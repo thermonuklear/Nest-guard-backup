@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account Locked — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="section split-hero">
+        <section class="login-brand">
+          <div>
+            <span class="eyebrow">Lockout state</span>
+            <h2>Repeated failed sign-ins should trigger a clear, controlled stop.</h2>
+            <p>This preview uses Priya Shah's coordinator account. A lockout is not just an error state. It is a review event with operational and audit consequences.</p>
+            <div class="signal-grid">
+              <div class="signal">
+                <strong>User</strong>
+                <p>Priya Shah / local coordinator.</p>
+              </div>
+              <div class="signal">
+                <strong>Trigger</strong>
+                <p>Five failed attempts from one device within 14 minutes.</p>
+              </div>
+              <div class="signal">
+                <strong>Next step</strong>
+                <p>Identity check, admin review, then unlock or forced reset.</p>
+              </div>
+              <div class="signal">
+                <strong>System response</strong>
+                <p>Audit entry created and dashboard queue updated.</p>
+              </div>
+            </div>
+          </div>
+          <div class="note brutal">
+            <h4>Brutal note</h4>
+            <p>Lockout handling cannot be an afterthought. If the PRD does not define it, support staff will invent inconsistent behaviour under pressure.</p>
+          </div>
+        </section>
+        <section class="login-panel">
+          <div class="form-card">
+            <span class="badge red">Account locked</span>
+            <h3 style="margin-top: 14px;">Sign-in blocked</h3>
+            <div class="field-list">
+              <div class="field"><small>Account</small><strong>priya.shah@oxfordguardians.co.uk</strong></div>
+              <div class="field"><small>Role</small><strong>Admin / Local coordinator</strong></div>
+              <div class="field"><small>Reason</small><strong>Too many unsuccessful sign-in attempts</strong></div>
+              <div class="field"><small>Recovery route</small><strong>Admin review or password reset</strong></div>
+            </div>
+            <div class="toolbar-actions" style="margin-top: 22px; justify-content: space-between;">
+              <a class="button-alt" href="login.html">Back to login</a>
+              <a class="button" href="password-reset-request.html">Request password reset</a>
+            </div>
+            <div class="topnav" style="margin-top: 18px;">
+              <a href="users.html">View user directory</a>
+              <a href="user-role-edit.html">Review role access</a>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

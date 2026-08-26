@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Safeguarding Case — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="section" style="padding:28px;" id="case-section">
+        <span class="eyebrow">Safeguarding case</span>
+        <h2 id="case-title">Loading…</h2>
+        <div class="badge-row" style="margin:12px 0;"><span class="badge red" id="case-status-badge">—</span><span class="badge navy">DSL lead: Jay Ray</span></div>
+        <div class="note brutal" style="margin:18px 0;">
+          <h4>Brutal product note</h4>
+          <p>This is the surface the PRD never specified: what does a safeguarding case actually look like inside the system? It's not a single note—it's a timeline of actions, communications, and decisions. Every contact with the student, school, or external agency is logged. Every decision is recorded with rationale. AEGIS Standard 6.2.5 requires secure, restricted case notes. This is where they live.</p>
+        </div>
+        <div class="cols-2">
+          <div>
+            <div class="info-block">
+              <h4>Concern details</h4>
+              <div class="kv">
+                <div class="kv-row"><small>Student</small><div id="kv-case-student">—</div></div>
+                <div class="kv-row"><small>Concern type</small><div id="kv-case-type">—</div></div>
+                <div class="kv-row"><small>Received via</small><div id="kv-case-source">—</div></div>
+                <div class="kv-row"><small>Received</small><div id="kv-case-received">—</div></div>
+                <div class="kv-row"><small>Triaged</small><div id="kv-case-triaged">—</div></div>
+                <div class="kv-row"><small>Decision</small><div id="kv-case-decision">—</div></div>
+                <div class="kv-row"><small>Status</small><div id="kv-case-status">—</div></div>
+              </div>
+            </div>
+            <div class="card" style="margin-top:16px;">
+              <h4>Access restrictions</h4>
+              <p>This case is restricted to DSL-level access only. Operations staff, local coordinators, and homestays cannot view case notes.</p>
+              <div class="list">
+                <div class="list-item"><strong>Jay Ray</strong><small>DSL — Case lead</small></div>
+                <div class="list-item"><strong>Zuko Fire</strong><small>Operations Director — Advisory access</small></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h4>Case timeline</h4>
+              <div class="timeline" id="case-timeline"></div>
+            </div>
+          </div>
+        </div>
+        <div class="info-block" style="margin-top:16px;">
+          <h4>Decision framework</h4>
+          <p>AEGIS expects DSL to consider external referral thresholds, school safeguarding lead liaison, and parental notification. The system should surface these questions:</p>
+          <div class="list" style="margin-top:10px;">
+            <div class="list-item"><strong>Has the threshold for external referral been met?</strong><small>Assess against physical harm, imminent danger, and evidence of criminal behaviour.</small></div>
+            <div class="list-item"><strong>Should school safeguarding lead be informed?</strong><small>Confirm and record the decision in the timeline.</small></div>
+            <div class="list-item"><strong>Should parents be informed?</strong><small>Confirm and record the decision in the timeline.</small></div>
+            <div class="list-item"><strong>Is this case related to any other known concern?</strong><small>Check the subject's concern history before deciding.</small></div>
+          </div>
+        </div>
+        <div class="action-row" style="margin-top:18px;">
+          <a class="button-alt" href="concerns-escalated.html">Back to escalation queue</a>
+          <a class="button-alt" href="school-liaison.html">Log school communication</a>
+          <a class="button-alt" id="btn-close-case" href="concern-close.html">Close case</a>
+          <a class="button" href="welfare-note-create.html">Add case note</a>
+        </div>
+      </section>
+      <section class="section" style="padding:28px; display:none;" id="not-found-section">
+        <span class="eyebrow">Safeguarding case</span>
+        <h2>No concern record found</h2>
+        <p class="lead">There's nothing logged yet, or the requested concern ID doesn't exist.</p>
+        <div class="action-row" style="margin-top:18px;">
+          <a class="button" href="low-level-concern-create.html">Log a concern</a>
+          <a class="button-alt" href="concerns-escalated.html">Escalation queue</a>
+        </div>
+      </section>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      var STATUS_BADGE = {
+        'Pending triage':  'red',
+        'Monitoring':      'amber',
+        'Open case':       'red',
+        'No escalation':   'green',
+        'Closed':          'green'
+      };
+
+      function escapeHtml(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+      function formatTimelineDate(iso) {
+        var d = new Date(iso);
+        if (isNaN(d.getTime())) return iso;
+        return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) + ' ' +
+          d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      }
+
+      var params    = new URLSearchParams(window.location.search);
+      var concernId = params.get('id');
+      var concerns  = getAllConcerns();
+      var concern   = concernId
+        ? concerns.find(function (c) { return c.id === concernId; })
+        : concerns.find(function (c) { return (c.status || '').toLowerCase() !== 'closed'; }) || concerns[0];
+
+      if (!concern) {
+        document.getElementById('case-section').style.display = 'none';
+        document.getElementById('not-found-section').style.display = 'block';
+      } else {
+        document.title = (concern.subjectName || 'Concern') + ' — Safeguarding Case — Oxford Guardians';
+        document.getElementById('case-title').textContent = (concern.subjectName || 'Unknown subject') + ' — ' + (concern.title || 'Untitled concern');
+
+        var badgeCls = STATUS_BADGE[concern.status] || 'navy';
+        var badge = document.getElementById('case-status-badge');
+        badge.textContent = concern.status || 'Status unknown';
+        badge.className = 'badge ' + badgeCls;
+
+        var student = concern.subjectId ? getStudentById(concern.subjectId) : null;
+        document.getElementById('kv-case-student').textContent =
+          (concern.subjectName || 'Unknown') +
+          (student && student.school ? (' — ' + student.school) : (concern.school ? (' — ' + concern.school) : '')) +
+          (concern.subjectRole ? (' (' + concern.subjectRole + ')') : '');
+        document.getElementById('kv-case-type').textContent = concern.category || 'Uncategorised';
+        document.getElementById('kv-case-source').textContent = concern.source || 'Not recorded';
+        document.getElementById('kv-case-received').textContent = concern.loggedDate || 'Not recorded';
+
+        var triageEntry = (concern.timeline || []).find(function (t) { return /triag/i.test(t.action || ''); });
+        document.getElementById('kv-case-triaged').textContent = triageEntry
+          ? (formatTimelineDate(triageEntry.date) + ' by ' + (triageEntry.by || 'DSL'))
+          : (concern.status === 'Pending triage' ? 'Awaiting DSL triage' : 'Not recorded');
+
+        document.getElementById('kv-case-decision').textContent = concern.closureRationale || concern.status || 'Not recorded';
+        document.getElementById('kv-case-status').textContent = concern.status || 'Unknown';
+
+        // ── Timeline ──
+        var timeline = Array.isArray(concern.timeline) && concern.timeline.length
+          ? concern.timeline.slice().sort(function (a, b) { return new Date(a.date) - new Date(b.date); })
+          : [{ date: new Date().toISOString(), action: 'Concern logged', by: concern.reportedBy || concern.source || 'Unknown', notes: concern.description || '' }];
+
+        document.getElementById('case-timeline').innerHTML = timeline.map(function (t) {
+          return '<div class="timeline-item"><time>' + escapeHtml(formatTimelineDate(t.date)) + '</time>' +
+            '<div><strong>' + escapeHtml(t.action || 'Update') + '</strong>' +
+            (t.by ? '<small> — ' + escapeHtml(t.by) + '</small>' : '') +
+            (t.notes ? '<small style="display:block;margin-top:4px;">' + escapeHtml(t.notes) + '</small>' : '') +
+            '</div></div>';
+        }).join('');
+
+        document.getElementById('btn-close-case').href = 'concern-close.html?id=' + encodeURIComponent(concern.id);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documents — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Global theme ── */
+      body { background: #f0f4f8; color: #0f2340; }
+
+      .app-frame { background: #f8fafc; border-color: #d5dce8; box-shadow: 0 20px 40px rgba(15,35,64,0.08); }
+
+      .chrome {
+        background: #e8eef6;
+        border-bottom-color: #d5dce8;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px;
+      }
+
+      .chrome small { color: #3b536e; letter-spacing: 0.04em; }
+      .dots span    { background: #7b9abf; }
+
+      .chrome-nav { display: flex; align-items: center; gap: 6px; }
+      .chrome-nav a {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 12px;
+        border-radius: 999px;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        color: #0f2340;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.15s;
+      }
+      .chrome-nav a:hover { background: #dce8f4; }
+
+      /* ── Sidebar ── */
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%);
+        color: #edf2fa;
+        padding: 24px 18px;
+        display: grid;
+        align-content: start;
+        gap: 18px;
+      }
+
+      .brand { padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .brand small  { display: block; text-transform: uppercase; letter-spacing: 0.1em; color: #7fb3d3; margin-bottom: 6px; }
+      .brand strong { font-family: "Outfit", sans-serif; color: #e8f0fa; font-size: 1.3rem; }
+
+      .nav-group { display: grid; gap: 4px; }
+      .nav-label { color: #7b9abf; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; padding: 10px 10px 6px; }
+
+      .nav-link {
+        display: block;
+        padding: 10px 12px;
+        border-radius: 12px;
+        color: #c8d8ee;
+        border: 1px solid transparent;
+        text-decoration: none;
+        font-size: 0.92rem;
+        transition: background 0.15s, color 0.15s;
+      }
+
+      .nav-link:hover { background: rgba(255,255,255,0.07); color: #e8f0fa; }
+
+      .nav-link.active {
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.14);
+        color: #e8f0fa;
+      }
+
+      .nav-link-sub {
+        display: block;
+        padding: 7px 12px 7px 36px;
+        border-radius: 10px;
+        color: #a8bfd6;
+        border: 1px solid transparent;
+        text-decoration: none;
+        font-size: 0.85em;
+        opacity: 0.85;
+        transition: background 0.15s, color 0.15s, opacity 0.15s;
+      }
+
+      .nav-link-sub:hover { background: rgba(255,255,255,0.06); color: #d8e8f4; opacity: 1; }
+      .nav-link-sub.active { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1); color: #e8f0fa; opacity: 1; }
+
+      /* ── Main ── */
+      .main { background: #f0f4f8; padding: 24px; }
+
+      h2, h3, h4, h5 { color: #0f2340; }
+      .eyebrow { color: #2a6096; }
+      .toolbar p { color: #3b536e; }
+
+      .button     { background: #0f2340; border-color: #0f2340; color: #ffffff; font-weight: 700; }
+      .button:hover { opacity: 0.88; }
+      .button-alt { background: #ffffff; border-color: #d5dce8; color: #0f2340; font-weight: 700; }
+      .button-alt:hover { background: #edf2f8; }
+
+      /* ── Two-column layout ── */
+      .doc-layout {
+        display: grid;
+        grid-template-columns: 1fr 288px;
+        gap: 16px;
+        align-items: start;
+      }
+      
+      .doc-layout > div:first-child {
+        min-width: 0; /* Prevents CSS grid blowout, allowing table-wrap to scroll */
+      }
+
+      /* ── Filter strip ── */
+      .filter-strip {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+
+      .filter-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        color: #3b536e;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+        user-select: none;
+      }
+
+      .filter-pill:hover { background: #e8eef6; }
+      .filter-pill.active { background: #0f2340; border-color: #0f2340; color: #ffffff; }
+
+      .filter-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.6;
+      }
+
+      /* ── Table ── */
+      .table-wrap { background: #ffffff; border: 1px solid #d5dce8; border-radius: 20px; overflow-x: auto; }
+
+      table { width: 100%; border-collapse: collapse; }
+      th, td { text-align: left; padding: 13px 15px; border-bottom: 1px solid #e8eef6; vertical-align: top; white-space: nowrap; }
+      th { background: #e8eef6; color: #0f2340; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700; border-bottom-color: #d5dce8; }
+      td { font-size: 0.9rem; }
+      tr:last-child td { border-bottom: 0; }
+      tr:hover td { background: #f4f7fb; }
+
+      td strong { display: block; font-weight: 600; color: #0f2340; font-size: 0.88rem; }
+      td small   { display: block; color: #6b85a0; font-size: 0.76rem; margin-top: 2px; }
+
+      .cat-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        white-space: nowrap;
+      }
+
+      .cat-student  { background: #dce8f8; color: #1a4080; }
+      .cat-host     { background: #e0f0e8; color: #1a5c38; }
+      .cat-driver   { background: #ede8f8; color: #4a2a80; }
+      .cat-policy   { background: #e8eef6; color: #1a3459; }
+      .cat-finance  { background: #fdf3dc; color: #7a4f0a; }
+      .cat-compliance { background: #f3e8f8; color: #5a1a80; }
+
+      .badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.04em; }
+      .badge.green   { background: #d1f0de; color: #145c33; }
+      .badge.amber   { background: #fde9c4; color: #7a4508; }
+      .badge.red     { background: #fddcdc; color: #8c1a1a; }
+      .badge.navy    { background: #dce8f6; color: #1a3459; }
+
+      /* ── Table footer ── */
+      .table-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px;
+        border-top: 1px solid #e8eef6;
+        font-size: 0.8rem;
+        color: #6b85a0;
+      }
+
+      .table-footer a {
+        font-weight: 600;
+        color: #1a4080;
+        text-decoration: none;
+        font-size: 0.8rem;
+      }
+
+      .table-footer a:hover { text-decoration: underline; }
+
+      /* ── Alerts sidebar ── */
+      .alerts-col { display: grid; gap: 10px; }
+
+      .alerts-heading {
+        font-family: "Outfit", sans-serif;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #3b536e;
+        margin-bottom: 4px;
+      }
+
+      .alert-card {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 16px;
+        padding: 14px 16px;
+        border-left-width: 4px;
+      }
+
+      .alert-card.alert-red    { border-left-color: #dc2626; }
+      .alert-card.alert-amber  { border-left-color: #d97706; }
+      .alert-card.alert-blue   { border-left-color: #2a6096; }
+
+      .alert-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        margin-bottom: 6px;
+      }
+
+      .alert-label.red   { color: #dc2626; }
+      .alert-label.amber { color: #d97706; }
+      .alert-label.blue  { color: #2a6096; }
+
+      .alert-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+      .alert-card h4 { font-size: 0.86rem; color: #0f2340; margin-bottom: 4px; line-height: 1.3; }
+      .alert-card p  { font-size: 0.78rem; color: #3b536e; line-height: 1.5; margin: 0; }
+      .alert-card small { display: block; font-size: 0.72rem; color: #6b85a0; margin-top: 8px; }
+
+      .alert-action {
+        display: inline-flex;
+        align-items: center;
+        margin-top: 10px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #0f2340;
+        text-decoration: none;
+        border: 1px solid #d5dce8;
+        background: #f4f7fb;
+        padding: 5px 11px;
+        border-radius: 999px;
+        transition: background 0.15s;
+      }
+
+      .alert-action:hover { background: #e2eaf4; }
+
+      /* ── Quick links ── */
+      .inline-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+      .link-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 7px 13px;
+        border-radius: 999px;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        color: #0f2340;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.15s;
+      }
+      .link-pill:hover { background: #e8eef6; }
+
+      @media (max-width: 1100px) {
+        .doc-layout { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+
+        <!-- Chrome bar -->
+        <div class="chrome">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="dots"><span></span><span></span><span></span></div>
+            <small>Route /admin/documents</small>
+          </div>
+          <nav class="chrome-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="notifications.html">Notifications</a>
+          </nav>
+        </div>
+
+        <div class="shell">
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Document Library</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link active" href="documents.html">Documents</a>
+
+              <a class="nav-link-sub" href="documents-students.html">Students</a>
+              <a class="nav-link-sub" href="documents-hosts.html">Hosts</a>
+              <a class="nav-link-sub" href="documents-drivers.html">Driver</a>
+              <a class="nav-link-sub" href="documents-staff.html">Staff &amp; Parents</a>
+              <a class="nav-link-sub" href="documents-finance.html">Finance</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <!-- Main content -->
+          <section class="main">
+
+            <!-- Toolbar -->
+            <div class="toolbar" style="margin-bottom:18px;">
+              <div>
+                <span class="eyebrow">Document management</span>
+                <h2>Policies, handbooks, contracts, templates, and evidence.</h2>
+                <p>Showing the 6 most recent documents across all categories.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="compliance.html">Open review tracker</a>
+                <a class="button-alt" href="document-approve.html">Approve draft</a>
+                <a class="button" href="document-create.html">Upload document</a>
+              </div>
+            </div>
+
+            <!-- Two-column layout -->
+            <div class="doc-layout">
+
+              <!-- ── Left column: Table ── -->
+              <div>
+
+                <!-- Category filter pills -->
+                <div class="filter-strip" id="filter-strip">
+                  <button class="filter-pill active" data-cat="all">All</button>
+                  <button class="filter-pill" data-cat="Student"><span class="filter-dot" style="background:#1a4080;"></span>Students</button>
+                  <button class="filter-pill" data-cat="Host"><span class="filter-dot" style="background:#1a5c38;"></span>Hosts</button>
+                  <button class="filter-pill" data-cat="Driver"><span class="filter-dot" style="background:#4a2a80;"></span>Driver</button>
+                  <button class="filter-pill" data-cat="Policy"><span class="filter-dot" style="background:#1a3459;"></span>Policy</button>
+                  <button class="filter-pill" data-cat="Finance"><span class="filter-dot" style="background:#7a4f0a;"></span>Finance</button>
+                </div>
+
+                <!-- Document table -->
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Document Name</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Version &amp; Date</th>
+                        <th>Review Date</th>
+                        <th>Audience</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="doc-tbody">
+                      <!-- populated by JS -->
+                    </tbody>
+                  </table>
+                  <div class="table-footer">
+                    <span id="doc-count">Showing 6 of 6 documents</span>
+                    <a href="document-create.html">+ Add document</a>
+                  </div>
+                </div>
+
+                <!-- Quick links -->
+                <div class="inline-links" style="margin-top:14px;">
+                  <a class="link-pill" href="document-create.html">Create document record</a>
+                  <a class="link-pill" href="document-approve.html">Approve draft</a>
+                  <a class="link-pill" href="document-validation.html">Validation errors</a>
+                  <a class="link-pill" href="document-edit.html">Edit record</a>
+                  <a class="link-pill" href="document-delete.html">Delete obsolete draft</a>
+                </div>
+
+              </div><!-- /left column -->
+
+              <!-- ── Right column: Alerts ── -->
+              <div class="alerts-col">
+                <p class="alerts-heading">Document Alerts</p>
+
+                <!-- Alert 1: Red — overdue policy -->
+                <div class="alert-card alert-red">
+                  <div class="alert-label red"><span class="alert-dot"></span>Action required</div>
+                  <h4>Missing Student Policy — draft overdue</h4>
+                  <p>Submitted for DSL review 3 weeks ago. No sign-off received. Policy is live in draft state and cannot be shared with schools.</p>
+                  <small>Assigned to: Jay Ray · Due: 15 Apr 2026</small>
+                  <br />
+                  <a class="alert-action" href="document-approve.html">Review &amp; approve</a>
+                </div>
+
+                <!-- Alert 2: Amber — expiring certificate -->
+                <div class="alert-card alert-amber">
+                  <div class="alert-label amber"><span class="alert-dot"></span>Renewal due</div>
+                  <h4>Gas Safety Certificate — Ashworth Family</h4>
+                  <p>CP12 certificate expires 14 May 2026. Must be renewed before any student placement continues at this address.</p>
+                  <small>Host: Sarah Ashworth · Expires: 14 May 2026</small>
+                  <br />
+                  <a class="alert-action" href="host-profile.html?id=sarah-ashworth">View host record</a>
+                </div>
+
+                <!-- Alert 3: Amber — DBS lapsed -->
+                <div class="alert-card alert-amber">
+                  <div class="alert-label amber"><span class="alert-dot"></span>Compliance gap</div>
+                  <h4>DBS Update Service — subscription lapsed</h4>
+                  <p>Sarah Ashworth's Update Service subscription is no longer active. A new Enhanced DBS application is required before next placement.</p>
+                  <small>Host: Sarah Ashworth · Last checked: Aug 2023</small>
+                  <br />
+                  <a class="alert-action" href="host-profile.html?id=sarah-ashworth">View host record</a>
+                </div>
+
+              </div><!-- /right column -->
+
+            </div><!-- /doc-layout -->
+
+          </section>
+        </div><!-- /shell -->
+      </div><!-- /app-frame -->
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      // Live document data from aggregator
+      var ALL_DOCS = (typeof aggregateDocuments === 'function') ? aggregateDocuments() : [];
+
+      // Sort by uploadDate descending (most recent first)
+      ALL_DOCS.sort(function (a, b) {
+        var da = a.uploadDate || '';
+        var db_val = b.uploadDate || '';
+        return db_val.localeCompare(da);
+      });
+
+      // Counts by personType and compliance subType
+      var counts = { Student: 0, Host: 0, Driver: 0, Finance: 0, Staff: 0, Parent: 0, Compliance: 0, Policy: 0 };
+      ALL_DOCS.forEach(function (d) {
+        if (Object.prototype.hasOwnProperty.call(counts, d.personType)) counts[d.personType]++;
+        if (d.subType === 'Compliance') counts.Compliance++;
+      });
+
+      // Update toolbar description with live total
+      var toolbarDesc = document.querySelector('.toolbar p');
+      if (toolbarDesc) {
+        toolbarDesc.textContent = 'Showing the 10 most recent documents across all categories. ' + ALL_DOCS.length + ' total document' + (ALL_DOCS.length !== 1 ? 's' : '') + ' on record.';
+      }
+
+      var CAT_CLASS = {
+        Student:    'cat-student',
+        Host:       'cat-host',
+        Driver:     'cat-driver',
+        Policy:     'cat-policy',
+        Finance:    'cat-finance',
+        Compliance: 'cat-compliance',
+        Staff:      'cat-policy',
+        Parent:     'cat-student'
+      };
+
+      // Render table rows
+      function renderTable(filter) {
+        var docs = filter === 'all'
+          ? ALL_DOCS
+          : ALL_DOCS.filter(function (d) { return d.personType === filter; });
+
+        var shown = docs.slice(0, 10);
+        var tbody = document.getElementById('doc-tbody');
+        var count = document.getElementById('doc-count');
+
+        if (!shown.length) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px;color:#6b85a0;font-size:0.86rem;">No documents found for this category.</td></tr>';
+          count.textContent = 'Showing 0 documents';
+          return;
+        }
+
+        tbody.innerHTML = shown.map(function (doc) {
+          var catClass = CAT_CLASS[doc.personType] || 'cat-policy';
+          var titleCell = doc.profileHref
+            ? '<a href="' + doc.profileHref + '" style="font-weight:600;color:#0f2340;text-decoration:none;display:block;font-size:0.88rem;">' + doc.docName + '</a><small>' + (doc.subType || '') + '</small>'
+            : '<strong>' + doc.docName + '</strong><small>' + (doc.subType || '') + '</small>';
+
+          var nameCell = doc.profileHref
+            ? '<a href="' + doc.profileHref + '" style="font-weight:600;color:#4a2a80;text-decoration:none;font-size:0.84rem;">' + doc.personName + '</a>'
+            : '<span style="font-size:0.84rem;color:#3b536e;">' + doc.personName + '</span>';
+
+          var statusBadge = doc.version
+            ? '<span class="badge green">v' + doc.version + ' Active</span>'
+            : '<span class="badge navy">Uploaded</span>';
+
+          return '<tr>' +
+            '<td>' + titleCell + '</td>' +
+            '<td style="white-space:nowrap;">' + nameCell + '</td>' +
+            '<td><span class="cat-badge ' + catClass + '">' + doc.personType + '</span></td>' +
+            '<td style="white-space:nowrap;"><span style="font-weight:600;font-size:0.84rem;">' + (doc.version ? 'v' + doc.version : '—') + '</span><small>' + (doc.uploadDate || '—') + '</small></td>' +
+            '<td style="font-size:0.84rem;color:#3b536e;white-space:nowrap;">' + (doc.reviewDate || '—') + '</td>' +
+            '<td style="font-size:0.82rem;color:#3b536e;">' + (doc.audience || '—') + '</td>' +
+            '<td>' + statusBadge + '</td>' +
+          '</tr>';
+        }).join('');
+
+        var total = docs.length;
+        count.textContent = 'Showing ' + shown.length + ' of ' + total + ' document' + (total !== 1 ? 's' : '');
+      }
+
+      // Filter pill interaction
+      var pills = document.querySelectorAll('.filter-pill');
+      pills.forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          pills.forEach(function (p) { p.classList.remove('active'); });
+          this.classList.add('active');
+          renderTable(this.getAttribute('data-cat'));
+        });
+      });
+
+      // Sidebar sub-link filter (via URL param)
+      var params = new URLSearchParams(window.location.search);
+      var urlFilter = params.get('filter');
+      if (urlFilter) {
+        var mapped = urlFilter.charAt(0).toUpperCase() + urlFilter.slice(1);
+        pills.forEach(function (p) {
+          p.classList.remove('active');
+          if (p.getAttribute('data-cat') === mapped) { p.classList.add('active'); }
+        });
+        renderTable(mapped);
+      } else {
+        renderTable('all');
+      }
+    </script>
+  </body>
+</html>

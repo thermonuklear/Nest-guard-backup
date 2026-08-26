@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Documents — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      body { background: #f0f4f8; color: #0f2340; }
+
+      .app-frame { background: #f8fafc; border-color: #d5dce8; box-shadow: 0 20px 40px rgba(15,35,64,0.08); }
+
+      .chrome {
+        background: #e8eef6;
+        border-bottom-color: #d5dce8;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px;
+      }
+
+      .chrome small { color: #3b536e; letter-spacing: 0.04em; }
+      .dots span    { background: #7b9abf; }
+
+      .chrome-nav { display: flex; align-items: center; gap: 6px; }
+      .chrome-nav a {
+        display: inline-flex; align-items: center; padding: 5px 12px;
+        border-radius: 999px; border: 1px solid #d5dce8; background: #ffffff;
+        color: #0f2340; font-size: 0.82rem; font-weight: 600; text-decoration: none;
+        transition: background 0.15s;
+      }
+      .chrome-nav a:hover { background: #dce8f4; }
+
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%);
+        color: #edf2fa; padding: 24px 18px; display: grid; align-content: start; gap: 18px;
+      }
+
+      .brand { padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .brand small  { display: block; text-transform: uppercase; letter-spacing: 0.1em; color: #7fb3d3; margin-bottom: 6px; }
+      .brand strong { font-family: "Outfit", sans-serif; color: #e8f0fa; font-size: 1.3rem; }
+
+      .nav-group { display: grid; gap: 4px; }
+      .nav-label { color: #7b9abf; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; padding: 10px 10px 6px; }
+
+      .nav-link {
+        display: block; padding: 10px 12px; border-radius: 12px; color: #c8d8ee;
+        border: 1px solid transparent; text-decoration: none; font-size: 0.92rem;
+        transition: background 0.15s, color 0.15s;
+      }
+      .nav-link:hover  { background: rgba(255,255,255,0.07); color: #e8f0fa; }
+      .nav-link.active { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.14); color: #e8f0fa; }
+
+      .nav-link-sub {
+        display: block; padding: 7px 12px 7px 36px; border-radius: 10px; color: #a8bfd6;
+        border: 1px solid transparent; text-decoration: none; font-size: 0.85em; opacity: 0.85;
+        transition: background 0.15s, color 0.15s, opacity 0.15s;
+      }
+      .nav-link-sub:hover  { background: rgba(255,255,255,0.06); color: #d8e8f4; opacity: 1; }
+      .nav-link-sub.active { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.12); color: #e8f0fa; opacity: 1; font-weight: 600; }
+
+      .main { background: #f0f4f8; padding: 24px; }
+
+      h2, h3, h4 { color: #0f2340; }
+      .eyebrow { color: #2a6096; }
+      .toolbar p { color: #3b536e; }
+
+      .button     { background: #0f2340; border-color: #0f2340; color: #ffffff; font-weight: 700; }
+      .button:hover { opacity: 0.88; }
+      .button-alt { background: #ffffff; border-color: #d5dce8; color: #0f2340; font-weight: 700; }
+      .button-alt:hover { background: #edf2f8; }
+
+      /* ── Table ── */
+      .table-wrap { background: #ffffff; border: 1px solid #d5dce8; border-radius: 20px; overflow: hidden; }
+
+      table { width: 100%; border-collapse: collapse; }
+      th, td { text-align: left; padding: 13px 15px; border-bottom: 1px solid #e8eef6; vertical-align: middle; }
+      th { background: #e8eef6; color: #0f2340; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700; border-bottom-color: #d5dce8; }
+      td { font-size: 0.88rem; color: #0f2340; }
+      tr:last-child td { border-bottom: 0; }
+      tr:hover td { background: #f4f7fb; }
+
+      .doc-name { font-weight: 600; display: block; }
+      .doc-sub  { font-size: 0.76rem; color: #6b85a0; display: block; margin-top: 2px; }
+
+      .person-link { color: #1a4080; font-weight: 600; text-decoration: none; }
+      .person-link:hover { text-decoration: underline; }
+
+      .type-badge {
+        display: inline-flex; align-items: center; padding: 3px 9px;
+        border-radius: 999px; font-size: 0.73rem; font-weight: 700; letter-spacing: 0.03em;
+      }
+      .type-general  { background: #dce8f8; color: #1a4080; }
+      .type-academic { background: #e0eaf8; color: #1a3a70; }
+
+      .badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px; font-size: 0.73rem; font-weight: 700; }
+      .badge.green { background: #d1f0de; color: #145c33; }
+      .badge.navy  { background: #dce8f6; color: #1a3459; }
+
+      .action-link {
+        display: inline-flex; align-items: center; padding: 4px 12px;
+        border: 1px solid #d5dce8; border-radius: 999px; background: #f4f7fb;
+        color: #0f2340; font-size: 0.78rem; font-weight: 600; text-decoration: none;
+        transition: background 0.15s;
+      }
+      .action-link:hover { background: #e2eaf4; }
+
+      /* ── Table footer ── */
+      .table-footer {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 10px 16px; border-top: 1px solid #e8eef6; font-size: 0.8rem; color: #6b85a0;
+      }
+
+      /* ── Empty state ── */
+      .empty-state {
+        padding: 48px 24px; text-align: center;
+      }
+      .empty-state h4 { color: #0f2340; margin-bottom: 8px; }
+      .empty-state p  { color: #6b85a0; font-size: 0.88rem; max-width: 44ch; margin: 0 auto; }
+      .empty-state a  { color: #1a4080; font-weight: 600; }
+
+      /* ── Type filter ── */
+      .filter-strip { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+      .filter-pill {
+        display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px;
+        border-radius: 999px; border: 1px solid #d5dce8; background: #ffffff;
+        color: #3b536e; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+        user-select: none;
+      }
+      .filter-pill:hover  { background: #e8eef6; }
+      .filter-pill.active { background: #0f2340; border-color: #0f2340; color: #ffffff; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+
+        <!-- Chrome -->
+        <div class="chrome">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="dots"><span></span><span></span><span></span></div>
+            <small>Route /admin/documents/students</small>
+          </div>
+          <nav class="chrome-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="notifications.html">Notifications</a>
+          </nav>
+        </div>
+
+        <div class="shell">
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Document Library</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+              <a class="nav-link-sub active" href="documents-students.html">Students</a>
+              <a class="nav-link-sub" href="documents-hosts.html">Hosts</a>
+              <a class="nav-link-sub" href="documents-drivers.html">Driver</a>
+              <a class="nav-link-sub" href="documents-staff.html">Staff &amp; Parents</a>
+              <a class="nav-link-sub" href="documents-finance.html">Finance</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <!-- Main -->
+          <section class="main">
+
+            <div class="toolbar" style="margin-bottom:18px;">
+              <div>
+                <span class="eyebrow">Document management</span>
+                <h2>Student Documents</h2>
+                <p>All documents uploaded to individual student profiles — general welfare docs and academic reports.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="documents.html">All documents</a>
+                <a class="button" href="students.html">Go to Students</a>
+              </div>
+            </div>
+
+            <!-- Sub-type filter -->
+            <div class="filter-strip" id="filter-strip">
+              <button class="filter-pill active" data-sub="all">All</button>
+              <button class="filter-pill" data-sub="General">General</button>
+              <button class="filter-pill" data-sub="Academic">Academic</button>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Document Name</th>
+                    <th>Student</th>
+                    <th>Type</th>
+                    <th>Upload Date</th>
+                    <th>Audience</th>
+                    <th>Status</th>
+                    <th>Profile</th>
+                  </tr>
+                </thead>
+                <tbody id="doc-tbody"></tbody>
+              </table>
+              <div class="table-footer">
+                <span id="doc-count">Loading…</span>
+              </div>
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      var ALL_DOCS  = aggregateDocuments().filter(function (d) { return d.personType === 'Student'; });
+      var activeFilter = 'all';
+
+      function renderTable(subFilter) {
+        activeFilter = subFilter;
+        var docs = subFilter === 'all'
+          ? ALL_DOCS
+          : ALL_DOCS.filter(function (d) { return d.subType === subFilter; });
+
+        var tbody = document.getElementById('doc-tbody');
+        var count = document.getElementById('doc-count');
+
+        if (!docs.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="7">' +
+              '<div class="empty-state">' +
+                '<h4>No documents found</h4>' +
+                '<p>Documents uploaded on <a href="students.html">student profiles</a> will appear here automatically.</p>' +
+              '</div>' +
+            '</td></tr>';
+          count.textContent = '0 documents';
+          return;
+        }
+
+        tbody.innerHTML = docs.map(function (d) {
+          var typeCls = d.subType === 'Academic' ? 'type-academic' : 'type-general';
+          var profileBtn = d.profileHref
+            ? '<a class="action-link" href="' + d.profileHref + '">View profile</a>'
+            : '—';
+          return '<tr>' +
+            '<td><span class="doc-name">' + d.docName + '</span></td>' +
+            '<td><a class="person-link" href="' + d.profileHref + '">' + d.personName + '</a></td>' +
+            '<td><span class="type-badge ' + typeCls + '">' + d.subType + '</span></td>' +
+            '<td style="white-space:nowrap;color:#3b536e;">' + d.uploadDate + '</td>' +
+            '<td style="color:#3b536e;font-size:0.82rem;">' + d.audience + '</td>' +
+            '<td><span class="badge navy">Uploaded</span></td>' +
+            '<td>' + profileBtn + '</td>' +
+          '</tr>';
+        }).join('');
+
+        count.textContent = docs.length + ' document' + (docs.length !== 1 ? 's' : '');
+      }
+
+      // Filter pills
+      document.querySelectorAll('.filter-pill').forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          document.querySelectorAll('.filter-pill').forEach(function (p) { p.classList.remove('active'); });
+          this.classList.add('active');
+          renderTable(this.getAttribute('data-sub'));
+        });
+      });
+
+      renderTable('all');
+    </script>
+  </body>
+</html>

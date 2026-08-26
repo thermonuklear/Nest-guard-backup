@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Case File — Complaints Register — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    body, .page, .shell, main { background: #f0f4f8 !important; color: #0f2340 !important; }
+    .app-frame { background: #f8fafc !important; border-color: #d5dce8 !important; box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important; }
+    .chrome { background: #e8eef6 !important; border-bottom-color: #d5dce8 !important; }
+    .chrome small { color: #3b536e !important; }
+    .dots span { background: #7b9abf !important; }
+    .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important; }
+    .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+    .brand small  { color: #7fb3d3 !important; }
+    .brand strong { color: #e8f0fa !important; }
+    .nav-label { color: #7b9abf !important; }
+    .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+    .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+    .nav-link.active { background: rgba(255,255,255,0.1) !important; border-color: rgba(255,255,255,0.14) !important; color: #e8f0fa !important; }
+    .main { background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important; }
+    h2, h3, h4 { color: #0f2340 !important; }
+    p { color: #3b536e; }
+    .eyebrow { color: #2a6096 !important; }
+    .toolbar p { color: #3b536e !important; }
+    .button { background: #0f2340 !important; border-color: #0f2340 !important; color: #ffffff !important; }
+    .button:hover { opacity: 0.88; }
+    .button-alt { background: #ffffff !important; border-color: #d5dce8 !important; color: #0f2340 !important; }
+    .button-alt:hover { background: #edf2f8 !important; }
+    .button-sm { padding: 7px 12px !important; font-size: 0.82rem !important; }
+
+    .field-input, .field-select, .field-textarea {
+      width: 100%; margin-top: 6px; padding: 10px 12px;
+      border: 1px solid #d5dce8 !important; border-radius: 10px;
+      background: #ffffff !important; color: #0f2340;
+      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.92rem;
+      outline: none; transition: border-color 0.15s, box-shadow 0.15s; box-sizing: border-box;
+    }
+    .field-input::placeholder, .field-textarea::placeholder { color: #9bafc4; }
+    .field-input:focus, .field-select:focus, .field-textarea:focus { border-color: #0f2340 !important; box-shadow: 0 0 0 3px rgba(15,35,64,0.1); }
+    .field-select { appearance: none; cursor: pointer; }
+    .field-textarea { resize: vertical; min-height: 90px; }
+    .field-file { margin-top: 6px; font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.85rem; cursor: pointer; color: #3b536e; }
+    .field small { display: block; font-size: 0.8rem; font-weight: 600; color: #3b536e; }
+    .field-hint { font-size: 0.76rem; color: #6b85a0; margin-top: 4px; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-span-2 { grid-column: span 2; }
+
+    .gov-card { background: #ffffff; border: 1px solid #d5dce8; border-radius: 20px; padding: 24px; margin-bottom: 18px; }
+    .gov-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 4px; }
+    .gov-card-sub { font-size: 0.86rem; color: #6b85a0; margin-bottom: 18px; }
+    .gov-standard-tag { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #2a6096; background: #dce8f5; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+
+    /* 4-Stage escalation selector */
+    .stage-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .stage-option { position: relative; }
+    .stage-option input { position: absolute; opacity: 0; pointer-events: none; }
+    .stage-option label {
+      display: block; border: 2px solid #e1e7ec; background: #fafcff; border-radius: 14px; padding: 14px;
+      cursor: pointer; transition: border-color 0.15s, background 0.15s; height: 100%;
+    }
+    .stage-option label:hover { border-color: #b7c6d9; }
+    .stage-option input:checked + label { border-color: #0f2340; background: #eef2f8; box-shadow: 0 0 0 3px rgba(15,35,64,0.08); }
+    .stage-option .stage-num { font-family: "Outfit", sans-serif; font-size: 0.74rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #2a6096; margin-bottom: 6px; }
+    .stage-option .stage-title { font-family: "Outfit", sans-serif; font-size: 0.95rem; font-weight: 700; color: #0f2340; margin-bottom: 6px; line-height: 1.25; }
+    .stage-option .stage-desc { font-size: 0.8rem; color: #6b85a0; line-height: 1.4; }
+
+    /* Chronological investigation log */
+    .log-entry-form { display: grid; grid-template-columns: 160px 1fr 160px auto; gap: 10px; align-items: end; background: #fafcff; border: 1px solid #e1e7ec; border-radius: 14px; padding: 14px; margin-bottom: 16px; }
+    .log-notes-row { grid-column: 1 / -1; margin-top: 10px; }
+    .log-entry-remove { background: none; border: none; color: #9f4347; font-size: 0.78rem; font-weight: 700; cursor: pointer; padding: 0; margin-top: 6px; }
+    .empty-log { padding: 24px; text-align: center; color: #6b85a0; font-size: 0.88rem; border: 1px dashed #cbd5e1; border-radius: 12px; }
+
+    .save-toast {
+      position: fixed; top: 20px; right: 24px; z-index: 9999;
+      background: #0f2340; color: #ffffff;
+      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.88rem; font-weight: 600;
+      padding: 12px 20px; border-radius: 10px; box-shadow: 0 8px 24px rgba(15,35,64,0.25);
+      display: flex; align-items: center; gap: 10px;
+      opacity: 0; transform: translateY(-8px);
+      transition: opacity 0.2s ease, transform 0.2s ease; pointer-events: none;
+    }
+    .save-toast.visible { opacity: 1; transform: translateY(0); }
+    .save-toast-icon { width: 18px; height: 18px; border-radius: 50%; background: #16a34a; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
+    .not-found { padding: 60px 32px; text-align: center; color: #3b536e; }
+    .not-found h3 { color: #0f2340 !important; margin-bottom: 10px; }
+
+    @media (max-width: 1200px) {
+      .stage-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-span-2 { grid-column: span 1; }
+      .stage-grid { grid-template-columns: 1fr; }
+      .log-entry-form { grid-template-columns: 1fr; }
+      .gov-card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="save-toast" id="save-toast">
+  <div class="save-toast-icon">&#10003;</div>
+  <span id="save-toast-text">Saved</span>
+</div>
+
+<main class="page">
+  <div class="app-frame">
+
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small id="chrome-route">Route /governance/complaints/case</small>
+    </div>
+
+    <div class="shell">
+
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong>Governance</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Navigation</div>
+          <a class="nav-link" href="admin-dashboard.html">&larr; Admin Dashboard</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Compliance</div>
+          <a class="nav-link" href="compliance.html">AEGIS Control Room</a>
+          <a class="nav-link" href="organisation-profile.html">Organisation &amp; Governance</a>
+          <a class="nav-link" href="policy-viewer.html">Statutory Policies</a>
+          <a class="nav-link active" href="complaints.html">Complaints Register</a>
+        </div>
+      </aside>
+
+      <section class="main">
+
+        <div class="toolbar">
+          <div>
+            <span class="eyebrow" id="toolbar-eyebrow">Case File</span>
+            <h2 id="toolbar-title">New Complaint</h2>
+            <p id="toolbar-sub">4-stage AEGIS grievance procedure — Standard 7 &amp; Appendix 8.</p>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" href="complaints.html">&larr; Back to Register</a>
+            <button type="button" class="button" onclick="saveCase()">Save Case File</button>
+          </div>
+        </div>
+
+        <div id="not-found" class="not-found" style="display:none;">
+          <h3>Complaint not found</h3>
+          <p><a href="complaints.html" style="color:#2a6096;font-weight:600;">Return to Complaints Register</a></p>
+        </div>
+
+        <div id="case-panel">
+
+          <!-- ── Intake ─────────────────────────────────────────────────────── -->
+          <div class="gov-card">
+            <div class="gov-card-head">
+              <div><h3>Intake</h3></div>
+              <span class="gov-standard-tag">AEGIS Standard 7</span>
+            </div>
+            <p class="gov-card-sub">Who raised the complaint, when, and what it concerns.</p>
+
+            <div class="form-grid">
+              <div class="field"><small>Complainant Name *</small><input class="field-input" type="text" id="f-complainant-name" /></div>
+              <div class="field">
+                <small>Complainant Role *</small>
+                <select class="field-select" id="f-complainant-type"></select>
+              </div>
+              <div class="field">
+                <small>Linked Student (optional)</small>
+                <select class="field-select" id="f-student-id"><option value="">&mdash; Not linked to a specific student &mdash;</option></select>
+              </div>
+              <div class="field"><small>Date Received *</small><input class="field-input" type="date" id="f-date-received" /></div>
+              <div class="field">
+                <small>Category *</small>
+                <select class="field-select" id="f-category"></select>
+              </div>
+              <div class="field"><small>Assigned Investigator</small><input class="field-input" type="text" id="f-investigator" placeholder="e.g. Jay Ray (DSL)" /></div>
+              <div class="field form-span-2"><small>Summary of Complaint *</small><textarea class="field-textarea" id="f-summary" placeholder="Describe the complaint in full, including how it was received..."></textarea></div>
+            </div>
+          </div>
+
+          <!-- ── 4-Stage Escalation Selector ────────────────────────────────── -->
+          <div class="gov-card">
+            <div class="gov-card-head">
+              <div><h3>Escalation Stage</h3></div>
+              <span class="gov-standard-tag">Appendix 8</span>
+            </div>
+            <p class="gov-card-sub">Select the current stage of the AEGIS 4-stage grievance procedure. Referring to Stage 3 raises a compliance alert until resolved.</p>
+
+            <div class="stage-grid" id="stage-grid">
+              <!-- populated by renderStageOptions() -->
+            </div>
+          </div>
+
+          <!-- ── Chronological Investigation Log ────────────────────────────── -->
+          <div class="gov-card">
+            <div class="gov-card-head">
+              <div><h3>Chronological Investigation Log</h3></div>
+            </div>
+            <p class="gov-card-sub">Append date-stamped action notes, meeting minutes and phone logs as the investigation proceeds. Entries save with the case file.</p>
+
+            <div class="log-entry-form">
+              <div class="field"><small>Date</small><input class="field-input" type="date" id="log-date" /></div>
+              <div class="field"><small>Action / Event</small><input class="field-input" type="text" id="log-action" placeholder="e.g. Phone call with complainant" /></div>
+              <div class="field"><small>Logged By</small><input class="field-input" type="text" id="log-by" placeholder="e.g. Jay Ray (DSL)" /></div>
+              <button type="button" class="button-alt button-sm" onclick="addLogEntry()">+ Add Entry</button>
+              <div class="field log-notes-row"><small>Notes</small><textarea class="field-textarea" id="log-notes" style="min-height:60px;" placeholder="Detail of the conversation, decision, or document..."></textarea></div>
+            </div>
+
+            <div class="timeline" id="log-timeline"></div>
+          </div>
+
+          <!-- ── Outcome & Closure ───────────────────────────────────────────── -->
+          <div class="gov-card">
+            <div class="gov-card-head">
+              <div><h3>Outcome &amp; Closure</h3></div>
+            </div>
+            <p class="gov-card-sub">Record the case outcome once investigation concludes.</p>
+
+            <div class="form-grid">
+              <div class="field">
+                <small>Outcome</small>
+                <select class="field-select" id="f-outcome"></select>
+              </div>
+              <div class="field"><small>Resolution Date</small><input class="field-input" type="date" id="f-resolution-date" /></div>
+              <div class="field form-span-2"><small>Resolution Summary</small><textarea class="field-textarea" id="f-resolution-summary" placeholder="Summarise the finding and any remedial action..."></textarea></div>
+              <div class="field form-span-2">
+                <small>Formal Report / Letter</small>
+                <input type="file" id="f-report-file" class="field-file" accept=".pdf,.docx,.doc,.md,.txt" />
+                <p class="field-hint" id="report-file-hint">No document on file.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button type="button" class="button" onclick="saveCase()">Save Case File</button>
+            <a class="button-alt" href="complaints.html">Cancel</a>
+          </div>
+
+        </div>
+
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="assets/db.js"></script>
+<script>
+  var CATEGORIES = ['Safeguarding', 'Pastoral', 'Homestay', 'Finance', 'School', 'Travel'];
+  var ROLES = ['Parent', 'Host', 'Student', 'School', 'Agent'];
+  var OUTCOMES = ['In Progress', 'Upheld', 'Partially Upheld', 'Not Upheld'];
+  var STAGES = [
+    { value: 'Stage 1: Informal',    num: 'Stage 1', title: 'Informal Resolution',                    desc: 'Handled directly by the DSL or coordinator through discussion — no formal investigation.' },
+    { value: 'Stage 2: Formal',      num: 'Stage 2', title: 'Formal Internal Investigation',           desc: 'A formal written investigation concluding with a documented response to the complainant.' },
+    { value: 'Stage 3: AEGIS Panel', num: 'Stage 3', title: 'AEGIS Panel Referral (Appendix 8)',       desc: 'Referred to an independent AEGIS panel under Appendix 8 of the Accreditation Handbook.' },
+    { value: 'Stage 4: Legal',       num: 'Stage 4', title: 'Legal / External Proceedings',            desc: 'External legal counsel, regulators, or other statutory bodies are engaged.' }
+  ];
+
+  var existingComplaint = null;
+  var currentChronology = [];
+  var reportFileNameOverride = null;
+
+  document.addEventListener('DOMContentLoaded', function () {
+    populateSelects();
+    renderStageOptions('Stage 1: Informal');
+
+    var params = new URLSearchParams(window.location.search);
+    var id = params.get('id');
+
+    if (id) {
+      existingComplaint = OG_DB.getComplaintById(id);
+      if (!existingComplaint) {
+        document.getElementById('not-found').style.display = 'block';
+        document.getElementById('case-panel').style.display = 'none';
+        return;
+      }
+      loadComplaintIntoForm(existingComplaint);
+    } else {
+      document.getElementById('f-date-received').value = new Date().toISOString().slice(0, 10);
+    }
+  });
+
+  function populateSelects() {
+    var roleSel = document.getElementById('f-complainant-type');
+    ROLES.forEach(function (r) {
+      var opt = document.createElement('option'); opt.value = r; opt.textContent = r;
+      roleSel.appendChild(opt);
+    });
+
+    var catSel = document.getElementById('f-category');
+    CATEGORIES.forEach(function (c) {
+      var opt = document.createElement('option'); opt.value = c; opt.textContent = c;
+      catSel.appendChild(opt);
+    });
+
+    var outSel = document.getElementById('f-outcome');
+    OUTCOMES.forEach(function (o) {
+      var opt = document.createElement('option'); opt.value = o; opt.textContent = o;
+      outSel.appendChild(opt);
+    });
+
+    var studentSel = document.getElementById('f-student-id');
+    OG_DB.getAllStudents().forEach(function (s) {
+      var opt = document.createElement('option');
+      opt.value = s.id;
+      opt.textContent = s.firstName + ' ' + s.lastName;
+      studentSel.appendChild(opt);
+    });
+
+    document.getElementById('log-date').value = new Date().toISOString().slice(0, 10);
+  }
+
+  function renderStageOptions(selectedValue) {
+    var grid = document.getElementById('stage-grid');
+    grid.innerHTML = STAGES.map(function (s, idx) {
+      var checked = s.value === selectedValue ? 'checked' : '';
+      var inputId = 'stage-opt-' + idx;
+      return '' +
+        '<div class="stage-option">' +
+          '<input type="radio" name="stage" id="' + inputId + '" value="' + escapeAttr(s.value) + '" ' + checked + ' />' +
+          '<label for="' + inputId + '">' +
+            '<div class="stage-num">' + escapeHtml(s.num) + '</div>' +
+            '<div class="stage-title">' + escapeHtml(s.title) + '</div>' +
+            '<div class="stage-desc">' + escapeHtml(s.desc) + '</div>' +
+          '</label>' +
+        '</div>';
+    }).join('');
+  }
+
+  function getSelectedStage() {
+    var checked = document.querySelector('input[name="stage"]:checked');
+    return checked ? checked.value : 'Stage 1: Informal';
+  }
+
+  function loadComplaintIntoForm(c) {
+    document.title = 'Case File — ' + (c.refNumber || c.id) + ' — Oxford Guardians Platform';
+    document.getElementById('chrome-route').textContent = 'Route /governance/complaints/' + c.id;
+    document.getElementById('toolbar-eyebrow').textContent = c.refNumber || c.id;
+    document.getElementById('toolbar-title').textContent = c.complainantName || 'Complaint';
+    document.getElementById('toolbar-sub').textContent = 'Logged ' + formatDate(c.dateReceived) + ' — ' + (c.category || 'Uncategorised');
+
+    document.getElementById('f-complainant-name').value = c.complainantName || '';
+    document.getElementById('f-complainant-type').value = c.complainantType || 'Parent';
+    document.getElementById('f-student-id').value = c.studentId || '';
+    document.getElementById('f-date-received').value = c.dateReceived || '';
+    document.getElementById('f-category').value = c.category || 'Pastoral';
+    document.getElementById('f-investigator').value = c.assignedInvestigator || '';
+    document.getElementById('f-summary').value = c.summary || '';
+
+    renderStageOptions(c.currentStage || 'Stage 1: Informal');
+
+    currentChronology = Array.isArray(c.chronology) ? c.chronology.slice() : [];
+    renderChronology();
+
+    document.getElementById('f-outcome').value = c.outcome || 'In Progress';
+    document.getElementById('f-resolution-date').value = c.resolutionDate || '';
+    document.getElementById('f-resolution-summary').value = c.resolutionSummary || '';
+    document.getElementById('report-file-hint').textContent = c.reportDocPath ? 'Current file: ' + c.reportDocPath : 'No document on file.';
+  }
+
+  // ── Chronological Investigation Log ────────────────────────────────────
+  function addLogEntry() {
+    var date = document.getElementById('log-date').value;
+    var action = document.getElementById('log-action').value.trim();
+    var by = document.getElementById('log-by').value.trim();
+    var notes = document.getElementById('log-notes').value.trim();
+
+    if (!date || !action) {
+      alert('Please enter a date and an action/event for the log entry.');
+      return;
+    }
+
+    currentChronology.push({ date: date, action: action, by: by, notes: notes });
+    document.getElementById('log-action').value = '';
+    document.getElementById('log-notes').value = '';
+    renderChronology();
+  }
+
+  function removeLogEntry(idx) {
+    currentChronology.splice(idx, 1);
+    renderChronology();
+  }
+
+  function renderChronology() {
+    var box = document.getElementById('log-timeline');
+    if (currentChronology.length === 0) {
+      box.innerHTML = '<div class="empty-log">No log entries yet. Add the first action, meeting note, or phone log above.</div>';
+      return;
+    }
+    var sorted = currentChronology.map(function (entry, idx) { return { entry: entry, idx: idx }; })
+      .sort(function (a, b) { return new Date(b.entry.date) - new Date(a.entry.date); });
+
+    box.innerHTML = sorted.map(function (item) {
+      var e = item.entry;
+      return '' +
+        '<div class="timeline-item">' +
+          '<time>' + escapeHtml(formatDate(e.date)) + '</time>' +
+          '<div>' +
+            '<strong>' + escapeHtml(e.action) + '</strong>' +
+            (e.by ? '<small> — logged by ' + escapeHtml(e.by) + '</small>' : '') +
+            (e.notes ? '<p style="margin-top:4px; color:#3b536e; font-size:0.9rem;">' + escapeHtml(e.notes) + '</p>' : '') +
+            '<button type="button" class="log-entry-remove" onclick="removeLogEntry(' + item.idx + ')">Remove entry</button>' +
+          '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  // ── Save ────────────────────────────────────────────────────────────────
+  function fileVal(inputId, existing) {
+    var inp = document.getElementById(inputId);
+    return (inp && inp.files && inp.files[0]) ? inp.files[0].name : (existing || '');
+  }
+
+  function saveCase() {
+    var name = document.getElementById('f-complainant-name').value.trim();
+    var dateReceived = document.getElementById('f-date-received').value;
+    var summary = document.getElementById('f-summary').value.trim();
+
+    if (!name || !dateReceived || !summary) {
+      alert('Please complete Complainant Name, Date Received, and Summary of Complaint before saving.');
+      return;
+    }
+
+    var complaint = existingComplaint || {};
+    complaint.complainantName = name;
+    complaint.complainantType = document.getElementById('f-complainant-type').value;
+    complaint.studentId = document.getElementById('f-student-id').value;
+    complaint.dateReceived = dateReceived;
+    complaint.category = document.getElementById('f-category').value;
+    complaint.assignedInvestigator = document.getElementById('f-investigator').value.trim();
+    complaint.summary = summary;
+    complaint.currentStage = getSelectedStage();
+    complaint.chronology = currentChronology;
+    complaint.outcome = document.getElementById('f-outcome').value;
+    complaint.resolutionDate = document.getElementById('f-resolution-date').value;
+    complaint.resolutionSummary = document.getElementById('f-resolution-summary').value.trim();
+    complaint.reportDocPath = fileVal('f-report-file', complaint.reportDocPath);
+
+    var id = OG_DB.saveComplaint(complaint);
+    existingComplaint = OG_DB.getComplaintById(id);
+
+    // Adopt the assigned id/ref into the URL without losing the in-progress form state.
+    if (!new URLSearchParams(window.location.search).get('id')) {
+      window.history.replaceState({}, '', 'complaint-create.html?id=' + encodeURIComponent(id));
+    }
+    loadComplaintIntoForm(existingComplaint);
+    showSaveToast('Case file ' + (existingComplaint.refNumber || id) + ' saved');
+  }
+
+  // ── Utilities ───────────────────────────────────────────────────────────
+  function formatDate(isoStr) {
+    if (!isoStr) return 'Not set';
+    var d = new Date(isoStr);
+    if (isNaN(d.getTime())) return isoStr;
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  function showSaveToast(message) {
+    var toast = document.getElementById('save-toast');
+    document.getElementById('save-toast-text').textContent = message || 'Saved';
+    toast.classList.add('visible');
+    setTimeout(function () { toast.classList.remove('visible'); }, 2200);
+  }
+
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+  function escapeAttr(str) { return escapeHtml(str); }
+</script>
+
+</body>
+</html>

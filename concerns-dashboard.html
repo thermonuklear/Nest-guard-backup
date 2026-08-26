@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Concerns Dashboard — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/safeguarding/concerns-dashboard</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Concerns Dashboard</strong></div>
+            <div class="nav-group"><div class="nav-label">Overview</div><a class="nav-link" href="admin-dashboard.html">Dashboard</a><a class="nav-link" href="notifications.html">Notifications</a></div>
+            <div class="nav-group"><div class="nav-label">Operations</div><a class="nav-link" href="students.html">Students</a><a class="nav-link" href="homestays.html">Homestays</a><a class="nav-link" href="travel.html">Travel</a><a class="nav-link" href="documents.html">Documents</a>
+</div>
+            <div class="nav-group"><div class="nav-label">Safeguarding</div><a class="nav-link" href="welfare-notes.html">Welfare notes</a><a class="nav-link active" href="concerns-dashboard.html">Concerns Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="concerns-low-level.html" style="color: #63768b; text-decoration: none;">• Low-Level</a><a href="concerns-escalated.html" style="color: #63768b; text-decoration: none;">• Escalated</a><a href="concerns-resolved.html" style="color: #63768b; text-decoration: none;">• Resolved (History)</a></div><a class="nav-link" href="emergency-procedures.html">Emergency</a></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Safeguarding</span>
+                <h2>Concerns Dashboard</h2>
+                <p>Overview of all logged concerns across tiers. Navigate to low-level monitoring records, active escalated cases, or the resolved concerns archive.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button" href="admin-dashboard.html">Back to Dashboard</a></div>
+            </div>
+            <div class="metrics">
+              <article class="metric"><h4>Low-level</h4><div class="metric-value" id="count-low">—</div><p class="metric-meta">Patterns under active monitoring</p></article>
+              <article class="metric featured"><h4>Escalated</h4><div class="metric-value" id="count-escalated">—</div><p class="metric-meta">Cases requiring DSL triage or review</p></article>
+              <article class="metric"><h4>Resolved</h4><div class="metric-value" id="count-resolved">—</div><p class="metric-meta">Closed and archived concerns</p></article>
+              <article class="metric"><h4>Total logged</h4><div class="metric-value" id="count-total">—</div><p class="metric-meta">Across all tiers</p></article>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 24px;">
+              <div class="card">
+                <h3>Low-Level Concerns</h3>
+                <p>Early warning system for monitoring patterns. A register of behaviours, comments, or observations that don't meet the threshold for formal concern but need recording in case a pattern emerges. AEGIS Standard 6.5 requires this register to be maintained and reviewed regularly.</p>
+                <a class="button" href="concerns-low-level.html">View Low-Level Concerns</a>
+              </div>
+              <div class="card">
+                <h3>Escalated Concerns</h3>
+                <p>Active concerns that have crossed the threshold for formal DSL assessment. Includes disclosures, allegations, and patterns that require immediate review, potential external referral, or formal written record in line with AEGIS Standard 6.5 and KCSIE.</p>
+                <a class="button" href="concerns-escalated.html">View Escalated Concerns</a>
+              </div>
+              <div class="card">
+                <h3>Resolved (History)</h3>
+                <p>Closed concerns with full audit trail. Each resolved concern retains its original log, review notes, and closure date. Historical records are maintained in line with AEGIS safeguarding record-keeping requirements and must not be deleted.</p>
+                <a class="button" href="concerns-resolved.html">View Resolved Concerns</a>
+              </div>
+            </div>
+            <div class="inline-links" style="margin-top: 24px;"><a href="low-level-concern-create.html">Log new concern</a><span class="sep">|</span><a href="welfare-notes.html">Welfare notes</a><span class="sep">|</span><a href="emergency-procedures.html">Emergency procedures</a><span class="sep">|</span><a href="mental-health-referral.html">Mental health referral</a></div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      (function () {
+        var low       = OG_DB.getConcernsByTier('low-level').length;
+        var escalated = OG_DB.getConcernsByTier('escalated').length;
+        var resolved  = OG_DB.getConcernsByTier('resolved').length;
+        document.getElementById('count-low').textContent       = low;
+        document.getElementById('count-escalated').textContent = escalated;
+        document.getElementById('count-resolved').textContent  = resolved;
+        document.getElementById('count-total').textContent     = low + escalated + resolved;
+      })();
+    </script>
+  </body>
+</html>

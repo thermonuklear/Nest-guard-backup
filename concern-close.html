@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Close Concern — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="section" style="padding:28px;" id="close-section">
+        <span class="eyebrow">Close safeguarding case</span>
+        <h2 id="close-title">Loading…</h2>
+        <div class="badge-row" style="margin:12px 0;"><span class="badge amber" id="close-status-badge">—</span><span class="badge navy">DSL: Jay Ray</span></div>
+        <div class="note brutal" style="margin:18px 0;">
+          <h4>Brutal product note</h4>
+          <p>Closing a safeguarding case is not a delete action. Every closure requires documented rationale, outcome, and any ongoing monitoring. The record is preserved indefinitely for audit purposes. This form forces explicit closure reasoning.</p>
+        </div>
+        <div class="info-block" style="margin:18px 0;">
+          <h4>Case summary</h4>
+          <div class="kv">
+            <div class="kv-row"><small>Student</small><div id="kv-close-student">—</div></div>
+            <div class="kv-row"><small>Concern type</small><div id="kv-close-type">—</div></div>
+            <div class="kv-row"><small>Opened</small><div id="kv-close-opened">—</div></div>
+            <div class="kv-row"><small>Closed</small><div id="kv-close-closed">Not yet closed</div></div>
+            <div class="kv-row"><small>Duration</small><div id="kv-close-duration">—</div></div>
+          </div>
+        </div>
+        <form class="form-grid">
+          <div class="form-span-2">
+            <label>Closure reason</label>
+            <select id="closure-reason">
+              <option>Concern resolved — no further action</option>
+              <option selected>Concern resolved — with ongoing support</option>
+              <option>Concern unfounded after investigation</option>
+              <option>Referred to external agency — case transferred</option>
+              <option>Student left guardianship — case transferred to new provider</option>
+            </select>
+          </div>
+          <div class="form-span-2">
+            <label>Closure summary</label>
+            <textarea class="textarea-box" id="closure-rationale" placeholder="Summarise what happened, what was done, and why the case is being closed..."></textarea>
+          </div>
+          <div>
+            <label>Outcome</label>
+            <select id="closure-outcome">
+              <option selected>Resolved internally</option>
+              <option>Referred to school safeguarding lead</option>
+              <option>Referred to LADO</option>
+              <option>Referred to local children's services</option>
+              <option>Police involvement</option>
+            </select>
+          </div>
+          <div>
+            <label>Ongoing monitoring</label>
+            <select id="closure-monitoring">
+              <option selected>None required</option>
+              <option>Low-level concern log created</option>
+              <option>Enhanced welfare check cadence</option>
+              <option>School liaison ongoing</option>
+            </select>
+          </div>
+          <div>
+            <label>Closed by</label>
+            <input type="text" id="closed-by" value="Jay Ray (DSL)" />
+          </div>
+          <div>
+            <label>Closure date</label>
+            <input type="text" id="closure-date-display" disabled />
+          </div>
+          <div class="form-span-2">
+            <label>Lessons learned (optional)</label>
+            <textarea class="textarea-box" id="lessons-learned" style="min-height:60px;" placeholder="Anything to change in process, checklists, or guidance as a result of this case..."></textarea>
+          </div>
+        </form>
+        <div class="action-row" style="margin-top:18px;">
+          <a class="button-alt" href="concerns-escalated.html">Back to escalation queue</a>
+          <a class="button-alt" id="btn-reopen-case" href="concern-case.html">Reopen case</a>
+          <button type="button" class="button" onclick="handleConfirmClosure()">Confirm closure</button>
+        </div>
+      </section>
+      <section class="section" style="padding:28px; display:none;" id="close-not-found-section">
+        <span class="eyebrow">Close safeguarding case</span>
+        <h2>No concern record found</h2>
+        <p class="lead">There's nothing open to close, or the requested concern ID doesn't exist.</p>
+        <div class="action-row" style="margin-top:18px;">
+          <a class="button-alt" href="concerns-escalated.html">Escalation queue</a>
+        </div>
+      </section>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      var STATUS_BADGE = {
+        'Pending triage':  'red',
+        'Monitoring':      'amber',
+        'Open case':       'red',
+        'No escalation':   'green',
+        'Closed':          'green'
+      };
+
+      function escapeHtml(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      var params    = new URLSearchParams(window.location.search);
+      var concernId = params.get('id');
+      var allConcerns = getAllConcerns();
+      var currentConcern = concernId
+        ? allConcerns.find(function (c) { return c.id === concernId; })
+        : allConcerns.find(function (c) { return (c.status || '').toLowerCase() !== 'closed'; });
+
+      var todayDisplay = new Date().toLocaleDateString('en-GB');
+      document.getElementById('closure-date-display').value = todayDisplay;
+
+      if (!currentConcern) {
+        document.getElementById('close-section').style.display = 'none';
+        document.getElementById('close-not-found-section').style.display = 'block';
+      } else {
+        document.title = 'Close: ' + (currentConcern.subjectName || 'Concern') + ' — Oxford Guardians';
+        document.getElementById('close-title').textContent = (currentConcern.subjectName || 'Unknown subject') + ' — ' + (currentConcern.title || 'Untitled concern');
+
+        var badgeCls = STATUS_BADGE[currentConcern.status] || 'navy';
+        var badge = document.getElementById('close-status-badge');
+        badge.textContent = currentConcern.status || 'Status unknown';
+        badge.className = 'badge ' + badgeCls;
+
+        document.getElementById('kv-close-student').textContent = currentConcern.subjectName || 'Unknown';
+        document.getElementById('kv-close-type').textContent = currentConcern.category || 'Uncategorised';
+        document.getElementById('kv-close-opened').textContent = currentConcern.loggedDate || 'Not recorded';
+
+        if (currentConcern.closedDate) {
+          document.getElementById('kv-close-closed').textContent = currentConcern.closedDate;
+        }
+
+        var opened = new Date(currentConcern.loggedDate);
+        if (!isNaN(opened.getTime())) {
+          var days = Math.max(0, Math.round((Date.now() - opened.getTime()) / 86400000));
+          document.getElementById('kv-close-duration').textContent = days + ' day' + (days === 1 ? '' : 's') + ' open';
+        } else {
+          document.getElementById('kv-close-duration').textContent = 'Not recorded';
+        }
+
+        document.getElementById('btn-reopen-case').href = 'concern-case.html?id=' + encodeURIComponent(currentConcern.id);
+
+        if (currentConcern.closureRationale) document.getElementById('closure-rationale').value = currentConcern.closureRationale;
+        if (currentConcern.lessonsLearned) document.getElementById('lessons-learned').value = currentConcern.lessonsLearned;
+        if (currentConcern.closedBy) document.getElementById('closed-by').value = currentConcern.closedBy;
+      }
+
+      function handleConfirmClosure() {
+        if (!currentConcern) {
+          alert('No concern selected to close.');
+          return;
+        }
+        var rationale = document.getElementById('closure-rationale').value.trim();
+        if (!rationale) {
+          alert('Please enter a closure summary before confirming.');
+          return;
+        }
+
+        currentConcern.status = 'Closed';
+        currentConcern.tier = 'resolved'; // matches concerns-resolved.html's getConcernsByTier('resolved') filter
+        currentConcern.closedDate = new Date().toISOString().split('T')[0];
+        currentConcern.closedBy = document.getElementById('closed-by').value.trim() || 'Jay Ray (DSL)';
+        currentConcern.closureReason = document.getElementById('closure-reason').value;
+        currentConcern.closureRationale = rationale;
+        currentConcern.outcome = document.getElementById('closure-outcome').value;
+        currentConcern.ongoingMonitoring = document.getElementById('closure-monitoring').value;
+        currentConcern.lessonsLearned = document.getElementById('lessons-learned').value.trim();
+
+        if (!currentConcern.timeline) currentConcern.timeline = [];
+        currentConcern.timeline.push({
+          date: new Date().toISOString(),
+          action: 'Case closed',
+          by: currentConcern.closedBy,
+          notes: currentConcern.closureRationale
+        });
+
+        saveConcern(currentConcern);
+        window.location.href = 'concerns-resolved.html';
+      }
+    </script>
+  </body>
+</html>

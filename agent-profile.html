@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agent Profile — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Parent avatar in toolbar ── */
+      .parent-avatar-lg {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Outfit", sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+        color: #fff8eb;
+        border: 2px solid var(--line);
+        flex-shrink: 0;
+      }
+
+      /* ── Sub-navigation tabs ── */
+      .subnav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 0 14px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .subnav button {
+        padding: 6px 16px;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: var(--ink-2);
+        background: transparent;
+        border: 1px solid transparent;
+        cursor: pointer;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+      }
+
+      .subnav button:hover { background: var(--surface-2); border-color: var(--line); }
+
+      .subnav button.active {
+        background: var(--navy);
+        border-color: var(--navy);
+        color: #fff8eb;
+      }
+
+      .tab-content { display: none; }
+      .tab-content.active { display: block; }
+
+      /* ── KV full-width span ── */
+      .kv-block-full { grid-column: 1 / -1; }
+
+      /* ── Linked student card ── */
+      .student-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px 20px;
+        margin-bottom: 14px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+        align-items: start;
+      }
+
+      .student-card:last-child { margin-bottom: 0; }
+
+      .student-card-name {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--ink);
+        text-decoration: none;
+      }
+
+      .student-card-name:hover { color: var(--gold); text-decoration: underline; }
+
+      .student-card-meta {
+        display: grid;
+        gap: 6px;
+        margin-top: 8px;
+      }
+
+      .student-card-row {
+        display: flex;
+        gap: 8px;
+        font-size: 0.86rem;
+        color: var(--ink-2);
+      }
+
+      .student-card-row small {
+        color: var(--ink-3);
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        font-size: 0.72rem;
+        min-width: 110px;
+        flex-shrink: 0;
+      }
+
+      /* ── Empty state ── */
+      .empty-state-card {
+        background: var(--surface);
+        border: 1.5px dashed var(--line);
+        border-radius: 20px;
+        padding: 36px 24px;
+        text-align: center;
+        color: var(--ink-3);
+        font-size: 0.88rem;
+      }
+
+      /* ── Required docs checklist ── */
+      .req-docs {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px 20px;
+        margin-bottom: 16px;
+        max-width: 640px;
+      }
+
+      .req-docs h4 { margin-bottom: 14px; }
+      .req-doc-list { display: grid; gap: 8px; }
+
+      .req-doc-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 12px;
+        background: var(--surface-3);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+      }
+
+      .req-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--ink-3);
+        margin-top: 5px;
+        flex-shrink: 0;
+      }
+
+      .req-doc-item strong { display: block; font-size: 0.88rem; }
+      .req-doc-item small  { font-size: 0.76rem; color: var(--ink-3); }
+
+      /* ── Upload card ── */
+      .upload-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px;
+        max-width: 640px;
+      }
+
+      .upload-card h4 { margin-bottom: 14px; }
+
+      .upload-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+
+      .upload-controls input[type="file"] {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.86rem;
+        color: var(--ink-2);
+        cursor: pointer;
+        max-width: 100%;
+      }
+
+      .doc-name-input {
+        flex: 1;
+        min-width: 150px;
+        padding: 9px 13px;
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface-3);
+        color: var(--ink);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s, background 0.15s;
+      }
+
+      .doc-name-input::placeholder { color: var(--ink-3); }
+      .doc-name-input:focus { border-color: var(--navy); background: var(--surface); }
+
+      .doc-list { display: grid; gap: 8px; }
+
+      .doc-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 13px;
+        background: var(--surface-3);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+
+      .doc-item-info { display: flex; align-items: center; gap: 10px; }
+
+      .doc-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: var(--navy);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .doc-icon svg { width: 15px; height: 15px; stroke: #ffffff; fill: none; }
+
+      .doc-item-name { font-size: 0.88rem; font-weight: 600; }
+      .doc-item-meta { font-size: 0.76rem; color: var(--ink-3); margin-top: 1px; }
+
+      .doc-remove {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--ink-3);
+        font-size: 0.95rem;
+        padding: 4px 6px;
+        border-radius: 6px;
+        transition: color 0.15s, background 0.15s;
+        line-height: 1;
+      }
+
+      .doc-remove:hover { color: var(--red); background: var(--red-soft); }
+
+      .doc-empty {
+        text-align: center;
+        padding: 24px 16px;
+        color: var(--ink-3);
+        font-size: 0.86rem;
+        border: 1.5px dashed var(--line);
+        border-radius: 12px;
+      }
+
+      /* ── Not-found state ── */
+      .not-found {
+        padding: 60px 32px;
+        text-align: center;
+        color: var(--ink-2);
+      }
+
+      .not-found h3 { margin-bottom: 10px; }
+    </style>
+  </head>
+  <body>
+
+  <main class="page">
+    <div class="app-frame">
+
+      <!-- Chrome bar -->
+      <div class="chrome">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <small id="chrome-route">Route /admin/agents</small>
+      </div>
+
+      <div class="shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="brand">
+            <small>Oxford Guardians</small>
+            <strong>Agent Directory</strong>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Overview</div>
+            <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+            <a class="nav-link" href="notifications.html">Notifications</a>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Access</div>
+            <a class="nav-link" href="users.html">Users &amp; roles</a>
+            <a class="nav-link nav-link-sub" href="students.html">Students</a>
+            <a class="nav-link nav-link-sub" href="staff-list.html">Staff</a>
+            <a class="nav-link nav-link-sub" href="drivers.html">Drivers</a>
+            <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
+            <a class="nav-link nav-link-sub" href="parent-list.html">Parents</a>
+            <a class="nav-link nav-link-sub" href="contracts.html">Contracts</a>
+            <a class="nav-link nav-link-sub active" href="agents.html">Agents</a>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Compliance</div>
+            <a class="nav-link" href="compliance.html">AEGIS control room</a>
+          </div>
+        </aside>
+
+        <!-- Main content -->
+        <section class="main" id="main-content">
+            <div class="toolbar">
+              <a href="agents.html" style="color:var(--ink-3); text-decoration:none; font-size:0.9rem; font-weight:600;">← Back to Directory</a>
+            </div>
+
+            <header class="profile-header">
+              <div class="profile-title">
+                <div class="parent-avatar-lg" id="avatar-initials"></div>
+                <div>
+                  <h2 id="agent-company">Loading...</h2>
+                  <div class="meta-row">
+                    <span class="badge" id="agent-status">Loading...</span>
+                    <span id="agent-id">ID: </span>
+                    <span id="agent-country">📍 </span>
+                  </div>
+                </div>
+              </div>
+              <div class="profile-actions">
+                <button class="button-alt">Send Email</button>
+                <button class="button" onclick="openEditModal()">Edit Agent</button>
+              </div>
+            </header>
+
+            <nav class="subnav">
+              <button data-tab="tab-overview" class="active">Overview</button>
+              <button data-tab="tab-students">Referred Students</button>
+              <button data-tab="tab-logs">Communication Logs</button>
+              <button data-tab="tab-contracts">Agreements & Contracts</button>
+            </nav>
+
+            <div id="tab-overview" class="tab-content" style="display:block;">
+              <div class="cols-2">
+                <div class="card">
+                  <h3>Agency Details</h3>
+                  <div class="data-grid">
+                    <div class="data-label">Primary Contact</div>
+                    <div class="data-value" id="agent-name">Loading...</div>
+                    <div class="data-label">Email</div>
+                    <div class="data-value" id="agent-email">Loading...</div>
+                    <div class="data-label">Phone</div>
+                    <div class="data-value" id="agent-phone">Loading...</div>
+                    <div class="data-label">Commission Rate</div>
+                    <div class="data-value" id="agent-commission">Loading...</div>
+                  </div>
+                </div>
+                <div class="card">
+                  <h3>Compliance & Notes</h3>
+                  <div class="data-grid">
+                    <div class="data-label">Agency Agreement</div>
+                    <div class="data-value" id="agent-agreement">Loading...</div>
+                    <div class="data-label">Internal Notes</div>
+                    <div class="data-value" id="agent-notes">Loading...</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="tab-students" class="tab-content" style="display:none;">
+              <div class="toolbar"><h3>Referred Students</h3></div>
+              <div id="students-list"></div>
+            </div>
+
+            <div id="tab-logs" class="tab-content" style="display:none;">
+              <div class="toolbar"><h3>Communication Logs</h3></div>
+              <div class="card" style="margin-bottom: 24px;">
+                <textarea id="new-log-content" placeholder="Log a call, email, or meeting note with this agent..." style="width:100%; height:80px; margin-bottom: 12px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; resize: vertical;"></textarea>
+                <div style="display:flex; justify-content: flex-end;">
+                  <button class="button" onclick="submitAgentLog()">Save Log</button>
+                </div>
+              </div>
+              <div id="logs-list"></div>
+            </div>
+
+            <div id="tab-contracts" class="tab-content" style="display:none;">
+              <div class="toolbar"><h3>Agreements & Contracts</h3></div>
+              <div id="contracts-list"></div>
+            </div>
+
+</section>
+          </div><!-- /tab-contracts -->
+
+
+        </section>
+      </div><!-- /shell -->
+    </div><!-- /app-frame -->
+  </main>
+
+  <script src="assets/db.js"></script>
+
+  <!-- ── Edit Agent Modal ──────────────────────────────────────────────── -->
+  <div id="edit-agent-modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(15,35,64,0.45);align-items:center;justify-content:center;">
+    <div style="background:#fffdf9;border:1px solid #d5dce8;border-radius:24px;padding:28px 28px 24px;width:min(560px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 24px 60px rgba(15,35,64,0.22);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;">
+        <h3 style="margin:0;">Edit Agent</h3>
+        <button onclick="closeEditModal()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:#6b85a0;line-height:1;">&#x2715;</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div>
+          <label style="display:block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6b85a0;margin-bottom:5px;">First Name</label>
+          <input id="ea-firstName" type="text" style="width:100%;padding:9px 12px;border:1.5px solid #d5dce8;border-radius:10px;background:#f4f7fb;font-family:inherit;font-size:0.9rem;color:#0f2340;outline:none;" />
+        </div>
+        <div>
+          <label style="display:block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6b85a0;margin-bottom:5px;">Last Name</label>
+          <input id="ea-lastName" type="text" style="width:100%;padding:9px 12px;border:1.5px solid #d5dce8;border-radius:10px;background:#f4f7fb;font-family:inherit;font-size:0.9rem;color:#0f2340;outline:none;" />
+        </div>
+        <div style="grid-column:1/-1;">
+          <label style="display:block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6b85a0;margin-bottom:5px;">Company / Agency Name</label>
+          <input id="ea-company" type="text" style="width:100%;padding:9px 12px;border:1.5px solid #d5dce8;border-radius:10px;background:#f4f7fb;font-family:inherit;font-size:0.9rem;color:#0f2340;outline:none;" />
+        </div>
+        <div>
+          <label style="display:block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6b85a0;margin-bottom:5px;">Email</label>
+          <input id="ea-email" type="email" style="width:100%;padding:9px 12px;border:1.5px solid #d5dce8;border-radius:10px;background:#f4f7fb;font-family:inherit;font-size:0.9rem;color:#0f2340;outline:none;" />
+        </div>
+        <div>
+          <label style="display:block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6b85a0;margin-bottom:5px;">Phone</label>
+          <input id="ea-phone" type="text" style="width:100%;padding:9px 12px;border:1.5px solid #d5dce8;border-radius:10px;background:#f4f7fb;font-family:inherit;font-size:0.9rem;color:#0f2340;outline:none;" />
+        </div>
+        <div>
+          <label style="display:block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6b85a0;margin-bottom:5px;">Country</label>
+          <input id="ea-country" type="text" style="width:100%;padding:9px 12px;border:1.5px solid #d5dce8;border-radius:10px;background:#f4f7fb;font-family:inherit;font-size:0.9rem;color:#0f2340;outline:none;" />
+        </div>
+        <div>
+          <label style="display:block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6b85a0;margin-bottom:5px;">Commission Rate</label>
+          <input id="ea-commission" type="text" placeholder="e.g. 15%" style="width:100%;padding:9px 12px;border:1.5px solid #d5dce8;border-radius:10px;background:#f4f7fb;font-family:inherit;font-size:0.9rem;color:#0f2340;outline:none;" />
+        </div>
+        <div>
+          <label style="display:block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6b85a0;margin-bottom:5px;">Agreement Status</label>
+          <select id="ea-agreementStatus" style="width:100%;padding:9px 12px;border:1.5px solid #d5dce8;border-radius:10px;background:#f4f7fb;font-family:inherit;font-size:0.9rem;color:#0f2340;outline:none;cursor:pointer;">
+            <option value="Active">Active</option>
+            <option value="Pending Renewal">Pending Renewal</option>
+            <option value="Expired">Expired</option>
+            <option value="None">None</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6b85a0;margin-bottom:5px;">Record Status</label>
+          <select id="ea-status" style="width:100%;padding:9px 12px;border:1.5px solid #d5dce8;border-radius:10px;background:#f4f7fb;font-family:inherit;font-size:0.9rem;color:#0f2340;outline:none;cursor:pointer;">
+            <option value="Active">Active</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </div>
+        <div style="grid-column:1/-1;">
+          <label style="display:block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6b85a0;margin-bottom:5px;">Internal Notes</label>
+          <textarea id="ea-notes" rows="3" style="width:100%;padding:9px 12px;border:1.5px solid #d5dce8;border-radius:10px;background:#f4f7fb;font-family:inherit;font-size:0.9rem;color:#0f2340;outline:none;resize:vertical;"></textarea>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid #d5dce8;">
+        <button class="button-alt" onclick="closeEditModal()">Cancel</button>
+        <button class="button" onclick="saveEditAgent()">Save changes</button>
+      </div>
+    </div>
+  </div>
+
+  </body>
+</html>
+<script>
+      function escapeHtml(unsafe) {
+        if (typeof unsafe !== 'string') return '';
+        return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      }
+
+      var params = new URLSearchParams(window.location.search);
+      var agentId = params.get('id') || 'AGT00001';
+      var allAgents = typeof getAllAgents === 'function' ? getAllAgents() : [];
+      var agent = allAgents.find(function(a) { return a.id === agentId; });
+
+      if (!agent) {
+        document.body.innerHTML = '<h2>Agent not found.</h2>';
+      } else {
+        document.getElementById('agent-company').textContent = agent.company || 'Unknown';
+        document.getElementById('avatar-initials').textContent = agent.company ? agent.company.charAt(0) : 'A';
+        document.getElementById('agent-status').textContent = agent.status || 'Unknown';
+        document.getElementById('agent-status').className = agent.status === 'Active' ? 'badge green' : 'badge slate';
+        document.getElementById('agent-id').textContent = 'ID: ' + agent.id;
+        document.getElementById('agent-country').textContent = '📍 ' + (agent.country || 'N/A');
+        
+        document.getElementById('agent-name').textContent = agent.firstName + ' ' + agent.lastName;
+        document.getElementById('agent-email').textContent = agent.email;
+        document.getElementById('agent-phone').textContent = agent.phone || 'N/A';
+        document.getElementById('agent-commission').textContent = agent.commissionRate || 'Standard';
+        document.getElementById('agent-agreement').innerHTML = agent.agreementStatus === 'Active' ? '<span style="color:var(--green)">Active</span>' : '<span style="color:var(--amber)">' + (agent.agreementStatus || 'Pending') + '</span>';
+        document.getElementById('agent-notes').textContent = agent.notes || 'None';
+
+        var studentsList = document.getElementById('students-list');
+        var allStudents = typeof getAllStudents === 'function' ? getAllStudents() : [];
+        var linkedStudents = allStudents.filter(function(s) { return s.legal && s.legal.agentId === agent.id; });
+        if (linkedStudents.length > 0) {
+          var html = '';
+          linkedStudents.forEach(function(s) {
+              html += '<div class="card" style="margin-bottom:16px;">' +
+                        '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+                          '<div>' +
+                            '<h4 style="margin:0 0 4px 0;">' + s.firstName + ' ' + s.lastName + '</h4>' +
+                            '<div class="meta-row"><span class="badge slate">' + s.id + '</span> <span>' + (s.school || 'Unassigned') + '</span></div>' +
+                          '</div>' +
+                          '<button class="button-sm button-alt" onclick="window.location.href=\'student-profile.html?id=' + s.id + '\'">View Student</button>' +
+                        '</div>' +
+                      '</div>';
+          });
+          studentsList.innerHTML = html;
+        } else {
+          studentsList.innerHTML = '<div class="empty-state">No students referred by this agent.</div>';
+        }
+
+        function renderAgentLogs() {
+          var logsList = document.getElementById('logs-list');
+          var logs = typeof getAgentLogs === 'function' ? getAgentLogs(agent.id) : [];
+          if (!logs.length) {
+            logsList.innerHTML = '<div class="empty-state">No communication logs recorded yet.</div>';
+            return;
+          }
+          logs.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+          var html = '<div class="timeline">';
+          logs.forEach(function(log) {
+            var formattedDate = new Date(log.date).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+            html += '<div class="timeline-item">' +
+                      '<time>' + formattedDate + '</time>' +
+                      '<div>' +
+                        '<strong>' + escapeHtml(log.author) + '</strong>' +
+                        '<p>' + escapeHtml(log.content).replace(/\n/g, '<br>') + '</p>' +
+                      '</div>' +
+                    '</div>';
+          });
+          html += '</div>';
+          logsList.innerHTML = html;
+        }
+        
+        window.submitAgentLog = function() {
+          var content = document.getElementById('new-log-content').value;
+          if (!content.trim()) return;
+          var log = {
+            id: 'ALOG' + Date.now(),
+            agentId: agent.id,
+            date: new Date().toISOString(),
+            author: 'Current User', // Mock
+            content: content.trim()
+          };
+          if(typeof saveAgentLog === 'function') { saveAgentLog(log); }
+          document.getElementById('new-log-content').value = '';
+          renderAgentLogs();
+        };
+        renderAgentLogs();
+
+        function renderContracts() {
+          var contractsList = document.getElementById('contracts-list');
+          var contracts = typeof getContractsByEntity !== 'undefined' ? getContractsByEntity('Agent', agent.id) : [];
+          if (!contracts.length) {
+            contractsList.innerHTML = '<div class="empty-state">No contracts found for this profile.</div>';
+            return;
+          }
+          var html = '';
+          contracts.forEach(function(c) {
+            var statusColor = c.status === 'Active' ? 'green' : (c.status === 'Expiring Soon' ? 'amber' : (c.status === 'Draft' ? 'slate' : 'blue'));
+            html += '<div class="card" style="margin-bottom:16px;">' +
+                      '<div style="display:flex; justify-content:space-between; align-items:flex-start;">' +
+                        '<div>' +
+                          '<h4 style="margin:0 0 8px 0;">' + escapeHtml(c.title) + '</h4>' +
+                          '<p style="margin:0; font-size:0.9em; color:#3b536e;">Valid: ' + escapeHtml(c.validFrom || '—') + ' to ' + escapeHtml(c.validTo || '—') + '</p>' +
+                        '</div>' +
+                        '<span class="badge ' + statusColor + '">' + escapeHtml(c.status) + '</span>' +
+                      '</div>' +
+                      '<div style="margin-top:16px; display:flex; gap:8px;">' +
+                        '<button class="button-sm button-alt" onclick="updateContractStatus(\'' + c.id + '\', \'Awaiting Signature\')">Request Signature</button>' +
+                        '<button class="button-sm button" onclick="updateContractStatus(\'' + c.id + '\', \'Active\')">Upload Signed Copy</button>' +
+                        '<button class="button-sm button-alt" style="color:var(--red);" onclick="updateContractStatus(\'' + c.id + '\', \'Terminated\')">Terminate</button>' +
+                      '</div>' +
+                    '</div>';
+          });
+          contractsList.innerHTML = html;
+        }
+        
+        window.updateContractStatus = function(cid, newStatus) {
+          if (typeof getContracts === 'undefined' || typeof saveContract === 'undefined') return;
+          var all = getContracts();
+          var c = all.find(function(x) { return x.id === cid; });
+          if (c) {
+            c.status = newStatus;
+            saveContract(c);
+            
+            var updatedAll = getContracts();
+            var updatedC = updatedAll.find(function(x) { return x.id === cid; });
+            if (updatedC && updatedC.status !== newStatus && newStatus === 'Active') {
+              alert('Safeguarding block! Cannot activate contract due to missing/expired compliance records.');
+            }
+            renderContracts();
+          }
+        };
+        renderContracts();
+      }
+
+      // Tab Switching
+      document.querySelectorAll('.subnav button').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.subnav button').forEach(function(b) { b.classList.remove('active'); });
+          document.querySelectorAll('.tab-content').forEach(function(c) { c.style.display = 'none'; });
+          btn.classList.add('active');
+          document.getElementById(btn.getAttribute('data-tab')).style.display = 'block';
+        });
+      });
+
+      // ── Edit Agent Modal ──────────────────────────────────────────────────
+
+      function openEditModal() {
+        if (!agent) return;
+        document.getElementById('ea-firstName').value        = agent.firstName        || '';
+        document.getElementById('ea-lastName').value         = agent.lastName         || '';
+        document.getElementById('ea-company').value          = agent.company          || '';
+        document.getElementById('ea-email').value            = agent.email            || '';
+        document.getElementById('ea-phone').value            = agent.phone            || '';
+        document.getElementById('ea-country').value          = agent.country          || '';
+        document.getElementById('ea-commission').value       = agent.commissionRate   || '';
+        document.getElementById('ea-agreementStatus').value  = agent.agreementStatus  || 'Active';
+        document.getElementById('ea-status').value           = agent.status           || 'Active';
+        document.getElementById('ea-notes').value            = agent.notes            || '';
+        document.getElementById('edit-agent-modal').style.display = 'flex';
+      }
+
+      function closeEditModal() {
+        document.getElementById('edit-agent-modal').style.display = 'none';
+      }
+
+      function saveEditAgent() {
+        agent.firstName       = document.getElementById('ea-firstName').value.trim();
+        agent.lastName        = document.getElementById('ea-lastName').value.trim();
+        agent.company         = document.getElementById('ea-company').value.trim();
+        agent.email           = document.getElementById('ea-email').value.trim();
+        agent.phone           = document.getElementById('ea-phone').value.trim();
+        agent.country         = document.getElementById('ea-country').value.trim();
+        agent.commissionRate  = document.getElementById('ea-commission').value.trim();
+        agent.agreementStatus = document.getElementById('ea-agreementStatus').value;
+        agent.status          = document.getElementById('ea-status').value;
+        agent.notes           = document.getElementById('ea-notes').value.trim();
+
+        if (typeof saveAgent === 'function') saveAgent(agent);
+
+        // Refresh the profile header and overview tab in-place
+        document.getElementById('agent-company').textContent      = agent.company || 'Unknown';
+        document.getElementById('avatar-initials').textContent    = agent.company ? agent.company.charAt(0) : 'A';
+        document.getElementById('agent-status').textContent       = agent.status  || 'Unknown';
+        document.getElementById('agent-status').className         = agent.status === 'Active' ? 'badge green' : 'badge slate';
+        document.getElementById('agent-country').textContent      = '📍 ' + (agent.country || 'N/A');
+        document.getElementById('agent-name').textContent         = agent.firstName + ' ' + agent.lastName;
+        document.getElementById('agent-email').textContent        = agent.email;
+        document.getElementById('agent-phone').textContent        = agent.phone || 'N/A';
+        document.getElementById('agent-commission').textContent   = agent.commissionRate || 'Standard';
+        document.getElementById('agent-agreement').innerHTML      = agent.agreementStatus === 'Active'
+          ? '<span style="color:var(--green)">Active</span>'
+          : '<span style="color:var(--amber)">' + escapeHtml(agent.agreementStatus || 'Pending') + '</span>';
+        document.getElementById('agent-notes').textContent        = agent.notes || 'None';
+
+        closeEditModal();
+      }
+
+      document.getElementById('edit-agent-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeEditModal();
+      });
+
+    </script>
+  </body>
+</html>

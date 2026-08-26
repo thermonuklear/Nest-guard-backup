@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DBS Check — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    body { background: #f0f4f8 !important; color: #0f2340 !important; }
+    .app-frame { background: #f8fafc !important; border-color: #d5dce8 !important; box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important; }
+    .chrome { background: #e8eef6 !important; border-bottom-color: #d5dce8 !important; }
+    .chrome small { color: #3b536e !important; }
+    .dots span { background: #7b9abf !important; }
+    .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important; }
+    .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+    .brand small  { color: #7fb3d3 !important; }
+    .brand strong { color: #e8f0fa !important; }
+    .nav-label { color: #7b9abf !important; }
+    .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+    .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+    .nav-link.active { background: rgba(255,255,255,0.1) !important; border-color: rgba(255,255,255,0.14) !important; color: #e8f0fa !important; }
+    .main { background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important; }
+    h2, h3, h4 { color: #0f2340 !important; }
+    .eyebrow { color: #2a6096 !important; }
+    .button { background: #0f2340 !important; border-color: #0f2340 !important; color: #ffffff !important; }
+    .button:hover { opacity: 0.88; }
+    .button-alt { background: #ffffff !important; border-color: #d5dce8 !important; color: #0f2340 !important; }
+    .button-alt:hover { background: #edf2f8 !important; }
+
+    .driver-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, #0f2340 0%, #1a3459 100%);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 18px; font-weight: 700;
+      color: #e8f0fa; font-family: 'Outfit', sans-serif;
+      letter-spacing: 0.02em; border: 2px solid #d5dce8;
+    }
+
+    .field-input, .field-select {
+      width: 100%; margin-top: 6px; padding: 10px 12px;
+      border: 1px solid #d5dce8 !important; border-radius: 10px;
+      background: #ffffff !important; color: #0f2340;
+      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.95rem;
+      outline: none; transition: border-color 0.15s, box-shadow 0.15s; box-sizing: border-box;
+    }
+    .field-input:focus, .field-select:focus { border-color: #0f2340; box-shadow: 0 0 0 3px rgba(15,35,64,0.1); }
+    .field small { display: block; font-size: 0.8rem; font-weight: 600; color: #3b536e; }
+    .field-file { margin-top: 6px; }
+    .field-file input[type="file"] { display: block; font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.86rem; color: #3b536e; cursor: pointer; }
+    .field-current { font-size: 0.76rem; color: #6b85a0; margin-top: 3px; }
+    .field-current a { color: #1a4080; }
+    .check-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+    .check-row input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: #0f2340; }
+    .check-row label { font-size: 0.88rem; font-weight: 600; color: #3b536e; cursor: pointer; }
+    .dbs-external-link { font-size: 0.8rem; color: #1a4080; font-weight: 600; margin-top: 6px; display: inline-block; }
+    .create-panel { background: #ffffff !important; border: 1px solid #d5dce8 !important; border-radius: 16px; padding: 28px; margin: 0 0 24px; }
+    .form-section-title { font-family: "Outfit", sans-serif; font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #2a6096; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #e8eef6; }
+    .action-row { display: flex; gap: 10px; align-items: center; padding-top: 8px; }
+    .not-found { padding: 60px 32px; text-align: center; color: #3b536e; }
+    .not-found h3 { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+<main class="page">
+  <div class="app-frame">
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small id="chrome-route">Route /admin/drivers/compliance/dbs</small>
+    </div>
+    <div class="shell">
+
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong>Drivers</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Overview</div>
+          <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+          <a class="nav-link" href="notifications.html">Notifications</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Operations</div>
+          <a class="nav-link" href="students.html">Students</a>
+          <a class="nav-link" href="homestays.html">Homestays</a>
+          <a class="nav-link" href="travel.html">Travel</a>
+          <a class="nav-link active" href="drivers.html">Drivers</a>
+          <a class="nav-link" href="documents.html">Documents</a>
+
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Compliance</div>
+          <a class="nav-link" href="compliance.html">AEGIS control room</a>
+        </div>
+      </aside>
+
+      <section class="main">
+        <div class="toolbar">
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div class="driver-avatar" id="driver-avatar">—</div>
+            <div>
+              <span class="eyebrow">Compliance — DBS Check</span>
+              <h2 id="driver-name" style="margin:2px 0 4px;">Loading…</h2>
+              <p id="driver-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">—</p>
+            </div>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" id="back-link" href="driver-compliance.html">Back to Compliance Overview</a>
+          </div>
+        </div>
+
+        <div id="not-found" class="not-found" style="display:none;">
+          <h3>Driver not found</h3>
+          <p><a href="drivers.html" style="color:#1a4080;font-weight:600;">Return to Drivers</a></p>
+        </div>
+
+        <div class="create-panel" id="edit-panel">
+          <form id="compliance-form" novalidate>
+            <div class="form-section-title">DBS Check</div>
+            <div class="form-grid">
+
+              <div class="field">
+                <small>DBS Number (SCR)</small>
+                <input class="field-input" type="text" id="c-dbs-number" placeholder="e.g. 002-452-8831-4" />
+              </div>
+
+              <div class="field">
+                <small>DBS Last Checked</small>
+                <input class="field-input" type="date" id="c-dbs-checked" />
+              </div>
+
+              <div class="field">
+                <small>DBS Expiry</small>
+                <input class="field-input" type="date" id="c-dbs-expiry" />
+              </div>
+
+              <div class="field">
+                <small>Update Service</small>
+                <div class="check-row" style="margin-top:18px;">
+                  <input type="checkbox" id="c-dbs-update-service" />
+                  <label for="c-dbs-update-service">On DBS Update Service</label>
+                </div>
+                <a class="dbs-external-link" href="https://www.gov.uk/dbs-update-service" target="_blank" rel="noopener">Check DBS Update Service ↗</a>
+              </div>
+
+              <div class="field form-span-2">
+                <small>DBS Certificate (file)</small>
+                <div class="field-file"><input type="file" id="c-dbs-cert-file" accept=".pdf,.jpg,.jpeg,.png" /></div>
+                <div class="field-current" id="c-dbs-cert-hint"></div>
+              </div>
+
+            </div>
+
+            <div class="action-row">
+              <button type="submit" class="button">Save changes</button>
+              <a class="button-alt" id="cancel-link" href="driver-compliance.html">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="assets/db.js"></script>
+<script>
+  var params   = new URLSearchParams(window.location.search);
+  var driverId = params.get('id');
+  var driver   = driverId ? getDriverById(driverId) : null;
+
+  if (!driver) {
+    document.getElementById('not-found').style.display  = 'block';
+    document.getElementById('edit-panel').style.display = 'none';
+  } else {
+    document.title = 'DBS Check — ' + driver.firstName + ' ' + driver.lastName + ' — Oxford Guardians';
+    document.getElementById('chrome-route').textContent  = 'Route /admin/drivers/' + driver.id + '/compliance/dbs';
+    document.getElementById('driver-name').textContent   = driver.firstName + ' ' + driver.lastName;
+    document.getElementById('driver-subtitle').textContent = (driver.carMake ? driver.carMake + ' ' + (driver.carModel || '') : '—');
+    document.getElementById('driver-avatar').textContent = ((driver.firstName||'').charAt(0) + (driver.lastName||'').charAt(0)).toUpperCase();
+    document.getElementById('back-link').href   = 'driver-compliance.html?id=' + driver.id;
+    document.getElementById('cancel-link').href = 'driver-compliance.html?id=' + driver.id;
+
+    var c = driver.compliance || {};
+
+    function fill(id, val) {
+      var el = document.getElementById(id);
+      if (!el || val === undefined || val === null) return;
+      if (el.type === 'checkbox') { el.checked = !!val; } else { el.value = val || ''; }
+    }
+    function hint(id, path) {
+      if (!path) return;
+      var el = document.getElementById(id);
+      if (el) el.innerHTML = 'Current: <a href="#">' + path + '</a>';
+    }
+    function toIso(str) {
+      if (!str) return '';
+      var d = new Date(str);
+      return isNaN(d.getTime()) ? '' : d.toISOString().substring(0, 10);
+    }
+
+    fill('c-dbs-number',        c.dbsNumber);
+    fill('c-dbs-checked',       toIso(c.dbsLastChecked));
+    fill('c-dbs-expiry',        c.dbsExpiry);
+    fill('c-dbs-update-service', c.dbsUpdateService);
+    hint('c-dbs-cert-hint',     c.dbsCertificatePath);
+  }
+
+  document.getElementById('compliance-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!driver) return;
+
+    function fileVal(id, existing) {
+      var inp = document.getElementById(id);
+      return (inp && inp.files && inp.files[0]) ? inp.files[0].name : (existing || '');
+    }
+
+    var c = driver.compliance || {};
+    c.dbsNumber          = document.getElementById('c-dbs-number').value.trim();
+    c.dbsLastChecked     = document.getElementById('c-dbs-checked').value;
+    c.dbsExpiry          = document.getElementById('c-dbs-expiry').value;
+    c.dbsUpdateService   = document.getElementById('c-dbs-update-service').checked;
+    c.dbsCertificatePath = fileVal('c-dbs-cert-file', c.dbsCertificatePath);
+    driver.compliance = c;
+
+    saveDriver(driver);
+    window.location.href = 'driver-compliance.html?id=' + driver.id;
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archived Revenue — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Global colour overrides ── */
+      body, .page, .shell {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+      }
+
+      /* ── Chrome bar ── */
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-right: 16px !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .chrome-nav-link {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        transition: background 0.15s, color 0.15s;
+        white-space: nowrap;
+      }
+
+      .chrome-nav-link:hover {
+        background: rgba(15, 35, 64, 0.07);
+        color: #0f2340;
+      }
+
+      /* ── Sidebar ── */
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+        box-shadow: 0 0 10px rgba(127, 179, 211, 0.35), 0 0 3px rgba(255,255,255,0.12) !important;
+      }
+
+      .nav-link-sub {
+        padding-left: 36px !important;
+        font-size: 0.85em !important;
+        opacity: 0.85;
+      }
+
+      /* ── Main ── */
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+        overflow-y: auto;
+      }
+
+      h2, h3, h4 { color: #0f2340 !important; }
+      p           { color: #3b536e; }
+      .eyebrow    { color: #2a6096 !important; }
+      .toolbar p  { color: #3b536e !important; }
+
+      /* ── Buttons ── */
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      .button-sm {
+        font-size: 0.8rem;
+        padding: 5px 12px;
+        border-radius: 6px;
+        border: 1px solid;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        transition: opacity 0.15s, background 0.15s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      /* ── Content padding ── */
+      .tracker-content {
+        padding: 0 24px 28px;
+      }
+
+      /* ── Filter row ── */
+      .filter-bar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .filter-group label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #6b85a0;
+      }
+
+      .filter-select {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 8px;
+        padding: 6px 28px 6px 10px;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: #0f2340;
+        appearance: none;
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b85a0' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 9px center;
+        transition: border-color 0.15s;
+      }
+
+      .filter-select:focus {
+        outline: none;
+        border-color: #0f2340;
+      }
+
+      .filter-meta {
+        margin-left: auto;
+        font-size: 0.8rem;
+        color: #6b85a0;
+        font-weight: 500;
+        align-self: flex-end;
+        padding-bottom: 1px;
+      }
+
+      /* ── Table ── */
+      .table-wrap {
+        background: #ffffff !important;
+        border: 1px solid #d5dce8 !important;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 8px;
+      }
+
+      table { width: 100%; border-collapse: collapse; }
+
+      th {
+        background: #e8eef6 !important;
+        color: #3b536e !important;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        padding: 11px 12px;
+        text-align: left;
+        border-bottom: 1px solid #d5dce8 !important;
+        white-space: nowrap;
+      }
+
+      td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #edf2f8 !important;
+        color: #3b536e !important;
+        font-size: 0.85rem;
+        vertical-align: middle;
+      }
+
+      tr:last-child td { border-bottom: 0 !important; }
+      tbody tr { transition: background 0.12s; }
+      tbody tr:hover td { background: #f4f7fb; }
+
+      td strong { color: #0f2340 !important; font-weight: 600; }
+      td small  { display: block; color: #6b85a0 !important; font-size: 0.76rem; margin-top: 1px; }
+
+      td.money { font-variant-numeric: tabular-nums; text-align: right; color: #0f2340 !important; font-weight: 600; }
+      th.money { text-align: right; }
+
+      td.cumulative { color: #1a3459 !important; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+
+      .badge-comp {
+        display: inline-block; padding: 2px 8px; border-radius: 999px;
+        font-size: 0.71rem; font-weight: 700;
+        background: #d1fae5; color: #065f46;
+      }
+
+      .badge-chargeable {
+        display: inline-block; padding: 2px 8px; border-radius: 999px;
+        font-size: 0.71rem; font-weight: 700;
+        background: #dbeafe; color: #1e40af;
+      }
+
+      /* ── Show more bar ── */
+      .show-more-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      /* ── Chart section ── */
+      .chart-section {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 16px;
+        padding: 20px 20px 16px;
+        margin-bottom: 20px;
+      }
+
+      .chart-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+
+      .chart-header h3 {
+        font-family: "Outfit", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #0f2340 !important;
+        margin: 0;
+      }
+
+      .chart-legend {
+        display: flex;
+        gap: 16px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #6b85a0;
+        align-items: center;
+      }
+
+      .legend-dot {
+        display: inline-block;
+        width: 12px;
+        height: 3px;
+        border-radius: 2px;
+        margin-right: 5px;
+        vertical-align: middle;
+      }
+
+      .legend-dot.curve  { background: #0f2340; height: 3px; }
+      .legend-dot.budget { background: #dc2626; height: 2px; border-top: 2px dashed #dc2626; background: transparent; }
+
+      #finance-chart {
+        display: block;
+        width: 100%;
+        height: 260px;
+      }
+
+      /* ── Action forms ── */
+      .actions-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+      }
+
+      .inline-form {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 14px;
+        padding: 18px 20px;
+        margin-bottom: 16px;
+        display: none;
+      }
+
+      .inline-form.open { display: block; }
+
+      .inline-form h4 {
+        font-family: "Outfit", sans-serif;
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: #0f2340 !important;
+        margin: 0 0 14px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .form-field label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: #6b85a0;
+      }
+
+      .form-field input,
+      .form-field select {
+        background: #f4f7fb;
+        border: 1px solid #d5dce8;
+        border-radius: 8px;
+        padding: 7px 10px;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.84rem;
+        font-weight: 500;
+        color: #0f2340;
+        transition: border-color 0.15s;
+      }
+
+      .form-field input:focus,
+      .form-field select:focus {
+        outline: none;
+        border-color: #0f2340;
+        background: #fff;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      /* ── Link pills ── */
+      .inline-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding-top: 4px;
+      }
+
+      .link-pill {
+        background: #ffffff !important;
+        border: 1px solid #d5dce8 !important;
+        color: #0f2340 !important;
+        font-weight: 600;
+        padding: 7px 14px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        text-decoration: none;
+        transition: background 0.13s, border-color 0.13s;
+      }
+
+      .link-pill:hover {
+        background: #e8eef6 !important;
+        border-color: #b0bfcf !important;
+      }
+
+      .button-danger {
+        background: #ffffff !important;
+        border-color: #fca5a5 !important;
+        color: #dc2626 !important;
+      }
+
+      .button-danger:hover {
+        background: #fef2f2 !important;
+        border-color: #dc2626 !important;
+      }
+
+      @media (max-width: 900px) {
+        .filter-bar { gap: 8px; }
+        .form-grid { grid-template-columns: 1fr 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+
+        <!-- Chrome bar -->
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <nav class="chrome-nav">
+            <a class="chrome-nav-link" href="admin-dashboard.html">Dashboard</a>
+            <a class="chrome-nav-link" href="notifications.html">Notifications</a>
+          </nav>
+        </div>
+
+        <div class="shell">
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Archived Revenue</strong>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="finances.html">Finances</a>
+              <a class="nav-link nav-link-sub" href="finances-tracker.html">Expenditure Tracker</a>
+              <a class="nav-link nav-link-sub" href="finances-archived.html" style="font-size: 0.8em !important; padding-left: 42px !important;">Archived Expenditure</a>
+              <a class="nav-link nav-link-sub" href="vat-reclamation.html" style="font-size: 0.8em !important; padding-left: 42px !important;">VAT Reclamation</a>
+              <a class="nav-link nav-link-sub" href="revenue.html">Revenue</a>
+              <a class="nav-link nav-link-sub active" href="archived-revenue.html" style="font-size: 0.8em !important; padding-left: 42px !important;">Archived Revenue</a>
+              <a class="nav-link nav-link-sub" href="student-funds.html">Student Held Funds</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <!-- Main content -->
+          <section class="main">
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Finance tracker</span>
+                <h2>Archived Revenue</h2>
+                <p>View archived incoming payments, deadlines, and brand revenue.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="finances.html">Back to Finances</a>
+              </div>
+            </div>
+
+            <div class="tracker-content">
+
+              <!-- Filter bar -->
+              <div class="filter-bar">
+                <div class="filter-group">
+                  <label for="f-month">Month</label>
+                  <select class="filter-select" id="f-month">
+                    <option value="">All</option>
+                    <option value="2025-09">Sep 2025</option>
+                    <option value="2025-10">Oct 2025</option>
+                    <option value="2025-11">Nov 2025</option>
+                    <option value="2025-12">Dec 2025</option>
+                    <option value="2026-01">Jan 2026</option>
+                    <option value="2026-02">Feb 2026</option>
+                    <option value="2026-03">Mar 2026</option>
+                    <option value="2026-04">Apr 2026</option>
+                  </select>
+                </div>
+                <div class="filter-group">
+                  <label for="f-student">Student</label>
+                  <select class="filter-select" id="f-student">
+                    <option value="">All</option>
+                  </select>
+                </div>
+                <div class="filter-group">
+                  <label for="f-type">Type</label>
+                  <select class="filter-select" id="f-type">
+                    <option value="">All</option>
+                    <option value="Complimentary">Complimentary</option>
+                    <option value="Chargeable">Chargeable</option>
+                  </select>
+                </div>
+                <span class="filter-meta" id="row-meta">— rows</span>
+              </div>
+
+              <!-- Table -->
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Date Of payment</th>
+                      <th>Deadline for Payment</th>
+                      <th>Item Label</th>
+                      <th>Student</th>
+                      <th>Brand</th>
+                      <th>Service Provider ID</th>
+                      <th class="money">Revenue</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="tracker-tbody"></tbody>
+                </table>
+              </div>
+
+              <!-- Show more -->
+              <div class="show-more-bar">
+                <span id="showing-label" style="font-size:0.8rem;color:#9bafc4;"></span>
+                <button class="button-sm button-alt" id="show-more-btn" style="display:none;">Show 50</button>
+              </div>
+
+              <!-- Action buttons -->
+              <div class="actions-row">
+                <button class="button-sm button" id="btn-add-event">+ Add Historical Service</button>
+              </div>
+
+              <!-- Add Historical Service form -->
+              <div class="inline-form" id="form-add-service">
+                <h4>Add Historical Service</h4>
+                <div class="form-grid">
+                  <div class="form-field">
+                    <label for="ne-date-payment">Date Of payment</label>
+                    <input type="date" id="ne-date-payment" />
+                  </div>
+                  <div class="form-field">
+                    <label for="ne-deadline">Deadline for Payment</label>
+                    <input type="date" id="ne-deadline" required />
+                  </div>
+                  <div class="form-field">
+                    <label for="ne-label">Service Label</label>
+                    <input type="text" id="ne-label" placeholder="e.g. Driver fee" required />
+                  </div>
+                  <div class="form-field">
+                    <label for="ne-student">Student</label>
+                    <select class="field-select" id="ne-student" required>
+                      <option value="">— Select student —</option>
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label for="ne-brand">Brand</label>
+                    <input type="text" id="ne-brand" placeholder="e.g. Oxford Guardians" required />
+                  </div>
+                  <div class="form-field">
+                    <label for="ne-provider">Service Provider ID</label>
+                    <select class="field-select" id="ne-provider" required>
+                      <option value="">— Select provider —</option>
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label for="ne-revenue">Revenue (£)</label>
+                    <input type="number" id="ne-revenue" placeholder="0.00" min="0" step="0.01" required />
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button class="button-sm button" id="ne-save">Save service</button>
+                  <button class="button-sm button-alt" id="ne-cancel">Cancel</button>
+                </div>
+              </div>
+
+              <!-- Edit Service form -->
+              <div class="inline-form" id="form-edit-event">
+                <h4>Edit Service</h4>
+                <div class="form-grid">
+                  <div class="form-field">
+                    <label for="ee-event">Event</label>
+                    <input type="text" id="ee-event" placeholder="e.g. Airport Transfer" />
+                  </div>
+                  <div class="form-field">
+                    <label for="ee-date">Date</label>
+                    <input type="date" id="ee-date" />
+                  </div>
+                  <div class="form-field">
+                    <label for="ee-label">Item Label</label>
+                    <input type="text" id="ee-label" placeholder="e.g. Driver fee" />
+                  </div>
+                  <div class="form-field">
+                    <label for="ee-cost">Item Cost (£)</label>
+                    <input type="number" id="ee-cost" placeholder="0.00" min="0" step="0.01" />
+                  </div>
+                  <div class="form-field">
+                    <label for="ee-academic-year">Academic Year</label>
+                    <input type="text" id="ee-academic-year" placeholder="e.g. 2025/2026" />
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button class="button-sm button" id="ee-save">Save Changes</button>
+                  <button class="button-sm button-danger" id="ee-unarchive">Unarchive Service</button>
+                  <button class="button-sm button-alt" id="ee-cancel">Cancel</button>
+                </div>
+              </div>
+
+              <!-- Link pills -->
+              <div class="inline-links">
+                <a class="link-pill" href="revenue.html">Back to Revenue</a>
+                <a class="link-pill" href="finances.html">Back to Finances</a>
+                <a class="link-pill" href="admin-dashboard.html">Back to dashboard</a>
+                <a class="link-pill" href="compliance.html">AEGIS control room</a>
+              </div>
+
+            </div><!-- /tracker-content -->
+
+          </section>
+        </div><!-- /shell -->
+      </div><!-- /app-frame -->
+    </main>
+
+    <script src="assets/finance-data.js"></script>
+    <script src="assets/db.js"></script>
+    <script>
+      /* ─────────────────────────────────────────────
+         State — reads archived entries from revenue store
+      ───────────────────────────────────────────── */
+      var storedEvents = localStorage.getItem('og_revenue_events');
+      var events;
+      if (storedEvents) {
+        events = JSON.parse(storedEvents);
+      } else {
+        events = [];
+      }
+
+      var rowLimit = 20;
+      var editingIndex = -1;
+
+      /* ─────────────────────────────────────────────
+         Helpers
+      ───────────────────────────────────────────── */
+      function fmt(n) {
+        return '£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      function fmtDateDisplay(iso) {
+        if (!iso) return '';
+        var parts = iso.split('-');
+        if (parts.length < 3) return iso;
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return parseInt(parts[2], 10) + ' ' + months[parseInt(parts[1], 10) - 1] + ' ' + parts[0];
+      }
+
+      function isoMonth(iso) {
+        if (!iso) return '';
+        return iso.slice(0, 7);
+      }
+
+      /* ─────────────────────────────────────────────
+         Populate student filter
+      ───────────────────────────────────────────── */
+      function populateStudentFilter() {
+        var sel = document.getElementById('f-student');
+        var names = {};
+        events.forEach(function (e) { if (e.student && e.archived) names[e.student] = true; });
+        Object.keys(names).sort().forEach(function (name) {
+          var opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          sel.appendChild(opt);
+        });
+      }
+
+      /* ─────────────────────────────────────────────
+         Render table — shows only archived entries
+      ───────────────────────────────────────────── */
+      function buildRows() {
+        events.forEach(function (row, i) { row._evIdx = i; });
+        return events.filter(function (row) { return row.archived === true; }).sort(function (a, b) {
+          return (a.date || '').localeCompare(b.date || '');
+        });
+      }
+
+      function renderTable() {
+        var allRows = buildRows();
+
+        var monthVal   = document.getElementById('f-month').value;
+        var studentVal = document.getElementById('f-student').value;
+        var typeVal    = document.getElementById('f-type').value;
+
+        var filtered = allRows.filter(function (row) {
+          if (monthVal   && isoMonth(row.date)   !== monthVal)   return false;
+          if (studentVal && row.student           !== studentVal) return false;
+          if (typeVal    && row.type              !== typeVal)    return false;
+          return true;
+        });
+
+        document.getElementById('row-meta').textContent = filtered.length + ' row' + (filtered.length !== 1 ? 's' : '');
+
+        var visible = filtered.slice(0, rowLimit);
+        var tbody   = document.getElementById('tracker-tbody');
+
+        if (!filtered.length) {
+          tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:28px;color:#9bafc4;font-size:0.84rem;">No archived revenue entries found.</td></tr>';
+          document.getElementById('showing-label').textContent = '';
+          document.getElementById('show-more-btn').style.display = 'none';
+          return;
+        }
+
+        tbody.innerHTML = visible.map(function (row) {
+          return '<tr>' +
+            '<td>' + fmtDateDisplay(row.datePayment) + '</td>' +
+            '<td>' + fmtDateDisplay(row.date) + '</td>' +
+            '<td>' + (row.label || '—') + '</td>' +
+            '<td>' + (row.student || '—') + '</td>' +
+            '<td>' + (row.brand || '—') + '</td>' +
+            '<td>' + (row.providerId || '—') + '</td>' +
+            '<td class="money">' + fmt(row.cost || 0) + '</td>' +
+            '<td style="text-align:right;white-space:nowrap;">' +
+              '<button class="button-sm button-alt" data-idx="' + row._evIdx + '" style="padding:3px 10px;font-size:0.75rem;">Edit</button>' +
+            '</td>' +
+          '</tr>';
+        }).join('');
+
+        var showMoreBtn = document.getElementById('show-more-btn');
+        document.getElementById('showing-label').textContent =
+          'Showing ' + Math.min(rowLimit, filtered.length) + ' of ' + filtered.length + ' rows';
+
+        if (filtered.length > rowLimit && rowLimit < 50) {
+          showMoreBtn.style.display = 'inline-block';
+          showMoreBtn.textContent   = 'Show 50';
+        } else {
+          showMoreBtn.style.display = 'none';
+        }
+      }
+
+      /* ─────────────────────────────────────────────
+         Show more
+      ───────────────────────────────────────────── */
+      document.getElementById('show-more-btn').addEventListener('click', function () {
+        rowLimit = 50;
+        renderTable();
+      });
+
+      /* ─────────────────────────────────────────────
+         Filter listeners
+      ───────────────────────────────────────────── */
+      ['f-month', 'f-student', 'f-type'].forEach(function (id) {
+        document.getElementById(id).addEventListener('change', function () {
+          rowLimit = 20;
+          renderTable();
+        });
+      });
+
+      /* ─────────────────────────────────────────────
+         Edit row — button delegation
+      ───────────────────────────────────────────── */
+      document.getElementById('tracker-tbody').addEventListener('click', function (e) {
+        var btn = e.target.closest('button[data-idx]');
+        if (!btn) return;
+        editingIndex = parseInt(btn.getAttribute('data-idx'), 10);
+        var row = events[editingIndex];
+        document.getElementById('ee-event').value         = row.event        || '';
+        document.getElementById('ee-date').value          = row.date         || '';
+        document.getElementById('ee-label').value         = row.label || row.item || '';
+        document.getElementById('ee-cost').value          = row.cost         != null ? row.cost : '';
+        document.getElementById('ee-academic-year').value = row.academicYear || '';
+        var form = document.getElementById('form-edit-event');
+        form.classList.add('open');
+        document.getElementById('form-add-service').classList.remove('open');
+        form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+
+      document.getElementById('ee-cancel').addEventListener('click', function () {
+        document.getElementById('form-edit-event').classList.remove('open');
+        editingIndex = -1;
+      });
+
+      document.getElementById('ee-save').addEventListener('click', function () {
+        if (editingIndex < 0) return;
+        var row = events[editingIndex];
+        row.event        = document.getElementById('ee-event').value.trim();
+        row.date         = document.getElementById('ee-date').value;
+        row.label        = document.getElementById('ee-label').value.trim();
+        row.cost         = parseFloat(document.getElementById('ee-cost').value) || 0;
+        row.academicYear = document.getElementById('ee-academic-year').value.trim();
+        localStorage.setItem('og_revenue_events', JSON.stringify(events));
+        document.getElementById('form-edit-event').classList.remove('open');
+        editingIndex = -1;
+        renderTable();
+      });
+
+      document.getElementById('ee-unarchive').addEventListener('click', function () {
+        if (editingIndex < 0) return;
+        events[editingIndex].archived = false;
+        localStorage.setItem('og_revenue_events', JSON.stringify(events));
+        document.getElementById('form-edit-event').classList.remove('open');
+        editingIndex = -1;
+        renderTable();
+      });
+
+      document.getElementById('btn-add-event').addEventListener('click', function () {
+        document.getElementById('form-add-service').classList.toggle('open');
+        document.getElementById('form-edit-event').classList.remove('open');
+      });
+
+      document.getElementById('ne-cancel').addEventListener('click', function () {
+        document.getElementById('form-add-service').classList.remove('open');
+      });
+
+      document.getElementById('ne-save').addEventListener('click', function () {
+        var datePaymentVal = document.getElementById('ne-date-payment').value;
+        var deadlineVal    = document.getElementById('ne-deadline').value;
+        var labelVal       = document.getElementById('ne-label').value.trim();
+        var studentVal     = document.getElementById('ne-student').value;
+        var brandVal       = document.getElementById('ne-brand').value.trim();
+        var providerVal    = document.getElementById('ne-provider').value;
+        var revenueVal     = parseFloat(document.getElementById('ne-revenue').value) || 0;
+
+        if (!deadlineVal || !labelVal || !studentVal || !brandVal || !providerVal) {
+          alert('Please fill in all required fields.');
+          return;
+        }
+
+        events.push({ datePayment: datePaymentVal, date: deadlineVal, label: labelVal, student: studentVal, brand: brandVal, providerId: providerVal, cost: revenueVal, archived: true });
+        localStorage.setItem('og_revenue_events', JSON.stringify(events));
+
+        ['ne-date-payment','ne-deadline','ne-label','ne-student','ne-brand','ne-provider','ne-revenue'].forEach(function (id) {
+          document.getElementById(id).value = '';
+        });
+        document.getElementById('form-add-service').classList.remove('open');
+
+        populateStudentFilter();
+        rowLimit = 20;
+        renderTable();
+      });
+
+      /* ─────────────────────────────────────────────
+         Populate Add form dropdowns
+      ───────────────────────────────────────────── */
+      function populateAddEventDropdowns() {
+        var studentSel = document.getElementById('ne-student');
+        studentSel.innerHTML = '<option value="">— Select student —</option>';
+        var naOpt = document.createElement('option');
+        naOpt.value = 'N/A'; naOpt.textContent = 'N/A';
+        studentSel.appendChild(naOpt);
+        OG_DB.getAllStudents().forEach(function (s) {
+          var opt = document.createElement('option');
+          opt.value = opt.textContent = s.firstName + ' ' + s.lastName + ' (' + s.id + ')';
+          studentSel.appendChild(opt);
+        });
+
+        var providerSel = document.getElementById('ne-provider');
+        providerSel.innerHTML = '<option value="">— Select provider —</option>';
+        var provNaOpt = document.createElement('option');
+        provNaOpt.value = 'N/A'; provNaOpt.textContent = 'N/A';
+        providerSel.appendChild(provNaOpt);
+        OG_DB.getAllHosts().concat(OG_DB.getAllDrivers()).forEach(function (p) {
+          var opt = document.createElement('option');
+          opt.value = opt.textContent = p.firstName + ' ' + p.lastName + ' (' + p.id + ')';
+          providerSel.appendChild(opt);
+        });
+      }
+
+      /* ─────────────────────────────────────────────
+         Init
+      ───────────────────────────────────────────── */
+      populateAddEventDropdowns();
+      populateStudentFilter();
+      renderTable();
+    </script>
+
+  </body>
+</html>

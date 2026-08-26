@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Driver Compliance — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    body { background: #f0f4f8 !important; color: #0f2340 !important; }
+    .app-frame { background: #f8fafc !important; border-color: #d5dce8 !important; box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important; }
+    .chrome { background: #e8eef6 !important; border-bottom-color: #d5dce8 !important; }
+    .chrome small { color: #3b536e !important; }
+    .dots span { background: #7b9abf !important; }
+    .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important; }
+    .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+    .brand small  { color: #7fb3d3 !important; }
+    .brand strong { color: #e8f0fa !important; }
+    .nav-label { color: #7b9abf !important; }
+    .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+    .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+    .nav-link.active { background: rgba(255,255,255,0.1) !important; border-color: rgba(255,255,255,0.14) !important; color: #e8f0fa !important; }
+    .main { background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important; }
+    h2, h3, h4 { color: #0f2340 !important; }
+    .eyebrow { color: #2a6096 !important; }
+    .button { background: #0f2340 !important; border-color: #0f2340 !important; color: #ffffff !important; }
+    .button:hover { opacity: 0.88; }
+    .button-alt { background: #ffffff !important; border-color: #d5dce8 !important; color: #0f2340 !important; }
+    .button-alt:hover { background: #edf2f8 !important; }
+
+    .driver-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, #0f2340 0%, #1a3459 100%);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 18px; font-weight: 700;
+      color: #e8f0fa; font-family: 'Outfit', sans-serif;
+      letter-spacing: 0.02em; border: 2px solid #d5dce8;
+    }
+
+    .compliance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .compliance-grid .card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+    .card { background: #ffffff !important; border-color: #d5dce8 !important; }
+    .card h4 { color: #0f2340 !important; }
+
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .card-title { font-family: "Outfit", sans-serif; font-size: 0.95rem; font-weight: 700; color: #0f2340; margin: 0; }
+
+    .check-list { display: grid; gap: 6px; margin-bottom: 16px; }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 0.86rem; color: #3b536e; }
+    .check-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .check-dot.ok   { background: #235842; }
+    .check-dot.miss { background: #7f3034; }
+    .check-dot.na   { background: #9bafc4; }
+
+    .not-found { padding: 60px 32px; text-align: center; color: #3b536e; }
+    .not-found h3 { margin-bottom: 10px; }
+
+    @media (max-width: 640px) {
+      .compliance-grid { grid-template-columns: 1fr; }
+      .compliance-grid .card:last-child:nth-child(odd) { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<main class="page">
+  <div class="app-frame">
+
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small id="chrome-route">Route /admin/drivers/compliance</small>
+    </div>
+
+    <div class="shell">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong>Drivers</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Overview</div>
+          <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+          <a class="nav-link" href="notifications.html">Notifications</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Operations</div>
+          <a class="nav-link" href="students.html">Students</a>
+          <a class="nav-link" href="homestays.html">Homestays</a>
+          <a class="nav-link" href="travel.html">Travel</a>
+          <a class="nav-link active" href="drivers.html">Drivers</a>
+          <a class="nav-link" href="documents.html">Documents</a>
+
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Compliance</div>
+          <a class="nav-link" href="compliance.html">AEGIS control room</a>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <section class="main" id="main-content">
+
+        <div class="toolbar">
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div class="driver-avatar" id="driver-avatar">—</div>
+            <div>
+              <span class="eyebrow">Compliance &amp; SCR</span>
+              <h2 id="driver-name" style="margin:2px 0 4px;">Loading…</h2>
+              <p id="driver-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">—</p>
+            </div>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" id="back-link" href="drivers.html">Back to Profile</a>
+          </div>
+        </div>
+
+        <div id="not-found" class="not-found" style="display:none;">
+          <h3>Driver not found</h3>
+          <p><a href="drivers.html" style="color:#1a4080;font-weight:600;">Return to Drivers</a></p>
+        </div>
+
+        <div id="compliance-panel" class="compliance-grid"></div>
+
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="assets/db.js"></script>
+<script>
+  var params   = new URLSearchParams(window.location.search);
+  var driverId = params.get('id');
+  var driver   = driverId ? getDriverById(driverId) : null;
+
+  if (!driver) {
+    document.getElementById('not-found').style.display       = 'block';
+    document.getElementById('compliance-panel').style.display = 'none';
+  } else {
+    var c = driver.compliance || {};
+
+    document.title = driver.firstName + ' ' + driver.lastName + ' — Compliance — Oxford Guardians';
+    document.getElementById('chrome-route').textContent = 'Route /admin/drivers/' + driver.id + '/compliance';
+
+    function initials(f, l) { return ((f||'').charAt(0) + (l||'').charAt(0)).toUpperCase(); }
+    document.getElementById('driver-avatar').textContent = initials(driver.firstName, driver.lastName);
+    document.getElementById('driver-name').textContent   = driver.firstName + ' ' + driver.lastName;
+    document.getElementById('driver-subtitle').textContent = (driver.carMake ? driver.carMake + ' ' + (driver.carModel || '') : '—');
+    document.getElementById('back-link').href = 'drivers.html?id=' + driver.id;
+
+    // ── Badge HTML ──────────────────────────────────────────────────────────────
+    function badgeHtml(label, cls) {
+      return '<span class="badge ' + cls + '" style="font-size:0.74rem;">' + label + '</span>';
+    }
+    function statusBadge(status) {
+      if (status === 'complete') return badgeHtml('Complete', 'green');
+      if (status === 'exempt')   return badgeHtml('Exempt',   'navy');
+      if (status === 'expired')  return badgeHtml('Expired',  'red');
+      return badgeHtml('Incomplete', 'amber');
+    }
+
+    // ── Check-item row ──────────────────────────────────────────────────────────
+    function checkItem(label, state) {
+      return '<div class="check-item"><div class="check-dot ' + state + '"></div><span>' + label + '</span></div>';
+    }
+    function ok(label)   { return checkItem(label, 'ok'); }
+    function miss(label) { return checkItem(label, 'miss'); }
+    function na(label)   { return checkItem(label, 'na'); }
+    function rowFor(label, value) { return value ? ok(label) : miss(label); }
+
+    // ── Card builder ────────────────────────────────────────────────────────────
+    function card(title, status, rows, href) {
+      return '<div class="card">' +
+        '<div class="card-header">' +
+          '<h4 class="card-title">' + title + '</h4>' +
+          statusBadge(status) +
+        '</div>' +
+        '<div class="check-list">' + rows.join('') + '</div>' +
+        '<a class="button" href="' + href + '" style="display:inline-block;text-decoration:none;font-size:0.84rem;padding:8px 16px;">Manage Record</a>' +
+      '</div>';
+    }
+
+    // ── 1. Identity & Right to Work ─────────────────────────────────────────────
+    var identityStatus;
+    if (c.isCitizen) {
+      identityStatus = c.idDocumentPath ? 'complete' : 'incomplete';
+    } else {
+      identityStatus = (c.idDocumentPath && c.rightToWorkCheckPath && c.rightToWorkExpiry) ? 'complete' : 'incomplete';
+    }
+    var identityRows = [rowFor('ID document', c.idDocumentPath)];
+    if (c.isCitizen) {
+      identityRows.push(na('Right to work check (British/Irish citizen — exempt)'));
+    } else {
+      identityRows.push(rowFor('Right to work document', c.rightToWorkCheckPath));
+      identityRows.push(rowFor('RTW expiry date', c.rightToWorkExpiry));
+    }
+    identityRows.push(ok('UK/Irish citizen: ' + (c.isCitizen ? 'Yes' : 'No')));
+
+    // ── 2. DBS Check ────────────────────────────────────────────────────────────
+    var dbsStatus = (c.dbsNumber && c.dbsCertificatePath) ? 'complete' : 'incomplete';
+    var dbsRows = [
+      rowFor('DBS number', c.dbsNumber),
+      rowFor('DBS certificate', c.dbsCertificatePath),
+      rowFor('Last checked date', c.dbsLastChecked),
+      rowFor('Expiry date', c.dbsExpiry),
+      ok('Update service: ' + (c.dbsUpdateService ? 'Subscribed' : 'Not subscribed'))
+    ];
+
+    // ── 3. References ───────────────────────────────────────────────────────────
+    var refStatus = (c.reference1Path && c.reference2Path) ? 'complete' : 'incomplete';
+    var refRows = [
+      rowFor('Reference 1', c.reference1Path),
+      rowFor('Reference 2', c.reference2Path)
+    ];
+
+    // ── 4. Overseas History ─────────────────────────────────────────────────────
+    var overseasStatus, overseasRows;
+    if (!c.livedAbroad) {
+      overseasStatus = 'exempt';
+      overseasRows   = [na('Overseas check not required — has not lived abroad (last 5 yrs)')];
+    } else {
+      overseasStatus = c.overseasCheckDocPath ? 'complete' : 'incomplete';
+      overseasRows   = [
+        ok('Has lived abroad in last 5 years'),
+        rowFor('Overseas check document', c.overseasCheckDocPath)
+      ];
+    }
+
+    // ── 5. Safeguarding Training (AEGIS 6.3 — 3-year statutory expiry) ─────────
+    function fmtSgDate(d) {
+      if (!d) return '—';
+      var p = new Date(d);
+      if (isNaN(p.getTime())) return d;
+      var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return p.getDate() + ' ' + M[p.getMonth()] + ' ' + p.getFullYear();
+    }
+    var sgExpired = !!(c.safeguardingTrainingExpiry && new Date(c.safeguardingTrainingExpiry) < new Date());
+    var sgStatus;
+    if (sgExpired) {
+      sgStatus = 'expired';
+    } else {
+      sgStatus = (c.safeguardingLevel && c.safeguardingTrainingDate && c.safeguardingTrainingExpiry && c.safeguardingCertificatePath) ? 'complete' : 'incomplete';
+    }
+    var sgRows = [
+      rowFor('Training level: ' + (c.safeguardingLevel || 'Not recorded'), c.safeguardingLevel),
+      rowFor('Training date: ' + fmtSgDate(c.safeguardingTrainingDate), c.safeguardingTrainingDate),
+      sgExpired
+        ? miss('Expiry date: ' + fmtSgDate(c.safeguardingTrainingExpiry) + ' — EXPIRED, renewal required')
+        : rowFor('Expiry date: ' + fmtSgDate(c.safeguardingTrainingExpiry), c.safeguardingTrainingExpiry),
+      rowFor('Certificate file: ' + (c.safeguardingCertificatePath || 'Not uploaded'), c.safeguardingCertificatePath)
+    ];
+
+    // ── Render ──────────────────────────────────────────────────────────────────
+    var panel = document.getElementById('compliance-panel');
+    panel.innerHTML =
+      card('Identity &amp; Right to Work', identityStatus, identityRows, 'driver-compliance-identity.html?id='     + driver.id) +
+      card('DBS Check',                    dbsStatus,       dbsRows,      'driver-compliance-dbs.html?id='          + driver.id) +
+      card('References',                   refStatus,       refRows,      'driver-compliance-references.html?id='   + driver.id) +
+      card('Overseas History',             overseasStatus,  overseasRows, 'driver-compliance-overseas.html?id='     + driver.id) +
+      card('Safeguarding Training',        sgStatus,        sgRows,       'driver-compliance-safeguarding.html?id=' + driver.id);
+  }
+</script>
+
+</body>
+</html>

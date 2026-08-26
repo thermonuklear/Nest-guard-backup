@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drivers Directory — Oxford Guardians</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    body {
+      background: #f0f4f8 !important;
+      color: #0f2340 !important;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      background: #ffffff;
+      border-bottom: 1px solid #d5dce8;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      gap: 24px;
+    }
+
+    .topbar-brand {
+      font-family: "Outfit", sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #0f2340;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-left: auto;
+    }
+
+    .topbar-nav a {
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #3b536e;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .topbar-nav a:hover {
+      background: #e8eef6;
+      color: #0f2340;
+    }
+
+    .topbar-nav a.active {
+      background: #0f2340;
+      color: #ffffff;
+    }
+
+    /* ── Content wrapper ── */
+    .content {
+      max-width: 1200px;
+      margin: 36px auto;
+      padding: 0 32px;
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      margin-bottom: 28px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .page-header h1 {
+      font-family: "Outfit", sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0f2340;
+      letter-spacing: -0.03em;
+    }
+
+    .page-header p {
+      color: #3b536e;
+      margin-top: 6px;
+      font-size: 0.95rem;
+    }
+
+    .toolbar-actions { display: flex; gap: 10px; align-items: center; }
+
+    /* ── Buttons ── */
+    .button {
+      background: #0f2340 !important;
+      color: #ffffff !important;
+      border-color: #0f2340 !important;
+    }
+
+    .button-alt {
+      background: #ffffff !important;
+      border-color: #d5dce8 !important;
+      color: #0f2340 !important;
+    }
+
+    /* ── Filter row ── */
+    .filter-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .filter-row .field {
+      background: #ffffff;
+      border: 1px solid #d5dce8;
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+
+    .filter-row .field small {
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b85a0;
+      font-size: 0.72rem;
+      margin-bottom: 4px;
+    }
+
+    .filter-input,
+    .filter-select {
+      width: 100%;
+      margin-top: 2px;
+      padding: 6px 0;
+      border: none;
+      border-bottom: 1px solid #d5dce8;
+      background: transparent;
+      color: #0f2340;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .filter-input::placeholder { color: #9bafc4; font-weight: 400; }
+    .filter-input:focus,
+    .filter-select:focus { border-bottom-color: #0f2340; }
+    .filter-select { appearance: none; cursor: pointer; }
+
+    /* ── Table ── */
+    h2, h3, h4, td strong, th { color: #0f2340 !important; }
+    td small { color: #3b536e !important; }
+
+    .table-wrap {
+      background: #ffffff;
+      border: 1px solid #d5dce8;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    th {
+      background: #e8eef6 !important;
+      color: #3b536e !important;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 13px 16px;
+      text-align: left;
+      border-bottom: 1px solid #d5dce8;
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #e8eef6;
+      vertical-align: top;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    /* ── Row hover ── */
+    tbody tr { transition: background 0.12s; }
+    tbody tr:hover td { background: #f4f7fb; }
+
+    /* ── Name link ── */
+    .driver-name-link {
+      color: #0f2340;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .driver-name-link:hover {
+      color: #2a6096;
+      text-decoration: underline;
+    }
+
+    /* ── Avatar initials ── */
+    .driver-avatar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0f2340 0%, #1a3459 100%);
+      color: #e8f0fa;
+      font-family: "Outfit", sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      border: 2px solid #d5dce8;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    .name-cell {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .name-cell-text small {
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* ── Result count ── */
+    .result-count {
+      font-size: 0.82rem;
+      color: #6b85a0;
+      margin-bottom: 10px;
+    }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 40px 24px;
+      color: #6b85a0;
+      font-size: 0.9rem;
+    }
+
+    /* ── Inline link pills ── */
+    .inline-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .link-pill {
+      background: #ffffff;
+      border: 1px solid #d5dce8;
+      color: #0f2340 !important;
+      font-weight: 600;
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .link-pill:hover {
+      background: #e8eef6;
+      border-color: #b0bfcf;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 760px) {
+      .topbar { padding: 0 18px; height: auto; flex-wrap: wrap; padding-top: 12px; padding-bottom: 12px; }
+      .content { padding: 0 18px; margin-top: 24px; }
+      .filter-row { grid-template-columns: 1fr 1fr; }
+      .page-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="topbar">
+    <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+    <div class="topbar-nav">
+      <a href="admin-dashboard.html">Dashboard</a>
+      <a href="notifications.html">Notifications</a>
+      <a href="travel.html" style="font-size: 1.1em;">Travel</a>
+      <a class="active" href="driver-list.html">Drivers</a>
+      <a href="compliance.html">Compliance</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="content">
+
+    <div class="page-header">
+      <div>
+        <h1>Drivers Directory</h1>
+        <p>All partner drivers — vehicle, DBS status, and rates at a glance. Click a name to open the full profile.</p>
+      </div>
+      <div class="toolbar-actions">
+        <a class="button" href="driver-create.html">Create driver</a>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-row">
+      <div class="field">
+        <small>Search</small>
+        <input class="filter-input" type="text" id="search-input" placeholder="Search name or car…" autocomplete="off" />
+      </div>
+      <div class="field">
+        <small>DBS Status</small>
+        <select class="filter-select" id="dbs-filter">
+          <option value="">All</option>
+          <option value="clear">Clear</option>
+          <option value="amber">Action Required</option>
+          <option value="expired">Expired</option>
+        </select>
+      </div>
+      <div class="field">
+        <small>Sort by</small>
+        <select class="filter-select" id="sort-select">
+          <option value="name-asc">Name A → Z</option>
+          <option value="name-desc">Name Z → A</option>
+          <option value="rate-asc">Rate low → high</option>
+          <option value="rate-desc">Rate high → low</option>
+          <option value="punctuality-desc">Punctuality high → low</option>
+        </select>
+      </div>
+      <div class="field">
+        <small>Showing</small>
+        <strong id="result-label" style="font-size:0.9rem;font-weight:700;color:#0f2340;display:block;margin-top:6px;">— drivers</strong>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Driver</th>
+            <th>Vehicle</th>
+            <th>Location</th>
+            <th>Rate</th>
+            <th>Punctuality</th>
+            <th>DBS Status</th>
+          </tr>
+        </thead>
+        <tbody id="driver-table-body"></tbody>
+      </table>
+    </div>
+
+    <div class="inline-links">
+      <a class="link-pill" href="driver-create.html">+ Add new driver</a>
+      <a class="link-pill" href="travel.html">Travel records</a>
+      <a class="link-pill" href="admin-dashboard.html">Back to dashboard</a>
+    </div>
+
+  </div>
+
+  <script src="assets/db.js"></script>
+  <script>
+    var searchInput = document.getElementById('search-input');
+    var dbsFilter   = document.getElementById('dbs-filter');
+    var sortSelect  = document.getElementById('sort-select');
+    var resultLabel = document.getElementById('result-label');
+
+    // ── Helpers ────────────────────────────────────────────────────────────────
+    function initials(first, last) {
+      return ((first || '').charAt(0) + (last || '').charAt(0)).toUpperCase();
+    }
+
+    function dbsBadgeClass(status) {
+      var map = { clear: 'green', amber: 'amber', expired: 'red' };
+      return map[status] || 'grey';
+    }
+
+    function dbsBadgeLabel(status) {
+      var map = { clear: 'DBS Clear', amber: 'Action Required', expired: 'Expired' };
+      return map[status] || 'Unknown';
+    }
+
+    function parseRate(rateStr) {
+      // Extracts a float from strings like "£0.55" or "£0.55 / mile"
+      if (!rateStr) return 0;
+      var match = rateStr.replace(/[^0-9.]/g, '');
+      return parseFloat(match) || 0;
+    }
+
+    // ── Render ─────────────────────────────────────────────────────────────────
+    function renderTable(data) {
+      var tbody = document.getElementById('driver-table-body');
+      resultLabel.textContent = data.length + ' driver' + (data.length !== 1 ? 's' : '');
+
+      if (!data.length) {
+        tbody.innerHTML =
+          '<tr><td colspan="6" class="empty-state">No drivers match the current filters.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = data.map(function (d) {
+        var fullName    = d.firstName + ' ' + d.lastName;
+        var avatarText  = initials(d.firstName, d.lastName);
+        var vehicle     = [d.carMake, d.carModel].filter(Boolean).join(' ') || '—';
+        var regDisplay  = d.regNumber ? '<small>' + d.regNumber + '</small>' : '';
+        var address     = d.address || '—';
+        // Show only city/area: everything after the first comma
+        var addressParts = address.split(',');
+        var city = addressParts.length > 1 ? addressParts.slice(1).join(',').trim() : address;
+        var rateDisplay = d.ratePerMile || '—';
+        var pct         = (d.punctualityPct != null) ? d.punctualityPct : '—';
+        var pctStr      = pct !== '—' ? pct + '%' : '—';
+        var badgeClass  = dbsBadgeClass(d.dbsStatus);
+        var badgeLabel  = dbsBadgeLabel(d.dbsStatus);
+
+        return '<tr>' +
+          // Driver name + avatar
+          '<td>' +
+            '<div class="name-cell">' +
+              '<span class="driver-avatar">' + avatarText + '</span>' +
+              '<div class="name-cell-text">' +
+                '<strong>' +
+                  '<a class="driver-name-link" href="drivers.html?id=' + d.id + '">' + fullName + '</a>' +
+                '</strong>' +
+                '<small>' + (d.mobile || d.email || '—') + '</small>' +
+              '</div>' +
+            '</div>' +
+          '</td>' +
+          // Vehicle
+          '<td><strong>' + vehicle + '</strong>' + regDisplay + '</td>' +
+          // Location
+          '<td>' +
+            '<strong>' + (addressParts[0] || address) + '</strong>' +
+            '<small>' + city + '</small>' +
+          '</td>' +
+          // Rate
+          '<td><strong>' + rateDisplay + ' / mile</strong>' +
+            (d.waitingRate ? '<small>' + d.waitingRate + '</small>' : '') +
+          '</td>' +
+          // Punctuality
+          '<td><strong>' + pctStr + '</strong>' +
+            (d.lateIncidents ? '<small>' + d.lateIncidents + '</small>' : '') +
+          '</td>' +
+          // DBS badge
+          '<td><span class="badge ' + badgeClass + '">' + badgeLabel + '</span>' +
+            (d.dbsRenewalDue ? '<small>Renewal: ' + d.dbsRenewalDue + '</small>' : '') +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    // ── Filter & sort ──────────────────────────────────────────────────────────
+    function applyFilters() {
+      var search = searchInput.value.trim().toLowerCase();
+      var dbs    = dbsFilter.value;
+      var sort   = sortSelect.value;
+
+      var data = getAllDrivers().filter(function (d) {
+        var searchable = [
+          d.firstName, d.lastName, d.carMake, d.carModel,
+          d.regNumber, d.address, d.preferredAirports, d.availability
+        ].join(' ').toLowerCase();
+
+        var matchSearch = !search || searchable.includes(search);
+        var matchDbs    = !dbs    || d.dbsStatus === dbs;
+
+        return matchSearch && matchDbs;
+      });
+
+      // Sort
+      data.sort(function (a, b) {
+        if (sort === 'name-asc')  return (a.firstName + a.lastName).localeCompare(b.firstName + b.lastName);
+        if (sort === 'name-desc') return (b.firstName + b.lastName).localeCompare(a.firstName + a.lastName);
+        if (sort === 'rate-asc')  return parseRate(a.ratePerMile) - parseRate(b.ratePerMile);
+        if (sort === 'rate-desc') return parseRate(b.ratePerMile) - parseRate(a.ratePerMile);
+        if (sort === 'punctuality-desc') return (b.punctualityPct || 0) - (a.punctualityPct || 0);
+        return 0;
+      });
+
+      renderTable(data);
+    }
+
+    searchInput.addEventListener('input',  applyFilters);
+    dbsFilter.addEventListener('change',   applyFilters);
+    sortSelect.addEventListener('change',  applyFilters);
+
+    // Initial render
+    applyFilters();
+  </script>
+
+</body>
+</html>

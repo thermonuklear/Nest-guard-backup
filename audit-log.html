@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audit Trail — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/compliance/audit</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Audit Trail</strong></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a><a class="nav-link" href="private-fostering.html">Private fostering</a><a class="nav-link" href="scr-dashboard.html">SCR Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="scr-staff.html" style="color: #63768b; text-decoration: none;">• Staff SCR</a><a href="scr-hosts.html" style="color: #63768b; text-decoration: none;">• Host SCR</a><a href="scr-drivers.html" style="color: #63768b; text-decoration: none;">• Driver SCR</a></div><a class="nav-link active" href="audit-log.html">Audit trail</a><a class="nav-link" href="reporting-dashboard.html">Reporting</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">System audit trail</span>
+                <h2>Who changed what, when. No exceptions.</h2>
+                <p>Every significant action is logged with timestamp, user, and before/after state. This is your evidence that records weren't tampered with and processes were followed.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button-alt" href="compliance.html">Back to compliance</a><a class="button" href="#">Export audit log</a></div>
+            </div>
+            <div class="metrics">
+              <article class="metric featured"><h4>Audit entries (30 days)</h4><div class="metric-value">847</div><p class="metric-meta">Average 28 entries per day</p></article>
+              <article class="metric"><h4>Users active</h4><div class="metric-value">6</div><p class="metric-meta">Distinct users with logged actions</p></article>
+              <article class="metric"><h4>High-sensitivity actions</h4><div class="metric-value">12</div><p class="metric-meta">Safeguarding, DBS, or compliance changes</p></article>
+              <article class="metric"><h4>Retention period</h4><div class="metric-value">7 years</div><p class="metric-meta">Per AEGIS/GDPR retention policy</p></article>
+            </div>
+            <div class="card" style="margin-bottom:24px;">
+              <h4>Filter audit log</h4>
+              <div class="form-grid">
+                <div>
+                  <label>Date range</label>
+                  <input type="text" value="01 Apr 2026 — 19 Apr 2026" />
+                </div>
+                <div>
+                  <label>User</label>
+                  <select>
+                    <option>All users</option>
+                    <option>Jay Ray</option>
+                    <option selected>Zuko Fire</option>
+                    <option>Priya Shah</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Record type</label>
+                  <select>
+                    <option selected>All types</option>
+                    <option>Student</option>
+                    <option>Homestay</option>
+                    <option>Travel</option>
+                    <option>Document</option>
+                    <option>Safeguarding</option>
+                    <option>Compliance</option>
+                    <option>User/access</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Action type</label>
+                  <select>
+                    <option selected>All actions</option>
+                    <option>Create</option>
+                    <option>Update</option>
+                    <option>Delete</option>
+                    <option>Archive</option>
+                    <option>Approve</option>
+                    <option>Export</option>
+                    <option>Login/logout</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Record</th><th>Details</th></tr></thead>
+                <tbody id="audit-log-tbody"></tbody>
+              </table>
+            </div>
+            <div class="cols-2" style="margin-top:24px;">
+              <div class="card">
+                <h4>What gets audited</h4>
+                <div class="list">
+                  <div class="list-item"><strong>All creates, updates, deletes</strong><small>Every record change with before/after diff</small></div>
+                  <div class="list-item"><strong>Approvals and state changes</strong><small>Document approvals, homestay approvals, concern status changes</small></div>
+                  <div class="list-item"><strong>Exports and downloads</strong><small>SCR exports, document downloads, report generation</small></div>
+                  <div class="list-item"><strong>Access events</strong><small>Logins, logouts, failed attempts, password resets</small></div>
+                  <div class="list-item"><strong>Safeguarding actions</strong><small>All concern logging, escalation, case notes — restricted access to audit</small></div>
+                  <div class="list-item"><strong>Compliance changes</strong><small>Threshold edits, DBS updates, policy reviews</small></div>
+                </div>
+              </div>
+              <div class="card">
+                <h4>Retention policy</h4>
+                <div class="list">
+                  <div class="list-item"><strong>Standard records</strong><small>7 years from last activity or student departure</small></div>
+                  <div class="list-item"><strong>Safeguarding records</strong><small>Until student turns 25 (or 7 years if longer)</small></div>
+                  <div class="list-item"><strong>SCR records</strong><small>Permanent for staff; 7 years post-departure for homestays</small></div>
+                  <div class="list-item"><strong>Audit log itself</strong><small>7 years, then anonymised summary retained</small></div>
+                </div>
+              </div>
+            </div>
+            <div class="note brutal" style="margin-top:24px;">
+              <h4>Why audit trails matter for AEGIS</h4>
+              <ul>
+                <li>Standard 2.5 requires "secure and efficient" record keeping — audit trails prove records weren't backdated or altered.</li>
+                <li>Safeguarding records must show who accessed what — inspectors will ask.</li>
+                <li>DBS checks must show who saw the original certificate — this is an audit question.</li>
+                <li>Parent complaints may require proving what was communicated and when.</li>
+                <li>The PRD doesn't mention audit trails at all. This is infrastructure, not a feature — but it's essential.</li>
+              </ul>
+            </div>
+            <p class="inline-links">Related: <a href="compliance.html">AEGIS control room</a> · <a href="scr-dashboard.html">SCR Dashboard</a> · <a href="users.html">User directory</a> · <a href="reporting-dashboard.html">Reporting</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      function esc(str) {
+        return String(str == null ? '' : str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      // Timestamps are stored as ISO strings (see logAuditEvent() in db.js);
+      // render them in the "19 Apr 2026 21:00" style the static mockup used.
+      function fmtAuditTimestamp(iso) {
+        var d = new Date(iso);
+        if (isNaN(d.getTime())) return esc(iso) || '—';
+        var datePart = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+        var timePart = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+        return datePart + ' ' + timePart;
+      }
+
+      // Maps an audit action string to the existing badge colour scheme
+      // (see .badge.green/.amber/.red/.navy in assets/app.css). Create/Delete
+      // get their own colours per spec; anything else (Update, Export,
+      // Approve, Archive, legacy free-form actions from other logAuditEvent()
+      // call sites) falls back to navy, matching most of the original mockup rows.
+      function badgeClassForAction(action) {
+        var a = String(action || '').toLowerCase();
+        if (a.indexOf('create') > -1) return 'green';
+        if (a.indexOf('delete') > -1) return 'red';
+        if (a.indexOf('update') > -1) return 'navy';
+        return 'navy';
+      }
+
+      function renderAuditLog() {
+        var tbody = document.getElementById('audit-log-tbody');
+        if (!tbody) return;
+
+        var logs = OG_DB.getAllAuditLogs();
+
+        if (!logs.length) {
+          tbody.innerHTML = '<tr><td colspan="5">No audit events recorded yet.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = logs.map(function (log) {
+          return '<tr>' +
+            '<td>' + fmtAuditTimestamp(log.timestamp) + '</td>' +
+            '<td>' + esc(log.userName) + '</td>' +
+            '<td><span class="badge ' + badgeClassForAction(log.action) + '">' + esc(log.action) + '</span></td>' +
+            '<td>' + esc(log.entityType) + '</td>' +
+            '<td>' + esc(log.details) + '</td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      renderAuditLog();
+    </script>
+  </body>
+</html>

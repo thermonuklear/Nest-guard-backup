@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Escalated Concerns — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      .shell { grid-template-columns: 248px minmax(0, 1fr) !important; }
+      .main  { min-width: 0; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/safeguarding/concerns-escalated</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Escalated Concerns</strong></div>
+            <div class="nav-group"><div class="nav-label">Overview</div><a class="nav-link" href="admin-dashboard.html">Dashboard</a><a class="nav-link" href="notifications.html">Notifications</a></div>
+            <div class="nav-group"><div class="nav-label">Operations</div><a class="nav-link" href="students.html">Students</a><a class="nav-link" href="homestays.html">Homestays</a><a class="nav-link" href="travel.html">Travel</a><a class="nav-link" href="documents.html">Documents</a>
+</div>
+            <div class="nav-group"><div class="nav-label">Safeguarding</div><a class="nav-link" href="welfare-notes.html">Welfare notes</a><a class="nav-link active" href="concerns-dashboard.html">Concerns Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="concerns-low-level.html" style="color: #63768b; text-decoration: none;">• Low-Level</a><a href="concerns-escalated.html" style="color: #1e3a5f; text-decoration: none; font-weight: 600;">• Escalated</a><a href="concerns-resolved.html" style="color: #63768b; text-decoration: none;">• Resolved (History)</a></div><a class="nav-link" href="emergency-procedures.html">Emergency</a></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Escalated concerns queue</span>
+                <h2>Escalated Concerns</h2>
+                <p>Concerns submitted by students, staff, or homestays that require DSL assessment. Every item here must be triaged: accept and open a case, record and monitor, or close with documented rationale.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button" href="admin-dashboard.html">Back to Dashboard</a><a class="button-alt" href="welfare-notes.html">Welfare notes</a><a class="button-alt" href="concerns-low-level.html">Low-level concerns</a><a class="button" href="concern-case.html">View open cases</a></div>
+            </div>
+            <div class="metrics">
+              <article class="metric featured"><h4>Pending triage</h4><div class="metric-value" id="count-pending">—</div><p class="metric-meta">New concerns awaiting DSL assessment</p></article>
+              <article class="metric"><h4>Total escalated</h4><div class="metric-value" id="count-total">—</div><p class="metric-meta">All concerns at this tier</p></article>
+              <article class="metric"><h4>Student disclosures</h4><div class="metric-value" id="count-student">—</div><p class="metric-meta">Concerns originating from a student</p></article>
+              <article class="metric"><h4>Referred externally</h4><div class="metric-value">0</div><p class="metric-meta">No LADO or LSP referrals this term</p></article>
+            </div>
+            <div class="note brutal">
+              <h4>Brutal product note</h4>
+              <p>The PRD mentions "safeguarding reporting" but doesn't specify what the DSL actually does when a concern lands. This is that surface: a triage queue with forced decision states. Every concern here must resolve to a documented outcome. The system should never let a concern rot in "pending" for more than 24 hours without nagging the DSL.</p>
+            </div>
+            <div class="table-wrap" style="overflow-x: auto; width: 100%; display: block;">
+              <table>
+                <thead><tr><th>Subject</th><th>Concern</th><th>Source</th><th>Logged</th><th>Status</th></tr></thead>
+                <tbody id="concerns-body"></tbody>
+              </table>
+            </div>
+            <div class="inline-links"><a href="concern-case.html">Open concern case</a><span class="sep">|</span><a href="concerns-resolved.html">Resolved concerns</a><span class="sep">|</span><a href="concerns-low-level.html">Low-level concerns</a><span class="sep">|</span><a href="welfare-notes.html">Welfare notes</a><span class="sep">|</span><a href="mental-health-referral.html">Mental health referral</a></div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      (function () {
+        var concerns = OG_DB.getConcernsByTier('escalated');
+        var tbody    = document.getElementById('concerns-body');
+
+        // Metrics
+        var pending  = concerns.filter(function (c) { return c.status === 'Pending triage'; }).length;
+        var students = concerns.filter(function (c) { return c.subjectRole === 'Student'; }).length;
+        document.getElementById('count-pending').textContent  = pending;
+        document.getElementById('count-total').textContent    = concerns.length;
+        document.getElementById('count-student').textContent  = students;
+
+        // Empty state
+        if (!concerns.length) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#64748b;padding:24px;">No escalated concerns on record.</td></tr>';
+          return;
+        }
+
+        var badgeMap = {
+          'Pending triage': 'red',
+          'Monitoring':     'amber',
+          'Open case':      'red',
+          'Closed':         'green'
+        };
+
+        concerns.forEach(function (c) {
+          var badge = badgeMap[c.status] || 'red';
+          var tr = document.createElement('tr');
+          tr.innerHTML =
+            '<td><strong>' + c.subjectName + '</strong><small>' + c.subjectRole + '</small></td>' +
+            '<td><strong>' + c.title + '</strong><small>' + c.description + '</small></td>' +
+            '<td>' + c.source + '</td>' +
+            '<td>' + c.loggedDate + '</td>' +
+            '<td><span class="badge ' + badge + '">' + c.status + '</span></td>';
+          tbody.appendChild(tr);
+        });
+      })();
+    </script>
+  </body>
+</html>

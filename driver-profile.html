@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Driver Profile — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      body {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+      }
+
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+      }
+
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+      }
+
+      h2, h3, h4 { color: #0f2340 !important; }
+      p           { color: #3b536e; }
+      .eyebrow    { color: #2a6096 !important; }
+      .toolbar p  { color: #3b536e !important; }
+
+      .info-block {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+      }
+
+      .kv-row { border-top-color: #e8eef6 !important; }
+      .kv-row small { color: #6b85a0 !important; }
+      .kv-row div   { color: #0f2340 !important; }
+
+      .card {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+      }
+
+      .card h4 { color: #0f2340 !important; }
+      .card p  { color: #3b536e !important; }
+
+      .timeline-item { border-top-color: #e8eef6 !important; }
+      .timeline-item time   { color: #6b85a0 !important; }
+      .timeline-item strong { color: #0f2340 !important; }
+      .timeline-item small  { color: #6b85a0 !important; }
+
+      .topnav a {
+        background: #f0f4f8 !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .topnav a:hover { background: #e2e9f3 !important; }
+
+      .inline-links a { color: #1a4080 !important; }
+
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      .dbs-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .driver-avatar {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0f2340 0%, #1a3459 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 18px;
+        font-weight: 700;
+        color: #e8f0fa;
+        font-family: 'Outfit', sans-serif;
+        letter-spacing: 0.02em;
+        border: 2px solid #d5dce8;
+      }
+
+      .punctuality-bar-wrap {
+        margin-top: 6px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .punctuality-bar-track {
+        flex: 1;
+        height: 7px;
+        background: #e8eef6;
+        border-radius: 99px;
+        overflow: hidden;
+      }
+
+      .punctuality-bar-fill {
+        height: 100%;
+        border-radius: 99px;
+        background: linear-gradient(90deg, #1a6632 0%, #28a745 100%);
+        transition: width 0.6s ease;
+      }
+
+      .punctuality-pct {
+        font-size: 12px;
+        font-weight: 700;
+        color: #1a6632;
+        white-space: nowrap;
+      }
+
+      .student-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 4px;
+      }
+
+      .student-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        background: #edf2f8;
+        border: 1px solid #d5dce8;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #0f2340;
+        text-decoration: none;
+        transition: background 0.15s;
+      }
+
+      .student-chip:hover { background: #dce8f4; }
+
+      .subnav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 0 14px;
+        border-bottom: 1px solid #d5dce8;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .subnav button {
+        padding: 6px 16px;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: #3b536e;
+        background: transparent;
+        border: 1px solid transparent;
+        cursor: pointer;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+      }
+
+      .subnav button:hover { background: #e8eef6; border-color: #d5dce8; }
+
+      .subnav button.active {
+        background: #0f2340;
+        border-color: #0f2340;
+        color: #ffffff;
+      }
+
+      .tab-content { display: none; }
+      .tab-content.active { display: block; }
+
+      .req-docs {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 20px;
+        padding: 18px 20px;
+        margin-bottom: 16px;
+        max-width: 640px;
+      }
+
+      .req-docs h4 { margin-bottom: 14px; color: #0f2340 !important; }
+      .req-doc-list { display: grid; gap: 8px; }
+
+      .req-doc-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 12px;
+        background: #f4f7fb;
+        border: 1px solid #e2e9f3;
+        border-radius: 10px;
+      }
+
+      .req-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #7b9abf;
+        margin-top: 5px;
+        flex-shrink: 0;
+      }
+
+      .req-doc-item strong { display: block; font-size: 0.88rem; color: #0f2340; }
+      .req-doc-item small  { font-size: 0.76rem; color: #6b85a0; }
+
+      .upload-card {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 20px;
+        padding: 18px;
+        max-width: 640px;
+      }
+
+      .upload-card h4 { margin-bottom: 14px; color: #0f2340 !important; }
+
+      .upload-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+
+      .upload-controls input[type="file"] {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.86rem;
+        color: #3b536e;
+        cursor: pointer;
+        max-width: 100%;
+      }
+
+      .doc-name-input {
+        flex: 1;
+        min-width: 150px;
+        padding: 9px 13px;
+        border: 1.5px solid #d5dce8;
+        border-radius: 10px;
+        background: #f0f4f8;
+        color: #0f2340;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s, background 0.15s;
+      }
+
+      .doc-name-input::placeholder { color: #9bafc4; }
+      .doc-name-input:focus { border-color: #0f2340; background: #ffffff; }
+
+      .doc-list { display: grid; gap: 8px; }
+
+      .doc-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 13px;
+        background: #f0f4f8;
+        border: 1px solid #d5dce8;
+        border-radius: 12px;
+      }
+
+      .doc-item-info { display: flex; align-items: center; gap: 10px; }
+
+      .doc-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: #0f2340;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .doc-icon svg { width: 15px; height: 15px; stroke: #ffffff; fill: none; }
+
+      .doc-item-name { font-size: 0.88rem; font-weight: 600; color: #0f2340; }
+      .doc-item-meta { font-size: 0.76rem; color: #6b85a0; margin-top: 1px; }
+
+      .doc-remove {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #9bafc4;
+        font-size: 0.95rem;
+        padding: 4px 6px;
+        border-radius: 6px;
+        transition: color 0.15s, background 0.15s;
+        line-height: 1;
+      }
+
+      .doc-remove:hover { color: #7f3034; background: #f3dddd; }
+
+      .doc-empty {
+        text-align: center;
+        padding: 24px 16px;
+        color: #9bafc4;
+        font-size: 0.86rem;
+        border: 1.5px dashed #d5dce8;
+        border-radius: 12px;
+      }
+
+      .not-found {
+        padding: 48px 24px;
+        text-align: center;
+        color: #3b536e;
+      }
+
+      .not-found h3 { color: #0f2340 !important; margin-bottom: 10px; }
+
+      /* ── Compliance tab ── */
+      .compliance-panel {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 16px;
+        padding: 24px 28px;
+        max-width: 760px;
+      }
+
+      .compliance-panel h4 {
+        color: #0f2340 !important;
+        margin-bottom: 18px;
+      }
+
+      .comp-section-title {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #6b85a0;
+        margin: 20px 0 8px;
+        padding-bottom: 6px;
+        border-bottom: 1px dashed #d5dce8;
+      }
+
+      .comp-section-title:first-child { margin-top: 0; }
+
+      .comp-kv-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 9px 0;
+        border-top: 1px solid #e8eef6;
+      }
+
+      .comp-kv-row:first-of-type { border-top: none; }
+
+      .comp-kv-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #6b85a0;
+        min-width: 180px;
+        flex-shrink: 0;
+      }
+
+      .comp-kv-val {
+        font-size: 0.88rem;
+        color: #0f2340;
+      }
+
+      .comp-kv-val a { color: #1a4080; font-weight: 600; text-decoration: none; }
+      .comp-kv-val a:hover { text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small id="chrome-route">Route /admin/drivers/profile</small>
+        </div>
+
+        <div class="shell">
+
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Driver Profile</strong>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Access</div>
+              <a class="nav-link" href="users.html">Users &amp; roles</a>
+              <a class="nav-link nav-link-sub" href="students.html">Students</a>
+              <a class="nav-link nav-link-sub" href="staff-list.html">Staff</a>
+              <a class="nav-link nav-link-sub active" href="drivers.html">Drivers</a>
+              <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
+              <a class="nav-link nav-link-sub" href="parent-list.html">Parents</a>
+              <a class="nav-link nav-link-sub" href="contracts.html">Contracts</a>
+              <a class="nav-link nav-link-sub" href="agents.html">Agents</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <section class="main" id="main-content">
+
+            <div class="toolbar">
+              <div style="display:flex; align-items:center; gap:16px;">
+                <div class="driver-avatar" id="driver-avatar" aria-hidden="true">—</div>
+                <div>
+                  <span class="eyebrow">Driver profile</span>
+                  <h2 id="driver-name" style="margin:2px 0 5px;">—</h2>
+                  <p id="driver-subtitle">Loading…</p>
+                </div>
+              </div>
+              <div class="toolbar-actions">
+                <span id="driver-dbs-badge" class="badge">—</span>
+                <a class="button-alt" href="travel.html">Back to Travel</a>
+                <a class="button-alt" id="edit-btn" href="#">Edit record</a>
+                <a class="button" id="compliance-btn" href="driver-compliance.html" style="text-decoration:none;">View Compliance Record</a>
+                <a class="button" href="travel-create.html">Assign to trip</a>
+              </div>
+            </div>
+
+            <!-- AEGIS Standard 6.3.1 Pre-Start Safeguarding Compliance Warning Banner -->
+            <div id="safeguarding-warning-strip" style="display:none;">
+              <div class="alert alert-warning" style="background:#fff3cd;border:1px solid #ffeeba;color:#856404;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:0.88rem;font-weight:600;">
+                Compliance Notice: Safeguarding training is missing or expired. Driver should not be dispatched for student transport until renewed (AEGIS Standard 6.3.1).
+              </div>
+            </div>
+
+            <nav class="subnav">
+              <button class="active" data-tab="tab-overview">Profile Overview</button>
+              <button data-tab="tab-travel">Connected Trips</button>
+              <button data-tab="tab-documents">Documents</button>
+            </nav>
+
+            <!-- ── Tab: Profile Overview ── -->
+            <div id="tab-overview" class="tab-content active">
+
+            <div class="info-grid">
+
+              <article class="info-block">
+                <h4>Personal details</h4>
+                <div class="kv">
+                  <div class="kv-row"><small>First name</small><div id="kv-first-name">—</div></div>
+                  <div class="kv-row"><small>Last name</small><div id="kv-last-name">—</div></div>
+                  <div class="kv-row"><small>Home address</small><div id="kv-address">—</div></div>
+                  <div class="kv-row"><small>Mobile</small><div id="kv-mobile">—</div></div>
+                  <div class="kv-row"><small>Email</small><div id="kv-email">—</div></div>
+                </div>
+              </article>
+
+              <article class="info-block">
+                <h4>Vehicle</h4>
+                <div class="kv">
+                  <div class="kv-row"><small>Registration number</small><div><strong id="kv-reg">—</strong></div></div>
+                  <div class="kv-row"><small>Make</small><div id="kv-make">—</div></div>
+                  <div class="kv-row"><small>Model</small><div id="kv-model">—</div></div>
+                  <div class="kv-row"><small>Colour</small><div id="kv-colour">—</div></div>
+                  <div class="kv-row"><small>Child seat available</small><div id="kv-child-seat">—</div></div>
+                  <div class="kv-row"><small>MOT expiry</small><div id="kv-mot">—</div></div>
+                  <div class="kv-row"><small>Insurance expiry</small><div id="kv-insurance">—</div></div>
+                </div>
+              </article>
+
+              <article class="info-block">
+                <h4>Compliance &amp; rates</h4>
+                <div class="kv">
+                  <div class="kv-row">
+                    <small>DBS status</small>
+                    <div class="dbs-row"><span id="kv-dbs-badge" class="badge">—</span></div>
+                  </div>
+                  <div class="kv-row"><small>DBS certificate number</small><div id="kv-dbs-cert">—</div></div>
+                  <div class="kv-row"><small>DBS issue date</small><div id="kv-dbs-issue">—</div></div>
+                  <div class="kv-row"><small>DBS renewal due</small><div id="kv-dbs-renewal">—</div></div>
+                  <div class="kv-row"><small>DBS update service</small><div id="kv-dbs-update">—</div></div>
+                  <div class="kv-row"><small>Average rate</small><div><strong id="kv-rate-mile">—</strong></div></div>
+                  <div class="kv-row"><small>Waiting time rate</small><div id="kv-rate-waiting">—</div></div>
+                  <div class="kv-row"><small>Billing contact</small><div id="kv-billing-contact">—</div></div>
+                  <div class="kv-row"><small>Invoicing cycle</small><div id="kv-invoicing">—</div></div>
+                </div>
+              </article>
+
+              <article class="info-block">
+                <h4>Performance &amp; notes</h4>
+                <div class="kv">
+                  <div class="kv-row">
+                    <small>Punctuality</small>
+                    <div>
+                      <span id="kv-punctuality-detail">—</span>
+                      <div class="punctuality-bar-wrap">
+                        <div class="punctuality-bar-track">
+                          <div class="punctuality-bar-fill" id="kv-punctuality-bar" style="width:0%;"></div>
+                        </div>
+                        <span class="punctuality-pct" id="kv-punctuality-pct">—</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="kv-row"><small>Late incidents</small><div id="kv-late-incidents">—</div></div>
+                  <div class="kv-row"><small>Parent feedback</small><div id="kv-parent-feedback">—</div></div>
+                  <div class="kv-row"><small>Preferred airports</small><div id="kv-airports">—</div></div>
+                  <div class="kv-row"><small>Availability</small><div id="kv-availability">—</div></div>
+                  <div class="kv-row"><small>Languages</small><div id="kv-languages">—</div></div>
+                  <div class="kv-row"><small>Notes</small><div id="kv-notes">—</div></div>
+                </div>
+              </article>
+
+            </div>
+
+            <div class="cols-2" style="margin-top: 16px;">
+
+              <article class="card">
+                <h4>Recent assignments</h4>
+                <div class="timeline" id="driver-timeline"></div>
+              </article>
+
+              <div>
+                <article class="card" style="margin-bottom: 14px;">
+                  <h4>Linked students</h4>
+                  <p>Students whose records reference this driver as a named or preferred collector.</p>
+                  <div class="student-chips" id="driver-linked-students"></div>
+                </article>
+
+                <article class="card">
+                  <h4>Quick actions</h4>
+                  <p>Common tasks for this driver record.</p>
+                  <div class="topnav">
+                    <a href="travel-create.html">Assign to new trip</a>
+                    <a href="travel.html">View all travel records</a>
+                    <a href="#">Download DBS certificate</a>
+                    <a href="#">View invoices</a>
+                  </div>
+                  <div class="inline-links" style="margin-top: 12px;">
+                    <a id="inline-edit-link" href="#">Edit record</a><span class="sep">|</span>
+                    <a href="#">Archive driver</a><span class="sep">|</span>
+                    <a href="#">Flag for review</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            </div><!-- /tab-overview -->
+
+            <!-- ── Tab: Documents ── -->
+            <div id="tab-documents" class="tab-content">
+
+              <div class="req-docs">
+                <h4>Required documents</h4>
+                <div class="req-doc-list">
+                  <div class="req-doc-item"><div class="req-dot"></div><div><strong>Enhanced DBS Certificate</strong><small>Current enhanced disclosure. Issue date, certificate number, and Update Service status must be on file.</small></div></div>
+                  <div class="req-doc-item"><div class="req-dot"></div><div><strong>MOT Certificate</strong><small>Valid MOT for the vehicle used for student transport. Upload each renewal.</small></div></div>
+                  <div class="req-doc-item"><div class="req-dot"></div><div><strong>Vehicle Insurance Policy — Hire &amp; Reward</strong><small>Policy must specifically cover hire &amp; reward use. Upload the policy schedule confirming this class of use.</small></div></div>
+                </div>
+              </div>
+
+              <div class="upload-card">
+                <h4>Upload document</h4>
+                <div class="upload-controls">
+                  <input type="file" id="doc-file" />
+                  <input class="doc-name-input" type="text" id="doc-name" placeholder="Enter document name…" />
+                  <button class="button" id="upload-btn">Upload</button>
+                </div>
+                <div id="document-list" class="doc-list"></div>
+              </div>
+
+            </div><!-- /tab-documents -->
+
+            <!-- ── Tab: Connected Trips ── -->
+            <div id="tab-travel" class="tab-content"><div class="upload-card" style="max-width:100%;"><h4>Connected Trips</h4><div id="driver-travel-list"></div></div></div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      var params   = new URLSearchParams(window.location.search);
+      var driverId = params.get('id') || 'DRV84920';
+      var driver   = getDriverById(driverId);
+
+      if (!driver) {
+        document.getElementById('main-content').innerHTML =
+          '<div class="not-found">' +
+            '<h3>Driver not found</h3>' +
+            '<p>No record exists for ID <strong>' + driverId + '</strong>. ' +
+            '<a href="travel.html">Return to Travel.</a></p>' +
+          '</div>';
+        throw new Error('Driver not found: ' + driverId);
+      }
+
+      function set(id, text) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = text || '—';
+      }
+
+      function dbsBadgeClass(status) {
+        var map = { clear: 'green', amber: 'amber', expired: 'red' };
+        return map[status] || 'grey';
+      }
+
+      function dbsBadgeLabel(status) {
+        var map = {
+          clear:   'Enhanced DBS — Clear',
+          amber:   'DBS — Action Required',
+          expired: 'DBS — Expired'
+        };
+        return map[status] || 'DBS — Unknown';
+      }
+
+      function initials(first, last) {
+        return (first.charAt(0) + last.charAt(0)).toUpperCase();
+      }
+
+      var fullName = driver.firstName + ' ' + driver.lastName;
+
+      document.getElementById('page-title').textContent   = fullName + ' — Oxford Guardians';
+      document.getElementById('chrome-route').textContent = 'Route /admin/drivers/' + driver.id;
+
+      // Edit links
+      document.getElementById('edit-btn').href        = 'driver-edit.html?id=' + driver.id;
+      document.getElementById('inline-edit-link').href = 'driver-edit.html?id=' + driver.id;
+      document.getElementById('compliance-btn').href = 'driver-compliance.html?id=' + driver.id;
+
+      document.getElementById('driver-avatar').textContent = initials(driver.firstName, driver.lastName);
+      document.getElementById('driver-name').innerHTML = fullName +
+        ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + driver.id + '</span>';
+      document.getElementById('driver-subtitle').textContent =
+        'Licensed partner driver. ' + dbsBadgeLabel(driver.dbsStatus) + '. ' + driver.preferredAirports.split('/')[0].trim() + ' specialist.';
+
+      var toolbarBadge = document.getElementById('driver-dbs-badge');
+      toolbarBadge.textContent = driver.dbsStatus === 'clear' ? 'DBS Clear' : dbsBadgeLabel(driver.dbsStatus);
+      toolbarBadge.className   = 'badge ' + dbsBadgeClass(driver.dbsStatus);
+
+      // ── AEGIS Standard 6.3.1 Pre-Start Safeguarding Compliance Warning ────────
+      (function () {
+        var bannerEl = document.getElementById('safeguarding-warning-strip');
+        if (!bannerEl) return;
+        var c = driver.compliance || {};
+        var safeguardingInvalid = !c.safeguardingTrainingDate ||
+          (c.safeguardingTrainingExpiry && new Date(c.safeguardingTrainingExpiry) < new Date());
+        bannerEl.style.display = safeguardingInvalid ? 'block' : 'none';
+      }());
+
+      set('kv-first-name', driver.firstName);
+      set('kv-last-name',  driver.lastName);
+      set('kv-address',    driver.address);
+      set('kv-mobile',     driver.mobile);
+      set('kv-email',      driver.email);
+
+      set('kv-reg',        driver.regNumber);
+      set('kv-make',       driver.carMake);
+      set('kv-model',      driver.carModel);
+      set('kv-colour',     driver.carColour);
+      set('kv-child-seat', driver.childSeat);
+      set('kv-mot',        driver.motExpiry);
+      set('kv-insurance',  driver.insuranceExpiry);
+
+      var kvDbs = document.getElementById('kv-dbs-badge');
+      kvDbs.textContent = dbsBadgeLabel(driver.dbsStatus);
+      kvDbs.className   = 'badge ' + dbsBadgeClass(driver.dbsStatus);
+
+      set('kv-dbs-cert',        driver.dbsCertNumber);
+      set('kv-dbs-issue',       driver.dbsIssueDate);
+      set('kv-dbs-renewal',     driver.dbsRenewalDue);
+      set('kv-dbs-update',      driver.dbsUpdateService);
+      set('kv-rate-mile',       driver.ratePerMile + ' / mile');
+      set('kv-rate-waiting',    driver.waitingRate);
+      set('kv-billing-contact', driver.billingContact);
+      set('kv-invoicing',       driver.invoicingCycle);
+
+      var pct = driver.punctualityPct || 0;
+      set('kv-punctuality-detail', driver.punctualityDetail);
+      document.getElementById('kv-punctuality-bar').style.width = pct + '%';
+      document.getElementById('kv-punctuality-pct').textContent = pct + '%';
+      set('kv-late-incidents',  driver.lateIncidents);
+      set('kv-parent-feedback', driver.parentFeedback);
+      set('kv-airports',        driver.preferredAirports);
+      set('kv-availability',    driver.availability);
+      set('kv-languages',       driver.languages);
+      set('kv-notes',           driver.notes);
+
+      // ── Linked students ───────────────────────────────────────────────────
+      var chipsEl = document.getElementById('driver-linked-students');
+      if (driver.linkedStudents && driver.linkedStudents.length) {
+        chipsEl.innerHTML = driver.linkedStudents.map(function (sid) {
+          var isPreferred = sid === driver.preferredStudentId;
+          var s = getStudentById(sid);
+          var label = s ? s.firstName + ' ' + s.lastName : sid;
+          return '<a class="student-chip" href="student-profile.html?id=' + sid + '">' +
+            label +
+            (isPreferred ? ' <span class="badge green" style="font-size:10px;padding:1px 6px;">Preferred</span>' : '') +
+          '</a>';
+        }).join('');
+      } else {
+        chipsEl.innerHTML = '<span style="font-size:13px;color:#6b85a0;">No linked students on record.</span>';
+      }
+
+      // ── Timeline ──────────────────────────────────────────────────────────
+      var timelines = {
+        'DRV84920': [
+          { date: '18 Apr 2026', title: 'Yuki Tanaka — Heathrow T5 collection',           note: 'JL043 / arrives 14:20 / confirmed pickup / parent summary sent' },
+          { date: '28 Mar 2026', title: 'Yuki Tanaka — CLC Easter holiday collection',    note: 'Break-up day 13:30 / aunt visiting from Tokyo / on time' },
+          { date: '15 Feb 2026', title: 'Yuki Tanaka — Spring exeat collection',          note: 'CLC 14:00 / return drop 09:00 Tue / positive feedback logged' },
+          { date: '14 Dec 2025', title: 'Yuki Tanaka — CLC Christmas holiday collection', note: 'Break-up day 13:30 / baggage: cello case noted / on time' },
+          { date: '14 Nov 2024', title: 'Yuki Tanaka — Heathrow T5 arrival',              note: 'Late — M40 closure. Arrived 22 min after expected. Flagged and resolved.' }
+        ],
+        'DRV19482': [
+          { date: '4 Apr 2026',  title: 'Chen Wei — Oundle Easter holiday collection',    note: 'Train link + station collection Oxford / on time' },
+          { date: '21 Feb 2026', title: 'Chen Wei — Spring exeat collection',             note: 'Peterborough → Oxford station 17:10 / 4-night stay / on time' },
+          { date: '18 Dec 2025', title: 'Chen Wei — Oundle Christmas holiday collection', note: 'Station collection 16:45 / on time / welfare note pre-shared with Finch family' },
+          { date: '2 Nov 2025',  title: 'Chen Wei — Half-term collection',                note: 'Oxford station collection / smooth handover / on time' },
+          { date: '14 Mar 2025', title: 'Chen Wei — Spring exeat collection',             note: 'Oundle school gate pickup 14:00 / return drop 09:00 Tue / on time' }
+        ]
+      };
+
+      var entries    = timelines[driver.id] || [];
+      var timelineEl = document.getElementById('driver-timeline');
+      if (entries.length) {
+        timelineEl.innerHTML = entries.map(function (e) {
+          return '<div class="timeline-item">' +
+            '<time>' + e.date + '</time>' +
+            '<div><strong>' + e.title + '</strong><small>' + e.note + '</small></div>' +
+          '</div>';
+        }).join('');
+      } else {
+        timelineEl.innerHTML = '<p style="padding:12px 0;color:#6b85a0;font-size:13px;">No assignments recorded yet.</p>';
+      }
+
+      // ── Tab switching ─────────────────────────────────────────────────────
+      var tabButtons = document.querySelectorAll('.subnav button[data-tab]');
+      var tabPanels  = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var target = this.getAttribute('data-tab');
+          tabPanels.forEach(function (p) { p.classList.remove('active'); p.style.display = 'none'; });
+          tabButtons.forEach(function (b) { b.classList.remove('active'); });
+          var active = document.getElementById(target);
+          if (active) { active.classList.add('active'); active.style.display = 'block'; }
+          this.classList.add('active');
+        });
+      });
+
+      tabPanels.forEach(function (p) {
+        p.style.display = p.classList.contains('active') ? 'block' : 'none';
+      });
+
+      // ── Helpers ───────────────────────────────────────────────────────────
+      function escapeHtml(str) {
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      function nowDate() {
+        return new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      }
+
+      // ── Upload widget ─────────────────────────────────────────────────────
+      function createUploadWidget(options) {
+        var key = options.storageKey;
+
+        function load() {
+          try { return JSON.parse(localStorage.getItem(key)) || []; } catch (e) { return []; }
+        }
+
+        function save(items) { localStorage.setItem(key, JSON.stringify(items)); }
+
+        function render() {
+          var items = load();
+          var list  = document.getElementById(options.listId);
+          if (!items.length) {
+            list.innerHTML = '<div class="doc-empty">' + (options.emptyText || 'No files uploaded yet.') + '</div>';
+            return;
+          }
+          list.innerHTML = items.map(function (item, i) {
+            return '<div class="doc-item">' +
+              '<div class="doc-item-info">' +
+                '<div class="doc-icon">' +
+                  '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                    '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>' +
+                    '<polyline points="14 2 14 8 20 8"></polyline>' +
+                  '</svg>' +
+                '</div>' +
+                '<div><div class="doc-item-name">' + escapeHtml(item.name) + '</div>' +
+                '<div class="doc-item-meta">Uploaded ' + item.date + '</div></div>' +
+              '</div>' +
+              '<button class="doc-remove" data-index="' + i + '" title="Remove">&#x2715;</button>' +
+            '</div>';
+          }).join('');
+          list.querySelectorAll('.doc-remove').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              var items = load();
+              items.splice(parseInt(this.getAttribute('data-index'), 10), 1);
+              save(items); render();
+            });
+          });
+        }
+
+        document.getElementById(options.btnId).addEventListener('click', function () {
+          var nameInput = document.getElementById(options.nameInputId);
+          var fileInput = document.getElementById(options.fileInputId);
+          var name = nameInput.value.trim();
+          if (!name) { nameInput.style.borderColor = '#7f3034'; nameInput.focus(); return; }
+          nameInput.style.borderColor = '';
+          var items = load();
+          items.push({ name: name, date: nowDate() });
+          save(items); render();
+          nameInput.value = ''; fileInput.value = '';
+        });
+
+        render();
+      }
+
+      createUploadWidget({
+        storageKey:  'driver_docs_' + driver.id,
+        fileInputId: 'doc-file',
+        nameInputId: 'doc-name',
+        btnId:       'upload-btn',
+        listId:      'document-list',
+        emptyText:   'No documents uploaded yet. Use the form above to add files.'
+      });
+
+      // ── Connected Trips ───────────────────────────────────────────────────
+      (function () {
+        var transports = OG_DB.getAllTransports().filter(function (t) {
+          return t.driverId === driver.id;
+        });
+        var listEl = document.getElementById('driver-travel-list');
+        if (!transports.length) {
+          listEl.innerHTML = '<div class="doc-empty">No connected trips.</div>';
+          return;
+        }
+        listEl.innerHTML =
+          '<table style="width:100%;border-collapse:collapse;font-size:0.88rem;">' +
+            '<thead><tr style="border-bottom:2px solid #d5dce8;text-align:left;">' +
+              '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">ID</th>' +
+              '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Student</th>' +
+              '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Date</th>' +
+              '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Route</th>' +
+              '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Status</th>' +
+            '</tr></thead>' +
+            '<tbody>' +
+            transports.map(function (t) {
+              var studentLink = t.studentId
+                ? '<a href="student-profile.html?id=' + escapeHtml(t.studentId) + '" style="color:#1a4080;font-weight:600;text-decoration:none;">' + escapeHtml(t.studentName || t.studentId) + '</a>'
+                : escapeHtml(t.studentName || '—');
+              var route = t.pickupLocation && t.dropoffLocation
+                ? escapeHtml(t.pickupLocation) + ' &rarr; ' + escapeHtml(t.dropoffLocation)
+                : escapeHtml(t.route || '—');
+              return '<tr style="border-bottom:1px solid #edf2f8;">' +
+                '<td style="padding:8px 12px;color:#6b85a0;">' + escapeHtml(t.id                        || '—') + '</td>' +
+                '<td style="padding:8px 12px;">'               + studentLink                                     + '</td>' +
+                '<td style="padding:8px 12px;">'               + escapeHtml(t.date || t.startDate        || '—') + '</td>' +
+                '<td style="padding:8px 12px;">'               + route                                           + '</td>' +
+                '<td style="padding:8px 12px;">'               + escapeHtml(t.status                     || '—') + '</td>' +
+              '</tr>';
+            }).join('') +
+            '</tbody></table>';
+      }());
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      .nav-link-sub { padding-left: 32px !important; font-size: 0.85em !important; opacity: 0.85; }
+      .nav-link-sub:hover, .nav-link-sub.active { opacity: 1; }
+      .card-link { text-decoration: none; color: inherit; display: block; }
+      .card-link:hover { opacity: 0.95; }
+      .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 18px; }
+      .quick-card { background: #ffffff; border: 1px solid #d5dce8; border-radius: 12px; padding: 14px 16px; text-decoration: none; color: #0f2340; transition: all 0.2s ease; display: flex; flex-direction: column; gap: 4px; }
+      .quick-card:hover { transform: translateY(-2px); border-color: #1a4080; box-shadow: 0 6px 14px rgba(15,35,64,0.06); }
+      .quick-card strong { font-family: "Outfit", sans-serif; font-size: 0.95rem; color: #0f2340; display: flex; align-items: center; justify-content: space-between; }
+      .quick-card small { font-size: 0.8rem; color: #64748b; }
+      .list-link { text-decoration: none; color: inherit; display: block; border-radius: 8px; padding: 4px 6px; margin: -4px -6px; transition: background 0.15s; }
+      .list-link:hover { background: #f1f5f9; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small>Route /admin/dashboard</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Admin Console</strong></div>
+
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link active" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+              <a class="nav-link" href="reports.html">Reports</a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Access</div>
+              <a class="nav-link" href="users.html">Users &amp; roles</a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
+              <a class="nav-link nav-link-sub" href="homestay-visit.html">Annual visits</a>
+              <a class="nav-link nav-link-sub" href="homestay-incidents.html">Accident Book</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="schools.html">Schools</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+              <a class="nav-link" href="exeats.html">Exeats</a>
+              <a class="nav-link" href="finances.html">Finances</a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Safeguarding</div>
+              <a class="nav-link" href="welfare-notes.html">Welfare notes</a>
+              <a class="nav-link" href="concerns-dashboard.html">Concerns Dashboard</a>
+              <a class="nav-link" href="emergency-procedures.html">Emergency</a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Compliance &amp; IT</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+              <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+              <a class="nav-link" href="organisation-profile.html">Organisation &amp; Governance</a>
+              <a class="nav-link" href="complaints.html">Complaints Register</a>
+              <a class="nav-link" href="policy-viewer.html">Statutory Policies</a>
+              <a class="nav-link-sub" href="policy-viewer.html?cat=Complaints+%26+governance" style="padding-left:24px;font-size:0.82rem;color:#94a3b8;">Complaints &amp; governance</a>
+              <a class="nav-link-sub" href="policy-viewer.html?cat=Data+protection+%26+privacy" style="padding-left:24px;font-size:0.82rem;color:#94a3b8;">Data protection &amp; privacy</a>
+              <a class="nav-link-sub" href="policy-viewer.html?cat=Safeguarding+%26+child+protection" style="padding-left:24px;font-size:0.82rem;color:#94a3b8;">Safeguarding &amp; child protection</a>
+              <a class="nav-link-sub" href="policy-viewer.html?cat=Welfare%2C+conduct+%26+emergencies" style="padding-left:24px;font-size:0.82rem;color:#94a3b8;">Welfare, conduct &amp; emergencies</a>
+              <a class="nav-link-sub" href="policy-viewer.html?view=history" style="padding-left:24px;font-size:0.82rem;color:#94a3b8;">Policy History</a>
+              <a class="nav-link" href="scr-dashboard.html">SCR Dashboard</a>
+              <a class="nav-link" href="audit-log.html">Audit trail</a>
+            </div>
+
+            <div style="padding:8px 12px 16px;margin-top:auto;">
+              <button onclick="localStorage.clear();location.reload();" style="width:100%;padding:6px 10px;background:transparent;border:1px solid #2d4a6b;border-radius:6px;color:#6b85a0;font-size:0.73rem;cursor:pointer;font-family:inherit;letter-spacing:0.02em;">Reset DB Cache</button>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Admin dashboard</span>
+                <h2>Risk first. Counts second.</h2>
+                <p>Jay Ray is signed in. This dashboard prioritises overdue checks, welfare concerns, travel events, and policy deadlines instead of pretending raw totals are useful on their own.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="policy-viewer.html">Statutory Policies</a>
+                <a class="button-alt" href="homestay-incidents.html">Accident Book</a>
+                <a class="button" href="students.html">Open student records</a>
+              </div>
+            </div>
+
+            <!-- Quick Launch Hub -->
+            <div class="quick-grid">
+              <a class="quick-card" href="policy-viewer.html">
+                <strong>Statutory Policies <span>&rarr;</span></strong>
+                <small>Health &amp; Safety, Safeguarding &amp; annual reviews</small>
+              </a>
+              <a class="quick-card" href="homestay-incidents.html">
+                <strong>Accident Book <span>&rarr;</span></strong>
+                <small>Students, hosts, staff, drivers &amp; RIDDOR</small>
+              </a>
+              <a class="quick-card" href="hosts.html">
+                <strong>Host Families <span>&rarr;</span></strong>
+                <small>Compliance, visits &amp; annual reviews</small>
+              </a>
+              <a class="quick-card" href="compliance.html">
+                <strong>AEGIS Control Room <span>&rarr;</span></strong>
+                <small>Audit standards, SCR &amp; DBS trackers</small>
+              </a>
+            </div>
+
+            <div class="banner red">
+              <h4>Immediate attention required</h4>
+              <p>
+                <a href="policy-viewer.html" style="color:inherit;font-weight:700;text-decoration:underline;">1 safeguarding policy review is overdue</a>, 
+                <a href="compliance.html" style="color:inherit;font-weight:700;text-decoration:underline;">2 DBS records need action</a>, and 
+                <a href="concerns-escalated.html" style="color:inherit;font-weight:700;text-decoration:underline;">1 student welfare note was escalated</a> after a homesickness concern on 28 March.
+              </p>
+            </div>
+
+            <div class="metrics">
+              <a class="metric featured card-link" href="students.html">
+                <h4>Students under active guardianship</h4>
+                <div class="metric-value">28</div>
+                <p class="metric-meta">21 boarding / 7 day students / 3 arriving within 10 days &rarr;</p>
+              </a>
+              <a class="metric card-link" href="compliance.html">
+                <h4>Open actions</h4>
+                <div class="metric-value">14</div>
+                <p class="metric-meta">5 compliance / 4 travel / 3 document reviews / 2 welfare &rarr;</p>
+              </a>
+              <a class="metric card-link" href="homestays.html">
+                <h4>Approved homestays</h4>
+                <div class="metric-value">11</div>
+                <p class="metric-meta">2 pending approval / 1 annual visit due this month &rarr;</p>
+              </a>
+              <a class="metric card-link" href="compliance.html">
+                <h4>AEGIS health</h4>
+                <div class="metric-value">Amber</div>
+                <p class="metric-meta">Strong records overall. Policy review discipline is slipping &rarr;</p>
+              </a>
+            </div>
+
+            <div class="cols-2">
+              <div>
+                <div class="card">
+                  <h4>Priority queue</h4>
+                  <div class="list">
+                    <div class="list-item">
+                      <a class="list-link" href="compliance.html">
+                        <strong>DBS online update check overdue for Priya Shah</strong>
+                        <small>Due 09 Apr 2026 / Record owner: Zuko Fire</small>
+                        <p>System should flag this before it becomes an audit embarrassment.</p>
+                      </a>
+                    </div>
+                    <div class="list-item">
+                      <a class="list-link" href="policy-viewer.html">
+                        <strong>Whistleblowing Policy review overdue</strong>
+                        <small>Due 15 Mar 2026 / Owner: Jay Ray</small>
+                        <p>Compliance score should remain amber until version 1.6 is approved.</p>
+                      </a>
+                    </div>
+                    <div class="list-item">
+                      <a class="list-link" href="travel.html">
+                        <strong>Travel pack confirmation missing for Yuki Tanaka</strong>
+                        <small>Arrival: 18 Apr 2026 / Heathrow T5</small>
+                        <p>Parent notification drafted, driver assigned, final confirmation not yet sent.</p>
+                      </a>
+                    </div>
+                    <div class="list-item">
+                      <a class="list-link" href="welfare-notes.html">
+                        <strong>Homesickness follow-up logged for Chen Wei</strong>
+                        <small>Pastoral check booked for tomorrow 08:30</small>
+                        <p>Concern is not critical, but it must not disappear into notes.</p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="table-wrap" style="margin-top: 16px;">
+                  <table>
+                    <thead>
+                      <tr><th>Today</th><th>Owner</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td><strong>07:45</strong><small>Approved airport pickup brief for Sofia Petrova</small></td><td>Jay Ray</td><td><span class="badge green">Sent</span></td></tr>
+                      <tr><td><strong>08:20</strong><small>Reviewed DBS upload for Eleanor Ashworth</small></td><td>Zuko Fire</td><td><span class="badge green">Verified</span></td></tr>
+                      <tr><td><strong>09:05</strong><small>Added welfare note after tutor email from Oundle</small></td><td>Jay Ray</td><td><span class="badge amber">Follow-up</span></td></tr>
+                      <tr><td><strong>10:10</strong><small>Uploaded draft Missing Student Policy v0.8</small></td><td>Admin Office</td><td><span class="badge amber">In review</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div>
+                <div class="card">
+                  <h4>Upcoming travel</h4>
+                  <div class="list">
+                    <div class="list-item"><a class="list-link" href="travel.html"><strong>18 Apr / Yuki Tanaka / Heathrow T5</strong><small>Collector: Matthew Clarke / BMW 2 Series / Parent update pending</small></a></div>
+                    <div class="list-item"><a class="list-link" href="travel.html"><strong>20 Apr / Sofia Petrova / Gatwick South</strong><small>Collector: Priya Shah / School handoff confirmed</small></a></div>
+                    <div class="list-item"><a class="list-link" href="travel.html"><strong>22 Apr / Daniel Kim / Oxford Parkway</strong><small>Exeat return / host family Brennan</small></a></div>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <h4>Document workflow snapshot</h4>
+                  <div class="list">
+                    <div class="list-item"><a class="list-link" href="policy-viewer.html"><strong>Safeguarding &amp; Child Protection Policy</strong><small>v2.3 / Approved / Next review 01 Sep 2026</small></a></div>
+                    <div class="list-item"><a class="list-link" href="policy-viewer.html"><strong>Missing Student Policy</strong><small>v0.8 / Draft / Needs Jay DSL review</small></a></div>
+                    <div class="list-item"><a class="list-link" href="documents.html"><strong>Parent Handbook</strong><small>v1.2 / Approved / Shared with 24 active families</small></a></div>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <h4>Access and authentication queue</h4>
+                  <div class="list">
+                    <div class="list-item"><a class="list-link" href="users.html"><strong>Invite pending for Emma Sanz</strong><small>Parent account / expires in 48 hours / linked to Lucia Herrera</small></a></div>
+                    <div class="list-item"><a class="list-link" href="users.html"><strong>Locked account for Priya Shah</strong><small>Local coordinator / 5 failed attempts / requires admin review</small></a></div>
+                    <div class="list-item"><a class="list-link" href="users.html"><strong>Password reset requested by Isabel Herrera</strong><small>Parent portal / requested 08:14 / no admin action yet taken</small></a></div>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <h4>School liaison and exeat queue</h4>
+                  <div class="list">
+                    <div class="list-item"><a class="list-link" href="exeats.html"><strong>Oundle weekend leave approval waiting on school reply</strong><small>Daniel Kim / requested by house parent / due before Friday 16:00</small></a></div>
+                    <div class="list-item"><a class="list-link" href="schools.html"><strong>Written service confirmation needs new term issue</strong><small>St Edward's Oxford / Lucia Herrera / parent scope agreed, school copy not yet sent</small></a></div>
+                    <div class="list-item"><a class="list-link" href="travel.html"><strong>Heathrow handoff record still missing final school arrival timestamp</strong><small>Yuki Tanaka / overnight host stay completed / school sign-in not logged yet</small></a></div>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <h4>Safeguarding queue</h4>
+                  <div class="list">
+                    <div class="list-item"><strong><a href="concern-case.html">Lucia Herrera — peer-on-peer concern</a></strong><small>Pending DSL triage / student portal submission / 08 Apr 09:15</small></div>
+                    <div class="list-item"><strong><a href="concerns-escalated.html">Daniel Kim — homestay behaviour report</a></strong><small>Pending DSL triage / homestay call / 07 Apr 19:40</small></div>
+                    <div class="list-item"><strong><a href="concerns-low-level.html">Chen Wei — homesickness pattern</a></strong><small>Low-level concern monitoring / review due 15 Apr</small></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Driver — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    body, .page, .shell, main { background: #f0f4f8 !important; color: #0f2340 !important; }
+
+    .app-frame {
+      background: #f8fafc !important;
+      border-color: #d5dce8 !important;
+      box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important;
+    }
+
+    .chrome { background: #e8eef6 !important; border-bottom-color: #d5dce8 !important; }
+    .chrome small { color: #3b536e !important; }
+    .dots span { background: #7b9abf !important; }
+
+    .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important; }
+    .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+    .brand small  { color: #7fb3d3 !important; }
+    .brand strong { color: #e8f0fa !important; }
+    .nav-label { color: #7b9abf !important; }
+    .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+    .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+    .nav-link.active {
+      background: rgba(255,255,255,0.1) !important;
+      border-color: rgba(255,255,255,0.14) !important;
+      color: #e8f0fa !important;
+    }
+
+    .main { background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important; }
+    h2, h3, h4 { color: #0f2340 !important; }
+    p { color: #3b536e; }
+    .eyebrow { color: #2a6096 !important; }
+    .toolbar p { color: #3b536e !important; }
+
+    .button {
+      background: #0f2340 !important;
+      border-color: #0f2340 !important;
+      color: #ffffff !important;
+    }
+    .button:hover { opacity: 0.88; }
+    .button-alt {
+      background: #ffffff !important;
+      border-color: #d5dce8 !important;
+      color: #0f2340 !important;
+    }
+    .button-alt:hover { background: #edf2f8 !important; }
+
+    .field-input,
+    .field-select,
+    .field-textarea {
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px 12px;
+      border: 1px solid #d5dce8 !important;
+      border-radius: 10px;
+      background: #ffffff !important;
+      color: #0f2340;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-sizing: border-box;
+    }
+
+    .field-input::placeholder,
+    .field-textarea::placeholder { color: #9bafc4; }
+
+    .field-input:focus,
+    .field-select:focus,
+    .field-textarea:focus {
+      border-color: #0f2340;
+      box-shadow: 0 0 0 3px rgba(15,35,64,0.1);
+    }
+
+    .field-select { appearance: none; cursor: pointer; }
+    .field-textarea { resize: vertical; min-height: 96px; }
+
+    .form-section { margin-bottom: 28px; }
+
+    .form-section-title {
+      font-family: "Outfit", sans-serif;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #2a6096;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e8eef6;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .form-span-2 { grid-column: span 2; }
+
+    .field small {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #3b536e;
+    }
+
+    .form-error {
+      display: none;
+      color: #7f3034;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: #f3dddd;
+      border: 1px solid #d8afb2;
+      border-radius: 8px;
+    }
+
+    .field-error .field-input,
+    .field-error .field-select,
+    .field-error .field-textarea {
+      border-color: #7f3034;
+      box-shadow: 0 0 0 3px rgba(127,48,52,0.1);
+    }
+
+    .create-panel {
+      background: #ffffff !important;
+      border: 1px solid #d5dce8 !important;
+      border-radius: 16px;
+      padding: 28px;
+      margin: 0 0 24px;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding-top: 8px;
+    }
+
+    .field-hint {
+      font-size: 0.76rem;
+      color: #6b85a0;
+      margin-top: 4px;
+    }
+
+    /* ── Compliance section ── */
+    .scr-sub {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b85a0;
+      margin: 20px 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed #d5dce8;
+    }
+
+    .scr-sub:first-child { margin-top: 0; }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .check-row input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: #0f2340; }
+    .check-row label { font-size: 0.88rem; font-weight: 600; color: #3b536e; cursor: pointer; }
+
+    .field-file { margin-top: 6px; }
+    .field-file input[type="file"] {
+      display: block;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 0.86rem;
+      color: #3b536e;
+      cursor: pointer;
+      max-width: 100%;
+    }
+    .field-current {
+      font-size: 0.76rem;
+      color: #6b85a0;
+      margin-top: 3px;
+    }
+    .field-current a { color: #1a4080; }
+
+    .dbs-external-link {
+      font-size: 0.8rem;
+      color: #1a4080;
+      font-weight: 600;
+      margin-top: 6px;
+      display: inline-block;
+    }
+
+    .save-toast {
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: #0f2340;
+      color: #e8f0fa;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(15,35,64,0.22);
+      z-index: 9999;
+    }
+
+    /* ── Not found state ── */
+    .not-found {
+      padding: 60px 24px;
+      text-align: center;
+    }
+    .not-found h3 { color: #0f2340 !important; margin-bottom: 10px; }
+    .not-found p  { color: #3b536e; }
+    .not-found a  { color: #1a4080; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<main class="page">
+  <div class="app-frame">
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small id="chrome-route">Route /admin/drivers/edit</small>
+    </div>
+    <div class="shell">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong>Edit Driver</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Overview</div>
+          <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+          <a class="nav-link" href="notifications.html">Notifications</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Operations</div>
+          <a class="nav-link" href="students.html">Students</a>
+          <a class="nav-link" href="homestays.html">Homestays</a>
+          <a class="nav-link" href="travel.html">Travel</a>
+          <a class="nav-link active" href="drivers.html">Drivers</a>
+          <a class="nav-link" href="documents.html">Documents</a>
+
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Compliance</div>
+          <a class="nav-link" href="compliance.html">AEGIS control room</a>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <section class="main" id="main-content">
+        <div class="toolbar">
+          <div>
+            <span class="eyebrow">Edit driver record</span>
+            <h2 id="page-heading">Edit driver</h2>
+            <p>Update profile details and vehicle information. Compliance records are managed separately.</p>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" id="back-link" href="drivers.html">Cancel</a>
+          </div>
+        </div>
+
+        <div class="create-panel">
+          <form id="driver-form" novalidate>
+
+            <!-- ── Section 1: Identity ── -->
+            <div class="form-section">
+              <div class="form-section-title">Identity</div>
+              <div class="form-grid">
+                <div class="field" id="field-first-name">
+                  <small>First Name *</small>
+                  <input class="field-input" type="text" id="first-name" placeholder="e.g. Matthew" autocomplete="given-name" />
+                </div>
+                <div class="field" id="field-last-name">
+                  <small>Last Name *</small>
+                  <input class="field-input" type="text" id="last-name" placeholder="e.g. Clarke" autocomplete="family-name" />
+                </div>
+                <div class="field form-span-2">
+                  <small>Home Address</small>
+                  <input class="field-input" type="text" id="address" placeholder="e.g. 14 Meadow Lane, Cowley, Oxford, OX4 2RN" autocomplete="street-address" />
+                </div>
+                <div class="field">
+                  <small>Mobile</small>
+                  <input class="field-input" type="tel" id="mobile" placeholder="e.g. 07700 900 441" autocomplete="tel" />
+                </div>
+                <div class="field">
+                  <small>Email</small>
+                  <input class="field-input" type="email" id="email" placeholder="e.g. m.clarke@oxfordguardians.co.uk" autocomplete="email" />
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Section 2: Vehicle ── -->
+            <div class="form-section">
+              <div class="form-section-title">Vehicle</div>
+              <div class="form-grid">
+                <div class="field" id="field-reg">
+                  <small>Registration Number *</small>
+                  <input class="field-input" type="text" id="reg-number" placeholder="e.g. OX21 MCL" style="text-transform:uppercase;" />
+                </div>
+                <div class="field">
+                  <small>Car Make</small>
+                  <input class="field-input" type="text" id="car-make" placeholder="e.g. Toyota" />
+                </div>
+                <div class="field">
+                  <small>Car Model &amp; Year</small>
+                  <input class="field-input" type="text" id="car-model" placeholder="e.g. Prius (2021)" />
+                </div>
+                <div class="field">
+                  <small>Car Colour</small>
+                  <input class="field-input" type="text" id="car-colour" placeholder="e.g. Silver" />
+                </div>
+                <div class="field">
+                  <small>Child Seat Available</small>
+                  <select class="field-select" id="child-seat">
+                    <option value="">Select…</option>
+                    <option value="Yes — standard Group 2/3 seat carried on request">Yes — Group 2/3 on request</option>
+                    <option value="Yes — Group 1/2/3 combination seat available">Yes — Group 1/2/3 available</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>MOT Expiry Date</small>
+                  <input class="field-input" type="date" id="mot-expiry" />
+                </div>
+                <div class="field form-span-2">
+                  <small>Insurance Expiry / Type</small>
+                  <input class="field-input" type="text" id="insurance-expiry" placeholder="e.g. 01 Sep 2026 / Hire & reward policy" />
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Section 3: DBS & Compliance ── -->
+            <div class="form-section">
+              <div class="form-section-title">DBS &amp; Compliance</div>
+              <div class="form-grid">
+                <div class="field" id="field-dbs-status">
+                  <small>DBS Status *</small>
+                  <select class="field-select" id="dbs-status">
+                    <option value="">Select status…</option>
+                    <option value="clear">Enhanced DBS — Clear</option>
+                    <option value="amber">DBS — Action Required</option>
+                    <option value="expired">DBS — Expired</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>DBS Certificate Number</small>
+                  <input class="field-input" type="text" id="dbs-cert" placeholder="e.g. 002-452-8831-4" />
+                </div>
+                <div class="field">
+                  <small>DBS Issue Date</small>
+                  <input class="field-input" type="date" id="dbs-issue" />
+                </div>
+                <div class="field">
+                  <small>DBS Renewal Due</small>
+                  <input class="field-input" type="date" id="dbs-renewal" />
+                </div>
+                <div class="field form-span-2">
+                  <small>DBS Update Service</small>
+                  <input class="field-input" type="text" id="dbs-update" placeholder="e.g. Subscribed — last verified 02 Apr 2026" />
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Section 4: Rates ── -->
+            <div class="form-section">
+              <div class="form-section-title">Rates &amp; Billing</div>
+              <div class="form-grid">
+                <div class="field" id="field-rate-mile">
+                  <small>Rate per Mile (£) *</small>
+                  <input class="field-input" type="text" id="rate-mile" placeholder="e.g. £0.55" />
+                  <p class="field-hint">Enter as £0.55 or 0.55</p>
+                </div>
+                <div class="field">
+                  <small>Waiting Time Rate</small>
+                  <input class="field-input" type="text" id="rate-waiting" placeholder="e.g. £18.00 / hour after 30 min free" />
+                </div>
+                <div class="field">
+                  <small>Billing Contact Email</small>
+                  <input class="field-input" type="email" id="billing-contact" placeholder="e.g. billing@oxfordguardians.co.uk" />
+                </div>
+                <div class="field">
+                  <small>Invoicing Cycle</small>
+                  <select class="field-select" id="invoicing-cycle">
+                    <option value="">Select…</option>
+                    <option value="Monthly — NET 14">Monthly — NET 14</option>
+                    <option value="Monthly — NET 30">Monthly — NET 30</option>
+                    <option value="Per job">Per job</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Section 5: Performance & Availability ── -->
+            <div class="form-section">
+              <div class="form-section-title">Performance &amp; Availability</div>
+              <div class="form-grid">
+                <div class="field">
+                  <small>Punctuality (% on-time)</small>
+                  <input class="field-input" type="number" id="punctuality" min="0" max="100" placeholder="e.g. 97" />
+                </div>
+                <div class="field">
+                  <small>Preferred Airports / Routes</small>
+                  <input class="field-input" type="text" id="airports" placeholder="e.g. Heathrow T2, T3, T5 / Gatwick South" />
+                </div>
+                <div class="field form-span-2">
+                  <small>Availability</small>
+                  <input class="field-input" type="text" id="availability" placeholder="e.g. 7 days — no Sunday runs after 22:00." />
+                </div>
+                <div class="field form-span-2">
+                  <small>Languages</small>
+                  <input class="field-input" type="text" id="languages" placeholder="e.g. English (native) / basic Japanese" />
+                </div>
+                <div class="field form-span-2">
+                  <small>Notes</small>
+                  <textarea class="field-textarea" id="notes" placeholder="Any additional notes about this driver…"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin:16px 0 8px;padding:14px 18px;background:var(--surface-2,#f1f5f9);border:1px solid var(--line,#e1e7ec);border-radius:10px;font-size:0.88rem;color:var(--ink-2,#3b536e);">
+              Compliance records are now managed separately.
+              <a id="compliance-banner-link" href="driver-compliance.html" style="color:var(--gold,#0891b2);font-weight:600;">Manage Compliance Record →</a>
+            </div>
+
+            <!-- ── Submit ── -->
+            <div class="action-row">
+              <button type="submit" class="button">Save changes</button>
+              <a class="button-alt" id="cancel-link" href="drivers.html">Cancel</a>
+            </div>
+            <p class="form-error" id="form-error">Please fill in all required fields before saving.</p>
+
+          </form>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</main>
+
+<div class="save-toast" id="save-toast">Driver record updated.</div>
+
+<script src="assets/db.js"></script>
+<script>
+  var params   = new URLSearchParams(window.location.search);
+  var driverId = params.get('id');
+  var driver   = driverId ? getDriverById(driverId) : null;
+
+  if (!driver) {
+    document.getElementById('main-content').innerHTML =
+      '<div class="not-found">' +
+        '<h3>Driver not found</h3>' +
+        '<p>No record for ID <strong>' + (driverId || '(none)') + '</strong>. ' +
+        '<a href="drivers.html">Return to Drivers.</a></p>' +
+      '</div>';
+    throw new Error('Driver not found: ' + driverId);
+  }
+
+  // ── Update chrome / heading ──────────────────────────────────────────────
+  document.getElementById('chrome-route').textContent = 'Route /admin/drivers/' + driver.id + '/edit';
+  document.getElementById('page-heading').textContent  = driver.firstName + ' ' + driver.lastName;
+  document.getElementById('back-link').href    = 'drivers.html?id=' + driver.id;
+  document.getElementById('cancel-link').href  = 'drivers.html?id=' + driver.id;
+
+  // ── Pre-fill helpers ─────────────────────────────────────────────────────
+  function fill(id, val) {
+    var el = document.getElementById(id);
+    if (!el || val === undefined || val === null) return;
+    if (el.tagName === 'SELECT') { el.value = val || ''; }
+    else if (el.type === 'checkbox') { el.checked = !!val; }
+    else { el.value = val || ''; }
+  }
+
+  // Core fields
+  fill('first-name',       driver.firstName);
+  fill('last-name',        driver.lastName);
+  fill('address',          driver.address);
+  fill('mobile',           driver.mobile);
+  fill('email',            driver.email);
+  fill('reg-number',       driver.regNumber);
+  fill('car-make',         driver.carMake);
+  fill('car-model',        driver.carModel);
+  fill('car-colour',       driver.carColour);
+  fill('child-seat',       driver.childSeat);
+  fill('insurance-expiry', driver.insuranceExpiry);
+  fill('dbs-status',       driver.dbsStatus);
+  fill('dbs-cert',         driver.dbsCertNumber);
+  fill('dbs-update',       driver.dbsUpdateService);
+  fill('rate-mile',        driver.ratePerMile);
+  fill('rate-waiting',     driver.waitingRate);
+  fill('billing-contact',  driver.billingContact);
+  fill('invoicing-cycle',  driver.invoicingCycle);
+  fill('punctuality',      driver.punctualityPct !== undefined ? String(driver.punctualityPct) : '');
+  fill('airports',         driver.preferredAirports);
+  fill('availability',     driver.availability);
+  fill('languages',        driver.languages);
+  fill('notes',            driver.notes);
+
+  // MOT expiry: convert display date back to ISO for the date input
+  (function () {
+    var raw = driver.motExpiry || '';
+    var d   = new Date(raw);
+    if (!isNaN(d.getTime())) {
+      fill('mot-expiry', d.toISOString().substring(0, 10));
+    }
+  }());
+
+  // DBS dates
+  (function () {
+    function toIso(str) {
+      if (!str) return '';
+      var d = new Date(str);
+      return isNaN(d.getTime()) ? '' : d.toISOString().substring(0, 10);
+    }
+    fill('dbs-issue',   toIso(driver.dbsIssueDate));
+    fill('dbs-renewal', toIso(driver.dbsRenewalDue));
+  }());
+
+  document.getElementById('compliance-banner-link').href = 'driver-compliance.html?id=' + driver.id;
+
+  // ── Save handler ─────────────────────────────────────────────────────────
+  document.getElementById('driver-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var required = [
+      { id: 'first-name', wrap: 'field-first-name' },
+      { id: 'last-name',  wrap: 'field-last-name'  },
+      { id: 'reg-number', wrap: 'field-reg'        },
+      { id: 'dbs-status', wrap: 'field-dbs-status' },
+      { id: 'rate-mile',  wrap: 'field-rate-mile'  }
+    ];
+
+    required.forEach(function (f) {
+      var w = document.getElementById(f.wrap);
+      if (w) w.classList.remove('field-error');
+    });
+
+    var valid = true;
+    required.forEach(function (f) {
+      var el = document.getElementById(f.id);
+      if (!el || !el.value.trim()) {
+        valid = false;
+        var w = document.getElementById(f.wrap);
+        if (w) w.classList.add('field-error');
+      }
+    });
+
+    var errorMsg = document.getElementById('form-error');
+    if (!valid) { errorMsg.style.display = 'block'; return; }
+    errorMsg.style.display = 'none';
+
+    function val(id) {
+      var el = document.getElementById(id);
+      return el ? el.value.trim() : '';
+    }
+
+    function fmtDate(iso) {
+      if (!iso) return '';
+      var d = new Date(iso + 'T00:00:00');
+      return isNaN(d.getTime()) ? iso : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    var rawRate = val('rate-mile');
+    var ratePerMile = rawRate.charAt(0) === '£' ? rawRate : '£' + rawRate;
+
+    var pctRaw = parseInt(val('punctuality'), 10);
+    var pct    = isNaN(pctRaw) ? (driver.punctualityPct || 100) : Math.min(100, Math.max(0, pctRaw));
+
+    var updated = Object.assign({}, driver, {
+      firstName:         val('first-name'),
+      lastName:          val('last-name'),
+      address:           val('address'),
+      mobile:            val('mobile'),
+      email:             val('email'),
+      regNumber:         val('reg-number').toUpperCase(),
+      carMake:           val('car-make'),
+      carModel:          val('car-model'),
+      carColour:         val('car-colour'),
+      childSeat:         val('child-seat') || driver.childSeat,
+      motExpiry:         fmtDate(val('mot-expiry')) || val('mot-expiry'),
+      insuranceExpiry:   val('insurance-expiry'),
+      dbsStatus:         val('dbs-status'),
+      dbsCertNumber:     val('dbs-cert'),
+      dbsIssueDate:      fmtDate(val('dbs-issue')) || val('dbs-issue'),
+      dbsRenewalDue:     fmtDate(val('dbs-renewal')) || val('dbs-renewal'),
+      dbsUpdateService:  val('dbs-update') || driver.dbsUpdateService,
+      ratePerMile:       ratePerMile,
+      waitingRate:       val('rate-waiting') || driver.waitingRate,
+      billingContact:    val('billing-contact') || driver.billingContact,
+      invoicingCycle:    val('invoicing-cycle') || driver.invoicingCycle,
+      punctualityPct:    pct,
+      preferredAirports: val('airports') || driver.preferredAirports,
+      availability:      val('availability') || driver.availability,
+      languages:         val('languages') || driver.languages,
+      notes:             val('notes'),
+      compliance:        driver.compliance || {}
+    });
+
+    saveDriver(updated);
+
+    var toast = document.getElementById('save-toast');
+    toast.style.display = 'block';
+    setTimeout(function () {
+      toast.style.display = 'none';
+      window.location.href = 'drivers.html?id=' + driver.id;
+    }, 1400);
+  });
+</script>
+
+</body>
+</html>

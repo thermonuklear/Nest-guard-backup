@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agent Directory — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Filter row ── */
+      .filter-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .filter-field {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 10px 14px;
+      }
+
+      .filter-field small {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-3);
+        font-size: 0.7rem;
+        margin-bottom: 3px;
+      }
+
+      .filter-input,
+      .filter-select {
+        width: 100%;
+        margin-top: 2px;
+        padding: 5px 0;
+        border: none;
+        border-bottom: 1px solid var(--line);
+        background: transparent;
+        color: var(--ink);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.88rem;
+        font-weight: 600;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+
+      .filter-input::placeholder { color: var(--ink-3); font-weight: 400; }
+      .filter-input:focus,
+      .filter-select:focus { border-bottom-color: var(--navy); }
+      .filter-select { appearance: none; cursor: pointer; }
+
+      /* ── Result count ── */
+      .result-count {
+        font-size: 0.78rem;
+        color: var(--ink-3);
+        margin-bottom: 8px;
+      }
+
+      /* ── Parent name cell ── */
+      .parent-name-cell {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .parent-avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+        color: #fff8eb;
+        font-family: "Outfit", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        flex-shrink: 0;
+        border: 2px solid var(--line);
+      }
+
+      .parent-name-link {
+        font-weight: 700;
+        color: var(--ink) !important;
+        text-decoration: none;
+      }
+
+      .parent-name-link:hover {
+        color: var(--gold) !important;
+        text-decoration: underline;
+      }
+
+      /* ── Empty state ── */
+      .empty-state {
+        text-align: center;
+        padding: 36px 24px;
+        color: var(--ink-3);
+        font-size: 0.88rem;
+      }
+
+      /* ── Metrics: 3-card override ── */
+      .metrics-3 {
+        display: grid;
+        grid-template-columns: 1.15fr repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      @media (max-width: 900px) {
+        .filter-row   { grid-template-columns: 1fr; }
+        .metrics-3    { grid-template-columns: 1fr 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+
+        <!-- Chrome bar -->
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small>Route /admin/agents</small>
+        </div>
+
+        <div class="shell">
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Agent Directory</strong>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Access</div>
+              <a class="nav-link" href="users.html">Users &amp; roles</a>
+              <a class="nav-link nav-link-sub" href="students.html">Students</a>
+              <a class="nav-link nav-link-sub" href="staff-list.html">Staff</a>
+              <a class="nav-link nav-link-sub" href="drivers.html">Drivers</a>
+              <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
+              <a class="nav-link nav-link-sub" href="parent-list.html">Parents</a>
+              <a class="nav-link nav-link-sub" href="contracts.html">Contracts</a>
+              <a class="nav-link nav-link-sub active" href="agents.html">Agents</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <!-- Main content -->
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Access control</span>
+                <h2>Agent directory</h2>
+                <p>Manage international education agents, their commission structures, compliance agreements, and linked students.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button" href="#">Register agent</a>
+              </div>
+            </div>
+
+            <div class="metrics metrics-3">
+              <article class="metric featured">
+                <h4>Total active agents</h4>
+                <div class="metric-value" id="agent-total">Loading...</div>
+                <p class="metric-meta">Active partners</p>
+              </article>
+              <article class="metric">
+                <h4>Missing compliance</h4>
+                <div class="metric-value" id="missing-compliance">Loading...</div>
+                <p class="metric-meta">Agency agreements pending or expired</p>
+              </article>
+              <article class="metric">
+                <h4>Total referred students</h4>
+                <div class="metric-value" id="referred-students-total">Loading...</div>
+                <p class="metric-meta">Currently linked in system</p>
+              </article>
+            </div>
+
+            <div class="card">
+              <div class="filter-row">
+                <div class="filter-field">
+                  <small>Search agents</small>
+                  <input type="text" class="filter-input" id="search-input" placeholder="Search by name, company, email, or country..." />
+                </div>
+                <div class="filter-field">
+                  <small>Status</small>
+                  <select class="filter-select" id="status-filter">
+                    <option value="">All statuses</option>
+                    <option value="Active">Active</option>
+                    <option value="Pending">Pending</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="result-count" id="result-count">Loading agents...</div>
+
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Company</th>
+                      <th>Primary Contact</th>
+                      <th>Country</th>
+                      <th>Commission</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="agent-table-body">
+                    <!-- Javascript populates this -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+</section>
+        </div><!-- /shell -->
+      </div><!-- /app-frame -->
+    </main>
+
+    <script src="assets/db.js"></script>
+    
+  </body>
+</html>
+<script>
+      var searchInput = document.getElementById('search-input');
+      var statusFilter = document.getElementById('status-filter');
+      var resultCount = document.getElementById('result-count');
+
+      if (searchInput) searchInput.addEventListener('input', applyFilters);
+      if (statusFilter) statusFilter.addEventListener('change', applyFilters);
+
+      function renderTable(data) {
+        var tbody = document.getElementById('agent-table-body');
+        resultCount.textContent = data.length + ' agent' + (data.length !== 1 ? 's' : '');
+
+        if (!data.length) {
+          tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No agents match the current filters.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = data.map(function (a) {
+          var statusColor = a.status === 'Active' ? 'green' : (a.status === 'Pending' ? 'amber' : 'slate');
+          return '<tr style="cursor:pointer;" onclick="window.location.href=\'agent-profile.html?id=' + a.id + '\'">' +
+                   '<td><span class="badge slate">' + a.id + '</span></td>' +
+                   '<td><strong>' + (a.company || '—') + '</strong></td>' +
+                   '<td>' + a.firstName + ' ' + a.lastName + '<br><small style="color:#64748b;">' + a.email + '</small></td>' +
+                   '<td>' + (a.country || '—') + '</td>' +
+                   '<td>' + (a.commissionRate || 'Standard') + '</td>' +
+                   '<td><span class="badge ' + statusColor + '">' + a.status + '</span></td>' +
+                 '</tr>';
+        }).join('');
+      }
+
+      function applyFilters() {
+        var search = searchInput.value.trim().toLowerCase();
+        var status = statusFilter.value;
+        var allAgents = typeof getAllAgents === 'function' ? getAllAgents() : [];
+
+        var data = allAgents.filter(function (a) {
+          var searchable = [a.company, a.firstName, a.lastName, a.email, a.country].join(' ').toLowerCase();
+          var matchSearch = !search || searchable.includes(search);
+          var matchStatus = !status || a.status === status;
+          return matchSearch && matchStatus;
+        });
+        renderTable(data);
+      }
+
+      function updateMetrics() {
+        var allAgents = typeof getAllAgents === 'function' ? getAllAgents() : [];
+        document.getElementById('agent-total').textContent = allAgents.filter(function(a) { return a.status === 'Active'; }).length;
+        document.getElementById('missing-compliance').textContent = allAgents.filter(function(a) { return a.agreementStatus !== 'Active'; }).length;
+        
+        var allStudents = typeof getAllStudents === 'function' ? getAllStudents() : [];
+        var referred = allStudents.filter(function(s) { return s.legal && s.legal.agentId; }).length;
+        document.getElementById('referred-students-total').textContent = referred;
+      }
+
+      applyFilters();
+      updateMetrics();
+    </script>
+  </body>
+</html>
