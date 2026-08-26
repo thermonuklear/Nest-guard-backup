@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Development Plan — Oxford Guardians Platform</title>
+<style>
+  :root{
+    --bg:#ffffff; --fg:#18181b; --fg2:#52525b; --fg3:#a1a1aa;
+    --line:#e4e4e7; --soft:#fafafa;
+    --accent:#0e7490; --accent-soft:#ecfeff; --accent-line:#a5f3fc;
+    --star:#b45309; --star-soft:#fffbeb; --star-line:#fde68a;
+    --mute:#71717a;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0c0c0e; --fg:#f4f4f5; --fg2:#a1a1aa; --fg3:#71717a;
+      --line:#27272a; --soft:#141416;
+      --accent:#22d3ee; --accent-soft:#083344; --accent-line:#155e75;
+      --star:#fbbf24; --star-soft:#292009; --star-line:#78350f;
+      --mute:#71717a;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0c0c0e; --fg:#f4f4f5; --fg2:#a1a1aa; --fg3:#71717a;
+    --line:#27272a; --soft:#141416;
+    --accent:#22d3ee; --accent-soft:#083344; --accent-line:#155e75;
+    --star:#fbbf24; --star-soft:#292009; --star-line:#78350f;
+  }
+  :root[data-theme="light"]{
+    --bg:#ffffff; --fg:#18181b; --fg2:#52525b; --fg3:#a1a1aa;
+    --line:#e4e4e7; --soft:#fafafa;
+    --accent:#0e7490; --accent-soft:#ecfeff; --accent-line:#a5f3fc;
+    --star:#b45309; --star-soft:#fffbeb; --star-line:#fde68a;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--fg2);
+    font:15px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:64px 28px 96px;}
+  h1,h2,h3{color:var(--fg); font-weight:650; line-height:1.25; letter-spacing:-.011em;}
+  h1{font-size:29px; margin:0 0 10px;}
+  h2{font-size:15px; margin:64px 0 18px; text-transform:uppercase; letter-spacing:.09em; color:var(--fg3); font-weight:600;}
+  h3{font-size:16px; margin:0;}
+  p{margin:10px 0;}
+  a{color:var(--accent);}
+  code{font:12.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace; background:var(--soft); border:1px solid var(--line); padding:1px 5px; border-radius:4px; color:var(--fg); overflow-wrap:anywhere;}
+  .sub{font-size:16px; color:var(--fg2); margin:0 0 26px;}
+  .meta{font-size:13.5px; color:var(--fg3); border-top:1px solid var(--line); padding-top:16px;}
+  .meta b{color:var(--fg2); font-weight:600;}
+
+  /* rules */
+  .rules{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+  .rules div{background:var(--bg); padding:16px 18px;}
+  .rules b{display:block; color:var(--fg); font-size:13.5px; margin-bottom:4px; font-weight:600;}
+  .rules span{font-size:13px; color:var(--fg2); line-height:1.5;}
+  @media(max-width:600px){ .rules{grid-template-columns:1fr;} }
+
+  /* timeline */
+  .tl{position:relative; margin:0; padding:0; list-style:none;}
+  .tl::before{content:""; position:absolute; left:15px; top:14px; bottom:14px; width:1px; background:var(--line);}
+  .st{position:relative; padding:0 0 4px 46px; margin-bottom:2px;}
+  .st > summary{
+    list-style:none; cursor:pointer; display:block; padding:12px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .st > summary::-webkit-details-marker{display:none;}
+  .st:last-child > summary{border-bottom:0;}
+  .node{
+    position:absolute; left:0; top:12px; width:31px; height:31px; border-radius:50%;
+    background:var(--bg); border:1px solid var(--line); color:var(--fg3);
+    font:600 12px/29px ui-monospace,monospace; text-align:center; letter-spacing:-.02em;
+  }
+  .st[data-kind="star"] .node{border-color:var(--star); color:var(--star); background:var(--star-soft); font-size:13px;}
+  .st[data-kind="last"] .node{border-style:dashed;}
+  .st[data-kind="core"] .node{border-color:var(--accent-line); color:var(--accent); background:var(--accent-soft);}
+  .hd{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
+  .hd h3{flex:1; min-width:200px;}
+  .st[data-kind="star"] .hd h3{color:var(--star);}
+  .st[data-kind="last"] .hd h3{color:var(--fg2);}
+  .dur{font:12px/1 ui-monospace,monospace; color:var(--fg3); white-space:nowrap;}
+  .bar{height:3px; background:var(--line); border-radius:2px; margin:9px 0 7px; overflow:hidden;}
+  .bar i{display:block; height:100%; background:var(--accent); border-radius:2px; opacity:.55;}
+  .st[data-kind="star"] .bar i{background:var(--star); opacity:.8;}
+  .st[data-kind="last"] .bar i{background:var(--fg3); opacity:.4;}
+  .gate{font-size:13px; color:var(--fg2);}
+  .gate b{color:var(--fg); font-weight:600;}
+  .chev{color:var(--fg3); font-size:11px; margin-left:2px;}
+  .st[open] .chev{opacity:.4;}
+
+  /* stage body */
+  .body{padding:14px 0 22px; font-size:13.5px;}
+  .body ul{margin:8px 0; padding-left:17px;}
+  .body li{margin:5px 0; color:var(--fg2);}
+  .body li b{color:var(--fg); font-weight:600;}
+  .body > p:first-child{margin-top:0;}
+  table{width:100%; border-collapse:collapse; margin:12px 0; font-size:12.5px;}
+  th,td{text-align:left; padding:7px 10px 7px 0; border-bottom:1px solid var(--line); vertical-align:top; overflow-wrap:anywhere;}
+  th{color:var(--fg3); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.06em;}
+  td b{color:var(--fg); font-weight:600;}
+  .tag{display:inline-block; font:11px/1.5 ui-monospace,monospace; background:var(--soft); border:1px solid var(--line); color:var(--fg2); padding:0 5px; border-radius:3px; margin:1px 2px 1px 0;}
+  .tag.a{background:var(--accent-soft); border-color:var(--accent-line); color:var(--accent);}
+
+  .callout{border-left:2px solid var(--star); background:var(--star-soft); padding:12px 16px; border-radius:0 6px 6px 0; margin:16px 0; font-size:13px;}
+  .callout b{color:var(--star);}
+  .note{border-left:2px solid var(--line); padding:10px 16px; margin:16px 0; font-size:12.5px; color:var(--fg3);}
+
+  .milestone{
+    margin:8px 0 10px 46px; padding:14px 18px; border:1px dashed var(--star-line);
+    background:var(--star-soft); border-radius:8px; font-size:13.5px; color:var(--fg2);
+  }
+  .milestone b{color:var(--star); display:block; margin-bottom:4px; font-size:13px; letter-spacing:.02em;}
+
+  .divider{display:flex; align-items:center; gap:12px; margin:26px 0 14px 46px; color:var(--fg3); font-size:11px; text-transform:uppercase; letter-spacing:.1em;}
+  .divider::after{content:""; flex:1; height:1px; background:var(--line);}
+
+  .foot{margin-top:64px; padding-top:20px; border-top:1px solid var(--line); font-size:12.5px; color:var(--fg3);}
+  @media print{ .st{page-break-inside:avoid;} .st > summary{border-bottom:1px solid #ddd;} details{display:block;} details > .body{display:block !important;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Development Plan</h1>
+  <p class="sub">Build sequence to AEGIS readiness — Oxford Guardians Platform</p>
+  <p class="meta">
+    <b>Prepared</b> 7 August 2026 &nbsp;·&nbsp; <b>Basis</b> AEGIS Architecture Review, 7 Aug (59% weighted)<br>
+    <b>Constraints</b> database security and certification sequenced last; policy content slotted in once every place that holds it exists.
+  </p>
+
+  <h2>How this is ordered</h2>
+  <p style="font-size:14px;margin-top:-4px;">By <b style="color:var(--fg)">dependency</b> — what must be true before the next thing can be built or verified. Not by compliance gain.</p>
+  <div class="rules">
+    <div><b>Instruments before work</b><span>The dashboard and alert engine are how every later stage is verified. While they show hardcoded fiction, you cannot tell whether anything you build works.</span></div>
+    <div><b>Plumbing before features</b><span>The alert engine and audit interceptor are single choke points in <code>db.js</code>. Every store added after inherits them free.</span></div>
+    <div><b>Containers before content</b><span>Policies slot into a store <i>plus</i> a category, a manifest, an acknowledgement record and a public surface. Stage 3 builds all of it.</span></div>
+    <div><b>Facts before enforcement</b><span>A rule can only be enforced on a field that exists. Enforcement follows schema, never precedes it.</span></div>
+  </div>
+
+  <h2>The sequence</h2>
+
+  <ul class="tl">
+
+    <li><details class="st" data-kind="core">
+      <summary>
+        <div class="node">0</div>
+        <div class="hd"><h3>Trustworthy instruments</h3><span class="dur">2–3 days</span></div>
+        <div class="bar"><i style="width:17%"></i></div>
+        <div class="gate">Wiring only, no new schema. <b>Gate:</b> every number on the dashboard traces to a real record. <span class="chev">▾</span></div>
+      </summary>
+      <div class="body">
+        <p>Everything downstream is verified by looking at the dashboard and notifications. Today both lie. This is not "quick wins" — it is the precondition for knowing whether Stages 1–10 worked.</p>
+        <table>
+          <tr><th style="width:52%">Task</th><th>Where</th></tr>
+          <tr><td><b>Wire dashboard to <code>generateComplianceAlerts()</code></b><br>Page has no <code>&lt;script&gt;</code> tag at all. Shows "28 students" (DB has 6), "11 homestays" (DB has 2).</td><td><code>admin-dashboard.html</code></td></tr>
+          <tr><td><b>Same for the AEGIS Control Room</b><br>Static DBS tracker names Margaret Ellis / Catherine Brennan — neither exists in <code>og_hosts</code>.</td><td><code>compliance.html</code></td></tr>
+          <tr><td><b>Fix always-100% issuance bug</b><br><code>s.emergencyNumberIssued || s.id</code> is always truthy. 3 lines.</td><td><code>db.js:3812</code></td></tr>
+          <tr><td><b>Wire concern create / triage / close</b><br>Save controls are <code>&lt;a href&gt;</code> links. <code>saveConcern()</code> already works — called fine from 3 other pages. ~40 lines.</td><td>4 concern pages</td></tr>
+          <tr><td><b>Render students + logs on the school page</b><br><code>getStudentsForSchool()</code> and <code>getSchoolLogs()</code> both exist and are exported. ~30 lines.</td><td><code>school-profile.html</code></td></tr>
+          <tr><td><b>Populate SCR DOB and Self-dec columns</b><br>Hardcoded to <code>—</code> despite <code>selfDeclarationDocPath</code> existing.</td><td>3 SCR pages</td></tr>
+          <tr><td><b>Fix branding leak</b><br>"Nest Guardians" appears inside AEGIS checklist labels. 13 occurrences.</td><td>6 files</td></tr>
+          <tr><td><b>Retire dead stubs</b> — 9 static duplicates of working flows</td><td><code>homestay-*</code></td></tr>
+          <tr><td><b>Promote <code>old_version/</code> to repo root</b><br>Do it now — every later stage makes the diff larger.</td><td>whole tree</td></tr>
+        </table>
+      </div>
+    </details></li>
+
+    <li><details class="st" data-kind="core">
+      <summary>
+        <div class="node">1</div>
+        <div class="hd"><h3>Central plumbing</h3><span class="dur">3–4 days</span></div>
+        <div class="bar"><i style="width:23%"></i></div>
+        <div class="gate">Concentrated in <code>db.js</code>. <b>Gate:</b> alerts cover every category; every write is audited. <span class="chev">▾</span></div>
+      </summary>
+      <div class="body">
+        <ul>
+          <li><b>Extend <code>generateComplianceAlerts()</code> with its nine blind spots</b> — overdue policy reviews, overdue annual homestay visits, failed H&amp;S checklist items, host over capacity, PF notification inside 42 days, overdue day-student welfare checks, expiring contracts, driver safeguarding expiry. All computable from data already held. ~80 lines, one function.</li>
+          <li><b>Add <code>og_audit_log</code> + a write interceptor</b> — wrap the <code>save*</code> functions once; record store, record id, action, who, when, before/after. Wire <code>audit-log.html</code> to it.</li>
+          <li><b>Collapse four duplicated representations</b> — DBS (Eleanor Ashworth currently displays a clear DBS <i>and</i> raises a critical "No DBS on file"); staff training (Priya Shah is <code>Safeguarding Awareness</code> on her record but "DSL Level 3" in the emergency plan); annual safeguarding update; parent contact.</li>
+          <li><b>Resolve leftover June findings</b> — <code>finance_docs</code> keys people by name string; three parallel logistics stores.</li>
+        </ul>
+        <div class="note"><b style="color:var(--fg2)">Judgement call — audit log placed early despite "security last."</b><br>An audit trail is Standard 2.5.1 record keeping, not access control, and it is a single choke point: added now, every store built in Stages 2–7 is audited automatically; added at Stage 9, it means a pass back over six new stores and ~100 write sites. The access-control layer <i>over</i> it stays in Stage 9. Move it if you'd rather hold the line strictly — costs roughly a day of rework.</div>
+      </div>
+    </details></li>
+
+    <li><details class="st" data-kind="core">
+      <summary>
+        <div class="node">2</div>
+        <div class="hd"><h3>Organisation entity</h3><span class="dur">2–3 days</span></div>
+        <div class="bar"><i style="width:17%"></i></div>
+        <div class="gate">Smallest store, largest standard coverage. <b>Gate:</b> org profile complete. <span class="chev">▾</span></div>
+      </summary>
+      <div class="body">
+        <p><code>db.js</code> models people, places and events but never the organisation itself. Six sub-standards fail for that single reason.</p>
+        <table>
+          <tr><th style="width:62%">Build</th><th>Unlocks</th></tr>
+          <tr><td><code>og_organisation</code> singleton + <code>organisation-profile.html</code></td><td>—</td></tr>
+          <tr><td>ICO registration number, named data controller</td><td><span class="tag">2.7.2</span></td></tr>
+          <tr><td>Insurance — PI, public liability, employer's liability — with renewals fed into the Stage 1 alert engine</td><td><span class="tag">2.4.1</span></td></tr>
+          <tr><td>Statement of aims, principles and practice; publicity register</td><td><span class="tag">1.1</span> <span class="tag">1.2</span></td></tr>
+          <tr><td>Company organogram</td><td><span class="tag">2.1.1</span></td></tr>
+          <tr><td>AEGIS accreditation level, award date, expiry, re-inspection due</td><td><span class="tag">Stage 10</span></td></tr>
+          <tr><td>Significant-changes log with a 14-day clock</td><td><span class="tag">2.11.1</span></td></tr>
+        </table>
+      </div>
+    </details></li>
+
+    <li><details class="st" data-kind="star" open>
+      <summary>
+        <div class="node">★</div>
+        <div class="hd"><h3>Stage 3 — The policy slot-in gate</h3><span class="dur">4–5 days</span></div>
+        <div class="bar"><i style="width:30%"></i></div>
+        <div class="gate">Five sub-tasks, not a paste. <b>Gate:</b> your written policies can land. <span class="chev">▾</span></div>
+      </summary>
+      <div class="body">
+        <p>Your policies are written. They cannot simply be pasted into <code>og_org_documents</code> today, because AEGIS does not only require a policy to <i>exist</i> — <b>6.1.1</b> requires a copy be <b>provided to all staff, homestays and volunteers</b> and be <b>publicly available</b>. 6.7.2 and 2.1.6 say the same. None of that machinery exists.</p>
+
+        <p><b style="color:var(--fg)">3a · Extend the category set</b> — categories are hardcoded in <b>six places</b>. You have four; you need Governance &amp; aims and Handbooks.</p>
+        <table>
+          <tr><th style="width:40%">Location</th><th>What's hardcoded</th></tr>
+          <tr><td><code>policy-viewer.html:143–158</code></td><td>Four <code>nav-folder</code> anchors</td></tr>
+          <tr><td><code>policy-viewer.html:219</code></td><td>Four <code>&lt;option&gt;</code> values</td></tr>
+          <tr><td><code>policy-viewer.html:362</code></td><td>The <code>CATEGORIES</code> array</td></tr>
+          <tr><td><code>policy-viewer.html:418–424</code></td><td>Per-category count vars</td></tr>
+          <tr><td><code>policy-viewer.html:445</code></td><td>Category branches in the render switch</td></tr>
+          <tr><td><code>db.js:2223</code></td><td><code>generateOrgDocId()</code>'s four-way prefix map</td></tr>
+        </table>
+        <p style="font-size:13px;color:var(--fg3);">Better: drive all six from one exported <code>POLICY_CATEGORIES</code> constant so a seventh category is a one-line change.</p>
+
+        <p><b style="color:var(--fg)">3b · Required-policy manifest</b> — seed ~17 placeholders with <code>status:'Missing'</code>, <code>standardRef</code>, <code>isMandatory</code>:</p>
+        <p>
+          <span class="tag">Statement of aims 1.1</span><span class="tag">Safeguarding &amp; Child Protection 6.1</span><span class="tag">Safer Recruitment 2.8.1</span><span class="tag">Whistleblowing 6.4</span><span class="tag">Low-Level Concerns 6.5.2</span><span class="tag">Data Protection &amp; Privacy 2.7.3</span><span class="tag">Missing Student 6.7</span><span class="tag">Anti-Bullying 6.9</span><span class="tag">Online Safety 6.10</span><span class="tag">Prevent Duty 6.6</span><span class="tag">Complaints 7.1</span><span class="tag">Welfare H&amp;S 5.10.1</span><span class="tag a">Emergency Procedure 2.6 ✓</span><span class="tag a">Mental Health 3.3 ✓</span><span class="tag">Staff &amp; Homestay Code of Conduct 2.1.6</span><span class="tag">Student Behaviour Code 6.8</span><span class="tag">Student / Parent / Homestay Handbooks 2.3</span>
+        </p>
+        <p style="font-size:13px;color:var(--fg3);">Converts an empty category from "nothing uploaded yet" into "you are missing a statutory document" — and makes Stage 1's review alerting meaningful.</p>
+
+        <p><b style="color:var(--fg)">3c · Issue &amp; acknowledgement tracking</b> — <b>zero exists today</b> (grepped: 0 occurrences). Add <code>og_policy_acknowledgements</code> keyed <code>{docId, personId, personType, issuedDate, acknowledgedDate, version}</code>. Surface as a coverage panel per policy and a row on staff/host profiles. <b>Without this, 6.1.1 stays partially met however good the content is.</b></p>
+
+        <p><b style="color:var(--fg)">3d · Public policy surface</b> — 2.7.3, 6.1.1 and 7.1 all require public availability. A read-only view filtered to <code>isPublic</code>, <i>not</i> the admin page with its create/edit/archive controls. Fix the <code>href="#"</code> privacy link in <code>index.html:569</code>.</p>
+
+        <p><b style="color:var(--fg)">3e · Handbook content checklists</b> — Appendices 1–3 enumerate 20 / 14 / 27 required content items. Model as per-handbook checklists so completeness is visible rather than asserted.</p>
+      </div>
+    </details></li>
+
+    <li><div class="milestone">
+      <b>★ MILESTONE — drop in your policies</b>
+      With 3a–3e done, paste in the 14 policies and 3 handbooks. That single act moves
+      <span class="tag">1.1</span><span class="tag">2.3</span><span class="tag">2.7.3</span><span class="tag">2.8.1</span><span class="tag">5.10.1</span><span class="tag">6.1</span><span class="tag">6.4</span><span class="tag">6.5.2</span><span class="tag">6.6</span><span class="tag">6.7</span><span class="tag">6.8</span><span class="tag">6.9</span><span class="tag">6.10</span><span class="tag">7.1</span>
+      — the largest compliance jump available anywhere in this plan, and the reason Stage 3 sits before Stages 4–7 rather than after.
+    </div></li>
+
+    <li><details class="st">
+      <summary>
+        <div class="node">4</div>
+        <div class="hd"><h3>Complaints &amp; AEGIS notifications</h3><span class="dur">3–4 days</span></div>
+        <div class="bar"><i style="width:23%"></i></div>
+        <div class="gate"><b>Gate:</b> Standard 7 has infrastructure for the first time. <span class="chev">▾</span></div>
+      </summary>
+      <div class="body">
+        <ul>
+          <li><b><code>og_complaints</code> + <code>complaints.html</code></b> — Standard 7 is the only standard with <i>no infrastructure whatsoever</i>. <code>og_concerns</code> is not a substitute: different lifecycle, different parties (parents, homestays, schools, agents), different outcomes. Needs complainant identity, date received, stage (informal / formal / AEGIS panel per Appendix 8), handler, actions, outcome, closed date, timeliness clock. 7.3 requires the record <b>regardless of whether upheld</b>.</li>
+          <li><b><code>og_aegis_notifications</code></b> — 2.11.1 significant changes (14-day clock) and 6.5.3 safeguarding self-report. Also 2.7.6 AEGIS-disclosure consent.</li>
+          <li><b>Staff / homestay self-report route</b> — 6.5.4 requires a process to record and manage.</li>
+        </ul>
+        <p style="font-size:13px;color:var(--fg3);">After Stage 3 because the register references the Complaints Policy and the self-report route references the Code of Conduct.</p>
+      </div>
+    </details></li>
+
+    <li><details class="st">
+      <summary>
+        <div class="node">5</div>
+        <div class="hd"><h3>Safer-recruitment schema</h3><span class="dur">1 week</span></div>
+        <div class="bar"><i style="width:33%"></i></div>
+        <div class="gate">Densest remaining code gap. <b>Gate:</b> every 16+ household member tracked. <span class="chev">▾</span></div>
+      </summary>
+      <div class="body">
+        <table>
+          <tr><th style="width:74%">Build</th><th>Std</th></tr>
+          <tr><td><b><code>householdMembers[].compliance</code> + <code>checkPerson()</code> iterating every member aged ≥16</b><br>Today <code>householdMembers[]</code> has no DBS field at all — the only trace is a free-text <code>secondaryAdultDbs</code> string. In a three-adult household, two adults are invisible to the compliance engine.</td><td><span class="tag">5.1.3</span></td></tr>
+          <tr><td><code>barredListCheckDate</code>, <code>dbsWrittenPermissionDate</code> — the SCR currently <i>derives</i> "Barred list" from <code>dbsStatus === 'clear'</code>, reporting a check that was never performed</td><td><span class="tag">2.8.6</span></td></tr>
+          <tr><td><code>rightToWorkCheckedDate</code> — the standard's explicit ask is the check date; only an expiry is stored</td><td><span class="tag">2.8.10</span></td></tr>
+          <tr><td><code>onlineSearchDate</code> + notes</td><td><span class="tag">2.8.11</span></td></tr>
+          <tr><td><code>dbsDisclosureRiskAssessmentPath</code> + outcome + decision-maker, gated on <code>dbsStatus !== 'clear'</code></td><td><span class="tag">2.8.7</span></td></tr>
+          <tr><td>Structured referee metadata — name, relationship, known-since, employer flag, not-related attestation, verification call log</td><td><span class="tag">2.8.4</span></td></tr>
+          <tr><td><code>og_interviews</code> keyed to <code>personId</code></td><td><span class="tag">2.8.3</span></td></tr>
+          <tr><td>Structured Appendix 5 self-declaration (11 questions) + annual re-declaration cycle</td><td><span class="tag">5.1.2</span></td></tr>
+          <tr><td>Real induction records; wire the two induction pages; <b>fix the mislabelled SCR "Induction" column</b> (renders safeguarding training)</td><td><span class="tag">2.1.4</span></td></tr>
+          <tr><td><code>settledStatusEvidencePath</code> + verification date — a boolean is not "evidence viewed and recorded"</td><td><span class="tag">2.1.8</span> <span class="tag">5.1.1</span></td></tr>
+          <tr><td><code>schoolIndependenceConfirmed</code>; <code>jobDescriptionDocPath</code></td><td><span class="tag">2.1.2</span> <span class="tag">2.1.3</span></td></tr>
+        </table>
+        <p style="font-size:13px;color:var(--fg3);">After Stage 1's deduplication, so new fields are added to one canonical representation rather than two.</p>
+      </div>
+    </details></li>
+
+    <li><details class="st">
+      <summary>
+        <div class="node">6</div>
+        <div class="hd"><h3>Enforcement</h3><span class="dur">4–5 days</span></div>
+        <div class="bar"><i style="width:30%"></i></div>
+        <div class="gate">Turns recorded facts into rules. <b>Gate:</b> placement rules block, not warn. <span class="chev">▾</span></div>
+      </summary>
+      <div class="body">
+        <p><code>homestay-create.html</code> calls <code>savePlacement()</code> with <b>zero validation</b> — no capacity check, no visit check, nothing.</p>
+        <table>
+          <tr><th style="width:60%">Rule</th><th>Std</th><th>Source</th></tr>
+          <tr><td>Max 3 students per homestay; block the 4th</td><td><span class="tag">5.5.2</span></td><td><code>capacityMax</code></td></tr>
+          <tr><td>Count students placed by other organisations in the cap</td><td><span class="tag">5.5.3</span></td><td>new field</td></tr>
+          <tr><td>No under-16 alongside an over-20</td><td><span class="tag">5.5.5</span></td><td><code>dob</code> — derivable today, never derived</td></tr>
+          <tr><td>Block placement where no approved in-person visit is current</td><td><span class="tag">5.10.1.1</span></td><td><code>getHostInPersonVisitStatus()</code></td></tr>
+          <tr><td>Block where <code>hasSpecialistCondition && !homestayConfirmedCompetent</code></td><td><span class="tag">3.4.4</span></td><td><code>medicalPlacementGate</code></td></tr>
+          <tr><td>Surface the contract-activation block in the UI (only <code>console.warn</code>s today)</td><td><span class="tag">2.2.3</span></td><td><code>saveContract()</code></td></tr>
+          <tr><td><code>og_transport_firms</code> — written DBS confirmation, date, review cycle</td><td><span class="tag">4.3</span></td><td>new store</td></tr>
+          <tr><td><code>student.heightCm</code> + child-seat check at booking</td><td><span class="tag">4.4</span></td><td>the two facts never meet today</td></tr>
+          <tr><td>Per-student school service confirmations, academic-year tracked</td><td><span class="tag">9.3</span></td><td>new field</td></tr>
+          <tr><td>Named coordinator per school + cover notification</td><td><span class="tag">9.8</span></td><td>new field</td></tr>
+          <tr><td>Guardianship-ended offboarding requiring a school notification</td><td><span class="tag">9.9</span></td><td><code>student-archive.html</code> is static</td></tr>
+        </table>
+      </div>
+    </details></li>
+
+    <li><details class="st">
+      <summary>
+        <div class="node">7</div>
+        <div class="hd"><h3>Conduct, training &amp; liaison</h3><span class="dur">3–4 days</span></div>
+        <div class="bar"><i style="width:23%"></i></div>
+        <div class="gate">Consumes Stage 3's acknowledgement machinery. <span class="chev">▾</span></div>
+      </summary>
+      <div class="body">
+        <table>
+          <tr><th style="width:74%">Build</th><th>Std</th></tr>
+          <tr><td>Code of conduct issue + acknowledgement for staff and homestays</td><td><span class="tag">2.1.6</span> <span class="tag">5.8.2</span></td></tr>
+          <tr><td>Staff sufficiency analytics — mirror <code>getHomestaySupplyAnalytics()</code> for coordinator caseload</td><td><span class="tag">2.1.9</span></td></tr>
+          <tr><td>School DSL contact fields + <code>contactRole</code> on school logs</td><td><span class="tag">6.2.4</span></td></tr>
+          <tr><td><code>og_external_referrals</code> — LSP and LADO contacts, referral records, inter-agency log</td><td><span class="tag">6.2.5</span></td></tr>
+          <tr><td><code>isLiveTraining</code> flag — AEGIS rejects non-live DSL training and the platform can't record the distinction</td><td><span class="tag">6.2.2</span></td></tr>
+          <tr><td>Run <code>checkTrainingRequirements()</code> for <b>drivers</b> — currently staff + hosts only, so driver safeguarding expiry is unenforced</td><td><span class="tag">6.3.1</span></td></tr>
+          <tr><td>Homestay AEGIS-inspection cooperation acknowledgement</td><td><span class="tag">5.11.1</span></td></tr>
+          <tr><td><code>hostSource</code> (own / third-party) gating approval</td><td><span class="tag">5.12.1</span></td></tr>
+          <tr><td>Home insurance awareness; <code>hostDrivesStudents</code> + vehicle insurance declaration</td><td><span class="tag">2.4.2</span> <span class="tag">2.4.3</span></td></tr>
+          <tr><td>Pre-arrival pack, virtual meeting record, <code>introductory-meeting</code> welfare log type</td><td><span class="tag">3.1</span></td></tr>
+          <tr><td>Wire <code>parent-consent-update.html</code> (static today)</td><td><span class="tag">3.4.2</span></td></tr>
+          <tr><td>Standing <code>hasCCTV</code> flag + ICO paper trail + ad hoc check schedule</td><td><span class="tag">5.8.6</span></td></tr>
+          <tr><td>NSPCC home-alone items on the visit report</td><td><span class="tag">5.5.8</span></td></tr>
+        </table>
+      </div>
+    </details></li>
+
+    <li><details class="st">
+      <summary>
+        <div class="node">8</div>
+        <div class="hd"><h3>Data seeding pass</h3><span class="dur">2–3 days</span></div>
+        <div class="bar"><i style="width:17%"></i></div>
+        <div class="gate">Content, not code. <b>Gate:</b> the alert wall clears legitimately. <span class="chev">▾</span></div>
+      </summary>
+      <div class="body">
+        <p>By this point every store exists and every field has a home.</p>
+        <ul>
+          <li><code>og_contracts</code> — staff, parent, homestay, agent templates (seeds empty today via <code>v2-empty</code>)</li>
+          <li><code>og_visit_reports</code> + <code>og_hs_checklists</code> — backfill existing hosts so warning alerts clear legitimately</li>
+          <li><code>og_training_completions</code> — staff and homestay training history</li>
+          <li><code>og_school_logs</code> + <code>og_parent_logs</code> — historical liaison</li>
+          <li><code>og_transports</code> + <code>og_travel_todos</code> — demonstrate the travel workflow</li>
+          <li>Compliance fields — <code>dbsCertificatePath</code>, <code>idDocumentPath</code>, <code>student.health.*</code> are empty strings today, which is why <code>notifications.html</code> shows a wall of alerts</li>
+          <li>The organisation profile from Stage 2</li>
+        </ul>
+      </div>
+    </details></li>
+
+    <li><div class="divider">Sequenced last, per your constraint</div></li>
+
+    <li><details class="st" data-kind="last">
+      <summary>
+        <div class="node">9</div>
+        <div class="hd"><h3>Security</h3><span class="dur">2–4 weeks</span></div>
+        <div class="bar"><i style="width:100%"></i></div>
+        <div class="gate"><b>Gate:</b> authentication, RBAC, off <code>localStorage</code>. <span class="chev">▾</span></div>
+      </summary>
+      <div class="body">
+        <table>
+          <tr><th style="width:74%">Build</th><th>Std</th></tr>
+          <tr><td>Real authentication — <code>login.html</code> performs no credential check and any page is reachable directly</td><td><span class="tag">2.7.4</span></td></tr>
+          <tr><td>Role-based access control enforced in code — <code>og_staff.role</code> exists and pages describe boundaries in prose, but nothing enforces them</td><td><span class="tag">2.7.4</span></td></tr>
+          <tr><td><b>DSL-and-senior-management-only gating</b> on <code>og_concerns</code>, <code>og_mh_*</code> — cannot be partially satisfied</td><td><span class="tag">6.2.6</span></td></tr>
+          <tr><td>Remove the unguarded <code>localStorage.clear()</code> control</td><td><span class="tag">2.5.1</span></td></tr>
+          <tr><td>Migrate off plaintext <code>localStorage</code> — IndexedDB or a backend — before any binary storage</td><td><span class="tag">2.5.1</span> <span class="tag">3.4.3</span></td></tr>
+          <tr><td>Encryption at rest; access-control layer over the Stage 1 audit log</td><td><span class="tag">3.4.3</span> <span class="tag">2.7.4</span></td></tr>
+        </table>
+        <div class="note"><code>host.profilePhoto</code> already stores base64 SVG data URIs inline in <code>og_hosts</code>. Small today, but the pattern is set — the moment real DBS or gas-safety PDFs are stored as data URLs, writes throw <code>QuotaExceededError</code>, which the <code>try/catch</code> blocks throughout <code>db.js</code> swallow silently. Data would vanish with no error shown. Keep binaries out until this stage lands.</div>
+      </div>
+    </details></li>
+
+    <li><details class="st" data-kind="last">
+      <summary>
+        <div class="node">10</div>
+        <div class="hd"><h3>Certification preparation</h3><span class="dur">1 week</span></div>
+        <div class="bar"><i style="width:33%"></i></div>
+        <div class="gate"><b>Gate:</b> the Appendix A bundle exports. <span class="chev">▾</span></div>
+      </summary>
+      <div class="body">
+        <table>
+          <tr><th style="width:60%">Build</th><th>Purpose</th></tr>
+          <tr><td>Appendix A evidence bundle export — all 30 required documents, assembled from the policy store, org profile, SCR and contracts</td><td>The actual submission artefact</td></tr>
+          <tr><td>Redaction / anonymisation mode</td><td>Appendix A requires personal detail be redacted</td></tr>
+          <tr><td>SCR export in Appendix 7 format</td><td>Safer recruitment evidence</td></tr>
+          <tr><td>Gold Standard contact-list templates for homestays and partner schools, with the 2.7.6 consent flag from Stage 4</td><td>Gold Standard inspection</td></tr>
+          <tr><td>Password-protected export</td><td>Appendix A recommendation</td></tr>
+          <tr><td>Annual Declaration report — student statistics + DBS confirmation</td><td>Continued membership</td></tr>
+        </table>
+      </div>
+    </details></li>
+
+  </ul>
+
+  <h2>Three calls to overrule if you disagree</h2>
+  <div class="callout">
+    <b>1 · Audit interceptor at Stage 1, not Stage 9.</b>
+    It is Standard 2.5.1 record-keeping rather than access control, and it is one choke point in <code>db.js</code> — added now, every store in Stages 2–7 inherits it free. Added at Stage 9, it is a pass back over six new stores. The access-control layer over it stays at Stage 9. Costs ~1 day of rework if you'd rather hold the line strictly.
+  </div>
+  <div class="callout">
+    <b>2 · <code>old_version/</code> → root promotion at Stage 0.</b>
+    It only gets more expensive as the diff grows, and the directory name is itself how a mirror came to be mistaken for the live app.
+  </div>
+  <div class="callout">
+    <b>3 · Stage 5 before Stage 6.</b>
+    You cannot enforce a rule on a field that does not exist yet — <code>homestay-create.html</code> currently calls <code>savePlacement()</code> with zero validation, so all of enforcement is genuinely new work.
+  </div>
+
+  <p class="foot">
+    Stages 0–3 (~2.5 weeks) deliver the largest single jump, because Stage 3 ends with your existing policy content landing against complete infrastructure. Stages 0–8 bring the platform to functional AEGIS coverage; Stages 9–10 make it defensible in an actual inspection.<br><br>
+    Oxford Guardians Platform · Development Plan · 7 August 2026 · derived from <code>AEGIS_Architecture_Review_2026-08-07</code> and a full read of the working tree.
+  </p>
+
+</div>
+</body>
+</html>

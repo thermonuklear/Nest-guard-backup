@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AEGIS Compliance Audit — Oxford Guardians Platform — 25 Jun 2026</title>
+<style>
+  :root{
+    --navy:#243b53; --navy2:#2c4a6e; --cyan:#06b6d4; --ink:#0f172a; --slate:#475569;
+    --mute:#64748b; --line:#dbe3ec; --bg:#ffffff;
+    --green:#15803d; --greenbg:#e8f5ec; --amber:#b45309; --amberbg:#fdf3e3;
+    --orange:#c2410c; --orangebg:#fdeee2; --red:#b91c1c; --redbg:#fdecec; --blue:#1d4ed8; --bluebg:#eaf1fb;
+  }
+  @page{
+    size:A4;
+    margin:18mm 16mm 20mm 16mm;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Plus Jakarta Sans","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); font-size:9.6px; line-height:1.5; -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  h1,h2,h3,h4{font-family:"Outfit","Plus Jakarta Sans",Arial,sans-serif; margin:0;}
+  h1{font-size:30px; font-weight:800; line-height:1.1; color:var(--ink); letter-spacing:-.5px;}
+  .subtitle{font-style:italic; color:var(--mute); font-size:11px; margin-top:8px; margin-bottom:4px;}
+
+  /* running footer */
+  .footer{position:fixed; bottom:-12mm; left:0; right:0; font-size:7.6px; color:var(--mute);
+    border-top:1px solid var(--line); padding-top:4px; display:flex; justify-content:space-between;}
+  .footer .pnum::after{counter-increment:page; content:"Page " counter(page);}
+
+  /* section band */
+  .band{background:var(--navy); color:#fff; font-family:"Outfit",Arial,sans-serif; font-weight:700;
+    font-size:14px; padding:9px 14px; border-radius:6px; margin:18px 0 10px;}
+  .sub{font-family:"Outfit",Arial,sans-serif; font-weight:700; font-size:11.5px; color:var(--navy);
+    margin:14px 0 6px;}
+
+  /* callouts */
+  .callout{border-radius:6px; padding:10px 12px 10px 14px; margin:10px 0; font-size:9.2px;}
+  .callout .ct{font-family:"Outfit",Arial,sans-serif; font-weight:700; font-size:9.4px; letter-spacing:.4px; display:block; margin-bottom:3px;}
+  .c-important{background:var(--bluebg); border-left:4px solid var(--blue);}
+  .c-important .ct{color:var(--blue);}
+  .c-progress{background:var(--greenbg); border-left:4px solid var(--green);}
+  .c-progress .ct{color:var(--green);}
+  .c-caution{background:var(--amberbg); border-left:4px solid var(--amber);}
+  .c-caution .ct{color:var(--amber);}
+  .c-resolved{background:var(--greenbg); border-left:4px solid var(--green);}
+  .c-resolved .ct{color:var(--green);}
+  .c-risk{background:var(--redbg); border-left:4px solid var(--red);}
+  .c-risk .ct{color:var(--red);}
+
+  /* tables */
+  table{width:100%; border-collapse:collapse; margin:6px 0 4px; font-size:9px;}
+  th{background:var(--navy2); color:#fff; text-align:left; font-weight:700; padding:6px 8px; font-family:"Outfit",Arial,sans-serif; font-size:8.8px;}
+  td{padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:top;}
+  tr{break-inside:avoid;}
+  tbody tr:nth-child(even){background:#f6f8fb;}
+  .summary th{background:var(--navy);}
+  .summary td.cat{font-weight:700;}
+  .summary tr.total td{font-weight:800; background:#eef2f7; border-top:2px solid var(--navy);}
+  td.ref{font-weight:700; white-space:nowrap; width:46px;}
+  td.req{font-weight:700; width:150px;}
+  td.st{white-space:nowrap; width:96px; font-weight:700;}
+  .num{text-align:center; width:64px;}
+
+  .s-func{color:var(--green);}
+  .s-part{color:var(--amber);}
+  .s-mock{color:var(--orange);}
+  .s-miss{color:var(--red);}
+  .tag{font-size:8.4px; font-weight:700;}
+
+  .legend td:first-child{font-weight:700; width:120px;}
+  code{font-family:"SFMono-Regular",Consolas,monospace; font-size:8.4px; background:#eef2f7; padding:0 3px; border-radius:3px; color:#334155;}
+  .avoid{break-inside:avoid;}
+  ol,ul{margin:4px 0 4px 16px; padding:0;}
+  li{margin:2px 0;}
+  .gap-h{font-family:"Outfit",Arial,sans-serif; font-weight:700; font-size:10px; margin:10px 0 2px;}
+  .crit{color:var(--red);} .high{color:var(--amber);} .med{color:var(--mute);}
+  .pagebreak{break-before:page;}
+</style>
+</head>
+<body>
+
+<div class="footer">
+  <span>AEGIS Compliance Audit — Oxford Guardians Platform&nbsp;&nbsp;|&nbsp;&nbsp;Confidential&nbsp;&nbsp;|&nbsp;&nbsp;Re-audit 25 Jun 2026</span>
+  <span class="pnum"></span>
+</div>
+
+<h1>AEGIS Compliance Audit — Oxford Guardians Platform</h1>
+<p class="subtitle">Re-audit · 25 June 2026 · supersedes the audit of 22 June 2026</p>
+
+<div class="callout c-important">
+  <span class="ct">IMPORTANT</span>
+  This audit re-maps every requirement of the 76-page <strong>AEGIS Accreditation Handbook &amp; Guardianship
+  Organisation Quality Standards (September 2025)</strong> against the platform as it stands today. It distinguishes
+  what is <strong>genuinely functional</strong> (dynamic, reads &amp; writes through <code>assets/db.js</code>,
+  persists across sessions) from what is a <strong>static mockup</strong> (hardcoded data, no persistence) or
+  <strong>missing</strong> entirely. It replaces the audit of 22 June 2026 and records the substantial functionality
+  added since — most of the homestay health-&amp;-safety suite, private-fostering casework, school- and parent-liaison
+  logging, and pre-placement risk assessment have moved from mockup to database-backed. The data-integrity defect
+  flagged in the previous audit has also been corrected.
+</div>
+
+<h3 class="sub">How To Read This Document</h3>
+<table class="legend">
+  <tr><th style="width:120px;">Symbol</th><th>Meaning</th></tr>
+  <tr><td class="s-func">✓ FUNCTIONAL</td><td>Dynamic, database-connected (localStorage via db.js); data persists across sessions</td></tr>
+  <tr><td class="s-part">~ PARTIAL</td><td>Partially met — a field or status exists but the data is unstructured, incomplete, or not fully wired</td></tr>
+  <tr><td class="s-mock">■ MOCKUP</td><td>Page exists with hardcoded dummy data but no real functionality or persistence</td></tr>
+  <tr><td class="s-miss">✗ MISSING</td><td>No page, form, or data field exists in the platform</td></tr>
+</table>
+
+<h3 class="sub">Executive Summary</h3>
+<table class="summary">
+  <tr><th>Category</th><th class="num">Functional</th><th class="num">Partial</th><th class="num">Mockup</th><th class="num">Missing</th></tr>
+  <tr><td class="cat">Std 1 — Company Statement</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">2</td></tr>
+  <tr><td class="cat">Std 2 — Management &amp; Ops</td><td class="num">12</td><td class="num">2</td><td class="num">2</td><td class="num">13</td></tr>
+  <tr><td class="cat">Std 3 — Students</td><td class="num">6</td><td class="num">0</td><td class="num">1</td><td class="num">3</td></tr>
+  <tr><td class="cat">Appendix 13 — Student Info Fields</td><td class="num">22</td><td class="num">1</td><td class="num">0</td><td class="num">0</td></tr>
+  <tr><td class="cat">Std 4 — Travel</td><td class="num">3</td><td class="num">2</td><td class="num">1</td><td class="num">2</td></tr>
+  <tr><td class="cat">Std 5 — Homestays</td><td class="num">9</td><td class="num">4</td><td class="num">0</td><td class="num">0</td></tr>
+  <tr><td class="cat">Std 6 — Safeguarding</td><td class="num">5</td><td class="num">1</td><td class="num">0</td><td class="num">9</td></tr>
+  <tr><td class="cat">Std 7 — Complaints</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">3</td></tr>
+  <tr><td class="cat">Std 8 — Private Fostering</td><td class="num">3</td><td class="num">1</td><td class="num">0</td><td class="num">0</td></tr>
+  <tr><td class="cat">Std 9 — School Liaison</td><td class="num">3</td><td class="num">1</td><td class="num">1</td><td class="num">0</td></tr>
+  <tr><td class="cat">Std 10 — Parent Liaison</td><td class="num">2</td><td class="num">1</td><td class="num">0</td><td class="num">0</td></tr>
+  <tr class="total"><td>TOTAL</td><td class="num">65</td><td class="num">13</td><td class="num">5</td><td class="num">32</td></tr>
+</table>
+
+<div class="callout c-progress">
+  <span class="ct">PROGRESS SINCE LAST AUDIT</span>
+  Roughly <strong>57% of mapped requirements are now genuinely functional</strong> (65 of 115), up from ~45% at the
+  22 June re-audit. Functional items rose from 52 to 65, mockups fell from 12 to 5, and missing items fell from 41 to 32.
+  Newly database-backed since the last audit: <strong>pre-placement student risk assessments</strong>, the full
+  <strong>homestay H&amp;S / annual-visit / training / accident records</strong>, <strong>host self-declarations</strong>
+  (Appendix 5), <strong>private-fostering casework</strong> (LA notification, briefings, correspondence log),
+  <strong>school-liaison logging</strong>, and a <strong>parent communication log</strong>. The compliance-alert field
+  mismatch reported last time has been fixed.
+</div>
+
+<div class="callout c-caution">
+  <span class="ct">CAUTION</span>
+  Functionality is not the same as compliance. Every record still lives in <strong>browser localStorage</strong> —
+  unencrypted, browser-bound, with no access control, audit trail or backup (fails Std 2.5.1, 2.7.4, 3.4.3, 6.2.6).
+  The mandatory policies, handbooks, contracts and insurance/ICO evidence (the Appendix A submission set) still have no
+  home in the platform, and the <strong>complaints standard (Std 7) remains entirely absent</strong>. An AEGIS inspector
+  would still find the platform non-compliant in its current state — but materially closer than at the last audit.
+</div>
+
+<!-- STANDARD 1 -->
+<div class="band pagebreak">Standard 1 — Statement of Aims, Principles and Practice</div>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">1.1</td><td class="req">Public statement of aims &amp; principles</td><td class="st s-miss tag">✗ MISSING</td><td>No public-facing 'About' / mission statement page. Platform is staff-only.</td></tr>
+  <tr><td class="ref">1.2</td><td class="req">Accurate publicity materials</td><td class="st s-miss tag">✗ MISSING</td><td>No brochure or marketing content management.</td></tr>
+</table>
+
+<!-- STANDARD 2 -->
+<div class="band">Standard 2 — Management of the Guardianship Organisation</div>
+<h3 class="sub">2.1 Staff, Volunteers &amp; Homestays</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">2.1.1</td><td class="req">Identify all staff and roles</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>staff-list / staff-create / staff-edit / staff-profile — full CRUD on the og_staff store (role, title, DSL designation, rota).</td></tr>
+  <tr><td class="ref">2.1.3</td><td class="req">Job descriptions</td><td class="st s-miss tag">✗ MISSING</td><td>No document storage for job descriptions.</td></tr>
+  <tr><td class="ref">2.1.4</td><td class="req">Induction procedure</td><td class="st s-mock tag">■ MOCKUP</td><td>induction-checklist.html / induction-create.html — static; no db.js, no persistence.</td></tr>
+  <tr><td class="ref">2.1.5</td><td class="req">Safer recruitment checks</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>scr-dashboard + scr-staff/hosts/drivers generated from the compliance object on each record (ID, DBS, RTW, references, overseas, safeguarding).</td></tr>
+  <tr><td class="ref">2.1.6</td><td class="req">Code of conduct</td><td class="st s-miss tag">✗ MISSING</td><td>No code-of-conduct document stored or tracked (Appendix 6).</td></tr>
+  <tr><td class="ref">2.1.8</td><td class="req">UK residency / settled status of carers</td><td class="st s-part tag">~ PARTIAL</td><td><code>compliance.isCitizen</code> / <code>worksOutsideUK</code> flags exist on host, driver &amp; staff records, but no settled-status evidence is captured or uploaded.</td></tr>
+</table>
+
+<h3 class="sub">2.2 Contracts</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">2.2.1</td><td class="req">Staff contracts</td><td class="st s-miss tag">✗ MISSING</td><td>No contract management.</td></tr>
+  <tr><td class="ref">2.2.2</td><td class="req">Parent contracts</td><td class="st s-mock tag">■ MOCKUP</td><td>'Guardian Services Agreement' rows are seeded into the documents dashboard, but they are static seed data — no upload, lifecycle or notice tracking.</td></tr>
+  <tr><td class="ref">2.2.3</td><td class="req">Homestay contracts</td><td class="st s-miss tag">✗ MISSING</td><td>No contract management.</td></tr>
+  <tr><td class="ref">2.2.4</td><td class="req">Agent contracts</td><td class="st s-miss tag">✗ MISSING</td><td>No agent contract tracking.</td></tr>
+</table>
+
+<h3 class="sub">2.3 Handbooks / 2.4 Insurance</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">2.3.1-3</td><td class="req">Student / parent / homestay handbooks</td><td class="st s-miss tag">✗ MISSING</td><td>No handbook storage (Appendices 1-3).</td></tr>
+  <tr><td class="ref">2.4.1</td><td class="req">Professional indemnity / public liability insurance</td><td class="st s-miss tag">✗ MISSING</td><td>No insurance certificate or expiry tracking.</td></tr>
+</table>
+
+<h3 class="sub">2.5 Record Keeping</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">2.5.1</td><td class="req">Secure and efficient record-holding system</td><td class="st s-part tag">~ PARTIAL</td><td>Data persists via db.js but only in browser localStorage — not secure, not encrypted, browser-only, no access control or backup. Does not meet 'secure method'.</td></tr>
+</table>
+
+<h3 class="sub">2.6 Emergency Procedures</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">2.6.1</td><td class="req">24-hour emergency contact</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>emergency-procedures.html — dynamic; staff emergency rota held on og_staff records.</td></tr>
+  <tr><td class="ref">2.6.2</td><td class="req">Emergency plan</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>emergency-incident.html writes incidents to og_incidents (saveIncident) with generated incident IDs; now also logs a parent-communication entry.</td></tr>
+</table>
+
+<h3 class="sub">2.7 Information Sharing &amp; Data Protection</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">2.7.2</td><td class="req">ICO registration</td><td class="st s-miss tag">✗ MISSING</td><td>No ICO certificate / data-controller tracking.</td></tr>
+  <tr><td class="ref">2.7.3</td><td class="req">Data protection policy &amp; privacy notice</td><td class="st s-miss tag">✗ MISSING</td><td>No policy document management; nothing published.</td></tr>
+  <tr><td class="ref">2.7.4</td><td class="req">Secure records, access controlled</td><td class="st s-miss tag">✗ MISSING</td><td>localStorage has zero access control — any user of the browser sees all records.</td></tr>
+  <tr><td class="ref">2.7.5</td><td class="req">Photo consent tracking</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><code>legal.permissions.photo</code> is a real persisted boolean, edited &amp; saved on student-legal.html.</td></tr>
+</table>
+
+<h3 class="sub">2.8 Safer Recruitment</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">2.8.1</td><td class="req">Safer recruitment policy / interview notes</td><td class="st s-miss tag">✗ MISSING</td><td>No policy or interview-note storage.</td></tr>
+  <tr><td class="ref">2.8.4</td><td class="req">Two written references per person</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><code>compliance.reference1Path / reference2Path</code> tracked per host/driver/staff; missing refs raise SCR alerts.</td></tr>
+  <tr><td class="ref">2.8.5</td><td class="req">DBS certificate tracking</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>dbsNumber / dbsCertificatePath / dbsExpiry / dbsUpdateService on every host, driver &amp; staff record; expiry alerts via generateComplianceAlerts.</td></tr>
+  <tr><td class="ref">2.8.8</td><td class="req">Overseas check (lived abroad &gt;3 mo.)</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>livedAbroad flag + overseasCheckDocPath; warning raised when abroad but no check uploaded.</td></tr>
+  <tr><td class="ref">2.8.9</td><td class="req">Identity verification (passport)</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>idDocumentPath on each record (identity sub-page); critical alert when absent. Student passport held in legal.passportOrBRPPath.</td></tr>
+  <tr><td class="ref">2.8.10</td><td class="req">Right-to-work checks</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>rightToWorkCheckPath + rightToWorkExpiry; critical alert for non-citizens without a check on file.</td></tr>
+</table>
+
+<h3 class="sub">2.9 Finance / 2.10 Policies / 2.11 Significant Changes</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">2.9.1</td><td class="req">Prompt payments recorded</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>finances-tracker.html — paid/unpaid status with deadline dates, persisted.</td></tr>
+  <tr><td class="ref">2.9.2</td><td class="req">Student finance records (pocket money)</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>Finance events linked to students via finance-data.js.</td></tr>
+  <tr><td class="ref">2.10.1</td><td class="req">Annual policy review tracking</td><td class="st s-miss tag">✗ MISSING</td><td>No policy version control or publication/review-date tracking.</td></tr>
+  <tr><td class="ref">2.11.1</td><td class="req">Report significant changes to AEGIS</td><td class="st s-miss tag">✗ MISSING</td><td>No mechanism to flag/record management or operational changes.</td></tr>
+</table>
+
+<!-- STANDARD 3 -->
+<div class="band pagebreak">Standard 3 — Students</div>
+<h3 class="sub">3.1 Student Induction</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">3.1.1</td><td class="req">Pre-arrival info for students &amp; parents</td><td class="st s-miss tag">✗ MISSING</td><td>No student/parent onboarding or pre-arrival flow.</td></tr>
+  <tr><td class="ref">3.1.2</td><td class="req">Introductory meeting record</td><td class="st s-mock tag">■ MOCKUP</td><td>induction-checklist.html is a static checklist; not persisted to a student file.</td></tr>
+  <tr><td class="ref">3.1.3</td><td class="req">Student induction programme</td><td class="st s-miss tag">✗ MISSING</td><td>No induction-programme content.</td></tr>
+</table>
+
+<h3 class="sub">3.2 Student Wellbeing</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">3.2.1</td><td class="req">Regular student check-ins</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>student-checkin-submit.html &amp; welfare-note-create.html write timestamped logs via saveWelfareLog to og_welfare_logs.</td></tr>
+  <tr><td class="ref">3.2.2</td><td class="req">Check-in records on student file</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>student-profile.html renders the welfare timeline live via getWelfareLogsForStudent — no longer hardcoded.</td></tr>
+</table>
+
+<h3 class="sub">3.3 Mental Health</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">3.3.1</td><td class="req">Mental health support procedure</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>mental-health-referral.html persists a per-student MH case (lead staff, status, support options) via saveMHCase; mental-health-comms.html logs MH communications (saveMHComm).</td></tr>
+  <tr><td class="ref">3.3.3</td><td class="req">Student removal form (Appendix 11)</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>mental-health-removal.html captures and stores a structured removal form via saveMHRemoval (og_mh_removals) and logs a welfare entry.</td></tr>
+  <tr><td class="ref">3.3.4</td><td class="req">Risk assessment before guardianship</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> student-risk.html captures a risk-assessment file and expiry date, persisted on the student record via upsertStudent; generateComplianceAlerts raises a critical alert when no assessment is on file and a warning as expiry approaches.</td></tr>
+</table>
+
+<h3 class="sub">3.4 Student Information</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">3.4.2</td><td class="req">Parental permission to hold &amp; share data</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>legal.permissions {travel, medical, photo, data} captured and saved per student.</td></tr>
+  <tr><td class="ref">3.4.4</td><td class="req">Medicine administration record</td><td class="st s-miss tag">✗ MISSING</td><td>Medical conditions are stored, but there is no medicine-administration log for homestays.</td></tr>
+</table>
+
+<div class="callout c-resolved">
+  <span class="ct">RESOLVED — DATA-INTEGRITY DEFECT FROM PREVIOUS AUDIT</span>
+  The previous audit reported that <code>generateComplianceAlerts</code> read student consent / health / contact
+  fields under names that did not match the saved schema, causing consent, medical-cover and UK-contact alerts to
+  mis-fire for every student. This is now fixed: <code>checkStudent</code> reads
+  <code>legal.permissions.medical/travel/photo/data</code>, <code>health.privateMedicalCover</code> and
+  <code>family.ukFamilyContacts</code> — matching the stored schema. The notifications screen now reflects the actual
+  data held per student.
+</div>
+
+<h3 class="sub">Appendix 13 — Mandatory Student Information Fields</h3>
+<p style="font-size:9px;color:var(--slate);margin:2px 0 6px;">The student schema in db.js carries the full Appendix 13 dataset across nested <code>health / family / legal / pastoral</code> objects, each editable and persisted via the student-health, student-family, student-legal and student-pastoral pages. Seed records ship empty, so fields must be populated per student before inspection.</p>
+<table>
+  <tr><th>Required Field (Appendix 13)</th><th class="st">In DB?</th><th class="st">In Profile UI?</th></tr>
+  <tr><td>Full name</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Preferred name</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Date of birth</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Home address</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Parent full names</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Parent addresses</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Parent occupations</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Parent tel / email</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>UK family contacts</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Agent details</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Family background info</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Permissions &amp; consents</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Medical conditions</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Allergies</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Dietary requirements</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Immunisation details</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Private medical cover</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Interests / hobbies</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Learning difficulties</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>School contact details</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-part tag">~ PARTIAL</td></tr>
+  <tr><td>Tutor / house</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Passport / BRP</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+  <tr><td>Student visit records</td><td class="s-func tag">✓ FUNCTIONAL</td><td class="s-func tag">✓ FUNCTIONAL</td></tr>
+</table>
+<p style="font-size:8.6px;color:var(--mute);margin:2px 0;">'School contact details' is partial: the school name, year and tutor/house are captured, but structured tutor email/telephone fields are not. Passport/BRP stores an upload <em>path</em> only — the platform records that a document exists, it does not securely store the file itself.</p>
+
+<!-- STANDARD 4 -->
+<div class="band pagebreak">Standard 4 — Travel Arrangements</div>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">4.1</td><td class="req">Full travel record keeping (date, time, mode)</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>travel-create.html persists transports to og_transports; auto-generates a travel to-do checklist per trip.</td></tr>
+  <tr><td class="ref">4.2</td><td class="req">Suitable travel permissions in place</td><td class="st s-part tag">~ PARTIAL</td><td>legal.permissions.travel consent is held on the student, but it is not linked to individual trip records.</td></tr>
+  <tr><td class="ref">4.3</td><td class="req">Taxi-firm enhanced-DBS confirmation</td><td class="st s-miss tag">✗ MISSING</td><td>No external transport-provider check tracking (own drivers do hold DBS records).</td></tr>
+  <tr><td class="ref">4.4</td><td class="req">Child-seat / booster compliance</td><td class="st s-part tag">~ PARTIAL</td><td>driver.childSeat is a free-text note per driver; not validated against student age/height.</td></tr>
+  <tr><td class="ref">4.1</td><td class="req">Travel record shared with school / homestay</td><td class="st s-mock tag">■ MOCKUP</td><td>Travel data exists; a school-liaison log entry can be raised from travel.html, but there is no structured per-trip export to homestay.</td></tr>
+  <tr><td class="ref">—</td><td class="req">Travel to-do tracking</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>travel-todo.html — dynamic checklist driven by og_travel_todos.</td></tr>
+  <tr><td class="ref">—</td><td class="req">Transportation dashboard</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>transportation.html — dynamic unbooked-trip tracker.</td></tr>
+  <tr><td class="ref">—</td><td class="req">Permission-to-travel letter (Appendix 9)</td><td class="st s-miss tag">✗ MISSING</td><td>No letter-template generation.</td></tr>
+</table>
+
+<!-- STANDARD 5 -->
+<div class="band">Standard 5 — Homestays</div>
+<h3 class="sub">5.1 Homestay Checks</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">5.1.1</td><td class="req">Primary carer citizenship / settled status</td><td class="st s-part tag">~ PARTIAL</td><td>compliance.isCitizen flag exists on the host record, but no settled-status evidence is viewed/recorded.</td></tr>
+  <tr><td class="ref">5.1.2</td><td class="req">Homestay self-declaration (Appendix 5)</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> host-compliance-declaration.html captures a self-declaration document path (selfDeclarationDocPath); a critical SCR alert fires for any host without one on file.</td></tr>
+  <tr><td class="ref">5.1.3</td><td class="req">Enhanced DBS for all residents 16+</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>dbsStatus, dbsCertNumber and secondaryAdultDbs held per host; overnight-visitor field captured.</td></tr>
+</table>
+
+<h3 class="sub">5.2 Homestay Information / 5.3 Profile / 5.5 Accommodation</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">5.2.1</td><td class="req">Full household member details (DOB, gender, occupation)</td><td class="st s-part tag">~ PARTIAL</td><td>householdResidents is a single free-text string — per-member structured data is not captured.</td></tr>
+  <tr><td class="ref">5.2.2</td><td class="req">Regular visitor information</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>overnightVisitors field captured per host.</td></tr>
+  <tr><td class="ref">5.3.1</td><td class="req">Shareable homestay profile</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>host-profile.html — dynamic, DB-connected, includes document uploads (host_docs_*) and now surfaces the H&amp;S, training and visit history.</td></tr>
+  <tr><td class="ref">5.5.1</td><td class="req">Bedroom / facility detail</td><td class="st s-part tag">~ PARTIAL</td><td>studentBedrooms / dietaryProvision are free-text; itemised facility detail now lives in the H&amp;S checklist rather than the host record.</td></tr>
+  <tr><td class="ref">5.5.2</td><td class="req">No more than 3 students per homestay</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>capacityMax: 3 enforced in the host schema.</td></tr>
+</table>
+
+<h3 class="sub">5.9 Annual Training / 5.10 Health &amp; Safety &amp; Annual Visit</h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">5.9.1</td><td class="req">Homestay annual training record</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> training-record-create.html writes per-host training logs via saveTrainingLog to og_training_logs; surfaced on host-compliance.html and training-log.html via getTrainingLogsForHost.</td></tr>
+  <tr><td class="ref">5.10.1.1</td><td class="req">Initial in-person assessment visit</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> homestay-visit-report.html records a structured visit with visitType 'Initial pre-placement', persisted via saveVisitReport to og_visit_reports.</td></tr>
+  <tr><td class="ref">5.10.1.2</td><td class="req">Accident book</td><td class="st s-part tag">~ PARTIAL</td><td>homestay-incident-create.html logs structured homestay incidents to og_incidents (saveIncident) and homestay-incidents.html lists them; the dedicated accident-book page (homestay-accident.html) remains static.</td></tr>
+  <tr><td class="ref">5.10.2</td><td class="req">H&amp;S checklist (smoke alarms, gas, etc.)</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> homestay-hs-checklist.html captures and persists an itemised H&amp;S checklist via saveHsChecklist to og_hs_checklists; results surface on host-compliance.html.</td></tr>
+  <tr><td class="ref">5.10.3</td><td class="req">Annual visit records</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> homestay-visit-report.html persists annual-review visits via saveVisitReport, which automatically updates the host's annualVisitLast / annualVisitDue / annualVisitStatus fields.</td></tr>
+</table>
+
+<!-- STANDARD 6 -->
+<div class="band pagebreak">Standard 6 — Safeguarding, Child Protection and Welfare</div>
+<div class="callout c-risk">
+  <span class="ct">HIGHEST-RISK AREA</span>
+  Casework remains database-backed — the concerns register, welfare logging and the DSL training record are all
+  functional. But the governing safeguarding documents (safeguarding/child-protection, whistleblowing, Prevent,
+  missing-students, behaviour, anti-bullying and online-safety policies) and the AEGIS self-reporting route are still
+  entirely absent. Safeguarding case notes also inherit the localStorage security gap (fails 6.2.6 'kept securely,
+  DSL-only access'). This standard is essentially unchanged since the last audit.
+</div>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">6.1</td><td class="req">Safeguarding &amp; child-protection policy</td><td class="st s-miss tag">✗ MISSING</td><td>No policy document management (Appendix 4).</td></tr>
+  <tr><td class="ref">6.2</td><td class="req">DSL appointment &amp; training</td><td class="st s-part tag">~ PARTIAL</td><td>A DSL is appointed (Jay Ray, role 'Admin / DSL') with DSL Level 3 training date &amp; expiry on the staff record; no deputy-DSL field or live-training certificate store, no policy.</td></tr>
+  <tr><td class="ref">6.3</td><td class="req">Safeguarding training records, with dates</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>compliance.safeguardingTrainingDate + trainingLevel/trainingDate/trainingExpiry per staff; missing records raise SCR warnings.</td></tr>
+  <tr><td class="ref">6.4</td><td class="req">Whistleblowing policy</td><td class="st s-miss tag">✗ MISSING</td><td>No policy management.</td></tr>
+  <tr><td class="ref">6.5.1</td><td class="req">Allegations procedure</td><td class="st s-miss tag">✗ MISSING</td><td>No allegations policy/workflow.</td></tr>
+  <tr><td class="ref">6.5.2</td><td class="req">Low-level concerns</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>concerns-dashboard / concerns-low-level / concerns-escalated / concerns-resolved read the og_concerns store via getConcernsByTier.</td></tr>
+  <tr><td class="ref">6.5.3</td><td class="req">Self-reporting to AEGIS</td><td class="st s-miss tag">✗ MISSING</td><td>No incident self-reporting route to AEGIS.</td></tr>
+  <tr><td class="ref">6.6</td><td class="req">Prevent / anti-radicalisation</td><td class="st s-miss tag">✗ MISSING</td><td>No Prevent policy or training tracking.</td></tr>
+  <tr><td class="ref">6.7</td><td class="req">Missing student policy / procedure</td><td class="st s-miss tag">✗ MISSING</td><td>No missing-student workflow.</td></tr>
+  <tr><td class="ref">6.8</td><td class="req">Student behaviour guidelines</td><td class="st s-miss tag">✗ MISSING</td><td>No behaviour code tracking.</td></tr>
+  <tr><td class="ref">6.9</td><td class="req">Anti-bullying / cyberbullying policy</td><td class="st s-miss tag">✗ MISSING</td><td>No anti-bullying policy or incident tracking.</td></tr>
+  <tr><td class="ref">6.10</td><td class="req">Online safety policy</td><td class="st s-miss tag">✗ MISSING</td><td>No online-safety policy tracking.</td></tr>
+  <tr><td class="ref">—</td><td class="req">Concern case management</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>Concern tier, status, review/closed dates and full case narrative persisted &amp; surfaced across the concerns dashboard suite (legacy concern-case/escalation pages remain static duplicates).</td></tr>
+  <tr><td class="ref">—</td><td class="req">Welfare note logging</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>Welfare notes write to og_welfare_logs and render on the student profile (legacy welfare-notes.html list is static).</td></tr>
+</table>
+
+<!-- STANDARD 7 -->
+<div class="band">Standard 7 — Complaints</div>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">7.1</td><td class="req">Complaints policy</td><td class="st s-miss tag">✗ MISSING</td><td>No complaints management.</td></tr>
+  <tr><td class="ref">7.2</td><td class="req">Informal + formal resolution stages + AEGIS referral</td><td class="st s-miss tag">✗ MISSING</td><td>No complaints workflow.</td></tr>
+  <tr><td class="ref">7.3</td><td class="req">Written record of all formal complaints</td><td class="st s-miss tag">✗ MISSING</td><td>No complaints data store. No complaints page exists anywhere in the platform.</td></tr>
+</table>
+
+<!-- STANDARD 8 -->
+<div class="band">Standard 8 — Day Students, Prolonged Stays &amp; Private Fostering</div>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">8.1</td><td class="req">Private-fostering compliance (28+ consecutive days)</td><td class="st s-part tag">~ PARTIAL</td><td>Each student now carries a structured <code>privateFostering</code> object (isApplicable, proposedStartDate) persisted via upsertStudent, and private-fostering.html manages applicable cases. Detection still relies on the manual accommodationType flag — the 28-day threshold is not auto-computed from actual placement durations, and some dashboard counts are still hardcoded.</td></tr>
+  <tr><td class="ref">8.2</td><td class="req">Local-authority notification tracking</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> private-fostering.html / private-fostering-notification.html persist <code>privateFostering.laNotifiedDate</code> per student.</td></tr>
+  <tr><td class="ref">8.3</td><td class="req">Explanation to school / homestay</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> <code>privateFostering.briefings</code> {schoolBriefed, homestayBriefed, parentConsent} booleans captured and persisted.</td></tr>
+  <tr><td class="ref">8.4</td><td class="req">LA correspondence log</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> <code>privateFostering.correspondenceLog</code> array persists dated correspondence entries per student.</td></tr>
+</table>
+
+<!-- STANDARD 9 -->
+<div class="band">Standard 9 — Liaison with Partner Schools</div>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">9.1</td><td class="req">Regular school contact</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> school-log-create.html writes dated school-communication entries via saveSchoolLog to og_school_logs; school-liaison.html and schools.html render them live via getSchoolLogs.</td></tr>
+  <tr><td class="ref">9.3</td><td class="req">Written service confirmation to school</td><td class="st s-mock tag">■ MOCKUP</td><td>school-service-confirmation.html — static; not generated per student or per year.</td></tr>
+  <tr><td class="ref">9.4</td><td class="req">Travel-arrangement liaison</td><td class="st s-part tag">~ PARTIAL</td><td>travel.html can raise a school-liaison log entry (saveSchoolLog), but there is no automated travel-notification feed to schools.</td></tr>
+  <tr><td class="ref">9.6</td><td class="req">Student welfare / medication liaison</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> school-welfare-notification.html records welfare/medication notifications to schools via saveSchoolLog.</td></tr>
+  <tr><td class="ref">9.7</td><td class="req">School visit / communication log</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> school-log-create.html persists visits/communications; school-liaison.html is now a live log rather than a static mockup.</td></tr>
+</table>
+
+<!-- STANDARD 10 -->
+<div class="band">Standard 10 — Liaison with Parents</div>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th class="st">Status</th><th>Platform Evidence</th></tr>
+  <tr><td class="ref">10.1</td><td class="req">Regular parent contact log</td><td class="st s-func tag">✓ FUNCTIONAL</td><td><strong>Now functional.</strong> parent-log-create.html writes dated contact entries via saveParentLog to og_parent_logs; parent-liaison.html and parent-profile.html render them via getParentLogs. Emergency incidents also auto-log a parent entry.</td></tr>
+  <tr><td class="ref">10.2</td><td class="req">24-hour contact provision to parents</td><td class="st s-part tag">~ PARTIAL</td><td>Staff emergency rota &amp; emergency procedures exist internally; the parent-facing portal (parent-portal.html) is static and does not surface a 24-hour number.</td></tr>
+  <tr><td class="ref">10.3</td><td class="req">Emergency notification to parents</td><td class="st s-func tag">✓ FUNCTIONAL</td><td>Parent contacts are structured per student and linked to the emergency-incident workflow.</td></tr>
+</table>
+
+<!-- WHAT IS FUNCTIONAL -->
+<div class="band pagebreak">What IS Genuinely Functional</div>
+<p style="font-size:9px;color:var(--slate);margin:2px 0 6px;">These features read from and write to localStorage through db.js. <strong>Bold</strong> rows are new or substantially upgraded since the 22 June audit.</p>
+<table>
+  <tr><th style="width:34%;">Feature</th><th>Key Pages</th></tr>
+  <tr><td>Student records + Appendix 13 data</td><td>students / student-create / student-edit / student-profile and the student-health, -family, -legal, -pastoral editors</td></tr>
+  <tr><td><strong>Pre-placement risk assessment</strong></td><td>student-risk → riskAssessmentFile / riskAssessmentExpiryDate; critical &amp; expiry alerts via generateComplianceAlerts</td></tr>
+  <tr><td>Welfare check-in logging</td><td>student-checkin-submit, welfare-note-create → og_welfare_logs; timeline on student-profile</td></tr>
+  <tr><td>Mental-health suite</td><td>mental-health-referral (case + support), mental-health-comms, mental-health-removal (Appendix 11)</td></tr>
+  <tr><td>Safeguarding concerns register</td><td>concerns-dashboard / -low-level / -escalated / -resolved (og_concerns)</td></tr>
+  <tr><td>SCR &amp; safer-recruitment compliance</td><td>scr-dashboard + scr-staff/hosts/drivers and the host/driver/staff -compliance-identity/dbs/references/overseas/safeguarding editors</td></tr>
+  <tr><td><strong>Host self-declaration (Appendix 5)</strong></td><td>host-compliance-declaration → selfDeclarationDocPath; critical SCR alert when absent</td></tr>
+  <tr><td><strong>Homestay H&amp;S checklists</strong></td><td>homestay-hs-checklist → og_hs_checklists (saveHsChecklist); surfaced on host-compliance</td></tr>
+  <tr><td><strong>Homestay training records</strong></td><td>training-record-create → og_training_logs (saveTrainingLog); training-log / host-compliance</td></tr>
+  <tr><td><strong>Homestay visit reports (initial + annual)</strong></td><td>homestay-visit-report → og_visit_reports (saveVisitReport); auto-updates host annual-visit fields</td></tr>
+  <tr><td><strong>Homestay incident logging</strong></td><td>homestay-incident-create → og_incidents (saveIncident); homestay-incidents list</td></tr>
+  <tr><td><strong>Private-fostering casework</strong></td><td>private-fostering / private-fostering-notification → student.privateFostering (laNotifiedDate, briefings, correspondenceLog)</td></tr>
+  <tr><td><strong>School-liaison logging</strong></td><td>school-log-create / school-welfare-notification → og_school_logs; school-liaison / schools read live</td></tr>
+  <tr><td><strong>Parent communication log</strong></td><td>parent-log-create → og_parent_logs; parent-liaison / parent-profile read live</td></tr>
+  <tr><td>Compliance notifications / expiry alerts</td><td>notifications.html via generateComplianceAlerts (now schema-aligned)</td></tr>
+  <tr><td>Staff records (CRUD)</td><td>staff-list / staff-create / staff-edit / staff-profile (og_staff)</td></tr>
+  <tr><td>Parent records (CRUD)</td><td>parent-list / parent-create / parent-profile (og_parents)</td></tr>
+  <tr><td>Driver records (CRUD)</td><td>driver-list / driver-create / driver-profile</td></tr>
+  <tr><td>Host records (CRUD)</td><td>hosts / host-create / host-profile</td></tr>
+  <tr><td>Transport records + travel to-dos</td><td>travel / travel-create / transportation / travel-todo (og_transports)</td></tr>
+  <tr><td>Homestay placements + to-dos</td><td>homestays / homestay-create / homestay-todo (og_placements)</td></tr>
+  <tr><td>Exeat management</td><td>exeats.html (og_exeats)</td></tr>
+  <tr><td>Emergency incidents &amp; procedures</td><td>emergency-incident (og_incidents) / emergency-procedures</td></tr>
+  <tr><td>Finance &amp; revenue trackers, VAT, documents</td><td>finances-tracker / revenue / vat-reclamation / documents (aggregateDocuments)</td></tr>
+  <tr><td>Weekly operations report</td><td>reports.html (live from students, transports, placements, exeats)</td></tr>
+</table>
+
+<!-- PRIORITY GAPS -->
+<div class="band pagebreak">Priority Gaps for AEGIS Inspection Readiness</div>
+
+<div class="gap-h crit">Critical (would fail inspection)</div>
+<ol>
+  <li><strong>Storage &amp; security architecture</strong> — The entire platform still runs on browser localStorage — unencrypted, single-browser, no access control, no audit trail, lost on cache-clear. Fails Std 2.5.1, 2.7.4, 3.4.3 and 6.2.6 and undermines every otherwise-functional record. Migrate to a secured, access-controlled, backed-up datastore. <em>This is now the single largest barrier to accreditation.</em></li>
+  <li><strong>Policy &amp; document management</strong> — No store for the mandatory AEGIS policies and handbooks (safeguarding, whistleblowing, Prevent, missing-students, behaviour, anti-bullying, online-safety, complaints, data-protection, safer-recruitment + student/parent/homestay handbooks) with publication/review dates — the core of the Appendix A submission set (Std 2.3, 2.7, 2.8.1, 2.10, 6.1, 6.4, 6.6, 6.7, 6.8, 6.9, 6.10, 7).</li>
+  <li><strong>Complaints system</strong> — No complaints policy, workflow or record whatsoever (Std 7). Confirmed absent — no complaints page exists in the platform.</li>
+</ol>
+
+<div class="gap-h high">High (expected, especially at Gold Standard)</div>
+<ol>
+  <li><strong>Contract management</strong> — No staff, parent, homestay or agent contracts (Std 2.2).</li>
+  <li><strong>ICO registration &amp; insurance evidence</strong> — No tracking of ICO registration, data controller or insurance certificates (Std 2.4, 2.7.2).</li>
+  <li><strong>Safeguarding self-reporting to AEGIS</strong> — Casework is logged internally but there is no route to self-report notifiable incidents to AEGIS (Std 6.5.3).</li>
+  <li><strong>Settled-status &amp; structured household evidence</strong> — Carer settled-status evidence and per-member household data are still flags / free-text (Std 2.1.8, 5.1.1, 5.2.1).</li>
+</ol>
+
+<div class="gap-h med">Medium (required, lower priority)</div>
+<ol>
+  <li><strong>Private-fostering 28-day auto-detection</strong> — Structured PF casework now persists, but the 28-day threshold is not computed from actual placement durations and some dashboard counts remain hardcoded (Std 8.1).</li>
+  <li><strong>Per-trip travel permissions, taxi-firm DBS confirmation &amp; permission-to-travel letter</strong> — Std 4.2, 4.3 and Appendix 9.</li>
+  <li><strong>Written service confirmation to schools</strong> — Still a static mockup; not generated per student/year (Std 9.3).</li>
+  <li><strong>Medicine-administration record &amp; induction programme</strong> — Std 3.4.4 and 3.1 (induction remains a static checklist).</li>
+  <li><strong>Public statement of aims &amp; introductory-meeting records</strong> — Std 1.1, 3.1.2.</li>
+  <li><strong>Dedicated accident book</strong> — Homestay incidents persist via og_incidents, but the named accident-book register (homestay-accident.html) is still static (Std 5.10.1.2).</li>
+</ol>
+
+<div class="callout c-progress" style="margin-top:14px;">
+  <span class="ct">DIRECTION OF TRAVEL</span>
+  Since the first audit (~18% functional) the platform has reached ~57% functional. The remaining work is now
+  concentrated in two areas rather than spread across every standard: (1) the underlying <strong>secure datastore</strong>,
+  and (2) a <strong>policy / document-management module</strong> covering the Appendix A submission set and complaints.
+  Closing those two would move the majority of the remaining 32 missing items toward compliance.
+</div>
+
+</body>
+</html>

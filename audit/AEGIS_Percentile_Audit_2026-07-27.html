@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AEGIS Percentile Compliance Audit — Oxford Guardians Platform — 27 Jul 2026</title>
+<style>
+  :root{
+    --navy:#243b53; --navy2:#2c4a6e; --cyan:#06b6d4; --ink:#0f172a; --slate:#475569;
+    --mute:#64748b; --line:#dbe3ec; --bg:#ffffff;
+    --green:#15803d; --greenbg:#e8f5ec; --amber:#b45309; --amberbg:#fdf3e3;
+    --orange:#c2410c; --orangebg:#fdeee2; --red:#b91c1c; --redbg:#fdecec; --blue:#1d4ed8; --bluebg:#eaf1fb;
+  }
+  @page{ size:A4; margin:18mm 16mm 20mm 16mm; }
+  *{box-sizing:border-box;}
+  html{color-scheme:light;}
+  html,body{margin:0;padding:0;background:var(--bg);}
+  body{
+    font-family:"Plus Jakarta Sans","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); font-size:9.6px; line-height:1.5; -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  h1,h2,h3,h4{font-family:"Outfit","Plus Jakarta Sans",Arial,sans-serif; margin:0;}
+  h1{font-size:30px; font-weight:800; line-height:1.1; color:var(--ink); letter-spacing:-.5px;}
+  .subtitle{font-style:italic; color:var(--mute); font-size:11px; margin-top:8px; margin-bottom:4px;}
+
+  .footer{position:fixed; bottom:-12mm; left:0; right:0; font-size:7.6px; color:var(--mute);
+    border-top:1px solid var(--line); padding-top:4px; display:flex; justify-content:space-between;}
+  .footer .pnum::after{counter-increment:page; content:"Page " counter(page);}
+
+  .band{background:var(--navy); color:#fff; font-family:"Outfit",Arial,sans-serif; font-weight:700;
+    font-size:14px; padding:9px 14px; border-radius:6px; margin:18px 0 10px;
+    display:flex; justify-content:space-between; align-items:baseline;}
+  .band .bscore{font-size:12px; font-weight:800; letter-spacing:.3px;}
+  .sub{font-family:"Outfit",Arial,sans-serif; font-weight:700; font-size:11.5px; color:var(--navy);
+    margin:14px 0 6px; display:flex; justify-content:space-between; align-items:baseline;}
+  .sub .sscore{font-size:10.5px; font-weight:800;}
+
+  .callout{border-radius:6px; padding:10px 12px 10px 14px; margin:10px 0; font-size:9.2px;}
+  .callout .ct{font-family:"Outfit",Arial,sans-serif; font-weight:700; font-size:9.4px; letter-spacing:.4px; display:block; margin-bottom:3px;}
+  .c-important{background:var(--bluebg); border-left:4px solid var(--blue);}
+  .c-important .ct{color:var(--blue);}
+  .c-progress{background:var(--greenbg); border-left:4px solid var(--green);}
+  .c-progress .ct{color:var(--green);}
+  .c-caution{background:var(--amberbg); border-left:4px solid var(--amber);}
+  .c-caution .ct{color:var(--amber);}
+  .c-risk{background:var(--redbg); border-left:4px solid var(--red);}
+  .c-risk .ct{color:var(--red);}
+
+  table{width:100%; border-collapse:collapse; margin:6px 0 4px; font-size:9px;}
+  th{background:var(--navy2); color:#fff; text-align:left; font-weight:700; padding:6px 8px; font-family:"Outfit",Arial,sans-serif; font-size:8.8px;}
+  td{padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:top;}
+  tr{break-inside:avoid;}
+  tbody tr:nth-child(even){background:#f6f8fb;}
+  .summary th{background:var(--navy);}
+  .summary td.cat{font-weight:700;}
+  .summary tr.total td{font-weight:800; background:#eef2f7; border-top:2px solid var(--navy);}
+  td.ref{font-weight:700; white-space:nowrap; width:40px;}
+  td.req{font-weight:700; width:132px;}
+  td.pct{white-space:nowrap; width:52px; font-weight:800; text-align:center;}
+  td.cnt{white-space:nowrap; width:46px; text-align:center; color:var(--slate);}
+  .num{text-align:center; width:60px;}
+  tr.secavg td{font-weight:800; background:#eef2f7;}
+
+  .p100{color:var(--green);} .p75{color:#3f7d20;} .p50{color:var(--amber);}
+  .p25{color:var(--orange);} .p0{color:var(--red);}
+
+  .legend td:first-child{font-weight:700; width:120px;}
+  code{font-family:"SFMono-Regular",Consolas,monospace; font-size:8.4px; background:#eef2f7; padding:0 3px; border-radius:3px; color:#334155;}
+  .avoid{break-inside:avoid;}
+  ol,ul{margin:4px 0 4px 16px; padding:0;}
+  li{margin:2px 0;}
+  .gap-h{font-family:"Outfit",Arial,sans-serif; font-weight:700; font-size:10px; margin:10px 0 2px;}
+  .crit{color:var(--red);} .high{color:var(--amber);} .med{color:var(--mute);}
+  .pagebreak{break-before:page;}
+  .bigscore{background:var(--navy); color:#fff; border-radius:8px; padding:16px 20px; margin:14px 0; display:flex; justify-content:space-between; align-items:center;}
+  .bigscore .lbl{font-family:"Outfit",Arial,sans-serif; font-weight:700; font-size:12px; letter-spacing:.4px;}
+  .bigscore .val{font-family:"Outfit",Arial,sans-serif; font-weight:800; font-size:38px; line-height:1;}
+  .bigscore .sml{font-size:8.6px; color:#b9cbe0; display:block; margin-top:4px; font-family:"Plus Jakarta Sans",Arial,sans-serif; font-weight:400;}
+</style>
+</head>
+<body>
+
+<div class="footer">
+  <span>AEGIS Percentile Compliance Audit — Oxford Guardians Platform&nbsp;&nbsp;|&nbsp;&nbsp;Confidential&nbsp;&nbsp;|&nbsp;&nbsp;27 Jul 2026</span>
+  <span class="pnum"></span>
+</div>
+
+<h1>AEGIS Percentile Compliance Audit — Oxford Guardians Platform</h1>
+<p class="subtitle">Section-by-section completeness scoring · 27 July 2026 · supersedes the audits of 22 and 25 June 2026</p>
+
+<div class="callout c-important">
+  <span class="ct">METHOD</span>
+  Every numbered requirement of the 76-page <strong>AEGIS Accreditation Handbook &amp; Guardianship Organisation
+  Quality Standards (September 2025)</strong> was decomposed into the specific <strong>fields, records and
+  functionalities</strong> the handbook actually names — including the itemised lists in Standards 5.2.1, 5.5.1,
+  5.10.2, 6.8.1 and Appendices 5, 7, 11 and 13. Each requirement is scored as
+  <strong>(required elements present ÷ required elements named)</strong>. A requirement whose page or store does not
+  exist scores <strong>0%</strong>. A field that exists but is unstructured, unwired or unpersisted scores partial
+  credit. Sub-section scores are the unweighted mean of their requirements; the standard score is the unweighted mean
+  of its sub-sections; the headline score is the unweighted mean of all 43 scored sections.
+</div>
+
+<div class="callout c-caution">
+  <span class="ct">SCOPE NOTE — WHERE THE PLATFORM ACTUALLY LIVES</span>
+  Despite the directory name, the working application is <code>old_version/</code> — <code>index.html</code> at the
+  repository root is only the sign-in shell and redirects to <code>old_version/admin-dashboard.html</code>. All scoring
+  below is against <code>old_version/</code> and <code>old_version/assets/db.js</code>. The copy at
+  <code>assets/db.js</code> (root) is an orphan: no page loads it, and it has diverged — it still carries seeded
+  contract records that the live store does not.
+</div>
+
+<h3 class="sub"><span>How To Read The Scores</span></h3>
+<table class="legend">
+  <tr><th style="width:120px;">Band</th><th>Meaning</th></tr>
+  <tr><td class="p100">90–100%</td><td>Every named field/function present, persisted through <code>db.js</code>, and surfaced in the UI</td></tr>
+  <tr><td class="p75">60–89%</td><td>Core record exists and persists; one or more named fields missing or unstructured</td></tr>
+  <tr><td class="p50">35–59%</td><td>Roughly half the named requirement met — typically a free-text field standing in for structured data</td></tr>
+  <tr><td class="p25">1–34%</td><td>Token coverage only — an acknowledgement tick-box, a static page, or a schema field nothing writes</td></tr>
+  <tr><td class="p0">0%</td><td>No page, form, store or data field exists for this requirement</td></tr>
+</table>
+
+<h3 class="sub"><span>Executive Summary — Score By Standard</span></h3>
+<table class="summary">
+  <tr><th>Standard</th><th class="num">Sections</th><th class="num">Requirements</th><th class="num">Score</th></tr>
+  <tr><td class="cat">Std 1 — Statement of Aims, Principles &amp; Practice</td><td class="num">1</td><td class="num">2</td><td class="num p0">0%</td></tr>
+  <tr><td class="cat">Std 2 — Management of the Organisation</td><td class="num">11</td><td class="num">43</td><td class="num p25">29.6%</td></tr>
+  <tr><td class="cat">Std 3 — Students</td><td class="num">4</td><td class="num">14</td><td class="num p50">49.0%</td></tr>
+  <tr><td class="cat">Std 4 — Travel Arrangements</td><td class="num">1</td><td class="num">4</td><td class="num p50">47.5%</td></tr>
+  <tr><td class="cat">Std 5 — Homestays</td><td class="num">12</td><td class="num">31</td><td class="num p50">40.6%</td></tr>
+  <tr><td class="cat">Std 6 — Safeguarding, Child Protection &amp; Welfare</td><td class="num">10</td><td class="num">31</td><td class="num p25">20.8%</td></tr>
+  <tr><td class="cat">Std 7 — Complaints</td><td class="num">1</td><td class="num">3</td><td class="num p25">3.3%</td></tr>
+  <tr><td class="cat">Std 8 — Day Students &amp; Private Fostering</td><td class="num">1</td><td class="num">5</td><td class="num p75">69.0%</td></tr>
+  <tr><td class="cat">Std 9 — Liaison with Partner Schools</td><td class="num">1</td><td class="num">9</td><td class="num p50">46.1%</td></tr>
+  <tr><td class="cat">Std 10 — Liaison with Parents</td><td class="num">1</td><td class="num">3</td><td class="num p75">66.7%</td></tr>
+  <tr class="total"><td>ALL STANDARDS</td><td class="num">43</td><td class="num">145</td><td class="num">33.7%</td></tr>
+</table>
+
+<div class="bigscore">
+  <div>
+    <span class="lbl">OVERALL PLATFORM COMPLETENESS</span>
+    <span class="sml">Unweighted mean of all 43 scored sections. Standard-level mean (10 standards equally weighted) is 37.3%.</span>
+  </div>
+  <div class="val">33.7%</div>
+</div>
+
+<h3 class="sub"><span>Supplementary Appendix Scores</span><span class="sscore"></span></h3>
+<table class="summary">
+  <tr><th>Appendix</th><th>What it prescribes</th><th class="num">Score</th></tr>
+  <tr><td class="cat">Appendix 13</td><td>Mandatory student information fields (14 field groups)</td><td class="num p75">88%</td></tr>
+  <tr><td class="cat">Appendix 11</td><td>Student Removal Form fields (16 fields)</td><td class="num p75">81%</td></tr>
+  <tr><td class="cat">Appendix 7</td><td>Single Central Record columns (19 columns)</td><td class="num p50">42%</td></tr>
+  <tr><td class="cat">Appendix 5</td><td>Homestay Self-Declaration (11 declaration questions)</td><td class="num p25">30%</td></tr>
+  <tr><td class="cat">Appendix 1/2/3</td><td>Student / Parent / Homestay handbook content</td><td class="num p0">0%</td></tr>
+  <tr><td class="cat">Appendix 4</td><td>Minimum content for a Safeguarding Policy (24 items)</td><td class="num p0">0%</td></tr>
+  <tr><td class="cat">Appendix 6</td><td>Staff &amp; Homestay Code of Conduct (21 topics)</td><td class="num p0">0%</td></tr>
+  <tr><td class="cat">Appendix 9</td><td>Permission to Travel letter</td><td class="num p0">0%</td></tr>
+  <tr><td class="cat">Appendix A</td><td>Accreditation submission set (30 documents)</td><td class="num p0">0%</td></tr>
+</table>
+<p style="font-size:8.6px;color:var(--mute);margin:4px 0 0;">Appendix scores are diagnostic detail; they are already reflected inside the standards that reference them (3.4.1, 3.3.3, 2.8, 5.1.2, 2.3, 6.1, 2.1.6, 4, 2.10) and are not double-counted in the headline.</p>
+
+<div class="callout c-progress">
+  <span class="ct">WHAT SCORES WELL</span>
+  Four areas are genuinely close to inspection-ready: <strong>Homestay annual training (5.9 — 90%)</strong>,
+  <strong>Homestay visits &amp; inspections (5.11 — 85%)</strong>, <strong>Finance (2.9 — 83%)</strong> and
+  <strong>Homestay H&amp;S / annual visit (5.10 — 72%)</strong>. The H&amp;S checklist covers all twelve of the checks
+  named at 5.10.2.1–5.10.2.12 with no gaps, and the annual-visit report writes back to the host record so
+  <code>annualVisitLast</code>/<code>Due</code>/<code>Status</code> stay accurate. <strong>Private fostering (Std 8 —
+  69%)</strong> and <strong>Parent liaison (Std 10 — 67%)</strong> follow.
+</div>
+
+<div class="callout c-risk">
+  <span class="ct">THE THREE FINDINGS THAT MOVE THE SCORE MOST</span>
+  <strong>1. Contracts cannot be created (Std 2.2 — 25%).</strong> The contracts module has a schema, a dashboard,
+  per-profile tabs, a version pill, a status lifecycle and a genuinely good safeguarding block in
+  <code>saveContract()</code> — but the "New contract" control is <code>href="#"</code>, the store seeds empty
+  (<code>og_contracts_seed_version = 'v2-empty'</code>), and <em>no page in the platform ever assigns
+  <code>entityType</code></em>. Nothing can enter the store, so all four contract requirements are unmeetable.<br>
+  <strong>2. No concern can be logged (Std 6.5 — 19%).</strong> <code>saveConcern()</code> and
+  <code>generateConcernId()</code> exist in <code>db.js</code> but are called by no page.
+  <code>low-level-concern-create.html</code> has no <code>db.js</code>. The concerns dashboards are read-only over four
+  seeded records, and the "Escalate to low-level concern" outcome on <code>welfare-note-create.html</code> does not
+  write one. This is a regression against the 22 June audit, which scored 6.5.2 as functional.<br>
+  <strong>3. The SCR reports two columns as permanently blank (Appendix 7 — 42%).</strong> On
+  <code>scr-hosts</code>, <code>scr-staff</code> and <code>scr-drivers</code> the <em>DOB</em> and <em>Self-declaration</em>
+  cells are hardcoded <code>—</code> (lines 192 and 202) even though <code>selfDeclarationDocPath</code> and
+  <code>selfDeclarationDate</code> are captured on <code>host-compliance-declaration.html</code>. The SCR under-reports
+  evidence the platform already holds.
+</div>
+
+<!-- ═══ STANDARD 1 ═══ -->
+<div class="band pagebreak"><span>Standard 1 — Statement of Company Aims, Principles and Practice</span><span class="bscore">0%</span></div>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">1.1</td><td class="req">Public statement of aims, principles and practice</td>
+    <td>Needs a published statement, publicly available. No public-facing route exists — the platform is staff-only behind <code>index.html</code>, and there is no store for a company statement.</td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">1.2</td><td class="req">Accurate publicity and information</td>
+    <td>Needs brochure/publicity content under version control so claims about service level and accommodation can be checked. No marketing or publicity content management of any kind.</td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">Standard 1 section score</td><td class="cnt">0/2</td><td class="pct p0">0%</td></tr>
+</table>
+
+<!-- ═══ STANDARD 2 ═══ -->
+<div class="band"><span>Standard 2 — Management of the Guardianship Organisation</span><span class="bscore">29.6%</span></div>
+
+<h3 class="sub"><span>2.1 Staff, Volunteers and Homestays</span><span class="sscore p50">42.5%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">2.1.1</td><td class="req">Identify all those involved and their roles</td>
+    <td>Full CRUD across <code>og_staff</code> (role, title, primary work, status, start date, rota), plus drivers, hosts, parents and now agents. <code>users.html</code> gives a directory tally. Missing only the organogram named in Appendix A.</td>
+    <td class="cnt">9/10</td><td class="pct p100">90%</td></tr>
+  <tr><td class="ref">2.1.2</td><td class="req">Staff / homestay independent of the school attended</td>
+    <td>No independence declaration or conflict-of-interest field on any staff or host record, and no cross-check against <code>student.schoolId</code>.</td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">2.1.3</td><td class="req">Job descriptions — responsibilities, reporting line, safeguarding duties</td>
+    <td><code>primaryWork</code> free-text on the staff record captures duties loosely. No job-description document store, no reporting line, no stated safeguarding responsibility per role.</td>
+    <td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">2.1.4</td><td class="req">Induction procedure for new staff, volunteers and homestays</td>
+    <td><strong>Homestays: complete.</strong> <code>training-record-create.html</code> writes a 15-item induction checklist plus four understanding questions and a certificate upload to <code>og_training_logs</code>. <strong>Staff and volunteers: none</strong> — <code>induction-checklist.html</code> and <code>induction-create.html</code> have no <code>db.js</code> and persist nothing.</td>
+    <td class="cnt">1/3</td><td class="pct p50">50%</td></tr>
+  <tr><td class="ref">2.1.5</td><td class="req">Safer recruitment checks on all appointments</td>
+    <td>Named elements: DBS ✓, ID ✓, right to work ✓, references ✓, interview notes ✗, British citizenship / settled status verified ✗ (only an <code>isCitizen</code> boolean, no evidence viewed or dated).</td>
+    <td class="cnt">4/6</td><td class="pct p75">67%</td></tr>
+  <tr><td class="ref">2.1.6</td><td class="req">Code of conduct for staff, coordinators, volunteers and homestays</td>
+    <td>The homestay induction records "Code of Conduct explained" as a Yes/No, which evidences sharing but not the document. No code-of-conduct store; none of the 21 Appendix 6 topics are represented.</td>
+    <td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">2.1.8</td><td class="req">Guardians / homestays live in UK full-time and are British or settled</td>
+    <td><code>compliance.isCitizen</code> and <code>worksOutsideUK</code> booleans only. No full-time UK residency field, no settled-status evidence upload, no date viewed.</td>
+    <td class="cnt">1/3</td><td class="pct p25">33%</td></tr>
+  <tr><td class="ref">2.1.9</td><td class="req">Sufficient staff acting as educational guardians / local coordinators</td>
+    <td>Staff list with roles and an emergency rota demonstrates who is available. No guardian-to-student ratio, caseload count or capacity metric to evidence sufficiency.</td>
+    <td class="cnt">1/2</td><td class="pct p50">50%</td></tr>
+  <tr class="secavg"><td colspan="3">2.1 section score (2.1.7 Scotland excluded — not applicable)</td><td class="cnt">—</td><td class="pct p50">42.5%</td></tr>
+</table>
+
+<h3 class="sub"><span>2.2 Contracts</span><span class="sscore p25">25%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">2.2.1</td><td class="req">Contract of employment for all paid staff</td>
+    <td rowspan="4">A single finding governs all four. <code>contracts.html</code> plus the Agreements &amp; Contracts tabs on staff, host, parent and agent profiles read <code>og_contracts</code> and support Draft → Awaiting Signature → Active → Terminated with <code>validFrom</code>/<code>validTo</code> and a version pill. <code>saveContract()</code> even blocks activation when DBS or Gas Safety evidence is missing or expired — the single best safeguarding control in the codebase. <strong>But nothing can create a contract:</strong> "New contract" is <code>href="#"</code>, <code>initialContracts = []</code>, and no page assigns <code>entityType</code>. Notice-period tracking (2.2.2) is absent even in schema. Each requirement therefore scores only for the schema and lifecycle shell.</td>
+    <td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">2.2.2</td><td class="req">Clear contract for all parents, with reasonable notice on termination</td><td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">2.2.3</td><td class="req">Clear contract for each homestay</td><td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">2.2.4</td><td class="req">Clear contract for educational agents</td><td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr class="secavg"><td colspan="3">2.2 section score</td><td class="cnt">—</td><td class="pct p25">25%</td></tr>
+</table>
+
+<h3 class="sub"><span>2.3 Handbooks</span><span class="sscore p0">3%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">2.3.1</td><td class="req">Student handbook (Appendix 1 — 19 required topics)</td>
+    <td>No handbook store, no content management, no issue tracking. None of the 19 named topics exist anywhere.</td>
+    <td class="cnt">0/19</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">2.3.2</td><td class="req">Parent / agent handbook (Appendix 2 — 14 required topics)</td>
+    <td><code>parent-portal.html</code> is a static design page and stores nothing. No parent handbook.</td>
+    <td class="cnt">0/14</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">2.3.3</td><td class="req">Homestay handbook (Appendix 3 — 27 required topics)</td>
+    <td>The homestay induction record has a "Homestay Handbook issued" Yes/No, which evidences issue but not the document or any of its 27 required topics.</td>
+    <td class="cnt">1/28</td><td class="pct p25">10%</td></tr>
+  <tr class="secavg"><td colspan="3">2.3 section score</td><td class="cnt">—</td><td class="pct p0">3%</td></tr>
+</table>
+
+<h3 class="sub"><span>2.4 Insurance</span><span class="sscore p25">15%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">2.4.1</td><td class="req">Professional indemnity, public liability and employer's liability insurance</td>
+    <td>No insurance certificate store, no policy number, no cover level, no expiry tracking, no alert. Nothing at company level exists in <code>db.js</code> at all.</td>
+    <td class="cnt">0/4</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">2.4.2</td><td class="req">Process for checking homestay home insurance adequacy</td>
+    <td>"Home Insurance Policy" appears in the static Required-documents list on <code>host-profile.html</code> and a file could be uploaded to <code>host_docs_*</code>, but there is no insurance field, no declared-to-insurer confirmation and no expiry.</td>
+    <td class="cnt">1/5</td><td class="pct p25">20%</td></tr>
+  <tr><td class="ref">2.4.3</td><td class="req">Homestay vehicle insurance where they transport students</td>
+    <td><code>homestay-visit-report.html</code> captures "Transport by homestay authorised?" — the trigger is recorded. No comprehensive-cover confirmation, no insurer-notified declaration, no expiry.</td>
+    <td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr class="secavg"><td colspan="3">2.4 section score</td><td class="cnt">—</td><td class="pct p25">15%</td></tr>
+</table>
+
+<h3 class="sub"><span>2.5 Record Keeping</span><span class="sscore p25">25%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">2.5.1</td><td class="req">Secure and efficient method for holding records</td>
+    <td>Four named properties: persistence ✓ (<code>db.js</code> writes reliably across ~20 stores), efficiency ✓ (records are indexed, cross-linked and aggregated), security ✗ (browser <code>localStorage</code>, unencrypted, no access control, lost on cache clear), auditability ✗ (<code>audit-log.html</code> has no <code>db.js</code> — the audit trail is itself a mockup).</td>
+    <td class="cnt">2/4</td><td class="pct p25">25%</td></tr>
+  <tr class="secavg"><td colspan="3">2.5 section score</td><td class="cnt">—</td><td class="pct p25">25%</td></tr>
+</table>
+
+<h3 class="sub"><span>2.6 Emergency Procedures</span><span class="sscore p50">58%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">2.6.1</td><td class="req">24-hour emergency contact number for all parties, connecting to suitable staff with record access</td>
+    <td><code>emergency-procedures.html</code> renders a live staffed rotation from <code>og_staff.emergencyRota</code>, escalation contacts, police/NHS and two LADO numbers, and staff do have record access. Not evidenced as issued to students, parents, homestays and schools — the parent-facing number lives only in static copy on <code>parent-portal.html</code>.</td>
+    <td class="cnt">3/4</td><td class="pct p75">75%</td></tr>
+  <tr><td class="ref">2.6.2</td><td class="req">Emergency plan for foreseeable emergencies, showing who is responsible and what action follows</td>
+    <td><code>emergency-incident.html</code> writes to <code>og_incidents</code> with a generated ID and covers the named scenarios — illness, missing student, death or serious harm, pandemic/outbreak, travel disruption, homestay emergency — with severity, status and parent-log linkage. The plan document itself, and the named responsible person per scenario, are absent; <code>emergency-protocols.html</code> is static.</td>
+    <td class="cnt">3/5</td><td class="pct p75">60%</td></tr>
+  <tr><td class="ref">2.6.3</td><td class="req">Lone guardians must have suitable, vetted emergency cover</td>
+    <td>The rota implies cover and all rota staff are DBS-tracked, so cover is vetted. No explicit lone-working or cover-arrangement record.</td>
+    <td class="cnt">1/2.5</td><td class="pct p50">40%</td></tr>
+  <tr class="secavg"><td colspan="3">2.6 section score</td><td class="cnt">—</td><td class="pct p50">58%</td></tr>
+</table>
+
+<h3 class="sub"><span>2.7 Information Sharing and Data Protection</span><span class="sscore p25">30%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">2.7.1</td><td class="req">Share information appropriately with parents, students, agents, homestays, schools and children's services</td>
+    <td>Named counterparties with a logging route: parents ✓ (<code>og_parent_logs</code>), schools ✓ (<code>og_school_logs</code>), agents ✓ (<code>og_agent_logs</code>), local authority ✓ (private-fostering correspondence log), homestays ✓ (shareable host profile). Students ✗ — <code>student-portal.html</code> is static.</td>
+    <td class="cnt">5/6</td><td class="pct p75">80%</td></tr>
+  <tr><td class="ref">2.7.2</td><td class="req">ICO registration and appointed data controller</td>
+    <td>No ICO certificate, registration number, renewal date or named data controller anywhere.</td>
+    <td class="cnt">0/3</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">2.7.3</td><td class="req">Data protection policy and publicly available privacy notice</td>
+    <td>Neither exists, and there is no public surface on which to publish them.</td>
+    <td class="cnt">0/2</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">2.7.4</td><td class="req">Records kept securely, accessible only to those who need them</td>
+    <td>Zero access control. <code>users.html</code> discusses role separation as static design copy; no role gate is enforced anywhere, and every store is readable by anyone with the browser open. <code>login.html</code> and root <code>index.html</code> authenticate nothing.</td>
+    <td class="cnt">0/3</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">2.7.5</td><td class="req">Consent and safeguards before using student photographs</td>
+    <td><code>legal.permissions.photo</code> is a real persisted boolean, edited on <code>student-legal.html</code> and enforced by <code>generateComplianceAlerts()</code>.</td>
+    <td class="cnt">1/1</td><td class="pct p100">100%</td></tr>
+  <tr><td class="ref">2.7.6</td><td class="req">Permission secured before supplying contact details to AEGIS</td>
+    <td>No AEGIS-disclosure consent flag on host, school or parent records.</td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">2.7 section score</td><td class="cnt">—</td><td class="pct p25">30%</td></tr>
+</table>
+
+<h3 class="sub"><span>2.8 Safer Recruitment</span><span class="sscore p25">33.6%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">2.8.1</td><td class="req">Safer recruitment policy, implemented per KCSIE</td>
+    <td>No policy store and no policy record. Appendix A lists this as an essential submission document.</td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">2.8.2</td><td class="req">At least one interview panel member safer-recruitment trained</td>
+    <td>Staff records carry <code>trainingLevel</code>/<code>trainingDate</code>/<code>trainingExpiry</code> but only for safeguarding. No safer-recruitment training type, provider or certificate.</td>
+    <td class="cnt">0/3</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">2.8.3</td><td class="req">Detailed notes of all staff and homestay interviews</td>
+    <td>Hosts have a one-line <code>safeRecruitment</code> summary ("Completed Sep 2022 — records held in secure documents"). No interview note record, no date, no panel, no questions.</td>
+    <td class="cnt">0.6/4</td><td class="pct p25">15%</td></tr>
+  <tr><td class="ref">2.8.4</td><td class="req">Two written references, one referee of 2+ years, employer reference, discrepancies followed up</td>
+    <td>Present: two reference slots (<code>reference1Path</code>, <code>reference2Path</code>), SCR columns, and warning alerts when absent. Missing: referee name and relationship, "known for 2 years" confirmation, employer/professional flag, verification date, log of any clarifying call, retention period.</td>
+    <td class="cnt">3/7.5</td><td class="pct p50">40%</td></tr>
+  <tr><td class="ref">2.8.5</td><td class="req">DBS certificate for all staff, volunteers, homestays and household members 16+; record date checked, certificate number, date of issue</td>
+    <td>Strong: <code>dbsNumber</code>, <code>dbsCertNumber</code>, <code>dbsIssueDate</code>, <code>dbsRenewalDue</code>, <code>dbsLastChecked</code>, <code>dbsExpiry</code>, <code>dbsUpdateService</code>, plus expiry alerts. Gap: household members 16+ are captured as name/DOB/age/occupation with <strong>no per-member DBS fields</strong> — only a free-text <code>secondaryAdultDbs</code> string.</td>
+    <td class="cnt">6/8</td><td class="pct p75">75%</td></tr>
+  <tr><td class="ref">2.8.6</td><td class="req">Children's barred list check, written permission before DBS, formal record of checks</td>
+    <td>The SCR "Barred list" column is derived from <code>person.dbsStatus === 'clear'</code> — it is not a separate check, has no date and no checker. No written-permission record, no Update Service online-check log.</td>
+    <td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">2.8.7</td><td class="req">Written risk assessment where a DBS discloses a conviction</td>
+    <td>No conviction-disclosure field, no risk assessment workflow, no LA-guidance escalation, and no representation of the UKVI criminal-conviction refusal criteria.</td>
+    <td class="cnt">0/3</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">2.8.8</td><td class="req">Overseas check where the person lived or worked abroad 3+ months in the last 5 years</td>
+    <td><code>livedAbroad</code> flag plus <code>overseasCheckDocPath</code>, an SCR column, and a warning when abroad without a check. Missing: which country, the dates abroad, and the fallback (extra reference + risk assessment) where no check is obtainable.</td>
+    <td class="cnt">3/4</td><td class="pct p75">75%</td></tr>
+  <tr><td class="ref">2.8.9</td><td class="req">Identity verified by passport, or birth certificate if none; permission to retain a copy</td>
+    <td><code>idDocumentPath</code> per staff/host/driver with a dedicated identity sub-page and a <em>critical</em> alert when absent. Missing: which document type was seen, and the retention permission the standard requires.</td>
+    <td class="cnt">2/3</td><td class="pct p75">70%</td></tr>
+  <tr><td class="ref">2.8.10</td><td class="req">Right to work confirmed and the date of that check recorded</td>
+    <td><code>rightToWorkCheckPath</code> and <code>rightToWorkExpiry</code>, with critical alerts for non-citizens with no check on file. The <strong>date the check took place</strong> — the specific thing 2.8.10 asks to record — is not stored.</td>
+    <td class="cnt">2/3</td><td class="pct p75">70%</td></tr>
+  <tr><td class="ref">2.8.11</td><td class="req">Online search as due diligence on shortlisted candidates</td>
+    <td>No online-search record, date or outcome field.</td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">2.8 section score</td><td class="cnt">—</td><td class="pct p25">33.6%</td></tr>
+</table>
+
+<h4 class="gap-h">Appendix 7 — Single Central Record columns (scored separately: 42%)</h4>
+<p style="font-size:8.8px;color:var(--slate);margin:2px 0 4px;">The SCR suite (<code>scr-dashboard</code> + <code>scr-staff</code>/<code>-hosts</code>/<code>-drivers</code>) is real, generated live from each record's <code>compliance</code> object, and offers full and anonymised CSV export — exactly what an inspector wants. What it does not yet do is carry the <em>who-checked-it-and-when</em> provenance that Appendix 7 is built around.</p>
+<table>
+  <tr><th>Appendix 7 column</th><th>Platform state</th><th class="pct">Score</th></tr>
+  <tr><td>Position &amp; date of commencement</td><td>Position + Start date columns, from <code>role</code> and <code>startDate</code></td><td class="pct p100">100%</td></tr>
+  <tr><td>Name</td><td>Name column with record ID</td><td class="pct p100">100%</td></tr>
+  <tr><td>Date of birth</td><td><strong>Column renders a hardcoded <code>—</code></strong>; no DOB on staff/host/driver schema</td><td class="pct p0">0%</td></tr>
+  <tr><td>Address</td><td>Held on host and driver records but absent from the SCR</td><td class="pct p50">50%</td></tr>
+  <tr><td>ID check documents (which document)</td><td>Path only — document type not recorded</td><td class="pct p50">50%</td></tr>
+  <tr><td>ID documents seen — date &amp; initials of receiver</td><td>Not captured</td><td class="pct p0">0%</td></tr>
+  <tr><td>Disclosure number &amp; level</td><td><code>dbsNumber</code> ✓; level is hardcoded "Enhanced" rather than stored</td><td class="pct p75">75%</td></tr>
+  <tr><td>Original certificate viewed by, and date</td><td><code>dbsLastChecked</code> exists; "viewed by" absent; column shows the certificate path</td><td class="pct p50">40%</td></tr>
+  <tr><td>Date barred list check undertaken</td><td>Derived from <code>dbsStatus</code>, no date</td><td class="pct p25">20%</td></tr>
+  <tr><td>Name of checker &amp; date (barred list)</td><td>Not captured</td><td class="pct p0">0%</td></tr>
+  <tr><td>What right-to-work evidence was provided</td><td>Path only; evidence type not recorded</td><td class="pct p50">50%</td></tr>
+  <tr><td>Name of checker &amp; date (right to work)</td><td>Not captured</td><td class="pct p0">0%</td></tr>
+  <tr><td>Evidence of British citizenship / settled status</td><td><code>isCitizen</code> boolean; no evidence, no date</td><td class="pct p25">25%</td></tr>
+  <tr><td>Overseas check — date received/verified &amp; initials</td><td>Path only</td><td class="pct p50">50%</td></tr>
+  <tr><td>References — date received/verified &amp; initials</td><td>Two paths, no dates or initials</td><td class="pct p50">50%</td></tr>
+  <tr><td>Self-declaration — date received</td><td>Captured on <code>host-compliance-declaration.html</code> but <strong>the SCR column is hardcoded <code>—</code></strong></td><td class="pct p50">50%</td></tr>
+  <tr><td>Induction — date completed</td><td>Rendered from <code>safeguardingTrainingDate</code>, falling back to the certificate</td><td class="pct p100">90%</td></tr>
+  <tr><td>Training</td><td>Training data exists on records but there is no SCR column</td><td class="pct p50">40%</td></tr>
+  <tr><td>Notes</td><td>No notes column</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="2">Appendix 7 score</td><td class="pct p50">42%</td></tr>
+</table>
+
+<h3 class="sub"><span>2.9 Finance</span><span class="sscore p75">82.5%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">2.9.1</td><td class="req">Payments to staff, volunteers and homestays transacted promptly and appropriately recorded</td>
+    <td><code>finances-tracker.html</code> holds paid/unpaid status against deadline dates with charting; <code>revenue.html</code>, <code>archived-revenue.html</code> and <code>vat-reclamation.html</code> extend it; driver billing cycle and rates sit on the driver record. Minor gap: <code>finances.html</code>, <code>finances-archived.html</code> and <code>vat-reclamation.html</code> write straight to <code>localStorage</code> rather than through <code>db.js</code>, so they sit outside the shared schema.</td>
+    <td class="cnt">—</td><td class="pct p75">85%</td></tr>
+  <tr><td class="ref">2.9.2</td><td class="req">Record of any student finances held (e.g. pocket money)</td>
+    <td>Finance events are linked to students through <code>finance-data.js</code> and surfaced in <code>reports.html</code>. Not a per-student running balance or ledger with receipts.</td>
+    <td class="cnt">—</td><td class="pct p75">80%</td></tr>
+  <tr class="secavg"><td colspan="3">2.9 section score</td><td class="cnt">—</td><td class="pct p75">82.5%</td></tr>
+</table>
+
+<h3 class="sub"><span>2.10 Policies</span><span class="sscore p25">10%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">2.10.1</td><td class="req">All policies and handbooks reviewed at least annually, carrying a publication and review date</td>
+    <td><code>documents.html</code> has a "Policy" category filter and a Review Date column, and shows a hardcoded alert about a "Missing Student Policy — draft overdue". But <code>aggregateDocuments()</code> never emits a Policy row, <code>document-create.html</code> has no <code>db.js</code> and no form fields, and there is no version control, publication date or review scheduler. The category exists; nothing can populate it.</td>
+    <td class="cnt">0.4/4</td><td class="pct p25">10%</td></tr>
+  <tr class="secavg"><td colspan="3">2.10 section score</td><td class="cnt">—</td><td class="pct p25">10%</td></tr>
+</table>
+
+<h3 class="sub"><span>2.11 Significant Changes</span><span class="sscore p0">0%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">2.11.1</td><td class="req">Report significant operational changes to AEGIS within 14 days</td>
+    <td>No mechanism to flag, record or date a change in ownership, management, student numbers or accommodation type, and no 14-day clock.</td>
+    <td class="cnt">0/2</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">2.11 section score</td><td class="cnt">—</td><td class="pct p0">0%</td></tr>
+</table>
+
+<!-- ═══ STANDARD 3 ═══ -->
+<div class="band pagebreak"><span>Standard 3 — Students</span><span class="bscore">49.0%</span></div>
+
+<h3 class="sub"><span>3.1 Student Induction</span><span class="sscore p0">3.3%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">3.1.1</td><td class="req">Pre-arrival information for students, parents and agents, including a virtual meeting with the appointed guardian before travel</td>
+    <td>No pre-arrival or onboarding flow, no pre-travel meeting record, no guardian-allocation step. <code>arrivalDate</code> exists on the student record but nothing hangs off it.</td>
+    <td class="cnt">0/3</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">3.1.2</td><td class="req">Introductory meeting after arrival — all students including emergency packages — with a record kept</td>
+    <td><code>induction-checklist.html</code> is static and writes nothing to the student file. A welfare log could stand in but there is no introductory-meeting note type, date or attendee field.</td>
+    <td class="cnt">0.3/3</td><td class="pct p25">10%</td></tr>
+  <tr><td class="ref">3.1.3</td><td class="req">Student induction programme, including walking through the student handbook</td>
+    <td>No induction programme content and no handbook to walk through (see 2.3.1).</td>
+    <td class="cnt">0/2</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">3.1 section score</td><td class="cnt">—</td><td class="pct p0">3.3%</td></tr>
+</table>
+
+<h3 class="sub"><span>3.2 Student Wellbeing</span><span class="sscore p75">75%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">3.2.1</td><td class="req">Regular check-ins with all students, especially during and after homestay stays; by call, text, remote meeting or visit</td>
+    <td>Strongest area of the platform. <code>welfare-note-create.html</code> writes to <code>og_welfare_logs</code> with note type (routine, post-homestay stay, post-travel, follow-up, concern response), contact method (phone, in-person visit, homestay relay, school email relay), duration, owner, outcome and next action due. <code>student-checkin-submit.html</code> adds a student-facing check-in with mood, location and follow-up request. Every named contact mode is represented. Not evidenced: a cadence rule or overdue-check-in alert.</td>
+    <td class="cnt">—</td><td class="pct p100">95%</td></tr>
+  <tr><td class="ref">3.2.2</td><td class="req">Record kept on the student file, and any concerns followed up appropriately</td>
+    <td>The welfare timeline renders live on <code>student-profile.html</code> via <code>getWelfareLogsForStudent()</code>. Follow-up is where it breaks: the "Escalate to DSL concern" and "Escalate to low-level concern" outcomes are recorded as text on the welfare note but <strong>do not create a concern record</strong> (see 6.5).</td>
+    <td class="cnt">—</td><td class="pct p75">70%</td></tr>
+  <tr><td class="ref">3.2.3</td><td class="req">Consider how to build trusted relationships that facilitate communication</td>
+    <td>The student check-in tool gives students a low-friction voice ("I need to talk to someone"), and welfare notes name an owner so relationships are consistent. But <code>student-portal.html</code> and <code>student-concern-submit.html</code> are static, so the student-facing side is design only.</td>
+    <td class="cnt">—</td><td class="pct p75">60%</td></tr>
+  <tr class="secavg"><td colspan="3">3.2 section score</td><td class="cnt">—</td><td class="pct p75">75%</td></tr>
+</table>
+
+<h3 class="sub"><span>3.3 Mental Health</span><span class="sscore p75">65.3%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">3.3.1</td><td class="req">Clear procedure to support a student presenting mental health issues, including removal from school</td>
+    <td><code>mental-health-referral.html</code> persists a per-student case (lead staff drawn from <code>og_staff</code>, status, support options with notes) via <code>saveMHCase()</code>; <code>mental-health-comms.html</code> logs MH communications; <code>mental-health-removal.html</code> completes the removal path. The workflow is real; the written procedure and the Appendix 12 policy are not.</td>
+    <td class="cnt">4/5</td><td class="pct p75">80%</td></tr>
+  <tr><td class="ref">3.3.2</td><td class="req">MH concern that is also a safeguarding concern → immediate action, DSL involved; Appendix 10 agency list accessible to staff</td>
+    <td>The MH case has support options and a lead, but there is no DSL-escalation step wired from the MH case, and none of the Appendix 10 external support directory is present in the platform for staff to reach for.</td>
+    <td class="cnt">1/2.5</td><td class="pct p50">40%</td></tr>
+  <tr><td class="ref">3.3.3</td><td class="req">Student removal form for school staff to complete (Appendix 11)</td>
+    <td>Structured form persisted to <code>og_mh_removals</code>, which also writes a welfare log entry. Scored against the 16 Appendix 11 fields — see the table below.</td>
+    <td class="cnt">13/16</td><td class="pct p75">81%</td></tr>
+  <tr><td class="ref">3.3.4</td><td class="req">Fully risk-assess the implications of providing guardianship before agreeing to act</td>
+    <td>New since the June audits: <code>student-risk.html</code> stores <code>riskAssessmentFile</code> and <code>riskAssessmentExpiryDate</code>, and <code>generateComplianceAlerts()</code> raises a <em>critical</em> alert when absent or expired — a well-built control. But it is a document upload, not a structured assessment, and nothing gates placement on it, so "before agreeing to become their guardian" is not enforced.</td>
+    <td class="cnt">3/5</td><td class="pct p75">60%</td></tr>
+  <tr class="secavg"><td colspan="3">3.3 section score</td><td class="cnt">—</td><td class="pct p75">65.3%</td></tr>
+</table>
+
+<h4 class="gap-h">Appendix 11 — Student Removal Form fields (81%)</h4>
+<table>
+  <tr><th>Required field</th><th class="pct">State</th><th>Required field</th><th class="pct">State</th></tr>
+  <tr><td>School name</td><td class="pct p100">✓</td><td>Risk of harm to self? (Y/N)</td><td class="pct p100">✓</td></tr>
+  <tr><td>Student name</td><td class="pct p100">✓</td><td>Risk to others? (Y/N)</td><td class="pct p100">✓</td></tr>
+  <tr><td>Date of birth</td><td class="pct p100">✓</td><td>School followed MH &amp; CP policies? (Y/N)</td><td class="pct p100">✓</td></tr>
+  <tr><td>Reason for request of removal</td><td class="pct p100">✓</td><td>Copy of relevant policies attached</td><td class="pct p0">✗</td></tr>
+  <tr><td>Assessed by medical professional? (Y/N)</td><td class="pct p100">✓</td><td>Full details of any medication</td><td class="pct p100">✓</td></tr>
+  <tr><td>Date of assessment</td><td class="pct p100">✓</td><td>Any other additional information</td><td class="pct p100">✓</td></tr>
+  <tr><td>Summary of assessment</td><td class="pct p100">✓</td><td>Signature</td><td class="pct p100">✓</td></tr>
+  <tr><td>Name of completing person</td><td class="pct p100">✓</td><td>Position &nbsp;/&nbsp; Date completed</td><td class="pct p0">✗ ✗</td></tr>
+</table>
+
+<h3 class="sub"><span>3.4 Student Information</span><span class="sscore p50">52.5%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">3.4.1</td><td class="req">Hold the Appendix 13 minimum information per student, reviewed regularly and at least annually</td>
+    <td>Appendix 13 coverage scores 88% across the <code>health</code>, <code>family</code>, <code>legal</code> and <code>pastoral</code> objects — see the table below. Deducted for the missing annual-review element: no last-reviewed date, no review-due flag, no alert.</td>
+    <td class="cnt">—</td><td class="pct p75">80%</td></tr>
+  <tr><td class="ref">3.4.2</td><td class="req">Parental permission to hold the information and pass it to homestays and schools</td>
+    <td><code>legal.permissions</code> holds four real, persisted consents (travel, medical, photo, data), edited on <code>student-legal.html</code> and alerted on. Not recorded: who granted it, when, and by what evidence.</td>
+    <td class="cnt">4/5</td><td class="pct p75">80%</td></tr>
+  <tr><td class="ref">3.4.3</td><td class="req">Confidential data securely stored; confidentiality maintained when sharing</td>
+    <td>Same failure as 2.5.1 and 2.7.4 — unencrypted browser storage, no access control, no sharing controls or redaction on the host-facing profile.</td>
+    <td class="cnt">0.3/3</td><td class="pct p25">10%</td></tr>
+  <tr><td class="ref">3.4.4</td><td class="req">Homestay aware of regular medication; formal medicine administration record; homestay trained where a condition needs specialist knowledge</td>
+    <td>Partial and improving. <code>homestay-incident-create.html</code> offers a "Medicine administration" incident type with a Medication Details field, and <code>school-welfare-notification.html</code> can send a "Medication Change". But an incident log is not a medicine administration record — there is no per-dose date/time/dose/administered-by log — and no field records that a homestay is trained and comfortable for asthma, diabetes or severe allergy cases before placement.</td>
+    <td class="cnt">1.2/3</td><td class="pct p50">40%</td></tr>
+  <tr class="secavg"><td colspan="3">3.4 section score</td><td class="cnt">—</td><td class="pct p50">52.5%</td></tr>
+</table>
+
+<h4 class="gap-h">Appendix 13 — Mandatory student information fields (88%)</h4>
+<table>
+  <tr><th>Required field group</th><th>Platform state</th><th class="pct">Score</th></tr>
+  <tr><td>Full name, date of birth, preferred name</td><td>All three on the student record and editable</td><td class="pct p100">100%</td></tr>
+  <tr><td>Home address</td><td><code>family.homeAddress</code> — "Student's Home Address (overseas)"</td><td class="pct p100">100%</td></tr>
+  <tr><td>Parents / legal guardians — names, addresses, tel, email, occupations</td><td>All five: <code>parent1/2Name/Email/Phone</code> plus <code>parentAddresses</code> and <code>parentOccupations</code>, backed by the <code>og_parents</code> store</td><td class="pct p100">100%</td></tr>
+  <tr><td>UK family contacts — relationship, names, addresses, tel, email, occupations</td><td>A single free-text <code>ukFamilyContacts</code> textarea stands in for six structured fields</td><td class="pct p50">40%</td></tr>
+  <tr><td>Agent details — names, addresses, tel, email, ongoing services</td><td><code>og_agents</code> store with company, email, phone, country, commission and notes, linked per student by <code>legal.agentId</code>. No agent address; "ongoing services provided to the student" is unstructured</td><td class="pct p75">70%</td></tr>
+  <tr><td>Relevant family background information</td><td><code>family.familyBackgroundInfo</code></td><td class="pct p100">100%</td></tr>
+  <tr><td>Permissions and consents given or withheld</td><td>Four persisted consents with alerting</td><td class="pct p100">100%</td></tr>
+  <tr><td>Health — medical details, immunisation, allergies, dietary, health concerns</td><td>All five under <code>health</code>, edited on <code>student-health.html</code></td><td class="pct p100">100%</td></tr>
+  <tr><td>Private medical cover</td><td><code>health.privateMedicalCover</code> with a warning alert</td><td class="pct p100">100%</td></tr>
+  <tr><td>Interests and hobbies</td><td><code>pastoral.interestsAndHobbies</code></td><td class="pct p100">100%</td></tr>
+  <tr><td>Specific learning difficulties</td><td><code>health.learningDifficulties</code></td><td class="pct p100">100%</td></tr>
+  <tr><td>School details — name, house/year group, tutor name, tutor email, tutor telephone, other</td><td>School name ✓, year ✓, <code>tutorOrHouse</code> free text ✓. <strong>No tutor email or telephone</strong>, and <code>tutorOrHouse</code> is not editable in <code>student-create</code>/<code>student-edit</code> — it is written as <code>''</code> on creation and only appears on seeded records</td><td class="pct p50">50%</td></tr>
+  <tr><td>Evidence to support regular student visits</td><td><code>pastoral.visitRecords</code> — date of visit, logged by, visit report, added on <code>student-pastoral.html</code></td><td class="pct p100">100%</td></tr>
+  <tr><td>Passport ID page / eVisa copy (advisory)</td><td><code>legal.passportOrBRPPath</code> with a critical alert when absent — but it stores a path, not the file</td><td class="pct p75">70%</td></tr>
+  <tr class="secavg"><td colspan="2">Appendix 13 score</td><td class="pct p75">88%</td></tr>
+</table>
+
+<!-- ═══ STANDARD 4 ═══ -->
+<div class="band"><span>Standard 4 — Travel Arrangements</span><span class="bscore">47.5%</span></div>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">4.1</td><td class="req">Full record of travel arrangements — date, times, mode — shared with student, parent, agent, school and homestay</td>
+    <td>Record side is complete: <code>travel-create.html</code> persists date, time, type of service, start point, destination, driver, passengers, luggage, mileage and cost to <code>og_transports</code>, and auto-generates a five-task travel checklist. Sharing side is partial: school ✓ (<code>travel.html</code> writes an automatic "Travel Notification" school log), parent ✓ (parent confirmation field), <strong>student, agent and homestay ✗</strong> — no route to any of the three.</td>
+    <td class="cnt">6/8</td><td class="pct p75">75%</td></tr>
+  <tr><td class="ref">4.2</td><td class="req">Suitable permissions in place for any travel undertaken</td>
+    <td>Now met at two levels: student-level <code>legal.permissions.travel</code>, and — new since June — a per-trip <strong>Permission Evidence (screenshot)</strong> upload on the transport record. The remaining gap is that trip creation is not blocked when neither is present.</td>
+    <td class="cnt">—</td><td class="pct p100">90%</td></tr>
+  <tr><td class="ref">4.3</td><td class="req">Written confirmation from licensed taxi firms that enhanced DBS checks were done on their drivers</td>
+    <td>No external transport-provider entity exists. Own drivers hold full DBS records, but there is nowhere to record a firm, its confirmation letter, or the date it was obtained — and Appendix A lists this as an essential submission item.</td>
+    <td class="cnt">0/3</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">4.4</td><td class="req">Child seat / booster compliance for under-12s and students under 135cm</td>
+    <td><code>driver.childSeat</code> is a free-text note ("Yes — standard Group 2/3 seat carried on request"). No student height field, no age-based requirement flag on the trip, and no validation that the assigned vehicle carries the right seat for the assigned student.</td>
+    <td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">—</td><td class="req">Permission to travel letter (Appendix 9 — advisory)</td>
+    <td>No letter template or generation for travel. Notable because the platform already proves it can do this: <code>private-fostering-notification.html</code> generates a full LA notification letter with jsPDF. <em>Advisory — excluded from the section average.</em></td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">Standard 4 section score</td><td class="cnt">—</td><td class="pct p50">47.5%</td></tr>
+</table>
+
+<!-- ═══ STANDARD 5 ═══ -->
+<div class="band pagebreak"><span>Standard 5 — Homestays</span><span class="bscore">40.6%</span></div>
+<p style="font-size:8.8px;color:var(--slate);margin:2px 0 8px;">The widest spread in the audit. The <em>evidence and inspection</em> half of Standard 5 (5.9, 5.10, 5.11) is the best-built part of the whole platform at 72–90%. The <em>living conditions and conduct</em> half (5.5, 5.6, 5.7, 5.8) is 0–18%, because those requirements are lists of household conditions the schema simply does not model.</p>
+
+<h3 class="sub"><span>5.1 Homestay Checks</span><span class="sscore p50">40%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">5.1.1</td><td class="req">Primary carer is British or holds settled status — evidence viewed and recorded</td>
+    <td>The standard names three things: the status, the evidence viewed, and it recorded. Only <code>compliance.isCitizen</code> (a boolean) exists. No evidence upload, no date viewed, no checker.</td>
+    <td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">5.1.2</td><td class="req">Household self-declaration (Appendix 5), ideally repeated annually or on change</td>
+    <td>Genuine progress: <code>host-compliance-declaration.html</code> stores <code>selfDeclarationDocPath</code> and <code>selfDeclarationDate</code>, and a missing declaration raises a <strong>critical</strong> alert — the only host-specific critical in the alert engine. Gaps: the eleven Appendix 5 declaration questions are not captured as structured answers (it is a file upload), there is no annual repeat schedule or notify-on-change undertaking, no per-household-member variant, and the SCR self-declaration column is hardcoded blank.</td>
+    <td class="cnt">2/4</td><td class="pct p50">50%</td></tr>
+  <tr><td class="ref">5.1.3</td><td class="req">Enhanced DBS for every resident aged 16+, including those temporarily away, and regular overnight visitors</td>
+    <td><code>householdMembers</code> now captures name, DOB, age and occupation per resident — but carries <strong>no DBS number, level, issue date or certificate</strong> per member; only the free-text <code>secondaryAdultDbs</code> string covers secondary adults. <code>overnightVisitors</code> is captured ✓. Residents temporarily working or studying away are not distinguished.</td>
+    <td class="cnt">2/4.5</td><td class="pct p50">45%</td></tr>
+  <tr class="secavg"><td colspan="3">5.1 section score</td><td class="cnt">—</td><td class="pct p50">40%</td></tr>
+</table>
+
+<h3 class="sub"><span>5.2 Homestay Information</span><span class="sscore p50">58%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">5.2.1</td><td class="req">Full details on all homestay members — nine named fields</td>
+    <td>Standard 5.2.1 names its fields explicitly. Present: <strong>Full names ✓</strong>, <strong>Date of birth ✓</strong>, <strong>Occupation ✓</strong> (structured per member on <code>host-profile.html</code>), <strong>Dietary patterns ✓</strong> and <strong>Pets ✓</strong> (household-level free text). Absent: <strong>Gender ✗</strong>, <strong>Interests and hobbies ✗</strong>, <strong>Religion ✗</strong>, <strong>Smoker — and if so inside/outside the property ✗</strong>. Note that the smoking field is also what 5.5.1.8 depends on.</td>
+    <td class="cnt">5/9</td><td class="pct p50">56%</td></tr>
+  <tr><td class="ref">5.2.2</td><td class="req">Regular visitor information, recording whether they stay overnight</td>
+    <td><code>overnightVisitors</code> free text captures both the visitors and the overnight question in prose. Not structured per visitor, so it cannot be cross-checked against the 16+ DBS requirement at 5.1.3.</td>
+    <td class="cnt">1.2/2</td><td class="pct p75">60%</td></tr>
+  <tr class="secavg"><td colspan="3">5.2 section score</td><td class="cnt">—</td><td class="pct p50">58%</td></tr>
+</table>
+
+<h3 class="sub"><span>5.3 Homestay Profile &nbsp;·&nbsp; 5.4 Availability of Homestays</span><span class="sscore p50">55% · 50%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">5.3.1</td><td class="req">Short homestay profile, based on the 5.2 information, that can be sent to students, parents and agents; photographs especially useful</td>
+    <td><code>host-profile.html</code> is fully dynamic with tabs, document uploads and a household section, and accommodation photos can be attached through the visit report. But it is an <em>admin</em> profile: there is no shareable or exportable parent/student-facing version, no photo on the host record itself, and no control over whether contact details are included when shared.</td>
+    <td class="cnt">—</td><td class="pct p50">55%</td></tr>
+  <tr><td class="ref">5.4.1</td><td class="req">Access to a sufficient number of homestays, including emergency provision per Standard 2.6</td>
+    <td><code>hosts.html</code> and <code>homestays.html</code> show capacity via <code>capacityMax</code>/<code>capacityCurrent</code>, which evidences headroom. No emergency-provision flag on any host, no availability calendar, and no measure of supply against student numbers.</td>
+    <td class="cnt">1/2</td><td class="pct p50">50%</td></tr>
+</table>
+
+<h3 class="sub"><span>5.5 Student Accommodation</span><span class="sscore p25">15.8%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">5.5.1</td><td class="req">Nine named accommodation conditions (5.5.1.1–5.5.1.9)</td>
+    <td>Scored item by item below. The structured <code>rooms</code> array (label, capacity, bed type, en-suite, desk space, storage, smoke alarm, lockable door) is real and editable on both <code>host-create</code> and <code>host-profile</code>, and covers four of the nine well. The rest — heating and hot water, privacy and bedroom-sharing consent, non-smoking/non-pet choice, access to communal rooms — have no representation.</td>
+    <td class="cnt">—</td><td class="pct p50">45.6%</td></tr>
+  <tr><td class="ref">5.5.2</td><td class="req">No more than three students placed with the same homestay at any one time</td>
+    <td><code>capacityMax</code> and <code>capacityCurrent</code> are recorded, and seed hosts are set to 3. But <strong>the cap is not enforced</strong>: <code>host-create.html</code> takes whatever number is typed (defaulting to 2), and <code>homestay-create.html</code> — the page that actually creates a placement — performs no capacity check at all. A fourth student can be placed without warning.</td>
+    <td class="cnt">1.6/4</td><td class="pct p50">40%</td></tr>
+  <tr><td class="ref">5.5.3</td><td class="req">Homestays working with other guardianship organisations must not exceed three students in total</td>
+    <td>No field records whether a host works with another organisation, or how many students that organisation has placed.</td>
+    <td class="cnt">0/2</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">5.5.5</td><td class="req">Where under-16s are hosted, no students over 20 in the same homestay</td>
+    <td>Student DOB and host placements both exist, so this is computable — but no age-mix validation or warning is implemented.</td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">5.5.6</td><td class="req">No other paying guests or bed-and-breakfast operation while hosting</td>
+    <td>No declaration field on the host record and no question in the H&amp;S checklist or visit report.</td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">5.5.7</td><td class="req">Students of any age sufficiently supervised; not permitted to live independently</td>
+    <td>The visit report captures "Approved student age range or restrictions" and placement conditions, which touches supervision indirectly. No supervision expectation is recorded against the placement.</td>
+    <td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">5.5.8</td><td class="req">NSPCC home-alone guidance — 12 and under not left alone for long, 16 and under not left overnight, and never if uncomfortable</td>
+    <td>Three explicit conditions, none represented on the host record, in the induction checklist or in the visit report.</td>
+    <td class="cnt">0/3</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">5.5 section score (5.5.4 boarding-house model excluded — not offered)</td><td class="cnt">—</td><td class="pct p25">15.8%</td></tr>
+</table>
+
+<h4 class="gap-h">5.5.1 detail — the nine accommodation conditions</h4>
+<table>
+  <tr><th>Condition</th><th>Platform state</th><th class="pct">Score</th></tr>
+  <tr><td>5.5.1.1 Suitable bedroom and social areas — clean, good repair, natural light</td><td>Room records plus visit-report photos and the H&amp;S hazard section. Repair and natural light not asked</td><td class="pct p75">60%</td></tr>
+  <tr><td>5.5.1.2 Privacy from other students; parental consent before bedroom sharing</td><td>Room capacity implies sharing but there is no parental consent-to-share field</td><td class="pct p25">20%</td></tr>
+  <tr><td>5.5.1.3 Only one student per double bed; students never share a bed</td><td><code>bedType</code> (Single/Twin/Bunk) and per-room capacity make this checkable; no rule enforces it</td><td class="pct p50">50%</td></tr>
+  <tr><td>5.5.1.4 Suitable heating, lighting and sufficient hot water</td><td>Not captured on the host record or in the H&amp;S checklist</td><td class="pct p0">0%</td></tr>
+  <tr><td>5.5.1.5 Access to a private space to study</td><td><code>deskSpace</code> per room</td><td class="pct p100">100%</td></tr>
+  <tr><td>5.5.1.6 Appropriate hanging and drawer space</td><td><code>storage</code> per room</td><td class="pct p100">100%</td></tr>
+  <tr><td>5.5.1.7 Bathroom with a lock, and a shower or bath</td><td><code>enSuite</code> ✓ and <code>lockableDoor</code> — but the latter is the bedroom door, not the bathroom; no shower/bath field</td><td class="pct p50">50%</td></tr>
+  <tr><td>5.5.1.8 Right to opt for a non-smoking and/or non-pet homestay</td><td><code>pets</code> recorded ✓; <strong>no smoking status at all</strong> (see 5.2.1); no student preference field to match against</td><td class="pct p25">30%</td></tr>
+  <tr><td>5.5.1.9 Treated as part of the family; access to communal rooms, not to family bedrooms</td><td>Not captured anywhere</td><td class="pct p0">0%</td></tr>
+</table>
+
+<h3 class="sub"><span>5.6 Meals &nbsp;·&nbsp; 5.7 Laundry</span><span class="sscore p25">17.5% · 0%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">5.6.1</td><td class="req">Full board — breakfast, lunch and dinner — accounting for dietary needs</td>
+    <td><code>dietaryProvision</code> free text covers the dietary half well ("Pescatarian-friendly. No nuts in household. Halal available on 48 hrs notice"). There is no full-board confirmation, and none of the three meals is separately confirmed at the homestay.</td>
+    <td class="cnt">1.4/4</td><td class="pct p25">35%</td></tr>
+  <tr><td class="ref">5.6.2</td><td class="req">Access to suitable drinks and snacks during the stay</td>
+    <td>Not captured on the host record, in the induction checklist, or in the visit report.</td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">5.7.1</td><td class="req">Suitable laundry facilities for stays longer than one night, with the arrangement agreed</td>
+    <td>No laundry field anywhere in the platform.</td>
+    <td class="cnt">0/2</td><td class="pct p0">0%</td></tr>
+</table>
+
+<h3 class="sub"><span>5.8 Guidelines on Conduct When Hosting</span><span class="sscore p25">4.2%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">5.8.1</td><td class="req">Homestays aware students should be included in family routines / homely environment</td>
+    <td>Not recorded or evidenced.</td><td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">5.8.2</td><td class="req">Produce suitable behaviour guidelines / code of conduct (Appendix 6)</td>
+    <td>The induction checklist records "Staff and Homestay Code of Conduct explained" as Yes/No — evidence of sharing, not of the document. None of Appendix 6's 21 topics exist.</td>
+    <td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">5.8.3</td><td class="req">Only reasonable, appropriate and lawful means of control</td>
+    <td>No acknowledgement field.</td><td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">5.8.4</td><td class="req">Physical punishment must never be used</td>
+    <td>The handbook requires this statement be made and understood. No field records that it was communicated or accepted.</td><td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">5.8.5</td><td class="req">Guidance on reassuring students in distress</td>
+    <td>Not present.</td><td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">5.8.6</td><td class="req">CCTV use — ICO Code of Practice adherence, paper trail, ad hoc checks by the organisation</td>
+    <td>No CCTV field on the host record, no question in the H&amp;S checklist or visit report, and no ad-hoc check record. A homestay could be running indoor CCTV and the platform would hold no trace of it.</td>
+    <td class="cnt">0/3</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">5.8 section score</td><td class="cnt">—</td><td class="pct p25">4.2%</td></tr>
+</table>
+
+<h3 class="sub"><span>5.9 Homestay Annual Training</span><span class="sscore p100">90%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">5.9.1</td><td class="req">Regular training opportunities at least annually, covering as a minimum a safeguarding update, a mental health update, and changes to national regulations</td>
+    <td>The best-built module in the platform. <code>training-record-create.html</code> writes to <code>og_training_logs</code> with induction type (Initial Induction, Annual Renewal, Returning Host Refresher, Policy Update Session), date, conducting staff member, certificate number and certificate upload, a 15-item checklist covering handbook, code of conduct, safeguarding, low-level concerns, whistleblowing, emergency procedure, missing student, Prevent, online safety, complaints, data protection and AEGIS inspection cooperation, an explicit item for "Annual safeguarding update, mental health update and relevant policy update completed and recorded", and four free-text <em>understanding</em> questions that test comprehension rather than attendance. <code>training-log.html</code> and <code>host-compliance.html</code> read it back per host. Remaining gap: no due-date computation or overdue alert driving the annual cycle, so the record is excellent but the reminder is manual.</td>
+    <td class="cnt">—</td><td class="pct p100">90%</td></tr>
+  <tr class="secavg"><td colspan="3">5.9 section score</td><td class="cnt">—</td><td class="pct p100">90%</td></tr>
+</table>
+
+<h3 class="sub"><span>5.10 Homestay Health &amp; Safety and Annual Visit</span><span class="sscore p75">72%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">5.10.1</td><td class="req">Written health and safety policy (organisations with 5+ employees)</td>
+    <td>No policy store. Appendix A lists a Welfare Health and Safety Policy as an essential submission document.</td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">5.10.1.1</td><td class="req">Initial in-person assessment visit before any placement — H&amp;S checks, simple risk assessment, accommodation suitability, comprehensive notes in the Homestay File</td>
+    <td><code>homestay-visit-report.html</code> persists visit type, date, staff member completing, requested and approved capacity, approved student age range and restrictions, placement matching notes, homestay transport authorisation, accommodation photos, an approval decision (approved / approved after actions / not approved / suspended), authorising reviewer and authorisation date, and next review due. Paired with the H&amp;S checklist's <code>riskAssessmentCompleted</code> item. Only gap: nothing blocks a placement being created before an assessment visit exists.</td>
+    <td class="cnt">—</td><td class="pct p100">90%</td></tr>
+  <tr><td class="ref">5.10.1.2</td><td class="req">Accident book for recordable events involving students, staff, homestays or volunteers</td>
+    <td><code>homestay-incident-create.html</code> writes to <code>og_incidents</code> with incident type (minor injury/accident, allergic reaction, illness episode, near-miss, medicine administration, behavioural, safeguarding, property damage), date, time, severity, what happened, action taken, reported by, logged by, notifications sent, DSL escalation and status — read back by <code>homestay-incidents.html</code>. Scope gap: the subject is a student, so accidents to staff, homestay members or volunteers cannot be recorded. <code>homestay-accident.html</code> and <code>homestay-accident-create.html</code> remain static duplicates and should be retired.</td>
+    <td class="cnt">3/4</td><td class="pct p75">75%</td></tr>
+  <tr><td class="ref">5.10.2</td><td class="req">The twelve minimum health and safety checks (5.10.2.1–5.10.2.12)</td>
+    <td><strong>All twelve present, with no gaps</strong> — smoke alarm per storey, CO alarm by fuel-burning appliances, landlord gas safety certificate (seen, retained, plus a certificate number field and file upload), electrical safety, evacuation routes and key location, extinguishers and blankets serviced, open-fire guard, matches and lighters stored, first aid kit available and complete, prescription medication stored safely, alcohol stored, and food hygiene. The checklist adds items the standard does not require but an inspector would welcome: hazard identification with photo evidence and a hazard register, accident reporting explained, Wi-Fi filtering and online safety, and a property risk assessment. Each item records Yes / No / N/A and is versioned per assessment in <code>og_hs_checklists</code>.</td>
+    <td class="cnt">12/12</td><td class="pct p100">100%</td></tr>
+  <tr><td class="ref">5.10.3</td><td class="req">At least an annual in-person visit — support offered, changes since the last visit recorded, comprehensive notes in the Homestay File</td>
+    <td>An "Annual review" visit report writes back to the host record automatically, setting <code>annualVisitLast</code>, rolling <code>annualVisitDue</code> forward twelve months and flipping <code>annualVisitStatus</code> to complete — genuinely good design. <code>host-compliance.html</code> surfaces the status. Only the "changes since the last visit" comparison is not explicitly prompted.</td>
+    <td class="cnt">—</td><td class="pct p100">95%</td></tr>
+  <tr class="secavg"><td colspan="3">5.10 section score</td><td class="cnt">—</td><td class="pct p75">72%</td></tr>
+</table>
+
+<h3 class="sub"><span>5.11 Visits and Inspections &nbsp;·&nbsp; 5.12 Third-Party Homestay Providers</span><span class="sscore">85% · 0%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">5.11.1</td><td class="req">Homestays informed at application that they must co-operate with AEGIS or statutory inspection</td>
+    <td>The induction checklist carries "AEGIS or statutory inspection cooperation expectation explained" as a recorded Yes/No per host, dated and attributed to the conducting staff member — exactly the evidence an inspector would ask for. Not captured at application stage specifically.</td>
+    <td class="cnt">—</td><td class="pct p100">85%</td></tr>
+  <tr><td class="ref">5.12.1</td><td class="req">Contact AEGIS before placing students in homestays sourced from a third-party provider</td>
+    <td>No provider-source field on the host record, so third-party-sourced homestays cannot be distinguished from directly recruited ones, and no AEGIS notification step exists.</td>
+    <td class="cnt">0/2</td><td class="pct p0">0%</td></tr>
+</table>
+
+<!-- ═══ STANDARD 6 ═══ -->
+<div class="band pagebreak"><span>Standard 6 — Safeguarding, Child Protection and Welfare</span><span class="bscore">20.8%</span></div>
+
+<div class="callout c-risk">
+  <span class="ct">HIGHEST-RISK AREA — AND IT HAS MOVED BACKWARDS</span>
+  Standard 6 is the lowest-scoring standard with any operational content, at <strong>20.8%</strong>. Two reasons.
+  First, eight of its ten sub-sections are fundamentally <em>policy</em> requirements — safeguarding, whistleblowing,
+  Prevent, missing students, behaviour, anti-bullying, online safety — and the platform has no policy store at all, so
+  the best any of them can score is the induction tick-box that evidences the policy was explained. Second, and more
+  seriously: <strong>the concerns register is now read-only</strong>. <code>saveConcern()</code> and
+  <code>generateConcernId()</code> were added to <code>db.js</code> but no page calls them, and
+  <code>low-level-concern-create.html</code>, <code>concern-case.html</code>, <code>concern-escalation.html</code> and
+  <code>concern-close.html</code> all lack <code>db.js</code>. The four dashboards display four seeded records and
+  nothing else can ever be added. This is a regression against the 22 June audit, which scored 6.5.2 as functional.
+</div>
+
+<h3 class="sub"><span>6.1 Safeguarding &amp; Child Protection Policy</span><span class="sscore p25">20%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">6.1.1</td><td class="req">Produce and implement a safeguarding &amp; child protection policy per KCSIE and Working Together; issue to all staff, homestays and volunteers; available to parents and schools on request; published publicly</td>
+    <td>No policy document, no store, no publication route. The homestay induction records that the policy was explained, which evidences distribution to one of the three named groups. None of Appendix 4's 24 minimum-content items — LADO details, LSP contacts, abuse types and signs, child-on-child abuse response, disclosure handling, information-sharing statement — exists anywhere in the platform.</td>
+    <td class="cnt">1/20</td><td class="pct p25">5%</td></tr>
+  <tr><td class="ref">6.1.2</td><td class="req">Students know how to keep safe, how to report concerns, and that concerns are taken seriously</td>
+    <td><code>student-checkin-submit.html</code> gives students two real reporting routes — "I have a concern to report" and "I need to talk to someone" — persisted to the welfare log with a follow-up request flag. That is a genuine student voice channel. But <code>student-concern-submit.html</code> and <code>student-portal.html</code> have no <code>db.js</code>, there is no age-appropriate guidance, and a student concern does not open a case.</td>
+    <td class="cnt">—</td><td class="pct p50">35%</td></tr>
+  <tr class="secavg"><td colspan="3">6.1 section score</td><td class="cnt">—</td><td class="pct p25">20%</td></tr>
+</table>
+
+<h3 class="sub"><span>6.2 Designated Safeguarding Lead</span><span class="sscore p50">46.4%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">6.2.1</td><td class="req">Appoint a senior member of staff as DSL</td>
+    <td>Jay Ray, role "Admin / DSL", title "Safeguarding lead", with primary work described as safeguarding governance, casework triage and external referrals.</td>
+    <td class="cnt">1/1</td><td class="pct p100">100%</td></tr>
+  <tr><td class="ref">6.2.2</td><td class="req">DSL attends suitable <em>live</em> training, renewed every two years</td>
+    <td><code>trainingLevel</code> "DSL Level 3", <code>trainingDate</code> and a two-year <code>trainingExpiry</code> are all on the staff record. Not captured: that the course was live (the standard is explicit that only live courses are acceptable), the provider, or the certificate itself.</td>
+    <td class="cnt">2/3</td><td class="pct p75">70%</td></tr>
+  <tr><td class="ref">6.2.3</td><td class="req">DSL must be resident in the UK</td>
+    <td>Only the <code>isCitizen</code> boolean. No UK residency field — and note that a second staff member is flagged <code>worksOutsideUK: true</code>, so residency is a live distinction the schema cannot express.</td>
+    <td class="cnt">0.3/1</td><td class="pct p25">30%</td></tr>
+  <tr><td class="ref">6.2.4</td><td class="req">DSL liaises with safeguarding counterparts at each partner school</td>
+    <td>School records hold only <code>id</code>, <code>name</code> and a services object — <strong>no contacts at all</strong>, let alone a named DSL counterpart. Contact can be logged after the fact through the school log, but there is no counterpart to log it against.</td>
+    <td class="cnt">—</td><td class="pct p50">35%</td></tr>
+  <tr><td class="ref">6.2.5</td><td class="req">Liaise with the Local Safeguarding Partnership; follow and document inter-agency procedures</td>
+    <td>Two LADO contacts appear on <code>emergency-procedures.html</code>, but statically. No LSP referral record, no inter-agency correspondence log, no referral outcome tracking.</td>
+    <td class="cnt">—</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">6.2.6</td><td class="req">Safeguarding case notes kept securely, accessible only to the DSL and senior management, including correspondence with children's services and police</td>
+    <td>The <code>og_concerns</code> store carries full case narratives naming students, hosts and disclosures — readable by anyone with the browser open, with no role gate anywhere in the platform. No correspondence attachment. This is the single most serious compliance failure in the audit.</td>
+    <td class="cnt">0.2/4</td><td class="pct p25">5%</td></tr>
+  <tr><td class="ref">6.2.7</td><td class="req">Plan for when the DSL is unavailable; ideally a deputy DSL trained to the same level</td>
+    <td>A second staff member holds DSL Level 3 and the emergency rota covers out-of-hours, so cover exists in substance. But no record designates a deputy DSL, so the arrangement is inferred rather than evidenced.</td>
+    <td class="cnt">—</td><td class="pct p75">60%</td></tr>
+  <tr class="secavg"><td colspan="3">6.2 section score</td><td class="cnt">—</td><td class="pct p50">46.4%</td></tr>
+</table>
+
+<h3 class="sub"><span>6.3 Safeguarding Training</span><span class="sscore p75">68.3%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">6.3.1</td><td class="req">All staff, volunteers and every homestay primary carer receive introductory safeguarding training before starting; renewed every three years; certificate seen with date and level recorded</td>
+    <td><code>compliance.safeguardingTrainingDate</code> and <code>safeguardingCertificatePath</code> on every staff, host and driver record; staff additionally carry level, date and expiry; the homestay induction records that the primary carer's certificate was seen with date and expiry. A missing record raises a warning. Gap: no three-year renewal computation for hosts and drivers, and no pre-start gate.</td>
+    <td class="cnt">—</td><td class="pct p75">80%</td></tr>
+  <tr><td class="ref">6.3.2</td><td class="req">Formal record of all safeguarding training, including training date and expiry date</td>
+    <td>Complete for staff (<code>trainingDate</code> + <code>trainingExpiry</code>). Hosts and drivers hold <code>safeguardingTrainingDate</code> with <strong>no expiry field</strong>, so the record cannot show when their training lapses.</td>
+    <td class="cnt">3/4</td><td class="pct p75">65%</td></tr>
+  <tr><td class="ref">6.3.3</td><td class="req">All staff and homestays receive safeguarding updates at least once per year</td>
+    <td>Fully covered for homestays through the annual training log (5.9.1). Nothing tracks an annual safeguarding update for staff — their record has a three-year DSL cycle but no yearly refresh.</td>
+    <td class="cnt">1/2</td><td class="pct p75">60%</td></tr>
+  <tr class="secavg"><td colspan="3">6.3 section score</td><td class="cnt">—</td><td class="pct p75">68.3%</td></tr>
+</table>
+
+<h3 class="sub"><span>6.4 Whistleblowing</span><span class="sscore p25">5%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">6.4.1</td><td class="req">Produce a whistleblowing policy, shared with staff and homestays</td>
+    <td>No policy store. The homestay induction records "Whistleblowing route explained" — evidence of sharing with one group, nothing more.</td>
+    <td class="cnt">0.6/4</td><td class="pct p25">15%</td></tr>
+  <tr><td class="ref">6.4.2</td><td class="req">Policy must show how whistleblowing is managed by the organisation</td>
+    <td>No whistleblowing intake, no case handling, no protection process.</td>
+    <td class="cnt">0/2</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">6.4.3</td><td class="req">Include NSPCC (0800 028 0285) and Protect (020 3117 2520) helpline details</td>
+    <td>Neither helpline appears anywhere in the platform, including on <code>emergency-procedures.html</code> where the other escalation numbers live.</td>
+    <td class="cnt">0/2</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">6.4 section score</td><td class="cnt">—</td><td class="pct p25">5%</td></tr>
+</table>
+
+<h3 class="sub"><span>6.5 Allegations and Low-Level Concerns</span><span class="sscore p25">18.8%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">6.5.1</td><td class="req">Outline the procedure followed when an allegation is made against a member of staff, homestay or volunteer</td>
+    <td>The concerns schema is well designed for this — <code>subjectRole</code> supports Student and Host, tiers run low-level → escalated → resolved, and cases carry category, source, logged date, status, review date and closed date. But there is no allegations policy, no harm-threshold decision step, no LADO referral, and — decisively — no way to open a case.</td>
+    <td class="cnt">1/4</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">6.5.2</td><td class="req">Policy for handling low-level concerns; staff understand the importance of reporting them</td>
+    <td><code>concerns-dashboard</code>, <code>-low-level</code>, <code>-escalated</code> and <code>-resolved</code> read <code>og_concerns</code> through <code>getConcernsByTier()</code>, and <code>host-profile.html</code> surfaces concerns per person via <code>getConcernsForPerson()</code>. The display layer is real. The capture layer does not exist: <strong>no page calls <code>saveConcern()</code></strong>, so the register is frozen at four seeded records. Homestays are told about self-reporting at induction, which is the only element fully met.</td>
+    <td class="cnt">1.2/4</td><td class="pct p25">30%</td></tr>
+  <tr><td class="ref">6.5.3</td><td class="req">Self-report to AEGIS any significant safeguarding concern or compromising situation</td>
+    <td>No AEGIS self-reporting route, no notification record, no date sent. Combined with 2.11.1, the platform has no channel to AEGIS at all.</td>
+    <td class="cnt">0/2</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">6.5.4</td><td class="req">Encourage staff and homestays to self-report, with a process to record and manage such circumstances</td>
+    <td>The induction item "Low-level concerns and self-reporting expectations explained" covers the encouragement. There is no self-report intake form and no process to record or manage what comes in.</td>
+    <td class="cnt">0.6/3</td><td class="pct p25">20%</td></tr>
+  <tr class="secavg"><td colspan="3">6.5 section score</td><td class="cnt">—</td><td class="pct p25">18.8%</td></tr>
+</table>
+
+<h3 class="sub"><span>6.6 Anti-Radicalisation — Prevent Duty</span><span class="sscore p25">7.5%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">6.6.1</td><td class="req">Produce a Prevent / anti-radicalisation policy, available to staff, volunteers, homestays, parents and schools</td>
+    <td>No policy. The induction records "Prevent / anti-radicalisation expectations explained" for homestays only.</td>
+    <td class="cnt">0.4/4</td><td class="pct p25">10%</td></tr>
+  <tr><td class="ref">6.6.2</td><td class="req">Cover the key points in appropriate language in the Student Handbook</td>
+    <td>No student handbook exists (2.3.1), so this cannot be met.</td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">6.6.3</td><td class="req">Policy must include a 24-hour number for reporting radicalisation concerns</td>
+    <td>A 24-hour emergency line and DSL escalation exist operationally, but no Prevent-specific reporting route is defined or published.</td>
+    <td class="cnt">—</td><td class="pct p25">20%</td></tr>
+  <tr><td class="ref">6.6.4</td><td class="req">At least one staff member completes Prevent / anti-radicalisation training, with evidence</td>
+    <td>No Prevent training field, no nominated Prevent lead, no certificate. Appendix A requires this evidence for accreditation.</td>
+    <td class="cnt">0/3</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">6.6 section score</td><td class="cnt">—</td><td class="pct p25">7.5%</td></tr>
+</table>
+
+<h3 class="sub"><span>6.7 Missing Students</span><span class="sscore p25">12.5%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">6.7.1</td><td class="req">Policy outlining procedures for staff and homestays when a student goes missing</td>
+    <td>No policy. There <em>is</em> an operational route — <code>emergency-incident.html</code> offers "Missing student" as an incident type with severity, status and parent-log linkage — so an event can be recorded even though the procedure is undocumented. <code>documents.html</code> displays a hardcoded alert about a "Missing Student Policy — draft overdue", which is design copy, not a record.</td>
+    <td class="cnt">—</td><td class="pct p25">15%</td></tr>
+  <tr><td class="ref">6.7.2</td><td class="req">Policy shared with staff, volunteers and homestays; available to parents and schools</td>
+    <td>Induction records "Missing student procedure explained" for homestays only.</td>
+    <td class="cnt">0.6/4</td><td class="pct p25">15%</td></tr>
+  <tr><td class="ref">6.7.3</td><td class="req">Policy must include a 24-hour number for reporting missing students</td>
+    <td>The emergency rota provides the capability; nothing publishes it as the missing-student reporting route.</td>
+    <td class="cnt">—</td><td class="pct p25">20%</td></tr>
+  <tr><td class="ref">6.7.4</td><td class="req">Take account of Children Missing from Education guidance where relevant</td>
+    <td>No reference, field or workflow.</td>
+    <td class="cnt">0/1</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">6.7 section score</td><td class="cnt">—</td><td class="pct p25">12.5%</td></tr>
+</table>
+
+<h3 class="sub"><span>6.8 Student Behaviour</span><span class="sscore p0">0%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">6.8.1</td><td class="req">Behaviour guidelines covering eleven named areas — homestay conduct, curfew, kitchen use, bathroom use, Wi-Fi and home computer access, alcohol law, drugs law, smoking and vaping law, sexual activity law, tattoos and piercings law, and arrangements for staying away from the homestay</td>
+    <td>Standard 6.8.1 is the most explicitly itemised requirement in the handbook, and <strong>not one of its eleven areas is represented</strong> in any record, checklist, handbook or policy. Appendix A lists a Student Behaviour Code of Conduct as an essential submission document. The nearest adjacent item is the H&amp;S checklist's Wi-Fi and online-safety discussion, which addresses filtering rather than the behavioural expectation.</td>
+    <td class="cnt">0/11</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">6.8 section score</td><td class="cnt">—</td><td class="pct p0">0%</td></tr>
+</table>
+
+<h3 class="sub"><span>6.9 Anti-Bullying including Cyberbullying &nbsp;·&nbsp; 6.10 Online Safety</span><span class="sscore">0% · 30%</span></h3>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">6.9.1</td><td class="req">Produce an anti-bullying policy including cyberbullying, shared with staff and homestays and available to parents and students</td>
+    <td>Nothing exists — no policy, no induction item, no incident category for bullying, and no student-facing guidance.</td>
+    <td class="cnt">0/4</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">6.9.2</td><td class="req">Bullying guidance for students and homestays, via the Student Handbook or a standalone document</td>
+    <td>Not present.</td>
+    <td class="cnt">0/2</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">6.10.1</td><td class="req">Produce an online safety policy for staff and homestays, available to students and parents; identify the risks and how they are managed; make homestays aware of Wi-Fi controls and filtering options</td>
+    <td>The policy itself is absent, but the last named element is genuinely met: the H&amp;S checklist item "Wi-Fi access, filtering/controls, age-appropriate boundaries and online safety expectations discussed" is assessed and recorded per homestay visit, and the induction checklist adds "Online safety and photography expectations explained". Homestays are demonstrably made aware; the policy, the risk identification and the student/parent availability are not.</td>
+    <td class="cnt">1.2/4</td><td class="pct p25">30%</td></tr>
+</table>
+
+<!-- ═══ STANDARD 7 ═══ -->
+<div class="band"><span>Standard 7 — Complaints</span><span class="bscore">3.3%</span></div>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">7.1</td><td class="req">Policy on recording and responding to complaints in a timely manner, published publicly and on the website</td>
+    <td>No complaints policy, no publication route. There is no file in the platform whose name contains "complaint".</td>
+    <td class="cnt">0/3</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">7.2</td><td class="req">Policy must cover an informal stage, a formal stage, and referral to AEGIS if unresolved</td>
+    <td>The homestay induction records "Complaints procedure and AEGIS escalation route explained", which evidences that a procedure was communicated to homestays. No stage exists in the platform, and there is no AEGIS referral route (see also 6.5.3, 2.11.1).</td>
+    <td class="cnt">0.3/3</td><td class="pct p25">10%</td></tr>
+  <tr><td class="ref">7.3</td><td class="req">Written record of all formal complaints and the action taken, whether upheld or not</td>
+    <td>No complaints store, no case record, no outcome field. Nothing to show an inspector.</td>
+    <td class="cnt">0/3</td><td class="pct p0">0%</td></tr>
+  <tr class="secavg"><td colspan="3">Standard 7 section score</td><td class="cnt">—</td><td class="pct p25">3.3%</td></tr>
+</table>
+
+<div class="callout c-caution">
+  <span class="ct">STANDARD 7 IS THE CHEAPEST FIX IN THIS AUDIT</span>
+  Complaints is a three-requirement standard scoring 3.3%, and the platform already contains every pattern it needs: a
+  tiered case register with status and review dates (concerns), a correspondence log (private fostering), a
+  document-upload path (host compliance), and a stage-based lifecycle (contracts). A complaints module built from those
+  existing parts would lift a whole standard from 3% to 80%+ and is the single highest score-per-effort change
+  available.
+</div>
+
+<!-- ═══ STANDARD 8 ═══ -->
+<div class="band pagebreak"><span>Standard 8 — Day Students, Prolonged Stays and Private Fostering</span><span class="bscore">69.0%</span></div>
+<p style="font-size:8.8px;color:var(--slate);margin:2px 0 8px;">The highest-scoring standard in the audit, and the biggest single improvement since June — private fostering has gone from two static mockups to a working casework module.</p>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">8.1</td><td class="req">Adhere to local authority private fostering regulations where an under-16 (under-18 if disabled) lives with a non-relative for 28+ consecutive days</td>
+    <td>Each student carries a <code>privateFostering</code> object (<code>isApplicable</code>, <code>proposedStartDate</code>, <code>laNotifiedDate</code>, briefings, correspondence log), and <code>private-fostering-notification.html</code> computes the 28-day threshold date, total days and age at arrangement start. Two gaps: <strong><code>isApplicable</code> is set by hand</strong> — nothing scans <code>og_placements</code> or <code>og_exeats</code> to detect a 28-day run automatically, which is precisely the "unexpected duration" risk the handbook's closing note warns about; and the under-18-with-disability variant is not modelled.</td>
+    <td class="cnt">—</td><td class="pct p75">70%</td></tr>
+  <tr><td class="ref">8.2</td><td class="req">Liaise with school and homestay so the local authority is notified at least six weeks before the arrangement begins, or immediately if it starts sooner</td>
+    <td>Best-implemented requirement in the standard. The dashboard flags any arrangement inside 42 days of its proposed start without an <code>laNotifiedDate</code> as urgent; <code>private-fostering-notification.html</code> captures the responsible local authority, address, phone and children's-services contact, and generates a formal notification letter as a PDF via jsPDF — the only real document generation anywhere in the platform.</td>
+    <td class="cnt">—</td><td class="pct p100">85%</td></tr>
+  <tr><td class="ref">8.3</td><td class="req">Liaise with school and homestay to explain what a private fostering arrangement requires, including regular LA visits and meetings</td>
+    <td>Stakeholder briefings are tracked as persisted flags — <code>schoolBriefed</code>, <code>homestayBriefed</code>, <code>parentConsent</code> — with evidence uploads for the school notification email and the homestay awareness form. What is recorded is <em>that</em> the briefing happened, not what was explained; the LA visits-and-meetings expectation is not itemised.</td>
+    <td class="cnt">—</td><td class="pct p75">70%</td></tr>
+  <tr><td class="ref">8.4</td><td class="req">System for recording all correspondence with the LA private fostering team, and securing permissions to share information with student, parents, agents, homestay and school</td>
+    <td><code>correspondenceLog</code> is a real dated append-only log on the student record, supported by uploads for the LA acknowledgement, parent consent letter, homestay DBS certificate and school notification, plus a ZIP evidence bundle. Sharing permission is captured for parents only — student, agent, homestay and school permissions are not.</td>
+    <td class="cnt">—</td><td class="pct p75">75%</td></tr>
+  <tr><td class="ref">8.5</td><td class="req">Day students over 16 — be mindful of extended time with homestays and regularly carry out suitable welfare checks</td>
+    <td><code>private-fostering.html</code> includes an "Over-16 Day Students" panel and <code>accommodationType</code> distinguishes Day Student, so the cohort is identifiable, and the general welfare check-in machinery applies to them. No distinct monitoring cadence, no cumulative-days tracking for this group, and no flag when a day student's homestay time grows.</td>
+    <td class="cnt">—</td><td class="pct p50">45%</td></tr>
+  <tr class="secavg"><td colspan="3">Standard 8 section score</td><td class="cnt">—</td><td class="pct p75">69.0%</td></tr>
+</table>
+
+<!-- ═══ STANDARD 9 ═══ -->
+<div class="band"><span>Standard 9 — Liaison with Partner Schools</span><span class="bscore">46.1%</span></div>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">9.1</td><td class="req">Keep in regular contact with the student's school, in line with parents' requirements</td>
+    <td>Now functional. <code>school-log-create.html</code> writes to <code>og_school_logs</code> with student, contact date, contact type and summary, plus a Pending/Resolved follow-up status; <code>schools.html</code> and <code>school-liaison.html</code> render the full log with seven-day and pending-follow-up metrics. "In line with the requirements of the parents" is not captured — no per-family contact expectation, and no overdue-contact alert.</td>
+    <td class="cnt">—</td><td class="pct p75">70%</td></tr>
+  <tr><td class="ref">9.2</td><td class="req">Inform the school contact whenever visiting the site</td>
+    <td><code>contact-type</code> is a free-text field, so a site visit could be typed in, but there is no visit-notification type, no scheduled-visit record and no confirmation the school was told in advance.</td>
+    <td class="cnt">—</td><td class="pct p25">25%</td></tr>
+  <tr><td class="ref">9.3</td><td class="req">Provide schools with written confirmation of the services contracted for <em>each student</em>, at the start of each academic year or when a new student joins</td>
+    <td>New since June: <code>school-profile.html</code> has a Service Confirmation Checklist over seven services (emergency support, homestay arrangements, academic liaison, travel assistance, pastoral care, practical admin, visa support) that saves automatically to the school record. But the standard's three specific elements are each unmet: it is held <strong>per school, not per student</strong>; there is <strong>no academic-year stamp</strong>; and there is <strong>no written confirmation generated or sent</strong> — Appendix A asks for an example of one.</td>
+    <td class="cnt">—</td><td class="pct p50">40%</td></tr>
+  <tr><td class="ref">9.4</td><td class="req">Liaise with the school concerning all travel and transport arrangements</td>
+    <td>Well done: <code>travel.html</code> writes an automatic "Travel Notification" entry to the school log recording the route and the date it was sent, so travel liaison is evidenced without staff effort. Not automatic on trip creation, only on the share action.</td>
+    <td class="cnt">—</td><td class="pct p100">85%</td></tr>
+  <tr><td class="ref">9.5</td><td class="req">Liaise with the school regarding any homestay arrangements</td>
+    <td>Placements exist in <code>og_placements</code> and school logs exist, but nothing connects them — there is no homestay-notification route to the school log equivalent to the travel one, so a placement can be made and changed without the school being told.</td>
+    <td class="cnt">—</td><td class="pct p25">20%</td></tr>
+  <tr><td class="ref">9.6</td><td class="req">Liaise with the school on the student's needs, wellbeing and medication</td>
+    <td>All three named topics covered by <code>school-welfare-notification.html</code>, which persists a Welfare Update, Incident Report or <strong>Medication Change</strong> against a student with a date of event and details, straight into the school log.</td>
+    <td class="cnt">3/3</td><td class="pct p100">90%</td></tr>
+  <tr><td class="ref">9.7</td><td class="req">Comprehensive record or log of all visits to, and communication with, schools</td>
+    <td>The communication half is complete and persisted, with per-school and per-student views. Visits are not distinguished from communications — there is no visit type, no attendee and no visit note — so the log evidences communication but not visits.</td>
+    <td class="cnt">—</td><td class="pct p75">75%</td></tr>
+  <tr><td class="ref">9.8</td><td class="req">If the named point of contact is unavailable, inform the school who is covering guardianship duties</td>
+    <td>No named point of contact per school, no cover designation, no notification mechanism. The school record holds no contacts at all (see 6.2.4).</td>
+    <td class="cnt">0/3</td><td class="pct p0">0%</td></tr>
+  <tr><td class="ref">9.9</td><td class="req">Inform schools when no longer acting as educational guardian for a student</td>
+    <td>Student status and <code>student-archive.html</code> exist, but the archive page is static and no school notification is triggered when a student leaves guardianship.</td>
+    <td class="cnt">—</td><td class="pct p25">10%</td></tr>
+  <tr class="secavg"><td colspan="3">Standard 9 section score</td><td class="cnt">—</td><td class="pct p50">46.1%</td></tr>
+</table>
+
+<!-- ═══ STANDARD 10 ═══ -->
+<div class="band"><span>Standard 10 — Liaison with Parents</span><span class="bscore">66.7%</span></div>
+<table>
+  <tr><th class="ref">Ref</th><th class="req">Requirement</th><th>Required elements &amp; platform evidence</th><th class="cnt">Met</th><th class="pct">Score</th></tr>
+  <tr><td class="ref">10.1</td><td class="req">Keep in regular contact with parents, in line with the terms of the contract</td>
+    <td>New since June: <code>parent-log-create.html</code> writes to <code>og_parent_logs</code> with parent, contact date, contact type and summary; <code>parent-liaison.html</code> and <code>parent-profile.html</code> render the history per parent. The <code>og_parents</code> store carries relationship, language, preferred contact and linked students, which supports the contact well. "In line with the terms of the contract" cannot be met while no contract can exist (2.2.2), and there is no cadence or overdue-contact alert.</td>
+    <td class="cnt">—</td><td class="pct p75">75%</td></tr>
+  <tr><td class="ref">10.2</td><td class="req">Provide parents with a 24-hour contact number and be clear who to contact in an emergency</td>
+    <td>Internally strong — the staffed rotation, escalation contacts and DSL cover on <code>emergency-procedures.html</code> are all live from <code>og_staff</code>. Parent-facing, it is not delivered: <code>parent-portal.html</code> has no <code>db.js</code>, and the emergency line it displays is static design copy rather than a wired, per-parent published contact. Nothing records that each parent was given the number.</td>
+    <td class="cnt">—</td><td class="pct p50">45%</td></tr>
+  <tr><td class="ref">10.3</td><td class="req">Keep parents informed in an emergency — delayed or cancelled flights, illness or injury, missing students, removal from school</td>
+    <td>Properly wired: <code>emergency-incident.html</code> calls <code>saveParentLog()</code>, so logging an incident creates the parent communication record automatically, and all four named scenarios exist as incident types (travel disruption, injury/medical emergency, missing student) or as a dedicated flow (<code>mental-health-removal.html</code>, which also writes a welfare entry). Parent contacts are structured per student and per parent record.</td>
+    <td class="cnt">4/5</td><td class="pct p75">80%</td></tr>
+  <tr class="secavg"><td colspan="3">Standard 10 section score</td><td class="cnt">—</td><td class="pct p75">66.7%</td></tr>
+</table>
+
+<!-- ═══ FULL SCORE TABLE ═══ -->
+<div class="band pagebreak"><span>Complete Section Scoring — All 43 Sections</span><span class="bscore">33.7%</span></div>
+<table class="summary">
+  <tr><th>Section</th><th class="num">Score</th><th>Section</th><th class="num">Score</th></tr>
+  <tr><td class="cat">1 &nbsp; Statement of aims</td><td class="num p0">0%</td><td class="cat">5.4 &nbsp; Availability of homestays</td><td class="num p50">50%</td></tr>
+  <tr><td class="cat">2.1 &nbsp; Staff, volunteers &amp; homestays</td><td class="num p50">42.5%</td><td class="cat">5.5 &nbsp; Student accommodation</td><td class="num p25">15.8%</td></tr>
+  <tr><td class="cat">2.2 &nbsp; Contracts</td><td class="num p25">25%</td><td class="cat">5.6 &nbsp; Meals</td><td class="num p25">17.5%</td></tr>
+  <tr><td class="cat">2.3 &nbsp; Handbooks</td><td class="num p0">3%</td><td class="cat">5.7 &nbsp; Laundry</td><td class="num p0">0%</td></tr>
+  <tr><td class="cat">2.4 &nbsp; Insurance</td><td class="num p25">15%</td><td class="cat">5.8 &nbsp; Conduct when hosting</td><td class="num p25">4.2%</td></tr>
+  <tr><td class="cat">2.5 &nbsp; Record keeping</td><td class="num p25">25%</td><td class="cat">5.9 &nbsp; Annual training</td><td class="num p100">90%</td></tr>
+  <tr><td class="cat">2.6 &nbsp; Emergency procedures</td><td class="num p50">58%</td><td class="cat">5.10 &nbsp; H&amp;S and annual visit</td><td class="num p75">72%</td></tr>
+  <tr><td class="cat">2.7 &nbsp; Information sharing &amp; DP</td><td class="num p25">30%</td><td class="cat">5.11 &nbsp; Visits and inspections</td><td class="num p75">85%</td></tr>
+  <tr><td class="cat">2.8 &nbsp; Safer recruitment</td><td class="num p25">33.6%</td><td class="cat">5.12 &nbsp; Third-party providers</td><td class="num p0">0%</td></tr>
+  <tr><td class="cat">2.9 &nbsp; Finance</td><td class="num p75">82.5%</td><td class="cat">6.1 &nbsp; Safeguarding &amp; CP policy</td><td class="num p25">20%</td></tr>
+  <tr><td class="cat">2.10 &nbsp; Policies</td><td class="num p25">10%</td><td class="cat">6.2 &nbsp; Designated Safeguarding Lead</td><td class="num p50">46.4%</td></tr>
+  <tr><td class="cat">2.11 &nbsp; Significant changes</td><td class="num p0">0%</td><td class="cat">6.3 &nbsp; Safeguarding training</td><td class="num p75">68.3%</td></tr>
+  <tr><td class="cat">3.1 &nbsp; Student induction</td><td class="num p0">3.3%</td><td class="cat">6.4 &nbsp; Whistleblowing</td><td class="num p25">5%</td></tr>
+  <tr><td class="cat">3.2 &nbsp; Student wellbeing</td><td class="num p75">75%</td><td class="cat">6.5 &nbsp; Allegations &amp; low-level concerns</td><td class="num p25">18.8%</td></tr>
+  <tr><td class="cat">3.3 &nbsp; Mental health</td><td class="num p75">65.3%</td><td class="cat">6.6 &nbsp; Prevent duty</td><td class="num p25">7.5%</td></tr>
+  <tr><td class="cat">3.4 &nbsp; Student information</td><td class="num p50">52.5%</td><td class="cat">6.7 &nbsp; Missing students</td><td class="num p25">12.5%</td></tr>
+  <tr><td class="cat">4 &nbsp; Travel arrangements</td><td class="num p50">47.5%</td><td class="cat">6.8 &nbsp; Student behaviour</td><td class="num p0">0%</td></tr>
+  <tr><td class="cat">5.1 &nbsp; Homestay checks</td><td class="num p50">40%</td><td class="cat">6.9 &nbsp; Anti-bullying</td><td class="num p0">0%</td></tr>
+  <tr><td class="cat">5.2 &nbsp; Homestay information</td><td class="num p50">58%</td><td class="cat">6.10 &nbsp; Online safety</td><td class="num p25">30%</td></tr>
+  <tr><td class="cat">5.3 &nbsp; Homestay profile</td><td class="num p50">55%</td><td class="cat">7 &nbsp; Complaints</td><td class="num p25">3.3%</td></tr>
+  <tr><td class="cat">8 &nbsp; Private fostering</td><td class="num p75">69%</td><td class="cat">9 &nbsp; School liaison</td><td class="num p50">46.1%</td></tr>
+  <tr><td class="cat">10 &nbsp; Parent liaison</td><td class="num p75">66.7%</td><td class="cat">&nbsp;</td><td class="num">&nbsp;</td></tr>
+  <tr class="total"><td colspan="2">MEAN OF ALL 43 SECTIONS</td><td colspan="2" class="num">33.7%</td></tr>
+</table>
+
+<h3 class="sub"><span>Distribution</span></h3>
+<table>
+  <tr><th>Band</th><th class="num">Sections</th><th>Which</th></tr>
+  <tr><td class="p100">90–100%</td><td class="num">1</td><td>5.9 Homestay annual training</td></tr>
+  <tr><td class="p75">60–89%</td><td class="num">8</td><td>5.11, 2.9, 3.2, 5.10, 8, 6.3, 10, 3.3</td></tr>
+  <tr><td class="p50">35–59%</td><td class="num">10</td><td>2.6, 5.2, 5.3, 3.4, 5.4, 4, 6.2, 9, 2.1, 5.1</td></tr>
+  <tr><td class="p25">1–34%</td><td class="num">18</td><td>2.8, 2.7, 6.10, 2.2, 2.5, 5.6, 5.5, 2.4, 6.7, 2.10, 6.6, 6.4, 5.8, 3.1, 2.3, 7, 6.1, 6.5</td></tr>
+  <tr><td class="p0">0%</td><td class="num">6</td><td>1, 2.11, 5.7, 5.12, 6.8, 6.9</td></tr>
+</table>
+
+<!-- ═══ ANALYSIS ═══ -->
+<div class="band"><span>What The Scores Show</span><span class="bscore"></span></div>
+
+<h4 class="gap-h">The distribution is bimodal, and the split is not random</h4>
+<p>Sections score high when the requirement is an <strong>event with a form</strong> — a visit, a training session, a
+check-in, a payment, a notification. Every section above 60% is of that shape: annual training (90%), inspection
+co-operation (85%), finance (83%), H&amp;S and annual visit (72%), student wellbeing (75%), private fostering (69%),
+parent liaison (67%), safeguarding training (68%). The platform is built by someone who models events well.</p>
+<p>Sections score near zero when the requirement is a <strong>governing document</strong> or a <strong>standing
+condition of the household</strong>. Every section below 20% is one of those two: handbooks (3%), student behaviour
+(0%), anti-bullying (0%), complaints (3.3%), whistleblowing (5%), Prevent (7.5%), laundry (0%), conduct when hosting
+(4.2%), meals (17.5%), accommodation conditions (15.8%). There is <strong>no policy or document store of any kind</strong>
+in <code>db.js</code> — no company-level entity exists at all — and the host schema models compliance evidence but not
+living conditions.</p>
+<p>Those two absences explain roughly two thirds of the missing score. Neither is a hard engineering problem.</p>
+
+<h4 class="gap-h">Three items are near-complete work that has been left unwired</h4>
+<p>These cost the score more than they cost to fix, because the hard part is already written:</p>
+<ol>
+  <li><strong>Contracts (2.2, 25%)</strong> — a full schema, dashboard, lifecycle, versioning and a working
+  safeguarding block in <code>saveContract()</code>, reachable by nothing. One creation form turns four requirements
+  from 25% to ~85% and closes four Appendix A submission items.</li>
+  <li><strong>Concerns (6.5, 18.8%)</strong> — <code>saveConcern()</code> and <code>generateConcernId()</code> are
+  written and exported but called by no page, while <code>welfare-note-create.html</code> already collects the
+  escalation decision. Wiring that one outcome into <code>saveConcern()</code> restores the safeguarding register and
+  reverses the regression against the June audit.</li>
+  <li><strong>SCR blanks (Appendix 7, 42%)</strong> — <code>scr-hosts</code>, <code>scr-staff</code> and
+  <code>scr-drivers</code> hardcode <code>—</code> in the DOB and Self-declaration cells (lines 192 and 202), so the
+  SCR under-reports a self-declaration the platform has already captured and alerts on. The self-declaration cell is a
+  one-line fix; DOB needs a schema field.</li>
+</ol>
+
+<h4 class="gap-h">Two structural defects cap the achievable score</h4>
+<ol>
+  <li><strong>Storage and access control.</strong> Every record lives in browser <code>localStorage</code> —
+  unencrypted, single-browser, no authentication, no roles, no backup, lost on cache clear.
+  <code>audit-log.html</code>, the page that would evidence an audit trail, has no <code>db.js</code> and is itself a
+  mockup. This alone caps 2.5.1, 2.7.4, 3.4.3 and 6.2.6, and it is why safeguarding case notes naming students and
+  disclosures are readable by anyone who opens the browser. No amount of feature work raises those four while it
+  stands.</li>
+  <li><strong>No company-level entity.</strong> <code>db.js</code> models students, staff, hosts, drivers, parents,
+  agents, schools and their events — but nothing models Oxford Guardians itself. That is why insurance (2.4.1), ICO
+  registration (2.7.2), the data protection policy (2.7.3), policy review (2.10.1), significant changes (2.11.1) and
+  every handbook and policy in Standard 6 all score at or near zero: there is nowhere to put them. A single
+  <code>og_org_documents</code> store with title, category, publication date, review date, version and file would lift
+  a dozen sections at once and produce most of the Appendix A submission set.</li>
+</ol>
+
+<h4 class="gap-h">Highest score-per-effort, in order</h4>
+<table>
+  <tr><th>Change</th><th>Sections it moves</th><th class="num">Est. gain</th></tr>
+  <tr><td><strong>Policy &amp; document store</strong> (org-level entity with publication/review dates)</td><td>2.3, 2.4, 2.7.2/3, 2.8.1, 2.10, 5.10.1, 6.1, 6.4, 6.6, 6.7, 6.9, 6.10, 7.1</td><td class="num">+9–11 pts</td></tr>
+  <tr><td><strong>Complaints module</strong> — reuse the concerns case pattern</td><td>7 (whole standard, 3.3% → ~80%)</td><td class="num">+1.8 pts</td></tr>
+  <tr><td><strong>Wire concern creation</strong> — call the functions that already exist</td><td>6.5, and 3.2.2 follow-up</td><td class="num">+1.5 pts</td></tr>
+  <tr><td><strong>Contract creation form</strong> — the module is otherwise complete</td><td>2.2 (25% → ~85%)</td><td class="num">+1.4 pts</td></tr>
+  <tr><td><strong>Homestay conditions fields</strong> — smoking, gender, religion, interests, heating/hot water, laundry, meals, communal access, CCTV, home-alone</td><td>5.2, 5.5, 5.6, 5.7, 5.8</td><td class="num">+5–6 pts</td></tr>
+  <tr><td><strong>Student behaviour code</strong> — the 11 items at 6.8.1</td><td>6.8 (0% → ~80%)</td><td class="num">+1.9 pts</td></tr>
+  <tr><td><strong>Authentication and roles</strong> on a server-side store</td><td>2.5.1, 2.7.4, 3.4.3, 6.2.6</td><td class="num">+2–3 pts</td></tr>
+  <tr><td><strong>Per-member DBS on household residents</strong>; SCR DOB and self-declaration cells</td><td>5.1.3, 2.8.5, Appendix 7</td><td class="num">+1 pt</td></tr>
+</table>
+<p style="font-size:8.8px;color:var(--slate);">The first four rows together are roughly two weeks of work against
+patterns the codebase already contains, and would take the platform from <strong>33.7% to approximately 48%</strong>
+without a single architectural change.</p>
+
+<div class="callout c-caution">
+  <span class="ct">READING THIS SCORE HONESTLY</span>
+  33.7% measures <em>how much of what AEGIS names is represented in the platform</em>. It is not a prediction of
+  inspection outcome, and it is not a judgement on build quality — the homestay H&amp;S, annual-visit, training and
+  private-fostering modules are better than most production compliance software. But an inspector does not average.
+  They ask for the Appendix A submission set, and the platform currently holds <strong>none of its thirty
+  documents</strong>; they ask to see the complaints record, and there is no complaints store; they ask how
+  safeguarding case notes are restricted to the DSL, and every record is in unprotected browser storage. On the
+  requirements that decide accreditation rather than the ones that fill a dashboard, the platform is further behind
+  than 33.7% suggests.
+</div>
+
+<p style="font-size:8.4px;color:var(--mute);margin-top:16px;border-top:1px solid var(--line);padding-top:8px;">
+Scored against <strong>AEGIS Accreditation Handbook &amp; Guardianship Organisation Quality Standards, September 2025</strong>
+(76pp) and the platform at commit <code>9f51336</code> ("fixed file architecture"), 27 July 2026. 145 requirements
+across 43 sections; Standards 2.1.7 (Scotland) and 5.5.4 (boarding-house model) excluded as not applicable, and the
+Appendix 9 permission-to-travel letter excluded as advisory. Supersedes the audits of 22 and 25 June 2026.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Oxford Guardians — AEGIS Architecture &amp; Compliance Review</title>
+<style>
+  :root{
+    --cyan:#06b6d4; --cyan-dark:#0e7490; --ink:#0f172a; --ink2:#334155;
+    --muted:#64748b; --line:#e2e8f0; --bg:#ffffff; --soft:#f8fafc;
+    --crit:#dc2626; --warn:#d97706; --info:#2563eb; --ok:#059669;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  body{
+    font-family:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink2); line-height:1.5; margin:0; font-size:11.2px; background:var(--bg);
+  }
+  h1,h2,h3,h4{font-family:"Outfit",sans-serif;color:var(--ink);line-height:1.2;font-weight:800;}
+  h1{font-size:30px;margin:0 0 6px;}
+  h2{font-size:19px;margin:30px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--cyan);}
+  h3{font-size:14.5px;margin:18px 0 6px;color:var(--cyan-dark);}
+  h4{font-size:12px;margin:12px 0 4px;color:var(--ink);}
+  p{margin:6px 0;}
+  a{color:var(--cyan-dark);}
+  code{font-family:"SFMono-Regular",Consolas,monospace;background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:0.9em;color:#0b4a57;}
+  ul,ol{margin:6px 0 6px 0;padding-left:20px;}
+  li{margin:3px 0;}
+  .page{max-width:880px;margin:0 auto;padding:46px 54px;}
+  .cover{
+    background:linear-gradient(135deg,#0e7490 0%,#06b6d4 60%,#22d3ee 100%);
+    color:#fff;padding:60px 54px 48px;
+  }
+  .cover h1{color:#fff;font-size:38px;}
+  .cover .sub{font-size:16px;opacity:.95;margin-top:4px;font-weight:600;}
+  .cover .meta{margin-top:26px;font-size:12px;opacity:.92;border-top:1px solid rgba(255,255,255,.35);padding-top:14px;}
+  .tag{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);padding:3px 10px;border-radius:999px;font-size:11px;margin-right:6px;}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:10.5px;}
+  th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;}
+  th{background:var(--soft);font-family:"Outfit";font-weight:700;color:var(--ink);font-size:10px;text-transform:uppercase;letter-spacing:.04em;}
+  tr:nth-child(even) td{background:#fcfdfe;}
+  .sev{font-weight:800;padding:2px 7px;border-radius:5px;color:#fff;font-size:9.5px;white-space:nowrap;display:inline-block;}
+  .s-crit{background:var(--crit);} .s-warn{background:var(--warn);} .s-info{background:var(--info);} .s-ok{background:var(--ok);}
+  .card{border:1px solid var(--line);border-left:4px solid var(--cyan);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--soft);}
+  .card.crit{border-left-color:var(--crit);}
+  .card.warn{border-left-color:var(--warn);}
+  .card.idea{border-left-color:var(--info);}
+  .card.good{border-left-color:var(--ok);}
+  .card h4{margin-top:0;}
+  .lead{font-size:12.5px;color:var(--ink2);}
+  .kicker{font-family:"Outfit";text-transform:uppercase;letter-spacing:.12em;font-size:10px;color:var(--cyan-dark);font-weight:700;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .pill{display:inline-block;background:#ecfeff;border:1px solid #a5f3fc;color:#0e7490;border-radius:6px;padding:1px 7px;font-size:9.5px;font-family:monospace;margin:1px 2px 1px 0;}
+  .pill.bad{background:#fef2f2;border-color:#fecaca;color:#b91c1c;}
+  .pill.good{background:#ecfdf5;border-color:#a7f3d0;color:#047857;}
+  .note{font-size:10px;color:var(--muted);font-style:italic;}
+  .toc{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:14px 22px;}
+  .toc ol{margin:0;padding-left:18px;} .toc li{margin:4px 0;font-weight:600;color:var(--ink);}
+  .toc span{font-weight:400;color:var(--muted);}
+  .legend{font-size:10px;display:flex;gap:16px;flex-wrap:wrap;margin:6px 0;}
+  .legend span{display:flex;align-items:center;gap:5px;}
+  .hero-score{display:flex;gap:18px;align-items:stretch;margin:14px 0 4px;}
+  .hero-score .big{
+    flex:0 0 168px;border:1px solid var(--line);border-radius:12px;background:var(--soft);
+    padding:16px 18px;text-align:center;
+  }
+  .hero-score .big .num{font-family:"Outfit";font-size:46px;font-weight:800;color:var(--warn);line-height:1;}
+  .hero-score .big .lbl{font-size:10px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.08em;}
+  .hero-score .txt{flex:1;}
+  .bar{height:13px;background:#eef2f6;border-radius:7px;overflow:hidden;min-width:70px;border:1px solid var(--line);}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,#06b6d4,#0e7490);}
+  .bar.lo i{background:linear-gradient(90deg,#f87171,#dc2626);}
+  .bar.mid i{background:linear-gradient(90deg,#fbbf24,#d97706);}
+  .bar.hi i{background:linear-gradient(90deg,#34d399,#059669);}
+  .scorerow td:nth-child(3){white-space:nowrap;font-weight:800;font-family:"Outfit";}
+  .met{color:var(--ok);font-weight:800;}
+  .part{color:var(--warn);font-weight:800;}
+  .notmet{color:var(--crit);font-weight:800;}
+  .flow{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0;font-family:"SFMono-Regular",Consolas,monospace;font-size:9.6px;line-height:1.65;white-space:pre;overflow-x:auto;color:var(--ink2);}
+  .phase{border:1px solid var(--line);border-radius:10px;padding:0;margin:14px 0;overflow:hidden;}
+  .phase > .head{background:var(--cyan-dark);color:#fff;padding:8px 14px;font-family:"Outfit";font-weight:700;font-size:11.5px;display:flex;justify-content:space-between;}
+  .phase > .head .gain{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:1px 10px;font-size:10px;}
+  .phase table{margin:0;border:0;}
+  .phase th,.phase td{border-left:0;border-right:0;}
+  @media print{ .page{padding:26px 34px;} h2{page-break-after:avoid;} table{page-break-inside:auto;} tr{page-break-inside:avoid;} .card{page-break-inside:avoid;} }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="tag">Internal technical review</div><div class="tag">Compliance audit</div><div class="tag">Prototype</div>
+  <h1>AEGIS Architecture &amp; Compliance Review</h1>
+  <div class="sub">Oxford Guardians Platform — audited against the AEGIS Guardianship Organisation Quality Standards, September 2025</div>
+  <div class="meta">
+    <strong>Prepared</strong> 6 August 2026 &nbsp;·&nbsp;
+    <strong>Scope</strong> full working tree — <code style="background:rgba(255,255,255,.18);color:#fff">old_version/</code> (179 pages) + <code style="background:rgba(255,255,255,.18);color:#fff">assets/db.js</code> (3,973 lines)<br>
+    <strong>Reference</strong> AEGIS Accreditation Handbook &amp; Quality Standards, September 2025 (76 pp) &nbsp;·&nbsp;
+    <strong>Status</strong> prototype — client-side only, no backend, no authentication<br>
+    <span style="opacity:.9;display:inline-block;margin-top:8px;">Every AEGIS standard and sub-standard traced through the data model, UI, persistence layer and alerting engine — reporting where each is genuinely wired end-to-end versus where it exists only as a schema field with no UI, or a UI rendering static text.</span>
+  </div>
+</div>
+
+<div class="page">
+
+<div class="toc">
+  <div class="kicker" style="margin-bottom:8px;">Contents</div>
+  <ol>
+    <li>Executive summary <span>— headline score, the three failure patterns, critical blockers</span></li>
+    <li>Architecture overview <span>— data flow, the two AEGIS engines, the duplicate db.js</span></li>
+    <li>Standard-by-standard compliance matrix <span>— Standards 1–10, all 139 sub-standards</span></li>
+    <li>Cross-cutting issues <span>— ten problems that span multiple standards</span></li>
+    <li>Remediation roadmap <span>— four phases, ordered by compliance gain per unit of effort</span></li>
+    <li>Appendix <span>— store inventory, static-page register, delta vs the June 2026 review</span></li>
+  </ol>
+</div>
+
+<h2>1 · Executive summary</h2>
+
+<div class="hero-score">
+  <div class="big">
+    <div class="num">51%</div>
+    <div class="lbl">Sub-standard weighted</div>
+  </div>
+  <div class="txt">
+    <p class="lead">The platform has a genuinely good architecture and, in several areas, a level of AEGIS fidelity well above what a prototype normally reaches. The homestay monitoring suite — a 24-item health &amp; safety checklist, a 38-item annual visit report, an in-person-visit gate that blocks placement — is a faithful, working implementation of Standard 5.10 and most of 5.5. Private fostering (Standard 8) correctly models the six-week LA notification window, structured stakeholder briefings and multi-party consent. Student held funds, the mental health suite, welfare cadence and the training engine are all real, persisted and alerting.</p>
+    <p class="lead">Against that, roughly half the standards are not met — and the failures fall into three recognisable patterns rather than being scattered.</p>
+    <p><strong>Accreditation readiness: not ready.</strong> AEGIS awards accreditation only where requirements are <em>fully</em> met.</p>
+  </div>
+</div>
+
+<h3>1.1 Scorecard</h3>
+<p class="note">Method: every sub-standard scored 0–100% against five tests — (a) schema field exists, (b) UI captures or displays it, (c) persists to localStorage and reads back, (d) <code>generateComplianceAlerts()</code> raises it when non-compliant, (e) visible from related pages. Sub-standards roll up by simple mean; standards roll up to the headline weighted by sub-standard count.</p>
+
+<table class="scorerow">
+<thead><tr><th style="width:38%">Standard</th><th style="width:9%">Subs</th><th style="width:9%">Score</th><th style="width:22%"></th><th>Verdict</th></tr></thead>
+<tbody>
+<tr><td><strong>1</strong> · Statement of company aims, principles and practice</td><td>2</td><td>5%</td><td><div class="bar lo"><i style="width:5%"></i></div></td><td><span class="notmet">NOT MET</span></td></tr>
+<tr><td><strong>2</strong> · Management of the Guardianship Organisation</td><td>34</td><td>45%</td><td><div class="bar mid"><i style="width:45%"></i></div></td><td><span class="part">PARTIALLY MET</span></td></tr>
+<tr><td><strong>3</strong> · Students</td><td>14</td><td>64%</td><td><div class="bar mid"><i style="width:64%"></i></div></td><td><span class="part">PARTIALLY MET</span></td></tr>
+<tr><td><strong>4</strong> · Travel Arrangements</td><td>4</td><td>49%</td><td><div class="bar mid"><i style="width:49%"></i></div></td><td><span class="part">PARTIALLY MET</span></td></tr>
+<tr><td><strong>5</strong> · Homestays</td><td>35</td><td>64%</td><td><div class="bar mid"><i style="width:64%"></i></div></td><td><span class="part">PARTIALLY MET</span></td></tr>
+<tr><td><strong>6</strong> · Safeguarding, Child Protection and Welfare</td><td>30</td><td>34%</td><td><div class="bar lo"><i style="width:34%"></i></div></td><td><span class="notmet">NOT MET</span></td></tr>
+<tr><td><strong>7</strong> · Complaints</td><td>3</td><td>5%</td><td><div class="bar lo"><i style="width:5%"></i></div></td><td><span class="notmet">NOT MET</span></td></tr>
+<tr><td><strong>8</strong> · Day Students, Prolonged Stays &amp; Private Fostering</td><td>5</td><td>80%</td><td><div class="bar hi"><i style="width:80%"></i></div></td><td><span class="part">PARTIALLY MET</span></td></tr>
+<tr><td><strong>9</strong> · Liaison with Partner Schools</td><td>9</td><td>45%</td><td><div class="bar mid"><i style="width:45%"></i></div></td><td><span class="part">PARTIALLY MET</span></td></tr>
+<tr><td><strong>10</strong> · Liaison with Parents</td><td>3</td><td>80%</td><td><div class="bar hi"><i style="width:80%"></i></div></td><td><span class="part">PARTIALLY MET</span></td></tr>
+<tr style="background:#f0fdff;"><td><strong>Weighted total</strong></td><td><strong>139</strong></td><td><strong>51%</strong></td><td><div class="bar mid"><i style="width:51%"></i></div></td><td></td></tr>
+</tbody>
+</table>
+
+<h3>1.2 The three failure patterns</h3>
+
+<div class="card crit">
+  <h4>Pattern A — The governance layer was never built</h4>
+  <p>AEGIS is at its core a documents-and-policies inspection; Appendix A lists <strong>30 essential documents</strong> for submission. The platform has an excellent policy store — <code>og_org_documents</code>, with versioning, review dates and a full audit history in <code>policy-viewer.html</code> — but only <strong>two</strong> documents are seeded into it, and nothing anywhere states which policies AEGIS actually requires.</p>
+  <p>There is no handbook store <span class="pill bad">2.3</span> no insurance record <span class="pill bad">2.4</span> no ICO registration or data controller <span class="pill bad">2.7.2</span> no code of conduct <span class="pill bad">2.1.6 · 5.8.2</span> no job descriptions <span class="pill bad">2.1.3</span> no complaints register <span class="pill bad">Std 7</span> no statement of aims <span class="pill bad">1.1</span> and no significant-changes log <span class="pill bad">2.11</span>. Each is a required AEGIS artefact; each is simply absent from the data model. This single pattern accounts for the majority of lost score.</p>
+</div>
+
+<div class="card crit">
+  <h4>Pattern B — Critical pages are static mockups</h4>
+  <p><strong>63 of 179 pages make no data call at all.</strong> Most are innocuous confirmation screens. Four are not:</p>
+  <ul>
+    <li><code>admin-dashboard.html</code> — the landing page and primary operational surface — contains <strong>no <code>&lt;script&gt;</code> tag whatsoever</strong>. Every figure is hardcoded: “28 students under active guardianship” (the database holds 6), “11 approved homestays” (it holds 2), “2 DBS records need action”. None derives from <code>generateComplianceAlerts()</code>, which sits one call away and returns real alerts.</li>
+    <li><code>compliance.html</code> — the “AEGIS Control Room”, the page an inspector is shown first — is likewise fully static. Its DBS tracker names <em>Margaret Ellis</em> and <em>Catherine Brennan</em>, neither of whom exists in <code>og_hosts</code>.</li>
+    <li><code>audit-log.html</code> — the audit trail evidencing Standard 2.5.1 — is static. No audit store exists in <code>db.js</code>.</li>
+    <li><code>low-level-concern-create.html</code> — the creation path for Standard 6.5.2 — renders a full form whose “Save low-level concern” control is an <code>&lt;a href&gt;</code>, not a submit. It writes nothing. Same for <code>concern-case</code>, <code>concern-close</code> and <code>concern-escalation</code>, so the entire allegation triage workflow is a dead end — even though <code>saveConcern()</code> exists and is called successfully from three other pages.</li>
+  </ul>
+</div>
+
+<div class="card warn">
+  <h4>Pattern C — Rich capture, no enforcement or alerting</h4>
+  <p>The annual visit report captures, as structured yes/no/na items, <em>“No more than three students will be hosted”</em>, <em>“If a student under 16 is placed, no student over 20 will be hosted”</em>, <em>“No other paying guests or bed and breakfast arrangements”</em>. These are hard AEGIS placement rules <span class="pill bad">5.5.2</span><span class="pill bad">5.5.5</span><span class="pill bad">5.5.6</span>. They are recorded as a point-in-time observation and read back on <code>host-profile.html</code> — but nothing consumes them as a rule. <code>homestay-create.html</code> will happily create a fourth placement.</p>
+  <p>Likewise <code>og_org_documents</code> tracks policy review dates and <code>policy-viewer.html</code> renders an overdue badge — but <strong><code>generateComplianceAlerts()</code> never reads the policy store</strong>, so an overdue statutory policy review, exactly what Standard 2.10.1 exists to prevent, produces no alert anywhere.</p>
+</div>
+
+<h3>1.3 Critical blockers</h3>
+<table>
+<thead><tr><th style="width:5%">#</th><th style="width:52%">Blocker</th><th style="width:26%">Standards affected</th><th>Severity</th></tr></thead>
+<tbody>
+<tr><td><strong>B1</strong></td><td>No authentication, authorisation or encryption. Student, safeguarding and DBS data in plaintext <code>localStorage</code>. <code>login.html</code> performs no credential check.</td><td>2.5.1 · 2.7.4 · 3.4.3 · 6.2.6</td><td><span class="sev s-crit">CRITICAL</span></td></tr>
+<tr><td><strong>B2</strong></td><td>No audit trail store. <code>audit-log.html</code> is static; nothing records who changed what, when.</td><td>2.5.1 · 2.7.4</td><td><span class="sev s-crit">CRITICAL</span></td></tr>
+<tr><td><strong>B3</strong></td><td>Statutory policy set absent. 2 of ~14 required policies seeded; no required-policy checklist; overdue reviews raise no alert.</td><td>2.10 · 6.1 · 6.4 · 6.6 · 6.7 · 6.9 · 6.10 · 7</td><td><span class="sev s-crit">CRITICAL</span></td></tr>
+<tr><td><strong>B4</strong></td><td>Complaints register does not exist. Standard 7 requires a written record of all formal complaints and actions, upheld or not.</td><td>7.1 – 7.3</td><td><span class="sev s-crit">CRITICAL</span></td></tr>
+<tr><td><strong>B5</strong></td><td><code>admin-dashboard.html</code> and <code>compliance.html</code> display fabricated compliance figures that contradict the database. In an inspection this is worse than showing nothing.</td><td>2.5.1 · 2.10 · 6.1</td><td><span class="sev s-crit">CRITICAL</span></td></tr>
+<tr><td><strong>B6</strong></td><td>Per-household-member DBS not modelled. 5.1.3 requires enhanced DBS for <em>every</em> resident aged 16+; <code>householdMembers[]</code> has no DBS field — only a free-text <code>secondaryAdultDbs</code> string on the host.</td><td>2.8.5 · 5.1.3</td><td><span class="sev s-crit">CRITICAL</span></td></tr>
+<tr><td><strong>B7</strong></td><td>Duplicate <code>db.js</code>. A stale orphan mirror at the repository root has silently diverged by 343 lines.</td><td>Architecture</td><td><span class="sev s-warn">HIGH</span></td></tr>
+</tbody>
+</table>
+
+<h2>2 · Architecture overview</h2>
+
+<h3>2.1 File structure</h3>
+<div class="flow">oxford-guardians-platform/
+├── index.html                   login shell → old_version/admin-dashboard.html
+├── policy-viewer.html           ⚠ duplicate of old_version/policy-viewer.html
+├── assets/
+│   ├── app.css
+│   └── db.js                    ⚠ ORPHAN MIRROR — 3,630 lines, no page loads it
+├── audit/                       previous review outputs (.md / .html / .pdf)
+└── old_version/                 ◀ THE LIVE APPLICATION
+    ├── assets/
+    │   ├── db.js                ◀ SINGLE SOURCE OF TRUTH — 3,973 lines
+    │   ├── app.css
+    │   └── finance-data.js
+    └── *.html                   179 pages</div>
+
+<h3>2.2 Data flow — one database, many views</h3>
+<p>Every page in <code>old_version/</code> loads <code>&lt;script src="assets/db.js"&gt;&lt;/script&gt;</code>, resolving to <code>old_version/assets/db.js</code>. That file declares <strong>35 localStorage keys</strong>, seeds them idempotently via a series of <code>init*DB()</code> calls, exposes ~140 functions both as bare globals <em>and</em> as <code>window.OG_DB.*</code> (pages use both styles interchangeably), and runs <code>migrateComplianceData()</code> at load to backfill missing compliance objects. This is the right pattern and it is followed consistently — almost every fix in this report is a change inside <code>db.js</code> plus a small render change on one or two pages.</p>
+
+<h3>2.3 The two engines that matter for AEGIS</h3>
+<div class="grid2">
+  <div class="card good">
+    <h4><code>generateComplianceAlerts()</code> <span class="note">db.js:2528–2779</span></h4>
+    <p>The platform's compliance conscience. Walks every staff member, host and driver through <code>checkPerson()</code> — ID document, overseas check, DBS presence and expiry, right to work, two references, safeguarding training, host self-declaration. Walks every student through <code>checkStudent()</code> — passport/BRP, four consent types, medical cover, allergies, home address, UK contacts, risk assessment and expiry, annual review status, welfare check-in cadence. Then runs role-based training requirements and merges user-defined notifications.</p>
+    <p><strong>Consumed by exactly one page: <code>notifications.html</code>.</strong> Neither <code>admin-dashboard.html</code> nor <code>compliance.html</code> — the two pages whose entire purpose is showing compliance state — calls it.</p>
+  </div>
+  <div class="card good">
+    <h4><code>aggregateDocuments()</code> <span class="note">db.js:2271–2425</span></h4>
+    <p>Now complete, and a clear improvement since June. Reads student general/academic docs, host/driver/staff/parent document lists, finance docs, private-fostering documents, the organisation policy store, <em>and</em> walks each person's <code>compliance.*Path</code> fields via <code>emitComplianceDocs()</code> to emit DBS, ID, right-to-work, reference, overseas-check, safeguarding, gas-safety and self-declaration rows.</p>
+    <p>All five <code>documents-*.html</code> pages and <code>documents.html</code> read from it. <span class="pill good">June findings D1, D2 and D6 resolved</span></p>
+  </div>
+</div>
+
+<h3>2.4 Page clusters</h3>
+<table>
+<thead><tr><th style="width:20%">Cluster</th><th style="width:56%">Pages</th><th>State</th></tr></thead>
+<tbody>
+<tr><td>Students</td><td><code>students</code>, <code>student-profile</code>, <code>-edit</code>, <code>-health</code>, <code>-legal</code>, <code>-family</code>, <code>-pastoral</code>, <code>-risk</code>, <code>-funds</code>, <code>-portal</code></td><td><span class="pill good">Wired, ID-linked</span></td></tr>
+<tr><td>Hosts / Homestays</td><td><code>hosts</code>, <code>host-profile</code>, <code>host-create/-edit</code>, 7 × <code>host-compliance-*</code>, <code>homestay-visit-report</code>, <code>homestay-hs-checklist</code>, <code>homestay-visit</code></td><td><span class="pill good">Strongest cluster</span></td></tr>
+<tr><td>Homestay (legacy)</td><td><code>homestay-approve</code>, <code>-archive</code>, <code>-assessment(-create)</code>, <code>-accident(-create)</code>, <code>-visit-create</code>, <code>-edit</code>, <code>-delete</code></td><td><span class="pill bad">Static, dead</span></td></tr>
+<tr><td>Drivers / Staff / SCR</td><td><code>drivers</code>, <code>driver-profile</code>, <code>staff-list</code>, <code>staff-profile</code>, 10 × <code>*-compliance-*</code>, <code>scr-{dashboard,staff,hosts,drivers}</code></td><td><span class="pill good">Wired</span></td></tr>
+<tr><td>Concerns</td><td><code>concerns-dashboard</code>, <code>-low-level</code>, <code>-escalated</code>, <code>-resolved</code></td><td><span class="pill bad">Read-only — all create/triage/close pages static</span></td></tr>
+<tr><td>Policies / Documents</td><td><code>policy-viewer</code>, <code>documents</code>, <code>documents-{students,hosts,drivers,staff,finance}</code></td><td><span class="pill good">Wired</span></td></tr>
+<tr><td>Compliance overview</td><td><code>compliance</code>, <code>compliance-edit</code>, <code>audit-log</code>, <code>reporting-dashboard</code></td><td><span class="pill bad">All static</span></td></tr>
+<tr><td>Dashboard</td><td><code>admin-dashboard</code></td><td><span class="pill bad">Static</span></td></tr>
+</tbody>
+</table>
+<p class="note"><code>homestay-profile.html</code> is now a 26-line redirect to <code>host-profile.html?id=…</code>, resolving the June review's D3 trap. Root <code>index.html</code> now redirects relatively, resolving D7.</p>
+
+<h3>2.5 The duplicate db.js — architectural issue A1</h3>
+<table>
+<thead><tr><th style="width:34%"></th><th><code>old_version/assets/db.js</code></th><th><code>assets/db.js</code> (root)</th></tr></thead>
+<tbody>
+<tr><td>Lines</td><td><strong>3,973</strong></td><td>3,630</td></tr>
+<tr><td>Loaded by</td><td>All 116 data-driven pages</td><td><strong>Nothing</strong></td></tr>
+<tr><td>Last commit</td><td><code>beec9ff</code></td><td><code>beec9ff</code> — same commit, edited in parallel</td></tr>
+</tbody>
+</table>
+<p>Both files are edited in the same commits, which is how the divergence stayed invisible. The root copy is missing entire feature blocks the live application depends on:</p>
+<table>
+<thead><tr><th style="width:60%">Feature</th><th style="width:20%">old_version</th><th>root</th></tr></thead>
+<tbody>
+<tr><td><code>getEmergencyScenarioLeads()</code> — Standard 2.6.2</td><td><span class="pill good">present</span></td><td><span class="pill bad">missing</span></td></tr>
+<tr><td><code>getEmergencyCoverArrangements()</code> — 2.6.3</td><td><span class="pill good">present</span></td><td><span class="pill bad">missing</span></td></tr>
+<tr><td><code>getEmergencyIssuanceStats()</code> / <code>recordEmergencyNumberIssued()</code> — 2.6.1</td><td><span class="pill good">present</span></td><td><span class="pill bad">missing</span></td></tr>
+<tr><td><code>getAppendix10Agencies()</code> — Appendix 10 / 3.3.2</td><td><span class="pill good">present</span></td><td><span class="pill bad">missing</span></td></tr>
+<tr><td><code>checkStudentRiskAssessmentStatus()</code> — 3.3.4</td><td><span class="pill good">present</span></td><td><span class="pill bad">missing</span></td></tr>
+<tr><td><code>saveAgentLog()</code> / <code>getAgentLogs()</code></td><td><span class="pill good">present</span></td><td><span class="pill bad">missing</span></td></tr>
+<tr><td><code>dayStudentWelfare</code> schema — 8.5</td><td><span class="pill good">present</span></td><td><span class="pill bad">missing</span></td></tr>
+<tr><td><code>generateVisitReportId()</code></td><td><span class="pill bad">absent</span></td><td><span class="pill">orphaned</span></td></tr>
+</tbody>
+</table>
+<div class="card">
+  <h4>Recommendation</h4>
+  <p><code>old_version/assets/db.js</code> is unambiguously canonical — every live page resolves to it and it is 343 lines ahead. <strong>Delete <code>assets/db.js</code> from the repository root</strong>, along with root <code>policy-viewer.html</code>, which is a byte-identical duplicate. The root should retain only <code>index.html</code> and <code>assets/app.css</code>.</p>
+  <p>If the intent is eventually to promote <code>old_version/</code> to the root, do it as a single explicit <code>git mv</code> rather than maintaining a mirror; the current arrangement guarantees any fix applied to one copy is eventually lost when someone edits the other. The directory name <code>old_version/</code> is itself a hazard — it names the live application as though it were archived, which is how a mirror came to be treated as the real thing. Rename it to <code>app/</code> in the same change.</p>
+</div>
+
+<h2>3 · Standard-by-standard compliance matrix</h2>
+<div class="legend">
+  <span><span class="sev s-ok">✓</span> FULLY MET</span>
+  <span><span class="sev s-warn">~</span> PARTIALLY MET</span>
+  <span><span class="sev s-crit">✗</span> NOT MET</span>
+</div>
+<p class="note">The full requirement text, complete platform evidence and per-sub-standard gap analysis are in the companion Markdown report. The tables below carry the requirement, the evidence anchor, the status and the specific gap.</p>
+
+<h3>Standard 1 — Statement of company aims, principles and practice <span class="notmet">5%</span></h3>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>1.1</strong></td><td>Statement of aims, principles and practice, publicly available.</td><td>None. <code>og_org_documents</code> could hold it; nothing seeded, no matching category.</td><td><span class="sev s-crit">NOT MET</span> 10%</td><td>No record, no page, no public surface. Add a <em>Governance &amp; aims</em> category and a public render route.</td></tr>
+<tr><td><strong>1.2</strong></td><td>All publicity and information accurate, conveying realistic expectations.</td><td>None. No brochure or publicity store; root marketing copy ungoverned.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Appendix A requires “copies of any brochures”. Also see cross-cutting issue X8 (branding leakage).</td></tr>
+</tbody>
+</table>
+
+<h3>Standard 2 — Management of the Guardianship Organisation <span class="part">45%</span></h3>
+
+<h4>2.1 Staff, Volunteers and Homestays — <span class="part">40%</span></h4>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>2.1.1</strong></td><td>Identify all those involved and their roles.</td><td><code>og_staff</code> (<code>role</code>, <code>title</code>, <code>primaryWork</code>), <code>og_hosts</code>, <code>og_drivers</code>, <code>og_agents</code>; <code>users.html</code> aggregates all five.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>No organogram artefact (required by Appendix A).</td></tr>
+<tr><td><strong>2.1.2</strong></td><td>Staff/homestays independent of any school attended by students in their care.</td><td>No field on staff or hosts.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Add <code>schoolIndependenceConfirmed</code> + date; check at placement against <code>student.schoolId</code>.</td></tr>
+<tr><td><strong>2.1.3</strong></td><td>Clear job descriptions including safeguarding responsibilities.</td><td>Zero occurrences of “job description” in the tree.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Appendix A requires these. Add <code>jobDescriptionDocPath</code> to the compliance object.</td></tr>
+<tr><td><strong>2.1.4</strong></td><td>Suitable induction procedure covering safeguarding training.</td><td><code>induction-checklist.html</code> and <code>induction-create.html</code> are <strong>both static</strong>. No induction field exists.</td><td><span class="sev s-crit">NOT MET</span> 10%</td><td>The SCR “Induction” column (<code>scr-hosts.html:218</code>) actually renders safeguarding training — it reads to an inspector as a completed check that was never performed.</td></tr>
+<tr><td><strong>2.1.5</strong></td><td>Safer recruitment checks — DBS, ID, right to work, references, interview notes.</td><td><code>compliance</code> object across staff/host/driver; 17 <code>*-compliance-*</code> sub-pages write it; all alerted.</td><td><span class="sev s-warn">PARTIAL</span> 75%</td><td><strong>Interview notes captured nowhere</strong> (2.8.3). Barred-list check has no field (2.8.6).</td></tr>
+<tr><td><strong>2.1.6</strong></td><td>Code of conduct for staff, coordinators, volunteers, homestays; shared and understood.</td><td>None. No store, no acknowledgement tracking.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Appendix 6 lists 21 required content areas; Appendix A requires the document for submission.</td></tr>
+<tr><td><strong>2.1.7</strong></td><td>Scotland — Care Inspectorate regard; PVG checks.</td><td>No PVG field; compliance models DBS only.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>May be out of scope, but the platform cannot record that determination either.</td></tr>
+<tr><td><strong>2.1.8</strong></td><td>Guardians and homestays must live in the UK full-time; British or settled status.</td><td><code>compliance.isCitizen</code> boolean + <code>rightToWorkCheckPath</code>/<code>Expiry</code>.</td><td><span class="sev s-warn">PARTIAL</span> 55%</td><td>No settled-status evidence path, verification date or full-time-residency attestation. A boolean is not evidence.</td></tr>
+<tr><td><strong>2.1.9</strong></td><td>Sufficient staff acting as educational guardians/coordinators.</td><td>None — contrast <code>getHomestaySupplyAnalytics()</code>, which does exactly this for hosts.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Mirror the host supply analytics: caseload per coordinator vs active student count.</td></tr>
+</tbody>
+</table>
+
+<h4>2.2 Contracts — <span class="met">90%</span></h4>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>2.2.1</strong></td><td>Contract of employment for all paid staff.</td><td><code>og_contracts</code> <code>entityType:'Staff'</code>; rendered on <code>staff-profile.html</code>.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>—</td></tr>
+<tr><td><strong>2.2.2</strong></td><td>Clear contract for all parents; reasonable termination notice.</td><td><code>entityType:'Parent'</code>; <code>parent-profile.html</code>.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>No <code>noticePeriodDays</code> field.</td></tr>
+<tr><td><strong>2.2.3</strong></td><td>Clear contract for each homestay.</td><td><code>entityType:'Homestay'</code>. <code>saveContract()</code> (db.js:3294) <strong>blocks activation</strong> when the host's DBS or gas safety certificate is missing or expired, forcing status back to Draft.</td><td><span class="sev s-ok">FULLY MET</span> 95%</td><td>The block only <code>console.warn</code>s — the user sees no explanation for the reverted status.</td></tr>
+<tr><td><strong>2.2.4</strong></td><td>Clear contract for educational agents, UK or overseas.</td><td><code>entityType:'Agent'</code>; <code>agent-profile.html</code>; <code>og_agents.agreementStatus</code>.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>—</td></tr>
+</tbody>
+</table>
+<p class="note"><code>og_contracts</code> seeds empty (<code>OG_CONTRACTS_SEED_VERSION = 'v2-empty'</code>), so the cluster demonstrates nothing until a contract is manually created.</p>
+
+<h4>2.3 Handbooks — <span class="notmet">5%</span></h4>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>2.3.1</strong></td><td>Student handbook, age-appropriate (Appendix 1 — 20 items).</td><td>None.</td><td><span class="sev s-crit">NOT MET</span> 5%</td><td>Required by Appendix A. No handbook entity exists.</td></tr>
+<tr><td><strong>2.3.2</strong></td><td>Parent/agent handbook (Appendix 2 — 14 items).</td><td>None. <code>admin-dashboard.html</code> shows a <strong>static</strong> “Parent Handbook v1.2 / Approved / Shared with 24 active families”.</td><td><span class="sev s-crit">NOT MET</span> 5%</td><td>The static claim is worse than absence — it asserts a controlled document that does not exist.</td></tr>
+<tr><td><strong>2.3.3</strong></td><td>Homestay handbook (Appendix 3 — 27 items).</td><td>None.</td><td><span class="sev s-crit">NOT MET</span> 5%</td><td>Handbooks are versioned, review-dated, audience-scoped documents — structurally identical to policies. Add a <em>Handbooks</em> category to <code>og_org_documents</code> rather than a new store.</td></tr>
+</tbody>
+</table>
+
+<h4>2.4 Insurance — <span class="notmet">15%</span></h4>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>2.4.1</strong></td><td>PI, public liability and (where applicable) employer's liability insurance sufficient for scope.</td><td>No organisation-level record of any kind — <code>db.js</code> has no organisation entity.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>See cross-cutting issue X3.</td></tr>
+<tr><td><strong>2.4.2</strong></td><td>Process for checking homestays are aware their home insurance must cover hosting.</td><td>No field; not in the visit report or H&amp;S checklist.</td><td><span class="sev s-crit">NOT MET</span> 10%</td><td>Add <code>homeInsuranceAwarenessConfirmed</code> + date, plus a visit-report item.</td></tr>
+<tr><td><strong>2.4.3</strong></td><td>Where the homestay transports students, make them aware of comprehensive vehicle insurance and the duty to declare the use.</td><td>Drivers carry <code>insuranceExpiry</code> and <code>motExpiry</code>; <strong>hosts who drive carry nothing</strong>.</td><td><span class="sev s-warn">PARTIAL</span> 30%</td><td>Hosts routinely drive students — <code>punctualityDetail</code> is measured on school collections. Add <code>hostDrivesStudents</code>, <code>vehicleInsuranceDeclaredDate</code>, <code>motExpiry</code>.</td></tr>
+</tbody>
+</table>
+
+<h4>2.5 – 2.7 Record keeping, emergency procedures, data protection</h4>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>2.5.1</strong></td><td>Secure and efficient method for holding records.</td><td><em>Efficient:</em> 35 structured stores, consistent ID conventions, a single access layer. <em>Secure:</em> plaintext <code>localStorage</code>, no encryption, no auth, no access control, no audit trail; <code>audit-log.html</code> static.</td><td><span class="sev s-warn">PARTIAL</span> 35%</td><td>Blockers <strong>B1</strong> and <strong>B2</strong>. The efficiency half is met well; the security half not at all, with no evidence surface for either.</td></tr>
+<tr><td><strong>2.6.1</strong></td><td>24-hour emergency number to all students, parents, staff, volunteers, homestays and schools, connecting to staff with record access.</td><td><code>POL-EMG-001</code> documents a 3-tier 24/7 rota on <code>+44 7700 900 999</code>. <code>recordEmergencyNumberIssued()</code> stamps students and hosts; <code>emergency-procedures.html</code> renders coverage.</td><td><span class="sev s-warn">PARTIAL</span> 70%</td><td><strong><code>getEmergencyIssuanceStats()</code> (db.js:3809) is broken</strong> — the filter <code>s.emergencyNumberIssued || s.id</code> is always truthy, so coverage always reports 100%; schools hardcoded 5/5. The page certifies 2.6.1 compliance regardless of data. Staff, volunteers and drivers untracked.</td></tr>
+<tr><td><strong>2.6.2</strong></td><td>Emergency plan for foreseeable emergencies showing responsibility and action.</td><td><code>getEmergencyScenarioLeads()</code> — 7 structured scenarios (medical, missing student, safeguarding disclosure, death/critical injury, travel disruption, homestay evacuation, pandemic), each with named lead, role, phone, backup, immediate action, escalation timeline and documentation. Rendered by <code>emergency-protocols.html</code>.</td><td><span class="sev s-ok">FULLY MET</span> 95%</td><td>Leads are hardcoded rather than resolved from <code>og_staff</code> — a departed employee stays named in the emergency plan.</td></tr>
+<tr><td><strong>2.6.3</strong></td><td>Lone-working guardians must have vetted emergency cover.</td><td><code>getEmergencyCoverArrangements()</code> — named reciprocal SLA, DSL Level 3 cover officer, enhanced DBS number, direct phone, effective/renewal dates, 60-minute GPS check-in protocol with 15-minute escalation.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>Hardcoded; the 2027 renewal date raises no alert.</td></tr>
+<tr><td><strong>2.7.1</strong></td><td>Share information appropriately with all parties.</td><td><code>og_school_logs</code>, <code>og_parent_logs</code>, <code>og_agent_logs</code>, PF <code>informationSharing</code>, <code>getShareableHostProfile()</code> with redaction.</td><td><span class="sev s-warn">PARTIAL</span> 65%</td><td>No children's-services sharing outside the PF flow; no lawful-basis field.</td></tr>
+<tr><td><strong>2.7.2</strong></td><td>Registered with the ICO; must appoint a data controller.</td><td><strong>Zero occurrences of “data controller”.</strong> No ICO registration field.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Appendix A requires the ICO certificate. Needs an organisation profile (X3).</td></tr>
+<tr><td><strong>2.7.3</strong></td><td>Data protection policy and privacy notice, publicly available and on the website.</td><td>Category and working route exist in <code>og_org_documents</code>; <strong>no document seeded</strong>. Root <code>index.html:569</code> links “Privacy Policy” to <code>href="#"</code>.</td><td><span class="sev s-warn">PARTIAL</span> 25%</td><td>The container works; the content does not exist. Cheapest high-value fix in the report.</td></tr>
+<tr><td><strong>2.7.4</strong></td><td>Records kept securely, accessible only to those who need them.</td><td>No auth, no roles enforced, no encryption. <code>staff-profile.html</code> describes access boundaries in prose only. <code>admin-dashboard.html:83</code> exposes an unguarded <code>localStorage.clear()</code>.</td><td><span class="sev s-crit">NOT MET</span> 10%</td><td>Blocker <strong>B1</strong>; 6.2.6 depends on it.</td></tr>
+<tr><td><strong>2.7.5</strong></td><td>Consent and safeguards before using student photographs.</td><td><code>student.legal.permissions.photo</code> = <code>{granted, grantedBy, grantedDate, evidenceMethod}</code>; alerted; edited on <code>student-legal.html</code>.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>No link from a stored image back to the consent record.</td></tr>
+<tr><td><strong>2.7.6</strong></td><td>Permission before supplying contact details to AEGIS for Gold Standard.</td><td>None.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Add an AEGIS-disclosure consent flag to host and school records.</td></tr>
+</tbody>
+</table>
+
+<h4>2.8 Safer Recruitment — <span class="part">50%</span></h4>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>2.8.1</strong></td><td>Safer recruitment policy per KCSIE.</td><td>Policy store exists; none seeded.</td><td><span class="sev s-crit">NOT MET</span> 10%</td><td>Required by Appendix A.</td></tr>
+<tr><td><strong>2.8.2</strong></td><td>At least one interview panel member trained in safer recruitment.</td><td><code>TRN-CRS-002</code> (code <code>AEGIS-2.8.2</code>), 36-month renewal, mandatory, DSL + Operations. Status computed and alerted.</td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>Nothing links a specific interview to a trained panel member (depends on 2.8.3).</td></tr>
+<tr><td><strong>2.8.3</strong></td><td>Detailed notes of all staff and homestay interviews.</td><td><strong>Nothing.</strong></td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Add an <code>og_interviews</code> store keyed to <code>personId</code>: date, panel, notes, outcome.</td></tr>
+<tr><td><strong>2.8.4</strong></td><td>Two written references with qualifying conditions — referee known ≥2 years, employer/professional source, not related, no open references, verification and call logs.</td><td><code>reference1Path</code> / <code>reference2Path</code>, three <code>*-compliance-references</code> pages, warning alerts, SCR columns. <code>reference.html</code> is static.</td><td><span class="sev s-warn">PARTIAL</span> 45%</td><td><strong>Only a file path is stored.</strong> None of the qualifying conditions are modelled — no referee name, relationship, known-since date, employer flag, “not related” attestation, verification-call log or discrepancy note. An inspector would find two files and no evidence any rule was applied.</td></tr>
+<tr><td><strong>2.8.5</strong></td><td>DBS certificate prior to employment/hosting; record date checked, certificate number, issue date; copies ≤6 months.</td><td>Two parallel representations — top-level <code>dbsStatus</code>/<code>dbsCertNumber</code>/<code>dbsIssueDate</code>/<code>dbsRenewalDue</code> (rich, seeded, displayed) and <code>compliance.dbsNumber</code>/<code>dbsCertificatePath</code>/<code>dbsExpiry</code>/<code>dbsLastChecked</code> (empty in seed, written by compliance pages, read by alerts and SCR).</td><td><span class="sev s-warn">PARTIAL</span> 60%</td><td><strong>Live divergence, already visible in seed data:</strong> Eleanor Ashworth shows a clear enhanced DBS with certificate <code>001-338-7742-6</code> on her profile while <code>generateComplianceAlerts()</code> raises a <em>critical</em> “No DBS certificate on file” for the same host. No retention tracking for the 6-month rule.</td></tr>
+<tr><td><strong>2.8.6</strong></td><td>Children's barred list check in addition to enhanced DBS; written permission before checks; formal record maintained.</td><td>SCR has a “Barred list” column, but <code>scr-hosts.html:162</code> derives it from <code>person.dbsStatus === 'clear'</code> — a proxy, not a check. No <code>barredListCheckDate</code> or <code>dbsWrittenPermissionDate</code>.</td><td><span class="sev s-crit">NOT MET</span> 20%</td><td>Appendix A explicitly requires barred list checks. <strong>The SCR currently reports a check that was never performed.</strong></td></tr>
+<tr><td><strong>2.8.7</strong></td><td>Written risk assessment where a DBS lists a previous conviction.</td><td>No field, no workflow. <code>dbsStatus</code> only ever holds <code>'clear'</code> in seed data and nothing handles other values.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Add <code>dbsDisclosureRiskAssessmentPath</code> + outcome + decision-maker, gated on <code>dbsStatus !== 'clear'</code>.</td></tr>
+<tr><td><strong>2.8.8</strong></td><td>Overseas police check where the person lived/worked abroad &gt;3 months in 5 years.</td><td><code>livedAbroad</code> + <code>overseasCheckDocPath</code>; dedicated sub-pages for all three person types; warning alert; SCR renders N/A correctly.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>No country field or fallback path (extra reference + risk assessment) where a country cannot supply a check.</td></tr>
+<tr><td><strong>2.8.9</strong></td><td>Verify identity by passport, or birth certificate if none; retain a copy with permission.</td><td><code>idDocumentPath</code>; <code>*-compliance-identity</code> pages; <strong>critical</strong> alert when absent; SCR “ID check” column.</td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>No document-type field and no retention-permission flag.</td></tr>
+<tr><td><strong>2.8.10</strong></td><td>Ensure right to work and <strong>record the date the check took place</strong>.</td><td><code>rightToWorkCheckPath</code>, <code>rightToWorkExpiry</code>, <code>isCitizen</code>; critical alert for non-citizens; expiry warnings.</td><td><span class="sev s-warn">PARTIAL</span> 60%</td><td><strong>There is no <code>rightToWorkCheckedDate</code>.</strong> The standard's explicit requirement is the check date; the schema stores only an expiry. <code>dbsLastChecked</code> exists for DBS — the equivalent is missing here.</td></tr>
+<tr><td><strong>2.8.11</strong></td><td>Online search as due diligence on shortlisted candidates.</td><td>None.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Add <code>onlineSearchDate</code> + <code>onlineSearchNotes</code>.</td></tr>
+</tbody>
+</table>
+
+<h4>2.9 – 2.11 Finance, policies, significant changes</h4>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>2.9.1</strong></td><td>Payments to staff, volunteers and homestays transacted promptly and recorded.</td><td><code>og_finance_events</code>/<code>og_revenue_events</code>; <code>finances-tracker.html</code> and <code>revenue.html</code> resolve payees against real records; drivers carry rates, waiting rate, invoicing cycle, billing contact.</td><td><span class="sev s-ok">FULLY MET</span> 80%</td><td>No due-date vs paid-date pair, so “promptly” is not measurable. <code>finance_docs</code> still keys people by name string.</td></tr>
+<tr><td><strong>2.9.2</strong></td><td>Record of any student finances held (e.g. pocket money).</td><td><code>og_student_held_funds</code> — a proper ledger. <code>saveStudentHeldFundTransaction()</code> recomputes a <strong>chronological running balance across the student's full ledger</strong> on every write. Records carry <code>approvedBy</code>, <code>receiptHeld</code>, <code>receiptDocPath</code>, <code>recordLocation</code>. Surfaced on three pages.</td><td><span class="sev s-ok">FULLY MET</span> 95%</td><td>The strongest single implementation in the codebase. No alert for stale balances or missing receipts.</td></tr>
+<tr><td><strong>2.10.1</strong></td><td>Review all policies and handbooks at least annually; include publication and review dates.</td><td><code>og_org_documents</code> with version, owner, audience, effective/review dates, status, content and <code>reviewHistory[]</code>. <code>policy-viewer.html</code> (1,134 lines) provides create/edit/archive/restore, category filtering, chronological history via <code>getAllPolicyHistory()</code>, and overdue badges. Submitting a review bumps the version, snapshots content and extends the window 12 months.</td><td><span class="sev s-warn">PARTIAL</span> 65%</td><td>Three gaps: <strong>(a)</strong> only 2 of ~14 required policies seeded; <strong>(b)</strong> no required-policy checklist, so an absent statutory document is silent; <strong>(c)</strong> <strong><code>generateComplianceAlerts()</code> never reads the policy store</strong>, so an overdue review produces no alert. Handbooks not covered at all.</td></tr>
+<tr><td><strong>2.11.1</strong></td><td>Report significant operational changes to AEGIS within 14 days.</td><td><strong>Nothing.</strong> Zero occurrences in the codebase.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Needs an <code>og_aegis_notifications</code> store with change type, detection date, reported date and a 14-day countdown. Student-number changes are already derivable.</td></tr>
+</tbody>
+</table>
+
+<h3>Standard 3 — Students <span class="part">64%</span></h3>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>3.1.1</strong></td><td>Pre-arrival information for students, parents and agents, including a virtual meeting with the guardian before arrival.</td><td>No pre-arrival pack record or virtual-meeting field. <code>arrivalDate</code> and <code>travelDetails</code> exist but no preparation workflow.</td><td><span class="sev s-crit">NOT MET</span> 10%</td><td>Add a pre-arrival checklist with <code>preArrivalMeetingDate</code> + <code>metWith</code>.</td></tr>
+<tr><td><strong>3.1.2</strong></td><td>Introductory meeting after arrival for all students; record kept.</td><td><code>og_welfare_logs</code> could hold it; no <code>introductory-meeting</code> type and no arrival-triggered requirement.</td><td><span class="sev s-warn">PARTIAL</span> 25%</td><td>Add the log type and alert when <code>arrivalDate</code> passes with no such log.</td></tr>
+<tr><td><strong>3.1.3</strong></td><td>Induction programme including walking through the student handbook.</td><td><code>induction-checklist.html</code> and <code>induction-create.html</code> both static; no student handbook exists.</td><td><span class="sev s-crit">NOT MET</span> 10%</td><td>Depends on 2.3.1 and 2.1.4.</td></tr>
+<tr><td><strong>3.2.1</strong></td><td>Check in with all students regularly, especially during and after homestay stays.</td><td><code>getStudentWelfareCadenceStatus()</code> buckets last contact green/amber/red; <code>checkStudent()</code> warns at 14 days with a deep link. Entry points: <code>welfare-note-create</code>, <code>student-checkin-submit</code> (self-service), <code>parent-portal</code>.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>The badge uses a 7-day threshold while the alert uses 14 — two definitions of “overdue” in one file. No post-homestay-stay specific check.</td></tr>
+<tr><td><strong>3.2.2</strong></td><td>Record of communication on the student file; concerns followed up.</td><td><code>getWelfareLogsForStudent()</code> on <code>student-profile</code> and <code>welfare-notes</code>; <code>welfare-note-create</code> escalates directly into <code>saveConcern()</code>.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>—</td></tr>
+<tr><td><strong>3.2.3</strong></td><td><em>Should</em> build trusted relationships facilitating communication.</td><td><code>student-portal</code>, <code>student-checkin-submit</code> and <code>student-concern-submit</code> give students a direct, low-friction channel.</td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>—</td></tr>
+<tr><td><strong>3.3.1</strong></td><td>Clear procedure supporting a student presenting mental health issues, including school removal.</td><td><code>POL-WCE-002</code> seeded policy; <code>og_mh_cases</code> and <code>og_mh_comms</code> with dedicated pages.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>—</td></tr>
+<tr><td><strong>3.3.2</strong></td><td>Escalate mental health concerns that are also safeguarding concerns; access Appendix 10 agencies.</td><td><code>mental-health-referral.html</code> — the best-integrated page in the app — pulls student, staff, welfare logs, concerns, MH case and <code>getAppendix10Agencies()</code> (8 agencies with category, phone, website, hours and <strong>referral criteria</strong>), then writes back via <code>saveConcern</code>, <code>saveMHCase</code> and <code>saveWelfareLog</code>.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>Agency list hardcoded rather than editable.</td></tr>
+<tr><td><strong>3.3.3</strong></td><td>Student removal form completed by school staff before removal (Appendix 11).</td><td><code>mental-health-removal.html</code> → <code>saveMHRemoval()</code> → <code>og_mh_removals</code>, plus a welfare log.</td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>Nothing gates an actual removal on the form; no school countersignature.</td></tr>
+<tr><td><strong>3.3.4</strong></td><td>Fully risk-assess the implications of providing guardianship before agreeing.</td><td><code>riskAssessmentFile</code> + <code>riskAssessmentExpiryDate</code>; <code>checkStudentRiskAssessmentStatus()</code>; <code>student-risk.html</code>; <strong>critical</strong> alert when absent or expired.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>A file path, not a structured needs/capability determination. Nothing blocks a student reaching Active without one.</td></tr>
+<tr><td><strong>3.4.1</strong></td><td>Hold Appendix 13 minimum information; review at least annually.</td><td>Near-complete Appendix 13 coverage — names, DOB, nationality, home address, parent details and occupations, <code>ukFamilyContactsStructured[]</code> (with <code>authorisedCollect</code>/<code>authorisedOvernight</code>), agent, family background, permissions, full health block, interests, school + tutor contacts, visit records. Annual review via <code>reviewDueDate</code>/<code>reviewStatus</code> with <strong>critical/warning alerts citing Standard 3.4.1 by name</strong>.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td><code>reviewStatus</code> is a stored string rather than derived from <code>reviewDueDate</code>, so it can drift from the date it describes.</td></tr>
+<tr><td><strong>3.4.2</strong></td><td>Parental permission to hold and pass on information, per ICO principles.</td><td><code>legal.permissions.{travel, medical, photo, data}</code>, each with <code>grantedBy</code>/<code>grantedDate</code>/<code>evidenceMethod</code>; <code>isPermissionGranted()</code> handles legacy and structured formats; all four alerted.</td><td><span class="sev s-warn">PARTIAL</span> 65%</td><td><strong><code>parent-consent-update.html</code> is static</strong> — the page named for updating consent has no data calls. No withdrawal or expiry handling.</td></tr>
+<tr><td><strong>3.4.3</strong></td><td>Confidential data securely stored; confidentiality maintained when sharing.</td><td>Plaintext <code>localStorage</code>; no access control. Sharing surfaces are thoughtful but sit on an unsecured store.</td><td><span class="sev s-crit">NOT MET</span> 15%</td><td>Blocker <strong>B1</strong>.</td></tr>
+<tr><td><strong>3.4.4</strong></td><td>Homestay aware of regular medication; formal administration record; homestay trained and comfortable for specialist conditions before placement.</td><td><code>medicineAdministrationLog[]</code> (date, time, medication, dosage, reason, administeredBy, witnessedBy, studentConsent, notes) and <code>medicalPlacementGate</code> (<code>hasSpecialistCondition</code>, <code>homestayBriefedDate/By</code>, <code>homestayConfirmedCompetent</code>, <code>epiPenTraining</code>, <code>insulinTraining</code>).</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>The gate is recorded but not <em>enforced</em> — nothing prevents placing a student with a specialist condition where the host is not confirmed competent, and that combination raises no alert.</td></tr>
+</tbody>
+</table>
+
+<h3>Standard 4 — Travel Arrangements <span class="part">49%</span></h3>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>4.1</strong></td><td>Full record of travel arrangements including date, times and mode; shared with student, parent, agent, school and homestay.</td><td><code>og_transports</code>; <code>travel-create.html</code> captures date, time, service type, start, destination, driver, student, passengers, luggage, miles, cost. <code>saveTransport()</code> auto-creates five <code>og_travel_todos</code> — parent confirmation, driver confirmation, arrival, departure, return trip — worked in <code>travel-todo.html</code>. <code>travel.html</code> also writes a school log.</td><td><span class="sev s-warn">PARTIAL</span> 70%</td><td>Todos cover parent and driver but <strong>not homestay or agent</strong>. Records that a task was ticked, not that an itinerary was sent. <code>travel-edit</code>, <code>-delete</code> and <code>-validation</code> are static.</td></tr>
+<tr><td><strong>4.2</strong></td><td>Suitable permissions in place for any travel undertaken.</td><td><code>legal.permissions.travel</code> (structured, alerted); <code>travel-create.html</code> captures a permission screenshot and parent confirmation.</td><td><span class="sev s-ok">FULLY MET</span> 75%</td><td>No hard block — a transport can be saved for a student whose travel consent is not granted.</td></tr>
+<tr><td><strong>4.3</strong></td><td>Written confirmation from any licensed taxi firm that enhanced DBS/PVG checks were conducted on its drivers.</td><td>Drivers in <code>og_drivers</code> are vetted individually and thoroughly. <strong>No third-party transport-firm entity exists</strong> — no company record, no confirmation document, no expiry.</td><td><span class="sev s-crit">NOT MET</span> 15%</td><td>Appendix A explicitly requires this evidence. Add <code>og_transport_firms</code> with a confirmation document, date and review cycle, plus a <code>firmId</code> on the transport record.</td></tr>
+<tr><td><strong>4.4</strong></td><td>Child seat / booster seat law for under-12s and students under 135 cm.</td><td><code>driver.childSeat</code> free-text. No student height field; <code>dob</code> exists so age is derivable but nothing derives it.</td><td><span class="sev s-warn">PARTIAL</span> 35%</td><td>Add <code>student.heightCm</code> and a booking-time check requiring a matching seat on the assigned driver. Currently the two facts never meet.</td></tr>
+</tbody>
+</table>
+
+<h3>Standard 5 — Homestays <span class="part">64%</span></h3>
+
+<h4>5.1 – 5.4 Checks, information, profile, availability</h4>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>5.1.1</strong></td><td>Primary carer British or settled status; <strong>evidence viewed and recorded</strong>.</td><td><code>compliance.isCitizen</code> boolean; <code>rightToWorkCheckPath</code> for non-citizens.</td><td><span class="sev s-warn">PARTIAL</span> 40%</td><td>A boolean is not “evidence viewed and recorded”. No evidence path, verification date or verifier name.</td></tr>
+<tr><td><strong>5.1.2</strong></td><td>Self-declaration on behalf of the household (Appendix 5); best practice annual repeat.</td><td><code>selfDeclarationDocPath</code>; dedicated <code>host-compliance-declaration.html</code>; <strong>critical</strong> alert when absent; emitted into the document library.</td><td><span class="sev s-warn">PARTIAL</span> 55%</td><td>Stores a file path only — the 11 Appendix 5 questions are not structured, so a “yes” answer triggers nothing. No <code>selfDeclarationDate</code>, therefore <strong>no annual re-declaration cycle or expiry alert</strong>. The SCR “Self-dec” column is hardcoded to <code>—</code> (<code>scr-hosts.html:217</code>) despite the field existing.</td></tr>
+<tr><td><strong>5.1.3</strong></td><td>Enhanced DBS for <strong>all residents aged 16+</strong>, including those temporarily away and regular overnight visitors.</td><td><code>householdMembers[]</code> carries name, DOB, age, gender, occupation, interests, religion — <strong>and no DBS field of any kind</strong>. The only trace is a free-text <code>secondaryAdultDbs</code> string on the host. <code>regularVisitors[]</code> carries a <code>dbsStatus</code> string and <code>staysOvernight</code>.</td><td><span class="sev s-crit">NOT MET</span> 30%</td><td><strong>Blocker B6.</strong> In a household with three adults over 16, two are entirely invisible to the compliance engine. <code>householdMembers[]</code> needs its own compliance sub-object and <code>checkPerson()</code> must iterate members aged ≥16.</td></tr>
+<tr><td><strong>5.2.1</strong></td><td>Full details on all homestay members — name, DOB, gender, occupation, interests, religion, smoker, dietary, pets.</td><td><code>householdMembers[]</code> with all seven per-member fields; host-level <code>smokerStatus</code>, <code>dietaryProvision</code>, <code>pets</code> (with allergy cross-reference in the seed).</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>Smoker status and dietary pattern are household-level; the standard asks per member.</td></tr>
+<tr><td><strong>5.2.2</strong></td><td>Information about other regular visitors, recording whether they stay overnight.</td><td><code>regularVisitors[]</code> — name, relationship, frequency, <strong><code>staysOvernight</code></strong>, <code>dbsStatus</code> — plus a free-text overnight policy field.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>A visitor with <code>staysOvernight: true</code> should trigger the 5.1.3 DBS requirement; nothing connects them.</td></tr>
+<tr><td><strong>5.3.1</strong></td><td>Short shareable homestay profile for students, parents and agents; photographs useful; contact disclosure at the GO's discretion.</td><td><code>getShareableHostProfile(hostId, {redactContact})</code> — annotated “AEGIS 5.3.1” — returns family name, photo, capacity, area, household summaries, smoking policy text, pets, dietary provision, bedrooms and a vetted-visitor summary. <strong>Redaction substitutes the Oxford Guardians 24/7 office number and welfare email.</strong> Rendered by <code>homestay-profile-view.html</code>.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td><code>area</code> is hardcoded to “Summertown, Oxford” for every host, and <code>safeguardingSummary</code> returns a fixed “Fully AEGIS compliant” string not derived from actual state — it would assert compliance for a host with an expired DBS.</td></tr>
+<tr><td><strong>5.4.1</strong></td><td>Sufficient homestays for students in care, including emergency provision.</td><td><code>getHomestaySupplyAnalytics()</code> — annotated “AEGIS 5.4.1 / 2.6” — computes approved hosts, total/occupied/available beds, emergency-ready hosts, standby beds, caseload, supply ratio and a pass/fail badge requiring available beds &gt; 0 and standby ≥ 2. Hosts carry <code>emergencyProvision</code>, <code>emergencyNoticeHours</code>, <code>emergencyCapacity</code> and a 7-period availability calendar.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>The insufficiency badge is display-only — it raises no compliance alert.</td></tr>
+</tbody>
+</table>
+
+<h4>5.5 – 5.8 Accommodation, meals, laundry, conduct — <span class="part">70% / 70% / 70% / 55%</span></h4>
+<div class="card good">
+  <h4>How these are captured</h4>
+  <p>The accommodation criteria and placement-limit rules are captured as <strong>structured yes/no/na items on <code>homestay-visit-report.html</code></strong> — a 38-item report persisted to <code>og_visit_reports[].items</code> and read back on <code>host-profile.html:1750</code> and <code>host-compliance.html:318</code>. This is a real, working implementation and it maps closely to the handbook text. Its limitation is uniform: everything is a <em>point-in-time observation on an annual visit</em>, never a standing host attribute, never an enforced rule and never an alert.</p>
+</div>
+<table>
+<thead><tr><th style="width:12%">Sub</th><th style="width:34%">Requirement</th><th style="width:26%">Visit report item key</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>5.5.1.1</strong></td><td>Suitable bedroom and social areas — clean, good repair, natural light.</td><td><code>homeClean</code>, <code>bedroomViewed</code>, <code>studentBedroomSuitable</code>, <code>bedroomLight</code>, <code>socialAreas</code></td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>Point-in-time only.</td></tr>
+<tr><td><strong>5.5.1.2</strong></td><td>Privacy safeguards; parent consent before room sharing.</td><td><code>privacy</code>, <code>privacySafeguards</code>, <code>roomSharingSafeguards</code></td><td><span class="sev s-warn">PARTIAL</span> 65%</td><td>Parent consent to room sharing is a visit observation, not a student-record consent.</td></tr>
+<tr><td><strong>5.5.1.3</strong></td><td>One student per double bed; students never share a bed.</td><td><code>noSharedBed</code>, <code>suitableBed</code></td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>Not enforced against actual placements.</td></tr>
+<tr><td><strong>5.5.1.4–.7</strong></td><td>Heating, lighting, hot water; private study space; hanging and drawer space; lockable bathroom with shower or bath.</td><td><code>hotWater</code>, <code>studySpace</code>, <code>hangingSpace</code>, <code>bathroomAccess</code></td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>—</td></tr>
+<tr><td><strong>5.5.1.8</strong></td><td>Right to opt for a non-smoking and/or non-pet homestay.</td><td><code>smokingPet</code>; host <code>smokerStatus</code>/<code>pets</code>; shareable profile renders a smoking policy statement.</td><td><span class="sev s-ok">FULLY MET</span> 80%</td><td>No student-side preference field, so the opt-out cannot be matched at placement.</td></tr>
+<tr><td><strong>5.5.1.9</strong></td><td>Treated as part of the family; communal access; no access to family bedrooms.</td><td><code>communalAccess</code>, <code>noFamilyBedrooms</code>, <code>familyRoutines</code></td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>—</td></tr>
+<tr><td><strong>5.5.2</strong></td><td><strong>No more than three students with the same homestay at any one time.</strong></td><td><code>maxThreeStudents</code>; <code>capacityMax</code>/<code>capacityCurrent</code> displayed on <code>hosts.html</code> and <code>host-profile.html</code>.</td><td><span class="sev s-warn">PARTIAL</span> 40%</td><td><strong>Nothing enforces it.</strong> <code>homestay-create.html</code> creates placements without checking capacity, and <code>capacityMax</code> is itself freely editable. A hard AEGIS limit with criminal-liability implications (Children Act 1989 Sch. 7) is advisory-only.</td></tr>
+<tr><td><strong>5.5.3</strong></td><td>Homestays working with other GOs must not exceed three students in total.</td><td>Visit report item present; no field for students placed by other organisations.</td><td><span class="sev s-warn">PARTIAL</span> 35%</td><td>Add <code>externalStudentsHosted</code> and include it in the capacity calculation.</td></tr>
+<tr><td><strong>5.5.4</strong></td><td>Boarding-house style hosting requires contact with AEGIS.</td><td>Not modelled.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Likely N/A for this business model, but not recorded as such.</td></tr>
+<tr><td><strong>5.5.5</strong></td><td>Under-16 students not hosted alongside students over 20.</td><td><code>ageRestriction</code>. Student <code>dob</code> is available.</td><td><span class="sev s-warn">PARTIAL</span> 35%</td><td>Derivable but never derived. Add an age-mix check across <code>host.linkedStudents</code> at placement.</td></tr>
+<tr><td><strong>5.5.6</strong></td><td>No other paying guests or B&amp;B while hosting AEGIS students.</td><td><code>noPayingGuests</code></td><td><span class="sev s-warn">PARTIAL</span> 50%</td><td>Recorded annually, not as a standing host attribute.</td></tr>
+<tr><td><strong>5.5.7</strong></td><td>Students sufficiently supervised; not permitted to live independently.</td><td><code>supervised</code>, <code>supervision</code></td><td><span class="sev s-warn">PARTIAL</span> 50%</td><td>—</td></tr>
+<tr><td><strong>5.5.8</strong></td><td>NSPCC home-alone guidance — under-12s, under-16s overnight, and student comfort.</td><td>Not present as a distinct item.</td><td><span class="sev s-crit">NOT MET</span> 10%</td><td>Add three explicit visit-report items and a corresponding homestay handbook statement.</td></tr>
+<tr><td><strong>5.6.1–.2</strong></td><td>Full board — breakfast, lunch, dinner — accounting for dietary needs; suitable drinks and snacks.</td><td><code>fullBoard</code>, <code>fullBoardChecked</code>, <code>dietaryNeeds</code>, <code>foodPreparation</code>, <code>drinksSnacks</code>, <code>drinksSnacksAccess</code>; host <code>dietaryProvision</code>; student <code>health.dietaryRequirements</code>.</td><td><span class="sev s-ok">FULLY MET</span> 80%</td><td>Student dietary requirements and host dietary provision are never matched at placement.</td></tr>
+<tr><td><strong>5.7.1</strong></td><td>Suitable laundry facilities for stays of more than one night.</td><td><code>laundry</code>, <code>laundryResidents</code></td><td><span class="sev s-ok">FULLY MET</span> 70%</td><td>Annual visit only; not a host attribute and not in a homestay handbook (which does not exist).</td></tr>
+<tr><td><strong>5.8.1</strong></td><td>Homestays include students in family routines; homely environment.</td><td><code>familyRoutines</code>, <code>communalAccess</code></td><td><span class="sev s-ok">FULLY MET</span> 75%</td><td>—</td></tr>
+<tr><td><strong>5.8.2</strong></td><td>Written guidelines for homestays on expected behaviour (Appendix 6).</td><td><strong>No code of conduct document exists.</strong></td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Appendix A requires a Staff and Homestay Code of Conduct; Appendix 6 lists 21 content areas.</td></tr>
+<tr><td><strong>5.8.3–.4</strong></td><td>Only reasonable, appropriate and lawful means of control; physical punishment never used.</td><td><code>behaviourManagement</code> — “Appropriate, lawful behaviour management only; no physical punishment.”</td><td><span class="sev s-warn">PARTIAL</span> 60%</td><td>Observed at a visit; not issued as a written instruction, because no document exists to issue.</td></tr>
+<tr><td><strong>5.8.5</strong></td><td>Guidance on reassuring students in distress.</td><td><code>homesickness</code></td><td><span class="sev s-warn">PARTIAL</span> 55%</td><td>—</td></tr>
+<tr><td><strong>5.8.6</strong></td><td>CCTV use compliant with the ICO Code; homestay paper trail; GO ad hoc checks.</td><td><code>cctvPresent</code>, <code>cctvRecorded</code> — “CCTV present? If yes, lawful use, privacy and ICO expectations discussed.”</td><td><span class="sev s-warn">PARTIAL</span> 55%</td><td>No standing <code>hasCCTV</code> flag, no paper-trail document field, no ad hoc check schedule.</td></tr>
+</tbody>
+</table>
+
+<h4>5.9 – 5.12 Training, health &amp; safety, inspections, third-party providers</h4>
+<table>
+<thead><tr><th style="width:8%">Sub</th><th style="width:26%">Requirement</th><th style="width:28%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>5.9.1</strong></td><td>Regular training at least annually covering safeguarding, mental health and regulatory changes.</td><td><code>TRN-CRS-007 “Homestay Annual Refresher Update”</code> (code <code>AEGIS-5.9.1</code>, 12 months, mandatory) plus <code>TRN-CRS-006</code> pre-approval induction. <code>saveTrainingLog()</code> automatically creates a completion when a log carries a <code>courseId</code>, keeping both views in sync. <code>getRequiredCoursesForPerson()</code> computes Not started / Overdue / Due soon (60-day) / Complete; <strong>critical</strong> alerts for overdue on all approved hosts.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>Course content is a free-text description — no evidence the annual update actually covered safeguarding + mental health + regulatory changes.</td></tr>
+<tr><td><strong>5.10.1</strong></td><td>Comply with HSE health and safety; written policy where 5+ employees.</td><td>No H&amp;S policy seeded (only 3 staff, so the written-policy threshold may not apply).</td><td><span class="sev s-warn">PARTIAL</span> 50%</td><td>Appendix A requires a “Welfare Health and Safety Policy, where relevant”.</td></tr>
+<tr><td><strong>5.10.1.1</strong></td><td><strong>Initial in-person assessment visit before placing any students</strong>, with H&amp;S checks, risk assessment and suitability check.</td><td><code>getHostInPersonVisitStatus()</code> returns missing / overdue / expiring_soon / current on a 12-month cycle and emits an explicit blocking warning: <em>“AEGIS Standard 5.10.1.1: No approved in-person assessment visit on record. Do not assign or place students with this host…”</em>. <code>Initial pre-placement</code> is a first-class visit type; outcomes are approved / approved_after_actions / not_approved / suspended.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>The warning is advisory text — <code>homestay-create.html</code> does not consult it before creating a placement.</td></tr>
+<tr><td><strong>5.10.1.2</strong></td><td>Accident book for recordable events involving students, staff, homestays or volunteers.</td><td><code>og_incidents</code> — annotated “Accident Book — AEGIS Standard 5.10.1.2”. Category, affected role, person, host, date, time, location, type, severity, description, action taken, reportedBy, firstAider, hospitalAttended, <strong>riddorReportable</strong>, status, loggedBy, and <code>notifications.{parents, school, dsl}</code>. Three create pages, three list pages, surfaced on <code>host-profile.html</code>.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td><code>homestay-accident*.html</code> are dead static duplicates of this working flow. No RIDDOR reporting deadline tracking.</td></tr>
+<tr><td><strong>5.10.2.1<br>– .12</strong></td><td>The twelve minimum H&amp;S checks — smoke alarm per storey, CO alarm, gas safety certificate, electrical safety, evacuation routes, serviced extinguishers, fire guard, matches storage, first aid kit, medication storage, alcohol storage, food hygiene.</td><td><code>homestay-hs-checklist.html</code> implements a <strong>24-item structured checklist</strong> across three panels with yes/no/na per item, mapping to <strong>every one of the twelve</strong> — <code>smokeAlarmEveryStorey</code>, <code>coAlarmGasAppliance</code>, <code>gasCertSeen</code>/<code>Retained</code>, <code>electricalVisualCheck</code>/<code>DetailCheck</code>/<code>ApplianceSafety</code>, <code>evacuationRoute*</code>, <code>fireExtinguisherServiced</code>, <code>openFireGuard</code>, <code>matchesLightersStored</code>, <code>firstAidKit*</code>, <code>medicationStoredSafely</code>, <code>alcoholStored</code>, <code>foodHygieneAwareness</code> — plus hazard identification, Wi-Fi/online safety and risk-assessment completion. Persisted with hazard rows, photographic evidence and gas certificate upload; tallied on two pages.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>A <code>no</code> answer on a mandatory item (e.g. no smoke alarm) produces no compliance alert and does not affect host status. The checklist's gas certificate does not write to <code>compliance.gasSafetyExpiry</code>, which gates contract activation.</td></tr>
+<tr><td><strong>5.10.3</strong></td><td>At least an annual in-person visit; support offered; changes recorded; comprehensive notes.</td><td>The 38-item visit report. <code>saveVisitReport()</code> <strong>automatically advances <code>annualVisitLast</code>, sets <code>annualVisitDue</code> to +1 year and flips <code>annualVisitStatus</code> to complete</strong> when an annual or initial visit is approved. <code>getHostInPersonVisitStatus()</code> provides expiry state with a 30-day amber window.</td><td><span class="sev s-ok">FULLY MET</span> 95%</td><td>Overdue annual visits <strong>do not appear in <code>generateComplianceAlerts()</code></strong> — the status is computed and rendered but never alerted, so it is visible only to someone who opens that host's profile.</td></tr>
+<tr><td><strong>5.11.1</strong></td><td>Inform homestays at application that they must cooperate with AEGIS or statutory inspection.</td><td>Nothing — not in the host record, visit report, self-declaration or (absent) handbook.</td><td><span class="sev s-crit">NOT MET</span> 10%</td><td>Add <code>aegisInspectionCooperationAcknowledged</code> + date at onboarding.</td></tr>
+<tr><td><strong>5.12.1</strong></td><td>Contact AEGIS before placing students with third-party-sourced homestays.</td><td>Nothing. No <code>sourcedVia</code> field.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Add <code>hostSource</code> and require an AEGIS contact record before a third-party host can reach approved status.</td></tr>
+</tbody>
+</table>
+
+<h3>Standard 6 — Safeguarding, Child Protection and Welfare <span class="notmet">34%</span></h3>
+<p class="lead">The platform's weakest standard, and the one AEGIS weights most heavily.</p>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>6.1.1</strong></td><td>Safeguarding &amp; child protection policy per KCSIE and Working Together; provided to all staff, homestays and volunteers; available to parents and schools; <strong>publicly available and on the website</strong>.</td><td><code>og_org_documents</code> has a working <em>Safeguarding &amp; child protection</em> category with a live route — <strong>but no safeguarding policy is seeded</strong>. Appendix 4 lists 24 minimum content areas; none modelled. No public surface, no issue-and-acknowledge record.</td><td><span class="sev s-crit">NOT MET</span> 25%</td><td><strong>The most consequential single omission in the audit.</strong> The infrastructure to hold it is complete and working; the document does not exist.</td></tr>
+<tr><td><strong>6.1.2</strong></td><td>Students know how to keep safe and report concerns, and that concerns are taken seriously.</td><td><code>student-concern-submit.html</code> gives students a working self-service route into <code>saveConcern()</code> + <code>saveWelfareLog()</code>, surfaced on <code>student-portal.html</code>.</td><td><span class="sev s-warn">PARTIAL</span> 45%</td><td>The mechanism exists and works; the age-appropriate written guidance telling students it exists does not (2.3.1).</td></tr>
+<tr><td><strong>6.2.1</strong></td><td>Appoint a senior member of staff as DSL.</td><td>Role <code>Admin / DSL</code> (Jay Ray, “Safeguarding lead”); named lead on emergency scenarios SCN-02/03/04.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>Role is free text; nothing validates exactly one active DSL exists.</td></tr>
+<tr><td><strong>6.2.2</strong></td><td>DSL attends suitable <strong>live</strong> training, renewed every two years.</td><td><code>TRN-CRS-001 “DSL Level 3”</code> (code <code>AEGIS-6.2.2</code>), 24-month renewal, mandatory, NSPCC/BSCP. Overdue raises a <strong>critical</strong> alert.</td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>No <code>isLiveTraining</code> flag — the standard explicitly rejects non-live DSL courses and the platform cannot record the distinction. Duplicate representation risks divergence (X6).</td></tr>
+<tr><td><strong>6.2.3</strong></td><td>DSL must be resident in the UK.</td><td>No field.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>—</td></tr>
+<tr><td><strong>6.2.4</strong></td><td>DSL should liaise with counterparts in each partner school.</td><td><code>og_schools</code> has no DSL contact field; school logs don't record contact role.</td><td><span class="sev s-crit">NOT MET</span> 15%</td><td>Add DSL contact fields to the school record and a <code>contactRole</code> on school logs.</td></tr>
+<tr><td><strong>6.2.5</strong></td><td>DSL liaises with the LSP; inter-agency procedures followed and documented.</td><td>No LSP entity, no referral record. <code>POL-EMG-001</code> mentions LADO / children's services referral as narrative only.</td><td><span class="sev s-crit">NOT MET</span> 10%</td><td>Appendix 4 requires LSP contact details for every operating area plus the LADO contact. Add <code>og_external_referrals</code>.</td></tr>
+<tr><td><strong>6.2.6</strong></td><td>Safeguarding case notes accessible only to the DSL and senior management.</td><td><code>og_concerns</code> is plaintext <code>localStorage</code> readable by any page.</td><td><span class="sev s-crit">NOT MET</span> 5%</td><td>Blocker <strong>B1</strong>. This requirement cannot be partially satisfied.</td></tr>
+<tr><td><strong>6.2.7</strong></td><td>Plan when the DSL is unavailable; ideally an equally trained deputy.</td><td>Zuko Fire holds DSL Level 3 and is named as backup; <code>getEmergencyCoverArrangements()</code> provides external DSL Level 3 cover.</td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>Priya Shah is named as SCN-03 backup “(DSL Level 3)” but her staff record says <code>Safeguarding Awareness</code> — the emergency plan contradicts the staff record.</td></tr>
+<tr><td><strong>6.3.1</strong></td><td>All staff, volunteers and every homestay primary carer receive introductory safeguarding training before starting; renewed every three years; certificate seen, date and level recorded.</td><td><code>safeguardingTrainingDate</code>, <code>safeguardingTrainingExpiry</code>, <code>safeguardingLevel</code>, <code>safeguardingCertificatePath</code> (annotated “AEGIS 6.3 — 3-year statutory expiry”); <code>TRN-CRS-003</code> and <code>-006</code>; sub-pages for all three person types; SCR renders expiry with 60-day amber. Seed deliberately includes an expired case to exercise the breach path.</td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td><code>checkPerson()</code> warns only when <em>both</em> date and certificate are missing — an <strong>expired</strong> expiry raises nothing there. Only <code>checkTrainingRequirements()</code> catches it, and that runs for staff and hosts but <strong>not drivers</strong> — so drivers have safeguarding expiry fields nothing enforces.</td></tr>
+<tr><td><strong>6.3.2</strong></td><td>Formal record of all safeguarding training with date and expiry.</td><td><code>og_training_completions</code> + <code>og_training_logs</code>; <code>training-log.html</code> renders the full matrix.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>—</td></tr>
+<tr><td><strong>6.3.3</strong></td><td>Regular safeguarding updates at least annually.</td><td><code>TRN-CRS-004</code> (code <code>AEGIS-6.3.3</code>, 12 months, All Staff) and <code>TRN-CRS-007</code> for hosts; staff carry <code>annualSafeguardingUpdateDate</code>.</td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td><code>annualSafeguardingUpdateDate</code> duplicates the completions store and is read by no alert.</td></tr>
+<tr><td><strong>6.4.1<br>– 6.4.3</strong></td><td>Whistleblowing policy shared with staff and homestays; show how it is managed; include the NSPCC (0800 028 0285) and Protect (020 3117 2520) helplines.</td><td>No policy seeded. <code>admin-dashboard.html</code> and <code>compliance.html</code> both display a <strong>static</strong> “Whistleblowing Policy review overdue / Owner: Zuko Fire / Due 15 Mar 2026” row. Neither helpline number appears anywhere.</td><td><span class="sev s-crit">NOT MET</span> 15%</td><td>The fabricated row is actively misleading — it presents a governed document with an owner and review date, backed by nothing.</td></tr>
+<tr><td><strong>6.5.1</strong></td><td>Procedures for allegations against staff, homestays or volunteers.</td><td><code>og_concerns</code> supports <code>subjectRole: 'Host'</code> (seeded example) and tiered dashboards read via <code>getConcernsByTier()</code>. No procedure document.</td><td><span class="sev s-warn">PARTIAL</span> 40%</td><td>The data model handles adult allegations correctly; the written procedure does not exist.</td></tr>
+<tr><td><strong>6.5.2</strong></td><td>Policy outlining the procedure for low-level concerns; staff understand the importance of reporting them.</td><td>Read path works across four dashboards. <strong>Write path is dead:</strong> <code>low-level-concern-create.html</code> renders a full form whose save control is an anchor tag; it loads no <code>db.js</code> and has no script. <code>concern-case</code>, <code>concern-close</code> and <code>concern-escalation</code> are equally static.</td><td><span class="sev s-warn">PARTIAL</span> 45%</td><td><code>saveConcern()</code> and <code>generateConcernId()</code> exist and are called successfully from three other pages. The four dedicated concern-management pages were simply never wired to them. <strong>A ~40-line fix that would move this sub-standard to fully met.</strong></td></tr>
+<tr><td><strong>6.5.3<br>– 6.5.4</strong></td><td>Self-report significant safeguarding concerns to AEGIS; encourage and record staff/homestay self-reporting.</td><td>No field, no entry point, no record type.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Related to 2.11.1 — both need an AEGIS-notification store with a deadline clock. Appendices 3 and 6 also require self-reporting statements in the homestay handbook and code of conduct.</td></tr>
+<tr><td><strong>6.6.1<br>– 6.6.3</strong></td><td>Anti-radicalisation policy per the Prevent Duty; key points in the Student Handbook; 24-hour reporting number in the policy.</td><td>No policy seeded; no student handbook. The 24/7 line exists but is not bound to a Prevent reporting route.</td><td><span class="sev s-warn">PARTIAL</span> 15%</td><td>Required by Appendix A.</td></tr>
+<tr><td><strong>6.6.4</strong></td><td>At least one staff member completes Prevent/anti-radicalisation training.</td><td><code>TRN-CRS-005 “Prevent Duty Awareness”</code>, 36 months, mandatory, DSL + Operations, Home Office provider. Overdue raises a critical alert; certificate path captured on completions.</td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>The course code is <code>AEGIS-6.6.5</code>, a sub-standard that does not exist — the requirement is 6.6.4. Cosmetic but visible on <code>training-log.html</code>.</td></tr>
+<tr><td><strong>6.7.1<br>– 6.7.4</strong></td><td>Missing student policy shared with all staff, volunteers and homestays; 24-hour reporting number; regard to Children Missing from Education.</td><td>No standalone policy. Emergency scenario <code>SCN-02</code> is fully specified — lead, backup, “Call Police (999/101) if not located within 30 minutes”, escalation timeline, documentation requirements — and carried in <code>POL-EMG-001</code> as narrative.</td><td><span class="sev s-warn">PARTIAL</span> 50%</td><td>The <em>procedure</em> is genuinely well specified; the <em>policy document</em> required by Appendix A is not, and there is no issue/acknowledgement tracking. <code>admin-dashboard.html</code> again shows a static “Missing Student Policy v0.8 / Draft” row for a non-existent document.</td></tr>
+<tr><td><strong>6.8.1</strong><br><span class="note">.1–.11</span></td><td>Student behaviour guidelines covering homestay conduct, curfew, kitchen, bathroom, Wi-Fi, alcohol, drugs, smoking/vaping, sexual activity, tattoos/piercings, and staying away.</td><td>No student code of conduct. The visit report touches three areas from the host side (<code>curfews</code>, <code>curfewProcedures</code>, staying-away expectations) and <code>wifiAndOnlineSafety</code> appears in the H&amp;S checklist. The other seven areas appear nowhere.</td><td><span class="sev s-crit">NOT MET</span> 10%</td><td>Handbook/policy content rather than database fields. Needs 2.3.1 and a behaviour code document.</td></tr>
+<tr><td><strong>6.9.1<br>– 6.9.2</strong></td><td>Anti-bullying policy including cyberbullying; bullying guidance for students and homestays.</td><td>Nothing — one incidental mention across 179 pages.</td><td><span class="sev s-crit">NOT MET</span> 5%</td><td>Required by Appendix A. <code>og_concerns.category</code> is free text with no taxonomy, so a bullying concern cannot even be classified.</td></tr>
+<tr><td><strong>6.10.1</strong></td><td>Online safety policy for staff and homestays; identify risks and management; <strong>make homestays aware of Wi-Fi controls and filtering</strong>.</td><td>No policy. The Wi-Fi limb <em>is</em> covered — H&amp;S checklist item <code>wifiAndOnlineSafety</code>: “Wi-Fi access, filtering/controls, age-appropriate boundaries and online safety expectations discussed”, captured at every assessment and persisted.</td><td><span class="sev s-warn">PARTIAL</span> 20%</td><td>Required by Appendix A. The operational check exists without the governing document.</td></tr>
+</tbody>
+</table>
+
+<h3>Standard 7 — Complaints <span class="notmet">5%</span></h3>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>7.1</strong></td><td>Policy on recording and responding to complaints in a timely manner; <strong>publicly available and on the website</strong>.</td><td>No complaints policy. <code>og_org_documents</code> has a <em>Complaints &amp; governance</em> category with a live route and no content.</td><td><span class="sev s-crit">NOT MET</span> 10%</td><td>Required by Appendix A.</td></tr>
+<tr><td><strong>7.2</strong></td><td>Policy must cover informal, formal and AEGIS-referral stages.</td><td>Not modelled. Appendix 8 sets out the four-stage AEGIS grievance procedure.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>—</td></tr>
+<tr><td><strong>7.3</strong></td><td><strong>Written record of all formal complaints and the action taken, regardless of whether upheld.</strong></td><td><strong>No complaints store exists.</strong> <code>og_concerns</code> covers safeguarding concerns — a different lifecycle, different parties (parents, homestays, schools and agents can all complain) and different outcome semantics. Grepping “complaint” returns only navigation labels and static text.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Blocker <strong>B4</strong>. Needs <code>og_complaints</code>: complainant type and identity, date received, stage, description, handler, actions, outcome (upheld / partly / not upheld), closed date and a timeliness clock.</td></tr>
+</tbody>
+</table>
+
+<h3>Standard 8 — Day Students, Prolonged Stays &amp; Private Fostering <span class="met">80%</span></h3>
+<p class="lead">The strongest standard relative to its difficulty, and clearly built directly against the handbook text.</p>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>8.1</strong></td><td>Adhere to private fostering regulations where under-16s live with a non-relative homestay for 28+ consecutive days.</td><td><code>privateFostering.isApplicable</code> + <code>proposedStartDate</code>; <code>accommodationType: 'Private Fostering'</code>; seeded case. <code>private-fostering.html</code> (1,155 lines) is the working hub.</td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td><code>isApplicable</code> is set manually — nothing derives it from age + duration, so a placement that <em>becomes</em> private fostering by exceeding 28 days is not detected. The under-18-with-disability limb is not modelled.</td></tr>
+<tr><td><strong>8.2</strong></td><td>Liaise with school and homestay so the LA is notified at least <strong>six weeks</strong> before the arrangement begins; immediately if sooner.</td><td><code>laNotifiedDate</code> and <code>proposedStartDate</code>; <code>private-fostering.html:527</code> computes <code>daysUntilDate(proposedStartDate) &lt; 42 &amp;&amp; !laNotifiedDate</code> → <strong>urgent</strong>, with caseload-wide notified/pending counts.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>The 42-day rule is correctly implemented but raises no entry in <code>generateComplianceAlerts()</code>, so it is visible only on that one page.</td></tr>
+<tr><td><strong>8.3</strong></td><td>Liaise with school and homestay to explain what a private fostering arrangement requires, including regular LA visits.</td><td><code>briefings.{school, homestay, parent}</code>, each <code>{briefed, date, by, contentCovered: [...], notes}</code> — the seed shows <code>['28-day threshold', 'LA notification', 'LA visits expectation']</code>. Legacy flat-boolean records are normalised on load.</td><td><span class="sev s-ok">FULLY MET</span> 95%</td><td>Records not just <em>that</em> a briefing happened but <em>what was covered</em>.</td></tr>
+<tr><td><strong>8.4</strong></td><td>System for recording LA correspondence and securing information-sharing permissions.</td><td><code>correspondenceLog[]</code> and <code>informationSharing.{parent, school, host}</code> each <code>{consented, date, method, reference}</code>; <code>private-fostering-notification.html</code>; <code>og_pf_documents</code> feeds the document aggregator.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td><code>private-fostering-documents.html</code> writes through its own local <code>saveRecords()</code> rather than a <code>db.js</code> function — the right key, but a write path that bypasses the data layer.</td></tr>
+<tr><td><strong>8.5</strong></td><td>For day students over 16, regularly carry out suitable welfare checks given the extended period with homestays.</td><td><code>dayStudentWelfare</code> — <code>homestayStartDate</code>, <code>welfareCheckFrequencyDays</code> (default 30), <code>checkins[]</code> (date, by, type, notes) and <code>consentLog.{parent, school, host}</code>. Seeded and rendered on <code>private-fostering.html</code>.</td><td><span class="sev s-ok">FULLY MET</span> 90%</td><td>The cadence is stored but not enforced — an overdue 8.5 check raises no alert, unlike the parallel 3.2.1 welfare cadence which does.</td></tr>
+</tbody>
+</table>
+
+<h3>Standard 9 — Liaison with Partner Schools <span class="part">45%</span></h3>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>9.1</strong></td><td>Regular contact with the student's school, per parents' requirements.</td><td><code>og_school_logs</code> via <code>saveSchoolLog()</code>; <code>school-log-create.html</code>; students carry <code>schoolId</code> plus tutor name, email and phone.</td><td><span class="sev s-ok">FULLY MET</span> 80%</td><td>No contact cadence or overdue detection (contrast the working 3.2.1 welfare cadence). Logs default to <code>status:'Pending'</code> with no closure workflow.</td></tr>
+<tr><td><strong>9.2</strong></td><td>Inform the school contact whenever visiting the site.</td><td>No visit type or notification field.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Add a <code>site-visit</code> log type with <code>schoolInformedDate</code>.</td></tr>
+<tr><td><strong>9.3</strong></td><td><strong>Written confirmation of contracted services for each student</strong>, sent each academic year or when a student joins.</td><td><code>og_schools[].services</code> is a proper 7-field matrix rendered by <code>school-profile.html</code> — but it is <em>school-level</em>, not per-student, and <strong>nothing records that a confirmation was issued</strong>. <code>admin-dashboard.html</code> shows a static “Written service confirmation needs new term issue” row.</td><td><span class="sev s-crit">NOT MET</span> 25%</td><td>Appendix A requires an example of written confirmation of service. Add <code>serviceConfirmationIssuedDate</code> + document path per student per academic year, with an alert at term start.</td></tr>
+<tr><td><strong>9.4</strong></td><td>Liaise with the school on all travel and transport arrangements.</td><td><code>travel.html</code> calls <code>saveSchoolLog()</code>; visit report item <code>schoolInformed</code>.</td><td><span class="sev s-ok">FULLY MET</span> 75%</td><td>—</td></tr>
+<tr><td><strong>9.5</strong></td><td>Liaise with the school regarding homestay arrangements.</td><td>Same <code>schoolInformed</code> item; no link between <code>og_placements</code> and <code>og_school_logs</code>.</td><td><span class="sev s-warn">PARTIAL</span> 45%</td><td>Creating a placement should offer to log the school notification.</td></tr>
+<tr><td><strong>9.6</strong></td><td>Liaise on the student's needs, wellbeing and medication.</td><td><code>school-welfare-notification.html</code> → <code>getStudentById()</code> + <code>saveSchoolLog()</code>.</td><td><span class="sev s-ok">FULLY MET</span> 80%</td><td>Medication is not a notification type despite <code>medicineAdministrationLog</code> existing.</td></tr>
+<tr><td><strong>9.7</strong></td><td>Comprehensive log of all visits to, and communication with, schools.</td><td><code>getSchoolLogs()</code> returns the full log; <code>schools.html</code> and <code>school-liaison.html</code> render it.</td><td><span class="sev s-warn">PARTIAL</span> 55%</td><td><strong><code>school-profile.html</code> renders only the services list</strong> — it calls neither <code>getStudentsForSchool()</code> (which exists and is exported) nor <code>getSchoolLogs()</code>. The per-school page, the natural home for this evidence, shows neither enrolled students nor the log. ~30-line fix.</td></tr>
+<tr><td><strong>9.8</strong></td><td>Inform the school who will cover if the named GO contact is unavailable.</td><td>No named-contact field, no cover workflow.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Add <code>assignedCoordinatorId</code> and a cover-notification log type.</td></tr>
+<tr><td><strong>9.9</strong></td><td>Inform schools when no longer acting as educational guardian.</td><td><code>student-archive.html</code> and <code>student-delete.html</code> are <strong>static</strong>; no offboarding workflow.</td><td><span class="sev s-crit">NOT MET</span> 0%</td><td>Require a school notification log before a student can be archived.</td></tr>
+</tbody>
+</table>
+
+<h3>Standard 10 — Liaison with Parents <span class="met">80%</span></h3>
+<table>
+<thead><tr><th style="width:6%">Sub</th><th style="width:28%">Requirement</th><th style="width:26%">Platform evidence</th><th style="width:11%">Status</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td><strong>10.1</strong></td><td>Regular contact with parents, in line with the terms of the contract.</td><td><code>og_parents</code> (5 seeded with <code>linkedStudentIds[]</code>, preferred contact, language, relationship); <code>og_parent_logs</code>; four dedicated pages; parent contracts in <code>og_contracts</code>.</td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>No cadence derived from contract terms, so “in line with the terms” is not measurable. Parent details still duplicated between <code>og_parents</code> and inline <code>student.parent1*</code> fields — the June review's C4 remains open.</td></tr>
+<tr><td><strong>10.2</strong></td><td>24-hour contact number; clear who to contact in an emergency.</td><td><code>recordEmergencyNumberIssued('parent', …)</code>; <code>parent-portal.html</code>; <code>emergency-procedures.html</code> reports coverage; <code>POL-EMG-001</code> names the rota by shift.</td><td><span class="sev s-ok">FULLY MET</span> 80%</td><td>Undermined by the <code>getEmergencyIssuanceStats()</code> bug — parent coverage uses <code>s.emergencyNumberIssued || s.parents</code>, which is not a reliable test and inflates the figure.</td></tr>
+<tr><td><strong>10.3</strong></td><td>Keep parents informed in an emergency — flights, illness, injury, missing students, school removal.</td><td><code>emergency-incident.html</code> writes an incident <strong>and</strong> calls <code>saveParentLog()</code>, so the notification is recorded against the parent as well as the incident. <code>incident.notifications.{parents, school, dsl}</code> on every accident-book entry. <code>POL-EMG-001</code> sets escalation timelines. <code>mental-health-removal.html</code> writes a welfare log on school removal.</td><td><span class="sev s-ok">FULLY MET</span> 85%</td><td>Timelines are documented in policy prose but never enforced or measured — nothing compares incident time to parent-notification time against the 1-hour rule. Travel disruption does not auto-create a parent log.</td></tr>
+</tbody>
+</table>
+
+<h2>4 · Cross-cutting issues</h2>
+<p class="lead">Problems that affect multiple standards and cannot be fixed within any single one.</p>
+
+<table>
+<thead><tr><th style="width:5%">#</th><th style="width:22%">Issue</th><th style="width:20%">Affects</th><th style="width:9%">Severity</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td><strong>X1</strong></td><td>No security model at all</td><td>2.5.1 · 2.7.4 · 3.4.3 · 6.2.6</td><td><span class="sev s-crit">CRITICAL</span></td><td>Safeguarding concerns, DBS numbers, medical data and home addresses sit unencrypted in <code>localStorage</code>, readable by any script on the origin. <code>login.html</code> performs no credential check and navigating directly to any page bypasses it. <code>og_staff.role</code> exists and pages describe access boundaries in prose, but nothing enforces them. <code>admin-dashboard.html:83</code> exposes an unguarded <code>localStorage.clear()</code> that destroys the entire database. Acceptable for a UI prototype; disqualifying for anything an inspector sees.</td></tr>
+<tr><td><strong>X2</strong></td><td>No audit trail</td><td>2.5.1 · 2.7.4 · 6.2.5</td><td><span class="sev s-crit">CRITICAL</span></td><td><code>audit-log.html</code> is entirely static. No audit store, no write interceptor, no <code>changedBy</code>/<code>changedAt</code> on any record. The only history anywhere is <code>og_org_documents[].reviewHistory[]</code> — well built, and the pattern that should be generalised. Without it the platform cannot evidence who accessed a safeguarding record or altered a DBS status.</td></tr>
+<tr><td><strong>X3</strong></td><td>No organisation entity</td><td>1.1 · 1.2 · 2.4 · 2.7.2 · 2.7.3 · 2.11</td><td><span class="sev s-warn">HIGH</span></td><td><code>db.js</code> models people, places and events but never the organisation itself. Nowhere to record the ICO number, data controller, insurance renewals, statement of aims, organogram, AEGIS accreditation level or significant-changes log. <strong>Six sub-standards fail for the single reason that there is no record to attach them to.</strong> An <code>og_organisation</code> singleton resolves more standards per line of code than anything else in this report.</td></tr>
+<tr><td><strong>X4</strong></td><td>The policy store is empty</td><td>1.1 · 2.3 · 2.7.3 · 2.8.1 · 2.10 · 5.10.1 · 6.1 · 6.4 · 6.6 · 6.7 · 6.9 · 6.10 · 7</td><td><span class="sev s-crit">CRITICAL</span></td><td><code>policy-viewer.html</code> is genuinely good — create, edit, archive, restore, version bumping, content snapshots, category filtering, chronological history, review badges. It holds <strong>two documents</strong> against ~14 required policies plus 3 handbooks. Worse, there is no required-policy manifest, so an empty category reads as “nothing uploaded yet” rather than “you are missing a statutory document”. Seed the manifest as placeholder records with <code>status:'Missing'</code> and the library becomes a live gap analysis.</td></tr>
+<tr><td><strong>X5</strong></td><td><code>generateComplianceAlerts()</code> blind spots</td><td>2.2 · 2.10 · 5.5.2 · 5.10.3 · 6.3.1 · 8.2 · 8.5 · 9.3</td><td><span class="sev s-warn">HIGH</span></td><td>Person compliance and student records are covered thoroughly. Not checked: overdue policy reviews, overdue annual homestay visits, failed H&amp;S checklist items, hosts over capacity, PF LA notification inside 6 weeks, overdue day-student welfare checks, expiring contracts, driver safeguarding training expiry. <strong>Every one is computable from data already held.</strong> Extending the engine converts several PARTIALLY MET standards to FULLY MET with no new capture.</td></tr>
+<tr><td><strong>X6</strong></td><td>Duplicated fields that silently diverge</td><td>2.8.5 · 3.4.1 · 6.2.2 · 10.1</td><td><span class="sev s-warn">HIGH</span></td><td>Four concepts stored twice with different writers and readers: <strong>DBS</strong> (top-level vs <code>compliance.*</code> — Eleanor Ashworth displays a clear DBS <em>and</em> raises a critical “No DBS on file” alert); <strong>staff training</strong> (record strings vs completions store — Priya Shah is “Safeguarding Awareness” on her record but “DSL Level 3” in the emergency plan); <strong>annual safeguarding update</strong>; <strong>parent contact</strong>. Compliance reads one, profiles display the other.</td></tr>
+<tr><td><strong>X7</strong></td><td>Static pages that assert compliance</td><td>2.5.1 · 2.10 · 6.1 · 6.4 · 6.7</td><td><span class="sev s-crit">CRITICAL</span></td><td>An unbuilt page is honest. A page asserting “Overall compliance state: Amber — Strong record coverage” while naming hosts who do not exist and policies never written is the kind of finding that ends an inspection early. <code>compliance.html</code>'s own closing note — <em>“RAG without definitions is dashboard cosplay”</em> — describes the page it appears on. Wire both to <code>generateComplianceAlerts()</code> (~60 lines; the function already returns everything they display) or remove them.</td></tr>
+<tr><td><strong>X8</strong></td><td>Branding leakage</td><td>1.2</td><td><span class="sev s-info">MEDIUM</span></td><td>Six pages contain <strong>“Nest Guardians”</strong> (13 occurrences), including inside AEGIS-critical checklist labels — <code>homestay-visit-report.html</code> asks <em>“No more than three students will be hosted in total when a Nest Guardians student is present”</em>. Affected: <code>homestay-visit-report</code>, <code>homestay-hs-checklist</code>, <code>training-log</code>, <code>training-record-create</code>, <code>student-funds</code>, <code>finances-tracker</code>. Standard 1.2 requires all information to be accurate; a compliance record naming a different organisation is not.</td></tr>
+<tr><td><strong>X9</strong></td><td>Orphaned duplicates at the repository root</td><td>Architecture</td><td><span class="sev s-warn">HIGH</span></td><td><code>assets/db.js</code> (343 lines diverged) and <code>policy-viewer.html</code> are unreferenced copies edited in parallel with the live files — see §2.5.</td></tr>
+<tr><td><strong>X10</strong></td><td><code>localStorage</code> capacity ceiling</td><td>2.5.1</td><td><span class="sev s-info">MEDIUM</span></td><td>Carried forward from June and still accurate. Upload widgets store <code>{name, date}</code> metadata only, so the ~5–10 MB quota is not currently at risk. One exception has appeared: <code>host.profilePhoto</code> now holds base64 SVG data URIs inline in <code>og_hosts</code>. Small, but it establishes the pattern. The moment real DBS or gas safety PDFs are stored as data URLs, writes throw <code>QuotaExceededError</code> — which the <code>try/catch</code> blocks throughout <code>db.js</code> swallow silently, so data would vanish with no error shown.</td></tr>
+</tbody>
+</table>
+
+<h2>5 · Remediation roadmap</h2>
+<p class="lead">Ordered by compliance gain per unit of effort. Percentages are estimated headline movement.</p>
+
+<div class="phase">
+  <div class="head"><span>Phase 1 — Wire what already exists <span style="font-weight:400;opacity:.85">· est. 2–3 days</span></span><span class="gain">+9%</span></div>
+  <table>
+  <thead><tr><th style="width:5%">#</th><th style="width:52%">Action</th><th style="width:17%">Effort</th><th>Unlocks</th></tr></thead>
+  <tbody>
+  <tr><td>1</td><td>Replace hardcoded metrics in <code>admin-dashboard.html</code> and <code>compliance.html</code> with <code>generateComplianceAlerts()</code> output</td><td>~60 lines</td><td>X7 · B5 · 2.5.1 · 2.10</td></tr>
+  <tr><td>2</td><td>Wire the four concern pages to the existing <code>saveConcern()</code> / <code>generateConcernId()</code></td><td>~40 lines</td><td>6.5.1 · 6.5.2</td></tr>
+  <tr><td>3</td><td>Add policy review dates, annual visit status, host capacity, PF 42-day and day-student cadence to <code>generateComplianceAlerts()</code></td><td>~80 lines, central</td><td>X5 · 2.10.1 · 5.5.2 · 5.10.3 · 8.2 · 8.5</td></tr>
+  <tr><td>4</td><td>Render <code>getStudentsForSchool()</code> and <code>getSchoolLogs()</code> on <code>school-profile.html</code></td><td>~30 lines</td><td>9.7</td></tr>
+  <tr><td>5</td><td>Fix the <code>getEmergencyIssuanceStats()</code> truthiness bug (db.js:3812–3814)</td><td>3 lines</td><td>2.6.1 · 10.2</td></tr>
+  <tr><td>6</td><td>Delete root <code>assets/db.js</code> and root <code>policy-viewer.html</code>; rename <code>old_version/</code> → <code>app/</code></td><td>1 commit</td><td>A1 · X9</td></tr>
+  <tr><td>7</td><td>Find/replace “Nest Guardians” → “Oxford Guardians” across 6 pages</td><td>trivial</td><td>X8 · 1.2</td></tr>
+  <tr><td>8</td><td>Populate SCR <code>DOB</code> and <code>Self-dec</code> columns — fields exist, cells hardcoded to <code>—</code></td><td>~10 lines</td><td>2.8 · 5.1.2</td></tr>
+  <tr><td>9</td><td>Retire dead duplicates: <code>homestay-accident*</code>, <code>homestay-assessment*</code>, <code>homestay-visit-create</code>, <code>homestay-approve/-edit/-delete/-archive</code></td><td>1 commit</td><td>Clarity</td></tr>
+  </tbody>
+  </table>
+</div>
+
+<div class="phase">
+  <div class="head"><span>Phase 2 — Fill the governance layer <span style="font-weight:400;opacity:.85">· est. 1–2 weeks</span></span><span class="gain">+18%</span></div>
+  <table>
+  <thead><tr><th style="width:5%">#</th><th style="width:52%">Action</th><th style="width:17%">Effort</th><th>Unlocks</th></tr></thead>
+  <tbody>
+  <tr><td>10</td><td>Add an <code>og_organisation</code> singleton + <code>organisation-profile.html</code>: ICO number, data controller, insurance with renewals, statement of aims, organogram, AEGIS accreditation level and expiry</td><td>Medium</td><td>X3 · 1.1 · 2.4 · 2.7.2</td></tr>
+  <tr><td>11</td><td>Seed a <strong>required-policy manifest</strong> — 14 policies + 3 handbooks with <code>status:'Missing'</code>, <code>standardRef</code>, <code>isMandatory</code> — turning the library into live gap analysis</td><td>Medium</td><td>X4 · 2.10 · 6.1 · 6.4 · 6.6 · 6.7 · 6.9 · 6.10 · 7.1</td></tr>
+  <tr><td>12</td><td>Add an <code>og_complaints</code> store + <code>complaints.html</code> register with stages, actions, outcome and a timeliness clock</td><td>Medium</td><td>B4 · 7.1–7.3</td></tr>
+  <tr><td>13</td><td>Add an <code>og_audit_log</code> store with a write interceptor in <code>db.js</code>; wire <code>audit-log.html</code> to it</td><td>Medium</td><td>X2 · B2 · 2.5.1</td></tr>
+  <tr><td>14</td><td>Add <em>Handbooks</em> as an <code>og_org_documents</code> category with per-audience issue/acknowledgement logs</td><td>Small</td><td>2.3.1–2.3.3</td></tr>
+  <tr><td>15</td><td>Add an <code>og_aegis_notifications</code> store with a 14-day clock</td><td>Small</td><td>2.11.1 · 6.5.3</td></tr>
+  </tbody>
+  </table>
+</div>
+
+<div class="phase">
+  <div class="head"><span>Phase 3 — Close the safer-recruitment gaps <span style="font-weight:400;opacity:.85">· est. 1 week</span></span><span class="gain">+8%</span></div>
+  <table>
+  <thead><tr><th style="width:5%">#</th><th style="width:52%">Action</th><th style="width:17%">Effort</th><th>Unlocks</th></tr></thead>
+  <tbody>
+  <tr><td>16</td><td>Give <code>householdMembers[]</code> its own <code>compliance</code> sub-object; make <code>checkPerson()</code> iterate members aged ≥16</td><td>Medium</td><td>B6 · 5.1.3 · 2.8.5</td></tr>
+  <tr><td>17</td><td>Add <code>barredListCheckDate</code>, <code>dbsWrittenPermissionDate</code>, <code>rightToWorkCheckedDate</code>, <code>onlineSearchDate</code>, <code>dbsDisclosureRiskAssessmentPath</code>; surface in the SCR</td><td>Small</td><td>2.8.6 · 2.8.7 · 2.8.10 · 2.8.11</td></tr>
+  <tr><td>18</td><td>Add structured referee metadata (name, relationship, known-since, employer flag, verification call log)</td><td>Medium</td><td>2.8.4</td></tr>
+  <tr><td>19</td><td>Add an <code>og_interviews</code> store keyed to <code>personId</code></td><td>Small</td><td>2.8.3 · 2.1.5</td></tr>
+  <tr><td>20</td><td>Capture the 11 Appendix 5 self-declaration questions as structured responses with a date and annual re-declaration cycle</td><td>Medium</td><td>5.1.2</td></tr>
+  <tr><td>21</td><td>Add a real induction record and wire <code>induction-checklist.html</code> / <code>induction-create.html</code>; correct the mislabelled SCR “Induction” column</td><td>Medium</td><td>2.1.4</td></tr>
+  <tr><td>22</td><td>Collapse the duplicated DBS / training / parent-contact representations</td><td>Medium</td><td>X6</td></tr>
+  </tbody>
+  </table>
+</div>
+
+<div class="phase">
+  <div class="head"><span>Phase 4 — Enforcement and security <span style="font-weight:400;opacity:.85">· est. 2–4 weeks</span></span><span class="gain">+12%</span></div>
+  <table>
+  <thead><tr><th style="width:5%">#</th><th style="width:52%">Action</th><th style="width:17%">Effort</th><th>Unlocks</th></tr></thead>
+  <tbody>
+  <tr><td>23</td><td>Enforce placement rules at <code>homestay-create.html</code>: capacity ≤3, under-16/over-20 age mix, in-person visit current, medical placement gate satisfied</td><td>Medium</td><td>5.5.2 · 5.5.5 · 5.10.1.1 · 3.4.4</td></tr>
+  <tr><td>24</td><td>Add authentication with real credential checking and role-based page gating; restrict <code>og_concerns</code> and <code>og_mh_*</code> to DSL and senior management</td><td>Large</td><td>B1 · X1 · 2.7.4 · 3.4.3 · 6.2.6</td></tr>
+  <tr><td>25</td><td>Move to IndexedDB or a backend before any binary storage; remove the unguarded <code>localStorage.clear()</code></td><td>Large</td><td>2.5.1 · X10</td></tr>
+  <tr><td>26</td><td>Add code of conduct + acknowledgement tracking for staff and homestays</td><td>Medium</td><td>2.1.6 · 5.8.2 · 5.8.4</td></tr>
+  <tr><td>27</td><td>Add <code>og_transport_firms</code> with DBS confirmation documents; add <code>student.heightCm</code> and a child-seat check at booking</td><td>Medium</td><td>4.3 · 4.4</td></tr>
+  <tr><td>28</td><td>Add per-student school service confirmations with academic-year issue tracking</td><td>Medium</td><td>9.3 · 9.8 · 9.9</td></tr>
+  </tbody>
+  </table>
+</div>
+
+<div class="card idea">
+  <h4>Projected trajectory</h4>
+  <p><strong>51% → ~78% after Phases 1 and 2 → ~98% after all four.</strong> Phase 1 is almost entirely re-wiring code that already exists: the alert engine, the concern save functions, the school query functions and the compliance data are all present and working — they are simply not connected to the pages that should display them.</p>
+</div>
+
+<h2>6 · Appendix</h2>
+
+<h3>6.1 Data store inventory</h3>
+<table>
+<thead><tr><th style="width:19%">Key</th><th style="width:30%">Contents</th><th style="width:24%">Written by</th><th style="width:12%">Read by</th><th>Standards</th></tr></thead>
+<tbody>
+<tr><td><code>og_students</code></td><td>6 students, full Appendix 13 schema</td><td><code>student-*.html</code>, <code>private-fostering.html</code></td><td>30+ pages</td><td>3.4 · 8</td></tr>
+<tr><td><code>og_hosts</code></td><td>2 hosts, household members, compliance, availability</td><td><code>host-*.html</code>, visit reports</td><td>20+ pages</td><td>5.x</td></tr>
+<tr><td><code>og_drivers</code></td><td>2 drivers, vehicle + compliance</td><td><code>driver-*.html</code></td><td>10+ pages</td><td>4 · 2.8</td></tr>
+<tr><td><code>og_staff</code></td><td>3 staff, roles + compliance</td><td><code>staff-*.html</code></td><td>15+ pages</td><td>2.1 · 6.2</td></tr>
+<tr><td><code>og_parents</code></td><td>5 parents with <code>linkedStudentIds[]</code></td><td><code>parent-*.html</code></td><td>6 pages</td><td>10</td></tr>
+<tr><td><code>og_agents</code> / <code>og_agent_logs</code></td><td>2 agents + contact log</td><td><code>agent-profile.html</code></td><td>3 pages</td><td>2.2.4</td></tr>
+<tr><td><code>og_schools</code> / <code>og_school_logs</code></td><td>6 schools + services matrix + logs</td><td><code>school-*.html</code>, <code>travel.html</code></td><td>5 pages</td><td>9</td></tr>
+<tr><td><code>og_concerns</code></td><td>4 seeded, tiered, <code>subjectId</code>-linked</td><td>3 pages</td><td>6 pages</td><td>6.5</td></tr>
+<tr><td><code>og_welfare_logs</code></td><td>Check-ins + staff notes</td><td>5 pages</td><td>6 pages</td><td>3.2</td></tr>
+<tr><td><code>og_incidents</code></td><td>Accident book, RIDDOR flag</td><td>3 create pages</td><td>5 pages</td><td>5.10.1.2</td></tr>
+<tr><td><code>og_mh_cases</code> / <code>_comms</code> / <code>_removals</code></td><td>Mental health suite</td><td><code>mental-health-*.html</code></td><td>3 pages</td><td>3.3</td></tr>
+<tr><td><code>og_visit_reports</code></td><td>38-item annual visit reports</td><td><code>homestay-visit-report.html</code></td><td>3 pages</td><td>5.5 · 5.10.3</td></tr>
+<tr><td><code>og_hs_checklists</code></td><td>24-item H&amp;S assessments</td><td><code>homestay-hs-checklist.html</code></td><td>3 pages</td><td>5.10.2</td></tr>
+<tr><td><code>og_training_courses</code> / <code>_completions</code> / <code>og_training_logs</code></td><td>7 courses + completion ledger</td><td><code>training-*.html</code></td><td>6 pages</td><td>5.9 · 6.3</td></tr>
+<tr><td><code>og_org_documents</code></td><td><strong>2 policies</strong> + version history</td><td><code>policy-viewer.html</code></td><td>2 pages</td><td>2.10</td></tr>
+<tr><td><code>og_student_held_funds</code></td><td>5 transactions, running balance</td><td><code>student-funds.html</code></td><td>3 pages</td><td>2.9.2</td></tr>
+<tr><td><code>og_contracts</code></td><td>Empty seed; 4 entity types</td><td>4 profile pages</td><td>5 pages</td><td>2.2</td></tr>
+<tr><td><code>og_transports</code> / <code>og_travel_todos</code></td><td>Journeys + 5-task checklist</td><td><code>travel-*.html</code></td><td>6 pages</td><td>4.1</td></tr>
+<tr><td><code>og_exeats</code> / <code>og_placements</code> / <code>og_todos</code></td><td>Logistics + 4-task checklist</td><td><code>exeats</code>, <code>homestay-create</code></td><td>5 pages</td><td>4 · 5</td></tr>
+<tr><td><code>og_finance_events</code> / <code>og_revenue_events</code> / <code>finance_docs</code></td><td>Expenses, income, seeded docs</td><td><code>finances-tracker</code>, <code>revenue</code></td><td>6 pages</td><td>2.9.1</td></tr>
+<tr><td><code>og_pf_documents</code></td><td>Private fostering uploads</td><td><code>private-fostering-documents.html</code> <span class="note">(local writer)</span></td><td>aggregator</td><td>8.4</td></tr>
+<tr><td><code>og_alert_settings</code> / <code>og_custom_notifs</code></td><td>Thresholds; user-defined alerts</td><td><code>notification-edit</code> / <code>-create</code></td><td>alert engine</td><td>—</td></tr>
+</tbody>
+</table>
+<div class="card crit">
+  <h4>No store exists for</h4>
+  <p><span class="pill bad">organisation profile</span><span class="pill bad">insurance</span><span class="pill bad">ICO registration</span><span class="pill bad">complaints</span><span class="pill bad">audit log</span><span class="pill bad">handbooks</span><span class="pill bad">codes of conduct</span><span class="pill bad">job descriptions</span><span class="pill bad">interview notes</span><span class="pill bad">barred-list checks</span><span class="pill bad">transport firms</span><span class="pill bad">AEGIS notifications</span></p>
+</div>
+
+<h3>6.2 Static pages with no data calls — 63 of 179</h3>
+<div class="grid2">
+  <div class="card crit">
+    <h4>Consequential — wire or remove</h4>
+    <p><span class="pill bad">admin-dashboard</span><span class="pill bad">compliance</span><span class="pill bad">compliance-edit</span><span class="pill bad">audit-log</span><span class="pill bad">reporting-dashboard</span><span class="pill bad">low-level-concern-create</span><span class="pill bad">low-level-concerns</span><span class="pill bad">concern-case</span><span class="pill bad">concern-close</span><span class="pill bad">concern-escalation</span><span class="pill bad">induction-checklist</span><span class="pill bad">induction-create</span><span class="pill bad">parent-consent-update</span><span class="pill bad">reference</span><span class="pill bad">student-archive</span><span class="pill bad">student_academics</span><span class="pill bad">exeat-calendar</span><span class="pill bad">exeat-approval</span><span class="pill bad">handoff-record</span></p>
+  </div>
+  <div class="card warn">
+    <h4>Dead duplicates of working flows — retire</h4>
+    <p><span class="pill">homestay-accident</span><span class="pill">homestay-accident-create</span><span class="pill">homestay-assessment</span><span class="pill">homestay-assessment-create</span><span class="pill">homestay-visit-create</span><span class="pill">homestay-approve</span><span class="pill">homestay-edit</span><span class="pill">homestay-delete</span><span class="pill">homestay-archive</span></p>
+    <h4 style="margin-top:12px;">Benign — confirmation and validation screens</h4>
+    <p class="note">12 × <code>*-success</code> · 4 × <code>*-validation</code> · 4 × <code>*-delete</code> · <code>login</code> · <code>password-reset-*</code> · <code>account-lockout</code> · <code>first-login-setup</code> · <code>user-invite*</code> · <code>user-role-edit</code> · 5 × <code>document-*</code> · <code>travel-edit</code> · <code>vat-reclamation</code> · <code>finances-archived</code> · <code>compliance-delete-blocked</code> · <code>student-edit-error</code></p>
+  </div>
+</div>
+
+<h3>6.3 Delta vs the 25 June 2026 Connectivity &amp; Architecture Review</h3>
+<table>
+<thead><tr><th style="width:38%">June finding</th><th style="width:14%">Status</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td><strong>D1</strong> — Aggregator ignores staff, parent and PF uploads</td><td><span class="sev s-ok">RESOLVED</span></td><td>All three sources added to <code>aggregateDocuments()</code></td></tr>
+<tr><td><strong>D2</strong> — Compliance documents never reach the library</td><td><span class="sev s-ok">RESOLVED</span></td><td><code>emitComplianceDocs()</code> walks all <code>compliance.*Path</code> fields including gas safety and self-declaration</td></tr>
+<tr><td><strong>D3</strong> — Two parallel Homestay/Host systems</td><td><span class="sev s-ok">RESOLVED</span></td><td><code>homestay-profile.html</code> is now a redirect to <code>host-profile.html</code>; remaining thin-cluster pages are dead stubs to delete</td></tr>
+<tr><td><strong>D4</strong> — Concerns not attached to their subject</td><td><span class="sev s-ok">RESOLVED</span></td><td><code>subjectId</code> added; <code>getConcernsForPerson()</code> consumed by host and student profiles</td></tr>
+<tr><td><strong>D5</strong> — Uploads don't clear the matching alert</td><td><span class="sev s-ok">RESOLVED</span></td><td>Resolved by D2</td></tr>
+<tr><td><strong>D6</strong> — <code>documents.html</code> hub is static</td><td><span class="sev s-ok">RESOLVED</span></td><td>Now calls <code>aggregateDocuments()</code></td></tr>
+<tr><td><strong>D7</strong> — Root <code>index.html</code> absolute redirect</td><td><span class="sev s-ok">RESOLVED</span></td><td>Now <code>old_version/admin-dashboard.html</code></td></tr>
+<tr><td><strong>C3</strong> — Schools ↔ students</td><td><span class="sev s-warn">PARTIAL</span></td><td><code>schoolId</code> and <code>getStudentsForSchool()</code> added to <code>db.js</code>, but <code>school-profile.html</code> still renders neither</td></tr>
+<tr><td><strong>C4</strong> — Parents: one source of truth</td><td><span class="sev s-crit">OPEN</span></td><td><code>student.parent1*</code> and <code>og_parents</code> still duplicate</td></tr>
+<tr><td><strong>C2</strong> — Finance ↔ people by ID</td><td><span class="sev s-crit">OPEN</span></td><td><code>finance_docs</code> still keys on name strings</td></tr>
+<tr><td><strong>C5</strong> — Exeats ↔ transports ↔ placements</td><td><span class="sev s-crit">OPEN</span></td><td>Three parallel logistics stores remain</td></tr>
+</tbody>
+</table>
+
+<p class="note" style="margin-top:26px;border-top:1px solid var(--line);padding-top:14px;">
+Oxford Guardians Platform — AEGIS Architecture &amp; Compliance Review · Generated 6 August 2026 · Based on a full read of <code>old_version/assets/db.js</code> (3,973 lines) and all 179 HTML pages in <code>old_version/</code>, assessed against the AEGIS Accreditation Handbook &amp; Guardianship Organisation Quality Standards, September 2025. This is a prototype-stage assessment. Scores reflect implementation state, not the organisation's actual operational compliance — a standard scored NOT MET here may well be satisfied by processes and paperwork held outside the platform.
+</p>
+
+</div>
+</body>
+</html>

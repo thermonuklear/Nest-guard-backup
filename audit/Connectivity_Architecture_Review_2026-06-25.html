@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Oxford Guardians — Data Connectivity & Architecture Review</title>
+<style>
+  :root{
+    --cyan:#06b6d4; --cyan-dark:#0e7490; --ink:#0f172a; --ink2:#334155;
+    --muted:#64748b; --line:#e2e8f0; --bg:#ffffff; --soft:#f8fafc;
+    --crit:#dc2626; --warn:#d97706; --info:#2563eb; --ok:#059669;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  body{
+    font-family:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink2); line-height:1.5; margin:0; font-size:11.2px; background:var(--bg);
+  }
+  h1,h2,h3,h4{font-family:"Outfit",sans-serif;color:var(--ink);line-height:1.2;font-weight:800;}
+  h1{font-size:30px;margin:0 0 6px;}
+  h2{font-size:19px;margin:30px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--cyan);}
+  h3{font-size:14.5px;margin:18px 0 6px;color:var(--cyan-dark);}
+  h4{font-size:12px;margin:12px 0 4px;color:var(--ink);}
+  p{margin:6px 0;}
+  a{color:var(--cyan-dark);}
+  code{font-family:"SFMono-Regular",Consolas,monospace;background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:0.9em;color:#0b4a57;}
+  ul,ol{margin:6px 0 6px 0;padding-left:20px;}
+  li{margin:3px 0;}
+  .page{max-width:880px;margin:0 auto;padding:46px 54px;}
+  .cover{
+    background:linear-gradient(135deg,#0e7490 0%,#06b6d4 60%,#22d3ee 100%);
+    color:#fff;padding:60px 54px 48px;border-radius:0;
+  }
+  .cover h1{color:#fff;font-size:38px;}
+  .cover .sub{font-size:16px;opacity:.95;margin-top:4px;font-weight:600;}
+  .cover .meta{margin-top:26px;font-size:12px;opacity:.92;border-top:1px solid rgba(255,255,255,.35);padding-top:14px;}
+  .tag{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);padding:3px 10px;border-radius:999px;font-size:11px;margin-right:6px;}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:10.5px;}
+  th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;}
+  th{background:var(--soft);font-family:"Outfit";font-weight:700;color:var(--ink);font-size:10px;text-transform:uppercase;letter-spacing:.04em;}
+  tr:nth-child(even) td{background:#fcfdfe;}
+  .sev{font-weight:800;padding:2px 7px;border-radius:5px;color:#fff;font-size:9.5px;white-space:nowrap;display:inline-block;}
+  .s-crit{background:var(--crit);} .s-warn{background:var(--warn);} .s-info{background:var(--info);} .s-ok{background:var(--ok);}
+  .card{border:1px solid var(--line);border-left:4px solid var(--cyan);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--soft);}
+  .card.crit{border-left-color:var(--crit);}
+  .card.warn{border-left-color:var(--warn);}
+  .card.idea{border-left-color:var(--info);}
+  .card h4{margin-top:0;}
+  .lead{font-size:12.5px;color:var(--ink2);}
+  .kicker{font-family:"Outfit";text-transform:uppercase;letter-spacing:.12em;font-size:10px;color:var(--cyan-dark);font-weight:700;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .pill{display:inline-block;background:#ecfeff;border:1px solid #a5f3fc;color:#0e7490;border-radius:6px;padding:1px 7px;font-size:9.5px;font-family:monospace;margin:1px 2px 1px 0;}
+  .pill.bad{background:#fef2f2;border-color:#fecaca;color:#b91c1c;}
+  .pill.good{background:#ecfdf5;border-color:#a7f3d0;color:#047857;}
+  .note{font-size:10px;color:var(--muted);font-style:italic;}
+  .toc{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:14px 22px;}
+  .toc ol{margin:0;padding-left:18px;} .toc li{margin:4px 0;font-weight:600;color:var(--ink);}
+  .toc span{font-weight:400;color:var(--muted);}
+  svg{max-width:100%;height:auto;}
+  .legend{font-size:10px;display:flex;gap:16px;flex-wrap:wrap;margin:6px 0;}
+  .legend span{display:flex;align-items:center;gap:5px;}
+  .sw{width:14px;height:10px;border-radius:3px;display:inline-block;}
+  .footer{margin-top:30px;border-top:1px solid var(--line);padding-top:10px;font-size:9.5px;color:var(--muted);}
+  @media print{
+    .page{padding:30px 40px;max-width:none;}
+    .cover{padding:60px 50px;}
+    h2{page-break-after:avoid;} h3,h4{page-break-after:avoid;}
+    table,.card,figure{page-break-inside:avoid;}
+    .break{page-break-before:always;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ───────────────────────── COVER ───────────────────────── -->
+<div class="cover">
+  <div class="kicker" style="color:#cffafe;">Internal Technical Review · Prototype Audit</div>
+  <h1>Data Connectivity &amp; Architecture Review</h1>
+  <div class="sub">Oxford Guardians Platform — mapping what should be joined up, and isn&rsquo;t</div>
+  <div class="meta">
+    <span class="tag">Prepared 25 June 2026</span>
+    <span class="tag">Scope: full codebase (~170 pages)</span>
+    <span class="tag">Status: prototype</span>
+    <br><br>
+    This review traces how data actually flows between the platform&rsquo;s pages, identifies sections that were
+    built at different stages and never wired together, recommends both obvious and non-obvious links, and assesses
+    whether joining them up would make pages too heavy &mdash; with a concrete strategy for keeping things stable.
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ───────────────────────── TOC ───────────────────────── -->
+<div class="toc">
+  <div class="kicker">Contents</div>
+  <ol>
+    <li>How the platform is built today <span>— the one-database, many-views model</span></li>
+    <li>Broken links: things that <em>should</em> connect but don&rsquo;t <span>— staged work left unjoined</span></li>
+    <li>Non-obvious connections worth making <span>— higher-effort, high-value joins</span></li>
+    <li>Weight &amp; stability: will connecting things break pages? <span>— and how to split them</span></li>
+    <li>Appendix <span>— data-store inventory, orphan pages, quick-win checklist</span></li>
+  </ol>
+</div>
+
+<h2>Executive summary</h2>
+<p class="lead">
+The platform is in good shape architecturally: almost all data goes through a <strong>single shared data layer</strong>
+(<code>old_version/assets/db.js</code>, ~1,900 lines) that reads and writes browser <code>localStorage</code>, and each
+HTML page is a thin &ldquo;view&rdquo; on top of it. That is the right pattern and it means most fixes are small and central.
+</p>
+<p>The disconnects you&rsquo;re feeling are real, and they fall into three buckets:</p>
+<ul>
+  <li><strong>The document library has blind spots.</strong> The aggregator that powers the Documents pages only looks
+      at <em>some</em> of the places documents are uploaded. Staff documents, parent documents, private-fostering
+      documents, and the entire <em>compliance</em> document set (DBS, ID, references) are invisible to it.</li>
+  <li><strong>Two parallel &ldquo;host / homestay&rdquo; systems exist.</strong> A rich, wired-up <em>Hosts</em> system and a thinner,
+      partly-static <em>Homestays</em> system were built at different times and overlap heavily.</li>
+  <li><strong>Many records are joined by name, not by ID.</strong> Concerns, finances, exeats, schools and parents
+      reference people by typed-in name strings instead of stable IDs &mdash; so the system can&rsquo;t reliably show
+      &ldquo;everything about this one person&rdquo; in one place.</li>
+</ul>
+<p>
+None of these require a rewrite. The biggest single win is making the <strong>document aggregator</strong> the one true
+source for every uploaded file, and adding <strong>ID links</strong> to the four name-based record types. On weight: the
+heaviest pages today (<code>finances-tracker.html</code> ~1,350 lines, <code>host-profile.html</code> ~1,315 lines) are
+already near the limit of what&rsquo;s comfortable in a single inline-script page, so Section&nbsp;4 recommends a
+tab/lazy-render approach rather than piling more onto them.
+</p>
+
+<!-- ───────────────────────── SECTION 1 ───────────────────────── -->
+<h2 class="break">1 · How the platform is built today</h2>
+
+<p>
+Two things are worth knowing before the findings make sense.
+</p>
+
+<h3>1.1 One database, many views</h3>
+<p>
+Everything runs client-side. <code>db.js</code> defines ~30 <code>localStorage</code> &ldquo;tables&rdquo; (students, hosts,
+drivers, staff, parents, concerns, incidents, exeats, placements, welfare logs, mental-health cases, finance events,
+and more), seeds them with demo data on first load, and exposes one global API object, <code>window.OG_DB</code>, with
+~80 functions. Every page includes <code>db.js</code> and calls into <code>OG_DB</code> to read/write. <strong>This is the
+single source of truth and the right place to make most of the fixes below.</strong>
+</p>
+
+<h3>1.2 Records link to each other two different ways</h3>
+<p>
+This split is the root cause of most of what feels &ldquo;disconnected&rdquo;:
+</p>
+<div class="grid2">
+  <div class="card" style="border-left-color:var(--ok);">
+    <h4 style="color:var(--ok);">✓ Linked by stable ID (good)</h4>
+    <p style="margin:4px 0;">These can reliably find each other:</p>
+    <span class="pill good">driver.linkedStudents[]</span>
+    <span class="pill good">host.linkedStudents[]</span>
+    <span class="pill good">parent.linkedStudentIds[]</span>
+    <span class="pill good">welfareLog.studentId</span>
+    <span class="pill good">mhCase[studentId]</span>
+    <span class="pill good">visitReport.hostId</span>
+    <span class="pill good">hsChecklist.hostId</span>
+    <span class="pill good">trainingLog.hostId</span>
+    <span class="pill good">todo.placementId</span>
+    <span class="pill good">alert.personId</span>
+  </div>
+  <div class="card crit">
+    <h4 style="color:var(--crit);">✗ Linked by typed-in name (fragile)</h4>
+    <p style="margin:4px 0;">These break if a name is spelt differently or changes:</p>
+    <span class="pill bad">concern.subjectName</span>
+    <span class="pill bad">financeEvent.student</span>
+    <span class="pill bad">financeDoc.person</span>
+    <span class="pill bad">exeat.studentName</span>
+    <span class="pill bad">student.school</span>
+    <span class="pill bad">student.parent1Name (inline)</span>
+  </div>
+</div>
+<p class="note">
+Example already in the seed data: <code>finance-data.js</code> bills students named &ldquo;Lucia Herrera&rdquo; and &ldquo;Aarav
+Mehta&rdquo;, who don&rsquo;t exist in the student database at all &mdash; a name-based link with nothing on the other end.
+</p>
+
+<h3>1.3 The document model — three stores that don&rsquo;t talk</h3>
+<p>The same person&rsquo;s documents can live in up to three unconnected places:</p>
+
+<figure>
+<svg viewBox="0 0 840 300" xmlns="http://www.w3.org/2000/svg" font-family="Outfit, sans-serif">
+  <!-- upload sources -->
+  <text x="20" y="22" font-size="12" font-weight="700" fill="#0f172a">WHERE FILES ARE UPLOADED</text>
+
+  <!-- Store A: *_docs_ arrays -->
+  <rect x="20" y="38" width="230" height="120" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="34" y="58" font-size="11" font-weight="700" fill="#047857">Store A · document lists</text>
+  <text x="34" y="76" font-size="9.5" fill="#334155">docs_&lt;id&gt; · acad_&lt;id&gt; (student)</text>
+  <text x="34" y="91" font-size="9.5" fill="#334155">host_docs_&lt;id&gt; · driver_docs_&lt;id&gt;</text>
+  <text x="34" y="106" font-size="9.5" fill="#b91c1c">staff_docs_&lt;id&gt; · parent_docs_&lt;id&gt;</text>
+  <text x="34" y="121" font-size="9.5" fill="#334155">finance_docs (seed)</text>
+  <text x="34" y="142" font-size="8.5" font-style="italic" fill="#64748b">stores {name, date} only — no file blob</text>
+
+  <!-- Store B: compliance.*Path -->
+  <rect x="20" y="170" width="230" height="100" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="34" y="190" font-size="11" font-weight="700" fill="#1d4ed8">Store B · compliance fields</text>
+  <text x="34" y="208" font-size="9.5" fill="#334155">person.compliance.dbsCertificatePath</text>
+  <text x="34" y="223" font-size="9.5" fill="#334155">.idDocumentPath · .reference1Path…</text>
+  <text x="34" y="241" font-size="8.5" font-style="italic" fill="#64748b">written by *-compliance-*.html via</text>
+  <text x="34" y="254" font-size="8.5" font-style="italic" fill="#64748b">saveHost / saveDriver / saveStaff</text>
+
+  <!-- Store C: pf docs -->
+  <rect x="20" y="282" width="230" height="2" />
+  <!-- aggregator -->
+  <rect x="330" y="90" width="180" height="120" rx="10" fill="#cffafe" stroke="#06b6d4" stroke-width="2"/>
+  <text x="345" y="112" font-size="11" font-weight="700" fill="#0e7490">aggregateDocuments()</text>
+  <text x="345" y="132" font-size="9" fill="#334155">the one function that</text>
+  <text x="345" y="146" font-size="9" fill="#334155">feeds the Documents pages</text>
+  <text x="345" y="172" font-size="9" fill="#047857">reads: docs_ acad_</text>
+  <text x="345" y="186" font-size="9" fill="#047857">host_docs_ driver_docs_</text>
+  <text x="345" y="200" font-size="9" fill="#047857">finance_docs</text>
+
+  <!-- documents pages -->
+  <rect x="600" y="90" width="215" height="120" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="614" y="112" font-size="11" font-weight="700" fill="#0f172a">Documents pages + filters</text>
+  <text x="614" y="132" font-size="9.5" fill="#334155">documents-students.html</text>
+  <text x="614" y="147" font-size="9.5" fill="#334155">documents-hosts.html</text>
+  <text x="614" y="162" font-size="9.5" fill="#334155">documents-drivers.html</text>
+  <text x="614" y="177" font-size="9.5" fill="#334155">documents-finance.html</text>
+  <text x="614" y="198" font-size="8.5" font-style="italic" fill="#64748b">documents.html = static hub only</text>
+
+  <!-- arrows -->
+  <defs>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#10b981"/></marker>
+    <marker id="arx" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#dc2626"/></marker>
+    <marker id="arc" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#06b6d4"/></marker>
+  </defs>
+  <!-- A partially feeds aggregator -->
+  <path d="M250,90 C295,85 300,120 328,130" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+  <!-- B does NOT -->
+  <path d="M250,210 C290,210 300,180 328,165" stroke="#dc2626" stroke-width="2" fill="none" stroke-dasharray="5,4" marker-end="url(#arx)"/>
+  <text x="262" y="232" font-size="9" font-weight="700" fill="#dc2626">never reaches aggregator ✗</text>
+  <!-- aggregator to pages -->
+  <path d="M510,150 L596,150" stroke="#06b6d4" stroke-width="2.5" fill="none" marker-end="url(#arc)"/>
+</svg>
+<figcaption class="note">The aggregator only sees part of Store A and never sees Store B. Anything in red is invisible to the Documents filters.</figcaption>
+</figure>
+
+<!-- ───────────────────────── SECTION 2 ───────────────────────── -->
+<h2 class="break">2 · Broken links: things that should connect but don&rsquo;t</h2>
+<p class="lead">These are gaps where two pieces clearly belong together &mdash; they were just built at different stages and never joined. Ordered by impact.</p>
+
+<table>
+  <thead><tr><th style="width:46px;">#</th><th>Disconnect</th><th style="width:160px;">Where</th><th style="width:70px;">Severity</th></tr></thead>
+  <tbody>
+    <tr><td>D1</td><td>Document aggregator ignores staff, parent &amp; private-fostering uploads</td><td>db.js · documents-*.html</td><td><span class="sev s-crit">High</span></td></tr>
+    <tr><td>D2</td><td>Compliance documents (DBS/ID/references) never appear in the document library</td><td>*-compliance-*.html</td><td><span class="sev s-crit">High</span></td></tr>
+    <tr><td>D3</td><td>Two parallel systems: <em>Homestays</em> vs <em>Hosts</em></td><td>homestay-*.html vs host-*.html</td><td><span class="sev s-crit">High</span></td></tr>
+    <tr><td>D4</td><td>Concerns aren&rsquo;t attached to the student/host they&rsquo;re about</td><td>concerns-*.html · student-profile</td><td><span class="sev s-warn">Med</span></td></tr>
+    <tr><td>D5</td><td>Compliance alerts can&rsquo;t be cleared from the document library (separate store)</td><td>db.js generateComplianceAlerts</td><td><span class="sev s-warn">Med</span></td></tr>
+    <tr><td>D6</td><td><code>documents.html</code> hub is static — disconnected from the live aggregator</td><td>documents.html</td><td><span class="sev s-info">Low</span></td></tr>
+    <tr><td>D7</td><td>Root <code>index.html</code> redirects to a hard-coded local file path</td><td>index.html:602</td><td><span class="sev s-warn">Med</span></td></tr>
+  </tbody>
+</table>
+
+<div class="card crit">
+  <h4>D1 — The Documents pages have blind spots</h4>
+  <p><code>aggregateDocuments()</code> in <code>db.js</code> pulls from <span class="pill">docs_</span><span class="pill">acad_</span>
+  <span class="pill">host_docs_</span><span class="pill">driver_docs_</span><span class="pill">finance_docs</span>, but uploads are <em>also</em> written to:</p>
+  <p><span class="pill bad">staff_docs_&lt;id&gt;</span> (staff-profile.html) &nbsp; <span class="pill bad">parent_docs_&lt;id&gt;</span> (parent-profile.html) &nbsp; <span class="pill bad">og_pf_documents</span> (private-fostering-documents.html)</p>
+  <p><strong>Effect:</strong> exactly the symptom you described — a file uploaded on a newer section never shows up in the Documents pages or their filters.
+  <strong>Fix:</strong> add three short blocks to <code>aggregateDocuments()</code> (one per source). ~20 lines, fully central. This is the single highest-value fix in the report.</p>
+</div>
+
+<div class="card crit">
+  <h4>D2 — Compliance documents live in a different world</h4>
+  <p>The compliance sub-pages (<code>driver-compliance-dbs.html</code>, <code>host-compliance-identity.html</code>, etc.) save uploads as
+  <em>fields on the person record</em> &mdash; <code>compliance.dbsCertificatePath</code>, <code>idDocumentPath</code>,
+  <code>reference1Path</code>, <code>safeguardingCertificatePath</code> &mdash; via <code>saveHost/saveDriver/saveStaff</code>.
+  The document library (Store&nbsp;A) never sees them.</p>
+  <p><strong>Effect:</strong> the most safeguarding-critical files (DBS, right-to-work, references) are <em>invisible</em> in the Documents browser. They only surface in the SCR pages.
+  <strong>Fix:</strong> teach <code>aggregateDocuments()</code> to also walk each person&rsquo;s <code>compliance.*Path</code> fields and emit a row per non-empty path (tagged sub-type &ldquo;Compliance&rdquo;). Then the library becomes complete and D5 partly resolves too.</p>
+</div>
+
+<div class="card crit">
+  <h4>D3 — &ldquo;Homestays&rdquo; and &ldquo;Hosts&rdquo; are two systems for one concept</h4>
+  <p>There is only one data table (<span class="pill good">og_hosts</span>), but two UIs sit on top of it:</p>
+  <table style="margin-top:6px;">
+    <thead><tr><th>Hosts cluster (wired, rich)</th><th>Homestays cluster (mixed / partly static)</th></tr></thead>
+    <tbody>
+      <tr><td><code>hosts.html</code> → <code>host-profile.html</code> (1,315 lines, full records, visit reports, compliance)</td>
+          <td><code>homestays.html</code> → <code>homestay-profile.html</code> (83-line static stub)</td></tr>
+      <tr><td><code>host-create.html</code> writes via <code>saveHost</code></td>
+          <td><code>homestay-create.html</code> reads hosts but several siblings are static</td></tr>
+    </tbody>
+  </table>
+  <p>Within the Homestays cluster, some pages <em>do</em> write to the shared DB (<code>homestay-visit-report.html</code> → <code>saveVisitReport</code>,
+  <code>homestay-hs-checklist.html</code> → <code>saveHsChecklist</code>, <code>homestay-incident-create.html</code> → <code>saveIncident</code>)
+  while others are dead stubs (<code>homestay-visit-create.html</code>, <code>homestay-assessment-create.html</code>,
+  <code>homestay-accident-create.html</code>, <code>homestay-approve.html</code>, <code>homestay-profile.html</code>).</p>
+  <p><strong>The trap:</strong> the dashboard&rsquo;s <em>Homestays</em> tab leads users into the thin cluster and its static profile stub, while the
+  real, data-rich host record lives one click away in <code>host-profile.html</code>.
+  <strong>Fix:</strong> pick <em>one</em> as canonical (recommend the Hosts cluster — it&rsquo;s where the data is), point the dashboard tab and
+  <code>homestay-profile.html</code> at <code>host-profile.html?id=…</code>, and fold the genuinely useful homestay actions (visit/checklist/incident) in as tabs on the host profile.</p>
+</div>
+
+<div class="card warn">
+  <h4>D4 — Concerns float free of the people they concern</h4>
+  <p>Concern records carry <code>subjectName</code> + <code>subjectRole</code> but no <code>subjectId</code>. So a student/host profile can&rsquo;t list
+  &ldquo;open concerns about this person,&rdquo; and a concern can&rsquo;t deep-link back to a profile. <strong>Fix:</strong> add <code>subjectId</code> to the
+  concern schema (and a picker on the create form), then show a concern strip on the relevant profile. Foundation for the unified timeline in §3.</p>
+</div>
+
+<div class="card warn">
+  <h4>D5 — Uploading a document doesn&rsquo;t clear the matching alert</h4>
+  <p><code>generateComplianceAlerts()</code> checks <code>compliance.*Path</code> fields. Because the document library writes to a different store (D2),
+  uploading &ldquo;DBS certificate&rdquo; there leaves the &ldquo;No DBS on file&rdquo; alert standing. Unifying the stores (D2) makes alerts respond to either path.</p>
+</div>
+
+<div class="card idea">
+  <h4>D6 / D7 — Smaller but worth noting</h4>
+  <p><strong>D6:</strong> <code>documents.html</code> is a static navigation hub with no data calls; the real work is in the four <code>documents-*.html</code> pages.
+  Either retire it or have it render live counts from the aggregator so it stops looking like &ldquo;the old documents section.&rdquo;</p>
+  <p><strong>D7:</strong> the root <code>index.html</code> login redirects to
+  <code>location.href = '/Users/tamid/Documents/GitHub/…/admin-dashboard.html'</code> — an absolute path to your own machine. It will 404 on any
+  other computer or host. Change to a relative path (<code>old_version/admin-dashboard.html</code>).</p>
+</div>
+
+<!-- ───────────────────────── SECTION 3 ───────────────────────── -->
+<h2 class="break">3 · Non-obvious connections worth making</h2>
+<p class="lead">
+These aren&rsquo;t bugs and nobody would flag them as &ldquo;broken&rdquo; — but wiring them up is what turns a set of separate screens into a
+coherent platform. Each one is enabled by giving records stable IDs instead of names (§1.2).
+</p>
+
+<div class="card idea">
+  <h4>C1 — A single safeguarding/welfare timeline on the student profile</h4>
+  <p>Today a student&rsquo;s story is scattered across welfare logs, mental-health case + comms, concerns, incidents, and exeats — each a separate screen,
+  some linked by ID and some by name. Merging them into one date-sorted timeline on <code>student-profile.html</code> would let a coordinator see
+  everything that happened to a child in one view. <span class="note">Needs: concern <code>subjectId</code> (D4), incident <code>studentId</code>, and the §2 fixes.</span></p>
+</div>
+
+<div class="card idea">
+  <h4>C2 — Finance ↔ the people it&rsquo;s about</h4>
+  <p><code>finance-data.js</code> events reference <code>student</code> as a name, and <code>finance_docs</code> reference <code>person</code> as
+  &ldquo;Tanaka Family.&rdquo; Key them to <code>STU…/DRV…/HST…</code> IDs instead and you unlock: a per-student cost panel on the profile, driver billing
+  statements that hang off the driver record, and finance docs that finally flow into the document library (D1).</p>
+</div>
+
+<div class="card idea">
+  <h4>C3 — Schools ↔ students, logs &amp; services</h4>
+  <p>Students store <code>school</code> as a name that happens to match <code>school.name</code>; there&rsquo;s already a schools table with a
+  per-school <em>services</em> matrix and school logs. Add a <code>schoolId</code> to students and <code>school-profile.html</code> can show enrolled
+  students, recent school logs, and which services apply — instead of being a near-empty page. <span class="note">Also resolves the redundancy between
+  schools.html, school-directory.html, school-liaison.html and school-profile.html, which currently overlap.</span></p>
+</div>
+
+<div class="card idea">
+  <h4>C4 — Parents: one source of truth</h4>
+  <p>Parent contact details live <em>twice</em>: inline on the student (<code>parent1Name/Email/Phone</code>) and as full records in
+  <span class="pill good">og_parents</span> (with <code>linkedStudentIds</code>). These can silently drift apart. Make the student&rsquo;s parent fields
+  reference parent records (or auto-create a parent record from them) so the parent portal, parent liaison logs, and the student profile all agree.</p>
+</div>
+
+<div class="card idea">
+  <h4>C5 — Logistics: exeats ↔ transports ↔ placements</h4>
+  <p>There are three overlapping logistics stores — <span class="pill good">og_exeats</span>,
+  <span class="pill good">og_transports</span> (+ travel todos) and <span class="pill good">og_placements</span> (+ todos) — each generating its own
+  checklist. They describe the same student journeys. Cross-reference them by <code>studentId</code> and an exeat could auto-spawn its transport leg and
+  homestay placement instead of re-entering the same trip three times. <span class="note">The <code>Exeat Calendar.xlsx</code> / <code>exeat workbook.xlsx</code>
+  in the repo suggest an import path that was never wired in.</span></p>
+</div>
+
+<div class="card idea">
+  <h4>C6 — Host monitoring feeds compliance status automatically</h4>
+  <p>Visit reports already nudge <code>host.annualVisitDue</code> when an annual review is saved — extend the same idea so H&amp;S checklists and training
+  logs feed the compliance alert generator and SCR. Then &ldquo;host monitoring up to date&rdquo; becomes a computed fact, not a manually-typed status field.</p>
+</div>
+
+<!-- ───────────────────────── SECTION 4 ───────────────────────── -->
+<h2 class="break">4 · Will connecting things make pages too heavy — and how to split them</h2>
+
+<p class="lead">
+Short answer: <strong>connecting the <em>data</em> won&rsquo;t bloat anything</strong> — it all flows through <code>db.js</code> and stays out of the page.
+The risk is on a few <em>view</em> pages where we&rsquo;d be tempted to render everything at once. Two pages are already near the comfortable limit.
+</p>
+
+<h3>4.1 Where the weight actually is</h3>
+<table>
+  <thead><tr><th>Page</th><th style="width:70px;">Lines</th><th>Risk if we add more</th></tr></thead>
+  <tbody>
+    <tr><td><code>finances-tracker.html</code></td><td>1,347</td><td><span class="sev s-warn">Watch</span> already a mega-page</td></tr>
+    <tr><td><code>host-profile.html</code></td><td>1,315</td><td><span class="sev s-warn">Watch</span> target for homestay merge (D3)</td></tr>
+    <tr><td><code>revenue.html</code> / <code>archived-revenue.html</code></td><td>~950 / ~870</td><td><span class="sev s-info">OK</span> but duplicated logic</td></tr>
+    <tr><td><code>reports.html</code></td><td>877</td><td><span class="sev s-info">OK</span></td></tr>
+    <tr><td><code>student-profile.html</code></td><td>~820</td><td><span class="sev s-warn">Watch</span> target for timeline (C1)</td></tr>
+  </tbody>
+</table>
+<p>
+The real fragility isn&rsquo;t line count — it&rsquo;s that <strong>each page re-implements its own rendering in one big inline <code>&lt;script&gt;</code></strong>.
+Adding a timeline or a documents panel to a 1,300-line page means more inline code to keep in sync, and more that renders on every load.
+</p>
+
+<h3>4.2 The actual breakage risk: localStorage limits</h3>
+<div class="card warn">
+  <p>Browsers cap <code>localStorage</code> at roughly <strong>5&ndash;10&nbsp;MB per origin</strong>. <span class="pill good">Good news:</span> the upload
+  widgets today store only <code>{name, date}</code> metadata — <em>not</em> the file bytes — so you&rsquo;re nowhere near the limit yet. But the moment a
+  &ldquo;real&rdquo; build stores actual files (base64 data URLs) in <code>localStorage</code>, a handful of PDFs will blow the quota and writes will start
+  throwing <code>QuotaExceededError</code> — which the current <code>try/catch</code> blocks swallow silently, so data would vanish with no error shown.
+  <strong>This is the most likely way the platform &ldquo;breaks&rdquo; as it grows.</strong> Keep file <em>bytes</em> out of <code>localStorage</code>; store
+  metadata + a reference, and move to IndexedDB or a real backend before storing binaries.</p>
+</div>
+
+<h3>4.3 Recommended structure to keep things light &amp; stable</h3>
+<ol>
+  <li><strong>Keep <code>db.js</code> as the only data layer.</strong> All the §2/§3 joins go here as functions
+      (e.g. <code>getTimelineForStudent(id)</code>, <code>getDocumentsForPerson(id)</code>). Pages stay thin. This is already your pattern — lean into it.</li>
+  <li><strong>Render heavy profiles in lazy tabs.</strong> On host/student profiles, don&rsquo;t build every section on load. Render the active tab only and
+      build the others on first click. This is what lets you add the timeline (C1), documents panel (D1/D2) and finance panel (C2) to a profile
+      <em>without</em> the page getting slower.</li>
+  <li><strong>Keep the Documents library split by owner (it already is)</strong> — students / hosts / drivers / finance — but feed all four from
+      <em>one</em> complete <code>aggregateDocuments()</code> (after D1+D2). Splitting the <em>view</em> is good; splitting the <em>source</em> is what caused the blind spots.</li>
+  <li><strong>Extract shared rendering into a <code>render-helpers.js</code>.</strong> Table-builders, the upload widget, date formatting and the
+      doc-list renderer are copy-pasted across many pages. One shared module shrinks every page and removes the &ldquo;fix it in 12 places&rdquo; problem
+      (e.g. revenue / archived-revenue duplication).</li>
+  <li><strong>De-duplicate the parallel clusters</strong> (Homestays→Hosts D3; school pages C3; revenue/archived-revenue) rather than maintaining two of each.</li>
+</ol>
+
+<h3>4.4 What to split out into its own section</h3>
+<p>When a profile tab grows past a screenful of distinct workflow, give it its own page reached by <code>?id=</code> (the platform already does this well —
+<code>student-risk.html?id=</code>, <code>student-health.html?id=</code>). Good candidates to <em>keep separate</em> rather than inline:</p>
+<ul>
+  <li>Finance per student → a dedicated <code>student-finance.html?id=</code> tab, not inline on the profile (finance logic is heavy).</li>
+  <li>The full document set per person → reuse the documents pages filtered by <code>personId</code>, linked from the profile, rather than re-rendering the list inline.</li>
+  <li>The safeguarding timeline (C1) → render inline but <em>lazy</em>, and cap it to the most recent N with a &ldquo;view all&rdquo; link to a full-history page.</li>
+</ul>
+
+<!-- ───────────────────────── APPENDIX ───────────────────────── -->
+<h2 class="break">5 · Appendix</h2>
+
+<h3>5.1 Quick-win checklist (ordered by value ÷ effort)</h3>
+<table>
+  <thead><tr><th style="width:40px;">#</th><th>Action</th><th style="width:120px;">Effort</th><th>Unlocks</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Add staff / parent / private-fostering sources to <code>aggregateDocuments()</code></td><td>~20 lines, central</td><td>Fixes the main symptom (D1)</td></tr>
+    <tr><td>2</td><td>Add <code>compliance.*Path</code> walk to the aggregator</td><td>~25 lines, central</td><td>D2 + D5</td></tr>
+    <tr><td>3</td><td>Fix root <code>index.html</code> absolute redirect → relative</td><td>1 line</td><td>D7 (portability)</td></tr>
+    <tr><td>4</td><td>Point Homestays tab + <code>homestay-profile</code> at the Hosts system</td><td>Small</td><td>D3</td></tr>
+    <tr><td>5</td><td>Add <code>subjectId</code> to concerns + picker on create form</td><td>Medium</td><td>D4 → C1</td></tr>
+    <tr><td>6</td><td>Add <code>schoolId</code> / <code>studentId</code> keys to schools, finance, exeats</td><td>Medium</td><td>C2 C3 C5</td></tr>
+    <tr><td>7</td><td>Extract <code>render-helpers.js</code>; de-dup revenue/school clusters</td><td>Medium</td><td>§4 stability</td></tr>
+  </tbody>
+</table>
+
+<h3>5.2 Document storage map (the heart of the problem)</h3>
+<table>
+  <thead><tr><th>Storage key</th><th>Written by</th><th>In aggregator?</th></tr></thead>
+  <tbody>
+    <tr><td><code>docs_&lt;id&gt;</code> (student general)</td><td>student-profile.html</td><td><span class="sev s-ok">Yes</span></td></tr>
+    <tr><td><code>acad_&lt;id&gt;</code> (student academic)</td><td>student-profile · student_academics</td><td><span class="sev s-ok">Yes</span></td></tr>
+    <tr><td><code>host_docs_&lt;id&gt;</code></td><td>host-profile.html</td><td><span class="sev s-ok">Yes</span></td></tr>
+    <tr><td><code>driver_docs_&lt;id&gt;</code></td><td>driver-profile · drivers.html</td><td><span class="sev s-ok">Yes</span></td></tr>
+    <tr><td><code>finance_docs</code></td><td>db.js seed</td><td><span class="sev s-ok">Yes</span></td></tr>
+    <tr><td><code>staff_docs_&lt;id&gt;</code></td><td>staff-profile.html</td><td><span class="sev s-crit">No</span></td></tr>
+    <tr><td><code>parent_docs_&lt;id&gt;</code></td><td>parent-profile.html</td><td><span class="sev s-crit">No</span></td></tr>
+    <tr><td><code>og_pf_documents</code></td><td>private-fostering-documents/-notification</td><td><span class="sev s-crit">No</span></td></tr>
+    <tr><td><code>compliance.*Path</code> (DBS, ID, refs…)</td><td>all *-compliance-*.html</td><td><span class="sev s-crit">No</span></td></tr>
+  </tbody>
+</table>
+
+<h3>5.3 Notable orphan / stub pages</h3>
+<p class="note">Reached only via JS navigation or not at all. Several compliance sub-pages are reached dynamically (expected); the static stubs below are the ones tied to the parallel-systems issue (D3).</p>
+<p>
+<span class="pill">homestay-profile.html (stub)</span>
+<span class="pill">homestay-approve.html (static)</span>
+<span class="pill">homestay-visit-create.html (static)</span>
+<span class="pill">homestay-assessment-create.html (static)</span>
+<span class="pill">homestay-accident-create.html (static)</span>
+<span class="pill">student_academics.html (underscore naming)</span>
+<span class="pill">concern-escalation.html</span>
+<span class="pill">low-level-concerns.html</span>
+<span class="pill">mental-health-comms.html</span>
+<span class="pill">reference.html</span>
+</p>
+
+<div class="footer">
+  Oxford Guardians Platform — Data Connectivity &amp; Architecture Review · Generated 25 June 2026 ·
+  Based on a full read of the working tree (<code>old_version/assets/db.js</code> + ~170 HTML pages).
+  This is a prototype-stage assessment; all fixes described are incremental and centre on the existing <code>db.js</code> data layer.
+</div>
+
+</div>
+</body>
+</html>
