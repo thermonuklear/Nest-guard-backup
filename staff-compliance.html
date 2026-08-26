@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Compliance — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    .staff-avatar-lg {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: "Outfit", sans-serif; font-size: 17px; font-weight: 700;
+      color: #ffffff; border: 2px solid var(--line); flex-shrink: 0;
+    }
+    .compliance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .compliance-grid .card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+    .card-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 12px;
+      margin-bottom: 14px;
+    }
+    .card-title {
+      font-family: "Outfit", sans-serif; font-size: 0.95rem; font-weight: 700;
+      color: var(--ink); margin: 0;
+    }
+    .check-list { display: grid; gap: 6px; margin-bottom: 16px; }
+    .check-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.86rem; color: var(--ink-2);
+    }
+    .check-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    }
+    .check-dot.ok   { background: var(--green); }
+    .check-dot.miss { background: var(--red); }
+    .check-dot.na   { background: var(--ink-3); }
+    .not-found { padding: 60px 32px; text-align: center; color: var(--ink-2); }
+    .not-found h3 { margin-bottom: 10px; }
+    @media (max-width: 640px) {
+      .compliance-grid { grid-template-columns: 1fr; }
+      .compliance-grid .card:last-child:nth-child(odd) { grid-column: auto; }
+    }
+
+    /* ── Role training requirements ── */
+    .training-req-row {
+      display: flex; align-items: center; gap: 16px;
+      padding: 13px 0;
+      border-top: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+    .training-req-row:first-child { border-top: 0; padding-top: 0; }
+    .training-req-main { flex: 1 1 220px; min-width: 0; }
+    .training-req-title { font-weight: 700; font-size: 0.9rem; color: var(--ink); }
+    .training-req-rule { font-size: 0.78rem; color: var(--ink-3); margin-top: 2px; }
+    .training-req-dates { display: flex; gap: 22px; flex-shrink: 0; }
+    .training-req-dates small {
+      display: block; text-transform: uppercase; letter-spacing: 0.06em;
+      font-size: 0.68rem; color: var(--ink-3);
+    }
+    .training-req-dates div div { font-size: 0.84rem; color: var(--ink-2); margin-top: 2px; }
+    .training-req-empty { color: var(--ink-2); font-size: 0.88rem; }
+  </style>
+</head>
+<body>
+
+<main class="page">
+  <div class="app-frame">
+
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small id="chrome-route">Route /admin/staff/compliance</small>
+    </div>
+
+    <div class="shell">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong>Staff Directory</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Overview</div>
+          <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+          <a class="nav-link" href="notifications.html">Notifications</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">People</div>
+          <a class="nav-link active" href="staff-list.html">Staff directory</a>
+          <a class="nav-link" href="parent-list.html">Parents</a>
+          <a class="nav-link" href="students.html">Students</a>
+          <a class="nav-link" href="hosts.html">Hosts</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Compliance</div>
+          <a class="nav-link" href="compliance.html">AEGIS control room</a>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <section class="main" id="main-content">
+
+        <!-- Toolbar -->
+        <div class="toolbar" id="profile-toolbar">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div class="staff-avatar-lg" id="toolbar-avatar">—</div>
+            <div>
+              <span class="eyebrow">Compliance &amp; SCR</span>
+              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
+              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:var(--ink-2);">—</p>
+            </div>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" id="back-link" href="staff-list.html">Back to Profile</a>
+          </div>
+        </div>
+
+        <!-- Not found -->
+        <div id="not-found" class="not-found" style="display:none;">
+          <h3>Staff member not found</h3>
+          <p><a href="staff-list.html" style="color:var(--gold);font-weight:600;">Return to Staff Directory</a></p>
+        </div>
+
+        <!-- Compliance cards -->
+        <div id="compliance-panel" class="compliance-grid"></div>
+
+        <!-- Role Training Requirements -->
+        <div id="training-requirements-section" style="margin-top:16px;display:none;">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Role Training Requirements</h4>
+              <a class="button" id="log-training-btn" href="#" style="display:inline-block;text-decoration:none;font-size:0.84rem;padding:8px 16px;">Log Training</a>
+            </div>
+            <div id="training-requirements-list"></div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="assets/db.js"></script>
+<script>
+  var params  = new URLSearchParams(window.location.search);
+  var staffId = params.get('id');
+  var member  = staffId ? getStaffById(staffId) : null;
+
+  if (!member) {
+    document.getElementById('not-found').style.display    = 'block';
+    document.getElementById('compliance-panel').style.display = 'none';
+  } else {
+    var c = member.compliance || {};
+
+    document.title = member.firstName + ' ' + member.lastName + ' — Compliance — Oxford Guardians';
+    document.getElementById('chrome-route').textContent = 'Route /admin/staff/' + member.id + '/compliance';
+
+    function initials(f, l) { return ((f||'').charAt(0) + (l||'').charAt(0)).toUpperCase(); }
+    document.getElementById('toolbar-avatar').textContent = initials(member.firstName, member.lastName);
+
+    var fullName = member.firstName + ' ' + member.lastName;
+    document.getElementById('toolbar-name').innerHTML =
+      escHtml(fullName) +
+      ' <span style="color:var(--ink-3);font-size:0.8em;font-weight:normal;margin-left:8px;">' + escHtml(member.id) + '</span>';
+    document.getElementById('toolbar-subtitle').textContent =
+      (member.role || '—') + ' · ' + (member.title || '—');
+    document.getElementById('back-link').href = 'staff-profile.html?id=' + member.id;
+
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ── Badge HTML helpers ──────────────────────────────────────────────────────
+    function badgeHtml(label, cls) {
+      return '<span class="badge ' + cls + '" style="font-size:0.74rem;">' + label + '</span>';
+    }
+    function statusBadge(status) {
+      if (status === 'complete') return badgeHtml('Complete', 'green');
+      if (status === 'exempt')   return badgeHtml('Exempt',   'navy');
+      return badgeHtml('Incomplete', 'amber');
+    }
+
+    // ── Check-item HTML ─────────────────────────────────────────────────────────
+    function checkItem(label, state) {
+      // state: 'ok' | 'miss' | 'na'
+      return '<div class="check-item">' +
+        '<div class="check-dot ' + state + '"></div>' +
+        '<span>' + label + '</span>' +
+      '</div>';
+    }
+    function ok(label)   { return checkItem(label, 'ok'); }
+    function miss(label) { return checkItem(label, 'miss'); }
+    function na(label)   { return checkItem(label, 'na'); }
+    function rowFor(label, value) { return value ? ok(label) : miss(label); }
+
+    // ── Card builder ────────────────────────────────────────────────────────────
+    function card(title, status, rows, href) {
+      return '<div class="card">' +
+        '<div class="card-header">' +
+          '<h4 class="card-title">' + title + '</h4>' +
+          statusBadge(status) +
+        '</div>' +
+        '<div class="check-list">' + rows.join('') + '</div>' +
+        '<a class="button" href="' + href + '" style="display:inline-block;text-decoration:none;font-size:0.84rem;padding:8px 16px;">Manage Record</a>' +
+      '</div>';
+    }
+
+    // ── 1. Identity & Right to Work ─────────────────────────────────────────────
+    var identityStatus;
+    if (c.worksOutsideUK) {
+      identityStatus = 'exempt';
+    } else if (c.isCitizen) {
+      identityStatus = c.idDocumentPath ? 'complete' : 'incomplete';
+    } else {
+      identityStatus = (c.idDocumentPath && c.rightToWorkCheckPath && c.rightToWorkExpiry) ? 'complete' : 'incomplete';
+    }
+
+    var identityRows = [rowFor('ID document', c.idDocumentPath)];
+    if (c.worksOutsideUK) {
+      identityRows.push(na('Right to work check (works outside UK — exempt)'));
+    } else if (c.isCitizen) {
+      identityRows.push(na('Right to work check (UK citizen — not required)'));
+    } else {
+      identityRows.push(rowFor('Right to work check', c.rightToWorkCheckPath));
+      identityRows.push(rowFor('RTW expiry date', c.rightToWorkExpiry));
+    }
+    identityRows.push(ok('UK citizen: ' + (c.isCitizen ? 'Yes' : 'No')));
+
+    // ── 2. DBS Check ────────────────────────────────────────────────────────────
+    var dbsStatus;
+    if (c.worksOutsideUK) {
+      dbsStatus = 'exempt';
+    } else {
+      dbsStatus = (c.dbsNumber && c.dbsCertificatePath) ? 'complete' : 'incomplete';
+    }
+
+    var dbsRows;
+    if (c.worksOutsideUK) {
+      dbsRows = [na('DBS not required — works outside UK')];
+    } else {
+      dbsRows = [
+        rowFor('DBS number', c.dbsNumber),
+        rowFor('DBS certificate', c.dbsCertificatePath),
+        rowFor('Last checked date', c.dbsLastChecked),
+        rowFor('Expiry date', c.dbsExpiry),
+        ok('Update service: ' + (c.dbsUpdateService ? 'Subscribed' : 'Not subscribed'))
+      ];
+    }
+
+    // ── 3. References ───────────────────────────────────────────────────────────
+    var refStatus = (c.reference1Path && c.reference2Path) ? 'complete' : 'incomplete';
+    var refRows = [
+      rowFor('Reference 1', c.reference1Path),
+      rowFor('Reference 2', c.reference2Path)
+    ];
+
+    // ── 4. Overseas History ─────────────────────────────────────────────────────
+    var overseasStatus;
+    var overseasRows;
+    if (!c.livedAbroad) {
+      overseasStatus = 'exempt';
+      overseasRows   = [na('Overseas check not required — has not lived abroad (last 5 yrs)')];
+    } else {
+      overseasStatus = c.overseasCheckDocPath ? 'complete' : 'incomplete';
+      overseasRows   = [
+        ok('Has lived abroad in last 5 years'),
+        rowFor('Overseas check document', c.overseasCheckDocPath)
+      ];
+    }
+
+    // ── 5. Safeguarding Training (AEGIS 6.3 — initial training + annual update) ─
+    function fmtSgDate(d) {
+      if (!d) return '—';
+      var p = new Date(d);
+      if (isNaN(p.getTime())) return d;
+      var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return p.getDate() + ' ' + M[p.getMonth()] + ' ' + p.getFullYear();
+    }
+    var sgStatus = (c.safeguardingTrainingDate && c.safeguardingCertificatePath && c.annualSafeguardingUpdateDate) ? 'complete' : 'incomplete';
+    var sgRows = [
+      rowFor('Training date: ' + fmtSgDate(c.safeguardingTrainingDate), c.safeguardingTrainingDate),
+      rowFor('Annual update date: ' + fmtSgDate(c.annualSafeguardingUpdateDate), c.annualSafeguardingUpdateDate),
+      rowFor('Annual update notes: ' + (c.annualSafeguardingUpdateNotes || 'Not recorded'), c.annualSafeguardingUpdateNotes),
+      rowFor('Certificate file: ' + (c.safeguardingCertificatePath || 'Not uploaded'), c.safeguardingCertificatePath)
+    ];
+
+    // ── Render ──────────────────────────────────────────────────────────────────
+    var panel = document.getElementById('compliance-panel');
+    panel.innerHTML =
+      card('Identity &amp; Right to Work', identityStatus, identityRows, 'staff-compliance-identity.html?id=' + member.id) +
+      card('DBS Check',                    dbsStatus,       dbsRows,      'staff-compliance-dbs.html?id='      + member.id) +
+      card('References',                   refStatus,       refRows,      'staff-compliance-references.html?id=' + member.id) +
+      card('Overseas History',             overseasStatus,  overseasRows, 'staff-compliance-overseas.html?id=' + member.id) +
+      card('Safeguarding Training',        sgStatus,        sgRows,       'staff-compliance-safeguarding.html?id=' + member.id);
+
+    // ── Role Training Requirements ───────────────────────────────────────────────
+    function trainingStatusBadgeClass(status) {
+      return { 'Complete': 'green', 'Due soon': 'amber', 'Overdue': 'red', 'Not started': 'navy' }[status] || 'navy';
+    }
+
+    var reqSection = document.getElementById('training-requirements-section');
+    if (typeof getRequiredCoursesForPerson === 'function') {
+      reqSection.style.display = '';
+      document.getElementById('log-training-btn').href = 'training-record-create.html?personId=' + member.id;
+
+      var required = getRequiredCoursesForPerson(member, 'staff');
+      var reqList = document.getElementById('training-requirements-list');
+
+      if (!required.length) {
+        reqList.innerHTML = '<p class="training-req-empty">No training requirements are defined for this role yet.</p>';
+      } else {
+        reqList.innerHTML = required.map(function (r) {
+          return '<div class="training-req-row">' +
+            '<div class="training-req-main">' +
+              '<div class="training-req-title">' + escHtml(r.course.title) + '</div>' +
+              '<div class="training-req-rule">' + escHtml(r.requirementRule) + (r.course.code ? ' · ' + escHtml(r.course.code) : '') + '</div>' +
+            '</div>' +
+            '<div class="training-req-dates">' +
+              '<div><small>Completed</small><div>' + escHtml(r.completionDate || '—') + '</div></div>' +
+              '<div><small>Expires</small><div>' + escHtml(r.expiryDate || (r.course.repeatIntervalMonths ? '—' : 'N/A')) + '</div></div>' +
+            '</div>' +
+            '<span class="badge ' + trainingStatusBadgeClass(r.status) + '">' + escHtml(r.status) + '</span>' +
+          '</div>';
+        }).join('');
+      }
+    }
+  }
+</script>
+
+</body>
+</html>

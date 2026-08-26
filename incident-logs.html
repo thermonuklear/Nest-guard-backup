@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Incident Logs — Emergency — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+    <style>
+      .incident-detail-row td { padding: 0 !important; }
+      .incident-detail {
+        background: var(--bg-card, #f9f9fb);
+        border-top: 2px solid var(--border, #e2e2e8);
+        padding: 20px 24px;
+      }
+      .incident-detail .detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .incident-detail .detail-grid .detail-span-2 {
+        grid-column: 1 / -1;
+      }
+      .incident-detail .detail-grid label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-muted, #888);
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .incident-detail .detail-grid .detail-value {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: var(--text, #1a1a2e);
+      }
+      tr.clickable-row { cursor: pointer; }
+      tr.clickable-row:hover { background: var(--bg-hover, #f0f0f5); }
+      tr.row-expanded { background: var(--bg-hover, #f0f0f5); }
+      .empty-state {
+        text-align: center;
+        padding: 48px 24px;
+        color: var(--text-muted, #888);
+      }
+      .badge-status {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+      .badge-status.resolved { background: var(--green-bg, #e6f9e6); color: var(--green, #2d8a4e); }
+      .badge-status.open { background: var(--amber-bg, #fff8e6); color: var(--amber, #b8860b); }
+      .badge-status.escalated { background: var(--red-bg, #fde8e8); color: var(--red, #c0392b); }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/emergency/logs</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Incident Logs</strong></div>
+            <div class="nav-group"><div class="nav-label">Emergency</div><a class="nav-link" href="emergency-procedures.html">Emergency</a><a class="nav-link" href="emergency-incident.html">Log incident</a><a class="nav-link active" href="incident-logs.html">Incident logs</a><a class="nav-link" href="emergency-protocols.html">Protocols</a></div>
+            <div class="nav-group"><div class="nav-label">Operations</div><a class="nav-link" href="admin-dashboard.html">Dashboard</a><a class="nav-link" href="students.html">Students</a><a class="nav-link" href="homestays.html">Homestays</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Emergency incident logs</span>
+                <h2>Every incident. Every detail. One place.</h2>
+                <p>Complete log of all emergency incidents. Click any row to expand and view full details.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button-alt" href="emergency-procedures.html">Back to emergency</a><a class="button" href="emergency-incident.html">Log new incident</a></div>
+            </div>
+            <div class="metrics">
+              <article class="metric featured"><h4>Total incidents</h4><div class="metric-value" id="metric-total">—</div><p class="metric-meta">All time</p></article>
+              <article class="metric"><h4>Open</h4><div class="metric-value" id="metric-open">—</div><p class="metric-meta">Requiring action</p></article>
+              <article class="metric"><h4>Resolved</h4><div class="metric-value" id="metric-resolved">—</div><p class="metric-meta">Closed incidents</p></article>
+              <article class="metric"><h4>This year</h4><div class="metric-value" id="metric-year">—</div><p class="metric-meta" id="metric-year-label">—</p></article>
+            </div>
+            <div class="table-wrap">
+              <table id="incidents-table">
+                <thead>
+                  <tr>
+                    <th>Date / Time</th>
+                    <th>Student</th>
+                    <th>Student ID</th>
+                    <th>Type</th>
+                    <th>Host / Driver</th>
+                    <th>External Actors</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="incidents-tbody">
+                </tbody>
+              </table>
+            </div>
+            <div class="empty-state" id="empty-state" style="display:none;">
+              <h3>No incidents recorded</h3>
+              <p>When incidents are logged, they will appear here.</p>
+              <a class="button" href="emergency-incident.html" style="margin-top:16px;display:inline-block;">Log first incident</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script>
+      (function () {
+        var incidents = OG_DB.getAllIncidents();
+        var tbody = document.getElementById('incidents-tbody');
+        var expandedId = null;
+
+        // ── Metrics ──
+        document.getElementById('metric-total').textContent = incidents.length;
+        var openCount = incidents.filter(function (i) { return i.status && i.status.indexOf('Open') === 0; }).length;
+        var resolvedCount = incidents.filter(function (i) { return i.status && i.status.indexOf('Resolved') === 0; }).length;
+        document.getElementById('metric-open').textContent = openCount;
+        document.getElementById('metric-resolved').textContent = resolvedCount;
+
+        var currentYear = new Date().getFullYear();
+        var thisYear = incidents.filter(function (i) {
+          return new Date(i.createdAt).getFullYear() === currentYear;
+        });
+        document.getElementById('metric-year').textContent = thisYear.length;
+        document.getElementById('metric-year-label').textContent = currentYear;
+
+        if (incidents.length === 0) {
+          document.getElementById('empty-state').style.display = 'block';
+          document.querySelector('.table-wrap').style.display = 'none';
+          return;
+        }
+
+        // Sort newest first
+        var sorted = incidents.slice().sort(function (a, b) {
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        });
+
+        function getStatusBadge(status) {
+          if (!status) return '<span class="badge-status open">Unknown</span>';
+          if (status.indexOf('Resolved') === 0) return '<span class="badge-status resolved">Resolved</span>';
+          if (status.indexOf('Open') === 0) return '<span class="badge-status open">Open</span>';
+          if (status.indexOf('Escalated') === 0) return '<span class="badge-status escalated">Escalated</span>';
+          return '<span class="badge-status open">' + status + '</span>';
+        }
+
+        function buildDetailRow(inc) {
+          var tr = document.createElement('tr');
+          tr.className = 'incident-detail-row';
+          tr.id = 'detail-' + inc.id;
+          var td = document.createElement('td');
+          td.colSpan = 7;
+          td.innerHTML =
+            '<div class="incident-detail">' +
+              '<div class="detail-grid">' +
+                '<div><label>Reference</label><div class="detail-value">' + inc.id + '</div></div>' +
+                '<div><label>Severity</label><div class="detail-value">' + (inc.severity || '—') + '</div></div>' +
+                '<div><label>Reported by</label><div class="detail-value">' + (inc.reportedBy || '—') + '</div></div>' +
+                '<div><label>Primary responder</label><div class="detail-value">' + (inc.primaryResponder || '—') + '</div></div>' +
+                '<div><label>Response time</label><div class="detail-value">' + (inc.responseTime || '—') + '</div></div>' +
+                '<div><label>Resolution time</label><div class="detail-value">' + (inc.resolutionTime || '—') + '</div></div>' +
+                '<div class="detail-span-2"><label>Location</label><div class="detail-value">' + (inc.location || '—') + '</div></div>' +
+                '<div class="detail-span-2"><label>Description</label><div class="detail-value">' + (inc.description || '—') + '</div></div>' +
+                '<div class="detail-span-2"><label>Immediate action taken</label><div class="detail-value">' + (inc.actionTaken || '—') + '</div></div>' +
+                '<div class="detail-span-2"><label>Escalations</label><div class="detail-value">' + (inc.escalations || '—') + '</div></div>' +
+                '<div class="detail-span-2"><label>Outcome summary</label><div class="detail-value">' + (inc.outcomeSummary || '—') + '</div></div>' +
+                '<div class="detail-span-2"><label>Lessons learned</label><div class="detail-value">' + (inc.lessonsLearned || '—') + '</div></div>' +
+              '</div>' +
+            '</div>';
+          tr.appendChild(td);
+          return tr;
+        }
+
+        sorted.forEach(function (inc) {
+          var tr = document.createElement('tr');
+          tr.className = 'clickable-row';
+          tr.dataset.id = inc.id;
+
+          var dateStr = inc.dateTime
+            ? new Date(inc.dateTime).toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+            : '—';
+
+          var hostDriver = [];
+          if (inc.hostName) hostDriver.push(inc.hostName + ' (host)');
+          if (inc.driverName) hostDriver.push(inc.driverName + ' (driver)');
+
+          tr.innerHTML =
+            '<td>' + dateStr + '</td>' +
+            '<td>' + (inc.studentName || '—') + '</td>' +
+            '<td><code>' + (inc.studentId || '—') + '</code></td>' +
+            '<td>' + (inc.type || '—') + '</td>' +
+            '<td>' + (hostDriver.length ? hostDriver.join(', ') : '—') + '</td>' +
+            '<td>' + (inc.externalActors || '—') + '</td>' +
+            '<td>' + getStatusBadge(inc.status) + '</td>';
+
+          tr.addEventListener('click', function () {
+            var detailRow = document.getElementById('detail-' + inc.id);
+            if (detailRow) {
+              detailRow.remove();
+              tr.classList.remove('row-expanded');
+              expandedId = null;
+            } else {
+              if (expandedId) {
+                var oldDetail = document.getElementById('detail-' + expandedId);
+                if (oldDetail) oldDetail.remove();
+                var oldRow = tbody.querySelector('[data-id="' + expandedId + '"]');
+                if (oldRow) oldRow.classList.remove('row-expanded');
+              }
+              var newDetail = buildDetailRow(inc);
+              tr.parentNode.insertBefore(newDetail, tr.nextSibling);
+              tr.classList.add('row-expanded');
+              expandedId = inc.id;
+            }
+          });
+
+          tbody.appendChild(tr);
+        });
+
+        // Auto-highlight if URL has ?highlight=INCxxxxx
+        var params = new URLSearchParams(window.location.search);
+        var highlightId = params.get('highlight');
+        if (highlightId) {
+          var targetRow = tbody.querySelector('[data-id="' + highlightId + '"]');
+          if (targetRow) {
+            targetRow.click();
+            setTimeout(function () { targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>

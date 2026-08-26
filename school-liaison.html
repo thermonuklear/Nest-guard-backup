@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>School Liaison Log — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small>Route /admin/communications/school-liaison</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>School Liaison</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="schools.html">Schools</a>
+              <a class="nav-link nav-link-sub active" href="school-liaison.html">Communication log</a>
+              <a class="nav-link nav-link-sub" href="school-log-create.html">Log contact</a>
+              <a class="nav-link nav-link-sub" href="school-welfare-notification.html">Welfare notification</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Partner school communications</span>
+                <h2>Every school contact should be timestamped, attributable, and follow-up driven.</h2>
+                <p>Standard 9.7 is not admin garnish. If contact with schools lives in email inboxes and memory, the organisation cannot prove what was agreed, what was escalated, or who owned the next step.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="school-directory.html">View School Directory</a>
+                <a class="button" href="school-log-create.html">Log school contact</a>
+              </div>
+            </div>
+
+            <div class="metrics">
+              <article class="metric featured">
+                <h4>Total school contacts</h4>
+                <div class="metric-value" id="metric-total">—</div>
+                <p class="metric-meta">All logged contacts across every student and partner school</p>
+              </article>
+              <article class="metric">
+                <h4>Recent contacts (7 days)</h4>
+                <div class="metric-value" id="metric-recent">—</div>
+                <p class="metric-meta">Contacts logged in the past seven days</p>
+              </article>
+              <article class="metric">
+                <h4>Pending follow-ups</h4>
+                <div class="metric-value" id="metric-pending">—</div>
+                <p class="metric-meta">Entries awaiting a school response or next action</p>
+              </article>
+              <article class="metric">
+                <h4>Welfare / Incident logs</h4>
+                <div class="metric-value" id="metric-welfare">—</div>
+                <p class="metric-meta">Welfare updates and incident reports sent to schools</p>
+              </article>
+            </div>
+
+            <div class="cols-2">
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Timestamp</th><th>Student / school</th><th>Contact type</th><th>Summary</th><th>Next step</th></tr>
+                  </thead>
+                  <tbody id="logs-tbody"></tbody>
+                </table>
+              </div>
+              <div>
+                <div class="card">
+                  <h4>Linked routes</h4>
+                  <div class="inline-links">
+                    <a class="link-pill" href="school-log-create.html">Create school contact</a>
+                    <a class="link-pill" href="school-log-success.html">School log success</a>
+                    <a class="link-pill" href="exeat-approval.html">Open exeat review</a>
+                    <a class="link-pill" href="handoff-record.html">Open handoff record</a>
+                  </div>
+                </div>
+                <div class="card">
+                  <h4>Follow-up owners</h4>
+                  <div class="list" id="owners-list"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+  <script src="assets/db.js"></script>
+  <script>
+    function renderLogs() {
+      var tbody = document.getElementById('logs-tbody');
+      var logs = getSchoolLogs();
+
+      var params = new URLSearchParams(window.location.search);
+      var filterSchool = params.get('filterSchool');
+
+      if (filterSchool) {
+        logs = logs.filter(function(log) {
+          var student = getStudentById(log.studentId);
+          return student && student.school === filterSchool;
+        });
+
+        var tableWrap = document.querySelector('.table-wrap');
+        var banner = document.createElement('div');
+        banner.style.cssText = 'padding:10px 14px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;margin-bottom:12px;font-size:0.875rem;color:#1e40af;display:flex;align-items:center;justify-content:space-between;gap:16px;';
+        banner.innerHTML = '<span>Viewing logs filtered for: <strong>' +
+          String(filterSchool).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') +
+          '</strong></span>' +
+          '<a href="school-liaison.html" style="color:#1e40af;font-weight:600;text-decoration:none;white-space:nowrap;">Clear filter</a>';
+        tableWrap.insertBefore(banner, tableWrap.firstChild);
+      }
+
+      if (logs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:32px;color:#94a3b8;">No school contact logs recorded yet. <a href="school-log-create.html">Log the first one.</a></td></tr>';
+        return;
+      }
+
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+      function esc(str) {
+        return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      tbody.innerHTML = logs.map(function(log) {
+        var dt = new Date(log.loggedAt || log.date);
+        var timestamp = String(dt.getDate()).padStart(2,'0') + ' ' + months[dt.getMonth()] +
+                        ' / ' + String(dt.getHours()).padStart(2,'0') + ':' + String(dt.getMinutes()).padStart(2,'0');
+
+        var student = getStudentById(log.studentId);
+        var schoolLine = student ? esc(student.school + (student.tutorOrHouse ? ' / ' + student.tutorOrHouse : '')) : '';
+
+        return '<tr>' +
+          '<td><strong>' + timestamp + '</strong></td>' +
+          '<td><strong>' + esc(log.studentName) + '</strong>' + (schoolLine ? '<small>' + schoolLine + '</small>' : '') + '</td>' +
+          '<td>' + esc(log.contactType) + '</td>' +
+          '<td>' + esc(log.summaryNotes) + '</td>' +
+          '<td>' + (log.status === 'Resolved' ? '<span class="badge green">Resolved</span>' : '<span class="badge amber">Pending</span>') + '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderMetrics(logs) {
+      document.getElementById('metric-total').textContent = logs.length;
+
+      var cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+      var recent = logs.filter(function(l) {
+        return new Date(l.loggedAt || l.date).getTime() >= cutoff;
+      });
+      document.getElementById('metric-recent').textContent = recent.length;
+
+      var pending = logs.filter(function(l) { return l.status !== 'Resolved'; });
+      document.getElementById('metric-pending').textContent = pending.length;
+
+      var welfare = logs.filter(function(l) {
+        var t = l.contactType || l.type || '';
+        return t.indexOf('Welfare') !== -1 || t.indexOf('Incident') !== -1;
+      });
+      document.getElementById('metric-welfare').textContent = welfare.length;
+    }
+
+    renderLogs();
+    renderMetrics(getSchoolLogs());
+
+    (function renderOwners() {
+      var ROLES = ['DSL', 'Operations', 'Local coordinator'];
+      var staff = getAllStaff().filter(function(s) {
+        return ROLES.some(function(r) { return s.role && s.role.indexOf(r) !== -1; });
+      });
+      var list = document.getElementById('owners-list');
+      list.innerHTML = staff.length
+        ? staff.map(function(s) {
+            return '<div class="list-item"><strong>' + s.firstName + ' ' + s.lastName + '</strong><small>' + s.role + '</small></div>';
+          }).join('')
+        : '<div class="list-item" style="color:#94a3b8;">No staff assigned.</div>';
+    })();
+  </script>
+</html>

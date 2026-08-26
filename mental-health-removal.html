@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AEGIS Student Removal Form — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+    <style>
+      .form-label {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-3);
+        font-size: 0.76rem;
+        margin-bottom: 5px;
+      }
+      .form-control {
+        width: 100%;
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--ink);
+        background: #faf6ee;
+        border: 1px solid #d8cbb2;
+        border-radius: 14px;
+        padding: 11px 14px;
+        appearance: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+        box-sizing: border-box;
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: #2a6096;
+        box-shadow: 0 0 0 3px rgba(42, 96, 150, 0.12);
+      }
+      textarea.form-control { min-height: 110px; resize: vertical; }
+      .form-field { display: grid; gap: 0; }
+      .readonly-field {
+        padding: 11px 14px;
+        background: #f0f4f8;
+        border: 1px solid #d5dce8;
+        border-radius: 14px;
+        font-size: 0.95rem;
+        color: #3b536e;
+        font-weight: 500;
+      }
+      .radio-group {
+        display: flex;
+        gap: 24px;
+        padding: 10px 0 4px;
+      }
+      .radio-group label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 0.95rem;
+        color: var(--ink);
+        cursor: pointer;
+        font-weight: 500;
+      }
+      .radio-group input[type="radio"] {
+        width: 17px;
+        height: 17px;
+        accent-color: #0f2340;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .section-divider {
+        border: none;
+        border-top: 1px solid #e8eef6;
+        margin: 6px 0 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="section" style="padding:28px;">
+        <span class="eyebrow">AEGIS Appendix 11</span>
+        <h1>AEGIS Student Removal Form</h1>
+        <p class="lead" style="margin-bottom:18px;">This form must be completed before the guardian organisation takes custody of a student for mental health or welfare reasons. Submission creates a welfare log entry on the student's timeline.</p>
+
+        <div class="panel" style="padding:22px; margin-top:18px;">
+          <form id="removal-form" novalidate>
+            <div class="form-grid">
+
+              <!-- Auto-populated read-only details -->
+              <div class="form-field">
+                <label class="form-label">Student name</label>
+                <div class="readonly-field" id="ro-name">—</div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">Date of birth</label>
+                <div class="readonly-field" id="ro-dob">—</div>
+              </div>
+
+              <div class="form-field form-span-2">
+                <label class="form-label">School</label>
+                <div class="readonly-field" id="ro-school">—</div>
+              </div>
+
+              <hr class="section-divider form-span-2" />
+
+              <!-- Reason for removal -->
+              <div class="form-field form-span-2">
+                <label class="form-label" for="f-reason">Reason for request of removal</label>
+                <textarea class="form-control" id="f-reason"
+                  placeholder="Describe the presenting concern and circumstances that have led to this request…"
+                  required></textarea>
+              </div>
+
+              <hr class="section-divider form-span-2" />
+
+              <!-- Medical assessment -->
+              <div class="form-field">
+                <label class="form-label">Assessed by medical professional?</label>
+                <div class="radio-group">
+                  <label><input type="radio" name="assessed" value="Yes"> Yes</label>
+                  <label><input type="radio" name="assessed" value="No"> No</label>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="f-assessment-date">Date of assessment</label>
+                <input type="date" class="form-control" id="f-assessment-date" />
+              </div>
+
+              <div class="form-field form-span-2">
+                <label class="form-label" for="f-assessment-summary">Summary of assessment</label>
+                <textarea class="form-control" id="f-assessment-summary"
+                  placeholder="Summarise the medical or professional assessment findings…"></textarea>
+              </div>
+
+              <hr class="section-divider form-span-2" />
+
+              <!-- Risk assessments -->
+              <div class="form-field">
+                <label class="form-label">Risk of harm to self?</label>
+                <div class="radio-group">
+                  <label><input type="radio" name="risk-self" value="Yes"> Yes</label>
+                  <label><input type="radio" name="risk-self" value="No"> No</label>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">Risk to others?</label>
+                <div class="radio-group">
+                  <label><input type="radio" name="risk-others" value="Yes"> Yes</label>
+                  <label><input type="radio" name="risk-others" value="No"> No</label>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">School followed policies?</label>
+                <div class="radio-group">
+                  <label><input type="radio" name="school-policies" value="Yes"> Yes</label>
+                  <label><input type="radio" name="school-policies" value="No"> No</label>
+                </div>
+              </div>
+
+              <div class="form-field form-span-2">
+                <label class="form-label">Copy of relevant school mental health &amp; child protection policies attached?</label>
+                <div class="radio-group" style="margin-bottom:8px;">
+                  <label><input type="radio" name="policies-attached" value="Yes" checked> Yes (Attached / Referenced)</label>
+                  <label><input type="radio" name="policies-attached" value="No"> No</label>
+                </div>
+                <textarea class="form-control" id="f-policy-notes" style="min-height:60px;"
+                  placeholder="Specify attached policy filenames or school policy handbook reference versions…"></textarea>
+              </div>
+
+              <hr class="section-divider form-span-2" />
+
+              <!-- Medication + additional -->
+              <div class="form-field form-span-2">
+                <label class="form-label" for="f-medication">Details of medication <span style="font-size:0.85em;text-transform:none;letter-spacing:0;">(optional)</span></label>
+                <textarea class="form-control" id="f-medication" style="min-height:80px;"
+                  placeholder="List any medication the student is currently prescribed or taking…"></textarea>
+              </div>
+
+              <div class="form-field form-span-2">
+                <label class="form-label" for="f-additional">Additional information <span style="font-size:0.85em;text-transform:none;letter-spacing:0;">(optional)</span></label>
+                <textarea class="form-control" id="f-additional" style="min-height:80px;"
+                  placeholder="Any other relevant information about the student's condition, behaviour, or circumstances…"></textarea>
+              </div>
+
+              <hr class="section-divider form-span-2" />
+
+              <!-- Signature -->
+              <div class="form-field form-span-2">
+                <label class="form-label" for="f-signature">Signature — name of completing staff member</label>
+                <input type="text" class="form-control" id="f-signature"
+                  placeholder="Full name of authorising staff member" required />
+              </div>
+
+              <div class="form-field form-span-2">
+                <label class="form-label" for="f-signature-role">Position / Role of authorising staff member</label>
+                <input type="text" class="form-control" id="f-signature-role"
+                  placeholder="e.g. Designated Safeguarding Lead / Head of House / School Nurse / Deputy Head Pastoral" required />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="f-date-completed">Date form completed</label>
+                <input type="date" class="form-control" id="f-date-completed" required />
+              </div>
+
+            </div>
+
+            <div class="action-row" style="margin-top:18px;">
+              <a class="button-alt" id="link-back" href="#">Cancel</a>
+              <button type="submit" class="button">Submit removal form</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <script>
+    (function () {
+      // ── Bootstrap ──────────────────────────────────────────────────────────
+      var params    = new URLSearchParams(window.location.search);
+      var studentId = params.get('id') || '';
+      var student   = studentId ? getStudentById(studentId) : null;
+
+      if (!student) {
+        document.querySelector('.section').innerHTML =
+          '<p style="color:#7f3034;">Student not found for ID: <strong>' + studentId + '</strong>. ' +
+          '<a href="students.html">Return to list</a></p>';
+        throw new Error('Student not found: ' + studentId);
+      }
+
+      // ── Auto-populate read-only fields ─────────────────────────────────────
+      function formatDob(iso) {
+        if (!iso) return '—';
+        var d = new Date(iso);
+        if (isNaN(d.getTime())) return iso;
+        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      }
+
+      var fullName = student.firstName + ' ' + student.lastName;
+      document.getElementById('ro-name').textContent   = fullName;
+      document.getElementById('ro-dob').textContent    = formatDob(student.dob);
+      document.getElementById('ro-school').textContent =
+        student.school +
+        (student.schoolYear   ? ' — ' + student.schoolYear   : '') +
+        (student.tutorOrHouse ? ' — ' + student.tutorOrHouse : '');
+
+      // ── Cancel link ────────────────────────────────────────────────────────
+      document.getElementById('link-back').href = 'mental-health-referral.html?id=' + studentId;
+
+      // ── Default date completed to today ───────────────────────────────────
+      document.getElementById('f-date-completed').value = new Date().toISOString().slice(0, 10);
+
+      // ── Radio helper ───────────────────────────────────────────────────────
+      function getRadio(name) {
+        var el = document.querySelector('input[name="' + name + '"]:checked');
+        return el ? el.value : '';
+      }
+
+      // ── Submit ─────────────────────────────────────────────────────────────
+      document.getElementById('removal-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var reason            = document.getElementById('f-reason').value.trim();
+        var assessed          = getRadio('assessed');
+        var assessmentDate    = document.getElementById('f-assessment-date').value;
+        var assessmentSum     = document.getElementById('f-assessment-summary').value.trim();
+        var riskSelf          = getRadio('risk-self');
+        var riskOthers        = getRadio('risk-others');
+        var schoolPolicies    = getRadio('school-policies');
+        var policiesAttached  = getRadio('policies-attached');
+        var policyNotes       = document.getElementById('f-policy-notes').value.trim();
+        var medication        = document.getElementById('f-medication').value.trim();
+        var additional        = document.getElementById('f-additional').value.trim();
+        var signature         = document.getElementById('f-signature').value.trim();
+        var signatureRole     = document.getElementById('f-signature-role').value.trim();
+        var dateCompleted     = document.getElementById('f-date-completed').value;
+
+        if (!reason) {
+          alert('Please enter the reason for removal.');
+          document.getElementById('f-reason').focus();
+          return;
+        }
+        if (!assessed) {
+          alert('Please indicate whether the student has been assessed by a medical professional.');
+          return;
+        }
+        if (!riskSelf) {
+          alert('Please indicate whether there is a risk of harm to self.');
+          return;
+        }
+        if (!riskOthers) {
+          alert('Please indicate whether there is a risk to others.');
+          return;
+        }
+        if (!schoolPolicies) {
+          alert('Please indicate whether the school followed its policies.');
+          return;
+        }
+        if (!policiesAttached) {
+          alert('Please indicate whether relevant school policies are attached.');
+          return;
+        }
+        if (!signature) {
+          alert('Please enter the name of the authorising staff member.');
+          document.getElementById('f-signature').focus();
+          return;
+        }
+        if (!signatureRole) {
+          alert('Please enter the position / role of the authorising staff member.');
+          document.getElementById('f-signature-role').focus();
+          return;
+        }
+        if (!dateCompleted) {
+          alert('Please enter the date the form was completed.');
+          document.getElementById('f-date-completed').focus();
+          return;
+        }
+
+        saveMHRemoval({
+          studentId:                studentId,
+          studentName:              fullName,
+          date:                     dateCompleted,
+          dateCompleted:            dateCompleted,
+          reason:                   reason,
+          assessed:                 assessed,
+          assessmentDate:           assessmentDate,
+          assessmentSummary:        assessmentSum,
+          riskSelf:                 riskSelf,
+          riskOthers:               riskOthers,
+          schoolPolicies:           schoolPolicies,
+          relevantPoliciesAttached: policiesAttached,
+          policyAttachmentNotes:    policyNotes,
+          medication:               medication,
+          additionalInfo:           additional,
+          signature:                signature,
+          completerPosition:        signatureRole
+        });
+
+        saveWelfareLog({
+          id:        'WL' + Date.now(),
+          studentId: studentId,
+          type:      'staff-note',
+          date:      dateCompleted,
+          summary:   'AEGIS Removal Form submitted',
+          details:   'Reason for removal: '           + reason +
+                     '\nMedical assessment: '         + assessed +
+                     (assessmentDate ? '\nAssessment date: '    + assessmentDate : '') +
+                     (assessmentSum  ? '\nAssessment summary: ' + assessmentSum  : '') +
+                     '\nRisk of harm to self: '       + riskSelf +
+                     '\nRisk to others: '             + riskOthers +
+                     '\nSchool followed policies: '   + schoolPolicies +
+                     '\nRelevant policies attached: ' + policiesAttached +
+                     (policyNotes ? ' (' + policyNotes + ')' : '') +
+                     (medication ? '\nMedication: '        + medication : '') +
+                     (additional ? '\nAdditional info: '   + additional : '') +
+                     '\nAuthorised by: '              + signature + ' (' + signatureRole + ')' +
+                     '\nDate completed: '             + dateCompleted
+        });
+
+        window.location.href = 'mental-health-referral.html?id=' + studentId;
+      });
+    }());
+    </script>
+  </body>
+</html>

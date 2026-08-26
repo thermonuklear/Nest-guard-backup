@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log Low-Level Concern — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="section" style="padding:28px;">
+        <span class="eyebrow">Log low-level concern</span>
+        <h2>Record a pattern or observation</h2>
+        <p class="lead">Low-level concerns exist so individual observations don't vanish. They're the early warning system for patterns that might escalate later.</p>
+        <div class="note brutal" style="margin:18px 0;">
+          <h4>Brutal product note</h4>
+          <p>This form forces you to distinguish between logging a pattern for awareness vs. escalating to the DSL. If you're unsure, start here—the DSL can always escalate later. But if you're logging something that makes you feel "this is actually serious," go directly to concern escalation instead.</p>
+        </div>
+        <form class="form-grid">
+          <div>
+            <label>Subject type</label>
+            <select id="subject-type">
+              <option selected>Student</option>
+              <option>Homestay carer</option>
+              <option>Staff member</option>
+              <option>Volunteer</option>
+              <option>External party</option>
+            </select>
+          </div>
+          <div>
+            <label>Subject</label>
+            <select id="subject-student">
+              <option value="">&mdash; Select student &mdash;</option>
+            </select>
+          </div>
+          <div>
+            <label>Concern category</label>
+            <select id="concern-cat">
+              <option selected>Welfare pattern</option>
+              <option>Boundary observation</option>
+              <option>Communication concern</option>
+              <option>Behaviour change</option>
+              <option>Third-party report</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label>Date observed</label>
+            <input type="date" id="date-observed" />
+          </div>
+          <div class="form-span-2">
+            <label>Concern title</label>
+            <input type="text" id="concern-title" placeholder="e.g. Homesickness pattern — third mention this month" />
+          </div>
+          <div class="form-span-2">
+            <label>Details</label>
+            <textarea class="textarea-box" id="concern-details" placeholder="Describe the observation or pattern in full..."></textarea>
+          </div>
+          <div>
+            <label>Reporter</label>
+            <select id="reporter-name">
+              <option selected>Jay Ray (DSL)</option>
+              <option>Zuko Fire</option>
+              <option>Priya Shah</option>
+            </select>
+          </div>
+          <div>
+            <label>Review date</label>
+            <input type="date" id="review-date" />
+          </div>
+          <div class="form-span-2">
+            <label>School awareness</label>
+            <select id="school-awareness">
+              <option>School not yet informed</option>
+              <option selected>School tutor aware</option>
+              <option>School safeguarding lead informed</option>
+              <option>Not applicable</option>
+            </select>
+          </div>
+          <div class="form-span-2">
+            <label>Linked welfare notes (optional)</label>
+            <input type="text" id="linked-welfare-notes" placeholder="e.g. Welfare note 02 Apr 14:30, Welfare note 25 Mar 11:00" />
+          </div>
+        </form>
+        <div class="action-row" style="margin-top:18px;">
+          <a class="button-alt" href="concerns-low-level.html">Cancel</a>
+          <a class="button-alt" href="concerns-escalated.html">Escalate to DSL concern instead</a>
+          <button type="button" class="button" onclick="handleSaveLowLevelConcern()">Save low-level concern</button>
+        </div>
+      </section>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      // Concern subject-role values must match what concerns-low-level.html already
+      // filters/counts on (subjectRole === 'Student', etc.) — mapped from the
+      // friendlier "Subject type" labels shown in this form.
+      var SUBJECT_ROLE_MAP = {
+        'Student':          'Student',
+        'Homestay carer':   'Host',
+        'Staff member':     'Staff',
+        'Volunteer':        'Volunteer',
+        'External party':   'Other'
+      };
+
+      function formatDisplayDate(isoStr) {
+        if (!isoStr) return '';
+        var d = new Date(isoStr);
+        if (isNaN(d.getTime())) return isoStr;
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return String(d.getDate()).padStart(2, '0') + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var studentSelect = document.getElementById('subject-student');
+        getAllStudents().forEach(function (s) {
+          var opt = document.createElement('option');
+          opt.value = s.id;
+          opt.textContent = s.firstName + ' ' + s.lastName + ' — ' + (s.school || 'No school on file');
+          studentSelect.appendChild(opt);
+        });
+
+        var todayIso = new Date().toISOString().slice(0, 10);
+        document.getElementById('date-observed').value = todayIso;
+        var reviewDefault = new Date();
+        reviewDefault.setDate(reviewDefault.getDate() + 14);
+        document.getElementById('review-date').value = reviewDefault.toISOString().slice(0, 10);
+      });
+
+      function handleSaveLowLevelConcern() {
+        var studentId = document.getElementById('subject-student').value;
+        var student = studentId ? getStudentById(studentId) : null;
+        var subjectTypeLabel = document.getElementById('subject-type').value;
+        var reporter = document.getElementById('reporter-name').value;
+        var title = document.getElementById('concern-title').value.trim();
+        var details = document.getElementById('concern-details').value.trim();
+
+        if (!title || !details) {
+          alert('Please enter a concern title and details before saving.');
+          return;
+        }
+        if (subjectTypeLabel === 'Student' && !studentId) {
+          alert('Please select the student this concern is about.');
+          return;
+        }
+
+        var observedIso = document.getElementById('date-observed').value || new Date().toISOString().slice(0, 10);
+        var reviewIso = document.getElementById('review-date').value;
+
+        // Real schema fields — matches what concerns-low-level.html / concerns-dashboard.html
+        // already read via OG_DB.getConcernsByTier('low-level').
+        var concern = {
+          id: generateConcernId(),
+          subjectId: studentId || null,
+          subjectName: student ? (student.firstName + ' ' + student.lastName) : subjectTypeLabel,
+          subjectRole: SUBJECT_ROLE_MAP[subjectTypeLabel] || 'Student',
+          tier: 'low-level',
+          category: document.getElementById('concern-cat').value,
+          title: title,
+          description: details,
+          source: 'Staff-logged — ' + reporter,
+          loggedDate: formatDisplayDate(observedIso),
+          status: 'Monitoring',
+          reviewDate: formatDisplayDate(reviewIso),
+          // Extra fields consumed by the case-management pages (concern-case.html / concern-close.html).
+          school: student ? (student.school || '') : '',
+          reportedBy: reporter,
+          schoolAwareness: document.getElementById('school-awareness').value,
+          linkedWelfareNotes: document.getElementById('linked-welfare-notes').value.trim(),
+          timeline: [
+            {
+              date: new Date().toISOString(),
+              action: 'Low-level concern logged',
+              by: reporter,
+              notes: 'Initial observation recorded.'
+            }
+          ]
+        };
+
+        saveConcern(concern);
+        window.location.href = 'concerns-low-level.html';
+      }
+    </script>
+  </body>
+</html>

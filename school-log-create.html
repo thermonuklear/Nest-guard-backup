@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log School Contact — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      #student-selector {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1.5px solid #d1dbe7;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        color: #0f172a;
+        background: #fff;
+        outline: none;
+        cursor: pointer;
+        appearance: auto;
+      }
+      #student-selector:focus { border-color: #06b6d4; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/schools/log-contact</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>School Liaison</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="schools.html">Schools</a>
+              <a class="nav-link nav-link-sub" href="school-liaison.html">Communication log</a>
+              <a class="nav-link nav-link-sub active" href="school-log-create.html">Log contact</a>
+              <a class="nav-link nav-link-sub" href="school-welfare-notification.html">Welfare notification</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Create school contact log</span>
+                <h2>Logging the call matters as much as making it.</h2>
+                <p>Record the details of a school contact — who was spoken to, what was discussed, and what still needs action.</p>
+              </div>
+            </div>
+            <div class="card">
+              <h4>Contact details</h4>
+              <div class="form-grid">
+                <div>
+                  <label>Student</label>
+                  <select id="student-selector">
+                    <option value="">Select a student…</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Contact date</label>
+                  <input type="date" id="contact-date" />
+                </div>
+                <div>
+                  <label>Contact type</label>
+                  <input type="text" id="contact-type" placeholder="e.g. Exeat approval call" />
+                </div>
+                <div class="form-span-2">
+                  <label>Summary / Notes</label>
+                  <textarea id="summary-notes" class="textarea-box" rows="5" style="width:100%;resize:vertical;"></textarea>
+                </div>
+                <div>
+                  <label>Follow-up Status</label>
+                  <select id="input-status" style="width:100%;padding:8px 10px;border:1.5px solid #d1dbe7;border-radius:8px;font-family:inherit;font-size:0.9rem;color:#0f172a;background:#fff;outline:none;cursor:pointer;appearance:auto;">
+                    <option value="Pending">Pending (Requires action)</option>
+                    <option value="Resolved">Resolved (No further action)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="action-row">
+              <a class="button-alt" href="school-liaison.html">Cancel</a>
+              <button id="save-log-btn" class="button">Save log</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      (function () {
+        var sel = document.getElementById('student-selector');
+        getAllStudents().forEach(function (s) {
+          var opt = document.createElement('option');
+          opt.value = s.id;
+          opt.textContent = s.firstName + ' ' + s.lastName;
+          sel.appendChild(opt);
+        });
+
+        document.getElementById('save-log-btn').addEventListener('click', function () {
+          var studentId    = sel.value;
+          var studentName  = studentId ? sel.options[sel.selectedIndex].textContent : '';
+          var date         = document.getElementById('contact-date').value;
+          var contactType  = document.getElementById('contact-type').value;
+          var summaryNotes = document.getElementById('summary-notes').value;
+          var status       = document.getElementById('input-status').value;
+
+          saveSchoolLog({
+            studentId:    studentId,
+            studentName:  studentName,
+            date:         date,
+            contactType:  contactType,
+            summaryNotes: summaryNotes,
+            status:       status,
+            loggedAt:     new Date().toISOString()
+          });
+
+          window.location.href = 'school-liaison.html';
+        });
+      })();
+    </script>
+  </body>
+</html>

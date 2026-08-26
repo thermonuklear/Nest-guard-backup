@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reporting Dashboard — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/reporting</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Reporting</strong></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a><a class="nav-link" href="private-fostering.html">Private fostering</a><a class="nav-link" href="scr-dashboard.html">SCR Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="scr-staff.html" style="color: #63768b; text-decoration: none;">• Staff SCR</a><a href="scr-hosts.html" style="color: #63768b; text-decoration: none;">• Host SCR</a><a href="scr-drivers.html" style="color: #63768b; text-decoration: none;">• Driver SCR</a></div><a class="nav-link" href="audit-log.html">Audit trail</a><a class="nav-link active" href="reporting-dashboard.html">Reporting</a></div>
+            <div class="nav-group"><div class="nav-label">Operations</div><a class="nav-link" href="admin-dashboard.html">Dashboard</a><a class="nav-link" href="students.html">Students</a><a class="nav-link" href="homestays.html">Homestays</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">AEGIS Inspection Readiness</span>
+                <h2>If you can't show it, you didn't do it.</h2>
+                <p>This dashboard aggregates compliance metrics across all AEGIS standards. Use it to prepare for inspection, identify gaps, and track improvement over time.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button-alt" href="compliance.html">Back to compliance</a><a class="button" href="#">Generate inspection report</a></div>
+            </div>
+            <div class="metrics">
+              <article class="metric featured"><h4>Overall AEGIS readiness</h4><div class="metric-value" style="color:var(--green);">87%</div><p class="metric-meta">Preliminary accreditation threshold: 80%</p></article>
+              <article class="metric"><h4>Critical gaps</h4><div class="metric-value">2</div><p class="metric-meta">Whistleblowing policy overdue, Ellis DBS pending</p></article>
+              <article class="metric"><h4>Standards fully met</h4><div class="metric-value">7/9</div><p class="metric-meta">Standards 2 and 6 have minor gaps</p></article>
+              <article class="metric"><h4>Last updated</h4><div class="metric-value">19 Apr</div><p class="metric-meta">Metrics refresh daily</p></article>
+            </div>
+            <div class="card" style="margin-bottom:24px;">
+              <h4>AEGIS Standards compliance summary</h4>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Standard</th><th>Title</th><th>Score</th><th>Status</th><th>Key gap</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>1</strong></td>
+                      <td>Company aims, principles, practice</td>
+                      <td>100%</td>
+                      <td><span class="badge green">Met</span></td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td><strong>2</strong></td>
+                      <td>Management of the organisation</td>
+                      <td>92%</td>
+                      <td><span class="badge amber">Minor gap</span></td>
+                      <td>Whistleblowing policy overdue for review</td>
+                    </tr>
+                    <tr>
+                      <td><strong>3</strong></td>
+                      <td>Students</td>
+                      <td>95%</td>
+                      <td><span class="badge green">Met</span></td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td><strong>4</strong></td>
+                      <td>Travel arrangements</td>
+                      <td>100%</td>
+                      <td><span class="badge green">Met</span></td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td><strong>5</strong></td>
+                      <td>Homestays</td>
+                      <td>93%</td>
+                      <td><span class="badge amber">Minor gap</span></td>
+                      <td>Brennan annual visit overdue</td>
+                    </tr>
+                    <tr>
+                      <td><strong>6</strong></td>
+                      <td>Safeguarding, child protection, welfare</td>
+                      <td>88%</td>
+                      <td><span class="badge amber">Minor gap</span></td>
+                      <td>Ellis household DBS pending</td>
+                    </tr>
+                    <tr>
+                      <td><strong>7</strong></td>
+                      <td>Complaints</td>
+                      <td>100%</td>
+                      <td><span class="badge green">Met</span></td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td><strong>8</strong></td>
+                      <td>Private fostering</td>
+                      <td>100%</td>
+                      <td><span class="badge green">Met</span></td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <td><strong>9</strong></td>
+                      <td>Liaison with partner schools</td>
+                      <td>100%</td>
+                      <td><span class="badge green">Met</span></td>
+                      <td>—</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="cols-2">
+              <div class="card">
+                <h4>Safer recruitment (Standard 2.8)</h4>
+                <div class="list">
+                  <div class="list-item"><strong>DBS coverage</strong><small>17/18 complete (94%) — Margaret Ellis pending</small></div>
+                  <div class="list-item"><strong>Update Service enrolment</strong><small>3/3 staff enrolled — reduces renewal burden</small></div>
+                  <div class="list-item"><strong>Reference verification</strong><small>17/17 complete (100%)</small></div>
+                  <div class="list-item"><strong>Overseas checks</strong><small>1/1 complete (Priya Shah — India)</small></div>
+                  <div class="list-item"><strong>Interview records</strong><small>3/3 staff with detailed notes</small></div>
+                </div>
+              </div>
+              <div class="card">
+                <h4>Training compliance (Standards 2.1, 6.2, 6.3)</h4>
+                <div class="list">
+                  <div class="list-item"><strong>DSL training</strong><small>2/2 current (Jay Ray, Zuko Fire)</small></div>
+                  <div class="list-item"><strong>Safer recruitment training</strong><small>2/2 interview panel trained</small></div>
+                  <div class="list-item"><strong>Prevent training</strong><small>1/1 minimum met (Zuko Fire)</small></div>
+                  <div class="list-item"><strong>Safeguarding L1</strong><small>3/3 staff current</small></div>
+                  <div class="list-item"><strong>Homestay annual updates</strong><small>11/14 current (78%) — 3 due May 2026</small></div>
+                </div>
+              </div>
+              <div class="card">
+                <h4>Policy reviews (Standard 2.10)</h4>
+                <div class="list">
+                  <div class="list-item"><strong>Policies current</strong><small>11/12 (92%)</small></div>
+                  <div class="list-item"><strong>Overdue</strong><small>1 — Whistleblowing Policy (due 15 Mar 2026)</small></div>
+                  <div class="list-item"><strong>Due within 30 days</strong><small>2 — Missing Student, Anti-Bullying</small></div>
+                  <div class="list-item"><strong>Handbooks current</strong><small>3/3 (Student, Parent, Homestay)</small></div>
+                </div>
+              </div>
+              <div class="card">
+                <h4>Operational metrics</h4>
+                <div class="list">
+                  <div class="list-item"><strong>Active students</strong><small>5 under guardianship</small></div>
+                  <div class="list-item"><strong>Active homestays</strong><small>4 approved, 1 pending</small></div>
+                  <div class="list-item"><strong>Welfare contacts this month</strong><small>18 (avg 4.5 per student)</small></div>
+                  <div class="list-item"><strong>School liaison entries this term</strong><small>94</small></div>
+                  <div class="list-item"><strong>Emergency incidents this year</strong><small>4 (all resolved)</small></div>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="margin-top:24px;">
+              <h4>Appendix A submission checklist</h4>
+              <div class="list">
+                <div class="list-item"><strong>☑ Statement of aims, principles, practice</strong><small>Published, current</small></div>
+                <div class="list-item"><strong>☑ Safeguarding & Child Protection Policy</strong><small>Reviewed Sep 2025, next Sep 2026</small></div>
+                <div class="list-item"><strong>☑ Safer Recruitment Policy</strong><small>Reviewed Jan 2026</small></div>
+                <div class="list-item"><strong>☐ Whistleblowing Policy</strong><small>Overdue — draft in review</small></div>
+                <div class="list-item"><strong>☑ Student Handbook</strong><small>Version 3.1, current</small></div>
+                <div class="list-item"><strong>☑ Parent Handbook</strong><small>Version 2.4, current</small></div>
+                <div class="list-item"><strong>☑ Homestay Handbook</strong><small>Version 2.2, current</small></div>
+                <div class="list-item"><strong>☑ Single Central Record</strong><small>94% complete, export ready</small></div>
+                <div class="list-item"><strong>☑ Training records</strong><small>All required training logged</small></div>
+                <div class="list-item"><strong>☑ Insurance certificates</strong><small>PI and PL current to Dec 2026</small></div>
+                <div class="list-item"><strong>☑ ICO registration</strong><small>Certificate ZA123456, valid</small></div>
+              </div>
+            </div>
+            <div class="note brutal" style="margin-top:24px;">
+              <h4>What inspectors actually look for</h4>
+              <ul>
+                <li>Evidence, not policies. Anyone can write a policy — show me the DBS certificates, the training records, the welfare notes.</li>
+                <li>Dated documents. If it doesn't have a date, it could have been created yesterday.</li>
+                <li>Who did what. Audit trails matter. "We do this" is not the same as "Jay Ray did this on 15 April."</li>
+                <li>Gaps explained. If something is incomplete, say why and when it will be fixed. Silence looks like hiding.</li>
+                <li>Consistency. If your policy says "weekly welfare checks," your welfare log should show weekly entries.</li>
+              </ul>
+            </div>
+            <p class="inline-links">Related: <a href="compliance.html">AEGIS control room</a> · <a href="scr-dashboard.html">SCR Dashboard</a> · <a href="audit-log.html">Audit trail</a> · <a href="training-log.html">Training records</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

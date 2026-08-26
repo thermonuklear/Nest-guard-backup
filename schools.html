@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Partner Schools Liaison — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/schools</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Standard 9</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link active" href="schools.html">Schools</a>
+              <a class="nav-link nav-link-sub" href="school-directory.html">School directory</a>
+              <a class="nav-link nav-link-sub" href="school-liaison.html">Communication log</a>
+              <a class="nav-link nav-link-sub" href="school-log-create.html">Log contact</a>
+              <a class="nav-link nav-link-sub" href="school-welfare-notification.html">Welfare notification</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Standard 9 — Partner School Liaison</span>
+                <h2>Partner Schools Liaison</h2>
+                <p>Standard 9 requires timely, documented, and attributable communication with every partner school. This hub is where that obligation is discharged — not in inboxes, not in memory.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="school-liaison.html">Full communication log</a>
+                <a class="button" href="school-log-create.html">Log school contact</a>
+              </div>
+            </div>
+
+            <div class="metrics" id="metrics-row">
+              <article class="metric featured">
+                <h4>Total school communications</h4>
+                <div class="metric-value" id="metric-total">—</div>
+                <p class="metric-meta">All logged contacts across all students and schools</p>
+              </article>
+              <article class="metric">
+                <h4>Last 7 days</h4>
+                <div class="metric-value" id="metric-recent">—</div>
+                <p class="metric-meta">Contacts logged in the past week</p>
+              </article>
+              <article class="metric">
+                <h4>Students contacted</h4>
+                <div class="metric-value" id="metric-students">—</div>
+                <p class="metric-meta">Distinct students with a school log entry</p>
+              </article>
+              <article class="metric">
+                <h4>Welfare notifications</h4>
+                <div class="metric-value" id="metric-welfare">—</div>
+                <p class="metric-meta">Welfare or incident updates sent to schools</p>
+              </article>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;">
+              <div class="card">
+                <h4>Communication Log</h4>
+                <p>Full history of all school contacts — timestamped, attributed, and searchable. Required evidence for Standard 9.7 inspection.</p>
+                <div style="margin-top:16px;">
+                  <a class="button" href="school-liaison.html">View full log →</a>
+                </div>
+              </div>
+              <div class="card">
+                <h4>Log a School Contact</h4>
+                <p>Record a phone call, email, meeting, or exeat discussion. Every contact must be logged within 24 hours of it taking place.</p>
+                <div style="margin-top:16px;">
+                  <a class="button" href="school-log-create.html">Log contact →</a>
+                </div>
+              </div>
+              <div class="card">
+                <h4>Welfare &amp; Incident Notification</h4>
+                <p>Generate a Standards 9.2 and 9.6 compliant notification to a partner school. Automatically logs the contact on send.</p>
+                <div style="margin-top:16px;">
+                  <a class="button" href="school-welfare-notification.html">Generate notification →</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Student / School</th>
+                    <th>Type</th>
+                    <th>Summary</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-logs-tbody"></tbody>
+              </table>
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+      function esc(str) {
+        return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      }
+
+      function renderMetrics(logs) {
+        document.getElementById('metric-total').textContent = logs.length;
+
+        var cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+        var recent = logs.filter(function(l) {
+          return new Date(l.loggedAt || l.date).getTime() >= cutoff;
+        });
+        document.getElementById('metric-recent').textContent = recent.length;
+
+        var studentSet = {};
+        logs.forEach(function(l) { if (l.studentName) studentSet[l.studentName] = true; });
+        document.getElementById('metric-students').textContent = Object.keys(studentSet).length;
+
+        var welfareTypes = ['Welfare Update', 'Incident Report', 'Medication Change', 'Travel Notification'];
+        var welfare = logs.filter(function(l) {
+          return welfareTypes.indexOf(l.contactType || l.type || '') !== -1;
+        });
+        document.getElementById('metric-welfare').textContent = welfare.length;
+      }
+
+      function renderRecentLogs(logs) {
+        var tbody = document.getElementById('recent-logs-tbody');
+        var recent = logs.slice(0, 5);
+
+        if (!recent.length) {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:28px;color:#94a3b8;">No communications logged yet. <a href="school-log-create.html">Log the first one.</a></td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = recent.map(function(log) {
+          var dt = new Date(log.loggedAt || log.date);
+          var dateStr = String(dt.getDate()).padStart(2,'0') + ' ' + months[dt.getMonth()] + ' ' + dt.getFullYear();
+
+          var student = log.studentId ? getStudentById(log.studentId) : null;
+          var schoolLine = student ? esc(student.school) : '';
+
+          var notes = esc(log.summaryNotes || log.notes || '—');
+          if (notes.length > 72) notes = notes.slice(0, 69) + '…';
+
+          return '<tr>' +
+            '<td>' + dateStr + '</td>' +
+            '<td><strong>' + esc(log.studentName || '—') + '</strong>' + (schoolLine ? '<small>' + schoolLine + '</small>' : '') + '</td>' +
+            '<td>' + esc(log.contactType || log.type || '—') + '</td>' +
+            '<td style="max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + notes + '</td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      var allLogs = getSchoolLogs();
+      renderMetrics(allLogs);
+      renderRecentLogs(allLogs);
+    </script>
+  </body>
+</html>

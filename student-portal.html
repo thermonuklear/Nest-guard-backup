@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Portal — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+    <style>
+      .student-switcher {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 14px;
+      }
+      .student-switcher label {
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--ink-3);
+      }
+      .student-switcher select {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.86rem;
+        font-weight: 600;
+        color: var(--ink);
+        background: #fffdf9;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 6px 30px 6px 12px;
+        cursor: pointer;
+      }
+      .emergency a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .mini-card a {
+        color: #2a6096;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .mini-card a:hover { text-decoration: underline; }
+      .mini-card .mini-card-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .mini-card .mini-card-actions a {
+        flex: 1;
+        text-align: center;
+        padding: 9px 10px;
+        border-radius: 10px;
+        font-size: 0.84rem;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="section hero">
+        <div>
+          <span class="eyebrow">Student portal</span>
+          <h1>The student screen should feel safe before it feels clever.</h1>
+          <p class="lead">The PRD is directionally right here. The prototype makes the priority explicit: emergency contact first, essential information second, forms last.</p>
+          <div class="topnav">
+            <a href="index.html">Prototype home</a>
+            <a href="login.html">Login</a>
+            <a href="parent-portal.html">Parent portal</a>
+            <a class="current" href="student-portal.html">Student portal</a>
+            <a id="topnav-checkin" href="student-checkin-submit.html">Check in</a>
+            <a id="topnav-concern" href="student-concern-submit.html">Report concern</a>
+          </div>
+          <div class="student-switcher">
+            <label for="portal-student-switcher">Viewing as</label>
+            <select id="portal-student-switcher"></select>
+          </div>
+        </div>
+        <aside class="note brutal">
+          <h4>Brutal product note</h4>
+          <p>The “one-tap emergency contact” in the PRD is not a decoration. It should dominate the mobile viewport and work on the device students actually use.</p>
+        </aside>
+      </section>
+
+      <section class="section" style="padding: 28px;">
+        <div class="mobile-shell">
+          <div class="mobile-top"><span>09:41</span><span>Oxford Guardians</span><span>4G</span></div>
+          <div class="mobile-screen">
+            <div class="mobile-body">
+              <div class="emergency">
+                <h3>Need help now?</h3>
+                <p>24/7 emergency contact</p>
+                <p style="font-size:1.5rem; font-weight:700; margin-top:8px;">
+                  <a href="tel:+441865742410">+44 (0)1865 742 410</a>
+                </p>
+              </div>
+              <div class="mini-card">
+                <h4>Your guardian</h4>
+                <p id="guardian-card-body">Loading…</p>
+              </div>
+              <div class="mini-card">
+                <h4>Your host family</h4>
+                <p id="host-card-body">Loading…</p>
+                <div class="mini-card-actions" id="host-card-actions" style="margin-top:10px; display:none;">
+                  <a class="button-alt" id="student-view-host-btn" href="#" target="_blank" style="font-size:0.78rem; padding:5px 10px; width:100%; text-align:center; display:block;">
+                    Meet Your Host Family
+                  </a>
+                </div>
+              </div>
+              <div class="mini-card">
+                <h4>Welfare check-in</h4>
+                <p id="checkin-card-body">Loading…</p>
+                <span class="badge" id="checkin-badge" style="margin-top:10px;">—</span>
+                <div class="mini-card-actions">
+                  <a class="button" id="checkin-btn" href="student-checkin-submit.html">Check in</a>
+                </div>
+              </div>
+              <div class="mini-card">
+                <h4>Report a concern</h4>
+                <p>Private route to DSL for bullying, safety worries, or anything that feels wrong.</p>
+                <span class="badge amber" style="margin-top:10px;">Direct to DSL</span>
+                <div class="mini-card-actions">
+                  <a class="button-alt" id="concern-btn" href="student-concern-submit.html">Report a concern</a>
+                </div>
+              </div>
+            </div>
+            <div class="mobile-nav">
+              <span class="active">Home</span>
+              <span>Handbook</span>
+              <span>Travel</span>
+              <span>Help</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+    (function () {
+      function esc(s) {
+        return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      var allStudents = getAllStudents();
+      var params      = new URLSearchParams(window.location.search);
+      var studentId   = params.get('id') || (allStudents[0] && allStudents[0].id) || '';
+      var student     = studentId ? getStudentById(studentId) : null;
+
+      // ── Student switcher ────────────────────────────────────────────────────
+      var switcherSel = document.getElementById('portal-student-switcher');
+      allStudents.forEach(function (s) {
+        var opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = s.firstName + ' ' + s.lastName + ' (' + s.id + ')';
+        if (s.id === studentId) opt.selected = true;
+        switcherSel.appendChild(opt);
+      });
+      switcherSel.addEventListener('change', function () {
+        window.location.href = 'student-portal.html?id=' + this.value;
+      });
+
+      // ── Carry the active student id through every action link ──────────────
+      ['topnav-checkin', 'checkin-btn'].forEach(function (id) {
+        document.getElementById(id).href = 'student-checkin-submit.html?id=' + studentId;
+      });
+      ['topnav-concern', 'concern-btn'].forEach(function (id) {
+        document.getElementById(id).href = 'student-concern-submit.html?id=' + studentId;
+      });
+
+      // ── Your guardian card ───────────────────────────────────────────────────
+      (function () {
+        var dsl = getAllStaff().find(function (s) { return /DSL/i.test(s.role || ''); });
+        var name  = dsl ? (dsl.firstName + ' ' + dsl.lastName) : 'Jay Ray';
+        var title = dsl ? dsl.title : 'DSL / Oxford Guardians';
+        var phone = dsl ? dsl.phone : '+44 7700 900 999';
+        var email = dsl ? dsl.email : 'jay.ray@oxfordguardians.co.uk';
+
+        document.getElementById('guardian-card-body').innerHTML =
+          '<strong>' + esc(name) + '</strong><br />' + esc(title) + '<br />' +
+          '<a href="tel:' + esc(phone.replace(/\s+/g, '')) + '">' + esc(phone) + '</a><br />' +
+          '<a href="mailto:' + esc(email) + '">' + esc(email) + '</a>';
+      }());
+
+      // ── Your host family card ────────────────────────────────────────────────
+      (function () {
+        var body = document.getElementById('host-card-body');
+        if (!student) { body.textContent = 'No student selected.'; return; }
+
+        var homestays = getHomestaysForStudent(student.id);
+        if (!homestays.length) {
+          body.textContent = 'No homestay currently linked to this student.';
+          return;
+        }
+
+        var host = homestays[0];
+        var hostName = host.firstName + ' ' + host.lastName + ' Family';
+
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        var upcoming = getAllExeats()
+          .filter(function (e) { return e.studentId === student.id || e.studentName === (student.firstName + ' ' + student.lastName); })
+          .filter(function (e) { var d = new Date(e.startDate); return !isNaN(d.getTime()) && d >= today; })
+          .sort(function (a, b) { return new Date(a.startDate) - new Date(b.startDate); });
+
+        var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        function fmtShort(d) { return d.getDate() + ' ' + M[d.getMonth()]; }
+
+        var bookingLine = 'No upcoming stay booked.';
+        if (upcoming.length) {
+          var next = upcoming[0];
+          var start = new Date(next.startDate);
+          var end   = next.returnDate ? new Date(next.returnDate) : null;
+          bookingLine = (next.breakType || 'Stay') + ' booked for ' +
+            fmtShort(start) + (end && !isNaN(end.getTime()) ? '–' + fmtShort(end) : '');
+        }
+
+        body.innerHTML =
+          '<strong>' + esc(hostName) + '</strong><br />' + esc(host.address || 'Address on file') + '<br />' +
+          esc(bookingLine);
+
+        var viewHostBtn = document.getElementById('student-view-host-btn');
+        viewHostBtn.href = 'homestay-profile-view.html?id=' + encodeURIComponent(host.id);
+        document.getElementById('host-card-actions').style.display = 'flex';
+      }());
+
+      // ── Welfare check-in status ──────────────────────────────────────────────
+      (function () {
+        var bodyEl  = document.getElementById('checkin-card-body');
+        var badgeEl = document.getElementById('checkin-badge');
+        if (!student) {
+          bodyEl.textContent = 'No student selected.';
+          badgeEl.style.display = 'none';
+          return;
+        }
+
+        var status = getStudentWelfareCadenceStatus(student.id);
+        bodyEl.textContent = 'A fast, low-friction check-in with immediate timestamp logging.';
+        badgeEl.textContent = status.label;
+        badgeEl.className = 'badge ' + status.cls;
+      }());
+    }());
+    </script>
+  </body>
+</html>

@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Staff Member — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    /* ── Form controls ── */
+    .field-input,
+    .field-select,
+    .field-textarea {
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--ink);
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-sizing: border-box;
+    }
+
+    .field-input::placeholder,
+    .field-textarea::placeholder { color: var(--ink-3); }
+
+    .field-input:focus,
+    .field-select:focus,
+    .field-textarea:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(15, 35, 64, 0.1);
+    }
+
+    .field-select { appearance: none; cursor: pointer; }
+    .field-textarea { resize: vertical; min-height: 96px; }
+
+    /* ── Form layout ── */
+    .form-section { margin-bottom: 28px; }
+
+    .form-section-title {
+      font-family: "Outfit", sans-serif;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .field small {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink-2);
+    }
+
+    .field-hint {
+      font-size: 0.76rem;
+      color: var(--ink-3);
+      margin-top: 4px;
+    }
+
+    /* ── Validation ── */
+    .form-error {
+      display: none;
+      color: var(--red);
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: var(--red-soft);
+      border: 1px solid #d8afb2;
+      border-radius: 8px;
+    }
+
+    .field-error .field-input,
+    .field-error .field-select,
+    .field-error .field-textarea {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(127, 48, 52, 0.1);
+    }
+
+    /* ── Panel ── */
+    .create-panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px;
+      margin: 0 0 24px;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<main class="page">
+  <div class="app-frame">
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small>Route /admin/staff/new</small>
+    </div>
+    <div class="shell">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong>Staff Directory</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Overview</div>
+          <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+          <a class="nav-link" href="notifications.html">Notifications</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">People</div>
+          <a class="nav-link active" href="staff-list.html">Staff directory</a>
+          <a class="nav-link" href="parent-list.html">Parents</a>
+          <a class="nav-link" href="students.html">Students</a>
+          <a class="nav-link" href="hosts.html">Hosts</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Compliance</div>
+          <a class="nav-link" href="compliance.html">AEGIS control room</a>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <section class="main">
+        <div class="toolbar">
+          <div>
+            <span class="eyebrow">New staff member</span>
+            <h2>Add someone to the team.</h2>
+            <p>Create a new staff profile. DBS and training records can be updated after creation.</p>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" href="staff-list.html">Discard</a>
+            <button class="button" type="submit" form="staff-form">Save</button>
+          </div>
+        </div>
+
+        <div class="create-panel">
+          <form id="staff-form" novalidate>
+
+            <!-- ── Card 1: Personal details ── -->
+            <div class="form-section">
+              <div class="form-section-title">Personal Details</div>
+              <div class="form-grid">
+                <div class="field" id="field-first-name">
+                  <small>First Name *</small>
+                  <input class="field-input" type="text" id="first-name" placeholder="e.g. Jay" autocomplete="given-name" />
+                </div>
+                <div class="field" id="field-last-name">
+                  <small>Last Name *</small>
+                  <input class="field-input" type="text" id="last-name" placeholder="e.g. Ray" autocomplete="family-name" />
+                </div>
+                <div class="field" id="field-email">
+                  <small>Email *</small>
+                  <input class="field-input" type="email" id="email" placeholder="name@oxfordguardians.co.uk" autocomplete="email" />
+                </div>
+                <div class="field">
+                  <small>Phone</small>
+                  <input class="field-input" type="tel" id="phone" placeholder="+44 7700 900 000" autocomplete="tel" />
+                </div>
+                <div class="field">
+                  <small>Start Date</small>
+                  <input class="field-input" type="month" id="start-date" />
+                  <p class="field-hint">Month and year the staff member joined.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Card 2: Role & responsibilities ── -->
+            <div class="form-section">
+              <div class="form-section-title">Role &amp; Responsibilities</div>
+              <div class="form-grid">
+                <div class="field" id="field-role">
+                  <small>Role *</small>
+                  <select class="field-select" id="role">
+                    <option value="">— Select role —</option>
+                    <option value="Admin / DSL">Admin / DSL</option>
+                    <option value="Admin / Operations">Admin / Operations</option>
+                    <option value="Admin / Local coordinator">Admin / Local coordinator</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>Title</small>
+                  <input class="field-input" type="text" id="title" placeholder="e.g. Safeguarding lead" />
+                </div>
+                <div class="field form-span-2">
+                  <small>Primary Work</small>
+                  <textarea class="field-textarea" id="primary-work" placeholder="Describe key responsibilities…"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Card 3: DBS & compliance ── -->
+            <div class="form-section">
+              <div class="form-section-title">DBS &amp; Compliance</div>
+              <div class="form-grid">
+                <div class="field">
+                  <small>DBS Status</small>
+                  <select class="field-select" id="dbs-status">
+                    <option value="">— Select —</option>
+                    <option value="clear">Enhanced DBS — Clear</option>
+                    <option value="amber">DBS — Action Required</option>
+                    <option value="expired">DBS — Expired</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>DBS Certificate Number</small>
+                  <input class="field-input" type="text" id="dbs-cert" placeholder="e.g. 005-112-9934-7" />
+                </div>
+                <div class="field">
+                  <small>DBS Issue Date</small>
+                  <input class="field-input" type="date" id="dbs-issue" />
+                </div>
+                <div class="field">
+                  <small>DBS Renewal Due</small>
+                  <input class="field-input" type="date" id="dbs-renewal" />
+                </div>
+                <div class="field form-span-2">
+                  <small>DBS Update Service</small>
+                  <input class="field-input" type="text" id="dbs-update" placeholder="e.g. Subscribed — last verified 10 Apr 2026" />
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Card 4: Training ── -->
+            <div class="form-section">
+              <div class="form-section-title">Training</div>
+              <div class="form-grid">
+                <div class="field">
+                  <small>Training Level</small>
+                  <select class="field-select" id="training-level">
+                    <option value="">— Select —</option>
+                    <option value="DSL Level 3">DSL Level 3</option>
+                    <option value="Safeguarding Awareness">Safeguarding Awareness</option>
+                    <option value="First Aid">First Aid</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>Training Date</small>
+                  <input class="field-input" type="date" id="training-date" />
+                </div>
+                <div class="field">
+                  <small>Training Expiry</small>
+                  <input class="field-input" type="date" id="training-expiry" />
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Card 5: Additional ── -->
+            <div class="form-section">
+              <div class="form-section-title">Additional</div>
+              <div class="form-grid">
+                <div class="field form-span-2">
+                  <small>Emergency Rota</small>
+                  <input class="field-input" type="text" id="emergency-rota" placeholder="e.g. Mon–Fri evening (18:00–22:00) primary" />
+                </div>
+                <div class="field form-span-2">
+                  <small>Notes</small>
+                  <textarea class="field-textarea" id="notes" placeholder="Any additional notes…"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Action row ── -->
+            <div class="action-row">
+              <button type="submit" class="button">Save staff member</button>
+              <a class="button-alt" href="staff-list.html">Cancel</a>
+            </div>
+            <p class="form-error" id="form-error">Please fill in all required fields before saving.</p>
+
+          </form>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="assets/db.js"></script>
+<script>
+  document.getElementById('staff-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // ── Clear previous errors ──────────────────────────────────────────────────
+    var required = [
+      { id: 'first-name', wrap: 'field-first-name' },
+      { id: 'last-name',  wrap: 'field-last-name'  },
+      { id: 'email',      wrap: 'field-email'       },
+      { id: 'role',       wrap: 'field-role'        }
+    ];
+
+    required.forEach(function (f) {
+      var wrap = document.getElementById(f.wrap);
+      if (wrap) wrap.classList.remove('field-error');
+    });
+
+    // ── Validate ──────────────────────────────────────────────────────────────
+    var valid = true;
+    required.forEach(function (f) {
+      var el = document.getElementById(f.id);
+      if (!el || !el.value.toString().trim()) {
+        valid = false;
+        var wrap = document.getElementById(f.wrap);
+        if (wrap) wrap.classList.add('field-error');
+      }
+    });
+
+    var errorMsg = document.getElementById('form-error');
+    if (!valid) { errorMsg.style.display = 'block'; return; }
+    errorMsg.style.display = 'none';
+
+    // ── Read helpers ──────────────────────────────────────────────────────────
+    function val(id) {
+      var el = document.getElementById(id);
+      return el ? el.value.trim() : '';
+    }
+
+    function fmtDate(iso) {
+      if (!iso) return '';
+      var d = new Date(iso + 'T00:00:00');
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function fmtMonth(ym) {
+      if (!ym) return '';
+      var parts = ym.split('-');
+      var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, 1);
+      return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+    }
+
+    // ── Generate ID ───────────────────────────────────────────────────────────
+    var newId = generateStaffId();
+
+    // ── Build object ──────────────────────────────────────────────────────────
+    var newStaff = {
+      id:               newId,
+      firstName:        val('first-name'),
+      lastName:         val('last-name'),
+      email:            val('email'),
+      phone:            val('phone'),
+      role:             val('role'),
+      title:            val('title'),
+      status:           'Active',
+      primaryWork:      val('primary-work'),
+      dbsStatus:        val('dbs-status'),
+      dbsCertNumber:    val('dbs-cert'),
+      dbsIssueDate:     fmtDate(val('dbs-issue'))   || val('dbs-issue'),
+      dbsRenewalDue:    fmtDate(val('dbs-renewal')) || val('dbs-renewal'),
+      dbsUpdateService: val('dbs-update'),
+      trainingLevel:    val('training-level'),
+      trainingDate:     fmtDate(val('training-date'))   || val('training-date'),
+      trainingExpiry:   fmtDate(val('training-expiry')) || val('training-expiry'),
+      startDate:        fmtMonth(val('start-date')) || val('start-date'),
+      emergencyRota:    val('emergency-rota'),
+      notes:            val('notes'),
+      compliance: {
+        idDocumentPath:           '',
+        rightToWorkCheckPath:     '',
+        isCitizen:                true,
+        worksOutsideUK:           false,
+        rightToWorkExpiry:        '',
+        dbsNumber:                '',
+        dbsLastChecked:           '',
+        dbsCertificatePath:       '',
+        dbsUpdateService:         false,
+        dbsExpiry:                '',
+        reference1Path:           '',
+        reference2Path:           '',
+        livedAbroad:              false,
+        overseasCheckDocPath:     '',
+        safeguardingTrainingDate: '',
+        safeguardingCertificatePath: ''
+      }
+    };
+
+    // ── Save & redirect ───────────────────────────────────────────────────────
+    saveStaffMember(newStaff);
+    window.location.href = 'staff-list.html';
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Profile — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Staff avatar in toolbar ── */
+      .staff-avatar-lg {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Outfit", sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+        color: #ffffff;
+        border: 2px solid var(--line);
+        flex-shrink: 0;
+      }
+
+      /* ── Sub-navigation tabs ── */
+      .subnav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 0 14px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .subnav button {
+        padding: 6px 16px;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: var(--ink-2);
+        background: transparent;
+        border: 1px solid transparent;
+        cursor: pointer;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+      }
+
+      .subnav button:hover { background: var(--surface-2); border-color: var(--line); }
+
+      .subnav button.active {
+        background: var(--navy);
+        border-color: var(--navy);
+        color: #fff8eb;
+      }
+
+      .tab-content { display: none; }
+      .tab-content.active { display: block; }
+
+      /* ── KV block full-width span ── */
+      .kv-block-full { grid-column: 1 / -1; }
+
+      /* ── Rota card ── */
+      .rota-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 16px;
+      }
+
+      .rota-card h4 { margin-bottom: 12px; }
+
+      .rota-slot {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        gap: 10px;
+        padding: 10px 0;
+        border-top: 1px solid #e5dccb;
+        font-size: 0.9rem;
+      }
+
+      .rota-slot:first-of-type { border-top: 0; padding-top: 0; }
+      .rota-slot small { color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.72rem; }
+
+      /* ── Required docs checklist ── */
+      .req-docs {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px 20px;
+        margin-bottom: 16px;
+        max-width: 640px;
+      }
+
+      .req-docs h4 { margin-bottom: 14px; }
+      .req-doc-list { display: grid; gap: 8px; }
+
+      .req-doc-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 12px;
+        background: var(--surface-3);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+      }
+
+      .req-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--ink-3);
+        margin-top: 5px;
+        flex-shrink: 0;
+      }
+
+      .req-doc-item strong { display: block; font-size: 0.88rem; }
+      .req-doc-item small  { font-size: 0.76rem; color: var(--ink-3); }
+
+      /* ── Upload card ── */
+      .upload-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px;
+        max-width: 640px;
+      }
+
+      .upload-card h4 { margin-bottom: 14px; }
+
+      .upload-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+
+      .upload-controls input[type="file"] {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.86rem;
+        color: var(--ink-2);
+        cursor: pointer;
+        max-width: 100%;
+      }
+
+      .doc-name-input {
+        flex: 1;
+        min-width: 150px;
+        padding: 9px 13px;
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface-3);
+        color: var(--ink);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s, background 0.15s;
+      }
+
+      .doc-name-input::placeholder { color: var(--ink-3); }
+      .doc-name-input:focus { border-color: var(--navy); background: var(--surface); }
+
+      .doc-list { display: grid; gap: 8px; }
+
+      .doc-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 13px;
+        background: var(--surface-3);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+
+      .doc-item-info { display: flex; align-items: center; gap: 10px; }
+
+      .doc-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: var(--navy);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .doc-icon svg { width: 15px; height: 15px; stroke: #ffffff; fill: none; }
+
+      .doc-item-name { font-size: 0.88rem; font-weight: 600; }
+      .doc-item-meta { font-size: 0.76rem; color: var(--ink-3); margin-top: 1px; }
+
+      .doc-remove {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--ink-3);
+        font-size: 0.95rem;
+        padding: 4px 6px;
+        border-radius: 6px;
+        transition: color 0.15s, background 0.15s;
+        line-height: 1;
+      }
+
+      .doc-remove:hover { color: var(--red); background: var(--red-soft); }
+
+      .doc-empty {
+        text-align: center;
+        padding: 24px 16px;
+        color: var(--ink-3);
+        font-size: 0.86rem;
+        border: 1.5px dashed var(--line);
+        border-radius: 12px;
+      }
+
+      /* ── Training rows (role-based courses) ── */
+      .training-rows-list { display: grid; gap: 4px; }
+      .training-row {
+        display: flex; align-items: center; gap: 16px;
+        padding: 13px 0;
+        border-top: 1px solid var(--line);
+        flex-wrap: wrap;
+      }
+      .training-row:first-child { border-top: 0; padding-top: 0; }
+      .training-row-main { flex: 1 1 220px; min-width: 0; }
+      .training-row-title { font-weight: 700; font-size: 0.9rem; color: var(--ink); }
+      .training-row-rule { font-size: 0.78rem; color: var(--ink-3); margin-top: 2px; }
+      .training-row-cert {
+        display: inline-block; margin-top: 5px;
+        font-size: 0.78rem; font-weight: 600; color: var(--gold);
+      }
+      .training-row-dates { display: flex; gap: 22px; flex-shrink: 0; }
+      .training-row-dates small {
+        display: block; text-transform: uppercase; letter-spacing: 0.06em;
+        font-size: 0.68rem; color: var(--ink-3);
+      }
+      .training-row-dates div div { font-size: 0.84rem; color: var(--ink-2); margin-top: 2px; }
+
+      /* ── Save toast ── */
+      .save-toast {
+        position: fixed;
+        top: 20px;
+        right: 24px;
+        z-index: 9999;
+        background: var(--navy);
+        color: #ffffff;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.88rem;
+        font-weight: 600;
+        padding: 12px 20px;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        opacity: 0;
+        transform: translateY(-8px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        pointer-events: none;
+      }
+
+      .save-toast.visible { opacity: 1; transform: translateY(0); }
+
+      .save-toast-icon {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #16a34a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 11px;
+      }
+
+      /* ── Not-found state ── */
+      .not-found {
+        padding: 60px 32px;
+        text-align: center;
+        color: var(--ink-2);
+      }
+
+      .not-found h3 { margin-bottom: 10px; }
+    </style>
+  </head>
+  <body>
+
+  <!-- Save toast -->
+  <div class="save-toast" id="save-toast">
+    <div class="save-toast-icon">✓</div>
+    <span>Profile saved</span>
+  </div>
+
+  <main class="page">
+    <div class="app-frame">
+
+      <!-- Chrome bar -->
+      <div class="chrome">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <small id="chrome-route">Route /admin/staff</small>
+      </div>
+
+      <div class="shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="brand">
+            <small>Oxford Guardians</small>
+            <strong>Staff Directory</strong>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Overview</div>
+            <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+            <a class="nav-link" href="notifications.html">Notifications</a>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">People</div>
+            <a class="nav-link active" href="staff-list.html">Staff directory</a>
+            <a class="nav-link" href="parent-list.html">Parents</a>
+            <a class="nav-link" href="students.html">Students</a>
+            <a class="nav-link" href="hosts.html">Hosts</a>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Compliance</div>
+            <a class="nav-link" href="compliance.html">AEGIS control room</a>
+          </div>
+        </aside>
+
+        <!-- Main content -->
+        <section class="main" id="main-content">
+
+          <!-- Toolbar -->
+          <div class="toolbar" id="profile-toolbar">
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div class="staff-avatar-lg" id="toolbar-avatar">—</div>
+              <div>
+                <span class="eyebrow">Staff profile</span>
+                <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
+                <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:var(--ink-2);">—</p>
+              </div>
+            </div>
+            <div class="toolbar-actions">
+              <span id="toolbar-status-badge" class="badge">—</span>
+              <a class="button" id="compliance-btn" href="staff-compliance.html" style="text-decoration:none;">View Compliance Record</a>
+              <a class="button-alt" href="staff-list.html">Back to Staff</a>
+            </div>
+          </div>
+
+          <!-- Sub-nav -->
+          <nav class="subnav">
+            <button class="active" data-tab="tab-overview">Profile Overview</button>
+            <button data-tab="tab-emergency">Emergency &amp; Rota</button>
+            <button data-tab="tab-documents">Documents</button>\n            <button data-tab="tab-contracts">Agreements & Contracts</button>
+          </nav>
+
+          <!-- ── Tab 1: Profile Overview ── -->
+          <div id="tab-overview" class="tab-content active">
+            <div class="info-grid">
+
+              <!-- Block 1: Personal details -->
+              <div class="info-block">
+                <h4>Personal details</h4>
+                <div class="kv">
+                  <div class="kv-row">
+                    <small>First Name</small>
+                    <div id="kv-first-name">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Last Name</small>
+                    <div id="kv-last-name">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Email</small>
+                    <div id="kv-email">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Phone</small>
+                    <div id="kv-phone">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Start Date</small>
+                    <div id="kv-start-date">—</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Block 2: Role & responsibilities -->
+              <div class="info-block">
+                <h4>Role &amp; responsibilities</h4>
+                <div class="kv">
+                  <div class="kv-row">
+                    <small>Role</small>
+                    <div id="kv-role">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Title</small>
+                    <div id="kv-title">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Primary Work</small>
+                    <div id="kv-primary-work">—</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Block 3: DBS & compliance (full width) -->
+              <div class="info-block kv-block-full">
+                <h4>DBS &amp; compliance</h4>
+                <div class="kv">
+                  <div class="kv-row">
+                    <small>DBS Status</small>
+                    <div id="kv-dbs-status">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Certificate Number</small>
+                    <div id="kv-dbs-cert">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Issue Date</small>
+                    <div id="kv-dbs-issue">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Renewal Due</small>
+                    <div id="kv-dbs-renewal">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Update Service</small>
+                    <div id="kv-dbs-update">—</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Block 4: Training -->
+              <div class="info-block kv-block-full">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px;">
+                  <h4 style="margin:0;">Training</h4>
+                  <a class="button-alt" id="log-training-link" href="#" style="display:inline-block;text-decoration:none;font-size:0.82rem;padding:7px 14px;">Log Training</a>
+                </div>
+                <div id="training-rows-list" class="training-rows-list"></div>
+              </div>
+
+              <!-- Block 5: Notes (full width) -->
+              <div class="info-block kv-block-full">
+                <h4>Notes</h4>
+                <div id="kv-notes" style="color:var(--ink-2);font-size:0.92rem;line-height:1.6;">—</div>
+              </div>
+
+            </div><!-- /info-grid -->
+          </div><!-- /tab-overview -->
+
+          <!-- ── Tab 2: Emergency & Rota ── -->
+          <div id="tab-emergency" class="tab-content">
+
+            <div class="rota-card">
+              <h4>Emergency rota assignment</h4>
+              <div id="kv-rota-assignment" style="font-size:0.95rem;color:var(--ink-2);line-height:1.6;">—</div>
+            </div>
+
+            <div class="rota-card">
+              <h4>Emergency coverage rota — full schedule</h4>
+              <div class="rota-slot">
+                <small>Mon–Fri daytime (08:00–18:00)</small>
+                <div>Zuko Fire — Operations director</div>
+              </div>
+              <div class="rota-slot">
+                <small>Mon–Fri evening (18:00–22:00)</small>
+                <div>Priya Shah — Travel and host liaison</div>
+              </div>
+              <div class="rota-slot">
+                <small>Overnight (22:00–08:00)</small>
+                <div>Jay Ray — Safeguarding lead (DSL)</div>
+              </div>
+              <div class="rota-slot">
+                <small>Weekends — DSL escalation</small>
+                <div>Jay Ray — Safeguarding lead (DSL)</div>
+              </div>
+            </div>
+
+            <div class="rota-card">
+              <h4>Escalation path</h4>
+              <div class="rota-slot">
+                <small>Safeguarding concern</small>
+                <div>Jay Ray — DSL · <a href="staff-profile.html?id=STF00001" style="color:var(--gold);font-weight:600;">View profile</a></div>
+              </div>
+              <div class="rota-slot">
+                <small>Operational issue</small>
+                <div>Zuko Fire — Operations director · <a href="staff-profile.html?id=STF00002" style="color:var(--gold);font-weight:600;">View profile</a></div>
+              </div>
+            </div>
+
+          </div><!-- /tab-emergency -->
+
+          <!-- ── Tab 3: Documents ── -->
+          <div id="tab-documents" class="tab-content">
+
+            <div class="req-docs">
+              <h4>Required documents</h4>
+              <div class="req-doc-list">
+                <div class="req-doc-item">
+                  <div class="req-dot"></div>
+                  <div>
+                    <strong>Enhanced DBS Certificate</strong>
+                    <small>Must be current. Issue date, certificate number, and Update Service status held on file.</small>
+                  </div>
+                </div>
+                <div class="req-doc-item">
+                  <div class="req-dot"></div>
+                  <div>
+                    <strong>Safeguarding Training Certificate</strong>
+                    <small>Level appropriate to role (Awareness / DSL Level 3). Renewal cycle as per training expiry date.</small>
+                  </div>
+                </div>
+                <div class="req-doc-item">
+                  <div class="req-dot"></div>
+                  <div>
+                    <strong>Employment Contract</strong>
+                    <small>Signed copy on file. Any amendments or addenda to be uploaded separately.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="upload-card">
+              <h4>Upload document</h4>
+              <div class="upload-controls">
+                <input type="file" id="doc-file" />
+                <input class="doc-name-input" type="text" id="doc-name" placeholder="Enter document name…" />
+                <button class="button" id="upload-btn">Upload</button>
+              </div>
+              <div id="document-list" class="doc-list"></div>
+            </div>
+
+          </div><!-- /tab-documents -->\n
+          <!-- Contracts Tab -->
+          <div id="tab-contracts" class="tab-content" style="display:none;">
+            <section class="section">
+              <div class="toolbar">
+                <h3>Agreements & Contracts</h3>
+              </div>
+              <div id="contracts-list"></div>
+            </section>
+          </div><!-- /tab-contracts -->
+
+
+        </section>
+      </div><!-- /shell -->
+    </div><!-- /app-frame -->
+  </main>
+
+  <script src="assets/db.js"></script>
+  <script>
+    // ── URL param parsing ──────────────────────────────────────────────────────
+    var params   = new URLSearchParams(window.location.search);
+    var staffId  = params.get('id') || 'STF00001';
+    var member   = getStaffById(staffId);
+
+    // ── Not-found guard ────────────────────────────────────────────────────────
+    if (!member) {
+      document.getElementById('main-content').innerHTML =
+        '<div class="not-found">' +
+          '<h3>Staff member not found</h3>' +
+          '<p>' + (staffId ? 'No record exists for ID <strong>' + staffId + '</strong>.' : 'No staff ID was provided.') + '</p>' +
+          '<p style="margin-top:12px;"><a href="staff-list.html" style="color:var(--gold);font-weight:600;">Return to Staff Directory</a></p>' +
+        '</div>';
+      throw new Error('Staff member not found: ' + staffId);
+    }
+
+    // ── Helpers ────────────────────────────────────────────────────────────────
+    function initials(first, last) {
+      return ((first || '').charAt(0) + (last || '').charAt(0)).toUpperCase();
+    }
+
+    function statusBadgeClass(s) {
+      return { Active: 'green', Locked: 'red', Invited: 'amber' }[s] || 'navy';
+    }
+
+    function dbsBadgeClass(s) {
+      return { clear: 'green', amber: 'amber', expired: 'red' }[(s || '').toLowerCase()] || 'navy';
+    }
+
+    function dbsBadgeLabel(s) {
+      return { clear: 'DBS Clear', amber: 'Action Required', expired: 'Expired' }[(s || '').toLowerCase()] || (s || '—');
+    }
+
+    function set(id, text) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = text || '—';
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function nowDate() {
+      return new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    // ── Populate page ──────────────────────────────────────────────────────────
+    var fullName = member.firstName + ' ' + member.lastName;
+
+    document.title = fullName + ' — Oxford Guardians';
+    document.getElementById('chrome-route').textContent = 'Route /admin/staff/' + member.id;
+    document.getElementById('compliance-btn').href = 'staff-compliance.html?id=' + member.id;
+
+    document.getElementById('toolbar-avatar').textContent = initials(member.firstName, member.lastName);
+    document.getElementById('toolbar-name').innerHTML =
+      escapeHtml(fullName) +
+      ' <span style="color:var(--ink-3);font-size:0.8em;font-weight:normal;margin-left:8px;">' + escapeHtml(member.id) + '</span>';
+    document.getElementById('toolbar-subtitle').textContent =
+      (member.role || '—') + ' · ' + (member.title || '—') + ' · Since ' + (member.startDate || '—');
+
+    var statusBadge = document.getElementById('toolbar-status-badge');
+    statusBadge.textContent = member.status || '—';
+    statusBadge.className   = 'badge ' + statusBadgeClass(member.status);
+
+    // Tab 1 — Profile Overview KV rows
+    set('kv-first-name',     member.firstName);
+    set('kv-last-name',      member.lastName);
+    set('kv-email',          member.email);
+    set('kv-phone',          member.phone);
+    set('kv-start-date',     member.startDate);
+
+    set('kv-role',           member.role);
+    set('kv-title',          member.title);
+    set('kv-primary-work',   member.primaryWork);
+
+    // DBS status as badge
+    var dbsEl = document.getElementById('kv-dbs-status');
+    if (dbsEl) {
+      dbsEl.innerHTML = '<span class="badge ' + dbsBadgeClass(member.dbsStatus) + '">' +
+        escapeHtml(dbsBadgeLabel(member.dbsStatus)) + '</span>';
+    }
+    set('kv-dbs-cert',       member.dbsCertNumber);
+    set('kv-dbs-issue',      member.dbsIssueDate);
+    set('kv-dbs-renewal',    member.dbsRenewalDue);
+    set('kv-dbs-update',     member.dbsUpdateService);
+
+    set('kv-notes',          member.notes);
+
+    // ── Training: dynamic rows from role-based course requirements ──────────
+    document.getElementById('log-training-link').href = 'training-record-create.html?personId=' + member.id;
+
+    function trainingStatusBadgeClass(status) {
+      return { 'Complete': 'green', 'Due soon': 'amber', 'Overdue': 'red', 'Not started': 'navy' }[status] || 'navy';
+    }
+
+    (function renderTrainingRows() {
+      var listEl = document.getElementById('training-rows-list');
+      if (!listEl || typeof getRequiredCoursesForPerson !== 'function') return;
+
+      var required = getRequiredCoursesForPerson(member, 'staff');
+      if (!required.length) {
+        listEl.innerHTML = '<p style="color:var(--ink-2);font-size:0.9rem;">No training requirements are defined for this role yet.</p>';
+        return;
+      }
+
+      listEl.innerHTML = required.map(function (r) {
+        var certPath = r.completion && r.completion.certificatePath;
+        var certLink = certPath
+          ? '<a href="' + escapeHtml(certPath) + '" target="_blank" rel="noopener noreferrer" class="training-row-cert">Download certificate</a>'
+          : '';
+        return '<div class="training-row">' +
+          '<div class="training-row-main">' +
+            '<div class="training-row-title">' + escapeHtml(r.course.title) + '</div>' +
+            '<div class="training-row-rule">' + escapeHtml(r.requirementRule) + (r.course.code ? ' · ' + escapeHtml(r.course.code) : '') + '</div>' +
+            certLink +
+          '</div>' +
+          '<div class="training-row-dates">' +
+            '<div><small>Completed</small><div>' + escapeHtml(r.completionDate || '—') + '</div></div>' +
+            '<div><small>Expires</small><div>' + escapeHtml(r.expiryDate || '—') + '</div></div>' +
+          '</div>' +
+          '<span class="badge ' + trainingStatusBadgeClass(r.status) + '">' + escapeHtml(r.status) + '</span>' +
+        '</div>';
+      }).join('');
+    })();
+
+    // Tab 2 — Emergency & Rota
+    set('kv-rota-assignment', member.emergencyRota);
+
+    // ── Tab switching ──────────────────────────────────────────────────────────
+    var tabButtons = document.querySelectorAll('.subnav button[data-tab]');
+    var tabPanels  = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var target = this.getAttribute('data-tab');
+        tabPanels.forEach(function (p) { p.classList.remove('active'); p.style.display = 'none'; });
+        tabButtons.forEach(function (b) { b.classList.remove('active'); });
+        var active = document.getElementById(target);
+        if (active) { active.classList.add('active'); active.style.display = 'block'; }
+        this.classList.add('active');
+      });
+    });
+
+    tabPanels.forEach(function (p) {
+      p.style.display = p.classList.contains('active') ? 'block' : 'none';
+    });
+
+    // ── Upload widget ──────────────────────────────────────────────────────────
+    function createUploadWidget(options) {
+      var key = options.storageKey;
+
+      function load() {
+        try { return JSON.parse(localStorage.getItem(key)) || []; } catch (e) { return []; }
+      }
+
+      function save(items) { localStorage.setItem(key, JSON.stringify(items)); }
+
+      function render() {
+        var items = load();
+        var list  = document.getElementById(options.listId);
+        if (!items.length) {
+          list.innerHTML = '<div class="doc-empty">' + (options.emptyText || 'No files uploaded yet.') + '</div>';
+          return;
+        }
+        list.innerHTML = items.map(function (item, i) {
+          return '<div class="doc-item">' +
+            '<div class="doc-item-info">' +
+              '<div class="doc-icon">' +
+                '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                  '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>' +
+                  '<polyline points="14 2 14 8 20 8"></polyline>' +
+                '</svg>' +
+              '</div>' +
+              '<div><div class="doc-item-name">' + escapeHtml(item.name) + '</div>' +
+              '<div class="doc-item-meta">Uploaded ' + item.date + '</div></div>' +
+            '</div>' +
+            '<button class="doc-remove" data-index="' + i + '" title="Remove">&#x2715;</button>' +
+          '</div>';
+        }).join('');
+        list.querySelectorAll('.doc-remove').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var items = load();
+            items.splice(parseInt(this.getAttribute('data-index'), 10), 1);
+            save(items); render();
+          });
+        });
+      }
+
+      document.getElementById(options.btnId).addEventListener('click', function () {
+        var nameInput = document.getElementById(options.nameInputId);
+        var fileInput = document.getElementById(options.fileInputId);
+        var name = nameInput.value.trim();
+        if (!name) { nameInput.style.borderColor = 'var(--red)'; nameInput.focus(); return; }
+        nameInput.style.borderColor = '';
+        var items = load();
+        items.push({ name: name, date: nowDate() });
+        save(items); render();
+        nameInput.value = ''; fileInput.value = '';
+      });
+
+      render();
+    }
+
+    createUploadWidget({
+      storageKey:  'staff_docs_' + member.id,
+      fileInputId: 'doc-file',
+      nameInputId: 'doc-name',
+      btnId:       'upload-btn',
+      listId:      'document-list',
+      emptyText:   'No documents uploaded yet. Use the form above to add files.'
+    });
+
+  
+    // ── Contracts ──────────────────────────────────────────────────────────────
+    function renderContracts() {
+      var contractsList = document.getElementById('contracts-list');
+      if (!contractsList) return;
+      var entityType = '';
+      var entityId = '';
+      if (typeof member !== 'undefined' && member.id) { entityType = 'Staff'; entityId = member.id; }
+      else if (typeof parentData !== 'undefined' && parentData.id) { entityType = 'Parent'; entityId = parentData.id; }
+      else if (typeof host !== 'undefined' && host.id) { entityType = 'Homestay'; entityId = host.id; }
+      
+      var contracts = typeof getContractsByEntity !== 'undefined' ? getContractsByEntity(entityType, entityId) : [];
+      if (!contracts.length) {
+        contractsList.innerHTML = '<div class="doc-empty">No contracts found for this profile.</div>';
+        return;
+      }
+      var html = '';
+      contracts.forEach(function(c) {
+        var statusColor = c.status === 'Active' ? 'green' : (c.status === 'Expiring Soon' ? 'amber' : (c.status === 'Draft' ? 'slate' : 'blue'));
+        html += '<div class="card" style="margin-bottom:16px;">' +
+                  '<div style="display:flex; justify-content:space-between; align-items:flex-start;">' +
+                    '<div>' +
+                      '<h4 style="margin:0 0 8px 0;">' + escapeHtml(c.title) + '</h4>' +
+                      '<p style="margin:0; font-size:0.9em; color:#3b536e;">Valid: ' + escapeHtml(c.validFrom || '—') + ' to ' + escapeHtml(c.validTo || '—') + '</p>' +
+                    '</div>' +
+                    '<span class="badge ' + statusColor + '">' + escapeHtml(c.status) + '</span>' +
+                  '</div>' +
+                  '<div style="margin-top:16px; display:flex; gap:8px;">' +
+                    '<button class="button-sm button-alt" onclick="updateContractStatus(\'' + c.id + '\', \'Awaiting Signature\')">Request Signature</button>' +
+                    '<button class="button-sm button" onclick="updateContractStatus(\'' + c.id + '\', \'Active\')">Upload Signed Copy</button>' +
+                    '<button class="button-sm button-alt" style="color:var(--red);" onclick="updateContractStatus(\'' + c.id + '\', \'Terminated\')">Terminate</button>' +
+                  '</div>' +
+                '</div>';
+      });
+      contractsList.innerHTML = html;
+    }
+    
+    window.updateContractStatus = function(cid, newStatus) {
+      if (typeof getContracts === 'undefined' || typeof saveContract === 'undefined') return;
+      var all = getContracts();
+      var c = all.find(function(x) { return x.id === cid; });
+      if (c) {
+        c.status = newStatus;
+        saveContract(c);
+        
+        // The saveContract function forces the status back to Draft if there is a safeguarding block.
+        // Let's re-fetch to see if our change was rejected.
+        var updatedAll = getContracts();
+        var updatedC = updatedAll.find(function(x) { return x.id === cid; });
+        if (updatedC && updatedC.status !== newStatus && newStatus === 'Active') {
+          alert('Safeguarding block! Cannot activate contract due to missing/expired compliance records.');
+        }
+        renderContracts();
+      }
+    };
+    renderContracts();
+\n  </script>
+
+  </body>
+</html>

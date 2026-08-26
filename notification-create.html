@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Custom Alert — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Form controls ──────────────────────────────────────────────────── */
+      .form-label {
+        display: block;
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-3, #6b85a0);
+        margin-bottom: 7px;
+      }
+      .form-label .form-hint {
+        text-transform: none;
+        letter-spacing: 0;
+        font-weight: 400;
+        margin-left: 6px;
+        color: var(--ink-3);
+      }
+      .form-input,
+      .form-select,
+      .form-textarea {
+        width: 100%;
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--ink, #0f2340);
+        background: #faf6ee;
+        border: 1px solid #d8cbb2;
+        border-radius: 14px;
+        padding: 11px 14px;
+        transition: border-color 0.15s, box-shadow 0.15s;
+        appearance: none;
+      }
+      .form-input:focus,
+      .form-select:focus,
+      .form-textarea:focus {
+        outline: none;
+        border-color: #2a6096;
+        box-shadow: 0 0 0 3px rgba(42, 96, 150, 0.12);
+      }
+      .form-select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b85a0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 36px;
+        cursor: pointer;
+      }
+      .form-textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+      .form-field { display: grid; gap: 0; }
+
+      /* ── Checkbox group ─────────────────────────────────────────────────── */
+      .checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .checkbox-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 16px;
+        background: #faf6ee;
+        border: 1px solid #d8cbb2;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--ink-2, #3b536e);
+        transition: background 0.14s, border-color 0.14s, color 0.14s;
+        user-select: none;
+      }
+      .checkbox-chip input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+        accent-color: #0f2340;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .checkbox-chip:has(input:checked) {
+        background: #e8eef6;
+        border-color: #2a6096;
+        color: #0f2340;
+      }
+      .checkbox-chip:has(input:disabled:not(:checked)) {
+        opacity: 0.42;
+        cursor: not-allowed;
+      }
+
+      /* ── Severity preview swatches ─────────────────────────────────────── */
+      .severity-swatch {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 6px;
+        vertical-align: middle;
+      }
+      .swatch-critical { background: #c0494e; }
+      .swatch-warning  { background: #d97706; }
+      .swatch-info     { background: #b07d1a; }
+
+      /* ── Toast ─────────────────────────────────────────────────────────── */
+      #toast {
+        position: fixed;
+        top: 28px;
+        right: 28px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 22px;
+        background: #13233c;
+        color: #fff8eb;
+        border-radius: 16px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        box-shadow: 0 12px 32px rgba(15,35,64,0.22);
+        opacity: 0;
+        transform: translateY(-12px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        pointer-events: none;
+      }
+      #toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      #toast .toast-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #4ade80;
+        flex-shrink: 0;
+      }
+
+      /* ── Error state ────────────────────────────────────────────────────── */
+      .field-error {
+        font-size: 0.82rem;
+        color: #7f3034;
+        margin-top: 5px;
+        display: none;
+      }
+      .field-error.visible { display: block; }
+      .form-input.invalid,
+      .form-select.invalid,
+      .form-textarea.invalid {
+        border-color: #c0494e;
+        box-shadow: 0 0 0 3px rgba(192, 73, 78, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small>Route /admin/notifications/create</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Alert Centre</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Custom notification</span>
+                <h2>Create a new alert.</h2>
+                <p>This alert will appear under each selected category in the Notifications centre.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="notifications.html">Cancel</a>
+              </div>
+            </div>
+
+            <div class="card" style="max-width:720px;">
+              <form id="create-form" novalidate>
+                <div style="display:grid;gap:20px;">
+
+                  <!-- Severity -->
+                  <div class="form-field">
+                    <label class="form-label" for="f-level">Severity</label>
+                    <select class="form-select" id="f-level" name="level">
+                      <option value="">Select severity…</option>
+                      <option value="critical">
+                        Critical (Red) — immediate action required
+                      </option>
+                      <option value="warning">
+                        Warning (Amber) — action needed soon
+                      </option>
+                      <option value="info">
+                        Info (Yellow) — for awareness only
+                      </option>
+                    </select>
+                    <span class="field-error" id="err-level">Please select a severity level.</span>
+                  </div>
+
+                  <!-- Target Categories -->
+                  <div class="form-field">
+                    <span class="form-label">
+                      Target Categories
+                      <span class="form-hint">— select up to 2</span>
+                    </span>
+                    <div class="checkbox-group" id="category-group">
+                      <label class="checkbox-chip">
+                        <input type="checkbox" name="category" value="staff"> Staff
+                      </label>
+                      <label class="checkbox-chip">
+                        <input type="checkbox" name="category" value="driver"> Drivers
+                      </label>
+                      <label class="checkbox-chip">
+                        <input type="checkbox" name="category" value="host"> Hosts
+                      </label>
+                      <label class="checkbox-chip">
+                        <input type="checkbox" name="category" value="student"> Students
+                      </label>
+                    </div>
+                    <span class="field-error" id="err-categories">Please select at least one category.</span>
+                  </div>
+
+                  <!-- Target User IDs -->
+                  <div class="form-field">
+                    <label class="form-label" for="f-person">
+                      Target User IDs
+                      <span class="form-hint">— optional, e.g. STU10492, HST2011</span>
+                    </label>
+                    <input
+                      class="form-input"
+                      type="text"
+                      id="f-person"
+                      name="person"
+                      placeholder="e.g. STU10492, HST2011"
+                    />
+                  </div>
+
+                  <!-- Issue Title -->
+                  <div class="form-field">
+                    <label class="form-label" for="f-field">Issue Title</label>
+                    <input
+                      class="form-input"
+                      type="text"
+                      id="f-field"
+                      name="field"
+                      placeholder="e.g. Missing Pocket Money"
+                    />
+                    <span class="field-error" id="err-field">Please enter an issue title.</span>
+                  </div>
+
+                  <!-- To-Do Action -->
+                  <div class="form-field">
+                    <label class="form-label" for="f-message">To-Do Action</label>
+                    <textarea
+                      class="form-textarea"
+                      id="f-message"
+                      name="message"
+                      placeholder="e.g. Contact parents to arrange top-up before Exeat."
+                    ></textarea>
+                    <span class="field-error" id="err-message">Please enter a to-do action.</span>
+                  </div>
+
+                </div>
+
+                <div class="action-row" style="margin-top:24px;">
+                  <a class="button-alt" href="notifications.html">Cancel</a>
+                  <button type="submit" class="button" id="submit-btn">Create Alert</button>
+                </div>
+              </form>
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Toast -->
+    <div id="toast">
+      <span class="toast-dot"></span>
+      <span id="toast-text">Alert created — redirecting…</span>
+    </div>
+
+    <script src="assets/db.js"></script>
+    <script>
+    (function () {
+
+      // ── Checkbox max-2 constraint ────────────────────────────────────────
+      var checkboxes = document.querySelectorAll('input[name="category"]');
+
+      function updateCheckboxStates() {
+        var checked = Array.prototype.filter.call(checkboxes, function (cb) { return cb.checked; });
+        checkboxes.forEach(function (cb) {
+          if (!cb.checked) cb.disabled = checked.length >= 2;
+        });
+      }
+
+      checkboxes.forEach(function (cb) {
+        cb.addEventListener('change', updateCheckboxStates);
+      });
+
+      // ── Validation ───────────────────────────────────────────────────────
+      function getCheckedCategories() {
+        return Array.prototype.filter.call(checkboxes, function (cb) { return cb.checked; })
+                                     .map(function (cb) { return cb.value; });
+      }
+
+      function clearErrors() {
+        document.querySelectorAll('.field-error').forEach(function (el) { el.classList.remove('visible'); });
+        document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(function (el) {
+          el.classList.remove('invalid');
+        });
+      }
+
+      function showError(errId, inputEl) {
+        document.getElementById(errId).classList.add('visible');
+        if (inputEl) inputEl.classList.add('invalid');
+      }
+
+      function validate() {
+        clearErrors();
+        var ok = true;
+
+        var level      = document.getElementById('f-level').value.trim();
+        var categories = getCheckedCategories();
+        var field      = document.getElementById('f-field').value.trim();
+        var message    = document.getElementById('f-message').value.trim();
+
+        if (!level) {
+          showError('err-level', document.getElementById('f-level'));
+          ok = false;
+        }
+        if (!categories.length) {
+          document.getElementById('err-categories').classList.add('visible');
+          ok = false;
+        }
+        if (!field) {
+          showError('err-field', document.getElementById('f-field'));
+          ok = false;
+        }
+        if (!message) {
+          showError('err-message', document.getElementById('f-message'));
+          ok = false;
+        }
+
+        return ok;
+      }
+
+      // ── Toast + redirect ─────────────────────────────────────────────────
+      function showToast(msg) {
+        var toast = document.getElementById('toast');
+        document.getElementById('toast-text').textContent = msg;
+        toast.classList.add('show');
+        setTimeout(function () {
+          window.location.href = 'notifications.html';
+        }, 1800);
+      }
+
+      // ── Save ─────────────────────────────────────────────────────────────
+      document.getElementById('create-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (!validate()) return;
+
+        var notif = {
+          level:      document.getElementById('f-level').value.trim(),
+          categories: getCheckedCategories(),
+          person:     document.getElementById('f-person').value.trim() || 'All',
+          field:      document.getElementById('f-field').value.trim(),
+          message:    document.getElementById('f-message').value.trim()
+        };
+
+        var existing = [];
+        try {
+          existing = JSON.parse(localStorage.getItem('og_custom_notifs')) || [];
+        } catch (err) {
+          existing = [];
+        }
+
+        existing.push(notif);
+        localStorage.setItem('og_custom_notifs', JSON.stringify(existing));
+
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').textContent = 'Saved…';
+
+        showToast('Alert created — redirecting to notifications…');
+      });
+
+    }());
+    </script>
+  </body>
+</html>

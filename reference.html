@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oxford Guardians Platform — Static App Prototype</title>
+    <meta name="description" content="Multi-page static app prototype for the Oxford Guardians Platform based on PRD.md." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="section hero">
+        <div>
+          <span class="eyebrow">Oxford Guardians / PRD-driven static prototype</span>
+          <h1>This is the web app the PRD was trying to describe.</h1>
+          <p class="lead">
+            Brutal version: the original single-file prototype was still too much of a presentation deck. This rebuild treats the PRD as an application map and turns it into route-based HTML pages with role-specific navigation, realistic data, and screens that behave like a real platform.
+          </p>
+          <div class="topnav">
+            <a class="current" href="index.html">Prototype home</a>
+            <a href="login.html">Login</a>
+            <a href="admin-dashboard.html">Admin dashboard</a>
+            <a href="users.html">Users</a>
+            <a href="students.html">Students</a>
+            <a href="homestays.html">Homestays</a>
+            <a href="travel.html">Travel</a>
+            <a href="documents.html">Documents</a>
+            <a href="parent-portal.html">Parent portal</a>
+            <a href="student-portal.html">Student portal</a>
+            <a href="compliance.html">Compliance</a>
+            <a href="emergency-procedures.html">Emergency</a>
+            <a href="welfare-notes.html">Safeguarding</a>
+            <a href="notifications.html">Notifications</a>
+          </div>
+        </div>
+        <aside class="note brutal">
+          <h4>Brutal product read</h4>
+          <ul>
+            <li>Notifications belong in Phase 1, not Phase 3.</li>
+            <li>The admin dashboard must prioritise risk, not vanity counts.</li>
+            <li>Student onboarding needs staged capture, or staff will hate it.</li>
+            <li>The parent portal should not drift into finance admin.</li>
+            <li>The student portal lives or dies on emergency visibility.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="section" style="padding: 28px;">
+        <div class="grid-3">
+          <article class="panel" style="padding: 22px;">
+            <span class="badge navy">Core routes</span>
+            <h3 style="margin: 12px 0;">Admin operations and access</h3>
+            <p class="lead" style="margin: 0 0 14px 0; font-size: 0.98rem;">Staff-facing screens for users, auth, students, homestays, travel, documents, compliance, and alerts.</p>
+            <div class="stack">
+              <a class="link-pill" href="admin-dashboard.html">Open dashboard</a>
+              <a class="link-pill" href="users.html">Open user directory</a>
+              <a class="link-pill" href="user-invite.html">Invite user</a>
+              <a class="link-pill" href="user-invite-success.html">Invite success</a>
+              <a class="link-pill" href="user-role-edit.html">Edit user role</a>
+              <a class="link-pill" href="students.html">Open student list</a>
+              <a class="link-pill" href="student-create.html">Create student</a>
+              <a class="link-pill" href="student-create-success.html">Student create success</a>
+              <a class="link-pill" href="student-edit.html">Edit student</a>
+              <a class="link-pill" href="student-edit-error.html">Student validation errors</a>
+              <a class="link-pill" href="student-archive.html">Archive student</a>
+              <a class="link-pill" href="student-delete.html">Delete student</a>
+              <a class="link-pill" href="homestays.html">Open homestay list</a>
+              <a class="link-pill" href="homestay-create.html">Create homestay</a>
+              <a class="link-pill" href="hosts.html?status=pending">Approve homestay</a>
+              <a class="link-pill" href="homestay-archive.html">Archive homestay</a>
+              <a class="link-pill" href="homestay-edit.html">Edit homestay</a>
+              <a class="link-pill" href="host-delete.html">Delete host</a>
+            </div>
+          </article>
+          <article class="panel" style="padding: 22px;">
+            <span class="badge amber">Family-facing</span>
+            <h3 style="margin: 12px 0;">Parent and student routes</h3>
+            <p class="lead" style="margin: 0 0 14px 0; font-size: 0.98rem;">Separated portals with different priorities, language, and levels of complexity.</p>
+            <div class="stack">
+              <a class="link-pill" href="parent-portal.html">Open parent portal</a>
+              <a class="link-pill" href="parent-consent-update.html">Parent consent update</a>
+              <a class="link-pill" href="parent-consent-success.html">Parent consent success</a>
+              <a class="link-pill" href="student-portal.html">Open student portal</a>
+              <a class="link-pill" href="student-checkin-submit.html">Student check-in flow</a>
+              <a class="link-pill" href="student-checkin-success.html">Student check-in success</a>
+              <a class="link-pill" href="student-concern-submit.html">Student concern flow</a>
+              <a class="link-pill" href="student-concern-success.html">Student concern success</a>
+              <a class="link-pill" href="login.html">Open login gateway</a>
+              <a class="link-pill" href="first-login-setup.html">First login setup</a>
+              <a class="link-pill" href="password-reset-request.html">Password reset request</a>
+              <a class="link-pill" href="password-reset-sent.html">Password reset sent</a>
+              <a class="link-pill" href="account-lockout.html">Account lockout</a>
+            </div>
+          </article>
+          <article class="panel" style="padding: 22px;">
+            <span class="badge green">AEGIS-heavy</span>
+            <h3 style="margin: 12px 0;">Compliance routes</h3>
+            <p class="lead" style="margin: 0 0 14px 0; font-size: 0.98rem;">DBS tracking, training records, policy reviews, SCR excerpts, and alert logic.</p>
+            <div class="stack">
+              <a class="link-pill" href="compliance.html">Open compliance control room</a>
+              <a class="link-pill" href="compliance-edit.html">Edit compliance threshold</a>
+              <a class="link-pill" href="compliance-delete-blocked.html">Deletion blocked state</a>
+              <a class="link-pill" href="documents.html">Open document library</a>
+              <a class="link-pill" href="document-create.html">Create document record</a>
+              <a class="link-pill" href="document-approve.html">Approve document</a>
+              <a class="link-pill" href="document-validation.html">Document validation errors</a>
+              <a class="link-pill" href="document-edit.html">Edit document record</a>
+              <a class="link-pill" href="document-delete.html">Delete document record</a>
+              <a class="link-pill" href="travel-success.html">Travel success state</a>
+              <a class="link-pill" href="travel-validation.html">Travel validation errors</a>
+              <a class="link-pill" href="school-liaison.html">School liaison log</a>
+              <a class="link-pill" href="school-log-create.html">Create school log entry</a>
+              <a class="link-pill" href="school-log-success.html">School log success</a>
+              <a class="link-pill" href="exeat-approval.html">Exeat approval review</a>
+              <a class="link-pill" href="exeat-validation.html">Exeat blocked state</a>
+              <a class="link-pill" href="handoff-record.html">Handoff record</a>
+              <a class="link-pill" href="school-service-confirmation.html">School service confirmation</a>
+              <a class="link-pill" href="notifications.html">Open alert centre</a>
+              <a class="link-pill" href="notification-create.html">Create alert rule</a>
+              <a class="link-pill" href="notification-validation.html">Alert rule validation</a>
+              <a class="link-pill" href="notification-edit.html">Edit alert rule</a>
+              <a class="link-pill" href="notification-delete.html">Delete alert rule</a>
+              <a class="link-pill" href="welfare-notes.html">Welfare notes</a>
+              <a class="link-pill" href="welfare-note-create.html">Create welfare note</a>
+              <a class="link-pill" href="welfare-note-success.html">Welfare note success</a>
+              <a class="link-pill" href="concerns-low-level.html">Low-level concerns</a>
+              <a class="link-pill" href="low-level-concern-create.html">Create low-level concern</a>
+              <a class="link-pill" href="concerns-escalated.html">Escalated concerns</a>
+              <a class="link-pill" href="concern-case.html">Safeguarding case</a>
+              <a class="link-pill" href="concern-close.html">Close concern</a>
+              <a class="link-pill" href="mental-health-referral.html">Mental health referral</a>
+              <a class="link-pill" href="host-profile.html?tab=visits">Homestay initial assessment</a>
+              <a class="link-pill" href="host-profile.html?tab=visits">Create assessment</a>
+              <a class="link-pill" href="homestay-visit.html">Annual visit log</a>
+              <a class="link-pill" href="homestay-visit-report.html">Log annual visit</a>
+              <a class="link-pill" href="homestay-visit-success.html">Visit success</a>
+              <a class="link-pill" href="homestay-hs-checklist.html">H&S checklist</a>
+              <a class="link-pill" href="homestay-incidents.html">Incident log</a>
+              <a class="link-pill" href="homestay-incident-create.html">Log accident</a>
+              <a class="link-pill" href="training-log.html">Training log</a>
+              <a class="link-pill" href="training-record-create.html">Log training</a>
+              <a class="link-pill" href="training-record-success.html">Training success</a>
+              <a class="link-pill" href="induction-checklist.html">Induction tracker</a>
+              <a class="link-pill" href="induction-create.html">Log induction</a>
+              <a class="link-pill" href="private-fostering.html">Private fostering</a>
+              <a class="link-pill" href="private-fostering-notification.html">Notify LA</a>
+              <a class="link-pill" href="private-fostering-success.html">LA notification success</a>
+              <a class="link-pill" href="emergency-procedures.html">Emergency</a>
+              <a class="link-pill" href="emergency-incident.html">Log emergency incident</a>
+              <a class="link-pill" href="emergency-incident-success.html">Incident success</a>
+              <a class="link-pill" href="scr-dashboard.html">SCR Dashboard</a>
+              <a class="link-pill" href="audit-log.html">Audit trail</a>
+              <a class="link-pill" href="reporting-dashboard.html">Reporting dashboard</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" style="padding: 28px;">
+        <div class="grid-2">
+          <div class="note safe">
+            <h4>What changed from the first attempt</h4>
+            <ul>
+              <li>Moved from one showcase page to separate app-like routes.</li>
+              <li>Added shared visual system so pages feel like one product.</li>
+              <li>Split parent and student views instead of burying them in admin-heavy layouts.</li>
+              <li>Used route names that match actual navigation, not just epic names.</li>
+            </ul>
+          </div>
+          <div class="note">
+            <h4>Static constraints preserved</h4>
+            <ul>
+              <li>No JavaScript.</li>
+              <li>No animations, transitions, hover changes, or sticky behaviour.</li>
+              <li>No hidden content or collapsed sections.</li>
+              <li>Everything visible on load across all routes.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

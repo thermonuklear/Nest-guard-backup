@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>School Welfare &amp; Incident Notification — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      #student-selector,
+      #input-type {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1.5px solid #d1dbe7;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        color: #0f172a;
+        background: #fff;
+        outline: none;
+        cursor: pointer;
+        appearance: auto;
+      }
+      #student-selector:focus,
+      #input-type:focus { border-color: #06b6d4; }
+      #input-details {
+        width: 100%;
+        resize: vertical;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/communications/school-welfare-notification</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>School Liaison</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="schools.html">Schools</a>
+              <a class="nav-link nav-link-sub" href="school-liaison.html">Communication log</a>
+              <a class="nav-link nav-link-sub" href="school-log-create.html">Log contact</a>
+              <a class="nav-link nav-link-sub active" href="school-welfare-notification.html">Welfare notification</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">School Welfare &amp; Incident Notification</span>
+                <h2>This generates the message. You still have to send it.</h2>
+                <p>The system prepares the school notification, but submission is your responsibility. Generating this also logs the communication automatically for Standards 9.2 and 9.6 compliance.</p>
+              </div>
+            </div>
+            <div class="card">
+              <h4>Notification details</h4>
+              <div class="form-grid">
+                <div>
+                  <label>Student</label>
+                  <select id="student-selector"><option value="">— Select a student —</option></select>
+                </div>
+                <div>
+                  <label>Date of Event</label>
+                  <input type="date" id="input-date" />
+                </div>
+                <div class="form-span-2">
+                  <label>Type</label>
+                  <select id="input-type">
+                    <option value="">— Select type —</option>
+                    <option value="Welfare Update">Welfare Update</option>
+                    <option value="Incident Report">Incident Report</option>
+                    <option value="Medication Change">Medication Change</option>
+                  </select>
+                </div>
+                <div class="form-span-2">
+                  <label>Details</label>
+                  <textarea id="input-details" class="textarea-box" rows="6" placeholder="Describe the welfare update, incident, or medication change in detail…"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="action-row">
+              <button id="btn-generate" class="button">📋 Generate &amp; Copy Email</button>
+              <a class="button-alt" href="school-liaison.html">Cancel</a>
+            </div>
+            <div class="note brutal" style="margin-top:24px;">
+              <h4>Standards 9.2 and 9.6</h4>
+              <ul>
+                <li>All welfare concerns and incidents must be communicated to the student's school promptly.</li>
+                <li>The communication must be logged, timestamped, and attributed to a named staff member.</li>
+                <li>Generating this notification automatically creates a record in the School Liaison log.</li>
+                <li>Keep a copy of the sent message and any school response as part of the student record.</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      var selector = document.getElementById('student-selector');
+      getAllStudents().forEach(function (s) {
+        var opt = document.createElement('option');
+        opt.value       = s.id;
+        opt.textContent = s.firstName + ' ' + s.lastName + (s.school ? ' (' + s.school + ')' : '');
+        selector.appendChild(opt);
+      });
+
+      document.getElementById('btn-generate').addEventListener('click', function () {
+        var btn         = this;
+        var studentId   = selector.value;
+        var student     = studentId ? getStudentById(studentId) : null;
+        var studentName = student ? student.firstName + ' ' + student.lastName : '—';
+        var school      = student ? (student.school || '—') : '—';
+        var date        = document.getElementById('input-date').value || '—';
+        var type        = document.getElementById('input-type').value || '—';
+        var details     = document.getElementById('input-details').value.trim() || '—';
+
+        var msg =
+          '🏫 *School Welfare & Incident Notification*\n' +
+          '*From:* Oxford Guardians (compliance@oxfordguardians.co.uk)\n' +
+          '*To:* ' + school + ' — pastoral / safeguarding team\n\n' +
+          '👤 *Student:* ' + studentName + '\n' +
+          '📅 *Date of Event:* ' + date + '\n' +
+          '📋 *Notification Type:* ' + type + '\n\n' +
+          '📝 *Details:*\n' + details + '\n\n' +
+          'This notification has been logged in the Oxford Guardians School Liaison record ' +
+          'for Standards 9.2 and 9.6 compliance. Please acknowledge receipt by return.\n\n' +
+          'Oxford Guardians\n' +
+          'compliance@oxfordguardians.co.uk';
+
+        var today    = new Date();
+        var todayStr = today.getFullYear() + '-' +
+                       String(today.getMonth() + 1).padStart(2, '0') + '-' +
+                       String(today.getDate()).padStart(2, '0');
+
+        navigator.clipboard.writeText(msg).then(function () {
+          saveSchoolLog({
+            studentId:    studentId,
+            studentName:  studentName,
+            contactType:  type,
+            date:         date,
+            summaryNotes: details,
+            status:       'Pending',
+            loggedAt:     today.toISOString(),
+            source:       'School Welfare & Incident Notification generator'
+          });
+
+          var orig = btn.innerHTML;
+          btn.innerHTML         = '✅ Copied to Clipboard';
+          btn.style.background  = '#d1fae5';
+          btn.style.borderColor = '#065f46';
+          btn.style.color       = '#065f46';
+          setTimeout(function () {
+            btn.innerHTML         = orig;
+            btn.style.background  = '';
+            btn.style.borderColor = '';
+            btn.style.color       = '';
+          }, 2500);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parent Portal — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+    <style>
+      .student-switcher {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 14px;
+      }
+      .student-switcher label {
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--ink-3);
+      }
+      .student-switcher select {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.86rem;
+        font-weight: 600;
+        color: var(--ink);
+        background: #fffdf9;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 6px 30px 6px 12px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="section hero">
+        <div>
+          <span class="eyebrow">Parent portal</span>
+          <h1>Calm, accountable, and limited on purpose.</h1>
+          <p class="lead">Parent-facing design should reduce anxiety, not imitate admin software. Show the child’s current reality, recent welfare communication, consent status, and emergency pathway. Nothing more than they actually need.</p>
+          <div class="topnav">
+            <a href="index.html">Prototype home</a>
+            <a href="login.html">Login</a>
+            <a class="current" href="parent-portal.html">Parent portal</a>
+            <a href="parent-consent-update.html">Update consent</a>
+            <a href="student-portal.html">Student portal</a>
+          </div>
+          <div class="student-switcher">
+            <label for="portal-student-switcher">Viewing as</label>
+            <select id="portal-student-switcher"></select>
+          </div>
+        </div>
+        <aside class="note brutal">
+          <h4>Brutal product note</h4>
+          <p>“Expense statements” in the PRD feel bolted on. If payments are out of scope, this portal should stay focused on welfare, records, and trust signals.</p>
+        </aside>
+      </section>
+
+      <section class="section" style="padding: 28px;">
+        <div class="banner green" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <h4 style="margin:0 0 4px 0;">24/7 Dedicated Emergency Contact</h4>
+            <p style="margin:0;">Oxford Guardians 24-Hour Emergency Line: <strong id="portal-emg-phone">+44 7700 900 999</strong> (Manned 24/7 by DBS-checked team).</p>
+          </div>
+          <div id="emg-ack-container">
+            <button type="button" class="button" id="btn-ack-emg" style="background:#166534; border-color:#166534; font-size:0.84rem; padding:8px 14px; cursor:pointer;">
+              ✓ Confirm Receipt of Emergency Number
+            </button>
+          </div>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <h4>Your child</h4>
+            <div class="kv">
+              <div class="kv-row"><small>Student</small><div id="pp-child-name">—</div></div>
+              <div class="kv-row"><small>School</small><div id="pp-child-school">—</div></div>
+              <div class="kv-row"><small>Current placement</small><div>
+                <div id="pp-child-placement">—</div>
+                <a href="#" id="pp-view-homestay-link" target="_blank" style="display:none; align-items:center; gap:4px; margin-top:6px; font-size:0.82rem; font-weight:700; color:#0284c7; text-decoration:none;">
+                  <span>🏠</span> View Host Family Profile &rarr;
+                </a>
+              </div></div>
+              <div class="kv-row"><small>Named guardian</small><div id="pp-child-guardian">—</div></div>
+            </div>
+          </article>
+          <article class="card">
+            <h4>Current status</h4>
+            <div class="list">
+              <div class="list-item"><strong>Student settled at school</strong><small>Last welfare check-in completed 03 Apr 2026</small></div>
+              <div class="list-item"><strong>Next travel event</strong><small>18 Apr / Heathrow arrival / pickup being finalised</small></div>
+              <div class="list-item"><strong>Medical note</strong><small>Asthma plan and peanut allergy shared with school and homestay</small></div>
+            </div>
+          </article>
+          <article class="card">
+            <h4>Consent tracker</h4>
+            <div class="list">
+              <div class="list-item"><strong>Medical emergency consent</strong><small>Signed / 02 Sep 2025</small></div>
+              <div class="list-item"><strong>Travel consent</strong><small>Signed / 02 Sep 2025</small></div>
+              <div class="list-item"><strong>Photography consent</strong><small>Declined</small></div>
+              <div class="list-item"><strong>Data sharing consent</strong><small>Signed / reviewed on latest contract update</small></div>
+            </div>
+          </article>
+        </div>
+        <div class="cols-2" style="margin-top:16px;">
+          <article class="card">
+            <h4>Welfare update feed</h4>
+            <div class="timeline">
+              <div class="timeline-item"><time>03 Apr</time><div><strong>Student check-in logged</strong><small>Yuki reported feeling settled after returning to school.</small></div></div>
+              <div class="timeline-item"><time>28 Mar</time><div><strong>Pastoral note shared</strong><small>Brief homesickness reported. Follow-up completed and no further escalation required at present.</small></div></div>
+              <div class="timeline-item"><time>15 Mar</time><div><strong>Weekend stay summary</strong><small>Ashworth family confirmed positive stay and normal school return.</small></div></div>
+            </div>
+          </article>
+          <article class="card">
+            <h4>Document access</h4>
+            <div class="list">
+              <div class="list-item"><strong>Parent Handbook</strong><small>Approved v1.2</small></div>
+              <div class="list-item"><strong>Safeguarding Policy</strong><small>Approved v2.3</small></div>
+              <div class="list-item"><strong>Complaints Policy</strong><small>Approved v1.4</small></div>
+              <div class="list-item"><strong>Student travel brief</strong><small>Available once final pickup confirmation is sent</small></div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        function esc(s) {
+          return String(s == null ? '' : s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+        }
+
+        var allStudents = getAllStudents();
+        var params      = new URLSearchParams(window.location.search);
+        var studentId   = params.get('id') || (allStudents[0] && allStudents[0].id) || '';
+        var student     = studentId ? getStudentById(studentId) : null;
+
+        // ── Student switcher ────────────────────────────────────────────────────
+        var switcherSel = document.getElementById('portal-student-switcher');
+        allStudents.forEach(function (s) {
+          var opt = document.createElement('option');
+          opt.value = s.id;
+          opt.textContent = s.firstName + ' ' + s.lastName + ' (' + s.id + ')';
+          if (s.id === studentId) opt.selected = true;
+          switcherSel.appendChild(opt);
+        });
+        switcherSel.addEventListener('change', function () {
+          window.location.href = 'parent-portal.html?id=' + this.value;
+        });
+
+        // ── Named guardian / 24-hour emergency line (DSL on duty) ──────────────
+        var dsl = getAllStaff().find(function (s) { return /DSL/i.test(s.role || ''); });
+        var emgPhone = dsl ? dsl.phone : '+44 7700 900 999';
+        document.getElementById('portal-emg-phone').textContent = emgPhone;
+
+        // ── Your child card ──────────────────────────────────────────────────────
+        if (student) {
+          document.getElementById('pp-child-name').textContent = student.firstName + ' ' + student.lastName;
+          document.getElementById('pp-child-school').textContent =
+            student.school + (student.schoolYear ? ' / ' + student.schoolYear : '');
+
+          var homestays = getHomestaysForStudent(student.id);
+          var placementText = 'No homestay currently linked to this student.';
+          var homestayLink = document.getElementById('pp-view-homestay-link');
+          if (homestays.length) {
+            var host = homestays[0];
+            placementText = host.firstName + ' ' + host.lastName + ' Family' + (host.address ? ' / ' + host.address : '');
+            homestayLink.href = 'homestay-profile-view.html?id=' + encodeURIComponent(host.id);
+            homestayLink.style.display = 'inline-flex';
+          } else {
+            homestayLink.style.display = 'none';
+          }
+          document.getElementById('pp-child-placement').textContent = placementText;
+
+          document.getElementById('pp-child-guardian').textContent =
+            dsl ? (dsl.firstName + ' ' + dsl.lastName + ' / ' + (dsl.title || dsl.role)) : 'Jay Ray / DSL';
+        } else {
+          ['pp-child-name', 'pp-child-school', 'pp-child-placement', 'pp-child-guardian'].forEach(function (id) {
+            document.getElementById(id).textContent = 'No student selected.';
+          });
+          document.getElementById('pp-view-homestay-link').style.display = 'none';
+        }
+
+        // ── 24/7 emergency number acknowledgement (AEGIS Standard 2.6.1) ───────
+        var ackBtn       = document.getElementById('btn-ack-emg');
+        var ackContainer = document.getElementById('emg-ack-container');
+
+        function renderAckState() {
+          if (student && student.emergencyNumberIssued) {
+            var confirmedDate = student.emergencyNumberIssuedDate || new Date().toISOString().slice(0, 10);
+            ackContainer.innerHTML =
+              '<span class="badge green" style="font-size:0.84rem; font-weight:700;">✓ Emergency Number Receipt Confirmed on ' +
+              esc(confirmedDate) + '</span>';
+          }
+        }
+        renderAckState();
+
+        if (ackBtn) {
+          ackBtn.addEventListener('click', function () {
+            if (!student) return;
+
+            OG_DB.recordEmergencyNumberIssued('parent', student.id);
+
+            saveWelfareLog({
+              id:        'WL' + Date.now(),
+              studentId: student.id,
+              type:      'parent-emergency-ack',
+              date:      new Date().toISOString().slice(0, 10),
+              summary:   '24/7 emergency number receipt confirmed by parent',
+              details:   'Parent confirmed receipt of the 24-hour emergency contact number (' + emgPhone +
+                         ') via the parent portal, evidencing AEGIS Standard 2.6.1 issuance.'
+            });
+
+            student = getStudentById(student.id);
+            renderAckState();
+          });
+        }
+      }());
+    </script>
+  </body>
+</html>

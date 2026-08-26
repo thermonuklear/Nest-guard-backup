@@ -1,0 +1,1580 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Policy Store &amp; Statutory Governance — Oxford Guardians</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <!-- Mammoth.js for client-side Word .docx reading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <!-- PDF.js for client-side PDF text extraction -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+      if (window['pdfjsLib']) {
+        window['pdfjsLib'].GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      }
+    </script>
+    <style>
+      body { background: #f0f4f8; color: #0f2340; font-family: "Plus Jakarta Sans", sans-serif; }
+      .app-frame { background: #f8fafc; border-color: #d5dce8; box-shadow: 0 20px 40px rgba(15,35,64,0.08); }
+      .chrome { background: #e8eef6; border-bottom-color: #d5dce8; display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; }
+      .chrome small { color: #3b536e; }
+      .dots span { background: #7b9abf; }
+      
+      .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%); color: #edf2fa; padding: 24px 18px; display: grid; align-content: start; gap: 16px; }
+      .brand { padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .brand small { display: block; text-transform: uppercase; letter-spacing: 0.1em; color: #7fb3d3; margin-bottom: 6px; }
+      .brand strong { font-family: "Outfit", sans-serif; color: #e8f0fa; font-size: 1.3rem; }
+      
+      .nav-group { display: grid; gap: 3px; }
+      .nav-label { color: #7b9abf; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; padding: 8px 10px 4px; }
+      .nav-link { display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; border-radius: 10px; color: #c8d8ee; text-decoration: none; font-size: 0.9rem; transition: all 0.15s; }
+      .nav-link:hover { background: rgba(255,255,255,0.08); color: #ffffff; }
+      .nav-link.active { background: rgba(255,255,255,0.14); color: #ffffff; font-weight: 600; border-left: 3px solid #38bdf8; border-radius: 4px 10px 10px 4px; }
+      
+      .nav-folder { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px 8px 18px; border-radius: 8px; color: #a8bfd6; text-decoration: none; font-size: 0.85rem; transition: all 0.15s; }
+      .nav-folder:hover { background: rgba(255,255,255,0.06); color: #e2e8f0; }
+      .nav-folder.active { background: rgba(56, 189, 248, 0.15); color: #38bdf8; font-weight: 600; border-left: 3px solid #38bdf8; border-radius: 0 8px 8px 0; }
+      .nav-count { font-size: 0.72rem; background: rgba(255,255,255,0.12); padding: 1px 7px; border-radius: 10px; color: #cbd5e1; }
+      .nav-folder.active .nav-count { background: rgba(56, 189, 248, 0.25); color: #38bdf8; }
+
+      .main { background: #f0f4f8; padding: 24px; }
+      
+      .button { background: #0f2340; border: 1px solid #0f2340; color: #ffffff; padding: 9px 16px; border-radius: 8px; font-weight: 600; font-size: 0.88rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; }
+      .button:hover { background: #1a3a60; border-color: #1a3a60; }
+      .button-alt { background: #ffffff; border: 1px solid #d5dce8; color: #0f2340; padding: 9px 16px; border-radius: 8px; font-weight: 600; font-size: 0.88rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; }
+      .button-alt:hover { background: #edf2f8; border-color: #b0c4de; }
+      .button-primary { background: #0284c7; border: 1px solid #0284c7; color: #ffffff; padding: 9px 16px; border-radius: 8px; font-weight: 600; font-size: 0.88rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(2,132,199,0.25); transition: all 0.15s; }
+      .button-primary:hover { background: #0369a1; }
+      .button-danger { background: #ef4444; border: 1px solid #ef4444; color: #ffffff; padding: 9px 16px; border-radius: 8px; font-weight: 600; font-size: 0.88rem; cursor: pointer; text-decoration: none; }
+      .button-danger:hover { background: #dc2626; }
+      .button-sm { padding: 6px 12px; font-size: 0.8rem; border-radius: 6px; }
+
+      .badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px; font-size: 0.76rem; font-weight: 700; gap: 4px; }
+      .badge.green { background: #d1fae5; color: #065f46; }
+      .badge.amber { background: #fef3c7; color: #92400e; }
+      .badge.red   { background: #fee2e2; color: #991b1b; }
+      .badge.blue  { background: #dbeafe; color: #1e40af; }
+      .badge.purple { background: #f3e8ff; color: #6b21a8; }
+      .badge.slate { background: #f1f5f9; color: #475569; }
+
+      /* Cards Grid */
+      .policy-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-top: 18px; }
+      .policy-card { background: #ffffff; border: 1px solid #d5dce8; border-radius: 14px; padding: 20px; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 6px rgba(15,35,64,0.02); }
+      .policy-card:hover { transform: translateY(-2px); border-color: #0284c7; box-shadow: 0 8px 20px rgba(15,35,64,0.06); }
+      .policy-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+      .policy-card-title { font-family: "Outfit", sans-serif; font-size: 1.1rem; color: #0f2340; margin: 0 0 4px; font-weight: 700; line-height: 1.3; }
+      .policy-card-code { font-size: 0.78rem; font-weight: 700; color: #0284c7; background: #e0f2fe; padding: 2px 8px; border-radius: 4px; display: inline-block; }
+      .policy-card-desc { font-size: 0.85rem; color: #475569; line-height: 1.5; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+      .policy-card-footer { border-top: 1px solid #f1f5f9; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+
+      /* Empty State */
+      .empty-state { background: #ffffff; border: 2px dashed #cbd5e1; border-radius: 16px; padding: 60px 30px; text-align: center; margin-top: 20px; }
+      .empty-svg-icon { display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 16px; background: #f0f7ff; color: #0284c7; margin-bottom: 16px; }
+      .empty-state h3 { font-family: "Outfit", sans-serif; font-size: 1.4rem; color: #0f2340; margin-bottom: 8px; }
+      .empty-state p { color: #64748b; font-size: 0.95rem; max-width: 520px; margin: 0 auto 24px; line-height: 1.6; }
+
+      /* Reader Paper View */
+      .reader-paper { background: #ffffff; border: 1px solid #d5dce8; border-radius: 16px; padding: 40px 48px; box-shadow: 0 4px 16px rgba(15,35,64,0.04); max-width: 900px; margin: 0 auto; }
+      .reader-paper h1 { font-family: "Outfit", sans-serif; font-size: 1.85rem; color: #0f2340; margin: 0 0 8px; }
+      .reader-meta-bar { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 18px; margin: 20px 0 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+      .meta-item small { display: block; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin-bottom: 2px; }
+      .meta-item strong { font-size: 0.88rem; color: #0f2340; }
+      .document-content { font-size: 0.96rem; line-height: 1.75; color: #1e293b; }
+      .document-content h2 { font-family: "Outfit", sans-serif; font-size: 1.3rem; color: #0f2340; margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid #e2e8f0; }
+      .document-content h3 { font-family: "Outfit", sans-serif; font-size: 1.1rem; color: #1e293b; margin: 20px 0 8px; }
+      .document-content p { margin-bottom: 14px; }
+      .document-content ul, .document-content ol { margin: 0 0 16px 24px; }
+      .document-content li { margin-bottom: 6px; }
+
+      /* History Timeline */
+      .history-timeline { position: relative; padding-left: 28px; margin-top: 20px; }
+      .history-timeline::before { content: ""; position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px; background: #cbd5e1; }
+      .history-item { position: relative; margin-bottom: 24px; }
+      .history-dot { position: absolute; left: -28px; top: 4px; width: 18px; height: 18px; border-radius: 50%; background: #0284c7; border: 3px solid #ffffff; box-shadow: 0 0 0 2px #0284c7; }
+      .history-card { background: #ffffff; border: 1px solid #d5dce8; border-radius: 12px; padding: 18px 20px; }
+
+      /* Modal */
+      .modal-backdrop { position: fixed; inset: 0; background: rgba(15,35,64,0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+      .modal-backdrop.open { display: flex; }
+      .modal-window { background: #ffffff; border-radius: 18px; width: 100%; max-width: 720px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px rgba(15,35,64,0.25); display: flex; flex-direction: column; }
+      .modal-header { padding: 20px 24px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: #ffffff; z-index: 2; }
+      .modal-header h3 { font-family: "Outfit", sans-serif; font-size: 1.25rem; color: #0f2340; margin: 0; }
+      .modal-body { padding: 24px; display: grid; gap: 16px; }
+      .modal-footer { padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: flex-end; gap: 10px; background: #f8fafc; border-radius: 0 0 18px 18px; position: sticky; bottom: 0; }
+
+      .form-group { display: grid; gap: 6px; }
+      .form-group label { font-size: 0.84rem; font-weight: 700; color: #1e293b; }
+      .form-control { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 0.9rem; color: #0f2340; background: #ffffff; outline: none; }
+      .form-control:focus { border-color: #0284c7; box-shadow: 0 0 0 3px rgba(2,132,199,0.15); }
+      .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      
+      .upload-dropzone { border: 2px dashed #93c5fd; background: #f0f7ff; border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s ease; }
+      .upload-dropzone:hover { background: #e0f2fe; border-color: #0284c7; }
+
+      /* Statutory Manifest */
+      .manifest-item { background: #ffffff; border: 1px solid #d5dce8; border-radius: 14px; padding: 18px 20px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+      .manifest-item.missing { border-color: #fecaca; background: #fef7f7; }
+      .manifest-item-num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 8px; background: #eef2f8; color: #475569; font-size: 0.78rem; font-weight: 800; flex-shrink: 0; }
+      .manifest-item-title { font-family: "Outfit", sans-serif; font-weight: 700; color: #0f2340; font-size: 1rem; margin-bottom: 3px; }
+      .manifest-item-ref { font-size: 0.78rem; color: #64748b; }
+
+      /* Top-bar toggle switch */
+      .toggle-switch-wrap { display: flex; align-items: center; gap: 8px; }
+      .toggle-switch { position: relative; width: 40px; height: 22px; background: #cbd5e1; border-radius: 999px; cursor: pointer; transition: background 0.2s; flex-shrink: 0; border: none; padding: 0; }
+      .toggle-switch.on { background: #0284c7; }
+      .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #ffffff; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+      .toggle-switch.on::after { transform: translateX(18px); }
+
+      /* Acknowledgement panel */
+      .ack-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 20px 22px; margin-top: 28px; }
+      .ack-bar-track { width: 100%; height: 10px; border-radius: 999px; background: #e2e8f0; overflow: hidden; margin: 10px 0 14px; }
+      .ack-bar-fill { height: 100%; background: linear-gradient(90deg, #0284c7, #38bdf8); border-radius: 999px; transition: width 0.3s; }
+      .ack-people-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+      .ack-chip { font-size: 0.76rem; padding: 3px 9px; border-radius: 999px; background: #ffffff; border: 1px solid #e2e8f0; color: #334155; }
+
+      /* Public surface view */
+      .public-banner { background: linear-gradient(135deg, #0f2340, #1a3a60); color: #ffffff; border-radius: 16px; padding: 24px 28px; margin-bottom: 20px; }
+      .public-banner h2 { font-family: "Outfit", sans-serif; color: #ffffff; margin: 0 0 6px; }
+      .public-banner p { color: #c8d8ee; margin: 0; }
+      .public-doc-card { background: #ffffff; border: 1px solid #d5dce8; border-radius: 14px; padding: 22px; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small id="chrome-route">Route /governance/policy-store</small>
+          <div class="toggle-switch-wrap">
+            <small style="color:#3b536e; font-weight: 600;">Public Surface View</small>
+            <button class="toggle-switch" id="public-surface-toggle" onclick="togglePublicSurface()" title="Show only documents marked Public — the view prospective parents, schools and inspectors see"></button>
+          </div>
+        </div>
+        <div class="shell">
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Policy Store</strong>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Navigation</div>
+              <a class="nav-link" href="admin-dashboard.html">
+                <span>&larr; Admin Dashboard</span>
+              </a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Compliance &amp; IT</div>
+              <a class="nav-link" href="compliance.html">
+                <span>AEGIS Control Room</span>
+              </a>
+              <a class="nav-link" href="it-control-room.html">
+                <span>IT Control Room</span>
+              </a>
+              <a class="nav-link" href="organisation-profile.html">
+                <span>Organisation &amp; Governance</span>
+              </a>
+              <a class="nav-link" href="complaints.html">
+                <span>Complaints Register</span>
+              </a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Statutory Policies</div>
+              <a class="nav-link" id="nav-manifest" href="javascript:void(0)" onclick="switchView('manifest')">
+                <span>Statutory Manifest</span>
+                <span class="nav-count" id="count-manifest-missing">0</span>
+              </a>
+              <a class="nav-link" id="nav-all-policies" href="javascript:void(0)" onclick="switchView('category', 'all')">
+                <span>All Policies</span>
+                <span class="nav-count" id="count-all">0</span>
+              </a>
+              <a class="nav-folder" id="nav-cat-cg" href="javascript:void(0)" onclick="switchView('category', 'Complaints & governance')">
+                <span>Complaints &amp; governance</span>
+                <span class="nav-count" id="count-cg">0</span>
+              </a>
+              <a class="nav-folder" id="nav-cat-dp" href="javascript:void(0)" onclick="switchView('category', 'Data protection & privacy')">
+                <span>Data protection &amp; privacy</span>
+                <span class="nav-count" id="count-dp">0</span>
+              </a>
+              <a class="nav-folder" id="nav-cat-sg" href="javascript:void(0)" onclick="switchView('category', 'Safeguarding & child protection')">
+                <span>Safeguarding &amp; child protection</span>
+                <span class="nav-count" id="count-sg">0</span>
+              </a>
+              <a class="nav-folder" id="nav-cat-wce" href="javascript:void(0)" onclick="switchView('category', 'Welfare, conduct & emergencies')">
+                <span>Welfare, conduct &amp; emergencies</span>
+                <span class="nav-count" id="count-wce">0</span>
+              </a>
+              <a class="nav-folder" id="nav-cat-hb" href="javascript:void(0)" onclick="switchView('category', 'Handbooks & guidance')">
+                <span>Handbooks &amp; guidance</span>
+                <span class="nav-count" id="count-hb">0</span>
+              </a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Governance &amp; History</div>
+              <a class="nav-link" id="nav-archived" href="javascript:void(0)" onclick="switchView('archived')">
+                <span>Archived Policies</span>
+                <span class="nav-count" id="count-archived">0</span>
+              </a>
+              <a class="nav-link" id="nav-history" href="javascript:void(0)" onclick="switchView('history')">
+                <span>History</span>
+                <span class="nav-count" id="count-history">0</span>
+              </a>
+            </div>
+
+            <div style="padding: 12px 0 0; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1);">
+              <button class="button-primary" style="width: 100%; justify-content: center;" onclick="openCreateModal()">
+                + Upload / Create Policy
+              </button>
+              <button onclick="purgePolicyStore()" style="width:100%;margin-top:10px;padding:6px 10px;background:transparent;border:1px solid #334e68;border-radius:6px;color:#7b9abf;font-size:0.72rem;cursor:pointer;">
+                Clear All Policy Data
+              </button>
+            </div>
+          </aside>
+
+          <!-- Main Content Area -->
+          <section class="main" id="main-content">
+            <!-- Dynamic Content injected via JS -->
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Create / Upload Policy Modal -->
+    <div class="modal-backdrop" id="modal-create">
+      <div class="modal-window">
+        <div class="modal-header">
+          <h3 id="modal-create-title">Upload / Create Policy Document</h3>
+          <button style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:#64748b;" onclick="closeModals()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="edit-policy-id" value="" />
+          <input type="hidden" id="form-manifest-key" value="" />
+          <input type="hidden" id="form-standard-ref" value="" />
+
+          <div id="manifest-target-banner" style="display:none; background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px 14px; color:#1e40af; font-size:0.86rem;"></div>
+
+          <div class="upload-dropzone" onclick="document.getElementById('file-upload-input').click()">
+            <div style="margin-bottom: 8px;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+            </div>
+            <strong style="color: #0284c7; display: block; margin-bottom: 4px;">Click to upload Word Document (.docx), PDF, Markdown (.md) or Text (.txt)</strong>
+            <small style="color: #64748b;">Text is extracted automatically. Effective &amp; review dates are stamped to today's upload date.</small>
+            <input type="file" id="file-upload-input" accept=".docx,.doc,.pdf,.txt,.md" style="display: none;" onchange="handleFileUpload(event)" />
+            <div id="file-upload-status" style="margin-top: 8px; font-weight: 600; color: #065f46;"></div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="form-title">Policy Title *</label>
+              <input type="text" class="form-control" id="form-title" placeholder="e.g. Safeguarding &amp; Child Protection Policy" required />
+            </div>
+            <div class="form-group">
+              <label for="form-category">Category Section *</label>
+              <select class="form-control" id="form-category" required>
+                <option value="Complaints & governance">Complaints & governance</option>
+                <option value="Data protection & privacy">Data protection & privacy</option>
+                <option value="Safeguarding & child protection">Safeguarding & child protection</option>
+                <option value="Welfare, conduct & emergencies">Welfare, conduct & emergencies</option>
+                <option value="Handbooks & guidance">Handbooks & guidance</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label style="display:flex; align-items:center; gap:8px; font-weight:600;">
+              <input type="checkbox" id="form-is-public" style="width:16px; height:16px;" />
+              Public Surface View — visible to prospective parents, schools &amp; inspectors
+            </label>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="form-code">Policy Code / Reference</label>
+              <input type="text" class="form-control" id="form-code" placeholder="Auto-generated if left blank (e.g. POL-SG-001)" />
+            </div>
+            <div class="form-group">
+              <label for="form-version">Version</label>
+              <input type="text" class="form-control" id="form-version" value="1.0" />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="form-owner">Policy Owner / Reviewer</label>
+              <input type="text" class="form-control" id="form-owner" value="Jay Ray (DSL / Director of Safeguarding)" />
+            </div>
+            <div class="form-group">
+              <label for="form-audience">Audience Scope</label>
+              <input type="text" class="form-control" id="form-audience" value="All Staff / Homestay Hosts / Drivers / Inspection" />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="form-effective-date">Effective Date</label>
+              <input type="date" class="form-control" id="form-effective-date" />
+            </div>
+            <div class="form-group">
+              <label for="form-review-date">Next Annual Review Due Date</label>
+              <input type="date" class="form-control" id="form-review-date" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="form-summary">Executive Summary / Scope Statement</label>
+            <textarea class="form-control" id="form-summary" rows="2" placeholder="Brief outline of policy statutory obligations and purpose..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="form-content">Full Policy Content (Markdown / Text)</label>
+            <textarea class="form-control" id="form-content" rows="8" placeholder="Paste policy body or sections here (will automatically populate if a document is uploaded above)..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="button-alt" onclick="closeModals()">Cancel</button>
+          <button type="button" class="button-primary" onclick="submitPolicyForm()">Save &amp; Store Policy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Annual Review / Version Update Modal -->
+    <div class="modal-backdrop" id="modal-review">
+      <div class="modal-window">
+        <div class="modal-header">
+          <h3>Conduct Annual Policy Review &amp; Version Update</h3>
+          <button style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:#64748b;" onclick="closeModals()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="review-policy-id" />
+          <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:12px 16px;color:#0369a1;font-size:0.88rem;">
+            <strong>Annual Review Process (AEGIS Standard 5.10.1)</strong><br />
+            Submitting this review will archive the current version snapshot to the <strong>History</strong> audit trail, update the version number, and extend the review compliance window by 12 months.
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Current Policy</label>
+              <input type="text" class="form-control" id="review-policy-title" readonly style="background:#f1f5f9;" />
+            </div>
+            <div class="form-group">
+              <label>New Version Number *</label>
+              <input type="text" class="form-control" id="review-new-version" placeholder="e.g. 1.1 or 2.0" required />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Review Date</label>
+              <input type="date" class="form-control" id="review-date" required />
+            </div>
+            <div class="form-group">
+              <label>Next Review Due Date (1 Year)</label>
+              <input type="date" class="form-control" id="review-next-date" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Reviewer Name / Role</label>
+            <input type="text" class="form-control" id="review-author" value="Jay Ray (DSL / Director of Safeguarding)" required />
+          </div>
+
+          <div class="form-group">
+            <label>Summary of Changes &amp; Statutory Notes *</label>
+            <textarea class="form-control" id="review-notes" rows="3" placeholder="Describe updates, regulatory changes, or observations made during this annual review..." required></textarea>
+          </div>
+
+          <div class="upload-dropzone" onclick="document.getElementById('review-file-input').click()">
+            <div style="margin-bottom: 6px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+            </div>
+            <strong style="color: #0284c7; font-size: 0.9rem;">(Optional) Upload New Word Document (.docx) for this Version</strong>
+            <input type="file" id="review-file-input" accept=".docx,.doc,.pdf,.txt,.md" style="display: none;" onchange="handleReviewFileUpload(event)" />
+            <div id="review-file-status" style="margin-top: 4px; font-size: 0.85rem; font-weight: 600; color: #065f46;"></div>
+          </div>
+
+          <div class="form-group">
+            <label>Updated Policy Body (Markdown / Text)</label>
+            <textarea class="form-control" id="review-content" rows="6"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="button-alt" onclick="closeModals()">Cancel</button>
+          <button type="button" class="button-primary" onclick="submitAnnualReview()">Complete Annual Review</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Snapshot Viewer Modal -->
+    <div class="modal-backdrop" id="modal-snapshot">
+      <div class="modal-window" style="max-width: 800px;">
+        <div class="modal-header">
+          <h3 id="snapshot-title">Historical Version Snapshot</h3>
+          <button style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:#64748b;" onclick="closeModals()">&times;</button>
+        </div>
+        <div class="modal-body" id="snapshot-body">
+          <!-- Snapshot Content -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="button-alt" onclick="closeModals()">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Policy Acknowledgement Sign-Off Modal -->
+    <div class="modal-backdrop" id="modal-ack">
+      <div class="modal-window" style="max-width: 480px;">
+        <div class="modal-header">
+          <h3>Record Policy Sign-Off</h3>
+          <button style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:#64748b;" onclick="closeModals()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="ack-policy-id" />
+          <div class="form-group">
+            <label for="ack-person-select">Staff member / homestay host *</label>
+            <select class="form-control" id="ack-person-select"></select>
+          </div>
+          <div class="form-group">
+            <label for="ack-sign-method">Sign method</label>
+            <select class="form-control" id="ack-sign-method">
+              <option value="Electronic">Electronic (in-app confirmation)</option>
+              <option value="Wet signature">Wet signature (scanned copy on file)</option>
+              <option value="Verbal / verified in person">Verbal / verified in person</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="button-alt" onclick="closeModals()">Cancel</button>
+          <button type="button" class="button-primary" onclick="submitAckSignOff()">Confirm Sign-Off</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/db.js"></script>
+    <script>
+      var CATEGORIES = [
+        'Complaints & governance',
+        'Data protection & privacy',
+        'Safeguarding & child protection',
+        'Welfare, conduct & emergencies',
+        'Handbooks & guidance'
+      ];
+
+      // AEGIS Appendix A — the 14 mandatory statutory policies plus the 3 mandatory
+      // handbooks. `keywords` is used to recognise a pre-existing og_org_documents
+      // record as fulfilling this manifest item (by title match) even if it predates
+      // the manifest and has no explicit manifestKey stamped on it yet.
+      var STATUTORY_MANIFEST = [
+        { key: 'aims',           ref: 'Standard 1.1',        title: 'Statement of Aims, Principles & Practice',        category: 'Complaints & governance',            keywords: ['statement of aims', 'aims, principles'] },
+        { key: 'safeguarding',   ref: 'Standard 6.1 / App 4', title: 'Safeguarding & Child Protection Policy',          category: 'Safeguarding & child protection',    keywords: ['safeguarding & child protection', 'safeguarding and child protection', 'child protection policy'] },
+        { key: 'safer-recruit',  ref: 'Standard 2.8',        title: 'Safer Recruitment Policy',                        category: 'Safeguarding & child protection',    keywords: ['safer recruitment'] },
+        { key: 'whistleblowing', ref: 'Standard 6.4',        title: 'Whistleblowing Policy',                           category: 'Complaints & governance',            keywords: ['whistleblowing'] },
+        { key: 'low-level',      ref: 'Standard 6.5',        title: 'Low-Level Concerns Policy',                       category: 'Safeguarding & child protection',    keywords: ['low-level concern', 'low level concern'] },
+        { key: 'data-protection',ref: 'Standard 2.7',        title: 'Data Protection & Privacy Notice',                category: 'Data protection & privacy',          keywords: ['data protection', 'privacy notice'], suggestPublic: true },
+        { key: 'missing-student',ref: 'Standard 6.7',        title: 'Missing Student Policy',                          category: 'Welfare, conduct & emergencies',     keywords: ['missing student'] },
+        { key: 'anti-bullying',  ref: 'Standard 6.9',        title: 'Anti-Bullying including Cyberbullying',           category: 'Welfare, conduct & emergencies',     keywords: ['anti-bullying', 'anti bullying', 'cyberbullying'] },
+        { key: 'online-safety',  ref: 'Standard 6.10',       title: 'Online Safety Policy',                            category: 'Welfare, conduct & emergencies',     keywords: ['online safety'] },
+        { key: 'behaviour-code', ref: 'Standard 6.8',        title: 'Student Behaviour Code of Conduct',               category: 'Welfare, conduct & emergencies',     keywords: ['behaviour code', 'code of conduct'] },
+        { key: 'prevent',        ref: 'Standard 6.6',        title: 'Anti-Radicalisation / Prevent Duty Policy',       category: 'Safeguarding & child protection',    keywords: ['radicalisation', 'radicalization', 'prevent duty'] },
+        { key: 'complaints',     ref: 'Standard 7.1 / App 8', title: 'Complaints Policy',                              category: 'Complaints & governance',            keywords: ['complaints policy', 'complaints and grievance'] },
+        { key: 'welfare-hs',     ref: 'Standard 5.10',       title: 'Welfare Health & Safety Policy',                  category: 'Welfare, conduct & emergencies',     keywords: ['health & safety', 'health and safety'] },
+        { key: 'emergency-plan', ref: 'Standard 2.6',        title: 'Major Emergency & Critical Incident Plan',        category: 'Welfare, conduct & emergencies',     keywords: ['major emergency', 'critical incident'] },
+        { key: 'student-hb',     ref: 'Appendix 1',          title: 'Student Handbook',                                category: 'Handbooks & guidance', isHandbook: true, keywords: ['student handbook'], suggestPublic: true },
+        { key: 'parent-agent-hb',ref: 'Appendix 2',          title: 'Parent & Agent Handbook',                         category: 'Handbooks & guidance', isHandbook: true, keywords: ['parent & agent handbook', 'parent and agent handbook'], suggestPublic: true },
+        { key: 'homestay-hb',    ref: 'Appendix 3',          title: 'Homestay Handbook',                               category: 'Handbooks & guidance', isHandbook: true, keywords: ['homestay handbook'], suggestPublic: true }
+      ];
+
+      // Returns the active og_org_documents record that fulfils this manifest item,
+      // or null if the statutory requirement is unmet.
+      function findManifestDoc(item) {
+        var docs = getAllOrgDocs().filter(function(d) { return d.status !== 'Archived'; });
+        var byKey = docs.find(function(d) { return d.manifestKey === item.key; });
+        if (byKey) return byKey;
+        var titleLower;
+        return docs.find(function(d) {
+          titleLower = (d.title || '').toLowerCase();
+          return item.keywords.some(function(kw) { return titleLower.indexOf(kw) > -1; });
+        }) || null;
+      }
+
+      var currentView = 'category'; // 'category', 'reader', 'archived', 'history', 'manifest'
+      var currentCategory = 'all';
+      var currentPolicyId = null;
+      var publicSurfaceMode = false;
+      var uploadedFileData = null;
+      var uploadedFileName = '';
+      var uploadedFileSize = '';
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', function () {
+        // Enforce cleanup if mock data exists
+        var stored = localStorage.getItem(OG_ORG_DOCS_KEY);
+        if (stored) {
+          try {
+            var parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.some(function(d) { return d.id === 'POL-HS-01' || d.id === 'POL-SG-01' || d.id === 'POL-MS-02'; })) {
+              // Reset to empty array for fresh store
+              localStorage.setItem(OG_ORG_DOCS_KEY, JSON.stringify([]));
+            }
+          } catch (e) {}
+        }
+
+        // Parse query params
+        var params = new URLSearchParams(window.location.search);
+        var id = params.get('id');
+        var cat = params.get('cat');
+        var view = params.get('view');
+
+        if (view === 'public') {
+          togglePublicSurface(true);
+        } else if (id) {
+          switchView('reader', id);
+        } else if (view === 'history') {
+          switchView('history');
+        } else if (view === 'archived') {
+          switchView('archived');
+        } else if (view === 'manifest') {
+          switchView('manifest');
+        } else if (cat) {
+          switchView('category', cat);
+        } else {
+          switchView('category', 'all');
+        }
+
+        updateSidebarCounts();
+      });
+
+      function updateSidebarCounts() {
+        var docs = typeof getAllOrgDocs === 'function' ? getAllOrgDocs() : [];
+        var active = docs.filter(function(d) { return d.status !== 'Archived'; });
+        var archived = docs.filter(function(d) { return d.status === 'Archived'; });
+        var history = typeof getAllPolicyHistory === 'function' ? getAllPolicyHistory() : [];
+
+        var countAll = active.length;
+        var countCG = active.filter(function(d) { return d.category === 'Complaints & governance'; }).length;
+        var countDP = active.filter(function(d) { return d.category === 'Data protection & privacy'; }).length;
+        var countSG = active.filter(function(d) { return d.category === 'Safeguarding & child protection'; }).length;
+        var countWCE = active.filter(function(d) { return d.category === 'Welfare, conduct & emergencies'; }).length;
+        var countHB = active.filter(function(d) { return d.category === 'Handbooks & guidance'; }).length;
+        var missingCount = STATUTORY_MANIFEST.filter(function(item) { return !findManifestDoc(item); }).length;
+
+        document.getElementById('count-all').innerText = countAll;
+        document.getElementById('count-cg').innerText = countCG;
+        document.getElementById('count-dp').innerText = countDP;
+        document.getElementById('count-sg').innerText = countSG;
+        document.getElementById('count-wce').innerText = countWCE;
+        document.getElementById('count-hb').innerText = countHB;
+        document.getElementById('count-archived').innerText = archived.length;
+        document.getElementById('count-history').innerText = history.length;
+        var manifestBadge = document.getElementById('count-manifest-missing');
+        manifestBadge.innerText = missingCount;
+        manifestBadge.style.background = missingCount > 0 ? 'rgba(239,68,68,0.35)' : 'rgba(255,255,255,0.12)';
+        manifestBadge.style.color = missingCount > 0 ? '#fecaca' : '#cbd5e1';
+      }
+
+      function switchView(view, param) {
+        // Leaving public-surface mode whenever the sidebar is used to navigate.
+        if (publicSurfaceMode) {
+          publicSurfaceMode = false;
+          document.getElementById('public-surface-toggle').classList.remove('on');
+        }
+        currentView = view;
+
+        // Reset sidebar active classes
+        document.querySelectorAll('.sidebar .nav-link, .sidebar .nav-folder').forEach(function(el) {
+          el.classList.remove('active');
+        });
+
+        if (view === 'category') {
+          currentCategory = param || 'all';
+          currentPolicyId = null;
+          if (currentCategory === 'all') {
+            document.getElementById('nav-all-policies').classList.add('active');
+          } else if (currentCategory === 'Complaints & governance') {
+            document.getElementById('nav-cat-cg').classList.add('active');
+          } else if (currentCategory === 'Data protection & privacy') {
+            document.getElementById('nav-cat-dp').classList.add('active');
+          } else if (currentCategory === 'Safeguarding & child protection') {
+            document.getElementById('nav-cat-sg').classList.add('active');
+          } else if (currentCategory === 'Welfare, conduct & emergencies') {
+            document.getElementById('nav-cat-wce').classList.add('active');
+          } else if (currentCategory === 'Handbooks & guidance') {
+            document.getElementById('nav-cat-hb').classList.add('active');
+          }
+          renderCategoryView();
+        } else if (view === 'reader') {
+          currentPolicyId = param;
+          renderReaderView(param);
+        } else if (view === 'archived') {
+          document.getElementById('nav-archived').classList.add('active');
+          renderArchivedView();
+        } else if (view === 'history') {
+          document.getElementById('nav-history').classList.add('active');
+          renderHistoryView();
+        } else if (view === 'manifest') {
+          document.getElementById('nav-manifest').classList.add('active');
+          renderManifestView();
+        }
+
+        updateSidebarCounts();
+      }
+
+      // ── Statutory Manifest View (AEGIS Appendix A) ─────────────────────────────
+      function renderManifestView() {
+        var missing = STATUTORY_MANIFEST.filter(function(item) { return !findManifestDoc(item); }).length;
+        var html = `
+          <div class="toolbar">
+            <div>
+              <span class="eyebrow">AEGIS Appendix A</span>
+              <h2>Statutory Policy Manifest</h2>
+              <p>The 14 mandatory policies and 3 mandatory handbooks every AEGIS-accredited guardianship organisation must hold. ${missing > 0
+                ? '<strong style="color:#991b1b;">' + missing + ' of ' + STATUTORY_MANIFEST.length + ' statutory requirement' + (missing === 1 ? '' : 's') + ' unmet.</strong>'
+                : '<strong style="color:#065f46;">All ' + STATUTORY_MANIFEST.length + ' statutory requirements are met.</strong>'}</p>
+            </div>
+          </div>
+        `;
+
+        STATUTORY_MANIFEST.forEach(function(item, idx) {
+          var doc = findManifestDoc(item);
+          var isMissing = !doc;
+          html += `
+            <div class="manifest-item ${isMissing ? 'missing' : ''}">
+              <div style="display:flex; align-items:flex-start; gap:14px;">
+                <span class="manifest-item-num">${idx + 1}</span>
+                <div>
+                  <div class="manifest-item-title">${escapeHtml(item.title)}</div>
+                  <div class="manifest-item-ref">AEGIS ${escapeHtml(item.ref)} &middot; ${escapeHtml(item.category)}${item.isHandbook ? ' &middot; Handbook' : ''}</div>
+                  ${doc ? `<div style="margin-top:6px; font-size:0.82rem; color:#64748b;">On file as <strong>${escapeHtml(doc.id)}</strong> (v${escapeHtml(doc.version || '1.0')})</div>` : ''}
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px; flex-shrink:0;">
+                ${isMissing
+                  ? '<span class="badge red">Missing (Statutory Requirement)</span>'
+                  : '<span class="badge green">Active</span>'}
+                ${isMissing
+                  ? `<button class="button-primary button-sm" onclick="openCreateModalForManifestItem(${idx})">Upload Document</button>`
+                  : `<button class="button-alt button-sm" onclick="switchView('reader', '${escapeHtml(doc.id)}')">View Policy &rarr;</button>`}
+              </div>
+            </div>
+          `;
+        });
+
+        document.getElementById('main-content').innerHTML = html;
+      }
+
+      // ── Category / Directory View ───────────────────────────────────────────
+      function renderCategoryView() {
+        var docs = getAllOrgDocs().filter(function(d) { return d.status !== 'Archived'; });
+        var filtered = currentCategory === 'all' ? docs : docs.filter(function(d) { return d.category === currentCategory; });
+
+        var title = currentCategory === 'all' ? 'All Statutory Policies' : currentCategory;
+        var subtitle = currentCategory === 'all' 
+          ? 'Central repository of all operational, safeguarding, privacy, and governance policies.'
+          : 'Official policy documents and annual review compliance for ' + currentCategory + '.';
+
+        var html = `
+          <div class="toolbar">
+            <div>
+              <span class="eyebrow">Policy Store &amp; Statutory Governance</span>
+              <h2>${escapeHtml(title)}</h2>
+              <p>${escapeHtml(subtitle)}</p>
+            </div>
+            <div class="toolbar-actions">
+              <button class="button-primary" onclick="openCreateModal('${currentCategory !== 'all' ? escapeHtml(currentCategory) : ''}')">
+                + Upload / Create Policy
+              </button>
+            </div>
+          </div>
+        `;
+
+        if (filtered.length === 0) {
+          html += `
+            <div class="empty-state">
+              <div class="empty-svg-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              </div>
+              <h3>No policies stored in this section yet</h3>
+              <p>Upload your official policy Word document (.docx / .doc) or create a policy directly to store and track statutory annual reviews.</p>
+              <div style="display: flex; justify-content: center; gap: 12px;">
+                <button class="button-primary" onclick="openCreateModal('${currentCategory !== 'all' ? escapeHtml(currentCategory) : ''}')">
+                  Upload Policy Document (.docx)
+                </button>
+                <button class="button-alt" onclick="openCreateModal('${currentCategory !== 'all' ? escapeHtml(currentCategory) : ''}')">
+                  Create Policy from Scratch
+                </button>
+              </div>
+            </div>
+          `;
+        } else {
+          html += `
+            <div style="margin: 16px 0 8px; display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: 0.85rem; color: #64748b; font-weight: 600;">Showing ${filtered.length} active policy document${filtered.length === 1 ? '' : 's'}</span>
+              <input type="text" id="policy-search" placeholder="Search policies..." oninput="filterPolicyCards(this.value)" class="form-control" style="max-width: 260px; padding: 6px 12px; font-size: 0.84rem;" />
+            </div>
+            <div class="policy-grid" id="policy-cards-container">
+          `;
+
+          filtered.forEach(function(d) {
+            var reviewBadge = getReviewStatusBadge(d.reviewDate);
+            html += `
+              <div class="policy-card" data-title="${escapeHtml(d.title).toLowerCase()}" data-code="${escapeHtml(d.id).toLowerCase()}">
+                <div>
+                  <div class="policy-card-header">
+                    <div>
+                      <span class="policy-card-code">${escapeHtml(d.id || 'POL')}</span>
+                      <h4 class="policy-card-title" style="margin-top: 6px;">${escapeHtml(d.title)}</h4>
+                    </div>
+                    <span class="badge blue">v${escapeHtml(d.version || '1.0')}</span>
+                  </div>
+                  <div style="margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 6px;">
+                    <span class="badge slate">${escapeHtml(d.category)}</span>
+                    ${reviewBadge}
+                  </div>
+                  <p class="policy-card-desc">${escapeHtml(d.summary || 'No summary provided.')}</p>
+                </div>
+                <div class="policy-card-footer">
+                  <small style="color: #64748b;">Due: <strong>${escapeHtml(d.reviewDate || 'Not set')}</strong></small>
+                  <div style="display: flex; gap: 6px;">
+                    <button class="button-alt button-sm" onclick="switchView('reader', '${escapeHtml(d.id)}')">View Policy &rarr;</button>
+                  </div>
+                </div>
+              </div>
+            `;
+          });
+
+          html += `</div>`;
+        }
+
+        document.getElementById('main-content').innerHTML = html;
+      }
+
+      function filterPolicyCards(q) {
+        var query = (q || '').toLowerCase().trim();
+        var cards = document.querySelectorAll('#policy-cards-container .policy-card');
+        cards.forEach(function(card) {
+          var title = card.getAttribute('data-title') || '';
+          var code = card.getAttribute('data-code') || '';
+          if (!query || title.indexOf(query) > -1 || code.indexOf(query) > -1) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      // ── Reader View ──────────────────────────────────────────────────────────
+      function renderReaderView(id) {
+        var doc = getOrgDocById(id);
+        if (!doc) {
+          switchView('category', 'all');
+          return;
+        }
+
+        var reviewBadge = getReviewStatusBadge(doc.reviewDate);
+        var backCat = doc.category || 'all';
+
+        var contentHtml = '';
+        if (doc.content) {
+          contentHtml = formatMarkdown(doc.content);
+        } else if (Array.isArray(doc.sections) && doc.sections.length > 0) {
+          doc.sections.forEach(function(sec) {
+            contentHtml += `<h2>${escapeHtml(sec.heading)}</h2><p>${escapeHtml(sec.content).replace(/\n/g, '<br/>')}</p>`;
+          });
+        } else {
+          contentHtml = '<p style="color:#64748b; font-style:italic;">No text content entered for this policy. Upload a Word document or edit the policy to populate sections.</p>';
+        }
+
+        var html = `
+          <div style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+            <button class="button-alt" onclick="switchView('category', '${escapeHtml(backCat)}')">
+              &larr; Back to ${escapeHtml(backCat)}
+            </button>
+            <div style="display: flex; gap: 8px;">
+              <button class="button-alt" onclick="openEditModal('${escapeHtml(doc.id)}')">Edit Policy</button>
+              <button class="button-primary" onclick="openReviewModal('${escapeHtml(doc.id)}')">Conduct Annual Review</button>
+              <button class="button-alt" onclick="archivePolicy('${escapeHtml(doc.id)}')">Archive</button>
+              <button class="button-alt" onclick="window.print()">Print / PDF</button>
+              <button class="button-danger button-sm" onclick="deletePolicy('${escapeHtml(doc.id)}')">Delete</button>
+            </div>
+          </div>
+
+          <div class="reader-paper">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;">
+              <div>
+                <span class="policy-card-code" style="font-size: 0.88rem; padding: 3px 10px;">${escapeHtml(doc.id)}</span>
+                <h1 style="margin-top: 8px;">${escapeHtml(doc.title)}</h1>
+              </div>
+              <span class="badge blue" style="font-size: 0.9rem; padding: 6px 14px;">Version ${escapeHtml(doc.version || '1.0')}</span>
+            </div>
+
+            <div class="reader-meta-bar">
+              <div class="meta-item">
+                <small>Category</small>
+                <strong>${escapeHtml(doc.category)}</strong>
+              </div>
+              <div class="meta-item">
+                <small>Owner / Lead</small>
+                <strong>${escapeHtml(doc.owner || 'Jay Ray (DSL)')}</strong>
+              </div>
+              <div class="meta-item">
+                <small>Effective Date</small>
+                <strong>${escapeHtml(doc.effectiveDate || doc.publicationDate || 'Not set')}</strong>
+              </div>
+              <div class="meta-item">
+                <small>Next Review Due</small>
+                <div>${reviewBadge}</div>
+              </div>
+            </div>
+
+            ${doc.fileName ? `
+              <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 10px; padding: 12px 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div>
+                    <strong style="color: #0f2340; font-size: 0.92rem;">${escapeHtml(doc.fileName)}</strong>
+                    <small style="display: block; color: #64748b;">${escapeHtml(doc.fileSize || 'Uploaded Document')}</small>
+                  </div>
+                </div>
+                <span class="badge green">Document Attached</span>
+              </div>
+            ` : ''}
+
+            ${doc.summary ? `
+              <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 14px 18px; border-radius: 0 8px 8px 0; margin-bottom: 24px; color: #1e293b; font-size: 0.94rem;">
+                <strong>Scope &amp; Executive Summary:</strong><br />
+                ${escapeHtml(doc.summary)}
+              </div>
+            ` : ''}
+
+            <div class="document-content">
+              ${contentHtml}
+            </div>
+
+            ${Array.isArray(doc.reviewHistory) && doc.reviewHistory.length > 0 ? `
+              <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid #e2e8f0;">
+                <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.15rem; color: #0f2340; margin-bottom: 12px;">Review &amp; Revision Log</h3>
+                <div style="display: grid; gap: 8px;">
+                  ${doc.reviewHistory.map(function(rev) {
+                    return `
+                      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; font-size: 0.86rem; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                          <strong>v${escapeHtml(rev.version)}</strong> &mdash; ${escapeHtml(rev.notes || 'Review recorded')}
+                          <small style="display: block; color: #64748b;">Reviewed by ${escapeHtml(rev.reviewedBy || 'Jay Ray')} on ${escapeHtml(rev.reviewDate || rev.timestamp || '')}</small>
+                        </div>
+                        <span class="badge ${rev.status === 'Archived' ? 'slate' : 'green'}">${escapeHtml(rev.status || 'Approved')}</span>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+
+          ${buildAckCardHtml(doc)}
+        `;
+
+        document.getElementById('main-content').innerHTML = html;
+      }
+
+      // ── Policy Acknowledgement & Distribution (AEGIS 2.1.6, 6.1.1) ─────────────
+      function buildAckCardHtml(doc) {
+        if (typeof getPolicyAcknowledgementStats !== 'function') return '';
+        var stats = getPolicyAcknowledgementStats(doc.id);
+        var staffAcked = stats.acknowledgedList.filter(function(p) { return p.personType === 'staff'; }).length;
+        var staffTotal = staffAcked + stats.pendingList.filter(function(p) { return p.personType === 'staff'; }).length;
+        var hostAcked = stats.acknowledgedList.filter(function(p) { return p.personType === 'host'; }).length;
+        var hostTotal = hostAcked + stats.pendingList.filter(function(p) { return p.personType === 'host'; }).length;
+
+        return `
+          <div class="ack-card">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+              <div>
+                <h3 style="font-family:'Outfit', sans-serif; font-size:1.1rem; color:#0f2340; margin:0 0 2px;">Acknowledgement &amp; Distribution</h3>
+                <small style="color:#64748b;">Version ${escapeHtml(doc.version || '1.0')} sign-off across staff and homestay primary carers.</small>
+              </div>
+              <button class="button-primary button-sm" onclick="openAckModal('${escapeHtml(doc.id)}')" ${stats.pendingList.length === 0 ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>Record Sign-Off</button>
+            </div>
+            <div class="ack-bar-track"><div class="ack-bar-fill" style="width:${stats.percentage}%;"></div></div>
+            <div style="display:flex; gap:20px; flex-wrap:wrap; font-size:0.86rem; color:#334155;">
+              <div><strong style="font-size:1.3rem; color:#0f2340;">${stats.percentage}%</strong> <span style="color:#64748b;">overall (${stats.acknowledgedCount}/${stats.totalEligible})</span></div>
+              <div>Staff: <strong>${staffAcked}/${staffTotal}</strong></div>
+              <div>Homestay hosts: <strong>${hostAcked}/${hostTotal}</strong></div>
+            </div>
+            ${stats.pendingList.length > 0 ? `
+              <div style="margin-top:12px;">
+                <small style="color:#64748b; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; font-size:0.72rem;">Outstanding sign-off</small>
+                <div class="ack-people-list">
+                  ${stats.pendingList.map(function(p) { return '<span class="ack-chip">' + escapeHtml(p.name) + ' (' + escapeHtml(p.personType) + ')</span>'; }).join('')}
+                </div>
+              </div>
+            ` : `<div style="margin-top:12px; color:#065f46; font-weight:600; font-size:0.86rem;">Everyone eligible has acknowledged this version.</div>`}
+          </div>
+        `;
+      }
+
+      function openAckModal(docId) {
+        var stats = getPolicyAcknowledgementStats(docId);
+        document.getElementById('ack-policy-id').value = docId;
+        var select = document.getElementById('ack-person-select');
+        select.innerHTML = '';
+        if (stats.pendingList.length === 0) {
+          select.innerHTML = '<option value="">No one outstanding</option>';
+        } else {
+          stats.pendingList.forEach(function(p) {
+            var opt = document.createElement('option');
+            opt.value = p.id + '|' + p.personType;
+            opt.textContent = p.name + ' (' + p.personType + ')';
+            select.appendChild(opt);
+          });
+        }
+        document.getElementById('modal-ack').classList.add('open');
+      }
+
+      function submitAckSignOff() {
+        var docId = document.getElementById('ack-policy-id').value;
+        var doc = getOrgDocById(docId);
+        var selectVal = document.getElementById('ack-person-select').value;
+        var signMethod = document.getElementById('ack-sign-method').value;
+        if (!doc || !selectVal) {
+          closeModals();
+          return;
+        }
+        var parts = selectVal.split('|');
+        recordPolicyAcknowledgement(doc.id, doc.version, parts[0], parts[1], signMethod);
+        closeModals();
+        switchView('reader', doc.id);
+      }
+
+      // ── Archived Policies View ───────────────────────────────────────────────
+      function renderArchivedView() {
+        var docs = getAllOrgDocs().filter(function(d) { return d.status === 'Archived'; });
+
+        var html = `
+          <div class="toolbar">
+            <div>
+              <span class="eyebrow">Governance Archive</span>
+              <h2>Archived Policies</h2>
+              <p>Older or superseded policies retained for statutory record-keeping and audit compliance.</p>
+            </div>
+          </div>
+        `;
+
+        if (docs.length === 0) {
+          html += `
+            <div class="empty-state">
+              <div class="empty-svg-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+              </div>
+              <h3>No archived policies</h3>
+              <p>When active policies are retired or superseded, they will appear here rather than being deleted.</p>
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="policy-grid">
+          `;
+          docs.forEach(function(d) {
+            html += `
+              <div class="policy-card">
+                <div>
+                  <div class="policy-card-header">
+                    <div>
+                      <span class="policy-card-code">${escapeHtml(d.id)}</span>
+                      <h4 class="policy-card-title" style="margin-top: 6px;">${escapeHtml(d.title)}</h4>
+                    </div>
+                    <span class="badge slate">Archived (v${escapeHtml(d.version || '1.0')})</span>
+                  </div>
+                  <div style="margin-bottom: 10px;">
+                    <span class="badge slate">${escapeHtml(d.category)}</span>
+                  </div>
+                  <p class="policy-card-desc">${escapeHtml(d.archiveReason || d.summary || 'Archived policy')}</p>
+                </div>
+                <div class="policy-card-footer">
+                  <button class="button-alt button-sm" onclick="restorePolicy('${escapeHtml(d.id)}')">Restore to Active</button>
+                  <button class="button-danger button-sm" onclick="deletePolicy('${escapeHtml(d.id)}')">Delete</button>
+                </div>
+              </div>
+            `;
+          });
+          html += `</div>`;
+        }
+
+        document.getElementById('main-content').innerHTML = html;
+      }
+
+      // ── History / Audit Changelog View ────────────────────────────────────────
+      function renderHistoryView() {
+        var history = getAllPolicyHistory();
+
+        var html = `
+          <div class="toolbar">
+            <div>
+              <span class="eyebrow">Audit &amp; Change Control</span>
+              <h2>Policy History &amp; Revision Log</h2>
+              <p>Chronological audit log tracking all policy creations, annual reviews, version bumps, and Word document updates.</p>
+            </div>
+          </div>
+        `;
+
+        if (history.length === 0) {
+          html += `
+            <div class="empty-state">
+              <div class="empty-svg-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <h3>No change history logged yet</h3>
+              <p>As you upload policies, conduct annual reviews, and update documents, every change and version snapshot will appear in this audit trail.</p>
+            </div>
+          `;
+        } else {
+          html += `<div class="history-timeline">`;
+          history.forEach(function(item, idx) {
+            var dateStr = item.date ? item.date.split('T')[0] : 'Recent';
+            html += `
+              <div class="history-item">
+                <div class="history-dot"></div>
+                <div class="history-card">
+                  <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px;">
+                    <div>
+                      <span class="badge blue" style="font-size: 0.75rem;">Version ${escapeHtml(item.version || '1.0')}</span>
+                      <strong style="font-size: 1.05rem; color: #0f2340; margin-left: 6px;">${escapeHtml(item.policyTitle)}</strong>
+                      <span class="badge slate" style="margin-left: 6px;">${escapeHtml(item.policyCategory)}</span>
+                    </div>
+                    <small style="color: #64748b; font-weight: 600;">${escapeHtml(dateStr)}</small>
+                  </div>
+                  <p style="color: #334155; font-size: 0.9rem; margin: 0 0 10px; line-height: 1.5;">${escapeHtml(item.notes)}</p>
+                  <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 8px;">
+                    <small style="color: #64748b;">Author / Reviewer: <strong>${escapeHtml(item.author)}</strong></small>
+                    <div style="display: flex; gap: 8px;">
+                      <button class="button-alt button-sm" onclick="switchView('reader', '${escapeHtml(item.policyId)}')">Open Current Policy &rarr;</button>
+                      ${item.snapshotContent ? `<button class="button-alt button-sm" onclick="openSnapshotModal(${idx})">View Version Snapshot</button>` : ''}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          });
+          html += `</div>`;
+        }
+
+        document.getElementById('main-content').innerHTML = html;
+      }
+
+      // ── Public Surface View — the layout shown to prospective parents, schools
+      // and inspectors. Only documents explicitly marked isPublic: true appear. ──
+      function togglePublicSurface(forceOn) {
+        publicSurfaceMode = typeof forceOn === 'boolean' ? forceOn : !publicSurfaceMode;
+        document.getElementById('public-surface-toggle').classList.toggle('on', publicSurfaceMode);
+
+        if (publicSurfaceMode) {
+          document.querySelectorAll('.sidebar .nav-link, .sidebar .nav-folder').forEach(function(el) {
+            el.classList.remove('active');
+          });
+          document.getElementById('chrome-route').innerText = 'Route /governance/policy-store?view=public';
+          renderPublicSurfaceView();
+        } else {
+          document.getElementById('chrome-route').innerText = 'Route /governance/policy-store';
+          switchView(currentView === 'reader' ? 'category' : currentView, currentCategory);
+        }
+      }
+
+      function renderPublicSurfaceView() {
+        var docs = getAllOrgDocs().filter(function(d) { return d.status !== 'Archived' && d.isPublic; });
+
+        var html = `
+          <div class="public-banner">
+            <h2>Oxford Guardians — Public Policy Library</h2>
+            <p>Statutory policies and handbooks shared with prospective parents, partner schools and AEGIS inspectors.</p>
+          </div>
+        `;
+
+        if (docs.length === 0) {
+          html += `
+            <div class="empty-state">
+              <div class="empty-svg-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+              </div>
+              <h3>No policies published to the public surface yet</h3>
+              <p>Mark a policy "Public Surface View" from its edit form (handbooks and the Data Protection Notice are typically public-facing) to make it appear here.</p>
+            </div>
+          `;
+        } else {
+          html += `<div class="policy-grid">`;
+          docs.forEach(function(d) {
+            html += `
+              <div class="public-doc-card">
+                <span class="policy-card-code">${escapeHtml(d.id)}</span>
+                <h4 class="policy-card-title" style="margin-top:8px;">${escapeHtml(d.title)}</h4>
+                <div style="margin:8px 0 12px;"><span class="badge slate">${escapeHtml(d.category)}</span></div>
+                <p class="policy-card-desc" style="-webkit-line-clamp:4;">${escapeHtml(d.summary || 'No summary provided.')}</p>
+                <button class="button-alt button-sm" onclick="renderPublicPolicyReader('${escapeHtml(d.id)}')">Read Policy &rarr;</button>
+              </div>
+            `;
+          });
+          html += `</div>`;
+        }
+
+        document.getElementById('main-content').innerHTML = html;
+      }
+
+      // Read-only reader for the public surface — no edit/review/archive/delete actions.
+      function renderPublicPolicyReader(id) {
+        var doc = getOrgDocById(id);
+        if (!doc || !doc.isPublic) { renderPublicSurfaceView(); return; }
+
+        var contentHtml = doc.content ? formatMarkdown(doc.content) : '<p style="color:#64748b; font-style:italic;">No text content available.</p>';
+
+        var html = `
+          <div style="margin-bottom:16px;">
+            <button class="button-alt" onclick="renderPublicSurfaceView()">&larr; Back to Public Policy Library</button>
+          </div>
+          <div class="reader-paper">
+            <span class="policy-card-code" style="font-size:0.88rem; padding:3px 10px;">${escapeHtml(doc.id)}</span>
+            <h1 style="margin-top:8px;">${escapeHtml(doc.title)}</h1>
+            <div class="reader-meta-bar">
+              <div class="meta-item"><small>Category</small><strong>${escapeHtml(doc.category)}</strong></div>
+              <div class="meta-item"><small>Effective Date</small><strong>${escapeHtml(doc.effectiveDate || 'Not set')}</strong></div>
+              <div class="meta-item"><small>Version</small><strong>${escapeHtml(doc.version || '1.0')}</strong></div>
+            </div>
+            ${doc.summary ? `<div style="background:#f8fafc; border-left:4px solid #0284c7; padding:14px 18px; border-radius:0 8px 8px 0; margin-bottom:24px;">${escapeHtml(doc.summary)}</div>` : ''}
+            <div class="document-content">${contentHtml}</div>
+          </div>
+        `;
+        document.getElementById('main-content').innerHTML = html;
+      }
+
+      // ── Form Handlers & Uploads ──────────────────────────────────────────────
+      // AEGIS 2.10.1 — auto-date stamping. The moment a real document is selected for
+      // upload, effectiveDate is stamped to today and reviewDate to today + 365 days,
+      // overwriting whatever was in those fields (including a stale edit-modal value).
+      function stampUploadDates() {
+        var today = new Date();
+        var nextReview = new Date();
+        nextReview.setDate(today.getDate() + 365);
+        document.getElementById('form-effective-date').value = today.toISOString().split('T')[0];
+        document.getElementById('form-review-date').value = nextReview.toISOString().split('T')[0];
+      }
+
+      function handleFileUpload(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+
+        uploadedFileName = file.name;
+        uploadedFileSize = (file.size / 1024).toFixed(1) + ' KB';
+        document.getElementById('file-upload-status').innerText = 'Selected: ' + file.name + ' (' + uploadedFileSize + ') — extracting text…';
+
+        stampUploadDates();
+
+        // Auto-fill title if empty
+        var titleInput = document.getElementById('form-title');
+        if (!titleInput.value) {
+          titleInput.value = file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+        }
+
+        var statusEl = document.getElementById('file-upload-status');
+        var doneStatus = function() {
+          statusEl.innerText = 'Selected: ' + file.name + ' (' + uploadedFileSize + ') — text extracted, dates stamped to today.';
+        };
+
+        var ext = file.name.split('.').pop().toLowerCase();
+        if (ext === 'docx' && typeof mammoth !== 'undefined') {
+          var reader = new FileReader();
+          reader.onload = function(evt) {
+            mammoth.convertToMarkdown({ arrayBuffer: evt.target.result })
+              .then(function(result) {
+                document.getElementById('form-content').value = result.value;
+                doneStatus();
+              })
+              .catch(function(err) {
+                console.error("Mammoth error", err);
+                statusEl.innerText = 'Selected: ' + file.name + ' — could not auto-extract text; paste the policy body manually below.';
+              });
+          };
+          reader.readAsArrayBuffer(file);
+        } else if (ext === 'txt' || ext === 'md') {
+          var reader = new FileReader();
+          reader.onload = function(evt) {
+            document.getElementById('form-content').value = evt.target.result;
+            doneStatus();
+          };
+          reader.readAsText(file);
+        } else if (ext === 'pdf' && typeof pdfjsLib !== 'undefined') {
+          var reader = new FileReader();
+          reader.onload = function(evt) {
+            pdfjsLib.getDocument({ data: evt.target.result }).promise.then(function(pdf) {
+              var pageTextPromises = [];
+              for (var p = 1; p <= pdf.numPages; p++) {
+                pageTextPromises.push(
+                  pdf.getPage(p).then(function(page) {
+                    return page.getTextContent().then(function(tc) {
+                      return tc.items.map(function(item) { return item.str; }).join(' ');
+                    });
+                  })
+                );
+              }
+              Promise.all(pageTextPromises).then(function(pages) {
+                document.getElementById('form-content').value = pages.join('\n\n');
+                doneStatus();
+              });
+            }).catch(function(err) {
+              console.error("PDF.js error", err);
+              statusEl.innerText = 'Selected: ' + file.name + ' — could not auto-extract PDF text; paste the policy body manually below.';
+            });
+          };
+          reader.readAsArrayBuffer(file);
+        } else {
+          doneStatus();
+        }
+      }
+
+      function handleReviewFileUpload(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+
+        document.getElementById('review-file-status').innerText = 'Selected: ' + file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+        
+        var ext = file.name.split('.').pop().toLowerCase();
+        if (ext === 'docx' && typeof mammoth !== 'undefined') {
+          var reader = new FileReader();
+          reader.onload = function(evt) {
+            mammoth.convertToMarkdown({ arrayBuffer: evt.target.result })
+              .then(function(result) {
+                document.getElementById('review-content').value = result.value;
+              })
+              .catch(function(err) {
+                console.error("Mammoth error", err);
+              });
+          };
+          reader.readAsArrayBuffer(file);
+        }
+      }
+
+      function openCreateModalForManifestItem(idx) {
+        openCreateModal(null, STATUTORY_MANIFEST[idx]);
+      }
+
+      function openCreateModal(defaultCategory, manifestItem) {
+        document.getElementById('edit-policy-id').value = '';
+        document.getElementById('modal-create-title').innerText = 'Upload / Create Policy Document';
+        document.getElementById('form-title').value = '';
+        document.getElementById('form-code').value = '';
+        document.getElementById('form-version').value = '1.0';
+        document.getElementById('form-owner').value = 'Jay Ray (DSL / Director of Safeguarding)';
+        document.getElementById('form-audience').value = 'All Staff / Homestay Hosts / Drivers / Inspection';
+        document.getElementById('form-manifest-key').value = '';
+        document.getElementById('form-standard-ref').value = '';
+        document.getElementById('form-is-public').checked = false;
+        document.getElementById('manifest-target-banner').style.display = 'none';
+
+        var today = new Date();
+        var nextYear = new Date();
+        nextYear.setFullYear(today.getFullYear() + 1);
+        document.getElementById('form-effective-date').value = today.toISOString().split('T')[0];
+        document.getElementById('form-review-date').value = nextYear.toISOString().split('T')[0];
+        document.getElementById('form-summary').value = '';
+        document.getElementById('form-content').value = '';
+        document.getElementById('file-upload-status').innerText = '';
+        uploadedFileName = '';
+        uploadedFileSize = '';
+
+        if (defaultCategory && CATEGORIES.indexOf(defaultCategory) > -1) {
+          document.getElementById('form-category').value = defaultCategory;
+        }
+
+        if (manifestItem) {
+          document.getElementById('modal-create-title').innerText = 'Upload Statutory Document: ' + manifestItem.title;
+          document.getElementById('form-title').value = manifestItem.title;
+          document.getElementById('form-category').value = manifestItem.category;
+          document.getElementById('form-manifest-key').value = manifestItem.key;
+          document.getElementById('form-standard-ref').value = manifestItem.ref;
+          document.getElementById('form-is-public').checked = !!manifestItem.suggestPublic;
+          var banner = document.getElementById('manifest-target-banner');
+          banner.style.display = 'block';
+          banner.innerText = 'Filling AEGIS Appendix A statutory requirement — ' + manifestItem.ref + '. Uploading here will mark this item Active on the Statutory Manifest.';
+        }
+
+        document.getElementById('modal-create').classList.add('open');
+      }
+
+      function openEditModal(id) {
+        var doc = getOrgDocById(id);
+        if (!doc) return;
+
+        document.getElementById('edit-policy-id').value = doc.id;
+        document.getElementById('modal-create-title').innerText = 'Edit Policy Document (' + doc.id + ')';
+        document.getElementById('form-title').value = doc.title || '';
+        document.getElementById('form-category').value = doc.category || 'Complaints & governance';
+        document.getElementById('form-code').value = doc.id || '';
+        document.getElementById('form-version').value = doc.version || '1.0';
+        document.getElementById('form-owner').value = doc.owner || '';
+        document.getElementById('form-audience').value = doc.audience || '';
+        document.getElementById('form-effective-date').value = doc.effectiveDate || doc.publicationDate || '';
+        document.getElementById('form-review-date').value = doc.reviewDate || '';
+        document.getElementById('form-summary').value = doc.summary || '';
+        document.getElementById('form-content').value = doc.content || '';
+        document.getElementById('file-upload-status').innerText = doc.fileName ? 'Attached: ' + doc.fileName : '';
+        uploadedFileName = doc.fileName || '';
+        uploadedFileSize = doc.fileSize || '';
+
+        document.getElementById('form-manifest-key').value = doc.manifestKey || '';
+        document.getElementById('form-standard-ref').value = doc.standardRef || '';
+        document.getElementById('form-is-public').checked = !!doc.isPublic;
+        var banner = document.getElementById('manifest-target-banner');
+        if (doc.manifestKey) {
+          banner.style.display = 'block';
+          banner.innerText = 'Fulfils AEGIS Appendix A statutory requirement — ' + (doc.standardRef || doc.manifestKey) + '.';
+        } else {
+          banner.style.display = 'none';
+        }
+
+        document.getElementById('modal-create').classList.add('open');
+      }
+
+      function submitPolicyForm() {
+        var id = document.getElementById('edit-policy-id').value;
+        var title = document.getElementById('form-title').value.trim();
+        var category = document.getElementById('form-category').value;
+        var code = document.getElementById('form-code').value.trim();
+        var version = document.getElementById('form-version').value.trim() || '1.0';
+        var owner = document.getElementById('form-owner').value.trim();
+        var audience = document.getElementById('form-audience').value.trim();
+        var effectiveDate = document.getElementById('form-effective-date').value;
+        var reviewDate = document.getElementById('form-review-date').value;
+        var summary = document.getElementById('form-summary').value.trim();
+        var content = document.getElementById('form-content').value;
+        var manifestKey = document.getElementById('form-manifest-key').value.trim();
+        var standardRef = document.getElementById('form-standard-ref').value.trim();
+        var isPublic = document.getElementById('form-is-public').checked;
+
+        if (!title) {
+          alert('Please enter a Policy Title.');
+          return;
+        }
+
+        var isNew = !id;
+        var doc = isNew ? {} : (getOrgDocById(id) || {});
+        doc.id = code || (isNew ? generateOrgDocId(category) : id);
+        doc.title = title;
+        doc.category = category;
+        doc.version = version;
+        doc.owner = owner;
+        doc.audience = audience;
+        doc.effectiveDate = effectiveDate;
+        doc.reviewDate = reviewDate;
+        doc.summary = summary;
+        doc.content = content;
+        doc.isPublic = isPublic;
+        if (manifestKey) doc.manifestKey = manifestKey;
+        if (standardRef) doc.standardRef = standardRef;
+        if (uploadedFileName) {
+          doc.fileName = uploadedFileName;
+          doc.fileSize = uploadedFileSize;
+        }
+
+        if (isNew) {
+          doc.status = 'Active';
+          doc.reviewHistory = [
+            {
+              version: version,
+              reviewDate: effectiveDate || new Date().toISOString().split('T')[0],
+              reviewedBy: owner,
+              notes: 'Initial policy creation and upload',
+              status: 'Active',
+              timestamp: new Date().toISOString(),
+              snapshotContent: content
+            }
+          ];
+        }
+
+        saveOrgDoc(doc);
+
+        if (isNew && window.OG_DB && typeof window.OG_DB.logAuditEvent === 'function') {
+          OG_DB.logAuditEvent('Policy Upload', 'Document', doc.id, 'Uploaded policy: ' + doc.title + ' (v' + (doc.version || '1.0') + ')', 'Jay Ray (DSL)');
+        }
+
+        closeModals();
+        switchView('reader', doc.id);
+      }
+
+      function openReviewModal(id) {
+        var doc = getOrgDocById(id);
+        if (!doc) return;
+
+        document.getElementById('review-policy-id').value = doc.id;
+        document.getElementById('review-policy-title').value = doc.title + ' (' + doc.id + ')';
+        
+        // Auto increment version e.g. 1.0 -> 1.1
+        var currVer = doc.version || '1.0';
+        var verNum = parseFloat(currVer);
+        var nextVer = !isNaN(verNum) ? (verNum + 0.1).toFixed(1) : currVer + '.1';
+        document.getElementById('review-new-version').value = nextVer;
+
+        var today = new Date();
+        var nextYear = new Date();
+        nextYear.setFullYear(today.getFullYear() + 1);
+        document.getElementById('review-date').value = today.toISOString().split('T')[0];
+        document.getElementById('review-next-date').value = nextYear.toISOString().split('T')[0];
+        document.getElementById('review-author').value = 'Jay Ray (DSL / Director of Safeguarding)';
+        document.getElementById('review-notes').value = 'Annual statutory review completed. Policy confirmed compliant with AEGIS standards.';
+        document.getElementById('review-content').value = doc.content || '';
+        document.getElementById('review-file-status').innerText = '';
+
+        document.getElementById('modal-review').classList.add('open');
+      }
+
+      function submitAnnualReview() {
+        var id = document.getElementById('review-policy-id').value;
+        var doc = getOrgDocById(id);
+        if (!doc) return;
+
+        var newVer = document.getElementById('review-new-version').value.trim() || '1.1';
+        var reviewDate = document.getElementById('review-date').value;
+        var nextReviewDate = document.getElementById('review-next-date').value;
+        var author = document.getElementById('review-author').value.trim();
+        var notes = document.getElementById('review-notes').value.trim();
+        var newContent = document.getElementById('review-content').value;
+
+        if (!newVer || !notes) {
+          alert('Please enter the new version number and summary notes.');
+          return;
+        }
+
+        if (!doc.reviewHistory) doc.reviewHistory = [];
+        doc.reviewHistory.unshift({
+          version: newVer,
+          reviewDate: reviewDate,
+          reviewedBy: author,
+          notes: notes,
+          status: 'Approved',
+          timestamp: new Date().toISOString(),
+          snapshotContent: newContent || doc.content
+        });
+
+        doc.version = newVer;
+        doc.reviewDate = nextReviewDate;
+        doc.owner = author;
+        if (newContent) doc.content = newContent;
+
+        saveOrgDoc(doc);
+        closeModals();
+        switchView('reader', doc.id);
+      }
+
+      function archivePolicy(id) {
+        var reason = prompt("Enter reason for archiving this policy (e.g. Superseded by updated framework):");
+        if (reason !== null) {
+          archiveOrgDoc(id, reason);
+          switchView('category', 'all');
+        }
+      }
+
+      function restorePolicy(id) {
+        restoreOrgDoc(id);
+        switchView('reader', id);
+      }
+
+      function deletePolicy(id) {
+        if (confirm("Are you sure you want to permanently delete this policy?")) {
+          deleteOrgDoc(id);
+          switchView('category', 'all');
+        }
+      }
+
+      function purgePolicyStore() {
+        if (confirm("Clear all policies from the store? This will reset the policy database to empty so you can start clean.")) {
+          clearAllOrgDocs();
+          switchView('category', 'all');
+        }
+      }
+
+      function openSnapshotModal(historyIndex) {
+        var history = getAllPolicyHistory();
+        var item = history[historyIndex];
+        if (!item) return;
+
+        document.getElementById('snapshot-title').innerText = 'Snapshot: ' + item.policyTitle + ' (v' + item.version + ')';
+        var bodyHtml = `
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px; margin-bottom:16px;">
+            <div><strong>Version:</strong> v${escapeHtml(item.version)} | <strong>Date:</strong> ${escapeHtml(item.date)}</div>
+            <div><strong>Reviewed By:</strong> ${escapeHtml(item.author)}</div>
+            <div style="margin-top:4px; color:#475569;"><strong>Notes:</strong> ${escapeHtml(item.notes)}</div>
+          </div>
+          <div class="document-content" style="max-height: 400px; overflow-y: auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px;">
+            ${formatMarkdown(item.snapshotContent || 'No snapshot text recorded.')}
+          </div>
+        `;
+        document.getElementById('snapshot-body').innerHTML = bodyHtml;
+        document.getElementById('modal-snapshot').classList.add('open');
+      }
+
+      function closeModals() {
+        document.querySelectorAll('.modal-backdrop').forEach(function(m) {
+          m.classList.remove('open');
+        });
+      }
+
+      // ── Utilities ────────────────────────────────────────────────────────────
+      function getReviewStatusBadge(reviewDate) {
+        if (!reviewDate) return '<span class="badge slate">Review Date Unset</span>';
+        var today = new Date();
+        var due = new Date(reviewDate);
+        var diffDays = Math.round((due - today) / (1000 * 60 * 60 * 24));
+
+        if (diffDays < 0) {
+          return '<span class="badge red">Overdue (' + Math.abs(diffDays) + 'd)</span>';
+        } else if (diffDays <= 30) {
+          return '<span class="badge amber">Due Soon (' + diffDays + 'd)</span>';
+        } else {
+          return '<span class="badge green">Compliant (' + diffDays + 'd left)</span>';
+        }
+      }
+
+      function escapeHtml(str) {
+        if (str === null || str === undefined) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function formatMarkdown(text) {
+        if (!text) return '';
+        var lines = text.split('\n');
+        var out = [];
+        var inList = false;
+
+        lines.forEach(function(line) {
+          var trimmed = line.trim();
+          if (trimmed.startsWith('# ')) {
+            if (inList) { out.push('</ul>'); inList = false; }
+            out.push('<h1>' + escapeHtml(trimmed.substring(2)) + '</h1>');
+          } else if (trimmed.startsWith('## ')) {
+            if (inList) { out.push('</ul>'); inList = false; }
+            out.push('<h2>' + escapeHtml(trimmed.substring(3)) + '</h2>');
+          } else if (trimmed.startsWith('### ')) {
+            if (inList) { out.push('</ul>'); inList = false; }
+            out.push('<h3>' + escapeHtml(trimmed.substring(4)) + '</h3>');
+          } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+            if (!inList) { out.push('<ul>'); inList = true; }
+            out.push('<li>' + escapeHtml(trimmed.substring(2)) + '</li>');
+          } else if (trimmed === '') {
+            if (inList) { out.push('</ul>'); inList = false; }
+          } else {
+            if (inList) { out.push('</ul>'); inList = false; }
+            out.push('<p>' + escapeHtml(trimmed) + '</p>');
+          }
+        });
+        if (inList) out.push('</ul>');
+        return out.join('');
+      }
+    </script>
+  </body>
+</html>

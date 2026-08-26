@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Global Alert Settings — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      .form-label {
+        display: block;
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-3, #6b85a0);
+        margin-bottom: 7px;
+      }
+      .form-label .form-hint {
+        text-transform: none;
+        letter-spacing: 0;
+        font-weight: 400;
+        margin-left: 6px;
+      }
+      .form-input,
+      .form-select {
+        width: 100%;
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--ink, #0f2340);
+        background: #faf6ee;
+        border: 1px solid #d8cbb2;
+        border-radius: 14px;
+        padding: 11px 14px;
+        transition: border-color 0.15s, box-shadow 0.15s;
+        appearance: none;
+      }
+      .form-input:focus,
+      .form-select:focus {
+        outline: none;
+        border-color: #2a6096;
+        box-shadow: 0 0 0 3px rgba(42, 96, 150, 0.12);
+      }
+      .form-input[type="number"] { max-width: 180px; }
+      .form-select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b85a0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 36px;
+        cursor: pointer;
+      }
+      .form-field { display: grid; gap: 0; }
+      .setting-block {
+        background: #fffdf9;
+        border: 1px solid var(--line, #d5dce8);
+        border-radius: 18px;
+        padding: 20px 22px;
+      }
+      .setting-block + .setting-block { margin-top: 14px; }
+      .setting-desc {
+        font-size: 0.85rem;
+        color: var(--ink-3, #6b85a0);
+        margin-top: 8px;
+        line-height: 1.55;
+      }
+
+      /* Toast */
+      #toast {
+        position: fixed;
+        top: 28px;
+        right: 28px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 22px;
+        background: #13233c;
+        color: #fff8eb;
+        border-radius: 16px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        box-shadow: 0 12px 32px rgba(15,35,64,0.22);
+        opacity: 0;
+        transform: translateY(-12px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        pointer-events: none;
+      }
+      #toast.show { opacity: 1; transform: translateY(0); }
+      #toast .toast-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; flex-shrink: 0; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small>Route /admin/notifications/settings</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Alert Centre</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Global Alert Settings</span>
+                <h2>Global Alert Settings</h2>
+                <p>These thresholds apply system-wide and are read live each time alerts are generated.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="notifications.html">Back to notifications</a>
+              </div>
+            </div>
+
+            <form id="settings-form" novalidate style="max-width:640px;">
+
+              <!-- Compliance Warning Threshold -->
+              <div class="setting-block">
+                <div class="form-field">
+                  <label class="form-label" for="f-threshold">
+                    Compliance Warning Threshold
+                    <span class="form-hint">— days</span>
+                  </label>
+                  <input
+                    class="form-input"
+                    type="number"
+                    id="f-threshold"
+                    name="warningThreshold"
+                    min="1"
+                    max="365"
+                    placeholder="30"
+                  />
+                </div>
+                <p class="setting-desc">
+                  DBS and Right to Work records expiring within this many days will be raised as
+                  <strong>Warning</strong> alerts. Records expiring on or before today remain
+                  <strong>Critical</strong> regardless of this value.
+                </p>
+              </div>
+
+              <!-- Student Consents Alert Level -->
+              <div class="setting-block">
+                <div class="form-field">
+                  <label class="form-label" for="f-consent-level">Student Consents Alert Level</label>
+                  <select class="form-select" id="f-consent-level" name="consentLevel">
+                    <option value="critical">Critical (Red) — missing consents are a blocking issue</option>
+                    <option value="warning">Warning (Amber) — missing consents need prompt attention</option>
+                    <option value="info">Info (Yellow) — missing consents are for awareness only</option>
+                  </select>
+                </div>
+                <p class="setting-desc">
+                  Applies to the four student consent flags: Medical, Travel, Photo, and Data.
+                  Changing this level affects where these alerts appear in the severity filter.
+                </p>
+              </div>
+
+              <div class="action-row" style="margin-top:20px;">
+                <a class="button-alt" href="notifications.html">Cancel</a>
+                <button type="submit" class="button" id="save-btn">Save Settings</button>
+              </div>
+
+            </form>
+
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <div id="toast">
+      <span class="toast-dot"></span>
+      <span id="toast-text">Settings saved.</span>
+    </div>
+
+    <script>
+    (function () {
+      var KEY = 'og_alert_settings';
+
+      // ── Populate form on load ────────────────────────────────────────────
+      var saved = {};
+      try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+
+      document.getElementById('f-threshold').value    = saved.warningThreshold || 30;
+      document.getElementById('f-consent-level').value = saved.consentLevel    || 'info';
+
+      // ── Toast (no redirect — stay on page) ──────────────────────────────
+      function showToast(msg) {
+        var toast = document.getElementById('toast');
+        document.getElementById('toast-text').textContent = msg;
+        toast.classList.add('show');
+        setTimeout(function () { toast.classList.remove('show'); }, 2600);
+      }
+
+      // ── Save ─────────────────────────────────────────────────────────────
+      document.getElementById('settings-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var raw = parseInt(document.getElementById('f-threshold').value, 10);
+        var threshold = (!isNaN(raw) && raw > 0) ? raw : 30;
+        var consentLevel = document.getElementById('f-consent-level').value || 'info';
+
+        localStorage.setItem(KEY, JSON.stringify({
+          warningThreshold: threshold,
+          consentLevel:     consentLevel
+        }));
+
+        showToast('Settings saved.');
+      });
+    }());
+    </script>
+  </body>
+</html>

@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parent Profile — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Parent avatar in toolbar ── */
+      .parent-avatar-lg {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Outfit", sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+        color: #fff8eb;
+        border: 2px solid var(--line);
+        flex-shrink: 0;
+      }
+
+      /* ── Sub-navigation tabs ── */
+      .subnav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 0 14px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .subnav button {
+        padding: 6px 16px;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: var(--ink-2);
+        background: transparent;
+        border: 1px solid transparent;
+        cursor: pointer;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+      }
+
+      .subnav button:hover { background: var(--surface-2); border-color: var(--line); }
+
+      .subnav button.active {
+        background: var(--navy);
+        border-color: var(--navy);
+        color: #fff8eb;
+      }
+
+      .tab-content { display: none; }
+      .tab-content.active { display: block; }
+
+      /* ── KV full-width span ── */
+      .kv-block-full { grid-column: 1 / -1; }
+
+      /* ── Linked student card ── */
+      .student-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px 20px;
+        margin-bottom: 14px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+        align-items: start;
+      }
+
+      .student-card:last-child { margin-bottom: 0; }
+
+      .student-card-name {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--ink);
+        text-decoration: none;
+      }
+
+      .student-card-name:hover { color: var(--gold); text-decoration: underline; }
+
+      .student-card-meta {
+        display: grid;
+        gap: 6px;
+        margin-top: 8px;
+      }
+
+      .student-card-row {
+        display: flex;
+        gap: 8px;
+        font-size: 0.86rem;
+        color: var(--ink-2);
+      }
+
+      .student-card-row small {
+        color: var(--ink-3);
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        font-size: 0.72rem;
+        min-width: 110px;
+        flex-shrink: 0;
+      }
+
+      /* ── Empty state ── */
+      .empty-state-card {
+        background: var(--surface);
+        border: 1.5px dashed var(--line);
+        border-radius: 20px;
+        padding: 36px 24px;
+        text-align: center;
+        color: var(--ink-3);
+        font-size: 0.88rem;
+      }
+
+      /* ── Required docs checklist ── */
+      .req-docs {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px 20px;
+        margin-bottom: 16px;
+        max-width: 640px;
+      }
+
+      .req-docs h4 { margin-bottom: 14px; }
+      .req-doc-list { display: grid; gap: 8px; }
+
+      .req-doc-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 12px;
+        background: var(--surface-3);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+      }
+
+      .req-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--ink-3);
+        margin-top: 5px;
+        flex-shrink: 0;
+      }
+
+      .req-doc-item strong { display: block; font-size: 0.88rem; }
+      .req-doc-item small  { font-size: 0.76rem; color: var(--ink-3); }
+
+      /* ── Upload card ── */
+      .upload-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px;
+        max-width: 640px;
+      }
+
+      .upload-card h4 { margin-bottom: 14px; }
+
+      .upload-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+
+      .upload-controls input[type="file"] {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.86rem;
+        color: var(--ink-2);
+        cursor: pointer;
+        max-width: 100%;
+      }
+
+      .doc-name-input {
+        flex: 1;
+        min-width: 150px;
+        padding: 9px 13px;
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface-3);
+        color: var(--ink);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s, background 0.15s;
+      }
+
+      .doc-name-input::placeholder { color: var(--ink-3); }
+      .doc-name-input:focus { border-color: var(--navy); background: var(--surface); }
+
+      .doc-list { display: grid; gap: 8px; }
+
+      .doc-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 13px;
+        background: var(--surface-3);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+
+      .doc-item-info { display: flex; align-items: center; gap: 10px; }
+
+      .doc-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: var(--navy);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .doc-icon svg { width: 15px; height: 15px; stroke: #ffffff; fill: none; }
+
+      .doc-item-name { font-size: 0.88rem; font-weight: 600; }
+      .doc-item-meta { font-size: 0.76rem; color: var(--ink-3); margin-top: 1px; }
+
+      .doc-remove {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--ink-3);
+        font-size: 0.95rem;
+        padding: 4px 6px;
+        border-radius: 6px;
+        transition: color 0.15s, background 0.15s;
+        line-height: 1;
+      }
+
+      .doc-remove:hover { color: var(--red); background: var(--red-soft); }
+
+      .doc-empty {
+        text-align: center;
+        padding: 24px 16px;
+        color: var(--ink-3);
+        font-size: 0.86rem;
+        border: 1.5px dashed var(--line);
+        border-radius: 12px;
+      }
+
+      /* ── Not-found state ── */
+      .not-found {
+        padding: 60px 32px;
+        text-align: center;
+        color: var(--ink-2);
+      }
+
+      .not-found h3 { margin-bottom: 10px; }
+    </style>
+  </head>
+  <body>
+
+  <main class="page">
+    <div class="app-frame">
+
+      <!-- Chrome bar -->
+      <div class="chrome">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <small id="chrome-route">Route /admin/parents</small>
+      </div>
+
+      <div class="shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="brand">
+            <small>Oxford Guardians</small>
+            <strong>Parent Directory</strong>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Overview</div>
+            <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+            <a class="nav-link" href="notifications.html">Notifications</a>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">People</div>
+            <a class="nav-link" href="staff-list.html">Staff directory</a>
+            <a class="nav-link active" href="parent-list.html">Parents</a>
+            <a class="nav-link" href="students.html">Students</a>
+            <a class="nav-link" href="hosts.html">Hosts</a>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Compliance</div>
+            <a class="nav-link" href="compliance.html">AEGIS control room</a>
+          </div>
+        </aside>
+
+        <!-- Main content -->
+        <section class="main" id="main-content">
+
+          <!-- Toolbar -->
+          <div class="toolbar" id="profile-toolbar">
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div class="parent-avatar-lg" id="toolbar-avatar">—</div>
+              <div>
+                <span class="eyebrow">Parent profile</span>
+                <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
+                <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:var(--ink-2);">—</p>
+              </div>
+            </div>
+            <div class="toolbar-actions">
+              <span id="toolbar-status-badge" class="badge">—</span>
+              <a class="button-alt" href="parent-list.html">Back to Parents</a>
+            </div>
+          </div>
+
+          <!-- Sub-nav -->
+          <nav class="subnav">
+            <button class="active" data-tab="tab-overview">Profile Overview</button>
+            <button data-tab="tab-students">Linked Students</button>
+            <button data-tab="tab-documents">Documents</button>\n            <button data-tab="tab-contracts">Agreements & Contracts</button>
+          </nav>
+
+          <!-- ── Tab 1: Profile Overview ── -->
+          <div id="tab-overview" class="tab-content active">
+            <div class="info-grid">
+
+              <!-- Block 1: Contact details -->
+              <div class="info-block">
+                <h4>Contact details</h4>
+                <div class="kv">
+                  <div class="kv-row">
+                    <small>First Name</small>
+                    <div id="kv-first-name">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Last Name</small>
+                    <div id="kv-last-name">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Email</small>
+                    <div id="kv-email">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Phone</small>
+                    <div id="kv-phone">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Address</small>
+                    <div id="kv-address">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Preferred Contact</small>
+                    <div id="kv-preferred-contact">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Language</small>
+                    <div id="kv-language">—</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Block 2: Family link -->
+              <div class="info-block">
+                <h4>Family link</h4>
+                <div class="kv">
+                  <div class="kv-row">
+                    <small>Relationship</small>
+                    <div id="kv-relationship">—</div>
+                  </div>
+                  <div class="kv-row">
+                    <small>Status</small>
+                    <div id="kv-status">—</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Block 3: Notes (full width) -->
+              <div class="info-block kv-block-full">
+                <h4>Notes</h4>
+                <div id="kv-notes" style="color:var(--ink-2);font-size:0.92rem;line-height:1.6;">—</div>
+              </div>
+
+              <!-- Block 4: Communication history (full width) -->
+              <div class="info-block kv-block-full">
+                <h4>Communication history</h4>
+                <div id="kv-comms-history"></div>
+              </div>
+
+            </div><!-- /info-grid -->
+          </div><!-- /tab-overview -->
+
+          <!-- ── Tab 2: Linked Students ── -->
+          <div id="tab-students" class="tab-content">
+            <div id="linked-students-list"></div>
+          </div>
+
+          <!-- ── Tab 3: Documents ── -->
+          <div id="tab-documents" class="tab-content">
+
+            <div class="req-docs">
+              <h4>Required documents</h4>
+              <div class="req-doc-list">
+                <div class="req-doc-item">
+                  <div class="req-dot"></div>
+                  <div>
+                    <strong>Signed Guardian Services Agreement</strong>
+                    <small>The parent/legal guardian must sign the current-year agreement before the placement begins.</small>
+                  </div>
+                </div>
+                <div class="req-doc-item">
+                  <div class="req-dot"></div>
+                  <div>
+                    <strong>Medical Emergency Consent Form</strong>
+                    <small>Authorises Oxford Guardians to consent to emergency medical treatment on behalf of the student.</small>
+                  </div>
+                </div>
+                <div class="req-doc-item">
+                  <div class="req-dot"></div>
+                  <div>
+                    <strong>Travel Consent Form</strong>
+                    <small>Permission for travel and transport arrangements including airport collections and exeat trips.</small>
+                  </div>
+                </div>
+                <div class="req-doc-item">
+                  <div class="req-dot"></div>
+                  <div>
+                    <strong>Data Sharing Consent</strong>
+                    <small>GDPR-compliant consent covering communication with schools, hosts, and drivers.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="upload-card">
+              <h4>Upload document</h4>
+              <div class="upload-controls">
+                <input type="file" id="doc-file" />
+                <input class="doc-name-input" type="text" id="doc-name" placeholder="Enter document name…" />
+                <button class="button" id="upload-btn">Upload</button>
+              </div>
+              <div id="document-list" class="doc-list"></div>
+            </div>
+
+          </div><!-- /tab-documents -->\n
+          <!-- Contracts Tab -->
+          <div id="tab-contracts" class="tab-content" style="display:none;">
+            <section class="section">
+              <div class="toolbar">
+                <h3>Agreements & Contracts</h3>
+              </div>
+              <div id="contracts-list"></div>
+            </section>
+          </div><!-- /tab-contracts -->
+
+
+        </section>
+      </div><!-- /shell -->
+    </div><!-- /app-frame -->
+  </main>
+
+  <script src="assets/db.js"></script>
+  <script>
+    // ── URL param parsing ──────────────────────────────────────────────────────
+    var params   = new URLSearchParams(window.location.search);
+    var parentId = params.get('id') || 'PAR00001';
+    var parent   = getParentById(parentId);
+
+    // ── Not-found guard ────────────────────────────────────────────────────────
+    if (!parent) {
+      document.getElementById('main-content').innerHTML =
+        '<div class="not-found">' +
+          '<h3>Parent not found</h3>' +
+          '<p>' + (parentId ? 'No record exists for ID <strong>' + parentId + '</strong>.' : 'No parent ID was provided.') + '</p>' +
+          '<p style="margin-top:12px;"><a href="parent-list.html" style="color:var(--gold);font-weight:600;">Return to Parent Directory</a></p>' +
+        '</div>';
+      throw new Error('Parent not found: ' + parentId);
+    }
+
+    // ── Helpers ────────────────────────────────────────────────────────────────
+    function initials(first, last) {
+      return ((first || '').charAt(0) + (last || '').charAt(0)).toUpperCase();
+    }
+
+    function statusBadgeClass(s) {
+      return { 'Active': 'green', 'Invited': 'amber', 'Reset pending': 'red' }[s] || 'navy';
+    }
+
+    function set(id, text) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = text || '—';
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function nowDate() {
+      return new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function linkedStudentNames(ids) {
+      if (!ids || !ids.length) return '—';
+      return ids.map(function (sid) {
+        var s = getStudentById(sid);
+        return s ? s.firstName + ' ' + s.lastName : sid;
+      }).join(', ');
+    }
+
+    // ── Populate page ──────────────────────────────────────────────────────────
+    var fullName     = parent.firstName + ' ' + parent.lastName;
+    var studentLabel = linkedStudentNames(parent.linkedStudentIds);
+
+    document.title = fullName + ' — Oxford Guardians';
+    document.getElementById('chrome-route').textContent = 'Route /admin/parents/' + parent.id;
+
+    document.getElementById('toolbar-avatar').textContent = initials(parent.firstName, parent.lastName);
+    document.getElementById('toolbar-name').innerHTML =
+      escapeHtml(fullName) +
+      ' <span style="color:var(--ink-3);font-size:0.8em;font-weight:normal;margin-left:8px;">' + escapeHtml(parent.id) + '</span>';
+    document.getElementById('toolbar-subtitle').textContent =
+      (parent.relationship || '—') + ' · ' + studentLabel;
+
+    var statusBadge = document.getElementById('toolbar-status-badge');
+    statusBadge.textContent = parent.status || '—';
+    statusBadge.className   = 'badge ' + statusBadgeClass(parent.status);
+
+    // Tab 1 — KV rows
+    set('kv-first-name',        parent.firstName);
+    set('kv-last-name',         parent.lastName);
+    set('kv-email',             parent.email);
+    set('kv-phone',             parent.phone);
+    set('kv-address',           parent.address);
+    set('kv-preferred-contact', parent.preferredContact);
+    set('kv-language',          parent.language);
+    set('kv-relationship',      parent.relationship);
+
+    var statusEl = document.getElementById('kv-status');
+    if (statusEl) {
+      statusEl.innerHTML = '<span class="badge ' + statusBadgeClass(parent.status) + '">' +
+        escapeHtml(parent.status || '—') + '</span>';
+    }
+
+    set('kv-notes', parent.notes);
+
+    // Communication history
+    (function () {
+      var logs = getParentLogs().filter(function (l) { return l.parentId === parentId; });
+      var el = document.getElementById('kv-comms-history');
+      if (!logs.length) {
+        el.innerHTML = '<p style="color:var(--ink-3);font-size:0.88rem;margin:0;">No communications logged yet. <a href="parent-log-create.html">Log the first one.</a></p>';
+        return;
+      }
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      el.innerHTML =
+        '<table style="width:100%;border-collapse:collapse;">' +
+          '<thead><tr>' +
+            '<th style="text-align:left;padding:8px 10px;font-size:0.78rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--line);font-weight:600;">Date</th>' +
+            '<th style="text-align:left;padding:8px 10px;font-size:0.78rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--line);font-weight:600;">Contact type</th>' +
+            '<th style="text-align:left;padding:8px 10px;font-size:0.78rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--line);font-weight:600;">Summary</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+          logs.map(function (log) {
+            var dt = new Date(log.loggedAt || log.date);
+            var dateStr = String(dt.getDate()).padStart(2, '0') + ' ' + months[dt.getMonth()] + ' ' + dt.getFullYear();
+            return '<tr>' +
+              '<td style="padding:8px 10px;font-size:0.88rem;color:var(--ink-2);border-bottom:1px solid var(--line);white-space:nowrap;">' + dateStr + '</td>' +
+              '<td style="padding:8px 10px;font-size:0.88rem;border-bottom:1px solid var(--line);">' + escapeHtml(log.contactType || '—') + '</td>' +
+              '<td style="padding:8px 10px;font-size:0.88rem;color:var(--ink-2);border-bottom:1px solid var(--line);">' + escapeHtml(log.summaryNotes || '—') + '</td>' +
+            '</tr>';
+          }).join('') +
+          '</tbody>' +
+        '</table>';
+    }());
+
+    // Tab 2 — Linked students
+    (function () {
+      var ids    = parent.linkedStudentIds || [];
+      var listEl = document.getElementById('linked-students-list');
+
+      if (!ids.length) {
+        listEl.innerHTML =
+          '<div class="empty-state-card">No linked students. Use the edit function to link this parent to student records.</div>';
+        return;
+      }
+
+      var html = '';
+      ids.forEach(function (sid) {
+        var s = getStudentById(sid);
+        if (!s) {
+          html +=
+            '<div class="student-card">' +
+              '<div><span style="color:var(--ink-3);font-size:0.88rem;">Student ID ' + escapeHtml(sid) + ' — record not found</span></div>' +
+            '</div>';
+          return;
+        }
+
+        var studentStatusClass = { Active: 'green', Monitor: 'amber', Pending: 'navy' }[s.status] || 'navy';
+
+        html +=
+          '<div class="student-card">' +
+            '<div>' +
+              '<a class="student-card-name" href="student-profile.html?id=' + escapeHtml(s.id) + '">' +
+                escapeHtml(s.firstName + ' ' + s.lastName) +
+                (s.preferredName && s.preferredName !== s.firstName ? ' (' + escapeHtml(s.preferredName) + ')' : '') +
+              '</a>' +
+              '<div class="student-card-meta">' +
+                '<div class="student-card-row"><small>School</small>' + escapeHtml(s.school || '—') + ' · ' + escapeHtml(s.schoolYear || '—') + '</div>' +
+                '<div class="student-card-row"><small>Homestay</small>' + escapeHtml(s.homestayFamily || '—') + '</div>' +
+                '<div class="student-card-row"><small>Welfare</small>' + escapeHtml(s.welfareStatus || '—') + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div>' +
+              '<span class="badge ' + studentStatusClass + '">' + escapeHtml(s.status || '—') + '</span>' +
+            '</div>' +
+          '</div>';
+      });
+
+      listEl.innerHTML = html;
+    }());
+
+    // ── Tab switching ──────────────────────────────────────────────────────────
+    var tabButtons = document.querySelectorAll('.subnav button[data-tab]');
+    var tabPanels  = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var target = this.getAttribute('data-tab');
+        tabPanels.forEach(function (p) { p.classList.remove('active'); p.style.display = 'none'; });
+        tabButtons.forEach(function (b) { b.classList.remove('active'); });
+        var active = document.getElementById(target);
+        if (active) { active.classList.add('active'); active.style.display = 'block'; }
+        this.classList.add('active');
+      });
+    });
+
+    tabPanels.forEach(function (p) {
+      p.style.display = p.classList.contains('active') ? 'block' : 'none';
+    });
+
+    // ── Upload widget ──────────────────────────────────────────────────────────
+    function createUploadWidget(options) {
+      var key = options.storageKey;
+
+      function load() {
+        try { return JSON.parse(localStorage.getItem(key)) || []; } catch (e) { return []; }
+      }
+
+      function save(items) { localStorage.setItem(key, JSON.stringify(items)); }
+
+      function render() {
+        var items = load();
+        var list  = document.getElementById(options.listId);
+        if (!items.length) {
+          list.innerHTML = '<div class="doc-empty">' + (options.emptyText || 'No files uploaded yet.') + '</div>';
+          return;
+        }
+        list.innerHTML = items.map(function (item, i) {
+          return '<div class="doc-item">' +
+            '<div class="doc-item-info">' +
+              '<div class="doc-icon">' +
+                '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                  '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>' +
+                  '<polyline points="14 2 14 8 20 8"></polyline>' +
+                '</svg>' +
+              '</div>' +
+              '<div><div class="doc-item-name">' + escapeHtml(item.name) + '</div>' +
+              '<div class="doc-item-meta">Uploaded ' + item.date + '</div></div>' +
+            '</div>' +
+            '<button class="doc-remove" data-index="' + i + '" title="Remove">&#x2715;</button>' +
+          '</div>';
+        }).join('');
+        list.querySelectorAll('.doc-remove').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var items = load();
+            items.splice(parseInt(this.getAttribute('data-index'), 10), 1);
+            save(items); render();
+          });
+        });
+      }
+
+      document.getElementById(options.btnId).addEventListener('click', function () {
+        var nameInput = document.getElementById(options.nameInputId);
+        var fileInput = document.getElementById(options.fileInputId);
+        var name = nameInput.value.trim();
+        if (!name) { nameInput.style.borderColor = 'var(--red)'; nameInput.focus(); return; }
+        nameInput.style.borderColor = '';
+        var items = load();
+        items.push({ name: name, date: nowDate() });
+        save(items); render();
+        nameInput.value = ''; fileInput.value = '';
+      });
+
+      render();
+    }
+
+    createUploadWidget({
+      storageKey:  'parent_docs_' + parent.id,
+      fileInputId: 'doc-file',
+      nameInputId: 'doc-name',
+      btnId:       'upload-btn',
+      listId:      'document-list',
+      emptyText:   'No documents uploaded yet. Use the form above to add files.'
+    });
+  
+    // ── Contracts ──────────────────────────────────────────────────────────────
+    function renderContracts() {
+      var contractsList = document.getElementById('contracts-list');
+      if (!contractsList) return;
+      var entityType = '';
+      var entityId = '';
+      if (typeof member !== 'undefined' && member.id) { entityType = 'Staff'; entityId = member.id; }
+      else if (typeof parentData !== 'undefined' && parentData.id) { entityType = 'Parent'; entityId = parentData.id; }
+      else if (typeof host !== 'undefined' && host.id) { entityType = 'Homestay'; entityId = host.id; }
+      
+      var contracts = typeof getContractsByEntity !== 'undefined' ? getContractsByEntity(entityType, entityId) : [];
+      if (!contracts.length) {
+        contractsList.innerHTML = '<div class="doc-empty">No contracts found for this profile.</div>';
+        return;
+      }
+      var html = '';
+      contracts.forEach(function(c) {
+        var statusColor = c.status === 'Active' ? 'green' : (c.status === 'Expiring Soon' ? 'amber' : (c.status === 'Draft' ? 'slate' : 'blue'));
+        html += '<div class="card" style="margin-bottom:16px;">' +
+                  '<div style="display:flex; justify-content:space-between; align-items:flex-start;">' +
+                    '<div>' +
+                      '<h4 style="margin:0 0 8px 0;">' + escapeHtml(c.title) + '</h4>' +
+                      '<p style="margin:0; font-size:0.9em; color:#3b536e;">Valid: ' + escapeHtml(c.validFrom || '—') + ' to ' + escapeHtml(c.validTo || '—') + '</p>' +
+                    '</div>' +
+                    '<span class="badge ' + statusColor + '">' + escapeHtml(c.status) + '</span>' +
+                  '</div>' +
+                  '<div style="margin-top:16px; display:flex; gap:8px;">' +
+                    '<button class="button-sm button-alt" onclick="updateContractStatus(\'' + c.id + '\', \'Awaiting Signature\')">Request Signature</button>' +
+                    '<button class="button-sm button" onclick="updateContractStatus(\'' + c.id + '\', \'Active\')">Upload Signed Copy</button>' +
+                    '<button class="button-sm button-alt" style="color:var(--red);" onclick="updateContractStatus(\'' + c.id + '\', \'Terminated\')">Terminate</button>' +
+                  '</div>' +
+                '</div>';
+      });
+      contractsList.innerHTML = html;
+    }
+    
+    window.updateContractStatus = function(cid, newStatus) {
+      if (typeof getContracts === 'undefined' || typeof saveContract === 'undefined') return;
+      var all = getContracts();
+      var c = all.find(function(x) { return x.id === cid; });
+      if (c) {
+        c.status = newStatus;
+        saveContract(c);
+        
+        // The saveContract function forces the status back to Draft if there is a safeguarding block.
+        // Let's re-fetch to see if our change was rejected.
+        var updatedAll = getContracts();
+        var updatedC = updatedAll.find(function(x) { return x.id === cid; });
+        if (updatedC && updatedC.status !== newStatus && newStatus === 'Active') {
+          alert('Safeguarding block! Cannot activate contract due to missing/expired compliance records.');
+        }
+        renderContracts();
+      }
+    };
+    renderContracts();
+\n  </script>
+
+  </body>
+</html>

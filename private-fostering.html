@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day Students & Placement Monitoring — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      #pf-modal,
+      #day-student-modal {
+        border: none;
+        border-radius: 14px;
+        padding: 0;
+        max-height: 82vh;
+        overflow-y: auto;
+        box-shadow: 0 12px 48px rgba(15,23,42,0.22);
+      }
+      #pf-modal { width: min(680px, 92vw); }
+      #day-student-modal { width: min(560px, 92vw); }
+      #pf-modal::backdrop,
+      #day-student-modal::backdrop {
+        background: rgba(15, 23, 42, 0.48);
+      }
+      .modal-inner {
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .modal-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .modal-header h3 { margin: 0; font-size: 1.1rem; }
+      .modal-section-title {
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #63768b;
+        margin: 0 0 10px;
+      }
+      .cb-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #e9edf2;
+        cursor: pointer;
+      }
+      .cb-row:last-child { border-bottom: none; }
+      .cb-row input[type="checkbox"] {
+        width: 17px;
+        height: 17px;
+        margin-top: 2px;
+        flex-shrink: 0;
+        accent-color: #06b6d4;
+        cursor: pointer;
+      }
+      .cb-row strong { display: block; font-size: 0.9rem; color: #0f172a; }
+      .cb-row small  { color: #63768b; }
+      .log-entry {
+        padding: 8px 0;
+        border-bottom: 1px solid #e9edf2;
+        font-size: 0.875rem;
+        color: #0f172a;
+      }
+      .log-entry:last-child { border-bottom: none; }
+      .log-date { font-size: 0.78rem; color: #63768b; margin-bottom: 2px; }
+      .log-empty { font-size: 0.875rem; color: #94a3b8; }
+      .log-add-row {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .log-add-row input[type="text"] {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1.5px solid #d1dbe7;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.875rem;
+        color: #0f172a;
+        background: #f7f8fa;
+        outline: none;
+      }
+      .log-add-row input[type="text"]:focus {
+        border-color: #06b6d4;
+        background: #fff;
+      }
+      #fostering-table-body tr,
+      #day-student-table-body tr { cursor: pointer; transition: background 0.12s; }
+      #fostering-table-body tr:hover,
+      #day-student-table-body tr:hover { background: #f0f9ff; }
+      .banner.amber {
+        background: linear-gradient(135deg, #f2e2ca 0%, #f7ecd9 100%);
+        border-color: #d9b978;
+      }
+      .banner.amber h4, .banner.amber p { color: #63400f; }
+      .banner-list { display: grid; gap: 12px; margin-top: 12px; }
+      .banner-list .banner { margin-bottom: 0; }
+      .residence-counter {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: #0f172a;
+      }
+      .field-input,
+      .field-select,
+      .field-textarea {
+        width: 100%;
+        margin-top: 6px;
+        padding: 10px 12px;
+        border: 1px solid #d5dce8;
+        border-radius: 10px;
+        background: #ffffff;
+        color: #0f2340;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+        box-sizing: border-box;
+      }
+      .field-input:focus,
+      .field-select:focus,
+      .field-textarea:focus {
+        border-color: #06b6d4;
+        box-shadow: 0 0 0 3px rgba(6,182,212,0.12);
+      }
+      .field-select { appearance: none; cursor: pointer; }
+      .field-textarea { resize: vertical; min-height: 84px; }
+      .field-grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 10px;
+      }
+      .field-grid-2 .field-span-2 { grid-column: 1 / -1; }
+      .field-grid-2 .field small {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #3b536e;
+        margin-bottom: 0;
+      }
+      .briefing-block,
+      .consent-block {
+        border: 1px solid #e9edf2;
+        border-radius: 12px;
+        padding: 14px 16px;
+        margin-bottom: 12px;
+      }
+      .briefing-block:last-child,
+      .consent-block:last-child { margin-bottom: 0; }
+      .briefing-block-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        cursor: pointer;
+      }
+      .briefing-block-header input[type="checkbox"] {
+        width: 17px;
+        height: 17px;
+        margin-top: 2px;
+        flex-shrink: 0;
+        accent-color: #06b6d4;
+        cursor: pointer;
+      }
+      .briefing-block-header strong { display: block; font-size: 0.92rem; color: #0f172a; }
+      .briefing-block-header small { color: #63768b; }
+      .briefing-subhead {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #63768b;
+        margin: 14px 0 6px;
+      }
+      .briefing-checklist { display: grid; gap: 7px; }
+      .briefing-checklist label {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 0.85rem;
+        color: #3b536e;
+        cursor: pointer;
+      }
+      .briefing-checklist input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+        margin-top: 2px;
+        flex-shrink: 0;
+        accent-color: #06b6d4;
+        cursor: pointer;
+      }
+      .tab-nav {
+        display: flex;
+        gap: 4px;
+        padding: 4px;
+        background: #f0f4f8;
+        border-radius: 10px;
+        width: fit-content;
+        margin-bottom: 16px;
+      }
+      .tab-btn {
+        padding: 7px 20px;
+        border: none;
+        border-radius: 7px;
+        font-family: inherit;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #63768b;
+        background: transparent;
+        cursor: pointer;
+        transition: background 0.14s, color 0.14s;
+      }
+      .tab-btn:hover { background: #e2e8f0; color: #0f172a; }
+      .tab-btn.active {
+        background: #fff;
+        color: #0f172a;
+        box-shadow: 0 1px 4px rgba(15,23,42,0.10);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/compliance/private-fostering</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Day Students & Placement Monitoring</strong></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a><a class="nav-link active" href="private-fostering.html">Private fostering</a><a class="nav-link" href="scr-dashboard.html">SCR Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="scr-staff.html" style="color: #63768b; text-decoration: none;">• Staff SCR</a><a href="scr-hosts.html" style="color: #63768b; text-decoration: none;">• Host SCR</a><a href="scr-drivers.html" style="color: #63768b; text-decoration: none;">• Driver SCR</a></div><a class="nav-link" href="audit-log.html">Audit trail</a><a class="nav-link" href="reporting-dashboard.html">Reporting</a></div>
+            <div class="nav-group"><div class="nav-label">Operations</div><a class="nav-link" href="students.html">Students</a><a class="nav-link" href="homestays.html">Homestays</a><a class="nav-link" href="travel.html">Travel</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">AEGIS Standard 8 — Day Students & Placement Monitoring</span>
+                <h2>No private fostering. No accidental breaches either.</h2>
+                <p>Oxford Guardians does not facilitate private fostering arrangements. This page monitors under-16 placement durations to prevent accidental statutory breaches, and tracks welfare check-ins for over-16 day students living with host families.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button-alt" href="students.html">Back to students</a><a class="button-alt" href="private-fostering-documents.html">Document Archive</a><a class="button" href="private-fostering-notification.html">Notify Local Authority</a></div>
+            </div>
+            <div class="metrics" id="fostering-metrics">
+              <article class="metric featured"><h4>Current private fostering arrangements</h4><div class="metric-value">2</div><p class="metric-meta">Both notified and acknowledged by respective local authorities</p></article>
+              <article class="metric"><h4>Pending notifications</h4><div class="metric-value">1</div><p class="metric-meta">Chen Wei — approaching 28-day threshold 22 Apr 2026</p></article>
+              <article class="metric"><h4>Notification compliance</h4><div class="metric-value">100%</div><p class="metric-meta">All arrangements properly notified and documented</p></article>
+            </div>
+            <div class="metrics" id="day-student-metrics" style="display:none;">
+              <article class="metric featured"><h4>Over-16 day students</h4><div class="metric-value" id="ds-metric-total">0</div><p class="metric-meta">Living with a host family and monitored under AEGIS 8.5</p></article>
+              <article class="metric"><h4>Check-ins due</h4><div class="metric-value" id="ds-metric-due">0</div><p class="metric-meta">Overdue or due within 7 days</p></article>
+              <article class="metric"><h4>Avg. days in residence</h4><div class="metric-value" id="ds-metric-avg-days">0</div><p class="metric-meta">Average cumulative days living in homestay</p></article>
+            </div>
+            <div class="tab-nav">
+              <button id="tab-fostering" class="tab-btn active">Under-16 Fostering</button>
+              <button id="tab-day-students" class="tab-btn">Over-16 Day Students</button>
+            </div>
+            <div id="fostering-wrap" class="table-wrap">
+              <table>
+                <thead><tr><th>Student</th><th>Age</th><th>Homestay</th><th>Stay duration</th><th>LA notified</th><th>LA response</th><th>Status</th></tr></thead>
+                <tbody id="fostering-table-body"></tbody>
+              </table>
+            </div>
+            <div id="guardrail-wrap" class="card" style="margin-top:24px;">
+              <h4>Automatic Placement Duration Monitor (28-Day Rule)</h4>
+              <p class="metric-meta" style="margin-bottom:4px;">Scans every under-16 (or disability-extended under-18) student not marked as a Day Student — including anyone not yet flagged as a private fostering arrangement — and calculates elapsed days in placement from arrival.</p>
+              <div class="banner-list" id="guardrail-alerts-list"></div>
+            </div>
+            <div id="day-student-wrap" class="table-wrap" style="display:none;">
+              <table>
+                <thead><tr><th>Student</th><th>Age</th><th>Homestay</th><th>Days in Residence</th><th>Last Check-In</th><th>Next Due</th><th>Status</th></tr></thead>
+                <tbody id="day-student-table-body"></tbody>
+              </table>
+            </div>
+            <div class="cols-2" style="margin-top:24px;">
+              <div class="card">
+                <h4>Private fostering trigger rules (Standard 8)</h4>
+                <div class="list">
+                  <div class="list-item"><strong>Age threshold</strong><small>Under 16, or under 18 if disabled</small></div>
+                  <div class="list-item"><strong>Duration threshold</strong><small>28+ consecutive days living with non-parent/non-close-relative</small></div>
+                  <div class="list-item"><strong>Close relative exclusions</strong><small>Grandparent, sibling, aunt, uncle, step-parent (with legal responsibility)</small></div>
+                  <div class="list-item"><strong>Notification deadline</strong><small>LA must be notified as soon as arrangement is known — ideally 6+ weeks before start</small></div>
+                  <div class="list-item"><strong>School awareness</strong><small>Organisation must inform school so they can also notify LA if required</small></div>
+                </div>
+              </div>
+              <div class="card">
+                <h4>Required evidence per arrangement</h4>
+                <div class="list">
+                  <div class="list-item"><strong>LA notification letter</strong><small>Dated copy of notification sent to local authority children's services</small></div>
+                  <div class="list-item"><strong>LA acknowledgement</strong><small>Written response from LA confirming receipt and any follow-up</small></div>
+                  <div class="list-item"><strong>School notification</strong><small>Evidence that school has been informed of the arrangement</small></div>
+                  <div class="list-item"><strong>Parent consent</strong><small>Written permission from parent for the private fostering arrangement</small></div>
+                  <div class="list-item"><strong>Homestay awareness</strong><small>Evidence homestay understands their obligations under private fostering regulations</small></div>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="margin-top:24px;">
+              <h4>Upcoming threshold alerts</h4>
+              <div class="list" id="threshold-alerts-list"></div>
+            </div>
+            <div class="note brutal" style="margin-top:24px;">
+              <h4>Why private fostering is often missed</h4>
+              <ul>
+                <li>Guardianship organisations assume schools handle notification — they often don't.</li>
+                <li>Rolling short stays never hit 28 days individually but arrangements functionally become private fostering.</li>
+                <li>16-17 year olds are forgotten because age threshold is 16 — but disability provision extends to 18.</li>
+                <li>Homestays don't understand they're private fostering — they think they're just "hosting."</li>
+                <li>PRD doesn't mention private fostering at all. This is a legal requirement, not a compliance nice-to-have.</li>
+              </ul>
+            </div>
+            <p class="inline-links">Related: <a href="students.html">Student records</a> · <a href="homestays.html">Homestay records</a> · <a href="compliance.html">AEGIS control room</a> · <a href="school-liaison.html">School liaison log</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <dialog id="pf-modal" class="card">
+      <div class="modal-inner">
+        <div class="modal-header">
+          <div>
+            <p class="modal-section-title">AEGIS 8.3 / 8.4 — Private Fostering</p>
+            <h3 id="pf-modal-title"></h3>
+          </div>
+          <button class="button-alt" id="pf-modal-close">Close</button>
+        </div>
+
+        <div>
+          <p class="modal-section-title">Stakeholder Briefings (AEGIS 8.3)</p>
+          <div id="pf-briefings-list"></div>
+        </div>
+
+        <div>
+          <p class="modal-section-title">Correspondence Log (AEGIS 8.4)</p>
+          <div id="pf-log-list"></div>
+          <div class="log-add-row">
+            <input type="text" id="pf-log-input" placeholder="Record an interaction with the Local Authority…">
+            <button class="button" id="pf-log-add">Add Log</button>
+          </div>
+        </div>
+
+        <div>
+          <p class="modal-section-title">Information Sharing Permissions (AEGIS 8.4)</p>
+          <p class="helper" style="margin:-6px 0 10px;">Agents are excluded from information sharing — agents only refer students.</p>
+          <div id="pf-sharing-list"></div>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="day-student-modal" class="card">
+      <div class="modal-inner">
+        <div class="modal-header">
+          <div>
+            <p class="modal-section-title">AEGIS 8.5 — Day Student Welfare</p>
+            <h3 id="ds-modal-title"></h3>
+            <p id="ds-modal-subtitle" class="metric-meta" style="margin-top:4px;"></p>
+          </div>
+          <button class="button-alt" id="ds-modal-close">Close</button>
+        </div>
+
+        <div>
+          <p class="modal-section-title">Days in Residence</p>
+          <div class="residence-counter" id="ds-residence-counter">—</div>
+        </div>
+
+        <div>
+          <p class="modal-section-title">Consent Status (AEGIS 8.4)</p>
+          <div>
+            <label class="cb-row">
+              <input type="checkbox" id="ds-cb-parent">
+              <div>
+                <strong>Parent Consent</strong>
+                <small>Parent or legal guardian has consented to information being shared for welfare monitoring purposes</small>
+              </div>
+            </label>
+            <label class="cb-row">
+              <input type="checkbox" id="ds-cb-school">
+              <div>
+                <strong>School Consent</strong>
+                <small>School has consented to information being shared for welfare monitoring purposes</small>
+              </div>
+            </label>
+            <label class="cb-row">
+              <input type="checkbox" id="ds-cb-host">
+              <div>
+                <strong>Host Family Consent</strong>
+                <small>Host family has consented to information being shared for welfare monitoring purposes</small>
+              </div>
+            </label>
+          </div>
+          <p class="helper" style="margin-top:6px;">Agents are excluded from consent and information sharing — agents only refer students.</p>
+        </div>
+
+        <div>
+          <p class="modal-section-title">Check-In History</p>
+          <div id="ds-log-list"></div>
+        </div>
+
+        <div>
+          <p class="modal-section-title">Log New Welfare Check-In</p>
+          <div class="field-grid-2">
+            <div class="field">
+              <small>Date</small>
+              <input type="date" class="field-input" id="ds-checkin-date">
+            </div>
+            <div class="field">
+              <small>Check-In Type</small>
+              <select class="field-select" id="ds-checkin-type">
+                <option>In-Person Visit</option>
+                <option>Phone Call</option>
+                <option>Video Call</option>
+                <option>Email</option>
+              </select>
+            </div>
+            <div class="field field-span-2">
+              <small>Reviewer</small>
+              <input type="text" class="field-input" id="ds-checkin-by" value="Jay Ray">
+            </div>
+            <div class="field field-span-2">
+              <small>Welfare Notes</small>
+              <textarea class="field-textarea" id="ds-checkin-notes" placeholder="Observations on accommodation, meals, wellbeing, commute…"></textarea>
+            </div>
+          </div>
+          <div class="action-row">
+            <button class="button" id="ds-checkin-save">Save Check-In</button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="assets/db.js"></script>
+    <script>
+      // ── Helpers ───────────────────────────────────────────────────────────────
+
+      function calculateAge(dobString) {
+        if (!dobString) return '—';
+        var today = new Date();
+        var dob   = new Date(dobString);
+        var age   = today.getFullYear() - dob.getFullYear();
+        if (today.getMonth() < dob.getMonth() ||
+            (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) {
+          age--;
+        }
+        return age;
+      }
+
+      function fmtDate(iso) {
+        if (!iso) return '—';
+        var d = new Date(iso);
+        if (isNaN(d.getTime())) return '—';
+        return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+      }
+
+      function daysUntilDate(dateStr) {
+        if (!dateStr) return null;
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        var d = new Date(dateStr);
+        if (isNaN(d.getTime())) return null;
+        d.setHours(0, 0, 0, 0);
+        return Math.floor((d - today) / 86400000);
+      }
+
+      function todayISO() {
+        return new Date().toISOString().split('T')[0];
+      }
+
+      function fmtDateNoYear(iso) {
+        if (!iso) return '—';
+        var d = new Date(iso);
+        if (isNaN(d.getTime())) return '—';
+        return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+      }
+
+      // Whole days elapsed from dateStr to today. Positive = in the past. Null if unparsable.
+      function daysSince(dateStr) {
+        if (!dateStr) return null;
+        var d = new Date(dateStr);
+        if (isNaN(d.getTime())) return null;
+        d.setHours(0, 0, 0, 0);
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return Math.floor((today - d) / 86400000);
+      }
+
+      function addDaysISO(dateStr, n) {
+        var d = new Date(dateStr);
+        if (isNaN(d.getTime())) return null;
+        d.setDate(d.getDate() + n);
+        return d.toISOString().split('T')[0];
+      }
+
+      // ── State ─────────────────────────────────────────────────────────────────
+
+      var allStudents = getAllStudents();
+      var pfStudents  = allStudents.filter(function (s) {
+        return s.accommodationType === 'Private Fostering';
+      });
+
+      function refreshStudentState() {
+        allStudents = getAllStudents();
+        pfStudents  = allStudents.filter(function (s) {
+          return s.accommodationType === 'Private Fostering';
+        });
+      }
+
+      // ── Table ─────────────────────────────────────────────────────────────────
+
+      function renderTable(data) {
+        var applicable = data.filter(function (s) {
+          return s.privateFostering && s.privateFostering.isApplicable === true;
+        });
+        var tbody = document.getElementById('fostering-table-body');
+        if (!applicable.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="7" style="text-align:center;padding:24px;color:#6b85a0;">' +
+            'No private fostering arrangements on record.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = applicable.map(function (s) {
+          var pf       = s.privateFostering || {};
+          var days     = daysUntilDate(pf.proposedStartDate);
+          var isUrgent = days !== null && days < 42 && !pf.laNotifiedDate;
+          var badgeHtml;
+          if (isUrgent) {
+            badgeHtml = '<span class="badge red">URGENT: LA Notification Due</span>';
+          } else if (pf.laNotifiedDate) {
+            badgeHtml = '<span class="badge green">Notified</span>';
+          } else {
+            badgeHtml = '<span class="badge amber">Pending</span>';
+          }
+          var duration   = pf.proposedStartDate ? 'Proposed: ' + fmtDate(pf.proposedStartDate) : '—';
+          var laResponse = pf.laResponseDate ? 'Acknowledged ' + fmtDate(pf.laResponseDate) : '—';
+          return '<tr data-id="' + s.id + '">' +
+            '<td><strong>' + s.firstName + ' ' + s.lastName + '</strong>' +
+              '<small>' + (s.school || '—') + (s.schoolYear ? ' / ' + s.schoolYear : '') + '</small></td>' +
+            '<td>' + calculateAge(s.dob) + '</td>' +
+            '<td>' + (s.homestayFamily || '—') + '</td>' +
+            '<td>' + duration + '</td>' +
+            '<td>' + fmtDate(pf.laNotifiedDate) + '</td>' +
+            '<td>' + laResponse + '</td>' +
+            '<td>' + badgeHtml + '</td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      // ── Metrics ───────────────────────────────────────────────────────────────
+
+      function renderMetrics() {
+        var applicable    = pfStudents.filter(function (s) { return s.privateFostering && s.privateFostering.isApplicable; });
+        var notifiedCount = applicable.filter(function (s) { return s.privateFostering.laNotifiedDate; }).length;
+        var pendingCount  = applicable.filter(function (s) { return !s.privateFostering.laNotifiedDate; }).length;
+        var compliancePct = applicable.length ? Math.round((notifiedCount / applicable.length) * 100) : 0;
+        var metricValues  = document.querySelectorAll('.metric-value');
+        if (metricValues[0]) metricValues[0].textContent = notifiedCount;
+        if (metricValues[1]) metricValues[1].textContent = pendingCount;
+        if (metricValues[2]) metricValues[2].textContent = compliancePct + '%';
+      }
+
+      // ── Threshold alerts ──────────────────────────────────────────────────────
+
+      function renderThresholdAlerts() {
+        var alertsList     = document.getElementById('threshold-alerts-list');
+        if (!alertsList) return;
+        var urgentStudents = allStudents.filter(function (s) {
+          var pf = s.privateFostering;
+          if (!pf || !pf.isApplicable) return false;
+          var days = daysUntilDate(pf.proposedStartDate);
+          return days !== null && days < 42 && !pf.laNotifiedDate;
+        });
+        if (!urgentStudents.length) {
+          alertsList.innerHTML =
+            '<div class="list-item"><small style="color:#6b85a0;">No upcoming threshold alerts.</small></div>';
+          return;
+        }
+        alertsList.innerHTML = urgentStudents.map(function (s) {
+          var pf   = s.privateFostering;
+          var days = daysUntilDate(pf.proposedStartDate);
+          return '<div class="list-item">' +
+            '<strong>' + s.firstName + ' ' + s.lastName + ' — ' + (s.homestayFamily || 'homestay TBC') + '</strong>' +
+            '<small>Proposed start ' + fmtDate(pf.proposedStartDate) + ' — ' + days + ' day' + (days === 1 ? '' : 's') +
+            ' away. LA notification has not been sent. Notify immediately to meet the 6-week advance requirement.</small>' +
+            '<a href="private-fostering-notification.html">Prepare notification →</a>' +
+          '</div>';
+        }).join('');
+      }
+
+      // ── Modal ─────────────────────────────────────────────────────────────────
+
+      var currentStudentId = null;
+      var modal = document.getElementById('pf-modal');
+
+      // AEGIS 8.3 — the three stakeholders whose briefing must be tracked.
+      var BRIEFING_STAKEHOLDERS = [
+        { key: 'school',   label: 'School Briefed',   description: 'School has been informed of the arrangement and their own duty to notify the LA' },
+        { key: 'homestay', label: 'Homestay Briefed', description: 'Homestay family understands their obligations under private fostering regulations' },
+        { key: 'parent',   label: 'Parent Briefed',   description: 'Parent or legal guardian has been briefed and has consented to the arrangement' }
+      ];
+
+      // Standard statutory topics a briefing should cover. The array values are what
+      // gets stored in contentCovered; BRIEFING_CONTENT_LABELS holds the display text.
+      var BRIEFING_CONTENT_TOPICS = [
+        '28-day threshold',
+        'LA notification',
+        'LA visits expectation',
+        'Arrangement changes',
+        'Emergency contacts'
+      ];
+      var BRIEFING_CONTENT_LABELS = {
+        '28-day threshold':      '28-day private fostering threshold and legal obligations',
+        'LA notification':       'Local authority notification requirements',
+        'LA visits expectation': 'Regular LA visits and meetings expectation',
+        'Arrangement changes':   'Obligation to notify if arrangement changes',
+        'Emergency contacts':    'Emergency contact and escalation procedures'
+      };
+
+      // AEGIS 8.4 — the three parties whose information-sharing consent must be tracked.
+      // Agents are intentionally excluded: they only refer students, they are not briefed
+      // and do not receive shared welfare/safeguarding information.
+      var SHARING_PARTIES = [
+        { key: 'parent', label: 'Parent',      description: 'Consent to share student welfare details with the local authority' },
+        { key: 'school', label: 'School',      description: 'Consent to share placement and safeguarding information' },
+        { key: 'host',   label: 'Host Family', description: 'Consent to share DBS and household records with the local authority' }
+      ];
+
+      // Normalises briefings into the AEGIS 8.3 structured shape. Transparently upgrades
+      // legacy { schoolBriefed, homestayBriefed, parentConsent } boolean-flag records so
+      // old data loads without errors.
+      function normalizeBriefings(raw) {
+        raw = raw || {};
+        var legacyKeyFor = { school: 'schoolBriefed', homestay: 'homestayBriefed', parent: 'parentConsent' };
+        var out = {};
+        BRIEFING_STAKEHOLDERS.forEach(function (sh) {
+          var existing = raw[sh.key];
+          if (existing && typeof existing === 'object') {
+            out[sh.key] = {
+              briefed: !!existing.briefed,
+              date: existing.date || '',
+              by: existing.by || '',
+              contentCovered: Array.isArray(existing.contentCovered) ? existing.contentCovered.slice() : [],
+              notes: existing.notes || ''
+            };
+          } else {
+            out[sh.key] = {
+              briefed: !!raw[legacyKeyFor[sh.key]],
+              date: '',
+              by: '',
+              contentCovered: [],
+              notes: ''
+            };
+          }
+        });
+        return out;
+      }
+
+      function normalizeSharing(raw) {
+        raw = raw || {};
+        var out = {};
+        SHARING_PARTIES.forEach(function (p) {
+          var existing = raw[p.key] || {};
+          out[p.key] = {
+            consented: !!existing.consented,
+            date: existing.date || '',
+            method: existing.method || '',
+            reference: existing.reference || ''
+          };
+        });
+        return out;
+      }
+
+      function renderBriefingBlock(sh, data) {
+        var checklistHtml = BRIEFING_CONTENT_TOPICS.map(function (topic) {
+          var checked = data.contentCovered.indexOf(topic) > -1 ? 'checked' : '';
+          return '<label><input type="checkbox" data-topic="' + topic + '" ' + checked + '> ' +
+            BRIEFING_CONTENT_LABELS[topic] + '</label>';
+        }).join('');
+
+        return '' +
+          '<div class="briefing-block" data-stakeholder="' + sh.key + '">' +
+            '<label class="briefing-block-header">' +
+              '<input type="checkbox" class="briefing-briefed-cb" ' + (data.briefed ? 'checked' : '') + '>' +
+              '<div><strong>' + sh.label + '</strong><small>' + sh.description + '</small></div>' +
+            '</label>' +
+            '<div class="field-grid-2">' +
+              '<div class="field"><small>Briefing Date</small>' +
+                '<input type="date" class="field-input briefing-date-input" value="' + (data.date || '') + '"></div>' +
+              '<div class="field"><small>Briefed By</small>' +
+                '<input type="text" class="field-input briefing-by-input" placeholder="Jay Ray" value="' + (data.by || '') + '"></div>' +
+            '</div>' +
+            '<p class="briefing-subhead">Content Explained</p>' +
+            '<div class="briefing-checklist">' + checklistHtml + '</div>' +
+            '<div class="field" style="margin-top:12px;"><small>Notes</small>' +
+              '<textarea class="field-textarea briefing-notes-input" placeholder="Briefing summary notes…">' + (data.notes || '') + '</textarea></div>' +
+          '</div>';
+      }
+
+      function renderSharingBlock(party, data) {
+        var methods = ['Written', 'Email', 'Verbal'];
+        var optionsHtml = '<option value="">—</option>' + methods.map(function (m) {
+          return '<option value="' + m + '"' + (data.method === m ? ' selected' : '') + '>' + m + '</option>';
+        }).join('');
+
+        return '' +
+          '<div class="consent-block" data-party="' + party.key + '">' +
+            '<label class="briefing-block-header">' +
+              '<input type="checkbox" class="sharing-consented-cb" ' + (data.consented ? 'checked' : '') + '>' +
+              '<div><strong>' + party.label + '</strong><small>' + party.description + '</small></div>' +
+            '</label>' +
+            '<div class="field-grid-2">' +
+              '<div class="field"><small>Date Received</small>' +
+                '<input type="date" class="field-input sharing-date-input" value="' + (data.date || '') + '"></div>' +
+              '<div class="field"><small>Consent Method</small>' +
+                '<select class="field-select sharing-method-input">' + optionsHtml + '</select></div>' +
+              '<div class="field field-span-2"><small>Evidence / Reference</small>' +
+                '<input type="text" class="field-input sharing-reference-input" placeholder="e.g. Signed consent form v2 on file" value="' + (data.reference || '') + '"></div>' +
+            '</div>' +
+          '</div>';
+      }
+
+      function populateModal(student) {
+        var pf        = student.privateFostering || {};
+        var briefings = normalizeBriefings(pf.briefings);
+        var sharing   = normalizeSharing(pf.informationSharing);
+        var log       = pf.correspondenceLog || [];
+
+        document.getElementById('pf-modal-title').textContent =
+          student.firstName + ' ' + student.lastName +
+          (student.homestayFamily ? ' — ' + student.homestayFamily : '');
+
+        // ── Stakeholder briefings (AEGIS 8.3) ──
+        var briefingsList = document.getElementById('pf-briefings-list');
+        briefingsList.innerHTML = BRIEFING_STAKEHOLDERS.map(function (sh) {
+          return renderBriefingBlock(sh, briefings[sh.key]);
+        }).join('');
+
+        BRIEFING_STAKEHOLDERS.forEach(function (sh) {
+          var block = briefingsList.querySelector('.briefing-block[data-stakeholder="' + sh.key + '"]');
+          block.querySelector('.briefing-briefed-cb').addEventListener('change', function () {
+            saveBriefingField(sh.key, 'briefed', this.checked);
+          });
+          block.querySelector('.briefing-date-input').addEventListener('change', function () {
+            saveBriefingField(sh.key, 'date', this.value);
+          });
+          block.querySelector('.briefing-by-input').addEventListener('change', function () {
+            saveBriefingField(sh.key, 'by', this.value.trim());
+          });
+          block.querySelector('.briefing-notes-input').addEventListener('change', function () {
+            saveBriefingField(sh.key, 'notes', this.value.trim());
+          });
+          block.querySelectorAll('.briefing-checklist input[type="checkbox"]').forEach(function (cb) {
+            cb.addEventListener('change', function () {
+              saveBriefingContentTopic(sh.key, this.dataset.topic, this.checked);
+            });
+          });
+        });
+
+        // ── Correspondence log (AEGIS 8.4) ──
+        var logList = document.getElementById('pf-log-list');
+        if (!log.length) {
+          logList.innerHTML = '<p class="log-empty">No correspondence logged yet.</p>';
+        } else {
+          logList.innerHTML = log.slice().reverse().map(function (entry) {
+            return '<div class="log-entry">' +
+              '<div class="log-date">' + fmtDate(entry.date) + '</div>' +
+              entry.text +
+            '</div>';
+          }).join('');
+        }
+
+        // Add-log button — .onclick prevents listener accumulation
+        document.getElementById('pf-log-add').onclick = function () {
+          var input = document.getElementById('pf-log-input');
+          var text  = input.value.trim();
+          if (!text) return;
+          var s = getStudentById(currentStudentId);
+          if (!s) return;
+          s.privateFostering.correspondenceLog = s.privateFostering.correspondenceLog || [];
+          s.privateFostering.correspondenceLog.push({ date: todayISO(), text: text });
+          upsertStudent(s);
+          input.value = '';
+          refreshStudentState();
+          populateModal(getStudentById(currentStudentId));
+          renderTable(pfStudents);
+          renderThresholdAlerts();
+        };
+
+        // Allow submitting the log entry with Enter
+        document.getElementById('pf-log-input').onkeydown = function (e) {
+          if (e.key === 'Enter') document.getElementById('pf-log-add').click();
+        };
+
+        // ── Information sharing permissions (AEGIS 8.4) ──
+        var sharingList = document.getElementById('pf-sharing-list');
+        sharingList.innerHTML = SHARING_PARTIES.map(function (p) {
+          return renderSharingBlock(p, sharing[p.key]);
+        }).join('');
+
+        SHARING_PARTIES.forEach(function (p) {
+          var block = sharingList.querySelector('.consent-block[data-party="' + p.key + '"]');
+          block.querySelector('.sharing-consented-cb').addEventListener('change', function () {
+            saveSharingField(p.key, 'consented', this.checked);
+          });
+          block.querySelector('.sharing-date-input').addEventListener('change', function () {
+            saveSharingField(p.key, 'date', this.value);
+          });
+          block.querySelector('.sharing-method-input').addEventListener('change', function () {
+            saveSharingField(p.key, 'method', this.value);
+          });
+          block.querySelector('.sharing-reference-input').addEventListener('change', function () {
+            saveSharingField(p.key, 'reference', this.value.trim());
+          });
+        });
+      }
+
+      function saveBriefingField(stakeholderKey, field, value) {
+        var s = getStudentById(currentStudentId);
+        if (!s) return;
+        s.privateFostering.briefings = normalizeBriefings(s.privateFostering.briefings);
+        s.privateFostering.briefings[stakeholderKey][field] = value;
+        upsertStudent(s);
+        refreshStudentState();
+        renderTable(pfStudents);
+      }
+
+      function saveBriefingContentTopic(stakeholderKey, topic, checked) {
+        var s = getStudentById(currentStudentId);
+        if (!s) return;
+        s.privateFostering.briefings = normalizeBriefings(s.privateFostering.briefings);
+        var arr = s.privateFostering.briefings[stakeholderKey].contentCovered;
+        var idx = arr.indexOf(topic);
+        if (checked && idx === -1) arr.push(topic);
+        if (!checked && idx > -1) arr.splice(idx, 1);
+        upsertStudent(s);
+        refreshStudentState();
+      }
+
+      function saveSharingField(partyKey, field, value) {
+        var s = getStudentById(currentStudentId);
+        if (!s) return;
+        s.privateFostering.informationSharing = normalizeSharing(s.privateFostering.informationSharing);
+        s.privateFostering.informationSharing[partyKey][field] = value;
+        upsertStudent(s);
+        refreshStudentState();
+      }
+
+      function openModal(studentId) {
+        currentStudentId = studentId;
+        var student = getStudentById(studentId);
+        if (!student) return;
+        populateModal(student);
+        modal.showModal();
+      }
+
+      // Close button
+      document.getElementById('pf-modal-close').onclick = function () {
+        modal.close();
+      };
+
+      // Clicking the backdrop closes the modal
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) modal.close();
+      });
+
+      // ── Row click delegation ───────────────────────────────────────────────────
+
+      document.getElementById('fostering-table-body').addEventListener('click', function (e) {
+        var row = e.target.closest('tr[data-id]');
+        if (!row) return;
+        openModal(row.dataset.id);
+      });
+
+      // ── Day student welfare hub (AEGIS 8.5) ──────────────────────────────────
+
+      var DEFAULT_CHECKIN_FREQUENCY_DAYS = 30;
+      var DUE_SOON_WINDOW_DAYS = 7;
+
+      function getOver16DayStudents() {
+        return getAllStudents().filter(function (s) {
+          return s.accommodationType === 'Day Student' && calculateAge(s.dob) >= 16;
+        });
+      }
+
+      function getLatestCheckin(dw) {
+        var checkins = (dw && dw.checkins) || [];
+        if (!checkins.length) return null;
+        return checkins.slice().sort(function (a, b) {
+          return new Date(b.date) - new Date(a.date);
+        })[0];
+      }
+
+      // Computes the welfare-monitoring figures for a single over-16 day student.
+      function computeDayStudentStatus(s) {
+        var dw            = s.dayStudentWelfare || {};
+        var frequency     = dw.welfareCheckFrequencyDays || DEFAULT_CHECKIN_FREQUENCY_DAYS;
+        var residenceBase = dw.homestayStartDate || s.arrivalDate || null;
+        var daysInResidence = daysSince(residenceBase);
+        var latest         = getLatestCheckin(dw);
+        var nextDueDate     = latest ? addDaysISO(latest.date, frequency) : addDaysISO(residenceBase, frequency);
+        var daysUntilDue    = nextDueDate ? -daysSince(nextDueDate) : null; // positive = days remaining
+
+        var statusKey, statusLabel, badgeClass;
+        if (daysUntilDue === null) {
+          statusKey = 'unknown'; statusLabel = 'No Data'; badgeClass = 'amber';
+        } else if (daysUntilDue < 0) {
+          statusKey = 'overdue'; statusLabel = 'Overdue'; badgeClass = 'red';
+        } else if (daysUntilDue <= DUE_SOON_WINDOW_DAYS) {
+          statusKey = 'due-soon'; statusLabel = 'Due Soon'; badgeClass = 'amber';
+        } else {
+          statusKey = 'compliant'; statusLabel = 'Compliant'; badgeClass = 'green';
+        }
+
+        return {
+          dw: dw,
+          daysInResidence: daysInResidence,
+          latestCheckin: latest,
+          nextDueDate: nextDueDate,
+          daysUntilDue: daysUntilDue,
+          statusKey: statusKey,
+          statusLabel: statusLabel,
+          badgeClass: badgeClass
+        };
+      }
+
+      function renderDayStudentTable() {
+        var students = getOver16DayStudents();
+        var tbody = document.getElementById('day-student-table-body');
+        if (!students.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="7" style="text-align:center;padding:24px;color:#6b85a0;">' +
+            'No over-16 day students on record.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = students.map(function (s) {
+          var c = computeDayStudentStatus(s);
+          var daysInResidenceText = c.daysInResidence === null ? '—' : c.daysInResidence + ' day' + (c.daysInResidence === 1 ? '' : 's');
+          var lastCheckinText     = c.latestCheckin ? fmtDate(c.latestCheckin.date) : 'No check-in yet';
+          var nextDueText         = c.nextDueDate ? fmtDate(c.nextDueDate) : '—';
+          return '<tr data-id="' + s.id + '">' +
+            '<td><strong>' + s.firstName + ' ' + s.lastName + '</strong>' +
+              '<small>' + (s.school || '—') + (s.schoolYear ? ' / ' + s.schoolYear : '') + '</small></td>' +
+            '<td>' + calculateAge(s.dob) + '</td>' +
+            '<td>' + (s.homestayFamily || '—') + '</td>' +
+            '<td>' + daysInResidenceText + '</td>' +
+            '<td>' + lastCheckinText + '</td>' +
+            '<td>' + nextDueText + '</td>' +
+            '<td><span class="badge ' + c.badgeClass + '">' + c.statusLabel + '</span></td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      function renderDayStudentMetrics() {
+        var students = getOver16DayStudents();
+        var total = students.length;
+        var due   = 0;
+        var residenceDays = [];
+        students.forEach(function (s) {
+          var c = computeDayStudentStatus(s);
+          if (c.statusKey === 'overdue' || c.statusKey === 'due-soon') due++;
+          if (c.daysInResidence !== null) residenceDays.push(c.daysInResidence);
+        });
+        var avgDays = residenceDays.length
+          ? Math.round(residenceDays.reduce(function (a, b) { return a + b; }, 0) / residenceDays.length)
+          : 0;
+        document.getElementById('ds-metric-total').textContent    = total;
+        document.getElementById('ds-metric-due').textContent      = due;
+        document.getElementById('ds-metric-avg-days').textContent = avgDays;
+      }
+
+      // ── Day student modal ─────────────────────────────────────────────────────
+
+      var dsCurrentStudentId = null;
+      var dsModal = document.getElementById('day-student-modal');
+
+      function populateDayStudentModal(student) {
+        var c   = computeDayStudentStatus(student);
+        var dw  = c.dw;
+        var consent = dw.consentLog || {};
+
+        document.getElementById('ds-modal-title').textContent =
+          student.firstName + ' ' + student.lastName +
+          (student.homestayFamily ? ' — ' + student.homestayFamily : '');
+        document.getElementById('ds-modal-subtitle').textContent =
+          (student.school || '—') + (student.schoolYear ? ' / ' + student.schoolYear : '');
+        document.getElementById('ds-residence-counter').textContent =
+          c.daysInResidence === null ? '—' : c.daysInResidence + ' day' + (c.daysInResidence === 1 ? '' : 's') + ' in residence';
+
+        // Consent checkboxes
+        document.getElementById('ds-cb-parent').checked = !!consent.parentConsent;
+        document.getElementById('ds-cb-school').checked = !!consent.schoolConsent;
+        document.getElementById('ds-cb-host').checked   = !!consent.hostConsent;
+
+        document.getElementById('ds-cb-parent').onchange = function () { saveDayStudentConsent('parentConsent', this.checked); };
+        document.getElementById('ds-cb-school').onchange = function () { saveDayStudentConsent('schoolConsent', this.checked); };
+        document.getElementById('ds-cb-host').onchange   = function () { saveDayStudentConsent('hostConsent', this.checked); };
+
+        // Check-in history
+        var logList = document.getElementById('ds-log-list');
+        var checkins = (dw.checkins || []).slice().sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+        if (!checkins.length) {
+          logList.innerHTML = '<p class="log-empty">No welfare check-ins logged yet.</p>';
+        } else {
+          logList.innerHTML = checkins.map(function (entry) {
+            return '<div class="log-entry">' +
+              '<div class="log-date">' + fmtDate(entry.date) + ' — <span class="badge navy">' + entry.type + '</span> — ' + entry.by + '</div>' +
+              entry.notes +
+            '</div>';
+          }).join('');
+        }
+
+        // Reset the new check-in form
+        document.getElementById('ds-checkin-date').value  = todayISO();
+        document.getElementById('ds-checkin-type').value  = 'In-Person Visit';
+        document.getElementById('ds-checkin-by').value    = 'Jay Ray';
+        document.getElementById('ds-checkin-notes').value = '';
+
+        document.getElementById('ds-checkin-save').onclick = function () {
+          var s = getStudentById(dsCurrentStudentId);
+          if (!s) return;
+          var date  = document.getElementById('ds-checkin-date').value || todayISO();
+          var type  = document.getElementById('ds-checkin-type').value;
+          var by    = document.getElementById('ds-checkin-by').value.trim() || 'Jay Ray';
+          var notes = document.getElementById('ds-checkin-notes').value.trim();
+          if (!notes) return;
+
+          s.dayStudentWelfare = s.dayStudentWelfare || {};
+          s.dayStudentWelfare.checkins = s.dayStudentWelfare.checkins || [];
+          s.dayStudentWelfare.checkins.unshift({ date: date, by: by, type: type, notes: notes });
+          s.welfareStatus = 'Last check-in ' + fmtDateNoYear(date);
+          upsertStudent(s);
+
+          refreshStudentState();
+          renderDayStudentTable();
+          renderDayStudentMetrics();
+          populateDayStudentModal(getStudentById(dsCurrentStudentId));
+        };
+      }
+
+      function saveDayStudentConsent(field, value) {
+        var s = getStudentById(dsCurrentStudentId);
+        if (!s) return;
+        s.dayStudentWelfare             = s.dayStudentWelfare || {};
+        s.dayStudentWelfare.consentLog  = s.dayStudentWelfare.consentLog || {};
+        s.dayStudentWelfare.consentLog[field] = value;
+        upsertStudent(s);
+        refreshStudentState();
+      }
+
+      function openDayStudentModal(studentId) {
+        dsCurrentStudentId = studentId;
+        var student = getStudentById(studentId);
+        if (!student) return;
+        populateDayStudentModal(student);
+        dsModal.showModal();
+      }
+
+      document.getElementById('ds-modal-close').onclick = function () {
+        dsModal.close();
+      };
+      dsModal.addEventListener('click', function (e) {
+        if (e.target === dsModal) dsModal.close();
+      });
+
+      document.getElementById('day-student-table-body').addEventListener('click', function (e) {
+        var row = e.target.closest('tr[data-id]');
+        if (!row) return;
+        openDayStudentModal(row.dataset.id);
+      });
+
+      // ── Automatic under-16 placement duration guardrails (AEGIS 8.1) ─────────
+
+      var GUARDRAIL_AMBER_FROM_DAYS = 21;
+      var GUARDRAIL_RED_FROM_DAYS   = 28;
+
+      function renderGuardrailMonitor() {
+        var list = document.getElementById('guardrail-alerts-list');
+        if (!list) return;
+
+        var flagged = getAllStudents().filter(function (s) {
+          if (s.accommodationType === 'Day Student') return false;
+          var age = calculateAge(s.dob);
+          var disabilityExtension = s.disabilityUnder18 === true && age < 18;
+          if (!(age < 16 || disabilityExtension)) return false;
+          return true;
+        }).map(function (s) {
+          return { student: s, days: daysSince(s.arrivalDate) };
+        }).filter(function (x) {
+          return x.days !== null && x.days >= 0;
+        }).sort(function (a, b) { return b.days - a.days; });
+
+        var redFlags   = flagged.filter(function (x) { return x.days >= GUARDRAIL_RED_FROM_DAYS; });
+        var amberFlags = flagged.filter(function (x) { return x.days >= GUARDRAIL_AMBER_FROM_DAYS && x.days < GUARDRAIL_RED_FROM_DAYS; });
+
+        if (!redFlags.length && !amberFlags.length) {
+          list.innerHTML =
+            '<div class="banner green"><h4>Within permitted window</h4>' +
+            '<p>All active under-16 homestay placements are within the permitted under-28-day window.</p></div>';
+          return;
+        }
+
+        var html = '';
+        redFlags.forEach(function (x) {
+          html += '<div class="banner red">' +
+            '<h4>STATUTORY BREACH — ' + x.student.firstName + ' ' + x.student.lastName +
+              ' (' + (x.student.homestayFamily || 'homestay TBC') + ') — ' + x.days + ' days</h4>' +
+            '<p>Stay has reached ' + x.days + ' consecutive days. Immediate local authority notification required under Children Act 1989.</p>' +
+            '<a class="button" href="private-fostering-notification.html">Notify Local Authority →</a>' +
+          '</div>';
+        });
+        amberFlags.forEach(function (x) {
+          html += '<div class="banner amber">' +
+            '<h4>Approaching threshold — ' + x.student.firstName + ' ' + x.student.lastName +
+              ' (' + (x.student.homestayFamily || 'homestay TBC') + ') — ' + x.days + ' days</h4>' +
+            '<p>Approaching 28-day statutory limit — arrange school return or alternative accommodation to prevent statutory private fostering breach.</p>' +
+          '</div>';
+        });
+        list.innerHTML = html;
+      }
+
+      // ── Sub-nav toggle ────────────────────────────────────────────────────────
+
+      document.getElementById('tab-fostering').onclick = function () {
+        document.getElementById('fostering-wrap').style.display    = '';
+        document.getElementById('guardrail-wrap').style.display    = '';
+        document.getElementById('fostering-metrics').style.display = '';
+        document.getElementById('day-student-wrap').style.display    = 'none';
+        document.getElementById('day-student-metrics').style.display = 'none';
+        document.getElementById('tab-fostering').classList.add('active');
+        document.getElementById('tab-day-students').classList.remove('active');
+      };
+
+      document.getElementById('tab-day-students').onclick = function () {
+        document.getElementById('fostering-wrap').style.display    = 'none';
+        document.getElementById('guardrail-wrap').style.display    = 'none';
+        document.getElementById('fostering-metrics').style.display = 'none';
+        document.getElementById('day-student-wrap').style.display    = '';
+        document.getElementById('day-student-metrics').style.display = '';
+        document.getElementById('tab-day-students').classList.add('active');
+        document.getElementById('tab-fostering').classList.remove('active');
+      };
+
+      // ── Initial render ────────────────────────────────────────────────────────
+
+      renderMetrics();
+      renderTable(pfStudents);
+      renderThresholdAlerts();
+      renderGuardrailMonitor();
+      renderDayStudentTable();
+      renderDayStudentMetrics();
+    </script>
+  </body>
+</html>

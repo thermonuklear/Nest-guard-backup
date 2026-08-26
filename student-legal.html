@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Legal & Agency — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      body {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+      }
+
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+      }
+
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+      }
+
+      h2, h3, h4 { color: #0f2340 !important; }
+      p           { color: #3b536e; }
+      .eyebrow    { color: #2a6096 !important; }
+      .toolbar p  { color: #3b536e !important; }
+
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      /* ── Deep Dive breadcrumb strip ── */
+      .deepdive-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+        background: #edf2f8;
+        border-radius: 14px;
+        padding: 10px 14px;
+        border: 1px solid #d5dce8;
+      }
+
+      .deepdive-nav .deepdive-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: #6b85a0;
+        margin-right: 4px;
+        white-space: nowrap;
+      }
+
+      .deepdive-nav a {
+        padding: 5px 14px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+      }
+
+      .deepdive-nav a:hover {
+        background: #e2e9f3;
+        border-color: #b0bfcf;
+        color: #0f2340;
+      }
+
+      .deepdive-nav a.active {
+        background: #0f2340;
+        border-color: #0f2340;
+        color: #ffffff;
+      }
+
+      /* ── Legal form ── */
+      .legal-form {
+        max-width: 720px;
+        display: grid;
+        gap: 20px;
+      }
+
+      .form-card {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 20px;
+        padding: 24px 28px;
+      }
+
+      .form-card h4 {
+        margin-bottom: 20px;
+        font-size: 1rem;
+        color: #0f2340 !important;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #edf2f8;
+      }
+
+      .field-group {
+        display: grid;
+        gap: 18px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .field label {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #6b85a0;
+      }
+
+      .field textarea {
+        padding: 10px 14px;
+        border: 1.5px solid #d5dce8;
+        border-radius: 10px;
+        background: #f8fafc;
+        color: #0f2340;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s, background 0.15s;
+        resize: vertical;
+        min-height: 90px;
+        line-height: 1.55;
+      }
+
+      .field textarea:focus {
+        border-color: #0f2340;
+        background: #ffffff;
+      }
+
+      .field textarea::placeholder { color: #9bafc4; }
+
+      /* ── File upload area ── */
+      .upload-area {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .upload-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .upload-controls input[type="file"] {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.86rem;
+        color: #3b536e;
+        cursor: pointer;
+      }
+
+      .file-on-record {
+        display: none;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: #f0f4f8;
+        border: 1px solid #d5dce8;
+        border-radius: 12px;
+      }
+
+      .file-on-record.visible { display: flex; }
+
+      .file-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: #0f2340;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .file-icon svg { width: 16px; height: 16px; stroke: #ffffff; fill: none; }
+
+      .file-info { flex: 1; }
+      .file-name { font-size: 0.88rem; font-weight: 600; color: #0f2340; }
+      .file-meta { font-size: 0.76rem; color: #6b85a0; margin-top: 1px; }
+
+      .file-actions { display: flex; align-items: center; gap: 8px; }
+
+      .file-download {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #2a6096;
+        text-decoration: none;
+      }
+
+      .file-download:hover { text-decoration: underline; }
+
+      .file-remove {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #9bafc4;
+        font-size: 0.95rem;
+        padding: 4px 6px;
+        border-radius: 6px;
+        transition: color 0.15s, background 0.15s;
+        line-height: 1;
+      }
+
+      .file-remove:hover { color: #7f3034; background: #f3dddd; }
+
+      .file-empty {
+        padding: 18px 14px;
+        color: #9bafc4;
+        font-size: 0.86rem;
+        border: 1.5px dashed #d5dce8;
+        border-radius: 12px;
+        text-align: center;
+      }
+
+      /* ── Field inputs (text/date) ── */
+      .field input[type="text"],
+      .field input[type="date"] {
+        padding: 10px 14px;
+        border: 1.5px solid #d5dce8;
+        border-radius: 10px;
+        background: #f8fafc;
+        color: #0f2340;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.88rem;
+        outline: none;
+        transition: border-color 0.15s, background 0.15s;
+      }
+
+      .field input[type="text"]:focus,
+      .field input[type="date"]:focus {
+        border-color: #0f2340;
+        background: #ffffff;
+      }
+
+      .field input[type="text"]::placeholder { color: #9bafc4; }
+
+      /* ── Consent cards ── */
+      .consent-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .consent-card {
+        border: 1.5px solid #d5dce8;
+        border-radius: 12px;
+        background: #f8fafc;
+        overflow: hidden;
+        transition: border-color 0.15s, background 0.15s;
+      }
+
+      .consent-card:hover { border-color: #b0bfcf; }
+
+      .consent-card.checked {
+        border-color: #0f2340;
+        background: #f0f4f8;
+      }
+
+      .consent-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 16px;
+        cursor: pointer;
+      }
+
+      .consent-item input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-top: 1px;
+        accent-color: #0f2340;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      .consent-text { display: flex; flex-direction: column; gap: 2px; }
+
+      .consent-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #0f2340;
+      }
+
+      .consent-desc {
+        font-size: 0.76rem;
+        color: #6b85a0;
+        line-height: 1.4;
+      }
+
+      .consent-provenance {
+        display: none;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        padding: 0 16px 16px 46px;
+      }
+
+      .consent-provenance.visible { display: grid; }
+
+      .consent-provenance .field { gap: 4px; }
+
+      .consent-provenance .field label {
+        font-size: 0.68rem;
+      }
+
+      @media (max-width: 640px) {
+        .consent-provenance {
+          grid-template-columns: 1fr;
+          padding-left: 16px;
+        }
+      }
+
+      /* ── Form actions + toast ── */
+      .form-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .toast {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: #1a4a1a;
+        color: #d4edda;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .toast.visible { display: flex; }
+
+      /* ── Not-found state ── */
+      .not-found {
+        padding: 48px 24px;
+        text-align: center;
+        color: #3b536e;
+      }
+
+      .not-found h3 { color: #0f2340 !important; margin-bottom: 10px; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small id="chrome-route">Route /admin/students/legal</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Student Profile</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link active" href="students.html">Students</a>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <section class="main" id="main-content">
+
+            <!-- Deep Dive navigation -->
+            <div class="deepdive-nav">
+              <span class="deepdive-label">Deep Dive:</span>
+              <a id="link-health"   href="student-health.html">Health &amp; Medical</a>
+              <a id="link-family"   href="student-family.html">Family &amp; Contacts</a>
+              <a id="link-legal"    href="student-legal.html" class="active">Legal &amp; Agency</a>
+              <a id="link-pastoral" href="student-pastoral.html">Pastoral &amp; Visits</a>
+              <a id="link-risk"     href="student-risk.html">Risk Assessment</a>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Legal &amp; Agency</span>
+                <h2 id="student-name">—</h2>
+                <p>Passport and BRP document, signed consent permissions, and education agency details for this student.</p>
+              </div>
+              <div class="toolbar-actions">
+                <span id="status-badge" class="badge">—</span>
+                <a class="button-alt" id="back-to-profile" href="student-profile.html">Back to Profile</a>
+              </div>
+            </div>
+
+            <!-- Legal form -->
+            <form class="legal-form" id="legal-form" onsubmit="return false;">
+
+              <!-- Passport / BRP -->
+              <div class="form-card">
+                <h4>Passport / BRP Document</h4>
+                <div class="upload-area">
+                  <div id="file-status" class="file-empty">No document on file.</div>
+                  <div id="file-on-record" class="file-on-record">
+                    <div class="file-icon">
+                      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                      </svg>
+                    </div>
+                    <div class="file-info">
+                      <div class="file-name" id="file-name-display">—</div>
+                      <div class="file-meta" id="file-meta-display">Held in secure documents</div>
+                    </div>
+                    <div class="file-actions">
+                      <a class="file-download" id="file-download-link" href="#" download style="display:none;">Download</a>
+                      <button class="file-remove" id="file-remove-btn" type="button" title="Remove document">&#x2715;</button>
+                    </div>
+                  </div>
+                  <div class="upload-controls">
+                    <input type="file" id="passport-file" accept=".pdf,.jpg,.jpeg,.png" />
+                    <button class="button-alt" id="upload-passport-btn" type="button">Upload Document</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Permissions & Consents -->
+              <div class="form-card">
+                <h4>Permissions &amp; Consents</h4>
+                <div class="consent-list" id="consent-list">
+                  <div class="consent-card" id="consent-travel-card">
+                    <label class="consent-item" id="consent-travel-item">
+                      <input type="checkbox" id="consent-travel" />
+                      <div class="consent-text">
+                        <span class="consent-label">Travel Consent</span>
+                        <span class="consent-desc">Permission for escorted and unescorted travel arrangements.</span>
+                      </div>
+                    </label>
+                    <div class="consent-provenance" id="consent-travel-provenance">
+                      <div class="field">
+                        <label for="consent-travel-grantedBy">Granted By</label>
+                        <input type="text" id="consent-travel-grantedBy" placeholder="e.g. Haruka Tanaka (Mother)" />
+                      </div>
+                      <div class="field">
+                        <label for="consent-travel-grantedDate">Date Granted</label>
+                        <input type="date" id="consent-travel-grantedDate" />
+                      </div>
+                      <div class="field">
+                        <label for="consent-travel-evidenceMethod">Evidence / Method</label>
+                        <input type="text" id="consent-travel-evidenceMethod" placeholder="e.g. Signed Guardianship Agreement / Ref OG-2025-042" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="consent-card" id="consent-medical-card">
+                    <label class="consent-item" id="consent-medical-item">
+                      <input type="checkbox" id="consent-medical" />
+                      <div class="consent-text">
+                        <span class="consent-label">Medical Consent</span>
+                        <span class="consent-desc">Permission to authorise routine medical treatment in an emergency.</span>
+                      </div>
+                    </label>
+                    <div class="consent-provenance" id="consent-medical-provenance">
+                      <div class="field">
+                        <label for="consent-medical-grantedBy">Granted By</label>
+                        <input type="text" id="consent-medical-grantedBy" placeholder="e.g. Haruka Tanaka (Mother)" />
+                      </div>
+                      <div class="field">
+                        <label for="consent-medical-grantedDate">Date Granted</label>
+                        <input type="date" id="consent-medical-grantedDate" />
+                      </div>
+                      <div class="field">
+                        <label for="consent-medical-evidenceMethod">Evidence / Method</label>
+                        <input type="text" id="consent-medical-evidenceMethod" placeholder="e.g. Signed Guardianship Agreement / Ref OG-2025-042" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="consent-card" id="consent-photo-card">
+                    <label class="consent-item" id="consent-photo-item">
+                      <input type="checkbox" id="consent-photo" />
+                      <div class="consent-text">
+                        <span class="consent-label">Photo Consent</span>
+                        <span class="consent-desc">Permission to use photographs for internal records and publications.</span>
+                      </div>
+                    </label>
+                    <div class="consent-provenance" id="consent-photo-provenance">
+                      <div class="field">
+                        <label for="consent-photo-grantedBy">Granted By</label>
+                        <input type="text" id="consent-photo-grantedBy" placeholder="e.g. Haruka Tanaka (Mother)" />
+                      </div>
+                      <div class="field">
+                        <label for="consent-photo-grantedDate">Date Granted</label>
+                        <input type="date" id="consent-photo-grantedDate" />
+                      </div>
+                      <div class="field">
+                        <label for="consent-photo-evidenceMethod">Evidence / Method</label>
+                        <input type="text" id="consent-photo-evidenceMethod" placeholder="e.g. Email confirmation to admissions@oxfordguardians.co.uk" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="consent-card" id="consent-data-card">
+                    <label class="consent-item" id="consent-data-item">
+                      <input type="checkbox" id="consent-data" />
+                      <div class="consent-text">
+                        <span class="consent-label">Data Sharing Consent</span>
+                        <span class="consent-desc">Permission to share data with school, host family, and AEGIS for inspection purposes.</span>
+                      </div>
+                    </label>
+                    <div class="consent-provenance" id="consent-data-provenance">
+                      <div class="field">
+                        <label for="consent-data-grantedBy">Granted By</label>
+                        <input type="text" id="consent-data-grantedBy" placeholder="e.g. Haruka Tanaka (Mother)" />
+                      </div>
+                      <div class="field">
+                        <label for="consent-data-grantedDate">Date Granted</label>
+                        <input type="date" id="consent-data-grantedDate" />
+                      </div>
+                      <div class="field">
+                        <label for="consent-data-evidenceMethod">Evidence / Method</label>
+                        <input type="text" id="consent-data-evidenceMethod" placeholder="e.g. Signed Guardianship Agreement / Ref OG-2025-042" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Agent Details -->
+              <div class="form-card">
+                <h4>Education Agent Details</h4>
+                <div class="field-group">
+                  <div class="field">
+                    <label for="field-agent">Agent / Agency Information</label>
+                    <textarea id="field-agent" placeholder="e.g. Kiyama Education Services / Agent: Mika Sato / mika@kiyamaedu.jp / +81 3 0000 1234. All family communications initially routed through agent. Parents prefer direct contact for welfare matters."></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button class="button" id="save-btn" type="button">Save Changes</button>
+                <div class="toast" id="save-toast">&#10003; Changes saved</div>
+              </div>
+
+            </form>
+
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      var params    = new URLSearchParams(window.location.search);
+      var studentId = params.get('id') || 'STU10492';
+      var student   = getStudentById(studentId);
+
+      if (!student) {
+        document.getElementById('main-content').innerHTML =
+          '<div class="not-found">' +
+            '<h3>Student not found</h3>' +
+            '<p>No record exists for ID <strong>' + studentId + '</strong>. ' +
+            '<a href="students.html">Return to student list.</a></p>' +
+          '</div>';
+        throw new Error('Student not found: ' + studentId);
+      }
+
+      // ── Helpers ─────────────────────────────────────────────────────────────
+      function statusClass(status) {
+        var map = { 'Active': 'green', 'Monitor': 'amber', 'Pending': 'amber' };
+        return map[status] || 'navy';
+      }
+
+      // ── Populate header ──────────────────────────────────────────────────────
+      var fullName = student.firstName + ' ' + student.lastName;
+
+      document.getElementById('page-title').textContent   = 'Legal & Agency — ' + fullName;
+      document.getElementById('chrome-route').textContent = 'Route /admin/students/' + student.id + '/legal';
+      document.getElementById('student-name').innerHTML   = fullName +
+        ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + student.id + '</span>';
+
+      var badge = document.getElementById('status-badge');
+      badge.textContent = student.status;
+      badge.className   = 'badge ' + statusClass(student.status);
+
+      // ── Wire up Deep Dive nav links ──────────────────────────────────────────
+      document.getElementById('link-health').href   = 'student-health.html?id='   + student.id;
+      document.getElementById('link-family').href   = 'student-family.html?id='   + student.id;
+      document.getElementById('link-legal').href    = 'student-legal.html?id='    + student.id;
+      document.getElementById('link-pastoral').href = 'student-pastoral.html?id=' + student.id;
+      document.getElementById('link-risk').href     = 'student-risk.html?id='     + student.id;
+      document.getElementById('back-to-profile').href = 'student-profile.html?id=' + student.id;
+
+      // ── Ensure legal sub-object exists ───────────────────────────────────────
+      if (!student.legal) {
+        student.legal = { passportOrBRPPath: '', permissions: { travel: false, medical: false, photo: false, data: false }, agentDetails: '' };
+      }
+      if (!student.legal.permissions) {
+        student.legal.permissions = { travel: false, medical: false, photo: false, data: false };
+      }
+
+      // ── Passport file state (data URL stored separately in localStorage) ─────
+      var PASSPORT_DATA_KEY = 'passport_data_' + student.id;
+
+      function renderFileState() {
+        var fileName  = student.legal.passportOrBRPPath;
+        var fileData  = localStorage.getItem(PASSPORT_DATA_KEY);
+        var empty     = document.getElementById('file-status');
+        var record    = document.getElementById('file-on-record');
+        var nameEl    = document.getElementById('file-name-display');
+        var dlLink    = document.getElementById('file-download-link');
+
+        if (fileName) {
+          empty.style.display  = 'none';
+          record.classList.add('visible');
+          nameEl.textContent   = fileName;
+          if (fileData) {
+            dlLink.href          = fileData;
+            dlLink.download      = fileName;
+            dlLink.style.display = 'inline';
+          } else {
+            dlLink.style.display = 'none';
+          }
+        } else {
+          empty.style.display = 'block';
+          record.classList.remove('visible');
+        }
+      }
+
+      document.getElementById('upload-passport-btn').addEventListener('click', function () {
+        var fileInput = document.getElementById('passport-file');
+        if (!fileInput.files.length) {
+          fileInput.click();
+          return;
+        }
+        var file   = fileInput.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+          student.legal.passportOrBRPPath = file.name;
+          localStorage.setItem(PASSPORT_DATA_KEY, reader.result);
+          renderFileState();
+          fileInput.value = '';
+        };
+      });
+
+      document.getElementById('passport-file').addEventListener('change', function () {
+        if (this.files.length) {
+          document.getElementById('upload-passport-btn').textContent = 'Upload "' + this.files[0].name + '"';
+        }
+      });
+
+      document.getElementById('file-remove-btn').addEventListener('click', function () {
+        student.legal.passportOrBRPPath = '';
+        localStorage.removeItem(PASSPORT_DATA_KEY);
+        document.getElementById('upload-passport-btn').textContent = 'Upload Document';
+        renderFileState();
+      });
+
+      // ── Pre-fill consent cards (structured permissions, AEGIS Standard 3.4.2) ──
+      var CONSENTS = [
+        { key: 'travel',   checkId: 'consent-travel',   cardId: 'consent-travel-card',   provId: 'consent-travel-provenance',
+          byId: 'consent-travel-grantedBy',   dateId: 'consent-travel-grantedDate',   evId: 'consent-travel-evidenceMethod'   },
+        { key: 'medical',  checkId: 'consent-medical',  cardId: 'consent-medical-card',  provId: 'consent-medical-provenance',
+          byId: 'consent-medical-grantedBy',  dateId: 'consent-medical-grantedDate',  evId: 'consent-medical-evidenceMethod'  },
+        { key: 'photo',    checkId: 'consent-photo',    cardId: 'consent-photo-card',    provId: 'consent-photo-provenance',
+          byId: 'consent-photo-grantedBy',    dateId: 'consent-photo-grantedDate',    evId: 'consent-photo-evidenceMethod'    },
+        { key: 'data',     checkId: 'consent-data',     cardId: 'consent-data-card',     provId: 'consent-data-provenance',
+          byId: 'consent-data-grantedBy',     dateId: 'consent-data-grantedDate',     evId: 'consent-data-evidenceMethod'     }
+      ];
+
+      function toggleProvenance(c, show) {
+        document.getElementById(c.cardId).classList.toggle('checked', show);
+        document.getElementById(c.provId).classList.toggle('visible', show);
+      }
+
+      CONSENTS.forEach(function (c) {
+        var checkbox      = document.getElementById(c.checkId);
+        var perm           = student.legal.permissions[c.key];
+        var granted        = isPermissionGranted(perm);
+        var hasProvenance  = !!(perm && typeof perm === 'object');
+
+        checkbox.checked = granted;
+        document.getElementById(c.byId).value   = hasProvenance ? (perm.grantedBy || '')      : '';
+        document.getElementById(c.dateId).value = hasProvenance ? (perm.grantedDate || '')    : '';
+        document.getElementById(c.evId).value   = hasProvenance ? (perm.evidenceMethod || '') : '';
+
+        toggleProvenance(c, granted);
+
+        checkbox.addEventListener('change', function () {
+          toggleProvenance(c, this.checked);
+        });
+      });
+
+      // ── Pre-fill agent textarea ──────────────────────────────────────────────
+      document.getElementById('field-agent').value = student.legal.agentDetails || '';
+
+      // ── Initial file render ──────────────────────────────────────────────────
+      renderFileState();
+
+      // ── Save handler ─────────────────────────────────────────────────────────
+      document.getElementById('save-btn').addEventListener('click', function () {
+        CONSENTS.forEach(function (c) {
+          student.legal.permissions[c.key] = {
+            granted:        document.getElementById(c.checkId).checked,
+            grantedBy:      document.getElementById(c.byId).value.trim(),
+            grantedDate:    document.getElementById(c.dateId).value,
+            evidenceMethod: document.getElementById(c.evId).value.trim()
+          };
+        });
+        student.legal.agentDetails = document.getElementById('field-agent').value.trim();
+
+        var students = getAllStudents();
+        var idx = students.findIndex(function (s) { return s.id === student.id; });
+        if (idx > -1) {
+          students[idx] = student;
+          saveAllStudents(students);
+        }
+
+        var toast = document.getElementById('save-toast');
+        toast.classList.add('visible');
+        setTimeout(function () { toast.classList.remove('visible'); }, 3000);
+      });
+    </script>
+  </body>
+</html>

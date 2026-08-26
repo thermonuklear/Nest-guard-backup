@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weekly Operations Report — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    /* ── Global colour overrides ── */
+    body {
+      background: #f0f4f8 !important;
+      color: #0f2340 !important;
+    }
+
+    /* ── App frame & chrome ── */
+    .app-frame {
+      background: #f8fafc !important;
+      border-color: #d5dce8 !important;
+      box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+    }
+
+    .chrome {
+      background: #e8eef6 !important;
+      border-bottom-color: #d5dce8 !important;
+    }
+
+    .chrome small { color: #3b536e !important; }
+    .dots span { background: #7b9abf !important; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+    }
+
+    .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+    .brand small { color: #7fb3d3 !important; }
+    .brand strong { color: #e8f0fa !important; }
+
+    .nav-label { color: #7b9abf !important; }
+
+    .nav-link { color: #c8d8ee !important; border-color: transparent !important; }
+    .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+    .nav-link.active {
+      background: rgba(255,255,255,0.1) !important;
+      border-color: rgba(255,255,255,0.14) !important;
+      color: #e8f0fa !important;
+    }
+
+    /* ── Main content area ── */
+    .main {
+      background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+    }
+
+    /* ── Typography ── */
+    h2, h3, h4 { color: #0f2340 !important; }
+    p, li { color: #3b536e; }
+    .eyebrow { color: #2a6096 !important; }
+    .toolbar p { color: #3b536e !important; }
+
+    /* ── Buttons ── */
+    .button {
+      background: #0f2340 !important;
+      border-color: #0f2340 !important;
+      color: #ffffff !important;
+    }
+
+    .button-alt {
+      background: #ffffff !important;
+      border-color: #d5dce8 !important;
+      color: #0f2340 !important;
+    }
+
+    .button-alt:hover { background: #edf2f8 !important; }
+
+    /* ── Top nav bar ── */
+    .top-nav {
+      background: linear-gradient(90deg, #0f2340 0%, #1a3459 100%);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      height: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-shrink: 0;
+    }
+
+    .top-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .top-nav-link {
+      color: #c8d8ee;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .top-nav-link:hover {
+      background: rgba(255,255,255,0.07);
+      color: #e8f0fa;
+    }
+
+    .top-nav-link.active {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.14);
+      color: #e8f0fa;
+    }
+
+    /* ── Report layout ── */
+    .report-section {
+      background: #ffffff;
+      border: 1px solid #d5dce8;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+
+    .report-section h3 {
+      font-size: 1rem !important;
+      font-weight: 700 !important;
+      color: #0f2340 !important;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e4eaf3;
+      letter-spacing: -0.01em;
+    }
+
+    .report-section table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .report-section th {
+      background: #e8eef6 !important;
+      color: #3b536e !important;
+      font-size: 0.83rem;
+      font-weight: 600;
+      text-align: left;
+      padding: 8px 12px;
+      border-bottom: 1px solid #d5dce8 !important;
+    }
+
+    .report-section td {
+      padding: 5px 8px;
+      border-bottom: 1px solid #edf2f8 !important;
+      vertical-align: middle;
+      color: #3b536e !important;
+    }
+
+    .report-section td.label-cell {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #0f2340 !important;
+      white-space: nowrap;
+      padding-right: 16px;
+    }
+
+    .row-num {
+      color: #6b85a0;
+      font-size: 0.82rem;
+      text-align: center;
+      width: 32px;
+    }
+
+    .field-input {
+      width: 100%;
+      border: 1px solid #d5dce8;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 0.88rem;
+      color: #0f2340;
+      background: #f8fafc;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .field-input:focus {
+      border-color: #2a6096;
+      background: #ffffff;
+    }
+
+    .field-textarea {
+      width: 100%;
+      border: 1px solid #d5dce8;
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 0.88rem;
+      color: #0f2340;
+      background: #f8fafc;
+      outline: none;
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.55;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .field-textarea:focus {
+      border-color: #2a6096;
+      background: #ffffff;
+    }
+
+    #report-history-dropdown {
+      border: 1px solid #d5dce8;
+      border-radius: 7px;
+      padding: 6px 10px;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 0.88rem;
+      color: #0f2340;
+      background: #ffffff;
+      cursor: pointer;
+      height: 36px;
+    }
+
+    /* ── Print ── */
+    @media print {
+      .sidebar, .chrome, .toolbar-actions, #btn-autofill, #btn-save { display: none !important; }
+      .main { padding: 0 !important; background: white !important; }
+      input, textarea { border: none !important; background: transparent !important; resize: none; padding: 0; }
+    }
+  </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+        </div>
+        <div class="top-nav">
+          <nav class="top-nav-links">
+            <a class="top-nav-link" href="users.html">Users &amp; roles</a>
+            <a class="top-nav-link" href="notifications.html">Notifications</a>
+            <a class="top-nav-link" href="admin-dashboard.html">Dashboard</a>
+          </nav>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Admin Console</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link active" href="reports.html">Reports</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+              <a class="nav-link" href="exeats.html">Exeats</a>
+              <a class="nav-link" href="finances.html">Finances</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Safeguarding</div>
+              <a class="nav-link" href="welfare-notes.html">Welfare notes</a>
+              <a class="nav-link" href="concerns-dashboard.html">Concerns Dashboard</a>
+              <a class="nav-link" href="emergency-procedures.html">Emergency</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Role previews</div>
+              <a class="nav-link" href="parent-portal.html">Parent portal</a>
+              <a class="nav-link" href="student-portal.html">Student portal</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Weekly report</span>
+                <h2>Weekly Operations Report</h2>
+                <p>Enter or override values below. Use Auto-Fill to pull live data from the system, or type manually. Save when done, or Print for a clean paper copy.</p>
+              </div>
+              <div class="toolbar-actions">
+                <select id="report-history-dropdown">
+                  <option value="">Select past report…</option>
+                </select>
+                <button class="button-alt" id="btn-autofill">Auto-Fill Live Data</button>
+                <button class="button" id="btn-save">Save Report</button>
+                <button class="button-alt" onclick="window.print()">Print</button>
+              </div>
+            </div>
+
+            <div id="main-content">
+
+              <!-- 1. Summary Overview -->
+              <div class="report-section">
+                <h3>Summary Overview</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width:28%">Metric</th>
+                      <th style="width:22%">Value</th>
+                      <th>Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="label-cell">Week commencing</td>
+                      <td><input type="text" class="field-input" name="sum-week" placeholder="e.g. 19 May 2026"></td>
+                      <td><input type="text" class="field-input" name="sum-week-notes"></td>
+                    </tr>
+                    <tr>
+                      <td class="label-cell">Report prepared by</td>
+                      <td><input type="text" class="field-input" name="sum-preparer" placeholder="Full name"></td>
+                      <td><input type="text" class="field-input" name="sum-preparer-notes"></td>
+                    </tr>
+                    <tr>
+                      <td class="label-cell">Total active students</td>
+                      <td><input type="text" class="field-input" name="sum-active-students" placeholder="0"></td>
+                      <td><input type="text" class="field-input" name="sum-active-notes"></td>
+                    </tr>
+                    <tr>
+                      <td class="label-cell">New students this week</td>
+                      <td><input type="text" class="field-input" name="sum-new-students" placeholder="0"></td>
+                      <td><input type="text" class="field-input" name="sum-new-notes"></td>
+                    </tr>
+                    <tr>
+                      <td class="label-cell">Open welfare concerns</td>
+                      <td><input type="text" class="field-input" name="sum-welfare" placeholder="0"></td>
+                      <td><input type="text" class="field-input" name="sum-welfare-notes"></td>
+                    </tr>
+                    <tr>
+                      <td class="label-cell">Travel events this week</td>
+                      <td><input type="text" class="field-input" name="sum-travel" placeholder="0"></td>
+                      <td><input type="text" class="field-input" name="sum-travel-notes"></td>
+                    </tr>
+                    <tr>
+                      <td class="label-cell">Exeats / placements confirmed</td>
+                      <td><input type="text" class="field-input" name="sum-exeats" placeholder="0"></td>
+                      <td><input type="text" class="field-input" name="sum-exeats-notes"></td>
+                    </tr>
+                    <tr>
+                      <td class="label-cell">AEGIS compliance status</td>
+                      <td><input type="text" class="field-input" name="sum-aegis" placeholder="Green / Amber / Red"></td>
+                      <td><input type="text" class="field-input" name="sum-aegis-notes"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- 2. Key Activities (Completed Tasks) -->
+              <div class="report-section">
+                <h3>Key Activities (Completed Tasks)</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th class="row-num">#</th>
+                      <th>Task</th>
+                      <th style="width:16%">Owner</th>
+                      <th style="width:16%">Date Completed</th>
+                      <th style="width:22%">Outcome</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="row-num">1</td>
+                      <td><input type="text" class="field-input" name="act-1-task"></td>
+                      <td><input type="text" class="field-input" name="act-1-owner"></td>
+                      <td><input type="text" class="field-input" name="act-1-date"></td>
+                      <td><input type="text" class="field-input" name="act-1-outcome"></td>
+                    </tr>
+                    <tr>
+                      <td class="row-num">2</td>
+                      <td><input type="text" class="field-input" name="act-2-task"></td>
+                      <td><input type="text" class="field-input" name="act-2-owner"></td>
+                      <td><input type="text" class="field-input" name="act-2-date"></td>
+                      <td><input type="text" class="field-input" name="act-2-outcome"></td>
+                    </tr>
+                    <tr>
+                      <td class="row-num">3</td>
+                      <td><input type="text" class="field-input" name="act-3-task"></td>
+                      <td><input type="text" class="field-input" name="act-3-owner"></td>
+                      <td><input type="text" class="field-input" name="act-3-date"></td>
+                      <td><input type="text" class="field-input" name="act-3-outcome"></td>
+                    </tr>
+                    <tr>
+                      <td class="row-num">4</td>
+                      <td><input type="text" class="field-input" name="act-4-task"></td>
+                      <td><input type="text" class="field-input" name="act-4-owner"></td>
+                      <td><input type="text" class="field-input" name="act-4-date"></td>
+                      <td><input type="text" class="field-input" name="act-4-outcome"></td>
+                    </tr>
+                    <tr>
+                      <td class="row-num">5</td>
+                      <td><input type="text" class="field-input" name="act-5-task"></td>
+                      <td><input type="text" class="field-input" name="act-5-owner"></td>
+                      <td><input type="text" class="field-input" name="act-5-date"></td>
+                      <td><input type="text" class="field-input" name="act-5-outcome"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- 3. Ongoing Tasks -->
+              <div class="report-section">
+                <h3>Ongoing Tasks</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th class="row-num">#</th>
+                      <th>Task</th>
+                      <th style="width:16%">Owner</th>
+                      <th style="width:16%">Status</th>
+                      <th style="width:18%">Target Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="row-num">1</td>
+                      <td><input type="text" class="field-input" name="ongoing-1-task"></td>
+                      <td><input type="text" class="field-input" name="ongoing-1-owner"></td>
+                      <td><input type="text" class="field-input" name="ongoing-1-status"></td>
+                      <td><input type="text" class="field-input" name="ongoing-1-target"></td>
+                    </tr>
+                    <tr>
+                      <td class="row-num">2</td>
+                      <td><input type="text" class="field-input" name="ongoing-2-task"></td>
+                      <td><input type="text" class="field-input" name="ongoing-2-owner"></td>
+                      <td><input type="text" class="field-input" name="ongoing-2-status"></td>
+                      <td><input type="text" class="field-input" name="ongoing-2-target"></td>
+                    </tr>
+                    <tr>
+                      <td class="row-num">3</td>
+                      <td><input type="text" class="field-input" name="ongoing-3-task"></td>
+                      <td><input type="text" class="field-input" name="ongoing-3-owner"></td>
+                      <td><input type="text" class="field-input" name="ongoing-3-status"></td>
+                      <td><input type="text" class="field-input" name="ongoing-3-target"></td>
+                    </tr>
+                    <tr>
+                      <td class="row-num">4</td>
+                      <td><input type="text" class="field-input" name="ongoing-4-task"></td>
+                      <td><input type="text" class="field-input" name="ongoing-4-owner"></td>
+                      <td><input type="text" class="field-input" name="ongoing-4-status"></td>
+                      <td><input type="text" class="field-input" name="ongoing-4-target"></td>
+                    </tr>
+                    <tr>
+                      <td class="row-num">5</td>
+                      <td><input type="text" class="field-input" name="ongoing-5-task"></td>
+                      <td><input type="text" class="field-input" name="ongoing-5-owner"></td>
+                      <td><input type="text" class="field-input" name="ongoing-5-status"></td>
+                      <td><input type="text" class="field-input" name="ongoing-5-target"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- 4. Deadlines Next Week -->
+              <div class="report-section">
+                <h3>Deadlines Next Week</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width:15%">Date</th>
+                      <th>Item</th>
+                      <th style="width:16%">Owner</th>
+                      <th style="width:14%">Priority</th>
+                      <th style="width:22%">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><input type="text" class="field-input" name="dl-1-date" placeholder="dd mmm yyyy"></td>
+                      <td><input type="text" class="field-input" name="dl-1-item"></td>
+                      <td><input type="text" class="field-input" name="dl-1-owner"></td>
+                      <td><input type="text" class="field-input" name="dl-1-priority" placeholder="High / Med / Low"></td>
+                      <td><input type="text" class="field-input" name="dl-1-notes"></td>
+                    </tr>
+                    <tr>
+                      <td><input type="text" class="field-input" name="dl-2-date" placeholder="dd mmm yyyy"></td>
+                      <td><input type="text" class="field-input" name="dl-2-item"></td>
+                      <td><input type="text" class="field-input" name="dl-2-owner"></td>
+                      <td><input type="text" class="field-input" name="dl-2-priority" placeholder="High / Med / Low"></td>
+                      <td><input type="text" class="field-input" name="dl-2-notes"></td>
+                    </tr>
+                    <tr>
+                      <td><input type="text" class="field-input" name="dl-3-date" placeholder="dd mmm yyyy"></td>
+                      <td><input type="text" class="field-input" name="dl-3-item"></td>
+                      <td><input type="text" class="field-input" name="dl-3-owner"></td>
+                      <td><input type="text" class="field-input" name="dl-3-priority" placeholder="High / Med / Low"></td>
+                      <td><input type="text" class="field-input" name="dl-3-notes"></td>
+                    </tr>
+                    <tr>
+                      <td><input type="text" class="field-input" name="dl-4-date" placeholder="dd mmm yyyy"></td>
+                      <td><input type="text" class="field-input" name="dl-4-item"></td>
+                      <td><input type="text" class="field-input" name="dl-4-owner"></td>
+                      <td><input type="text" class="field-input" name="dl-4-priority" placeholder="High / Med / Low"></td>
+                      <td><input type="text" class="field-input" name="dl-4-notes"></td>
+                    </tr>
+                    <tr>
+                      <td><input type="text" class="field-input" name="dl-5-date" placeholder="dd mmm yyyy"></td>
+                      <td><input type="text" class="field-input" name="dl-5-item"></td>
+                      <td><input type="text" class="field-input" name="dl-5-owner"></td>
+                      <td><input type="text" class="field-input" name="dl-5-priority" placeholder="High / Med / Low"></td>
+                      <td><input type="text" class="field-input" name="dl-5-notes"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- 5. Budget Management -->
+              <div class="report-section">
+                <h3>Budget Management</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Category</th>
+                      <th style="width:16%">Budgeted (£)</th>
+                      <th style="width:16%">Spent this week (£)</th>
+                      <th style="width:16%">Remaining (£)</th>
+                      <th style="width:22%">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><input type="text" class="field-input" name="bud-1-cat" placeholder="e.g. Travel &amp; Transport"></td>
+                      <td><input type="text" class="field-input" name="bud-1-budgeted"></td>
+                      <td><input type="text" class="field-input" name="bud-1-spent"></td>
+                      <td><input type="text" class="field-input" name="bud-1-remaining"></td>
+                      <td><input type="text" class="field-input" name="bud-1-notes"></td>
+                    </tr>
+                    <tr>
+                      <td><input type="text" class="field-input" name="bud-2-cat" placeholder="e.g. Homestay Fees"></td>
+                      <td><input type="text" class="field-input" name="bud-2-budgeted"></td>
+                      <td><input type="text" class="field-input" name="bud-2-spent"></td>
+                      <td><input type="text" class="field-input" name="bud-2-remaining"></td>
+                      <td><input type="text" class="field-input" name="bud-2-notes"></td>
+                    </tr>
+                    <tr>
+                      <td><input type="text" class="field-input" name="bud-3-cat" placeholder="e.g. Welfare &amp; Pastoral"></td>
+                      <td><input type="text" class="field-input" name="bud-3-budgeted"></td>
+                      <td><input type="text" class="field-input" name="bud-3-spent"></td>
+                      <td><input type="text" class="field-input" name="bud-3-remaining"></td>
+                      <td><input type="text" class="field-input" name="bud-3-notes"></td>
+                    </tr>
+                    <tr>
+                      <td><input type="text" class="field-input" name="bud-4-cat" placeholder="e.g. Administration"></td>
+                      <td><input type="text" class="field-input" name="bud-4-budgeted"></td>
+                      <td><input type="text" class="field-input" name="bud-4-spent"></td>
+                      <td><input type="text" class="field-input" name="bud-4-remaining"></td>
+                      <td><input type="text" class="field-input" name="bud-4-notes"></td>
+                    </tr>
+                    <tr>
+                      <td><input type="text" class="field-input" name="bud-5-cat" placeholder="e.g. Miscellaneous"></td>
+                      <td><input type="text" class="field-input" name="bud-5-budgeted"></td>
+                      <td><input type="text" class="field-input" name="bud-5-spent"></td>
+                      <td><input type="text" class="field-input" name="bud-5-remaining"></td>
+                      <td><input type="text" class="field-input" name="bud-5-notes"></td>
+                    </tr>
+                    <tr>
+                      <td class="label-cell" style="font-weight: 700; color: #0f2340 !important;">Total</td>
+                      <td><input type="text" class="field-input" name="bud-total-budgeted"></td>
+                      <td><input type="text" class="field-input" name="bud-total-spent"></td>
+                      <td><input type="text" class="field-input" name="bud-total-remaining"></td>
+                      <td><input type="text" class="field-input" name="bud-total-notes"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- 6. Notes / Recommendations -->
+              <div class="report-section">
+                <h3>Notes / Recommendations</h3>
+                <textarea class="field-textarea" name="notes-text" rows="6" placeholder="Enter any notes, observations, or recommendations for this reporting period…"></textarea>
+              </div>
+
+            </div><!-- /#main-content -->
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script src="assets/finance-data.js"></script>
+    <script>
+    // ── Utilities ──────────────────────────────────────────────────────────────
+
+    function weekBounds() {
+      var now = new Date();
+      var dow = now.getDay(); // 0 = Sunday
+      var monday = new Date(now);
+      monday.setDate(now.getDate() - ((dow + 6) % 7));
+      monday.setHours(0, 0, 0, 0);
+      var sunday = new Date(monday);
+      sunday.setDate(monday.getDate() + 6);
+      sunday.setHours(23, 59, 59, 999);
+      return { start: monday, end: sunday };
+    }
+
+    function inRange(dateStr, from, to) {
+      if (!dateStr) return false;
+      var d = new Date(dateStr);
+      return !isNaN(d) && d >= from && d <= to;
+    }
+
+    var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function fmt(d) {
+      return d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+    }
+
+    function getISOWeek(date) {
+      var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+      var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    }
+
+    function setField(name, val) {
+      var el = document.querySelector('#main-content [name="' + name + '"]');
+      if (el) el.value = val;
+    }
+
+    function showToast(msg, isError) {
+      var t = document.createElement('div');
+      t.textContent = msg;
+      t.style.cssText = [
+        'position:fixed', 'bottom:24px', 'right:24px',
+        'padding:12px 20px', 'border-radius:8px',
+        'font-family:"Plus Jakarta Sans",sans-serif',
+        'font-size:0.88rem', 'font-weight:600',
+        'z-index:9999', 'transition:opacity 0.4s',
+        isError
+          ? 'background:#7f3034;color:#fff;'
+          : 'background:#0f2340;color:#e8f0fa;'
+      ].join(';');
+      document.body.appendChild(t);
+      setTimeout(function() { t.style.opacity = '0'; }, 2600);
+      setTimeout(function() { if (t.parentNode) t.parentNode.removeChild(t); }, 3000);
+    }
+
+    // ── Finance helpers ─────────────────────────────────────────────────────────
+
+    function getFinanceEvents() {
+      try {
+        var stored = localStorage.getItem('og_finance_events');
+        if (stored) return JSON.parse(stored);
+      } catch (e) { /* fall through */ }
+      return (typeof FINANCE_EVENTS !== 'undefined') ? FINANCE_EVENTS : [];
+    }
+
+    function getRevenueEvents() {
+      try {
+        var stored = localStorage.getItem('og_revenue_events');
+        if (stored) return JSON.parse(stored);
+      } catch (e) { /* fall through */ }
+      return [];
+    }
+
+    function categorise(item) {
+      var s = (item || '').toLowerCase();
+      if (/transfer|train|transport|driver|pickup|flight/.test(s)) return 'Travel & Transport';
+      if (/homestay|placement fee|host fee/.test(s))               return 'Homestay Fees';
+      if (/welfare|pastoral|lunch|counsell/.test(s))               return 'Welfare & Pastoral';
+      if (/admin|insurance|dbs|training|stationery|printing|registration|membership/.test(s)) return 'Administration';
+      return 'Miscellaneous';
+    }
+
+    // ── autoFill ────────────────────────────────────────────────────────────────
+
+    function autoFill() {
+      var wb = weekBounds();
+
+      // 1. Active students count
+      var students = OG_DB.getAllStudents();
+      var activeCount = students.filter(function(s) { return s.status === 'Active'; }).length;
+      setField('sum-active-students', activeCount);
+
+      // 2. Exeats + placements starting this week
+      var exeats = OG_DB.getAllExeats();
+      var placements = OG_DB.getAllPlacements();
+      var exeatCount = exeats.filter(function(e) {
+        return inRange(e.startDate || e.date, wb.start, wb.end);
+      }).length + placements.filter(function(p) {
+        return inRange(p.startDate || p.date, wb.start, wb.end);
+      }).length;
+      setField('sum-exeats', exeatCount);
+
+      // 3. Travel events this week
+      var transports = OG_DB.getAllTransports();
+      var travelCount = transports.filter(function(t) {
+        return inRange(t.date, wb.start, wb.end);
+      }).length;
+      setField('sum-travel', travelCount);
+
+      // 4. Week commencing
+      setField('sum-week', fmt(wb.start));
+
+      // 5. Budget management — categorise events and compute spend
+      var events = getFinanceEvents();
+      var totalAnnualBudget = (typeof FINANCE_BUDGET !== 'undefined') ? FINANCE_BUDGET : 25000;
+
+      var budgetAlloc = {
+        'Travel & Transport': 8000,
+        'Homestay Fees':      10000,
+        'Welfare & Pastoral': 3000,
+        'Administration':     2500,
+        'Miscellaneous':      1500
+      };
+
+      var allTimeSpend = {};
+      var weekSpend    = {};
+      var catOrder = ['Travel & Transport', 'Homestay Fees', 'Welfare & Pastoral', 'Administration', 'Miscellaneous'];
+      catOrder.forEach(function(c) { allTimeSpend[c] = 0; weekSpend[c] = 0; });
+
+      events.filter(function(e) { return !e.archived; }).forEach(function(e) {
+        var cat = categorise(e.item);
+        allTimeSpend[cat] = (allTimeSpend[cat] || 0) + (e.cost || 0);
+        if (inRange(e.date, wb.start, wb.end)) {
+          weekSpend[cat] = (weekSpend[cat] || 0) + (e.cost || 0);
+        }
+      });
+
+      var totalBudgeted = 0, totalSpentWeek = 0, totalRemaining = 0;
+      catOrder.forEach(function(cat, i) {
+        var n = i + 1;
+        var alloc     = budgetAlloc[cat] || 0;
+        var spent     = weekSpend[cat]   || 0;
+        var remaining = Math.max(0, alloc - (allTimeSpend[cat] || 0));
+        setField('bud-' + n + '-cat',       cat);
+        setField('bud-' + n + '-budgeted',  '£' + alloc.toLocaleString());
+        setField('bud-' + n + '-spent',     '£' + spent.toLocaleString());
+        setField('bud-' + n + '-remaining', '£' + remaining.toLocaleString());
+        totalBudgeted  += alloc;
+        totalSpentWeek += spent;
+        totalRemaining += remaining;
+      });
+
+      setField('bud-total-budgeted',  '£' + totalBudgeted.toLocaleString());
+      setField('bud-total-spent',     '£' + totalSpentWeek.toLocaleString());
+      setField('bud-total-remaining', '£' + totalRemaining.toLocaleString());
+
+      // 6. Deadlines in the next 7 days (finance invoices + upcoming spend + revenue events)
+      var now = new Date(); now.setHours(0, 0, 0, 0);
+      var plus7 = new Date(now); plus7.setDate(now.getDate() + 7); plus7.setHours(23, 59, 59, 999);
+
+      var deadlines = [];
+
+      var pending = (typeof FINANCE_INVOICES_PENDING !== 'undefined') ? FINANCE_INVOICES_PENDING : [];
+      pending.forEach(function(inv) {
+        if (inRange(inv.due, now, plus7)) {
+          deadlines.push({
+            date:     fmt(new Date(inv.due)),
+            item:     'Invoice ' + inv.id + ' — ' + (inv.desc || ''),
+            owner:    inv.vendor || '',
+            priority: (inv.amount || 0) >= 500 ? 'High' : 'Med',
+            notes:    '£' + parseFloat(inv.amount || 0).toLocaleString()
+          });
+        }
+      });
+
+      var upcoming = (typeof FINANCE_UPCOMING !== 'undefined') ? FINANCE_UPCOMING : [];
+      upcoming.forEach(function(u) {
+        if (inRange(u.due, now, plus7)) {
+          deadlines.push({
+            date:     fmt(new Date(u.due)),
+            item:     u.item || '',
+            owner:    'Finance',
+            priority: (u.amount || 0) >= 1000 ? 'High' : 'Med',
+            notes:    '£' + parseFloat(u.amount || 0).toLocaleString()
+          });
+        }
+      });
+
+      getRevenueEvents().forEach(function(e) {
+        var dueKey = e.dueDate || e.due;
+        if (dueKey && inRange(dueKey, now, plus7)) {
+          deadlines.push({
+            date:     fmt(new Date(dueKey)),
+            item:     e.description || e.item || '',
+            owner:    e.owner || '',
+            priority: 'Med',
+            notes:    e.amount ? '£' + parseFloat(e.amount).toLocaleString() : ''
+          });
+        }
+      });
+
+      for (var i = 0; i < 5; i++) {
+        var dl = deadlines[i];
+        var n  = i + 1;
+        setField('dl-' + n + '-date',     dl ? dl.date     : '');
+        setField('dl-' + n + '-item',     dl ? dl.item     : '');
+        setField('dl-' + n + '-owner',    dl ? dl.owner    : '');
+        setField('dl-' + n + '-priority', dl ? dl.priority : '');
+        setField('dl-' + n + '-notes',    dl ? dl.notes    : '');
+      }
+
+      showToast('Live data loaded.');
+    }
+
+    // ── saveReport ──────────────────────────────────────────────────────────────
+
+    function saveReport() {
+      var data = {};
+      document.querySelectorAll('#main-content [name]').forEach(function(el) {
+        data[el.name] = el.value;
+      });
+
+      var now    = new Date();
+      var weekId = 'Week ' + getISOWeek(now) + ' — ' + MONTHS[now.getMonth()] + ' ' + now.getFullYear();
+
+      var report = {
+        id:      Date.now(),
+        weekId:  weekId,
+        savedAt: now.toISOString(),
+        data:    data
+      };
+
+      var reports = [];
+      try { reports = JSON.parse(localStorage.getItem('og_reports')) || []; } catch (e) {}
+      reports.unshift(report);
+      localStorage.setItem('og_reports', JSON.stringify(reports));
+
+      loadHistory();
+      showToast('Saved — ' + weekId);
+    }
+
+    // ── loadHistory ─────────────────────────────────────────────────────────────
+
+    function loadHistory() {
+      var reports = [];
+      try { reports = JSON.parse(localStorage.getItem('og_reports')) || []; } catch (e) {}
+
+      var sel = document.getElementById('report-history-dropdown');
+
+      // Detach old change listener by replacing the element with a clone
+      var fresh = sel.cloneNode(false); // no children
+      sel.parentNode.replaceChild(fresh, sel);
+      sel = fresh;
+
+      // Add placeholder
+      var placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = reports.length
+        ? 'Select past report… (' + reports.length + ' saved)'
+        : 'No saved reports yet';
+      sel.appendChild(placeholder);
+
+      reports.forEach(function(r) {
+        var saved = new Date(r.savedAt);
+        var opt   = document.createElement('option');
+        opt.value = String(r.id);
+        opt.textContent = r.weekId + ' (saved ' + saved.getDate() + ' ' + MONTHS[saved.getMonth()] + ')';
+        sel.appendChild(opt);
+      });
+
+      sel.addEventListener('change', function() {
+        var id = this.value;
+        if (!id) return;
+        var found = reports.find(function(r) { return String(r.id) === id; });
+        if (!found) return;
+        Object.keys(found.data).forEach(function(key) {
+          var el = document.querySelector('#main-content [name="' + key + '"]');
+          if (el) el.value = found.data[key];
+        });
+        showToast('Loaded: ' + found.weekId);
+      });
+    }
+
+    // ── Init ────────────────────────────────────────────────────────────────────
+
+    document.getElementById('btn-autofill').addEventListener('click', autoFill);
+    document.getElementById('btn-save').addEventListener('click', saveReport);
+    loadHistory();
+    </script>
+  </body>
+</html>

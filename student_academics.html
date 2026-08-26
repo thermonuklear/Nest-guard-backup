@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academic Overview — Oxford Guardians</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    body {
+      background: #f0f4f8 !important;
+      color: #0f2340 !important;
+    }
+
+    .topbar {
+      background: #ffffff;
+      border-bottom: 1px solid #d5dce8;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      gap: 24px;
+    }
+
+    .topbar-brand {
+      font-family: "Outfit", sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #0f2340;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .topbar-nav a {
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #3b536e;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .topbar-nav a:hover {
+      background: #e8eef6;
+      color: #0f2340;
+    }
+
+    .topbar-nav a.active {
+      background: #0f2340;
+      color: #ffffff;
+    }
+
+    .content {
+      max-width: 1200px;
+      margin: 36px auto;
+      padding: 0 32px;
+    }
+
+    .page-header {
+      margin-bottom: 36px;
+    }
+
+    .page-header h1 {
+      font-family: "Outfit", sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0f2340;
+      letter-spacing: -0.03em;
+    }
+
+    .page-header p {
+      color: #3b536e;
+      margin-top: 6px;
+      font-size: 0.95rem;
+    }
+
+    .placeholder-card {
+      background: #ffffff;
+      border: 1px dashed #b0bfcf;
+      border-radius: 20px;
+      padding: 64px 32px;
+      text-align: center;
+      color: #6b85a0;
+    }
+
+    .placeholder-card h2 {
+      font-family: "Outfit", sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #0f2340 !important;
+      margin-bottom: 10px;
+    }
+
+    .placeholder-card p {
+      font-size: 0.95rem;
+      max-width: 48ch;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 760px) {
+      .topbar { padding: 0 18px; height: auto; flex-wrap: wrap; padding-top: 12px; padding-bottom: 12px; }
+      .content { padding: 0 18px; margin-top: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="topbar">
+    <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+    <div class="topbar-nav">
+      <a href="admin-dashboard.html">Dashboard</a>
+      <a href="notifications.html">Notifications</a>
+      <a href="students.html">Students</a>
+      <a class="active" href="student_academics.html">Academic</a>
+      <a href="homestays.html">Homestays</a>
+      <a href="travel.html">Travel</a>
+      <a href="documents.html">Documents</a>
+      <a href="compliance.html">Compliance</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div class="page-header">
+      <h1>Academic Overview</h1>
+      <p>Track student academic progress, school liaison, and term dates across all placements.</p>
+    </div>
+
+    <div class="placeholder-card">
+      <h2>Content coming soon</h2>
+      <p>Academic records, school reports, and tutor notes will appear here once this section is built out.</p>
+    </div>
+  </div>
+
+</body>
+</html>

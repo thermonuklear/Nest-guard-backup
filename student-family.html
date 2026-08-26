@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Family & Contacts — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      body {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+      }
+
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+      }
+
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+      }
+
+      h2, h3, h4 { color: #0f2340 !important; }
+      p           { color: #3b536e; }
+      .eyebrow    { color: #2a6096 !important; }
+      .toolbar p  { color: #3b536e !important; }
+
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      /* ── Deep Dive breadcrumb strip ── */
+      .deepdive-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+        background: #edf2f8;
+        border-radius: 14px;
+        padding: 10px 14px;
+        border: 1px solid #d5dce8;
+      }
+
+      .deepdive-nav .deepdive-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: #6b85a0;
+        margin-right: 4px;
+        white-space: nowrap;
+      }
+
+      .deepdive-nav a {
+        padding: 5px 14px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+      }
+
+      .deepdive-nav a:hover {
+        background: #e2e9f3;
+        border-color: #b0bfcf;
+        color: #0f2340;
+      }
+
+      .deepdive-nav a.active {
+        background: #0f2340;
+        border-color: #0f2340;
+        color: #ffffff;
+      }
+
+      /* ── Family form ── */
+      .family-form {
+        max-width: 720px;
+        display: grid;
+        gap: 20px;
+      }
+
+      .form-card {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 20px;
+        padding: 24px 28px;
+      }
+
+      .form-card h4 {
+        margin-bottom: 20px;
+        font-size: 1rem;
+        color: #0f2340 !important;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #edf2f8;
+      }
+
+      .field-group {
+        display: grid;
+        gap: 18px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .field label {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #6b85a0;
+      }
+
+      .field input[type="text"],
+      .field input[type="email"],
+      .field input[type="tel"],
+      .field textarea {
+        padding: 10px 14px;
+        border: 1.5px solid #d5dce8;
+        border-radius: 10px;
+        background: #f8fafc;
+        color: #0f2340;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s, background 0.15s;
+        resize: vertical;
+      }
+
+      .field input[type="text"]:focus,
+      .field input[type="email"]:focus,
+      .field input[type="tel"]:focus,
+      .field textarea:focus {
+        border-color: #0f2340;
+        background: #ffffff;
+      }
+
+      .field input[type="text"]::placeholder,
+      .field input[type="email"]::placeholder,
+      .field input[type="tel"]::placeholder,
+      .field textarea::placeholder {
+        color: #9bafc4;
+      }
+
+      .field textarea {
+        min-height: 90px;
+        line-height: 1.55;
+      }
+
+      .field textarea.tall {
+        min-height: 120px;
+      }
+
+      .field textarea.compact {
+        min-height: 60px;
+      }
+
+      .form-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      /* ── UK Family Contacts manager ── */
+      .uk-contacts-list {
+        display: grid;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .uk-contacts-empty {
+        padding: 18px 14px;
+        color: #9bafc4;
+        font-size: 0.86rem;
+        border: 1.5px dashed #d5dce8;
+        border-radius: 12px;
+        text-align: center;
+      }
+
+      .uk-contact-card {
+        border: 1.5px solid #d5dce8;
+        border-radius: 14px;
+        background: #f8fafc;
+        padding: 18px;
+        display: grid;
+        gap: 14px;
+      }
+
+      .uk-contact-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .uk-contact-card-title {
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #6b85a0;
+      }
+
+      .uk-contact-remove {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #9bafc4;
+        font-size: 0.95rem;
+        padding: 4px 6px;
+        border-radius: 6px;
+        transition: color 0.15s, background 0.15s;
+        line-height: 1;
+      }
+
+      .uk-contact-remove:hover { color: #7f3034; background: #f3dddd; }
+
+      .uk-contact-checks {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+
+      .uk-contact-check {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.86rem;
+        color: #3b536e;
+        cursor: pointer;
+      }
+
+      .uk-contact-check input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: #0f2340;
+        cursor: pointer;
+      }
+
+      /* ── Toast ── */
+      .toast {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: #1a4a1a;
+        color: #d4edda;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .toast.visible { display: flex; }
+
+      /* ── Not-found state ── */
+      .not-found {
+        padding: 48px 24px;
+        text-align: center;
+        color: #3b536e;
+      }
+
+      .not-found h3 { color: #0f2340 !important; margin-bottom: 10px; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small id="chrome-route">Route /admin/students/family</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Student Profile</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link active" href="students.html">Students</a>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <section class="main" id="main-content">
+
+            <!-- Deep Dive navigation -->
+            <div class="deepdive-nav">
+              <span class="deepdive-label">Deep Dive:</span>
+              <a id="link-health"   href="student-health.html">Health &amp; Medical</a>
+              <a id="link-family"   href="student-family.html" class="active">Family &amp; Contacts</a>
+              <a id="link-legal"    href="student-legal.html">Legal &amp; Agency</a>
+              <a id="link-pastoral" href="student-pastoral.html">Pastoral &amp; Visits</a>
+              <a id="link-risk"     href="student-risk.html">Risk Assessment</a>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Family &amp; Contacts</span>
+                <h2 id="student-name">—</h2>
+                <p>Home address, parent contact details, family background context, and UK-based emergency contacts for this student.</p>
+              </div>
+              <div class="toolbar-actions">
+                <span id="status-badge" class="badge">—</span>
+                <a class="button-alt" id="back-to-profile" href="student-profile.html">Back to Profile</a>
+              </div>
+            </div>
+
+            <!-- Family form -->
+            <form class="family-form" id="family-form" onsubmit="return false;">
+
+              <div class="form-card">
+                <h4>Home Address</h4>
+                <div class="field-group">
+                  <div class="field">
+                    <label for="field-home-address">Student's Home Address (overseas)</label>
+                    <textarea id="field-home-address" class="tall" placeholder="e.g. 3-14-7 Minami-Aoyama, Minato-ku, Tokyo 107-0062, Japan"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-card">
+                <h4>Parent Details</h4>
+                <div class="field-group">
+                  <div class="field">
+                    <label for="field-parent-addresses">Parent / Guardian Addresses</label>
+                    <textarea id="field-parent-addresses" class="tall" placeholder="e.g. Parent 1 (Haruka Tanaka) — as above. Parent 2 (Kenji Tanaka) — same household."></textarea>
+                  </div>
+                  <div class="field">
+                    <label for="field-parent-occupations">Parent / Guardian Occupations</label>
+                    <textarea id="field-parent-occupations" placeholder="e.g. Haruka Tanaka — Paediatric consultant. Kenji Tanaka — Senior architect."></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-card">
+                <h4>Family Background</h4>
+                <div class="field-group">
+                  <div class="field">
+                    <label for="field-background">Family Background Information</label>
+                    <textarea id="field-background" class="tall" placeholder="e.g. Only child. Family has prior UK boarding school experience — older cousin attended Marlborough. Parents separated communication preferred; contact Haruka first."></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-card">
+                <h4>UK Emergency Contacts <span style="font-weight: 500; text-transform: none; letter-spacing: normal; color: #6b85a0; font-size: 0.76rem;">(Legacy text summary)</span></h4>
+                <div class="field-group">
+                  <div class="field">
+                    <label for="field-uk-contacts">UK-Based Family or Trusted Contacts</label>
+                    <textarea id="field-uk-contacts" class="tall" placeholder="e.g. Aunt: Yoko Mori — 07700 900 123 / yoko.mori@example.co.uk / London NW3. Authorised to collect in emergencies. Not authorised for overnight stays without written parent approval."></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-card">
+                <h4>UK Family &amp; Emergency Contacts (Appendix 13)</h4>
+                <div class="uk-contacts-list" id="uk-contacts-list"></div>
+                <button type="button" class="button-alt" id="add-uk-contact-btn">+ Add UK Contact</button>
+              </div>
+
+              <div class="form-card">
+                <h4>School &amp; Tutor Details (Appendix 13)</h4>
+                <div class="field-group">
+                  <div class="form-grid">
+                    <div class="field">
+                      <label for="field-tutor-house">Tutor / House</label>
+                      <input type="text" id="field-tutor-house" placeholder="e.g. Tutor: Mrs Caroline Reeves" />
+                    </div>
+                    <div class="field">
+                      <label for="field-tutor-email">Tutor Email</label>
+                      <input type="email" id="field-tutor-email" placeholder="e.g. c.reeves@cheltenhamladies.org" />
+                    </div>
+                    <div class="field">
+                      <label for="field-tutor-phone">Tutor Phone</label>
+                      <input type="tel" id="field-tutor-phone" placeholder="e.g. +44 1242 520 691" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button class="button" id="save-btn" type="button">Save Changes</button>
+                <div class="toast" id="save-toast">&#10003; Changes saved</div>
+              </div>
+
+            </form>
+
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      var params    = new URLSearchParams(window.location.search);
+      var studentId = params.get('id') || 'STU10492';
+      var student   = getStudentById(studentId);
+
+      if (!student) {
+        document.getElementById('main-content').innerHTML =
+          '<div class="not-found">' +
+            '<h3>Student not found</h3>' +
+            '<p>No record exists for ID <strong>' + studentId + '</strong>. ' +
+            '<a href="students.html">Return to student list.</a></p>' +
+          '</div>';
+        throw new Error('Student not found: ' + studentId);
+      }
+
+      // ── Helpers ─────────────────────────────────────────────────────────────
+      function statusClass(status) {
+        var map = { 'Active': 'green', 'Monitor': 'amber', 'Pending': 'amber' };
+        return map[status] || 'navy';
+      }
+
+      // ── Populate header ──────────────────────────────────────────────────────
+      var fullName = student.firstName + ' ' + student.lastName;
+
+      document.getElementById('page-title').textContent   = 'Family & Contacts — ' + fullName;
+      document.getElementById('chrome-route').textContent = 'Route /admin/students/' + student.id + '/family';
+      document.getElementById('student-name').innerHTML   = fullName +
+        ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + student.id + '</span>';
+
+      var badge = document.getElementById('status-badge');
+      badge.textContent = student.status;
+      badge.className   = 'badge ' + statusClass(student.status);
+
+      // ── Wire up Deep Dive nav links ──────────────────────────────────────────
+      document.getElementById('link-health').href   = 'student-health.html?id='   + student.id;
+      document.getElementById('link-family').href   = 'student-family.html?id='   + student.id;
+      document.getElementById('link-legal').href    = 'student-legal.html?id='    + student.id;
+      document.getElementById('link-pastoral').href = 'student-pastoral.html?id=' + student.id;
+      document.getElementById('link-risk').href     = 'student-risk.html?id='     + student.id;
+      document.getElementById('back-to-profile').href = 'student-profile.html?id=' + student.id;
+
+      // ── Ensure family sub-object exists ─────────────────────────────────────
+      if (!student.family) {
+        student.family = { homeAddress: '', parentAddresses: '', parentOccupations: '', familyBackgroundInfo: '', ukFamilyContacts: '', ukFamilyContactsStructured: [] };
+      }
+      if (!student.family.ukFamilyContactsStructured) {
+        student.family.ukFamilyContactsStructured = [];
+      }
+
+      // ── Pre-fill form ────────────────────────────────────────────────────────
+      document.getElementById('field-home-address').value     = student.family.homeAddress         || '';
+      document.getElementById('field-parent-addresses').value = student.family.parentAddresses     || '';
+      document.getElementById('field-parent-occupations').value = student.family.parentOccupations || '';
+      document.getElementById('field-background').value       = student.family.familyBackgroundInfo || '';
+      document.getElementById('field-uk-contacts').value      = student.family.ukFamilyContacts    || '';
+
+      // ── Pre-fill tutor / school details (Appendix 13) ────────────────────────
+      document.getElementById('field-tutor-house').value = student.tutorOrHouse || '';
+      document.getElementById('field-tutor-email').value = student.tutorEmail  || '';
+      document.getElementById('field-tutor-phone').value = student.tutorPhone  || '';
+
+      // ── UK Family & Emergency Contacts manager (Appendix 13) ─────────────────
+      var ukContacts = student.family.ukFamilyContactsStructured.map(function (c) {
+        return {
+          id: c.id || '',
+          relationship: c.relationship || '',
+          fullName: c.fullName || '',
+          address: c.address || '',
+          telephone: c.telephone || '',
+          email: c.email || '',
+          occupation: c.occupation || '',
+          authorisedCollect: !!c.authorisedCollect,
+          authorisedOvernight: !!c.authorisedOvernight,
+          notes: c.notes || ''
+        };
+      });
+
+      function escapeAttr(str) {
+        return String(str || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
+      function renderUkContacts() {
+        var list = document.getElementById('uk-contacts-list');
+        if (!ukContacts.length) {
+          list.innerHTML = '<div class="uk-contacts-empty">No structured UK contacts added yet. Use “+ Add UK Contact” below.</div>';
+          return;
+        }
+        list.innerHTML = ukContacts.map(function (contact, index) {
+          return (
+            '<div class="uk-contact-card">' +
+              '<div class="uk-contact-card-header">' +
+                '<span class="uk-contact-card-title">Contact ' + (index + 1) + '</span>' +
+                '<button type="button" class="uk-contact-remove" data-index="' + index + '" title="Remove contact">&#x2715;</button>' +
+              '</div>' +
+              '<div class="form-grid">' +
+                '<div class="field"><label>Relationship</label><input type="text" class="uk-c-field" data-index="' + index + '" data-key="relationship" value="' + escapeAttr(contact.relationship) + '" placeholder="e.g. Aunt (Maternal)" /></div>' +
+                '<div class="field"><label>Full Name</label><input type="text" class="uk-c-field" data-index="' + index + '" data-key="fullName" value="' + escapeAttr(contact.fullName) + '" placeholder="e.g. Yoko Mori" /></div>' +
+                '<div class="field form-span-2"><label>UK Address</label><input type="text" class="uk-c-field" data-index="' + index + '" data-key="address" value="' + escapeAttr(contact.address) + '" placeholder="e.g. 14 Belsize Park Gardens, London NW3 4HJ" /></div>' +
+                '<div class="field"><label>Telephone</label><input type="tel" class="uk-c-field" data-index="' + index + '" data-key="telephone" value="' + escapeAttr(contact.telephone) + '" placeholder="e.g. +44 7700 900 123" /></div>' +
+                '<div class="field"><label>Email</label><input type="email" class="uk-c-field" data-index="' + index + '" data-key="email" value="' + escapeAttr(contact.email) + '" placeholder="e.g. yoko.mori@example.co.uk" /></div>' +
+                '<div class="field form-span-2"><label>Occupation</label><input type="text" class="uk-c-field" data-index="' + index + '" data-key="occupation" value="' + escapeAttr(contact.occupation) + '" placeholder="e.g. University Lecturer (UCL)" /></div>' +
+              '</div>' +
+              '<div class="uk-contact-checks">' +
+                '<label class="uk-contact-check"><input type="checkbox" class="uk-c-check" data-index="' + index + '" data-key="authorisedCollect" ' + (contact.authorisedCollect ? 'checked' : '') + ' /> Authorised to Collect</label>' +
+                '<label class="uk-contact-check"><input type="checkbox" class="uk-c-check" data-index="' + index + '" data-key="authorisedOvernight" ' + (contact.authorisedOvernight ? 'checked' : '') + ' /> Authorised for Overnight</label>' +
+              '</div>' +
+              '<div class="field"><label>Notes</label><textarea class="uk-c-field compact" data-index="' + index + '" data-key="notes" placeholder="e.g. First UK emergency contact. Authorised to collect from school.">' + escapeAttr(contact.notes) + '</textarea></div>' +
+            '</div>'
+          );
+        }).join('');
+
+        list.querySelectorAll('.uk-c-field').forEach(function (el) {
+          el.addEventListener('input', function () {
+            var idx = parseInt(this.getAttribute('data-index'), 10);
+            var key = this.getAttribute('data-key');
+            ukContacts[idx][key] = this.value;
+          });
+        });
+        list.querySelectorAll('.uk-c-check').forEach(function (el) {
+          el.addEventListener('change', function () {
+            var idx = parseInt(this.getAttribute('data-index'), 10);
+            var key = this.getAttribute('data-key');
+            ukContacts[idx][key] = this.checked;
+          });
+        });
+        list.querySelectorAll('.uk-contact-remove').forEach(function (el) {
+          el.addEventListener('click', function () {
+            var idx = parseInt(this.getAttribute('data-index'), 10);
+            ukContacts.splice(idx, 1);
+            renderUkContacts();
+          });
+        });
+      }
+
+      document.getElementById('add-uk-contact-btn').addEventListener('click', function () {
+        ukContacts.push({
+          id: '', relationship: '', fullName: '', address: '', telephone: '', email: '', occupation: '',
+          authorisedCollect: false, authorisedOvernight: false, notes: ''
+        });
+        renderUkContacts();
+      });
+
+      renderUkContacts();
+
+      // ── Save handler ─────────────────────────────────────────────────────────
+      document.getElementById('save-btn').addEventListener('click', function () {
+        student.family.homeAddress          = document.getElementById('field-home-address').value.trim();
+        student.family.parentAddresses      = document.getElementById('field-parent-addresses').value.trim();
+        student.family.parentOccupations    = document.getElementById('field-parent-occupations').value.trim();
+        student.family.familyBackgroundInfo = document.getElementById('field-background').value.trim();
+
+        student.tutorOrHouse = document.getElementById('field-tutor-house').value.trim();
+        student.tutorEmail   = document.getElementById('field-tutor-email').value.trim();
+        student.tutorPhone   = document.getElementById('field-tutor-phone').value.trim();
+
+        // Persist structured UK contacts, regenerating sequential IDs.
+        student.family.ukFamilyContactsStructured = ukContacts.map(function (c, i) {
+          return {
+            id: c.id || ('UKFC-' + String(i + 1).padStart(3, '0')),
+            relationship: (c.relationship || '').trim(),
+            fullName: (c.fullName || '').trim(),
+            address: (c.address || '').trim(),
+            telephone: (c.telephone || '').trim(),
+            email: (c.email || '').trim(),
+            occupation: (c.occupation || '').trim(),
+            authorisedCollect: !!c.authorisedCollect,
+            authorisedOvernight: !!c.authorisedOvernight,
+            notes: (c.notes || '').trim()
+          };
+        });
+
+        // Legacy text fallback (Standard 3.4.2 backward compatibility): if structured
+        // contacts exist, regenerate the summary from them; otherwise keep whatever
+        // was typed directly into the legacy textarea.
+        if (student.family.ukFamilyContactsStructured.length) {
+          var summary = student.family.ukFamilyContactsStructured.map(function (c) {
+            var parts = [];
+            if (c.relationship || c.fullName) parts.push((c.relationship ? c.relationship + ': ' : '') + c.fullName);
+            if (c.telephone) parts.push(c.telephone);
+            if (c.email) parts.push(c.email);
+            if (c.address) parts.push(c.address);
+            var authNotes = [];
+            if (c.authorisedCollect) authNotes.push('Authorised to collect');
+            if (c.authorisedOvernight) authNotes.push('Authorised for overnight stays');
+            if (authNotes.length) parts.push(authNotes.join('; '));
+            if (c.notes) parts.push(c.notes);
+            return parts.join(' — ');
+          }).join('\n');
+          student.family.ukFamilyContacts = summary;
+          document.getElementById('field-uk-contacts').value = summary;
+        } else {
+          student.family.ukFamilyContacts = document.getElementById('field-uk-contacts').value.trim();
+        }
+
+        var students = getAllStudents();
+        var idx = students.findIndex(function (s) { return s.id === student.id; });
+        if (idx > -1) {
+          students[idx] = student;
+          saveAllStudents(students);
+        }
+
+        var toast = document.getElementById('save-toast');
+        toast.classList.add('visible');
+        setTimeout(function () { toast.classList.remove('visible'); }, 3000);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Check-in — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+    <style>
+      .form-label {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-3);
+        font-size: 0.76rem;
+        margin-bottom: 5px;
+      }
+      .form-control {
+        width: 100%;
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--ink);
+        background: #faf6ee;
+        border: 1px solid #d8cbb2;
+        border-radius: 14px;
+        padding: 11px 14px;
+        appearance: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: #2a6096;
+        box-shadow: 0 0 0 3px rgba(42, 96, 150, 0.12);
+      }
+      select.form-control {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b85a0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 36px;
+        cursor: pointer;
+      }
+      textarea.form-control { min-height: 110px; resize: vertical; }
+      .form-field { display: grid; gap: 0; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="section" style="padding:28px;">
+        <span class="eyebrow">Student check-in</span>
+        <h1>Fast enough to actually be used.</h1>
+        <div class="panel" style="padding:22px; margin-top:18px;">
+          <form id="checkin-form" novalidate>
+            <div class="form-grid">
+
+              <div class="field">
+                <small>Student</small>
+                <strong id="student-name">Loading…</strong>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="f-status">Status</label>
+                <select class="form-control" id="f-status" required>
+                  <option value="">Select…</option>
+                  <option value="I am okay today">I am okay today</option>
+                  <option value="I am a bit low today">I am a bit low today</option>
+                  <option value="I need to talk to someone">I need to talk to someone</option>
+                  <option value="I have a concern to report">I have a concern to report</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="f-location">Location</label>
+                <select class="form-control" id="f-location" required>
+                  <option value="">Select…</option>
+                  <option value="At school boarding house">At school boarding house</option>
+                  <option value="At host family">At host family</option>
+                  <option value="At school (day)">At school (day pupil)</option>
+                  <option value="Travelling">Travelling</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="f-followup">Need follow-up?</label>
+                <select class="form-control" id="f-followup">
+                  <option value="No">No</option>
+                  <option value="Yes — please contact me">Yes — please contact me</option>
+                </select>
+              </div>
+
+              <div class="form-field form-span-2">
+                <label class="form-label" for="f-note">Optional note</label>
+                <textarea class="form-control" id="f-note" placeholder="Any additional information…"></textarea>
+              </div>
+
+            </div>
+            <div class="action-row" style="margin-top:18px;">
+              <a class="button-alt" id="back-portal-btn" href="student-portal.html">Back</a>
+              <button type="submit" class="button">Submit check-in</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <script>
+    (function () {
+      var params    = new URLSearchParams(window.location.search);
+      var studentId = params.get('id') || '';
+
+      var student = studentId ? getStudentById(studentId) : null;
+      document.getElementById('student-name').textContent =
+        student ? student.firstName + ' ' + student.lastName : (studentId || 'Unknown student');
+
+      if (studentId) {
+        document.getElementById('back-portal-btn').href = 'student-portal.html?id=' + studentId;
+      }
+
+      document.getElementById('checkin-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var status   = document.getElementById('f-status').value;
+        var location = document.getElementById('f-location').value;
+        var followup = document.getElementById('f-followup').value;
+        var note     = document.getElementById('f-note').value.trim();
+
+        if (!status || !location) {
+          alert('Please select a status and location before submitting.');
+          return;
+        }
+
+        var details = 'Status: '           + status
+          + '\nLocation: '                 + location
+          + '\nFollow-up needed: '         + followup
+          + (note ? '\nNote: ' + note : '');
+
+        saveWelfareLog({
+          id:        'WL' + Date.now(),
+          studentId: studentId,
+          type:      'check-in',
+          date:      new Date().toISOString().slice(0, 10),
+          summary:   'Student check-in completed',
+          details:   details
+        });
+
+        window.location.href = 'student-checkin-success.html?id=' + studentId;
+      });
+    }());
+    </script>
+  </body>
+</html>

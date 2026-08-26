@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Pastoral & Visits — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      body {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+      }
+
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+      }
+
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+      }
+
+      h2, h3, h4 { color: #0f2340 !important; }
+      p           { color: #3b536e; }
+      .eyebrow    { color: #2a6096 !important; }
+      .toolbar p  { color: #3b536e !important; }
+
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      /* ── Deep Dive breadcrumb strip ── */
+      .deepdive-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+        background: #edf2f8;
+        border-radius: 14px;
+        padding: 10px 14px;
+        border: 1px solid #d5dce8;
+      }
+
+      .deepdive-nav .deepdive-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: #6b85a0;
+        margin-right: 4px;
+        white-space: nowrap;
+      }
+
+      .deepdive-nav a {
+        padding: 5px 14px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+      }
+
+      .deepdive-nav a:hover {
+        background: #e2e9f3;
+        border-color: #b0bfcf;
+        color: #0f2340;
+      }
+
+      .deepdive-nav a.active {
+        background: #0f2340;
+        border-color: #0f2340;
+        color: #ffffff;
+      }
+
+      /* ── Page layout ── */
+      .pastoral-layout {
+        max-width: 720px;
+        display: grid;
+        gap: 20px;
+      }
+
+      /* ── Shared card ── */
+      .form-card {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 20px;
+        padding: 24px 28px;
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #edf2f8;
+      }
+
+      .card-header h4 {
+        margin: 0;
+        font-size: 1rem;
+        color: #0f2340 !important;
+      }
+
+      /* ── Field ── */
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .field label {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #6b85a0;
+      }
+
+      .field textarea,
+      .field input[type="text"],
+      .field input[type="date"] {
+        padding: 10px 14px;
+        border: 1.5px solid #d5dce8;
+        border-radius: 10px;
+        background: #f8fafc;
+        color: #0f2340;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s, background 0.15s;
+        resize: vertical;
+      }
+
+      .field textarea:focus,
+      .field input[type="text"]:focus,
+      .field input[type="date"]:focus {
+        border-color: #0f2340;
+        background: #ffffff;
+      }
+
+      .field textarea::placeholder,
+      .field input[type="text"]::placeholder {
+        color: #9bafc4;
+      }
+
+      .field textarea { min-height: 100px; line-height: 1.55; }
+
+      /* ── Interests save row ── */
+      .interests-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      /* ── Log visit form (collapsible) ── */
+      .log-visit-form {
+        display: none;
+        flex-direction: column;
+        gap: 14px;
+        background: #f4f7fb;
+        border: 1px solid #d5dce8;
+        border-radius: 14px;
+        padding: 18px 20px;
+        margin-bottom: 20px;
+      }
+
+      .log-visit-form.open { display: flex; }
+
+      .log-visit-row {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 14px;
+      }
+
+      .log-visit-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .btn-cancel {
+        background: none;
+        border: none;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.86rem;
+        font-weight: 600;
+        color: #6b85a0;
+        cursor: pointer;
+        padding: 0 4px;
+        transition: color 0.15s;
+      }
+
+      .btn-cancel:hover { color: #0f2340; }
+
+      /* ── Visit timeline ── */
+      .visit-timeline {
+        display: grid;
+        gap: 0;
+      }
+
+      .visit-item {
+        display: grid;
+        grid-template-columns: 110px 1fr auto;
+        gap: 14px;
+        align-items: start;
+        padding: 16px 0;
+        border-top: 1px solid #edf2f8;
+      }
+
+      .visit-item:first-child { border-top: none; }
+
+      .visit-date {
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: #2a6096;
+        padding-top: 2px;
+        white-space: nowrap;
+      }
+
+      .visit-body { display: flex; flex-direction: column; gap: 3px; }
+
+      .visit-report {
+        font-size: 0.88rem;
+        color: #0f2340;
+        line-height: 1.55;
+        white-space: pre-wrap;
+      }
+
+      .visit-logged-by {
+        font-size: 0.76rem;
+        color: #6b85a0;
+      }
+
+      .visit-remove {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #c8d0da;
+        font-size: 0.9rem;
+        padding: 4px 6px;
+        border-radius: 6px;
+        transition: color 0.15s, background 0.15s;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+
+      .visit-remove:hover { color: #7f3034; background: #f3dddd; }
+
+      .visit-empty {
+        padding: 28px 0 8px;
+        text-align: center;
+        color: #9bafc4;
+        font-size: 0.86rem;
+        border-top: 1px solid #edf2f8;
+      }
+
+      /* ── Toast ── */
+      .toast {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: #1a4a1a;
+        color: #d4edda;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .toast.visible { display: flex; }
+
+      /* ── Not-found state ── */
+      .not-found {
+        padding: 48px 24px;
+        text-align: center;
+        color: #3b536e;
+      }
+
+      .not-found h3 { color: #0f2340 !important; margin-bottom: 10px; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small id="chrome-route">Route /admin/students/pastoral</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Student Profile</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link active" href="students.html">Students</a>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <section class="main" id="main-content">
+
+            <!-- Deep Dive navigation -->
+            <div class="deepdive-nav">
+              <span class="deepdive-label">Deep Dive:</span>
+              <a id="link-health"   href="student-health.html">Health &amp; Medical</a>
+              <a id="link-family"   href="student-family.html">Family &amp; Contacts</a>
+              <a id="link-legal"    href="student-legal.html">Legal &amp; Agency</a>
+              <a id="link-pastoral" href="student-pastoral.html" class="active">Pastoral &amp; Visits</a>
+              <a id="link-risk"     href="student-risk.html">Risk Assessment</a>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Pastoral &amp; Visits</span>
+                <h2 id="student-name">—</h2>
+                <p>Student interests and hobbies, and a chronological record of all guardian visits and welfare check-ins.</p>
+              </div>
+              <div class="toolbar-actions">
+                <span id="status-badge" class="badge">—</span>
+                <a class="button-alt" id="back-to-profile" href="student-profile.html">Back to Profile</a>
+              </div>
+            </div>
+
+            <div class="pastoral-layout">
+
+              <!-- Interests & Hobbies -->
+              <div class="form-card">
+                <div class="card-header">
+                  <h4>Interests &amp; Hobbies</h4>
+                </div>
+                <div class="field">
+                  <label for="field-interests">Known interests, hobbies, and activities</label>
+                  <textarea id="field-interests" placeholder="e.g. Piano (Grade 7), competitive swimming, manga and anime, cooking Japanese food. Expressed interest in joining school debating club."></textarea>
+                </div>
+                <div class="interests-actions">
+                  <button class="button" id="save-interests-btn" type="button">Save</button>
+                  <div class="toast" id="interests-toast">&#10003; Saved</div>
+                </div>
+              </div>
+
+              <!-- Visit Records -->
+              <div class="form-card">
+                <div class="card-header">
+                  <h4>Visit Records</h4>
+                  <button class="button-alt" id="log-visit-toggle" type="button">+ Log New Visit</button>
+                </div>
+
+                <!-- Inline log form (hidden by default) -->
+                <div class="log-visit-form" id="log-visit-form">
+                  <div class="log-visit-row">
+                    <div class="field">
+                      <label for="visit-date">Date of Visit</label>
+                      <input type="date" id="visit-date" />
+                    </div>
+                    <div class="field">
+                      <label for="visit-logged-by">Logged by</label>
+                      <input type="text" id="visit-logged-by" placeholder="e.g. Priya Shah" />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="visit-report">Visit Report</label>
+                    <textarea id="visit-report" placeholder="e.g. Home visit to Ashworth Family. Student appeared settled and in good spirits. Discussed upcoming exeat plans and reviewed welfare checklist. No concerns raised. Next check-in scheduled for 3 May."></textarea>
+                  </div>
+                  <div class="log-visit-actions">
+                    <button class="button" id="save-visit-btn" type="button">Log Visit</button>
+                    <button class="btn-cancel" id="cancel-visit-btn" type="button">Cancel</button>
+                    <div class="toast" id="visit-toast">&#10003; Visit logged</div>
+                  </div>
+                </div>
+
+                <!-- Timeline list -->
+                <div class="visit-timeline" id="visit-timeline"></div>
+
+              </div>
+
+            </div><!-- /pastoral-layout -->
+
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      var params    = new URLSearchParams(window.location.search);
+      var studentId = params.get('id') || 'STU10492';
+      var student   = getStudentById(studentId);
+
+      if (!student) {
+        document.getElementById('main-content').innerHTML =
+          '<div class="not-found">' +
+            '<h3>Student not found</h3>' +
+            '<p>No record exists for ID <strong>' + studentId + '</strong>. ' +
+            '<a href="students.html">Return to student list.</a></p>' +
+          '</div>';
+        throw new Error('Student not found: ' + studentId);
+      }
+
+      // ── Helpers ─────────────────────────────────────────────────────────────
+      function statusClass(status) {
+        var map = { 'Active': 'green', 'Monitor': 'amber', 'Pending': 'amber' };
+        return map[status] || 'navy';
+      }
+
+      function escapeHtml(str) {
+        return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      function formatDate(iso) {
+        if (!iso) return '—';
+        var d = new Date(iso + 'T00:00:00');
+        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      }
+
+      function persistStudent() {
+        var students = getAllStudents();
+        var idx = students.findIndex(function (s) { return s.id === student.id; });
+        if (idx > -1) { students[idx] = student; saveAllStudents(students); }
+      }
+
+      function showToast(id) {
+        var toast = document.getElementById(id);
+        toast.classList.add('visible');
+        setTimeout(function () { toast.classList.remove('visible'); }, 3000);
+      }
+
+      // ── Populate header ──────────────────────────────────────────────────────
+      var fullName = student.firstName + ' ' + student.lastName;
+
+      document.getElementById('page-title').textContent   = 'Pastoral & Visits — ' + fullName;
+      document.getElementById('chrome-route').textContent = 'Route /admin/students/' + student.id + '/pastoral';
+      document.getElementById('student-name').innerHTML   = fullName +
+        ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + student.id + '</span>';
+
+      var badge = document.getElementById('status-badge');
+      badge.textContent = student.status;
+      badge.className   = 'badge ' + statusClass(student.status);
+
+      // ── Wire up Deep Dive nav + back link ────────────────────────────────────
+      document.getElementById('link-health').href   = 'student-health.html?id='   + student.id;
+      document.getElementById('link-family').href   = 'student-family.html?id='   + student.id;
+      document.getElementById('link-legal').href    = 'student-legal.html?id='    + student.id;
+      document.getElementById('link-pastoral').href = 'student-pastoral.html?id=' + student.id;
+      document.getElementById('link-risk').href     = 'student-risk.html?id='     + student.id;
+      document.getElementById('back-to-profile').href = 'student-profile.html?id=' + student.id;
+
+      // ── Ensure pastoral sub-object exists ────────────────────────────────────
+      if (!student.pastoral) {
+        student.pastoral = { interestsAndHobbies: '', visitRecords: [] };
+      }
+      if (!Array.isArray(student.pastoral.visitRecords)) {
+        student.pastoral.visitRecords = [];
+      }
+
+      // ── Interests & Hobbies ──────────────────────────────────────────────────
+      document.getElementById('field-interests').value = student.pastoral.interestsAndHobbies || '';
+
+      document.getElementById('save-interests-btn').addEventListener('click', function () {
+        student.pastoral.interestsAndHobbies = document.getElementById('field-interests').value.trim();
+        persistStudent();
+        showToast('interests-toast');
+      });
+
+      // ── Visit Records — render ────────────────────────────────────────────────
+      function renderVisits() {
+        var timeline  = document.getElementById('visit-timeline');
+        var records   = student.pastoral.visitRecords;
+
+        if (!records.length) {
+          timeline.innerHTML = '<div class="visit-empty">No visits logged yet.</div>';
+          return;
+        }
+
+        var sorted = records.slice().sort(function (a, b) {
+          return (b.date || '').localeCompare(a.date || '');
+        });
+
+        timeline.innerHTML = sorted.map(function (v) {
+          return '<div class="visit-item">' +
+            '<div class="visit-date">' + escapeHtml(formatDate(v.date)) + '</div>' +
+            '<div class="visit-body">' +
+              '<div class="visit-report">' + escapeHtml(v.report) + '</div>' +
+              (v.loggedBy ? '<div class="visit-logged-by">Logged by ' + escapeHtml(v.loggedBy) + '</div>' : '') +
+            '</div>' +
+            '<button class="visit-remove" data-id="' + escapeHtml(v.id) + '" title="Remove visit">&#x2715;</button>' +
+          '</div>';
+        }).join('');
+
+        timeline.querySelectorAll('.visit-remove').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var removeId = this.getAttribute('data-id');
+            student.pastoral.visitRecords = student.pastoral.visitRecords.filter(function (v) {
+              return v.id !== removeId;
+            });
+            persistStudent();
+            renderVisits();
+          });
+        });
+      }
+
+      renderVisits();
+
+      // ── Log Visit form — toggle ───────────────────────────────────────────────
+      var logForm = document.getElementById('log-visit-form');
+
+      document.getElementById('log-visit-toggle').addEventListener('click', function () {
+        logForm.classList.toggle('open');
+        if (logForm.classList.contains('open')) {
+          // Default date to today
+          if (!document.getElementById('visit-date').value) {
+            document.getElementById('visit-date').value = new Date().toISOString().split('T')[0];
+          }
+          document.getElementById('visit-report').focus();
+        }
+      });
+
+      document.getElementById('cancel-visit-btn').addEventListener('click', function () {
+        logForm.classList.remove('open');
+        document.getElementById('visit-report').value   = '';
+        document.getElementById('visit-logged-by').value = '';
+      });
+
+      // ── Log Visit form — save ─────────────────────────────────────────────────
+      document.getElementById('save-visit-btn').addEventListener('click', function () {
+        var date     = document.getElementById('visit-date').value;
+        var report   = document.getElementById('visit-report').value.trim();
+        var loggedBy = document.getElementById('visit-logged-by').value.trim();
+
+        if (!date) {
+          document.getElementById('visit-date').style.borderColor = '#7f3034';
+          document.getElementById('visit-date').focus();
+          return;
+        }
+        if (!report) {
+          document.getElementById('visit-report').style.borderColor = '#7f3034';
+          document.getElementById('visit-report').focus();
+          return;
+        }
+
+        document.getElementById('visit-date').style.borderColor   = '';
+        document.getElementById('visit-report').style.borderColor = '';
+
+        student.pastoral.visitRecords.push({
+          id:       Date.now().toString(),
+          date:     date,
+          report:   report,
+          loggedBy: loggedBy
+        });
+
+        persistStudent();
+        renderVisits();
+        showToast('visit-toast');
+
+        setTimeout(function () {
+          logForm.classList.remove('open');
+          document.getElementById('visit-report').value    = '';
+          document.getElementById('visit-logged-by').value = '';
+        }, 1400);
+      });
+    </script>
+  </body>
+</html>

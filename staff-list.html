@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Directory — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Filter row ── */
+      .filter-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .filter-field {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 10px 14px;
+      }
+
+      .filter-field small {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-3);
+        font-size: 0.7rem;
+        margin-bottom: 3px;
+      }
+
+      .filter-input,
+      .filter-select {
+        width: 100%;
+        margin-top: 2px;
+        padding: 5px 0;
+        border: none;
+        border-bottom: 1px solid var(--line);
+        background: transparent;
+        color: var(--ink);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.88rem;
+        font-weight: 600;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+
+      .filter-input::placeholder { color: var(--ink-3); font-weight: 400; }
+      .filter-input:focus,
+      .filter-select:focus { border-bottom-color: var(--navy); }
+      .filter-select { appearance: none; cursor: pointer; }
+
+      /* ── Result count ── */
+      .result-count {
+        font-size: 0.78rem;
+        color: var(--ink-3);
+        margin-bottom: 8px;
+      }
+
+      /* ── Staff name cell ── */
+      .staff-name-cell {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .staff-avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+        color: #fff8eb;
+        font-family: "Outfit", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        flex-shrink: 0;
+        border: 2px solid var(--line);
+      }
+
+      .staff-name-link {
+        font-weight: 700;
+        color: var(--ink) !important;
+        text-decoration: none;
+      }
+
+      .staff-name-link:hover {
+        color: var(--gold) !important;
+        text-decoration: underline;
+      }
+
+      /* ── Empty state ── */
+      .empty-state {
+        text-align: center;
+        padding: 36px 24px;
+        color: var(--ink-3);
+        font-size: 0.88rem;
+      }
+
+      @media (max-width: 900px) {
+        .filter-row { grid-template-columns: 1fr 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+
+        <!-- Chrome bar -->
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small>Route /admin/staff</small>
+        </div>
+
+        <div class="shell">
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Staff Directory</strong>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Access</div>
+              <a class="nav-link" href="users.html">Users &amp; roles</a>
+              <a class="nav-link nav-link-sub" href="students.html">Students</a>
+              <a class="nav-link nav-link-sub active" href="staff-list.html">Staff</a>
+              <a class="nav-link nav-link-sub" href="drivers.html">Drivers</a>
+              <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
+              <a class="nav-link nav-link-sub" href="parent-list.html">Parents</a>
+              <a class="nav-link nav-link-sub" href="contracts.html">Contracts</a>
+              <a class="nav-link nav-link-sub" href="agents.html">Agents</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <!-- Main content -->
+          <section class="main">
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Staff directory</span>
+                <h2>The people who keep this running.</h2>
+                <p>All staff accounts with roles, DBS status, and emergency rota assignments.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="admin-dashboard.html">Back to dashboard</a>
+                <a class="button" href="staff-create.html">Add staff member</a>
+              </div>
+            </div>
+
+            <!-- Metrics row -->
+            <div class="metrics" id="metrics-row">
+              <article class="metric featured">
+                <h4>Total staff</h4>
+                <div class="metric-value" id="metric-total">—</div>
+                <p class="metric-meta">All accounts in the staff directory</p>
+              </article>
+              <article class="metric">
+                <h4>Active</h4>
+                <div class="metric-value" id="metric-active">—</div>
+                <p class="metric-meta">Accounts with active status</p>
+              </article>
+              <article class="metric">
+                <h4>DBS current</h4>
+                <div class="metric-value" id="metric-dbs">—</div>
+                <p class="metric-meta">Clear DBS on record</p>
+              </article>
+              <article class="metric">
+                <h4>On emergency rota</h4>
+                <div class="metric-value" id="metric-rota">—</div>
+                <p class="metric-meta">Staff with rota assignments</p>
+              </article>
+            </div>
+
+            <!-- Filter row -->
+            <div class="filter-row">
+              <div class="filter-field">
+                <small>Search</small>
+                <input
+                  class="filter-input"
+                  type="text"
+                  id="search-input"
+                  placeholder="Search name, email, role, title…"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="filter-field">
+                <small>Role</small>
+                <select class="filter-select" id="role-filter">
+                  <option value="">All roles</option>
+                  <option value="Admin / DSL">Admin / DSL</option>
+                  <option value="Admin / Operations">Admin / Operations</option>
+                  <option value="Admin / Local coordinator">Admin / Local coordinator</option>
+                </select>
+              </div>
+              <div class="filter-field">
+                <small>Status</small>
+                <select class="filter-select" id="status-filter">
+                  <option value="">All</option>
+                  <option value="Active">Active</option>
+                  <option value="Locked">Locked</option>
+                  <option value="Invited">Invited</option>
+                </select>
+              </div>
+            </div>
+
+            <p class="result-count" id="result-count">Loading…</p>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Title</th>
+                    <th>DBS Status</th>
+                    <th>Emergency Rota</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="staff-table-body"></tbody>
+              </table>
+            </div>
+
+          </section>
+        </div><!-- /shell -->
+      </div><!-- /app-frame -->
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      var searchInput  = document.getElementById('search-input');
+      var roleFilter   = document.getElementById('role-filter');
+      var statusFilter = document.getElementById('status-filter');
+      var resultCount  = document.getElementById('result-count');
+
+      function initials(first, last) {
+        return ((first || '').charAt(0) + (last || '').charAt(0)).toUpperCase();
+      }
+
+      function dbsBadgeClass(status) {
+        var map = { clear: 'green', amber: 'amber', expired: 'red' };
+        return map[(status || '').toLowerCase()] || 'navy';
+      }
+
+      function dbsBadgeLabel(status) {
+        var map = { clear: 'DBS Clear', amber: 'Action Required', expired: 'Expired' };
+        return map[(status || '').toLowerCase()] || (status || '—');
+      }
+
+      function statusBadgeClass(status) {
+        var map = { active: 'green', locked: 'red', invited: 'amber' };
+        return map[(status || '').toLowerCase()] || 'navy';
+      }
+
+      function renderTable(data) {
+        var tbody = document.getElementById('staff-table-body');
+        resultCount.textContent = data.length + ' staff member' + (data.length !== 1 ? 's' : '');
+
+        if (!data.length) {
+          tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No staff members match the current filters.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = data.map(function (s) {
+          var fullName = s.firstName + ' ' + s.lastName;
+          var avt      = initials(s.firstName, s.lastName);
+
+          return '<tr>' +
+            '<td>' +
+              '<div class="staff-name-cell">' +
+                '<div class="staff-avatar">' + avt + '</div>' +
+                '<div>' +
+                  '<a class="staff-name-link" href="staff-profile.html?id=' + s.id + '">' + fullName + '</a>' +
+                  '<small>' + (s.email || '—') + '</small>' +
+                '</div>' +
+              '</div>' +
+            '</td>' +
+            '<td><strong>' + (s.role || '—') + '</strong></td>' +
+            '<td>' + (s.title || '—') + '</td>' +
+            '<td>' +
+              '<span class="badge ' + dbsBadgeClass(s.dbsStatus) + '">' + dbsBadgeLabel(s.dbsStatus) + '</span>' +
+              (s.dbsRenewalDue ? '<small>Renewal: ' + s.dbsRenewalDue + '</small>' : '') +
+            '</td>' +
+            '<td>' + (s.emergencyRota || '—') + '</td>' +
+            '<td>' +
+              '<span class="badge ' + statusBadgeClass(s.status) + '">' + (s.status || '—') + '</span>' +
+            '</td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      function applyFilters() {
+        var search = searchInput.value.trim().toLowerCase();
+        var role   = roleFilter.value;
+        var status = statusFilter.value;
+
+        var data = getAllStaff().filter(function (s) {
+          var searchable = [
+            s.firstName, s.lastName, s.email, s.role, s.title
+          ].join(' ').toLowerCase();
+
+          var matchSearch = !search || searchable.includes(search);
+          var matchRole   = !role   || s.role === role;
+          var matchStatus = !status || s.status === status;
+
+          return matchSearch && matchRole && matchStatus;
+        });
+
+        renderTable(data);
+      }
+
+      function updateMetrics() {
+        var all = getAllStaff();
+        document.getElementById('metric-total').textContent  = all.length;
+        document.getElementById('metric-active').textContent = all.filter(function (s) { return s.status === 'Active'; }).length;
+        document.getElementById('metric-dbs').textContent    = all.filter(function (s) { return (s.dbsStatus || '').toLowerCase() === 'clear'; }).length;
+        document.getElementById('metric-rota').textContent   = all.filter(function (s) { return s.emergencyRota && s.emergencyRota.trim() !== ''; }).length;
+      }
+
+      searchInput.addEventListener('input', applyFilters);
+      roleFilter.addEventListener('change', applyFilters);
+      statusFilter.addEventListener('change', applyFilters);
+
+      updateMetrics();
+      applyFilters();
+    </script>
+  </body>
+</html>

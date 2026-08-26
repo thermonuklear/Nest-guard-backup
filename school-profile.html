@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>School Profile — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      .school-profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      @media (max-width: 900px) { .school-profile-grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/school-profile</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Standard 9</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link active" href="schools.html">Schools</a>
+              <a class="nav-link nav-link-sub" href="school-directory.html">School directory</a>
+              <a class="nav-link nav-link-sub" href="school-liaison.html">Communication log</a>
+              <a class="nav-link nav-link-sub" href="school-log-create.html">Log contact</a>
+              <a class="nav-link nav-link-sub" href="school-welfare-notification.html">Welfare notification</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow" id="page-eyebrow">Operations — Schools</span>
+                <h2 id="page-title">School Profile</h2>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button" id="assign-students-link" href="school-assign-students.html">+ Assign Students</a>
+                <a class="button-alt" href="school-directory.html">← Back to directory</a>
+              </div>
+            </div>
+
+            <div class="school-profile-grid">
+
+              <div class="card">
+                <h4>Enrolled Students</h4>
+                <p style="margin:0 0 14px;color:#64748b;font-size:0.85rem;">Students currently boarding at this school under Oxford Guardians' guardianship.</p>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr><th>Name</th><th>Year Group</th><th>Status</th></tr>
+                    </thead>
+                    <tbody id="students-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="card">
+                <h4>Recent Communications</h4>
+                <p style="margin:0 0 14px;color:#64748b;font-size:0.85rem;">The 5 most recent logged contacts with this school.</p>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr><th>Date</th><th>Type</th><th>Summary</th></tr>
+                    </thead>
+                    <tbody id="comms-tbody"></tbody>
+                  </table>
+                </div>
+                <a class="button" id="comms-link" href="school-liaison.html" style="margin-top:14px;display:inline-block;">View full communication log</a>
+              </div>
+
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      function esc(str) {
+        return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
+      function formatDate(isoStr) {
+        if (!isoStr) return 'Not set';
+        var d = new Date(isoStr);
+        if (isNaN(d.getTime())) return isoStr;
+        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      }
+
+      var params = new URLSearchParams(window.location.search);
+      var id = params.get('id');
+      if (!id) { window.location.href = 'school-directory.html'; }
+
+      var school = getSchoolById(id);
+      if (!school) { window.location.href = 'school-directory.html'; }
+
+      document.getElementById('page-eyebrow').textContent = school.id + ' — ' + school.name;
+      document.getElementById('page-title').textContent = school.name;
+      document.title = school.name + ' — Oxford Guardians Platform';
+
+      document.getElementById('assign-students-link').href = 'school-assign-students.html?id=' + encodeURIComponent(school.id);
+
+      var commsLink = document.getElementById('comms-link');
+      commsLink.href = 'school-liaison.html?filterSchool=' + encodeURIComponent(school.name);
+
+      // ── Enrolled Students ──────────────────────────────────────────────
+      var studentsTbody = document.getElementById('students-tbody');
+      var enrolledStudents = getStudentsForSchool(school.name);
+
+      if (!enrolledStudents.length) {
+        studentsTbody.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:24px;color:#94a3b8;">No students currently enrolled at this school.</td></tr>';
+      } else {
+        studentsTbody.innerHTML = enrolledStudents.map(function (s) {
+          var name = (s.preferredName || s.firstName || '') + ' ' + (s.lastName || '');
+          return '<tr>' +
+            '<td><strong>' + esc(name.trim()) + '</strong></td>' +
+            '<td>' + esc(s.schoolYear) + '</td>' +
+            '<td>' + esc(s.status) + '</td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      // ── Recent Communications ──────────────────────────────────────────
+      var commsTbody = document.getElementById('comms-tbody');
+      var schoolLogs = getSchoolLogs().filter(function (log) {
+        var student = getStudentById(log.studentId);
+        return student && student.school === school.name;
+      }).sort(function (a, b) {
+        return new Date(b.date || b.loggedAt) - new Date(a.date || a.loggedAt);
+      }).slice(0, 5);
+
+      if (!schoolLogs.length) {
+        commsTbody.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:24px;color:#94a3b8;">No communications logged with this school yet.</td></tr>';
+      } else {
+        commsTbody.innerHTML = schoolLogs.map(function (log) {
+          return '<tr>' +
+            '<td>' + esc(formatDate(log.date || log.loggedAt)) + '</td>' +
+            '<td>' + esc(log.contactType) + '</td>' +
+            '<td>' + esc(log.summaryNotes) + '</td>' +
+          '</tr>';
+        }).join('');
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log School Communication — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+    <style>
+      .form-grid label {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-3);
+        font-size: 0.76rem;
+        margin-bottom: 5px;
+      }
+      .form-grid input,
+      .form-grid textarea {
+        width: 100%;
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--ink);
+        background: #faf6ee;
+        border: 1px solid #d8cbb2;
+        border-radius: 14px;
+        padding: 11px 14px;
+        appearance: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+        box-sizing: border-box;
+      }
+      .form-grid input:focus,
+      .form-grid textarea:focus {
+        outline: none;
+        border-color: #2a6096;
+        box-shadow: 0 0 0 3px rgba(42, 96, 150, 0.12);
+      }
+      .form-grid input:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .form-grid textarea { min-height: 140px; resize: vertical; }
+      .form-grid > div { display: grid; gap: 0; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="section" style="padding:28px;">
+        <span class="eyebrow">Mental health support</span>
+        <h2 id="page-heading">Log school communication</h2>
+        <p class="lead">Record every contact with the school about this student's mental health case. This creates a timestamped evidence trail aligned with AEGIS Standard 3.3.</p>
+
+        <!-- Input form -->
+        <form class="form-grid" id="comms-form" novalidate style="margin-top:18px;">
+
+          <div>
+            <label for="f-student">Student</label>
+            <input type="text" id="f-student" disabled />
+          </div>
+
+          <div>
+            <label for="f-date">Date</label>
+            <input type="date" id="f-date" required />
+          </div>
+
+          <div class="form-span-2">
+            <label for="f-contact">Contact person at school</label>
+            <input type="text" id="f-contact" placeholder="e.g. Mrs Ellis (Tutor), Mr Patel (Head of Year)" required />
+          </div>
+
+          <div class="form-span-2">
+            <label for="f-note">Note details</label>
+            <textarea id="f-note" placeholder="What was discussed, agreed, or flagged during this communication…" required></textarea>
+          </div>
+
+        </form>
+
+        <div class="action-row" style="margin-top:18px;">
+          <a class="button-alt" id="link-back" href="#">Back to case dashboard</a>
+          <button type="button" class="button" id="save-btn">Save communication</button>
+        </div>
+
+        <!-- Timeline feed -->
+        <div style="margin-top:32px;">
+          <h3 style="margin-bottom:14px;">Previous school communications</h3>
+          <div class="card">
+            <div class="timeline" id="comms-feed"></div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <script>
+    (function () {
+      // ── Bootstrap ──────────────────────────────────────────────────────────
+      var params    = new URLSearchParams(window.location.search);
+      var studentId = params.get('id') || '';
+      var student   = studentId ? getStudentById(studentId) : null;
+      var studentName = student
+        ? student.firstName + ' ' + student.lastName
+        : (studentId || 'Unknown student');
+
+      // ── Page heading + student field ───────────────────────────────────────
+      document.getElementById('page-heading').textContent =
+        'Log school communication for ' + studentName;
+      document.getElementById('f-student').value = student
+        ? studentName + ' — ' + (student.school || '') + ' — ' + (student.schoolYear || '')
+        : studentName;
+
+      // ── Back link ──────────────────────────────────────────────────────────
+      document.getElementById('link-back').href = 'mental-health-referral.html?id=' + studentId;
+
+      // ── Default date to today ──────────────────────────────────────────────
+      var today = new Date();
+      var pad   = function (n) { return String(n).padStart(2, '0'); };
+      document.getElementById('f-date').value =
+        today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
+
+      // ── Save handler ───────────────────────────────────────────────────────
+      document.getElementById('save-btn').addEventListener('click', function () {
+        var date    = document.getElementById('f-date').value.trim();
+        var contact = document.getElementById('f-contact').value.trim();
+        var note    = document.getElementById('f-note').value.trim();
+
+        if (!date) {
+          alert('Please select a date.');
+          document.getElementById('f-date').focus();
+          return;
+        }
+        if (!contact) {
+          alert('Please enter the contact person at school.');
+          document.getElementById('f-contact').focus();
+          return;
+        }
+        if (!note) {
+          alert('Please enter the note details.');
+          document.getElementById('f-note').focus();
+          return;
+        }
+
+        saveMHComm({
+          id:            'MHC' + Date.now(),
+          studentId:     studentId,
+          date:          date,
+          contactPerson: contact,
+          note:          note
+        });
+
+        window.location.reload();
+      });
+
+      // ── Timeline feed ──────────────────────────────────────────────────────
+      function escapeHtml(str) {
+        return String(str || '')
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function fmtDate(iso) {
+        if (!iso) return '—';
+        var d = new Date(iso);
+        if (isNaN(d.getTime())) return iso;
+        var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return d.getDate() + ' ' + M[d.getMonth()] + ' ' + d.getFullYear();
+      }
+
+      var feed  = document.getElementById('comms-feed');
+      var comms = getMHCommsForStudent(studentId);
+
+      if (!comms.length) {
+        feed.innerHTML =
+          '<p style="color:#6b85a0;font-size:0.9rem;padding:8px 0;">No school communications logged yet.</p>';
+      } else {
+        feed.innerHTML = comms.map(function (c) {
+          return '<div class="timeline-item">' +
+            '<time>' + escapeHtml(fmtDate(c.date)) + '</time>' +
+            '<div>' +
+              '<strong>' + escapeHtml(c.contactPerson) + '</strong>' +
+              '<small>' + escapeHtml(c.note) + '</small>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
+    }());
+    </script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Low-Level Concerns — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/safeguarding/low-level-concerns</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Low-Level Concerns</strong></div>
+            <div class="nav-group"><div class="nav-label">Overview</div><a class="nav-link" href="admin-dashboard.html">Dashboard</a><a class="nav-link" href="notifications.html">Notifications</a></div>
+            <div class="nav-group"><div class="nav-label">Operations</div><a class="nav-link" href="students.html">Students</a><a class="nav-link" href="homestays.html">Homestays</a><a class="nav-link" href="travel.html">Travel</a><a class="nav-link" href="documents.html">Documents</a>
+</div>
+            <div class="nav-group"><div class="nav-label">Safeguarding</div><a class="nav-link" href="welfare-notes.html">Welfare notes</a><a class="nav-link active" href="concerns-dashboard.html">Concerns Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="concerns-low-level.html" style="color: #63768b; text-decoration: none;">• Low-Level</a><a href="concerns-escalated.html" style="color: #63768b; text-decoration: none;">• Escalated</a><a href="concerns-resolved.html" style="color: #63768b; text-decoration: none;">• Resolved (History)</a></div><a class="nav-link" href="emergency-procedures.html">Emergency</a></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Low-level concerns register</span>
+                <h2>Patterns matter before they become crises</h2>
+                <p>AEGIS Standard 6.5 requires a low-level concerns policy. This is the operational surface: a register of behaviours, comments, or patterns that don't meet the threshold for formal concern but need recording and monitoring.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button-alt" href="welfare-notes.html">View welfare notes</a><a class="button-alt" href="concerns-escalated.html">Escalated concerns</a><a class="button" href="low-level-concern-create.html">Log low-level concern</a></div>
+            </div>
+            <div class="metrics">
+              <article class="metric featured"><h4>Active monitoring</h4><div class="metric-value">3</div><p class="metric-meta">Patterns or behaviours under observation</p></article>
+              <article class="metric"><h4>Student-related</h4><div class="metric-value">2</div><p class="metric-meta">Welfare pattern monitoring</p></article>
+              <article class="metric"><h4>Staff/homestay-related</h4><div class="metric-value">1</div><p class="metric-meta">Boundary/behaviour observation</p></article>
+              <article class="metric"><h4>Escalated this term</h4><div class="metric-value">0</div><p class="metric-meta">No low-level concerns escalated to formal concern</p></article>
+            </div>
+            <div class="note brutal">
+              <h4>Brutal product note</h4>
+              <p>The PRD mentions nothing about low-level concerns. KCSIE and AEGIS both require them. Low-level concerns are the early warning system: a single comment from a homestay about a student "seeming off" might mean nothing, but three comments in two months create a pattern. This register exists so patterns don't vanish into separate notes across different records.</p>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Subject</th><th>Concern type</th><th>Details</th><th>Logged</th><th>Review due</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Chen Wei</strong><small>Student — Oundle School</small></td>
+                    <td>Welfare pattern</td>
+                    <td><strong>Homesickness pattern</strong><small>Three welfare notes this month mentioning homesickness. No safeguarding concern, but pattern now tracked for closer monitoring.</small></td>
+                    <td>02 Apr 2026</td>
+                    <td>15 Apr 2026</td>
+                    <td><span class="badge amber">Monitoring</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Yuki Tanaka</strong><small>Student — Cheltenham Ladies' College</small></td>
+                    <td>Welfare pattern</td>
+                    <td><strong>Post-exeat adjustment</strong><small>Two notes about tearfulness after returning from homestay stays. Pattern may indicate difficulty with transitions. School tutor aware.</small></td>
+                    <td>28 Mar 2026</td>
+                    <td>28 Apr 2026</td>
+                    <td><span class="badge amber">Monitoring</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Catherine Brennan</strong><small>Homestay carer — Brennan Family</small></td>
+                    <td>Boundary observation</td>
+                    <td><strong>Communication style note</strong><small>Staff member noted Mrs Brennan's tone in email was "abrupt and dismissive" when asked about meal arrangements. Single incident, logged for pattern awareness.</small></td>
+                    <td>20 Mar 2026</td>
+                    <td>20 Jun 2026</td>
+                    <td><span class="badge green">No escalation</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="info-block" style="margin-top:16px;">
+              <h4>What belongs here vs. escalated concerns</h4>
+              <div class="list">
+                <div class="list-item"><strong>Low-level concern</strong><small>A comment, behaviour, or observation that doesn't meet the threshold for safeguarding action but should be recorded in case a pattern emerges.</small></div>
+                <div class="list-item"><strong>Escalated concern</strong><small>A disclosure, allegation, or observation that requires immediate DSL assessment and may require external referral.</small></div>
+                <div class="list-item"><strong>Escalation trigger</strong><small>If multiple low-level concerns about the same subject emerge, or if a single low-level concern reveals something more serious on review, escalate to DSL.</small></div>
+              </div>
+            </div>
+            <div class="inline-links"><a href="low-level-concern-create.html">Log new low-level concern</a><span class="sep">|</span><a href="welfare-notes.html">Welfare notes</a><span class="sep">|</span><a href="concerns-escalated.html">Escalated concerns</a><span class="sep">|</span><a href="mental-health-referral.html">Mental health referral</a></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safeguarding Training — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    .staff-avatar-lg {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: "Outfit", sans-serif; font-size: 17px; font-weight: 700;
+      color: #ffffff; border: 2px solid var(--line); flex-shrink: 0;
+    }
+    .field-input {
+      width: 100%; margin-top: 6px; padding: 10px 12px;
+      border: 1px solid var(--line); border-radius: 10px;
+      background: var(--surface); color: var(--ink);
+      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.95rem;
+      outline: none; transition: border-color 0.15s, box-shadow 0.15s; box-sizing: border-box;
+    }
+    .field-input:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(15,35,64,0.1); }
+    .field small { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink-2); }
+    .field-hint { font-size: 0.76rem; color: var(--ink-3); margin-top: 4px; }
+    .field-file { margin-top: 6px; font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.85rem; cursor: pointer; }
+    .create-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; margin: 0 0 24px; }
+    .form-section-title {
+      font-family: "Outfit", sans-serif; font-size: 0.76rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold);
+      margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
+    }
+    .action-row { display: flex; gap: 10px; align-items: center; padding-top: 8px; }
+    .save-toast {
+      position: fixed; top: 20px; right: 24px; z-index: 9999;
+      background: var(--navy); color: #fff;
+      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.88rem; font-weight: 600;
+      padding: 12px 20px; border-radius: 10px; box-shadow: var(--shadow);
+      display: flex; align-items: center; gap: 10px;
+      opacity: 0; transform: translateY(-8px);
+      transition: opacity 0.2s ease, transform 0.2s ease; pointer-events: none;
+    }
+    .save-toast.visible { opacity: 1; transform: translateY(0); }
+    .save-toast-icon { width: 18px; height: 18px; border-radius: 50%; background: #16a34a; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
+    .not-found { padding: 60px 32px; text-align: center; color: var(--ink-2); }
+    .not-found h3 { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+<div class="save-toast" id="save-toast">
+  <div class="save-toast-icon">✓</div>
+  <span>Saved</span>
+</div>
+
+<main class="page">
+  <div class="app-frame">
+
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small id="chrome-route">Route /admin/staff/compliance/safeguarding</small>
+    </div>
+
+    <div class="shell">
+
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong>Staff Directory</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Overview</div>
+          <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+          <a class="nav-link" href="notifications.html">Notifications</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">People</div>
+          <a class="nav-link active" href="staff-list.html">Staff directory</a>
+          <a class="nav-link" href="parent-list.html">Parents</a>
+          <a class="nav-link" href="students.html">Students</a>
+          <a class="nav-link" href="hosts.html">Hosts</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Compliance</div>
+          <a class="nav-link" href="compliance.html">AEGIS control room</a>
+        </div>
+      </aside>
+
+      <section class="main">
+
+        <div class="toolbar">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div class="staff-avatar-lg" id="toolbar-avatar">—</div>
+            <div>
+              <span class="eyebrow">Compliance — Safeguarding Training</span>
+              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
+              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:var(--ink-2);">—</p>
+            </div>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" id="back-link" href="staff-compliance.html">Back to Compliance Overview</a>
+          </div>
+        </div>
+
+        <div id="not-found" class="not-found" style="display:none;">
+          <h3>Staff member not found</h3>
+          <p><a href="staff-list.html" style="color:var(--gold);font-weight:600;">Return to Staff Directory</a></p>
+        </div>
+
+        <div class="create-panel" id="edit-panel">
+          <form id="compliance-form" novalidate>
+
+            <div class="form-section-title">Safeguarding Training</div>
+            <p style="font-size:0.88rem;color:var(--ink-2);margin-bottom:18px;">
+              All staff must hold a current safeguarding training certificate appropriate to their role. DSL-designated staff require Level 3; all others require Safeguarding Awareness as a minimum. Training must be renewed per the certificate expiry date.
+            </p>
+            <div class="form-grid">
+
+              <div class="field">
+                <small>Training Completion Date</small>
+                <input class="field-input" type="date" id="c-safeguarding-date" />
+              </div>
+
+              <div class="field">
+                <small>Safeguarding Certificate</small>
+                <input type="file" id="c-safeguarding-cert" class="field-file" accept=".pdf,.jpg,.jpeg,.png" />
+                <p class="field-hint" id="c-safeguarding-cert-hint"></p>
+              </div>
+
+            </div>
+
+            <div class="form-section-title" style="margin-top:28px;">Annual Safeguarding Update (AEGIS 6.3.3)</div>
+            <p style="font-size:0.88rem;color:var(--ink-2);margin-bottom:18px;">
+              In addition to initial training, all staff must complete an annual safeguarding refresher covering current KCSIE guidance.
+            </p>
+            <div class="form-grid">
+
+              <div class="field">
+                <small>Last Annual Safeguarding Update Date</small>
+                <input class="field-input" type="date" id="c-annual-update-date" />
+              </div>
+
+              <div class="field">
+                <small>Annual Update Notes / Topic</small>
+                <input class="field-input" type="text" id="c-annual-update-notes" placeholder="e.g. KCSIE 2025/2026 update session" />
+              </div>
+
+            </div>
+
+            <div class="action-row">
+              <button type="submit" class="button">Save changes</button>
+              <a class="button-alt" id="cancel-link" href="staff-compliance.html">Cancel</a>
+            </div>
+
+          </form>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="assets/db.js"></script>
+<script>
+  var params  = new URLSearchParams(window.location.search);
+  var staffId = params.get('id');
+  var member  = staffId ? getStaffById(staffId) : null;
+
+  if (!member) {
+    document.getElementById('not-found').style.display  = 'block';
+    document.getElementById('edit-panel').style.display = 'none';
+  } else {
+    document.title = 'Safeguarding Training — ' + member.firstName + ' ' + member.lastName + ' — Oxford Guardians';
+    document.getElementById('chrome-route').textContent = 'Route /admin/staff/' + member.id + '/compliance/safeguarding';
+    document.getElementById('toolbar-name').textContent = member.firstName + ' ' + member.lastName;
+    document.getElementById('toolbar-subtitle').textContent = (member.role || '—') + ' · ' + (member.title || '—');
+    document.getElementById('toolbar-avatar').textContent =
+      ((member.firstName||'').charAt(0) + (member.lastName||'').charAt(0)).toUpperCase();
+    document.getElementById('back-link').href   = 'staff-compliance.html?id=' + member.id;
+    document.getElementById('cancel-link').href = 'staff-compliance.html?id=' + member.id;
+
+    var c = member.compliance || {};
+    if (c.safeguardingTrainingDate) {
+      document.getElementById('c-safeguarding-date').value = c.safeguardingTrainingDate;
+    }
+    var certHint = document.getElementById('c-safeguarding-cert-hint');
+    if (certHint && c.safeguardingCertificatePath) {
+      certHint.textContent = 'Current file: ' + c.safeguardingCertificatePath;
+    }
+    if (c.annualSafeguardingUpdateDate) {
+      document.getElementById('c-annual-update-date').value = c.annualSafeguardingUpdateDate;
+    }
+    if (c.annualSafeguardingUpdateNotes) {
+      document.getElementById('c-annual-update-notes').value = c.annualSafeguardingUpdateNotes;
+    }
+  }
+
+  document.getElementById('compliance-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!member) return;
+
+    function fileVal(id, existing) {
+      var inp = document.getElementById(id);
+      return (inp && inp.files && inp.files[0]) ? inp.files[0].name : (existing || '');
+    }
+
+    var c = member.compliance || {};
+    c.safeguardingTrainingDate     = document.getElementById('c-safeguarding-date').value;
+    c.safeguardingCertificatePath  = fileVal('c-safeguarding-cert', c.safeguardingCertificatePath);
+    c.annualSafeguardingUpdateDate  = document.getElementById('c-annual-update-date').value;
+    c.annualSafeguardingUpdateNotes = document.getElementById('c-annual-update-notes').value.trim();
+    member.compliance = c;
+
+    saveStaffMember(member);
+    window.location.href = 'staff-compliance.html?id=' + member.id;
+  });
+</script>
+
+</body>
+</html>

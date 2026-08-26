@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Student — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    .field-input,
+    .field-select {
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px 12px;
+      border: 1px solid #d8cbb2;
+      border-radius: 10px;
+      background: #fffdf9;
+      color: var(--ink);
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .field-input::placeholder { color: #b0a48c; }
+    .field-input:focus,
+    .field-select:focus {
+      border-color: var(--navy-3);
+      box-shadow: 0 0 0 3px rgba(41, 70, 115, 0.1);
+    }
+    .field-select { appearance: none; cursor: pointer; }
+
+    .form-section { margin-bottom: 24px; }
+    .form-section-title {
+      font-family: "Outfit", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .parent-block {
+      border: 1px solid #d8cbb2;
+      border-radius: 18px;
+      padding: 18px;
+      background: #faf6ee;
+      margin-bottom: 12px;
+    }
+    .parent-block-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--ink-2);
+      margin-bottom: 4px;
+    }
+    .primary-label {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--navy-2);
+      background: var(--blue-soft);
+      border-radius: 999px;
+      padding: 3px 10px;
+      margin-bottom: 14px;
+      letter-spacing: 0.04em;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .checkbox-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--navy); cursor: pointer; }
+    .checkbox-row label { font-size: 0.88rem; color: var(--ink-2); cursor: pointer; }
+
+    #parent2-block { display: none; }
+
+    .form-error {
+      display: none;
+      color: var(--red);
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-top: 14px;
+    }
+    .field-error .field-input,
+    .field-error .field-select {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(127, 48, 52, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<main class="page">
+  <div class="app-frame">
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small>Route /admin/students/new</small>
+    </div>
+    <div class="shell">
+
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong>Create Student</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Operations</div>
+          <a class="nav-link active" href="students.html">Students</a>
+          <a class="nav-link" href="homestays.html">Homestays</a>
+          <a class="nav-link" href="travel.html">Travel</a>
+          <a class="nav-link" href="documents.html">Documents</a>
+
+        </div>
+      </aside>
+
+      <section class="main">
+        <div class="toolbar">
+          <div>
+            <span class="eyebrow">Create student</span>
+            <h2>Admission essentials first.</h2>
+            <p>Stage one intake: identity, parent link, school, and arrival basics.</p>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" href="students.html">Cancel</a>
+          </div>
+        </div>
+
+        <div class="panel" style="padding: 24px;">
+          <form id="student-form" novalidate>
+
+            <!-- Group 1: Student -->
+            <div class="form-section">
+              <div class="form-section-title">Student</div>
+              <div class="form-grid">
+                <div class="field" id="field-first-name">
+                  <small>First Name *</small>
+                  <input class="field-input" type="text" id="first-name" name="first_name" placeholder="e.g. Lucia" />
+                </div>
+                <div class="field" id="field-last-name">
+                  <small>Last Name *</small>
+                  <input class="field-input" type="text" id="last-name" name="last_name" placeholder="e.g. Herrera" />
+                </div>
+                <div class="field" id="field-dob">
+                  <small>Date of Birth *</small>
+                  <input class="field-input" type="date" id="dob" name="dob" />
+                </div>
+                <div class="field" id="field-nationality">
+                  <small>Nationality *</small>
+                  <select class="field-select" id="nationality" name="nationality">
+                    <option value="">Select nationality…</option>
+                    <option>British</option>
+                    <option>Chinese</option>
+                    <option>French</option>
+                    <option>German</option>
+                    <option>Italian</option>
+                    <option>Japanese</option>
+                    <option>Korean</option>
+                    <option>Russian</option>
+                    <option>Spanish</option>
+                    <option>Thai</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Group 2: Details -->
+            <div class="form-section">
+              <div class="form-section-title">Details</div>
+              <div class="form-grid">
+                <div class="field">
+                  <small>School</small>
+                  <select class="field-select" id="school" name="school"></select>
+                </div>
+                <div class="field">
+                  <small>School Year</small>
+                  <select class="field-select" id="school-year" name="school_year">
+                    <option value="">Select year…</option>
+                    <option>Year 7</option>
+                    <option>Year 8</option>
+                    <option>Year 9</option>
+                    <option>Year 10</option>
+                    <option>Year 11</option>
+                    <option>Year 12</option>
+                    <option>Year 13</option>
+                  </select>
+                </div>
+                <div class="field" id="field-accommodation-type">
+                  <small>Accommodation Type *</small>
+                  <select class="field-select" id="accommodation-type" name="accommodation_type">
+                    <option value="">Select type...</option>
+                    <option>Boarding Student</option>
+                    <option>Private Fostering</option>
+                    <option>Day Student</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>Arrival Date</small>
+                  <input class="field-input" type="date" id="arrival-date" name="arrival_date" />
+                </div>
+                <div class="field">
+                  <small>Tutor / House</small>
+                  <input class="field-input" type="text" id="tutor-house" name="tutor_house" placeholder="e.g. Tutor: Mrs Caroline Reeves" />
+                </div>
+                <div class="field">
+                  <small>Tutor Email</small>
+                  <input class="field-input" type="email" id="tutor-email" name="tutor_email" placeholder="e.g. c.reeves@cheltenhamladies.org" />
+                </div>
+                <div class="field">
+                  <small>Tutor Phone</small>
+                  <input class="field-input" type="tel" id="tutor-phone" name="tutor_phone" placeholder="e.g. +44 1242 520 691" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Group 3: Parents -->
+            <div class="form-section">
+              <div class="form-section-title">Parents / Guardians</div>
+
+              <!-- Parent 1 -->
+              <div class="parent-block">
+                <div class="parent-block-title">Parent 1</div>
+                <div class="primary-label">Primary Point of Contact</div>
+                <div class="form-grid">
+                  <div class="field form-span-2" id="field-p1-name">
+                    <small>Full Name *</small>
+                    <input class="field-input" type="text" id="p1-name" name="p1_name" placeholder="e.g. Isabel Herrera" />
+                  </div>
+                  <div class="field" id="field-p1-email">
+                    <small>Email *</small>
+                    <input class="field-input" type="email" id="p1-email" name="p1_email" placeholder="e.g. isabel@example.com" />
+                  </div>
+                  <div class="field" id="field-p1-phone">
+                    <small>Phone *</small>
+                    <input class="field-input" type="tel" id="p1-phone" name="p1_phone" placeholder="e.g. +34 600 000 000" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Parent 2 (hidden until toggled) -->
+              <div class="parent-block" id="parent2-block">
+                <div class="parent-block-title">Parent 2</div>
+                <div class="form-grid">
+                  <div class="field form-span-2">
+                    <small>Full Name</small>
+                    <input class="field-input" type="text" id="p2-name" name="p2_name" placeholder="e.g. Carlos Herrera" />
+                  </div>
+                  <div class="field">
+                    <small>Email</small>
+                    <input class="field-input" type="email" id="p2-email" name="p2_email" placeholder="e.g. carlos@example.com" />
+                  </div>
+                  <div class="field">
+                    <small>Phone</small>
+                    <input class="field-input" type="tel" id="p2-phone" name="p2_phone" placeholder="e.g. +34 600 000 001" />
+                  </div>
+                </div>
+                <div class="checkbox-row">
+                  <input type="checkbox" id="p2-primary" name="p2_primary" />
+                  <label for="p2-primary">Make Primary Point of Contact</label>
+                </div>
+              </div>
+
+              <button type="button" class="button-alt" id="add-parent2-btn" style="margin-top: 4px;">+ Add Second Parent</button>
+            </div>
+
+            <!-- Submit -->
+            <div class="action-row">
+              <button type="submit" class="button">Save draft student</button>
+              <a class="button-alt" href="students.html">Cancel</a>
+            </div>
+            <p class="form-error" id="form-error">Please fill in all required fields before saving.</p>
+
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<script src="assets/db.js"></script>
+<script>
+  // ── Populate School dropdown from the school directory ─────────────────────
+  (function populateSchoolSelect() {
+    var sel = document.getElementById('school');
+    var blank = document.createElement('option');
+    blank.value = '';
+    blank.textContent = '— No school assigned —';
+    sel.appendChild(blank);
+    getSchools().forEach(function (sch) {
+      var opt = document.createElement('option');
+      opt.value = sch.id;
+      opt.textContent = sch.name;
+      sel.appendChild(opt);
+    });
+  })();
+
+  // Toggle Parent 2
+  document.getElementById('add-parent2-btn').addEventListener('click', function () {
+    var block = document.getElementById('parent2-block');
+    var visible = block.style.display !== 'none';
+    block.style.display = visible ? 'none' : 'block';
+    this.textContent = visible ? '+ Add Second Parent' : '− Remove Second Parent';
+  });
+
+  // Form submission
+  document.getElementById('student-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var required = [
+      { id: 'first-name',  wrap: 'field-first-name' },
+      { id: 'last-name',   wrap: 'field-last-name' },
+      { id: 'dob',         wrap: 'field-dob' },
+      { id: 'nationality', wrap: 'field-nationality' },
+      { id: 'p1-name',             wrap: 'field-p1-name' },
+      { id: 'p1-email',            wrap: 'field-p1-email' },
+      { id: 'p1-phone',            wrap: 'field-p1-phone' },
+      { id: 'accommodation-type',  wrap: 'field-accommodation-type' }
+    ];
+
+    var valid = true;
+
+    required.forEach(function (f) {
+      var wrap = document.getElementById(f.wrap);
+      if (wrap) wrap.classList.remove('field-error');
+    });
+
+    required.forEach(function (f) {
+      var el = document.getElementById(f.id);
+      if (!el || !el.value.trim()) {
+        valid = false;
+        var wrap = document.getElementById(f.wrap);
+        if (wrap) wrap.classList.add('field-error');
+      }
+    });
+
+    var errorMsg = document.getElementById('form-error');
+
+    if (!valid) {
+      errorMsg.style.display = 'block';
+      return;
+    }
+
+    errorMsg.style.display = 'none';
+
+    // ── Extract form values ────────────────────────────────────────────────
+    var firstName   = document.getElementById('first-name').value.trim();
+    var lastName    = document.getElementById('last-name').value.trim();
+    var dob         = document.getElementById('dob').value;
+    var nationality = document.getElementById('nationality').value;
+    var schoolSelect = document.getElementById('school');
+    var schoolId    = schoolSelect.value;
+    var school      = schoolId ? schoolSelect.options[schoolSelect.selectedIndex].textContent : '';
+    var schoolYear  = document.getElementById('school-year').value;
+    var arrivalDate = document.getElementById('arrival-date').value;
+    var tutorHouse  = document.getElementById('tutor-house').value.trim();
+    var tutorEmail  = document.getElementById('tutor-email').value.trim();
+    var tutorPhone  = document.getElementById('tutor-phone').value.trim();
+    var p1Name      = document.getElementById('p1-name').value.trim();
+    var p1Email     = document.getElementById('p1-email').value.trim();
+    var p1Phone     = document.getElementById('p1-phone').value.trim();
+    var p2Name         = document.getElementById('p2-name').value.trim();
+    var p2Email        = document.getElementById('p2-email').value.trim();
+    var p2Phone        = document.getElementById('p2-phone').value.trim();
+    var accommodationType = document.getElementById('accommodation-type').value;
+
+    // ── Generate unique ID ─────────────────────────────────────────────────
+    var baseId = (firstName + '-' + lastName)
+      .toLowerCase()
+      .replace(/[^a-z0-9-]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
+
+    var existingIds = getAllStudents().map(function (s) { return s.id; });
+    var uniqueId    = baseId;
+    var counter     = 2;
+    while (existingIds.indexOf(uniqueId) !== -1) {
+      uniqueId = baseId + '-' + counter;
+      counter++;
+    }
+
+    // ── Build student object ───────────────────────────────────────────────
+    var newStudent = {
+      id:              uniqueId,
+      firstName:       firstName,
+      lastName:        lastName,
+      preferredName:   firstName,
+      dob:             dob,
+      nationality:     nationality,
+      school:          school,
+      schoolId:        schoolId,
+      schoolYear:      schoolYear,
+      tutorOrHouse:    tutorHouse,
+      tutorEmail:      tutorEmail,
+      tutorPhone:      tutorPhone,
+      arrivalDate:     arrivalDate,
+      travelDetails:   arrivalDate ? 'Arrival details pending' : 'No inbound trip pending',
+      homestayFamily:  'Not yet assigned',
+      homestayDetails: 'Placement pending',
+      welfareStatus:   'No check-in yet',
+      welfareNotes:    'New student — welfare workflow not started',
+      status:          'Pending',
+      parent1Name:     p1Name,
+      parent1Email:    p1Email,
+      parent1Phone:    p1Phone,
+      parent2Name:     p2Name,
+      parent2Email:    p2Email,
+      parent2Phone:    p2Phone,
+      accommodationType: accommodationType
+    };
+
+    // ── Persist to localStorage ────────────────────────────────────────────
+    var updatedArray = getAllStudents();
+    updatedArray.push(newStudent);
+    localStorage.setItem('og_students', JSON.stringify(updatedArray));
+
+    // ── Redirect ───────────────────────────────────────────────────────────
+    window.location.href = 'students.html';
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New School — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      .field-input {
+        width: 100%;
+        margin-top: 6px;
+        padding: 8px 10px;
+        border: 1.5px solid #d1dbe7;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        color: #0f172a;
+        background: #fff;
+        outline: none;
+        box-sizing: border-box;
+      }
+      .field-input:focus { border-color: #06b6d4; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/school-directory/new</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Standard 9</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="schools.html">Schools</a>
+              <a class="nav-link nav-link-sub active" href="school-directory.html">School directory</a>
+              <a class="nav-link nav-link-sub" href="school-liaison.html">Communication log</a>
+              <a class="nav-link nav-link-sub" href="school-log-create.html">Log contact</a>
+              <a class="nav-link nav-link-sub" href="school-welfare-notification.html">Welfare notification</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Operations — Schools</span>
+                <h2>Add New School</h2>
+                <p>Register a new partner school. Oxford Guardians provides guardianship services to students who board at this school, not to the school itself.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="school-directory.html">← Back to directory</a>
+              </div>
+            </div>
+
+            <div class="card" style="max-width:520px;">
+              <h4>School details</h4>
+              <div class="form-grid">
+                <div class="form-span-2">
+                  <label>School Name</label>
+                  <input type="text" id="input-school-name" class="field-input" placeholder="e.g. Wycombe Abbey" />
+                </div>
+              </div>
+              <p id="form-error" style="display:none;color:#9f4347;font-size:0.85rem;margin-top:12px;"></p>
+              <div class="action-row" style="margin-top:16px;">
+                <a class="button-alt" href="school-directory.html">Cancel</a>
+                <button type="button" class="button" id="save-school-btn">Save School</button>
+              </div>
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      document.getElementById('save-school-btn').addEventListener('click', function () {
+        var nameInput = document.getElementById('input-school-name');
+        var name = nameInput.value.trim();
+        var errorEl = document.getElementById('form-error');
+
+        if (!name) {
+          errorEl.textContent = 'Please enter a school name.';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        var newSchool = {
+          id: generateSchoolId(),
+          name: name,
+          services: {
+            emergencySupport:      false,
+            homestayArrangements:  false,
+            academicLiaison:       false,
+            travelAssistance:      false,
+            pastoralCare:          false,
+            practicalAdmin:        false,
+            visaSupport:           false
+          }
+        };
+
+        upsertSchool(newSchool);
+        window.location.href = 'school-directory.html';
+      });
+    </script>
+  </body>
+</html>

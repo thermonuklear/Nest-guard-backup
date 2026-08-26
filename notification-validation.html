@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Quality Audit — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      .section-heading {
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--ink-3, #6b85a0);
+        margin-bottom: 12px;
+        margin-top: 28px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--line, #d5dce8);
+      }
+      .section-heading:first-of-type { margin-top: 0; }
+
+      .audit-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-bottom: 4px;
+      }
+      .audit-grid.four-col {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .audit-card {
+        background: #fffdf9;
+        border: 1px solid var(--line, #d5dce8);
+        border-radius: 20px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .audit-card.alert-card {
+        border-color: #d8afb2;
+        background: linear-gradient(145deg, #fdf4f4 0%, #f8ecec 100%);
+      }
+      .audit-card.warn-card {
+        border-color: #e8cfa0;
+        background: linear-gradient(145deg, #fffbf1 0%, #fdf3e0 100%);
+      }
+      .audit-card-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--ink-3, #6b85a0);
+      }
+      .audit-card.alert-card .audit-card-label { color: #8b4447; }
+      .audit-card.warn-card  .audit-card-label { color: #8a5a1a; }
+
+      .audit-value {
+        font-family: "Outfit", sans-serif;
+        font-size: 2.8rem;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        color: var(--ink, #0f2340);
+      }
+      .audit-card.alert-card .audit-value { color: #7f3034; }
+      .audit-card.warn-card  .audit-value { color: #87531d; }
+
+      .audit-card-desc {
+        font-size: 0.85rem;
+        color: var(--ink-3, #6b85a0);
+        margin-top: 2px;
+      }
+      .audit-card.alert-card .audit-card-desc { color: #a05558; }
+      .audit-card.warn-card  .audit-card-desc { color: #9a6826; }
+
+      .audit-total-card {
+        background: linear-gradient(145deg, #13233c 0%, #1d3250 100%);
+        border-color: #243f66;
+      }
+      .audit-total-card .audit-card-label { color: #95a2bc; }
+      .audit-total-card .audit-value      { color: #fff8eb; }
+      .audit-total-card .audit-card-desc  { color: #8a9ab8; }
+
+      @media (max-width: 1100px) {
+        .audit-grid, .audit-grid.four-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      @media (max-width: 600px) {
+        .audit-grid, .audit-grid.four-col { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small>Route /admin/notifications/data-quality</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Alert Centre</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Data Quality Audit</span>
+                <h2>Data Quality Audit</h2>
+                <p>Live counts of missing and incomplete records across all people in the system.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="notifications.html">Back to notifications</a>
+              </div>
+            </div>
+
+            <!-- ── Staff & Compliance Data ────────────────────────────────── -->
+            <p class="section-heading">Staff &amp; Compliance Data</p>
+            <div class="audit-grid" id="compliance-grid">
+
+              <div class="audit-card" id="card-dbs-expiry">
+                <span class="audit-card-label">Missing DBS Expiry Date</span>
+                <span class="audit-value" id="val-dbs-expiry">—</span>
+                <span class="audit-card-desc">Staff, driver &amp; host records with no DBS expiry date on file</span>
+              </div>
+
+              <div class="audit-card" id="card-rtw-expiry">
+                <span class="audit-card-label">Missing RTW Expiry Date</span>
+                <span class="audit-value" id="val-rtw-expiry">—</span>
+                <span class="audit-card-desc">Non-citizen records with no right-to-work expiry date set</span>
+              </div>
+
+              <div class="audit-card audit-total-card">
+                <span class="audit-card-label">Total Compliance Records</span>
+                <span class="audit-value" id="val-compliance-total">—</span>
+                <span class="audit-card-desc">Staff, drivers &amp; hosts audited in this run</span>
+              </div>
+
+            </div>
+
+            <!-- ── Student Welfare Data ───────────────────────────────────── -->
+            <p class="section-heading">Student Welfare Data</p>
+            <div class="audit-grid four-col" id="student-grid">
+
+              <div class="audit-card" id="card-passport">
+                <span class="audit-card-label">Missing Passport / BRP</span>
+                <span class="audit-value" id="val-passport">—</span>
+                <span class="audit-card-desc">Students without a passport or BRP document on file</span>
+              </div>
+
+              <div class="audit-card" id="card-uk-contacts">
+                <span class="audit-card-label">Missing UK Contacts</span>
+                <span class="audit-value" id="val-uk-contacts">—</span>
+                <span class="audit-card-desc">Students with no UK emergency contact recorded</span>
+              </div>
+
+              <div class="audit-card" id="card-medical-cover">
+                <span class="audit-card-label">Missing Medical Cover</span>
+                <span class="audit-value" id="val-medical-cover">—</span>
+                <span class="audit-card-desc">Students with no medical cover information on file</span>
+              </div>
+
+              <div class="audit-card audit-total-card">
+                <span class="audit-card-label">Total Students</span>
+                <span class="audit-value" id="val-students-total">—</span>
+                <span class="audit-card-desc">Students currently in the system</span>
+              </div>
+
+            </div>
+
+            <!-- ── Actions ───────────────────────────────────────────────── -->
+            <div class="action-row" style="margin-top:28px;">
+              <a href="users.html"    class="button">Audit Staff</a>
+              <a href="students.html" class="button">Audit Students</a>
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+    (function () {
+      var staff    = getAllStaff();
+      var drivers  = getAllDrivers();
+      var hosts    = getAllHosts();
+      var students = getAllStudents();
+
+      var complianceRecords = staff.concat(drivers).concat(hosts);
+
+      // Missing DBS expiry — record works in UK and no dbsExpiry is set
+      var missingDbsExpiry = complianceRecords.filter(function (p) {
+        var c = p.compliance;
+        return c && !c.worksOutsideUK && !c.dbsExpiry;
+      }).length;
+
+      // Missing RTW expiry — non-citizen, works in UK, no rightToWorkExpiry set
+      var missingRtwExpiry = complianceRecords.filter(function (p) {
+        var c = p.compliance;
+        return c && !c.isCitizen && !c.worksOutsideUK && !c.rightToWorkExpiry;
+      }).length;
+
+      // Students missing passport / BRP
+      var missingPassport = students.filter(function (s) {
+        return !(s.legal && s.legal.passportOrBRPPath);
+      }).length;
+
+      // Students missing UK emergency contacts
+      var missingUkContacts = students.filter(function (s) {
+        return !(s.family && s.family.ukContacts);
+      }).length;
+
+      // Students missing medical cover
+      var missingMedicalCover = students.filter(function (s) {
+        return !(s.health && s.health.medicalCover);
+      }).length;
+
+      // ── Render helpers ───────────────────────────────────────────────────
+      function set(id, value) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = value;
+      }
+
+      function applyAlertStyle(cardId, count, severity) {
+        if (count === 0) return;
+        var card = document.getElementById(cardId);
+        if (!card) return;
+        card.classList.add(severity === 'critical' ? 'alert-card' : 'warn-card');
+      }
+
+      // ── Write values ─────────────────────────────────────────────────────
+      set('val-dbs-expiry',        missingDbsExpiry);
+      set('val-rtw-expiry',        missingRtwExpiry);
+      set('val-compliance-total',  complianceRecords.length);
+      set('val-passport',          missingPassport);
+      set('val-uk-contacts',       missingUkContacts);
+      set('val-medical-cover',     missingMedicalCover);
+      set('val-students-total',    students.length);
+
+      // ── Colour cards when non-zero ───────────────────────────────────────
+      applyAlertStyle('card-dbs-expiry',    missingDbsExpiry,   'warning');
+      applyAlertStyle('card-rtw-expiry',    missingRtwExpiry,   'warning');
+      applyAlertStyle('card-passport',      missingPassport,    'critical');
+      applyAlertStyle('card-uk-contacts',   missingUkContacts,  'warning');
+      applyAlertStyle('card-medical-cover', missingMedicalCover,'warning');
+    }());
+    </script>
+  </body>
+</html>

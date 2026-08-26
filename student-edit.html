@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Student — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    /* ── Global colour overrides ── */
+    body {
+      background: #f0f4f8 !important;
+      color: #0f2340 !important;
+    }
+
+    .app-frame {
+      background: #f8fafc !important;
+      border-color: #d5dce8 !important;
+      box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+    }
+
+    .chrome {
+      background: #e8eef6 !important;
+      border-bottom-color: #d5dce8 !important;
+    }
+
+    .chrome small { color: #3b536e !important; }
+    .dots span    { background: #7b9abf !important; }
+
+    .sidebar {
+      background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+    }
+
+    .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+    .brand small  { color: #7fb3d3 !important; }
+    .brand strong { color: #e8f0fa !important; }
+
+    .nav-label { color: #7b9abf !important; }
+    .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+    .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+    .nav-link.active {
+      background: rgba(255,255,255,0.1) !important;
+      border-color: rgba(255,255,255,0.14) !important;
+      color: #e8f0fa !important;
+    }
+
+    .main {
+      background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+    }
+
+    h2, h3, h4 { color: #0f2340 !important; }
+    p           { color: #3b536e; }
+    .eyebrow    { color: #2a6096 !important; }
+    .toolbar p  { color: #3b536e !important; }
+
+    .button {
+      background: #0f2340 !important;
+      border-color: #0f2340 !important;
+      color: #ffffff !important;
+    }
+
+    .button:hover { opacity: 0.88; }
+
+    .button-alt {
+      background: #ffffff !important;
+      border-color: #d5dce8 !important;
+      color: #0f2340 !important;
+    }
+
+    .button-alt:hover { background: #edf2f8 !important; }
+
+    .button, .button-alt { cursor: pointer; }
+
+    .field-input,
+    .field-select {
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px 12px;
+      border: 1px solid #d5dce8;
+      border-radius: 10px;
+      background: #ffffff;
+      color: var(--ink);
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .field-input::placeholder { color: #b0a48c; }
+    .field-input:focus,
+    .field-select:focus {
+      border-color: var(--navy-3);
+      box-shadow: 0 0 0 3px rgba(41, 70, 115, 0.1);
+    }
+    .field-select { appearance: none; cursor: pointer; }
+
+    .form-section { margin-bottom: 24px; }
+    .form-section-title {
+      font-family: "Outfit", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #2a6096;
+      margin-bottom: 14px;
+    }
+
+    .parent-block {
+      border: 1px solid #d5dce8;
+      border-radius: 18px;
+      padding: 18px;
+      background: #f8fafc;
+      margin-bottom: 12px;
+    }
+    .parent-block-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--ink-2);
+      margin-bottom: 4px;
+    }
+    .primary-label {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--navy-2);
+      background: var(--blue-soft);
+      border-radius: 999px;
+      padding: 3px 10px;
+      margin-bottom: 14px;
+      letter-spacing: 0.04em;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .checkbox-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--navy); cursor: pointer; }
+    .checkbox-row label { font-size: 0.88rem; color: var(--ink-2); cursor: pointer; }
+
+    #parent2-block { display: none; }
+
+    .form-error {
+      display: none;
+      color: var(--red);
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-top: 14px;
+    }
+    .field-error .field-input,
+    .field-error .field-select {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(127, 48, 52, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<main class="page">
+  <div class="app-frame">
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small>Route /admin/students/edit</small>
+    </div>
+    <div class="shell">
+
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong>Edit Student</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Operations</div>
+          <a class="nav-link active" href="students.html">Students</a>
+          <a class="nav-link" href="homestays.html">Homestays</a>
+          <a class="nav-link" href="travel.html">Travel</a>
+          <a class="nav-link" href="documents.html">Documents</a>
+
+        </div>
+      </aside>
+
+      <section class="main">
+        <div class="toolbar">
+          <div>
+            <span class="eyebrow">Edit student</span>
+            <h2 id="edit-header">Update Student</h2>
+            <p>Edit route surfaces the fields staff actually change most often: identity, school, parent contacts, and arrival details.</p>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" id="discard-btn" href="students.html">Discard changes</a>
+          </div>
+        </div>
+
+        <div class="panel" style="padding: 24px; background: #ffffff !important; border-color: #d5dce8 !important;">
+          <form id="student-form" novalidate>
+
+            <!-- Group 1: Student -->
+            <div class="form-section">
+              <div class="form-section-title">Student</div>
+              <div class="form-grid">
+                <div class="field" id="field-first-name">
+                  <small>First Name *</small>
+                  <input class="field-input" type="text" id="first-name" name="first_name" placeholder="e.g. Lucia" />
+                </div>
+                <div class="field" id="field-last-name">
+                  <small>Last Name *</small>
+                  <input class="field-input" type="text" id="last-name" name="last_name" placeholder="e.g. Herrera" />
+                </div>
+                <div class="field" id="field-dob">
+                  <small>Date of Birth *</small>
+                  <input class="field-input" type="date" id="dob" name="dob" />
+                </div>
+                <div class="field" id="field-nationality">
+                  <small>Nationality *</small>
+                  <select class="field-select" id="nationality" name="nationality">
+                    <option value="">Select nationality…</option>
+                    <option>British</option>
+                    <option>Chinese</option>
+                    <option>French</option>
+                    <option>German</option>
+                    <option>Italian</option>
+                    <option>Japanese</option>
+                    <option>Korean</option>
+                    <option>Russian</option>
+                    <option>Spanish</option>
+                    <option>Thai</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Group 2: Details -->
+            <div class="form-section">
+              <div class="form-section-title">Details</div>
+              <div class="form-grid">
+                <div class="field">
+                  <small>School</small>
+                  <select class="field-select" id="school" name="school"></select>
+                </div>
+                <div class="field">
+                  <small>School Year</small>
+                  <select class="field-select" id="school-year" name="school_year">
+                    <option value="">Select year…</option>
+                    <option>Year 7</option>
+                    <option>Year 8</option>
+                    <option>Year 9</option>
+                    <option>Year 10</option>
+                    <option>Year 11</option>
+                    <option>Year 12</option>
+                    <option>Year 13</option>
+                  </select>
+                </div>
+                <div class="field" id="field-accommodation-type">
+                  <small>Accommodation Type *</small>
+                  <select class="field-select" id="accommodation-type" name="accommodation_type">
+                    <option value="">Select type...</option>
+                    <option>Boarding Student</option>
+                    <option>Private Fostering</option>
+                    <option>Day Student</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>Arrival Date</small>
+                  <input class="field-input" type="date" id="arrival-date" name="arrival_date" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Group 3: Parents -->
+            <div class="form-section">
+              <div class="form-section-title">Parents / Guardians</div>
+
+              <!-- Parent 1 -->
+              <div class="parent-block">
+                <div class="parent-block-title">Parent 1</div>
+                <div class="primary-label">Primary Point of Contact</div>
+                <div class="form-grid">
+                  <div class="field form-span-2" id="field-p1-name">
+                    <small>Full Name *</small>
+                    <input class="field-input" type="text" id="p1-name" name="p1_name" placeholder="e.g. Isabel Herrera" />
+                  </div>
+                  <div class="field" id="field-p1-email">
+                    <small>Email *</small>
+                    <input class="field-input" type="email" id="p1-email" name="p1_email" placeholder="e.g. isabel@example.com" />
+                  </div>
+                  <div class="field" id="field-p1-phone">
+                    <small>Phone *</small>
+                    <input class="field-input" type="tel" id="p1-phone" name="p1_phone" placeholder="e.g. +34 600 000 000" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Parent 2 (hidden until toggled) -->
+              <div class="parent-block" id="parent2-block">
+                <div class="parent-block-title">Parent 2</div>
+                <div class="form-grid">
+                  <div class="field form-span-2">
+                    <small>Full Name</small>
+                    <input class="field-input" type="text" id="p2-name" name="p2_name" placeholder="e.g. Carlos Herrera" />
+                  </div>
+                  <div class="field">
+                    <small>Email</small>
+                    <input class="field-input" type="email" id="p2-email" name="p2_email" placeholder="e.g. carlos@example.com" />
+                  </div>
+                  <div class="field">
+                    <small>Phone</small>
+                    <input class="field-input" type="tel" id="p2-phone" name="p2_phone" placeholder="e.g. +34 600 000 001" />
+                  </div>
+                </div>
+                <div class="checkbox-row">
+                  <input type="checkbox" id="p2-primary" name="p2_primary" />
+                  <label for="p2-primary">Make Primary Point of Contact</label>
+                </div>
+              </div>
+
+              <button type="button" class="button-alt" id="add-parent2-btn" style="margin-top: 4px;">+ Add Second Parent</button>
+            </div>
+
+            <!-- Submit -->
+            <div class="action-row">
+              <button type="submit" class="button">Update Student</button>
+              <a class="button-alt" id="cancel-btn" href="students.html">Cancel</a>
+            </div>
+            <p class="form-error" id="form-error">Please fill in all required fields before saving.</p>
+
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<script src="assets/db.js"></script>
+<script>
+  // ── Load student from URL ─────────────────────────────────────────────────
+  var params    = new URLSearchParams(window.location.search);
+  var studentId = params.get('id');
+  var student   = studentId ? getStudentById(studentId) : null;
+
+  if (!student) {
+    window.location.href = 'students.html';
+    throw new Error('Student not found: ' + studentId);
+  }
+
+  // ── Update page metadata ──────────────────────────────────────────────────
+  document.getElementById('edit-header').textContent =
+    'Update ' + student.firstName + ' ' + student.lastName;
+  document.title =
+    'Edit ' + student.firstName + ' ' + student.lastName + ' — Oxford Guardians';
+
+  // ── Wire up Discard / Cancel links ───────────────────────────────────────
+  var profileUrl = 'student-profile.html?id=' + student.id;
+  document.getElementById('discard-btn').href = profileUrl;
+  document.getElementById('cancel-btn').href  = profileUrl;
+
+  // ── Pre-fill form fields ──────────────────────────────────────────────────
+  document.getElementById('first-name').value   = student.firstName    || '';
+  document.getElementById('last-name').value    = student.lastName     || '';
+  document.getElementById('dob').value          = student.dob          || '';
+  document.getElementById('nationality').value  = student.nationality  || '';
+  document.getElementById('school-year').value  = student.schoolYear   || '';
+
+  // ── Populate School dropdown from the school directory ────────────────────
+  (function populateSchoolSelect() {
+    var sel = document.getElementById('school');
+    var blank = document.createElement('option');
+    blank.value = '';
+    blank.textContent = '— No school assigned —';
+    sel.appendChild(blank);
+    getSchools().forEach(function (sch) {
+      var opt = document.createElement('option');
+      opt.value = sch.id;
+      opt.textContent = sch.name;
+      sel.appendChild(opt);
+    });
+
+    var currentId = student.schoolId;
+    if (!currentId && student.school) {
+      // Legacy records may only carry a free-text school name — try to resolve it to a school record.
+      var match = getSchools().find(function (sch) { return sch.name === student.school; });
+      if (match) currentId = match.id;
+    }
+    sel.value = currentId || '';
+  })();
+  document.getElementById('arrival-date').value = student.arrivalDate  || '';
+  document.getElementById('p1-name').value      = student.parent1Name  || '';
+  document.getElementById('p1-email').value     = student.parent1Email || '';
+  document.getElementById('p1-phone').value     = student.parent1Phone || '';
+  document.getElementById('p2-name').value      = student.parent2Name  || '';
+  document.getElementById('p2-email').value     = student.parent2Email || '';
+  document.getElementById('p2-phone').value     = student.parent2Phone || '';
+  document.getElementById('accommodation-type').value = student.accommodationType || 'Boarding Student';
+
+  // ── Show Parent 2 block if data already exists ────────────────────────────
+  if (student.parent2Name || student.parent2Email || student.parent2Phone) {
+    document.getElementById('parent2-block').style.display = 'block';
+    document.getElementById('add-parent2-btn').textContent = '− Remove Second Parent';
+  }
+
+  // ── Toggle Parent 2 ───────────────────────────────────────────────────────
+  document.getElementById('add-parent2-btn').addEventListener('click', function () {
+    var block   = document.getElementById('parent2-block');
+    var visible = block.style.display !== 'none';
+    block.style.display = visible ? 'none' : 'block';
+    this.textContent    = visible ? '+ Add Second Parent' : '− Remove Second Parent';
+  });
+
+  // ── Form submission ───────────────────────────────────────────────────────
+  document.getElementById('student-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var required = [
+      { id: 'first-name',  wrap: 'field-first-name' },
+      { id: 'last-name',   wrap: 'field-last-name' },
+      { id: 'dob',         wrap: 'field-dob' },
+      { id: 'nationality', wrap: 'field-nationality' },
+      { id: 'p1-name',             wrap: 'field-p1-name' },
+      { id: 'p1-email',            wrap: 'field-p1-email' },
+      { id: 'p1-phone',            wrap: 'field-p1-phone' },
+      { id: 'accommodation-type',  wrap: 'field-accommodation-type' }
+    ];
+
+    var valid = true;
+
+    required.forEach(function (f) {
+      var wrap = document.getElementById(f.wrap);
+      if (wrap) wrap.classList.remove('field-error');
+    });
+
+    required.forEach(function (f) {
+      var el = document.getElementById(f.id);
+      if (!el || !el.value.trim()) {
+        valid = false;
+        var wrap = document.getElementById(f.wrap);
+        if (wrap) wrap.classList.add('field-error');
+      }
+    });
+
+    var errorMsg = document.getElementById('form-error');
+
+    if (!valid) {
+      errorMsg.style.display = 'block';
+      return;
+    }
+
+    errorMsg.style.display = 'none';
+
+    // ── Extract updated values ────────────────────────────────────────────
+    var updatedFields = {
+      firstName:   document.getElementById('first-name').value.trim(),
+      lastName:    document.getElementById('last-name').value.trim(),
+      dob:         document.getElementById('dob').value,
+      nationality: document.getElementById('nationality').value,
+      school:      (function () {
+        var sel = document.getElementById('school');
+        return sel.value ? sel.options[sel.selectedIndex].textContent : '';
+      })(),
+      schoolId:    document.getElementById('school').value,
+      schoolYear:  document.getElementById('school-year').value,
+      arrivalDate: document.getElementById('arrival-date').value,
+      parent1Name:  document.getElementById('p1-name').value.trim(),
+      parent1Email: document.getElementById('p1-email').value.trim(),
+      parent1Phone: document.getElementById('p1-phone').value.trim(),
+      parent2Name:  document.getElementById('p2-name').value.trim(),
+      parent2Email: document.getElementById('p2-email').value.trim(),
+      parent2Phone: document.getElementById('p2-phone').value.trim(),
+      accommodationType: document.getElementById('accommodation-type').value
+    };
+
+    // ── Merge into existing record to preserve welfare/health/homestay data ─
+    var updatedStudent = Object.assign({}, student, updatedFields);
+
+    // ── Save and redirect ─────────────────────────────────────────────────
+    upsertStudent(updatedStudent);
+    window.location.href = 'student-profile.html?id=' + student.id;
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Organisation &amp; Governance — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    body, .page, .shell, main { background: #f0f4f8 !important; color: #0f2340 !important; }
+    .app-frame { background: #f8fafc !important; border-color: #d5dce8 !important; box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important; }
+    .chrome { background: #e8eef6 !important; border-bottom-color: #d5dce8 !important; }
+    .chrome small { color: #3b536e !important; }
+    .dots span { background: #7b9abf !important; }
+    .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important; }
+    .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+    .brand small  { color: #7fb3d3 !important; }
+    .brand strong { color: #e8f0fa !important; }
+    .nav-label { color: #7b9abf !important; }
+    .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+    .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+    .nav-link.active { background: rgba(255,255,255,0.1) !important; border-color: rgba(255,255,255,0.14) !important; color: #e8f0fa !important; }
+    .nav-link-sub { padding-left: 36px !important; font-size: 0.85em !important; opacity: 0.85; }
+    .main { background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important; }
+    h2, h3, h4 { color: #0f2340 !important; }
+    p { color: #3b536e; }
+    .eyebrow { color: #2a6096 !important; }
+    .toolbar p { color: #3b536e !important; }
+    .button { background: #0f2340 !important; border-color: #0f2340 !important; color: #ffffff !important; }
+    .button:hover { opacity: 0.88; }
+    .button-alt { background: #ffffff !important; border-color: #d5dce8 !important; color: #0f2340 !important; }
+    .button-alt:hover { background: #edf2f8 !important; }
+    .button-sm { padding: 7px 12px !important; font-size: 0.82rem !important; }
+
+    .field-input, .field-select, .field-textarea {
+      width: 100%; margin-top: 6px; padding: 10px 12px;
+      border: 1px solid #d5dce8 !important; border-radius: 10px;
+      background: #ffffff !important; color: #0f2340;
+      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.92rem;
+      outline: none; transition: border-color 0.15s, box-shadow 0.15s; box-sizing: border-box;
+    }
+    .field-input::placeholder, .field-textarea::placeholder { color: #9bafc4; }
+    .field-input:focus, .field-select:focus, .field-textarea:focus {
+      border-color: #0f2340 !important; box-shadow: 0 0 0 3px rgba(15,35,64,0.1);
+    }
+    .field-select { appearance: none; cursor: pointer; }
+    .field-textarea { resize: vertical; min-height: 90px; }
+    .field-file { margin-top: 6px; font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.85rem; cursor: pointer; color: #3b536e; }
+    .field small { display: block; font-size: 0.8rem; font-weight: 600; color: #3b536e; }
+    .field-hint { font-size: 0.76rem; color: #6b85a0; margin-top: 4px; }
+    .check-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; cursor: pointer; font-size: 0.9rem; color: #0f2340; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .form-span-2 { grid-column: span 2; }
+    .form-span-3 { grid-column: span 3; }
+
+    .gov-card { background: #ffffff; border: 1px solid #d5dce8; border-radius: 20px; padding: 24px; margin-bottom: 18px; }
+    .gov-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 4px; }
+    .gov-card-head h3 { margin-bottom: 2px; }
+    .gov-card-sub { font-size: 0.86rem; color: #6b85a0; margin-bottom: 18px; }
+    .gov-standard-tag { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #2a6096; background: #dce8f5; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+
+    .sub-card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .sub-card { background: #fafcff; border: 1px solid #e1e7ec; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+    .sub-card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .sub-card-head strong { font-family: "Outfit", sans-serif; font-size: 0.95rem; color: #0f2340; }
+
+    .organogram-preview {
+      border: 1px dashed #b7c6d9; border-radius: 14px; background: #f7fafd;
+      min-height: 160px; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; margin-top: 10px;
+    }
+    .organogram-preview img { max-width: 100%; max-height: 260px; object-fit: contain; }
+    .organogram-preview .placeholder { color: #8aa0b8; font-size: 0.86rem; text-align: center; padding: 24px; }
+
+    .save-toast {
+      position: fixed; top: 20px; right: 24px; z-index: 9999;
+      background: #0f2340; color: #ffffff;
+      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.88rem; font-weight: 600;
+      padding: 12px 20px; border-radius: 10px; box-shadow: 0 8px 24px rgba(15,35,64,0.25);
+      display: flex; align-items: center; gap: 10px;
+      opacity: 0; transform: translateY(-8px);
+      transition: opacity 0.2s ease, transform 0.2s ease; pointer-events: none;
+    }
+    .save-toast.visible { opacity: 1; transform: translateY(0); }
+    .save-toast-icon { width: 18px; height: 18px; border-radius: 50%; background: #16a34a; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
+
+    /* Modal (site does not yet have a shared modal component — themed to match app.css tokens) */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(15,35,64,0.55); backdrop-filter: blur(3px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+    .modal-backdrop.open { display: flex; }
+    .modal-window { background: #ffffff; border-radius: 20px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px rgba(15,35,64,0.25); }
+    .modal-header { padding: 20px 24px; border-bottom: 1px solid #e1e7ec; display: flex; align-items: center; justify-content: space-between; }
+    .modal-header h3 { margin: 0; font-size: 1.2rem; }
+    .modal-body { padding: 22px 24px; display: grid; gap: 14px; }
+    .modal-footer { padding: 16px 24px; border-top: 1px solid #e1e7ec; display: flex; justify-content: flex-end; gap: 10px; background: #fafcff; border-radius: 0 0 20px 20px; }
+    .modal-close-x { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #6b85a0; line-height: 1; }
+    .deadline-hint { font-size: 0.82rem; padding: 10px 12px; border-radius: 10px; background: #dce8f5; color: #1a3459; }
+
+    @media (max-width: 1200px) {
+      .sub-card-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .form-grid, .form-grid-3 { grid-template-columns: 1fr; }
+      .form-span-2, .form-span-3 { grid-column: span 1; }
+      .gov-card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="save-toast" id="save-toast">
+  <div class="save-toast-icon">&#10003;</div>
+  <span id="save-toast-text">Saved</span>
+</div>
+
+<main class="page">
+  <div class="app-frame">
+
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small>Route /governance/organisation-profile</small>
+    </div>
+
+    <div class="shell">
+
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong>Governance</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Navigation</div>
+          <a class="nav-link" href="admin-dashboard.html">&larr; Admin Dashboard</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Compliance &amp; IT</div>
+          <a class="nav-link" href="compliance.html">AEGIS Control Room</a>
+          <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+          <a class="nav-link active" href="organisation-profile.html">Organisation &amp; Governance</a>
+          <a class="nav-link" href="complaints.html">Complaints Register</a>
+          <a class="nav-link" href="policy-viewer.html">Statutory Policies</a>
+        </div>
+      </aside>
+
+      <section class="main">
+
+        <div class="toolbar">
+          <div>
+            <span class="eyebrow">Organisation &amp; Governance</span>
+            <h2 id="org-name-heading">Oxford Guardians Ltd</h2>
+            <p>Corporate compliance prerequisites — ICO registration, insurance, statement of aims, company structure, and the 14-day significant changes register (AEGIS Standards 1.1, 2.1.1, 2.4.1, 2.7.2, 2.11.1).</p>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" href="compliance.html">AEGIS Control Room</a>
+          </div>
+        </div>
+
+        <!-- ── Quick Stat Bar ─────────────────────────────────────────────── -->
+        <div class="metrics" id="stat-bar">
+          <div class="metric featured">
+            <h4>Organisation</h4>
+            <div class="metric-value" id="stat-org-name" style="font-size:1.7rem;">&mdash;</div>
+            <p class="metric-meta" id="stat-org-meta">&mdash;</p>
+          </div>
+          <div class="metric">
+            <h4>ICO Registration</h4>
+            <div id="stat-ico-badge">&mdash;</div>
+            <p class="metric-meta" id="stat-ico-meta">&mdash;</p>
+          </div>
+          <div class="metric">
+            <h4>Insurance Portfolio</h4>
+            <div id="stat-insurance-badge">&mdash;</div>
+            <p class="metric-meta" id="stat-insurance-meta">&mdash;</p>
+          </div>
+          <div class="metric">
+            <h4>Next AEGIS Re-Inspection</h4>
+            <div id="stat-reinspect-badge">&mdash;</div>
+            <p class="metric-meta" id="stat-reinspect-meta">&mdash;</p>
+          </div>
+        </div>
+
+        <!-- ── Organisation Identity & Accreditation ──────────────────────── -->
+        <div class="gov-card" id="section-identity">
+          <div class="gov-card-head">
+            <div>
+              <h3>Organisation Identity &amp; Accreditation</h3>
+            </div>
+            <span class="gov-standard-tag">Standards 1.1 &middot; 2.1.1</span>
+          </div>
+          <p class="gov-card-sub">Legal name, appointed data controller, and AEGIS accreditation status.</p>
+
+          <div class="form-grid">
+            <div class="field"><small>Organisation Name</small><input class="field-input" type="text" id="i-name" /></div>
+            <div class="field"><small>Appointed Data Controller</small><select class="field-input" id="i-data-controller"></select></div>
+            <div class="field"><small>AEGIS Accreditation Tier</small><input class="field-input" type="text" id="i-accreditation-tier" /></div>
+            <div class="field"><small>Next Re-Inspection Due Date</small><input class="field-input" type="date" id="i-reinspection-date" /></div>
+            <div class="field form-span-2"><small>Annual Declaration Last Submitted</small><input class="field-input" type="date" id="i-annual-declaration" /></div>
+          </div>
+
+          <div class="action-row">
+            <button type="button" class="button" onclick="saveIdentitySection()">Save Identity Details</button>
+          </div>
+        </div>
+
+        <!-- ── 1. ICO & Data Protection ───────────────────────────────────── -->
+        <div class="gov-card" id="section-ico">
+          <div class="gov-card-head">
+            <div><h3>ICO &amp; Data Protection</h3></div>
+            <span class="gov-standard-tag">Standard 2.7.2</span>
+          </div>
+          <p class="gov-card-sub">Information Commissioner's Office registration and the appointed data controller for statutory data-processing obligations.</p>
+
+          <div class="form-grid">
+            <div class="field"><small>ICO Registration Number</small><input class="field-input" type="text" id="ico-number" placeholder="e.g. ZA123456" /></div>
+            <div class="field">
+              <small>Registration Expiry Date</small>
+              <input class="field-input" type="date" id="ico-expiry" onchange="renderIcoBadge()" />
+              <p class="field-hint" id="ico-renewal-badge"></p>
+            </div>
+            <div class="field form-span-2">
+              <small>ICO Registration Certificate</small>
+              <input type="file" id="ico-cert-file" class="field-file" accept=".pdf,.jpg,.jpeg,.png" />
+              <p class="field-hint" id="ico-cert-hint"></p>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button type="button" class="button" onclick="saveIcoSection()">Save ICO Details</button>
+          </div>
+        </div>
+
+        <!-- ── 2. Corporate Insurance Portfolio ───────────────────────────── -->
+        <div class="gov-card" id="section-insurance">
+          <div class="gov-card-head">
+            <div><h3>Corporate Insurance Portfolio</h3></div>
+            <span class="gov-standard-tag">Standard 2.4.1</span>
+          </div>
+          <p class="gov-card-sub">Professional Indemnity, Public Liability and Employers' Liability cover must be current at all times. Each policy saves independently.</p>
+
+          <div class="sub-card-grid" id="insurance-grid">
+            <!-- populated by renderInsuranceCards() -->
+          </div>
+        </div>
+
+        <!-- ── 3. Statement of Aims & Publicity ───────────────────────────── -->
+        <div class="gov-card" id="section-aims">
+          <div class="gov-card-head">
+            <div><h3>Statement of Aims &amp; Publicity</h3></div>
+            <span class="gov-standard-tag">Standards 1.1 &middot; 1.2</span>
+          </div>
+          <p class="gov-card-sub">The organisation's public-facing Statement of Aims, Principles &amp; Practice.</p>
+
+          <div class="form-grid">
+            <div class="field form-span-2">
+              <small>Statement of Aims, Principles &amp; Practice</small>
+              <textarea class="field-textarea" id="aims-statement" placeholder="Paste or write the organisation's Statement of Aims, Principles &amp; Practice..." style="min-height:160px;"></textarea>
+            </div>
+            <div class="field">
+              <small>Upload Statement Document</small>
+              <input type="file" id="aims-doc-file" class="field-file" accept=".docx,.pdf,.md,.txt" />
+              <p class="field-hint" id="aims-doc-hint"></p>
+            </div>
+            <div class="field">
+              <small>Publication</small>
+              <label class="check-row">
+                <input type="checkbox" id="aims-published" />
+                <span>Published on public website</span>
+              </label>
+              <p class="field-hint">Also consider marking the equivalent statutory manifest document Public Surface View in the <a href="policy-viewer.html?view=manifest" style="color:#2a6096;">Statutory Policy Manifest</a>.</p>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button type="button" class="button" onclick="saveAimsSection()">Save Statement of Aims</button>
+          </div>
+        </div>
+
+        <!-- ── 4. Company Structure & Organogram ──────────────────────────── -->
+        <div class="gov-card" id="section-organogram">
+          <div class="gov-card-head">
+            <div><h3>Company Structure &amp; Organogram</h3></div>
+            <span class="gov-standard-tag">Standard 2.1.1</span>
+          </div>
+          <p class="gov-card-sub">Upload the current company organogram showing reporting lines, safeguarding leads and ownership structure.</p>
+
+          <div class="form-grid">
+            <div class="field">
+              <small>Organogram Document / Image</small>
+              <input type="file" id="organogram-file" class="field-file" accept=".pdf,.png,.jpg,.jpeg" onchange="handleOrganogramSelect(event)" />
+              <p class="field-hint" id="organogram-hint"></p>
+            </div>
+            <div class="field">
+              <small>Last Updated</small>
+              <input class="field-input" type="text" id="organogram-updated" readonly style="background:#f1f5f9;" />
+            </div>
+          </div>
+
+          <div class="organogram-preview" id="organogram-preview">
+            <div class="placeholder">No organogram on file yet. Upload a PDF or image above.</div>
+          </div>
+
+          <div class="action-row">
+            <button type="button" class="button" onclick="saveOrganogramSection()">Save Organogram</button>
+          </div>
+        </div>
+
+        <!-- ── 5. Significant Changes Register ────────────────────────────── -->
+        <div class="gov-card" id="section-changes">
+          <div class="gov-card-head">
+            <div><h3>14-Day Significant Changes Register</h3></div>
+            <span class="gov-standard-tag">Standard 2.11.1</span>
+          </div>
+          <p class="gov-card-sub">Operational changes (management, ownership, student volume, accommodation) must be reported to AEGIS within 14 days of occurring.</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date of Change</th>
+                  <th>Description</th>
+                  <th>Reported to AEGIS</th>
+                  <th>14-Day Deadline</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="changes-table-body">
+                <!-- populated by renderChangesTable() -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="action-row">
+            <button type="button" class="button" onclick="openChangeModal()">+ Log Operational Change</button>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</main>
+
+<!-- Modal: Log Operational Change -->
+<div class="modal-backdrop" id="modal-change">
+  <div class="modal-window">
+    <div class="modal-header">
+      <h3>Log Operational Change</h3>
+      <button class="modal-close-x" onclick="closeModals()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <small>Date of Change *</small>
+        <input class="field-input" type="date" id="chg-date" onchange="updateDeadlineHint()" required />
+      </div>
+      <div class="field">
+        <small>Change Type *</small>
+        <select class="field-select" id="chg-type">
+          <option value="Management">Management</option>
+          <option value="Ownership">Ownership</option>
+          <option value="Student volume">Student volume</option>
+          <option value="Accommodation">Accommodation</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <small>Description *</small>
+        <textarea class="field-textarea" id="chg-description" placeholder="Describe the operational change in full..." required></textarea>
+      </div>
+      <div class="field">
+        <small>Reported to AEGIS Date (leave blank if not yet reported)</small>
+        <input class="field-input" type="date" id="chg-reported-date" onchange="updateDeadlineHint()" />
+      </div>
+      <p class="deadline-hint" id="chg-deadline-hint">Select a date of change to see the 14-day AEGIS reporting deadline.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="button-alt" onclick="closeModals()">Cancel</button>
+      <button type="button" class="button" onclick="submitChangeModal()">Log Change</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Record AEGIS Notification (for an existing change) -->
+<div class="modal-backdrop" id="modal-report">
+  <div class="modal-window" style="max-width:440px;">
+    <div class="modal-header">
+      <h3>Record AEGIS Notification</h3>
+      <button class="modal-close-x" onclick="closeModals()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="report-change-id" />
+      <div class="field">
+        <small>Date Reported to AEGIS *</small>
+        <input class="field-input" type="date" id="report-date" required />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="button-alt" onclick="closeModals()">Cancel</button>
+      <button type="button" class="button" onclick="submitReportModal()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/db.js"></script>
+<script>
+  var INSURANCE_KEYS = {
+    professionalIndemnity: 'Professional Indemnity Insurance',
+    publicLiability:       'Public Liability Insurance',
+    employersLiability:    "Employers' Liability Insurance"
+  };
+  var organogramPreviewDataUrl = null; // session-only preview; only the filename is persisted
+
+  document.addEventListener('DOMContentLoaded', function () {
+    loadPage();
+  });
+
+  function loadPage() {
+    var org = getOrganisation();
+    if (!org) return;
+
+    document.getElementById('org-name-heading').textContent = org.name || 'Oxford Guardians Ltd';
+
+    // Identity section
+    document.getElementById('i-name').value = org.name || '';
+    var dcSelect = document.getElementById('i-data-controller');
+    dcSelect.innerHTML = '<option value="">-- Select Staff Member --</option>';
+    getAllStaff().forEach(function (s) {
+      var opt = document.createElement('option');
+      opt.value = s.id;
+      opt.textContent = s.firstName + ' ' + s.lastName;
+      dcSelect.appendChild(opt);
+    });
+    dcSelect.value = org.dataControllerId || '';
+    document.getElementById('i-accreditation-tier').value = org.accreditationTier || '';
+    document.getElementById('i-reinspection-date').value = org.reInspectionDueDate || '';
+    document.getElementById('i-annual-declaration').value = org.annualDeclarationLastSubmitted || '';
+
+    // ICO section
+    document.getElementById('ico-number').value = org.icoRegistrationNumber || '';
+    document.getElementById('ico-expiry').value = org.icoExpiryDate || '';
+    document.getElementById('ico-cert-hint').textContent = org.icoDocPath ? 'Current file: ' + org.icoDocPath : 'No certificate on file.';
+    renderIcoBadge();
+
+    // Insurance section
+    renderInsuranceCards(org);
+
+    // Aims section
+    document.getElementById('aims-statement').value = org.aimsStatement || '';
+    document.getElementById('aims-doc-hint').textContent = org.aimsDocPath ? 'Current file: ' + org.aimsDocPath : 'No document on file.';
+    document.getElementById('aims-published').checked = !!org.aimsPublished;
+
+    // Organogram section
+    document.getElementById('organogram-hint').textContent = org.organogramDocPath ? 'Current file: ' + org.organogramDocPath : 'No file selected yet.';
+    document.getElementById('organogram-updated').value = org.organogramUpdatedAt ? formatDisplayDate(org.organogramUpdatedAt) : 'Never updated';
+    renderOrganogramPreview(org);
+
+    // Significant changes
+    renderChangesTable(org);
+
+    // Quick stat bar
+    renderStatBar(org);
+  }
+
+  // ── Date / RAG helpers ──────────────────────────────────────────────────
+  function daysUntil(dateStr) {
+    if (!dateStr) return null;
+    var d = new Date(dateStr);
+    if (isNaN(d.getTime())) return null;
+    d.setHours(0, 0, 0, 0);
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return Math.round((d - today) / 86400000);
+  }
+
+  function formatDisplayDate(isoStr) {
+    var d = new Date(isoStr);
+    if (isNaN(d.getTime())) return isoStr;
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  // Returns { cls: 'green'|'amber'|'red'|'slate', label: string }
+  function ragForDate(dateStr, warnDays) {
+    var threshold = typeof warnDays === 'number' ? warnDays : 30;
+    if (!dateStr) return { cls: 'slate', label: 'Not set' };
+    var days = daysUntil(dateStr);
+    if (days === null) return { cls: 'slate', label: 'Not set' };
+    if (days < 0) return { cls: 'red', label: 'Expired ' + Math.abs(days) + 'd ago' };
+    if (days <= threshold) return { cls: 'amber', label: 'Due in ' + days + 'd' };
+    return { cls: 'green', label: days + 'd remaining' };
+  }
+
+  function badgeHtml(rag) {
+    return '<span class="badge ' + rag.cls + '">' + escapeHtml(rag.label) + '</span>';
+  }
+
+  function fileVal(inputId, existing) {
+    var inp = document.getElementById(inputId);
+    return (inp && inp.files && inp.files[0]) ? inp.files[0].name : (existing || '');
+  }
+
+  function showSaveToast(message) {
+    var toast = document.getElementById('save-toast');
+    document.getElementById('save-toast-text').textContent = message || 'Saved';
+    toast.classList.add('visible');
+    setTimeout(function () { toast.classList.remove('visible'); }, 2200);
+  }
+
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  // ── Quick Stat Bar ──────────────────────────────────────────────────────
+  function renderStatBar(org) {
+    document.getElementById('stat-org-name').textContent = org.name || 'Oxford Guardians Ltd';
+    document.getElementById('stat-org-meta').textContent = org.accreditationTier || 'Accreditation tier not set';
+
+    // ICO
+    var icoRag = org.icoRegistrationNumber ? ragForDate(org.icoExpiryDate, 30) : { cls: 'red', label: 'Not registered' };
+    document.getElementById('stat-ico-badge').innerHTML = badgeHtml(icoRag);
+    document.getElementById('stat-ico-meta').textContent = org.icoRegistrationNumber
+      ? ('No. ' + org.icoRegistrationNumber)
+      : 'No ICO registration on file';
+
+    // Insurance aggregate
+    var policies = Object.keys(INSURANCE_KEYS).map(function (k) { return org.insurances && org.insurances[k]; });
+    var anyMissing = policies.some(function (p) { return !p || !p.expiryDate; });
+    var anyExpired = policies.some(function (p) { return p && p.expiryDate && daysUntil(p.expiryDate) < 0; });
+    var anyDueSoon = policies.some(function (p) { return p && p.expiryDate && daysUntil(p.expiryDate) >= 0 && daysUntil(p.expiryDate) <= 30; });
+    var insRag;
+    if (anyMissing || anyExpired) insRag = { cls: 'red', label: anyExpired ? 'Policy expired' : 'Policy missing' };
+    else if (anyDueSoon) insRag = { cls: 'amber', label: 'Renewal due soon' };
+    else insRag = { cls: 'green', label: 'All current' };
+    document.getElementById('stat-insurance-badge').innerHTML = badgeHtml(insRag);
+    var onFileCount = policies.filter(function (p) { return p && p.expiryDate; }).length;
+    document.getElementById('stat-insurance-meta').textContent = onFileCount + ' of 3 policies on file';
+
+    // Re-inspection countdown
+    var reRag = ragForDate(org.reInspectionDueDate, 90);
+    document.getElementById('stat-reinspect-badge').innerHTML = badgeHtml(reRag);
+    document.getElementById('stat-reinspect-meta').textContent = org.reInspectionDueDate
+      ? formatDisplayDate(org.reInspectionDueDate)
+      : 'Date not set';
+  }
+
+  // ── Section: Organisation Identity ─────────────────────────────────────
+  function saveIdentitySection() {
+    var org = getOrganisation();
+    org.name = document.getElementById('i-name').value.trim() || 'Oxford Guardians Ltd';
+    var dcEl = document.getElementById('i-data-controller');
+    org.dataControllerId = dcEl.value;
+    org.dataController = dcEl.value ? dcEl.options[dcEl.selectedIndex].text : '';
+    org.accreditationTier = document.getElementById('i-accreditation-tier').value.trim();
+    org.reInspectionDueDate = document.getElementById('i-reinspection-date').value;
+    org.annualDeclarationLastSubmitted = document.getElementById('i-annual-declaration').value;
+    saveOrganisation(org);
+    document.getElementById('org-name-heading').textContent = org.name;
+    renderStatBar(org);
+    showSaveToast('Organisation identity saved');
+  }
+
+  // ── Section: ICO & Data Protection ─────────────────────────────────────
+  function renderIcoBadge() {
+    var expiry = document.getElementById('ico-expiry').value;
+    var rag = ragForDate(expiry, 30);
+    document.getElementById('ico-renewal-badge').innerHTML = badgeHtml(rag);
+  }
+
+  function saveIcoSection() {
+    var org = getOrganisation();
+    org.icoRegistrationNumber = document.getElementById('ico-number').value.trim();
+    org.icoExpiryDate = document.getElementById('ico-expiry').value;
+    org.icoDocPath = fileVal('ico-cert-file', org.icoDocPath);
+    saveOrganisation(org);
+    document.getElementById('ico-cert-hint').textContent = org.icoDocPath ? 'Current file: ' + org.icoDocPath : 'No certificate on file.';
+    renderStatBar(org);
+    showSaveToast('ICO &amp; Data Protection details saved');
+  }
+
+  // ── Section: Corporate Insurance Portfolio ─────────────────────────────
+  function renderInsuranceCards(org) {
+    var grid = document.getElementById('insurance-grid');
+    var html = '';
+    Object.keys(INSURANCE_KEYS).forEach(function (key) {
+      var label = INSURANCE_KEYS[key];
+      var policy = (org.insurances && org.insurances[key]) || { insurer: '', policyNo: '', expiryDate: '', docPath: '' };
+      var rag = policy.expiryDate ? ragForDate(policy.expiryDate, 30) : { cls: 'red', label: 'Not on file' };
+      html += '' +
+        '<div class="sub-card">' +
+          '<div class="sub-card-head"><strong>' + escapeHtml(label) + '</strong>' + badgeHtml(rag) + '</div>' +
+          '<div class="field"><small>Insurer</small><input class="field-input" type="text" id="ins-' + key + '-insurer" value="' + escapeHtml(policy.insurer) + '" /></div>' +
+          '<div class="field"><small>Policy Number</small><input class="field-input" type="text" id="ins-' + key + '-policyno" value="' + escapeHtml(policy.policyNo) + '" /></div>' +
+          '<div class="field"><small>Expiry Date</small><input class="field-input" type="date" id="ins-' + key + '-expiry" value="' + escapeHtml(policy.expiryDate) + '" onchange="renderInsuranceBadge(\'' + key + '\')" /></div>' +
+          '<div class="field"><small>Policy Document</small><input type="file" class="field-file" id="ins-' + key + '-file" accept=".pdf,.jpg,.jpeg,.png" />' +
+            '<p class="field-hint" id="ins-' + key + '-hint">' + (policy.docPath ? 'Current file: ' + escapeHtml(policy.docPath) : 'No document on file.') + '</p></div>' +
+          '<button type="button" class="button-alt button-sm" onclick="saveInsuranceCard(\'' + key + '\')">Save Policy</button>' +
+        '</div>';
+    });
+    grid.innerHTML = html;
+  }
+
+  function renderInsuranceBadge(key) {
+    var expiry = document.getElementById('ins-' + key + '-expiry').value;
+    var rag = expiry ? ragForDate(expiry, 30) : { cls: 'red', label: 'Not on file' };
+    var head = document.querySelector('#ins-' + key + '-expiry').closest('.sub-card').querySelector('.sub-card-head');
+    var badgeSpan = head.querySelector('.badge');
+    if (badgeSpan) badgeSpan.outerHTML = badgeHtml(rag);
+  }
+
+  function saveInsuranceCard(key) {
+    var org = getOrganisation();
+    if (!org.insurances) org.insurances = {};
+    var existing = org.insurances[key] || {};
+    org.insurances[key] = {
+      insurer: document.getElementById('ins-' + key + '-insurer').value.trim(),
+      policyNo: document.getElementById('ins-' + key + '-policyno').value.trim(),
+      expiryDate: document.getElementById('ins-' + key + '-expiry').value,
+      docPath: fileVal('ins-' + key + '-file', existing.docPath)
+    };
+    saveOrganisation(org);
+    renderInsuranceCards(org);
+    renderStatBar(org);
+    showSaveToast(INSURANCE_KEYS[key] + ' saved');
+  }
+
+  // ── Section: Statement of Aims & Publicity ─────────────────────────────
+  function saveAimsSection() {
+    var org = getOrganisation();
+    org.aimsStatement = document.getElementById('aims-statement').value;
+    org.aimsDocPath = fileVal('aims-doc-file', org.aimsDocPath);
+    org.aimsPublished = document.getElementById('aims-published').checked;
+    saveOrganisation(org);
+    document.getElementById('aims-doc-hint').textContent = org.aimsDocPath ? 'Current file: ' + org.aimsDocPath : 'No document on file.';
+    showSaveToast('Statement of Aims saved');
+  }
+
+  // ── Section: Company Structure & Organogram ────────────────────────────
+  function handleOrganogramSelect(e) {
+    var file = e.target.files[0];
+    organogramPreviewDataUrl = null;
+    if (!file) return;
+    document.getElementById('organogram-hint').textContent = 'Selected: ' + file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB) — save to store.';
+    if (file.type && file.type.indexOf('image/') === 0) {
+      var reader = new FileReader();
+      reader.onload = function (evt) {
+        organogramPreviewDataUrl = evt.target.result;
+        document.getElementById('organogram-preview').innerHTML = '<img src="' + organogramPreviewDataUrl + '" alt="Organogram preview" />';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      document.getElementById('organogram-preview').innerHTML = '<div class="placeholder">' + escapeHtml(file.name) + ' selected. PDF preview is not rendered inline — save, then open the stored file to verify.</div>';
+    }
+  }
+
+  function renderOrganogramPreview(org) {
+    var box = document.getElementById('organogram-preview');
+    if (organogramPreviewDataUrl) return; // a fresh selection preview is already showing
+    if (org.organogramDocPath) {
+      box.innerHTML = '<div class="placeholder">On file: <strong>' + escapeHtml(org.organogramDocPath) + '</strong><br/>Only the filename is retained between sessions — re-upload to refresh the visual preview.</div>';
+    } else {
+      box.innerHTML = '<div class="placeholder">No organogram on file yet. Upload a PDF or image above.</div>';
+    }
+  }
+
+  function saveOrganogramSection() {
+    var org = getOrganisation();
+    var newPath = fileVal('organogram-file', org.organogramDocPath);
+    var changed = newPath !== org.organogramDocPath;
+    org.organogramDocPath = newPath;
+    if (changed) org.organogramUpdatedAt = new Date().toISOString().slice(0, 10);
+    saveOrganisation(org);
+    document.getElementById('organogram-hint').textContent = org.organogramDocPath ? 'Current file: ' + org.organogramDocPath : 'No file selected yet.';
+    document.getElementById('organogram-updated').value = org.organogramUpdatedAt ? formatDisplayDate(org.organogramUpdatedAt) : 'Never updated';
+    showSaveToast('Organogram saved');
+  }
+
+  // ── Section: Significant Changes Register ──────────────────────────────
+  function renderChangesTable(org) {
+    var tbody = document.getElementById('changes-table-body');
+    var log = (org.significantChangesLog || []).slice().sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+
+    if (log.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#6b85a0; padding:28px;">No operational changes logged yet. Use "Log Operational Change" to record management, ownership, student volume or accommodation changes.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = log.map(function (c) {
+      var reportedBadge;
+      if (c.reportedToAegisDate) {
+        var onTime = new Date(c.reportedToAegisDate) <= new Date(c.deadline14Days);
+        reportedBadge = '<span class="badge ' + (onTime ? 'green' : 'amber') + '">' + escapeHtml(formatDisplayDate(c.reportedToAegisDate)) + (onTime ? '' : ' (late)') + '</span>';
+      } else {
+        reportedBadge = '<span class="badge slate">Not yet reported</span> <button type="button" class="button-alt button-sm" style="margin-top:6px;" onclick="openReportModal(\'' + escapeHtml(c.id) + '\')">Mark Reported</button>';
+      }
+
+      var deadlineBadge;
+      if (c.reportedToAegisDate) {
+        deadlineBadge = '<span class="badge slate">' + escapeHtml(formatDisplayDate(c.deadline14Days)) + '</span>';
+      } else {
+        var days = daysUntil(c.deadline14Days);
+        if (days === null) deadlineBadge = '<span class="badge slate">&mdash;</span>';
+        else if (days < 0) deadlineBadge = '<span class="badge red">Overdue by ' + Math.abs(days) + 'd</span>';
+        else if (days <= 5) deadlineBadge = '<span class="badge amber">' + days + 'd left</span>';
+        else deadlineBadge = '<span class="badge green">' + days + 'd left</span>';
+      }
+
+      return '' +
+        '<tr>' +
+          '<td>' + escapeHtml(formatDisplayDate(c.date)) + '</td>' +
+          '<td><strong>' + escapeHtml(c.changeType || 'Operational change') + '</strong><small>' + escapeHtml(c.changeDescription || '') + '</small></td>' +
+          '<td>' + reportedBadge + '</td>' +
+          '<td>' + deadlineBadge + '</td>' +
+          '<td></td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  function openChangeModal() {
+    document.getElementById('chg-date').value = new Date().toISOString().slice(0, 10);
+    document.getElementById('chg-type').value = 'Management';
+    document.getElementById('chg-description').value = '';
+    document.getElementById('chg-reported-date').value = '';
+    updateDeadlineHint();
+    document.getElementById('modal-change').classList.add('open');
+  }
+
+  function updateDeadlineHint() {
+    var dateVal = document.getElementById('chg-date').value;
+    var hint = document.getElementById('chg-deadline-hint');
+    if (!dateVal) {
+      hint.textContent = 'Select a date of change to see the 14-day AEGIS reporting deadline.';
+      return;
+    }
+    var deadline = new Date(dateVal);
+    deadline.setDate(deadline.getDate() + 14);
+    var deadlineStr = deadline.toISOString().slice(0, 10);
+    var reported = document.getElementById('chg-reported-date').value;
+    if (reported) {
+      var onTime = new Date(reported) <= new Date(deadlineStr);
+      hint.textContent = onTime
+        ? ('Reported ' + formatDisplayDate(reported) + ' — within the 14-day deadline of ' + formatDisplayDate(deadlineStr) + '.')
+        : ('Reported ' + formatDisplayDate(reported) + ' — after the 14-day deadline of ' + formatDisplayDate(deadlineStr) + '.');
+    } else {
+      hint.textContent = 'Must be reported to AEGIS by ' + formatDisplayDate(deadlineStr) + ' (14 days from the date of change).';
+    }
+  }
+
+  function submitChangeModal() {
+    var dateVal = document.getElementById('chg-date').value;
+    var description = document.getElementById('chg-description').value.trim();
+    if (!dateVal || !description) {
+      alert('Please enter the date of change and a description.');
+      return;
+    }
+    var deadline = new Date(dateVal);
+    deadline.setDate(deadline.getDate() + 14);
+    var reportedDate = document.getElementById('chg-reported-date').value;
+
+    logSignificantChange({
+      date: dateVal,
+      changeType: document.getElementById('chg-type').value,
+      changeDescription: description,
+      reportedToAegisDate: reportedDate || '',
+      deadline14Days: deadline.toISOString().slice(0, 10),
+      status: reportedDate ? 'Reported' : 'Open'
+    });
+
+    closeModals();
+    var org = getOrganisation();
+    renderChangesTable(org);
+    showSaveToast('Operational change logged');
+  }
+
+  function openReportModal(changeId) {
+    document.getElementById('report-change-id').value = changeId;
+    document.getElementById('report-date').value = new Date().toISOString().slice(0, 10);
+    document.getElementById('modal-report').classList.add('open');
+  }
+
+  function submitReportModal() {
+    var changeId = document.getElementById('report-change-id').value;
+    var reportDate = document.getElementById('report-date').value;
+    if (!reportDate) {
+      alert('Please enter the date reported to AEGIS.');
+      return;
+    }
+    var org = getOrganisation();
+    var entry = (org.significantChangesLog || []).find(function (c) { return c.id === changeId; });
+    if (entry) {
+      entry.reportedToAegisDate = reportDate;
+      entry.status = 'Reported';
+      saveOrganisation(org);
+      renderChangesTable(org);
+      showSaveToast('AEGIS notification recorded');
+    }
+    closeModals();
+  }
+
+  function closeModals() {
+    document.querySelectorAll('.modal-backdrop').forEach(function (m) { m.classList.remove('open'); });
+  }
+</script>
+
+</body>
+</html>

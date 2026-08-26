@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Single Central Record — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/compliance/scr</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Single Central Record</strong></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a><a class="nav-link" href="private-fostering.html">Private fostering</a><a class="nav-link active" href="scr-dashboard.html">SCR Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="scr-staff.html" style="color: #63768b; text-decoration: none;">• Staff SCR</a><a href="scr-hosts.html" style="color: #63768b; text-decoration: none;">• Host SCR</a><a href="scr-drivers.html" style="color: #63768b; text-decoration: none;">• Driver SCR</a></div><a class="nav-link" href="audit-log.html">Audit trail</a><a class="nav-link" href="reporting-dashboard.html">Reporting</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">AEGIS Appendix 7 — Single Central Record</span>
+                <h2>The SCR is the evidence. Everything else is commentary.</h2>
+                <p>This is the inspection-ready view of all safer recruitment evidence. Every field maps to an AEGIS/KCSIE requirement. Gaps here are compliance failures.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button-alt" href="admin-dashboard.html">Back to Dashboard</a><a class="button-alt" href="compliance.html">Back to compliance</a><button class="button" onclick="exportSCRToCSV()">Export CSV</button></div>
+            </div>
+            <div class="metrics">
+              <article class="metric featured"><h4>SCR completeness</h4><div class="metric-value">94%</div><p class="metric-meta">17 of 18 records fully compliant. 1 pending (Margaret Ellis).</p></article>
+              <article class="metric"><h4>Staff records</h4><div class="metric-value">3</div><p class="metric-meta">All complete</p></article>
+              <article class="metric"><h4>Volunteer records</h4><div class="metric-value">1</div><p class="metric-meta">All complete</p></article>
+              <article class="metric"><h4>Homestay records</h4><div class="metric-value">14</div><p class="metric-meta">13 complete, 1 pending</p></article>
+            </div>
+            <div class="card" style="margin-bottom:24px;">
+              <h4>Export options</h4>
+              <div class="list">
+                <div class="list-item"><strong>Full export (internal)</strong><small>All fields including certificate numbers and addresses. For internal records only.</small><div style="margin-top:8px;"><button class="button" onclick="exportSCRToCSV()">Download Full CSV</button></div></div>
+                <div class="list-item"><strong>Anonymised export (inspection)</strong><small>Hides certificate numbers and household addresses. Suitable for AEGIS inspection.</small><div style="margin-top:8px;"><button class="button-alt" onclick="exportSCRToCSV('anonymised')">Download Anonymised CSV</button></div></div>
+                <div class="list-item"><strong>Filtered export</strong><small>Use the individual SCR pages to view records by type: <a href="scr-staff.html">Staff</a>, <a href="scr-hosts.html">Hosts</a>, <a href="scr-drivers.html">Drivers</a>.</small></div>
+              </div>
+            </div>
+            <div class="cols-2" style="margin-top:24px;">
+              <div class="card">
+                <h4>SCR field requirements (Appendix 7)</h4>
+                <div class="list">
+                  <div class="list-item"><strong>Position and start date</strong><small>Role title and date person began working/hosting</small></div>
+                  <div class="list-item"><strong>Name and DOB</strong><small>Full legal name and date of birth</small></div>
+                  <div class="list-item"><strong>ID check</strong><small>Document type, date checked, checker initials</small></div>
+                  <div class="list-item"><strong>DBS details</strong><small>Certificate number, level (enhanced/enhanced+barred), date seen, who saw original</small></div>
+                  <div class="list-item"><strong>Barred list check</strong><small>Separate check for regulated activity — date and outcome</small></div>
+                  <div class="list-item"><strong>Right to work</strong><small>Evidence type and verification date</small></div>
+                  <div class="list-item"><strong>Overseas check</strong><small>Required if lived/worked abroad >3 months in last 5 years</small></div>
+                  <div class="list-item"><strong>References</strong><small>Two references, both verified with dates and checker</small></div>
+                  <div class="list-item"><strong>Self-declaration</strong><small>Date completed</small></div>
+                  <div class="list-item"><strong>Induction</strong><small>Date completed (staff and homestay primary carers)</small></div>
+                </div>
+              </div>
+              <div class="note brutal">
+                <h4>Why SCRs fail inspection</h4>
+                <ul>
+                  <li>Certificate "seen" but no record of who saw it or when.</li>
+                  <li>References "obtained" but not verified — no phone call or written confirmation.</li>
+                  <li>Household members over 16 missing DBS checks entirely.</li>
+                  <li>Overseas checks forgotten for staff who lived abroad.</li>
+                  <li>Barred list check conflated with DBS — they're separate requirements for regulated activity.</li>
+                  <li>Update service not being used — 3-year renewals become compliance debt.</li>
+                </ul>
+              </div>
+            </div>
+            <p class="inline-links">Related: <a href="compliance.html">AEGIS control room</a> · <a href="training-log.html">Training records</a> · <a href="users.html">User directory</a> · <a href="homestays.html">Homestay records</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+    function exportSCRToCSV(mode) {
+      var anon = (mode === 'anonymised');
+      var headers = ['Name', 'Position', 'ID Check', 'DBS Number', 'Certificate Seen', 'Right To Work', 'Overseas Check', 'Ref 1', 'Ref 2', 'Induction'];
+      var csvRows = [headers.join(',')];
+
+      function q(val) {
+        return '"' + String(val || '').replace(/"/g, '""') + '"';
+      }
+
+      function docVal(path) {
+        return path ? 'Present' : 'Missing';
+      }
+
+      function processRecord(p, type) {
+        var c = p.compliance || {};
+        var name     = anon ? (p.firstName.charAt(0) + '. ' + p.lastName) : (p.firstName + ' ' + p.lastName);
+        var position = type === 'staff'  ? (p.title || p.role || 'Staff')
+                     : type === 'host'   ? 'Homestay carer'
+                     :                     'Licensed driver';
+
+        var idCheck  = docVal(c.idDocumentPath);
+        var dbsNum   = c.worksOutsideUK ? 'Exempt'
+                     : anon             ? (c.dbsNumber || p.dbsCertNumber ? 'Present' : 'Missing')
+                     :                    (c.dbsNumber || p.dbsCertNumber || 'Missing');
+        var certSeen = c.worksOutsideUK ? 'Exempt' : docVal(c.dbsCertificatePath);
+
+        var rtw;
+        if (c.worksOutsideUK)        rtw = 'Exempt';
+        else if (c.isCitizen)         rtw = 'Citizen';
+        else                          rtw = docVal(c.rightToWorkCheckPath);
+
+        var overseas = c.livedAbroad ? docVal(c.overseasCheckDocPath) : 'N/A';
+        var ref1     = docVal(c.reference1Path);
+        var ref2     = docVal(c.reference2Path);
+
+        var induction;
+        if (c.safeguardingTrainingDate)      induction = anon ? 'Present' : c.safeguardingTrainingDate;
+        else if (c.safeguardingCertificatePath) induction = 'Present';
+        else                                    induction = 'Missing';
+
+        csvRows.push([q(name), q(position), q(idCheck), q(dbsNum), q(certSeen), q(rtw), q(overseas), q(ref1), q(ref2), q(induction)].join(','));
+      }
+
+      getAllStaff().forEach(function (p)  { processRecord(p, 'staff');  });
+      getAllHosts().forEach(function (p)   { processRecord(p, 'host');   });
+      getAllDrivers().forEach(function (p) { processRecord(p, 'driver'); });
+
+      var blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      var url  = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', anon ? 'Oxford_Guardians_SCR_Anonymised.csv' : 'Oxford_Guardians_SCR_Export.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    (function () {
+      var today = new Date();
+
+      // AEGIS 6.3 — hosts/drivers renew safeguarding training every 3 years
+      // (safeguardingTrainingExpiry); staff instead complete an annual update
+      // (annualSafeguardingUpdateDate) on top of their initial training. Both
+      // renewal cycles must count against the headline SCR compliance score.
+      function rowStatus(c, type) {
+        if (c.worksOutsideUK) return 'exempt';
+        var sgExpired = (type === 'host' || type === 'driver') &&
+          c.safeguardingTrainingExpiry && new Date(c.safeguardingTrainingExpiry) < today;
+        var annualUpdateDue = type === 'staff' && (
+          !c.annualSafeguardingUpdateDate ||
+          Math.floor((today - new Date(c.annualSafeguardingUpdateDate)) / 86400000) > 365
+        );
+        var missing =
+          !c.idDocumentPath ||
+          (!c.dbsNumber && !c.dbsCertificatePath) ||
+          (!c.isCitizen && !c.rightToWorkCheckPath) ||
+          !c.reference1Path ||
+          !c.reference2Path ||
+          (c.livedAbroad && !c.overseasCheckDocPath) ||
+          (!c.safeguardingTrainingDate && !c.safeguardingCertificatePath) ||
+          sgExpired ||
+          annualUpdateDue;
+        return missing ? 'incomplete' : 'complete';
+      }
+
+      var allPeople = getAllStaff().map(function (p) { return { p: p, type: 'staff' }; })
+        .concat(getAllHosts().map(function (p) { return { p: p, type: 'host' }; }))
+        .concat(getAllDrivers().map(function (p) { return { p: p, type: 'driver' }; }));
+      var total = allPeople.length;
+      var complete = 0;
+      var exempt   = 0;
+
+      allPeople.forEach(function (entry) {
+        var s = rowStatus(entry.p.compliance || {}, entry.type);
+        if (s === 'complete') complete++;
+        if (s === 'exempt')   exempt++;
+      });
+
+      var incomplete = total - complete - exempt;
+      var pct = total ? Math.round(((complete + exempt) / total) * 100) : 0;
+
+      var metricEl = document.querySelector('.metric.featured .metric-value');
+      if (metricEl) metricEl.textContent = pct + '%';
+
+      var metricMeta = document.querySelector('.metric.featured .metric-meta');
+      if (metricMeta) {
+        metricMeta.textContent = (complete + exempt) + ' of ' + total + ' records complete or exempt.' +
+          (incomplete > 0 ? ' ' + incomplete + ' incomplete.' : '');
+      }
+
+      var staffCount  = getAllStaff().length;
+      var hostCount   = getAllHosts().length;
+      var driverCount = getAllDrivers().length;
+      var metricCards = document.querySelectorAll('.metric:not(.featured)');
+      if (metricCards[0]) { metricCards[0].querySelector('.metric-value').textContent = staffCount;  metricCards[0].querySelector('.metric-meta').textContent = 'Staff members'; }
+      if (metricCards[1]) { metricCards[1].querySelector('.metric-value').textContent = hostCount;   metricCards[1].querySelector('.metric-meta').textContent = 'Host families'; }
+      if (metricCards[2]) { metricCards[2].querySelector('.metric-value').textContent = driverCount; metricCards[2].querySelector('.metric-meta').textContent = 'Drivers'; }
+    }());
+    </script>
+  </body>
+</html>

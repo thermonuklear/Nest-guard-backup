@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Single Central Record — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style> .shell { grid-template-columns: 248px minmax(0, 1fr) !important; } .main { min-width: 0; } </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/compliance/scr/staff</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Staff SCR</strong></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a><a class="nav-link" href="private-fostering.html">Private fostering</a><a class="nav-link active" href="scr-dashboard.html">SCR Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="scr-staff.html" style="color: #e8f0fa; font-weight: 600; text-decoration: none;">• Staff SCR</a><a href="scr-hosts.html" style="color: #63768b; text-decoration: none;">• Host SCR</a><a href="scr-drivers.html" style="color: #63768b; text-decoration: none;">• Driver SCR</a></div><a class="nav-link" href="audit-log.html">Audit trail</a><a class="nav-link" href="reporting-dashboard.html">Reporting</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">AEGIS Appendix 7 — Staff Records</span>
+                <h2>Staff Single Central Record</h2>
+                <p>Safer recruitment evidence for all staff members. Every field maps to an AEGIS/KCSIE requirement. Gaps here are compliance failures.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button-alt" href="admin-dashboard.html">Back to Dashboard</a><a class="button-alt" href="scr-dashboard.html">Back to SCR Dashboard</a><a class="button" href="#">Export CSV</a></div>
+            </div>
+            <div class="table-wrap" style="overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; display: block; border: 1px solid #e1e7ec; border-radius: 8px; padding-bottom: 15px;">
+              <table style="min-width: max-content; width: 100%; font-size: 0.85rem; border-collapse: collapse; white-space: nowrap;">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Start date</th>
+                    <th>DOB</th>
+                    <th>ID check</th>
+                    <th>DBS number</th>
+                    <th>DBS level</th>
+                    <th>Certificate seen</th>
+                    <th>Barred list</th>
+                    <th>Right to work</th>
+                    <th>Overseas check</th>
+                    <th>Ref 1</th>
+                    <th>Ref 2</th>
+                    <th>Self-dec</th>
+                    <th>Induction</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="scr-staff-body"></tbody>
+              </table>
+            </div>
+            <div class="cols-2" style="margin-top:24px;">
+              <div class="card">
+                <h4>SCR field requirements (Appendix 7)</h4>
+                <div class="list">
+                  <div class="list-item"><strong>Position and start date</strong><small>Role title and date person began working</small></div>
+                  <div class="list-item"><strong>Name and DOB</strong><small>Full legal name and date of birth</small></div>
+                  <div class="list-item"><strong>ID check</strong><small>Document type, date checked, checker initials</small></div>
+                  <div class="list-item"><strong>DBS details</strong><small>Certificate number, level (enhanced/enhanced+barred), date seen, who saw original</small></div>
+                  <div class="list-item"><strong>Barred list check</strong><small>Separate check for regulated activity — date and outcome</small></div>
+                  <div class="list-item"><strong>Right to work</strong><small>Evidence type and verification date</small></div>
+                  <div class="list-item"><strong>Overseas check</strong><small>Required if lived/worked abroad >3 months in last 5 years</small></div>
+                  <div class="list-item"><strong>References</strong><small>Two references, both verified with dates and checker</small></div>
+                  <div class="list-item"><strong>Self-declaration</strong><small>Date completed</small></div>
+                  <div class="list-item"><strong>Induction</strong><small>Date completed</small></div>
+                </div>
+              </div>
+              <div class="note brutal">
+                <h4>Why SCRs fail inspection</h4>
+                <ul>
+                  <li>Certificate "seen" but no record of who saw it or when.</li>
+                  <li>References "obtained" but not verified — no phone call or written confirmation.</li>
+                  <li>Overseas checks forgotten for staff who lived abroad.</li>
+                  <li>Barred list check conflated with DBS — they're separate requirements for regulated activity.</li>
+                  <li>Update service not being used — 3-year renewals become compliance debt.</li>
+                </ul>
+              </div>
+            </div>
+            <p class="inline-links">Related: <a href="scr-dashboard.html">SCR Dashboard</a> · <a href="scr-hosts.html">Host SCR</a> · <a href="scr-drivers.html">Driver SCR</a> · <a href="staff-list.html">Staff list</a> · <a href="compliance.html">AEGIS control room</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+    (function () {
+      function tick() {
+        return '<span style="color:#1a6632;font-weight:600;">&#10003;</span>';
+      }
+      function missingBadge() {
+        return '<span class="badge red" style="font-size:0.73rem;padding:2px 7px;">Missing</span>';
+      }
+      function exemptBadge(label) {
+        return '<span class="badge amber" style="font-size:0.73rem;padding:2px 7px;">' + label + '</span>';
+      }
+      function naCell() {
+        return '<span style="color:#9bafc4;">N/A</span>';
+      }
+      function docCell(path) {
+        return path ? tick() : missingBadge();
+      }
+
+      var today = new Date();
+
+      // AEGIS 2.8.2 / KCSIE — "Safer Recruitment in Education" (TRN-CRS-002) is the
+      // real training record for staff who sit on interview panels. We read the
+      // person's actual completion via getRequiredCoursesForPerson rather than
+      // inferring or fabricating a status: staff whose role doesn't require it show
+      // "Not required for role" instead of a false negative.
+      function interviewPanelStatusCell(person) {
+        if (typeof getRequiredCoursesForPerson !== 'function') return '<span style="color:#9bafc4;">Not recorded</span>';
+        var required = getRequiredCoursesForPerson(person, 'staff');
+        var entry = required.find(function (r) { return r.course && (r.course.id === 'TRN-CRS-002' || r.course.code === 'AEGIS-2.8.2'); });
+        if (!entry) {
+          return '<span class="badge slate" style="font-size:0.73rem;padding:2px 7px;">Not required for role</span>';
+        }
+        if (entry.status === 'Complete') {
+          return '<span class="badge green" style="font-size:0.73rem;padding:2px 7px;">Complete' + (entry.completionDate ? ' (' + entry.completionDate + ')' : '') + '</span>';
+        }
+        if (entry.status === 'Due soon') {
+          return '<span class="badge amber" style="font-size:0.73rem;padding:2px 7px;">Due soon' + (entry.expiryDate ? ' (' + entry.expiryDate + ')' : '') + '</span>';
+        }
+        if (entry.status === 'Overdue') {
+          return '<span class="badge red" style="font-size:0.73rem;padding:2px 7px;">Overdue</span>';
+        }
+        return '<span class="badge red" style="font-size:0.73rem;padding:2px 7px;">Not started</span>';
+      }
+
+      function rowStatus(c) {
+        if (c.worksOutsideUK) return 'exempt';
+        var missing =
+          !c.idDocumentPath ||
+          (!c.dbsNumber && !c.dbsCertificatePath) ||
+          (!c.isCitizen && !c.rightToWorkCheckPath) ||
+          !c.reference1Path ||
+          !c.reference2Path ||
+          (c.livedAbroad && !c.overseasCheckDocPath) ||
+          (!c.safeguardingTrainingDate && !c.safeguardingCertificatePath);
+        return missing ? 'incomplete' : 'complete';
+      }
+
+      function buildRow(person, type) {
+        var c = person.compliance || {};
+        var name     = person.firstName + ' ' + person.lastName;
+        var position, startDate;
+
+        if (type === 'staff') {
+          position  = person.title || person.role || 'Staff';
+          startDate = person.startDate || '—';
+        } else if (type === 'host') {
+          position  = 'Homestay carer';
+          startDate = person.hostSince || '—';
+        } else {
+          position  = 'Licensed driver';
+          startDate = '—';
+        }
+
+        var idCell   = docCell(c.idDocumentPath);
+        var dbsNum   = c.dbsNumber || person.dbsCertNumber || '';
+        var dbsNumCell;
+        if (c.worksOutsideUK) {
+          dbsNumCell = exemptBadge('Exempt (Non-UK)');
+        } else {
+          dbsNumCell = dbsNum
+            ? '<span style="font-family:monospace;font-size:0.82rem;">' + dbsNum + '</span>'
+            : missingBadge();
+        }
+
+        var certCell = c.worksOutsideUK ? exemptBadge('Exempt (Non-UK)') : docCell(c.dbsCertificatePath);
+
+        var barredCell;
+        if (c.worksOutsideUK) {
+          barredCell = exemptBadge('Exempt (Non-UK)');
+        } else {
+          barredCell = (person.dbsStatus === 'clear')
+            ? '<span style="color:#1a6632;font-weight:600;">Clear</span>'
+            : '<span style="color:#9bafc4;">—</span>';
+        }
+
+        var rtwCell;
+        if (c.worksOutsideUK) {
+          rtwCell = exemptBadge('Exempt (Non-UK)');
+        } else if (c.isCitizen) {
+          rtwCell = exemptBadge('Citizen (No Expiry)');
+        } else {
+          rtwCell = docCell(c.rightToWorkCheckPath);
+        }
+
+        var overseasCell = c.livedAbroad ? docCell(c.overseasCheckDocPath) : naCell();
+
+        // AEGIS 6.3.3 — staff show qualification level + initial training date, plus the
+        // separate annual safeguarding update, flagged once it's over 12 months old.
+        var level        = person.trainingLevel || 'Not recorded';
+        var trainingDate = c.safeguardingTrainingDate || person.trainingDate || '—';
+        var annualUpdate = c.annualSafeguardingUpdateDate || 'Annual update pending';
+        var annualAgeDays = c.annualSafeguardingUpdateDate
+          ? Math.floor((today - new Date(c.annualSafeguardingUpdateDate)) / 86400000)
+          : null;
+        var annualDue = annualAgeDays === null || annualAgeDays > 365;
+
+        var inductionCell =
+          '<div style="font-size:0.8rem;color:#3b536e;">' + level + ' — ' + trainingDate + '</div>' +
+          '<div style="font-size:0.78rem;color:#63768b;margin-top:2px;">Annual update: ' + annualUpdate + '</div>' +
+          (annualDue ? '<span class="badge amber" style="font-size:0.7rem;padding:2px 7px;margin-top:2px;display:inline-block;">Annual Update Due</span>' : '') +
+          '<div style="font-size:0.76rem;color:#63768b;margin-top:6px;border-top:1px dashed #e1e7ec;padding-top:5px;">Interview panel (Safer Recruitment):<br/>' + interviewPanelStatusCell(person) + '</div>';
+
+        // AEGIS/KCSIE Appendix 7 — DOB has no real source anywhere in the staff schema
+        // yet (no page collects it); we look for a real field rather than fabricate one,
+        // and report that gap honestly instead of hiding it behind a bare "—".
+        var dobCell = (c.dob || person.dob)
+          ? '<span>' + (c.dob || person.dob) + '</span>'
+          : '<span style="color:#9bafc4;">Not recorded</span>';
+
+        var status = rowStatus(c);
+        var statusCell =
+          status === 'complete' ? '<span class="badge green">Complete</span>'  :
+          status === 'exempt'   ? '<span class="badge amber">Exempt</span>'    :
+                                  '<span class="badge red">Incomplete</span>';
+
+        var editUrl = type === 'staff' ? 'staff-compliance.html?id=' + person.id :
+                      type === 'host'  ? 'host-compliance.html?id='  + person.id :
+                                         'driver-compliance.html?id=' + person.id;
+
+        return '<tr>' +
+          '<td><a href="' + editUrl + '" style="text-decoration:none;color:inherit;"><strong>' + name + '</strong></a>' +
+            '<br><span style="font-size:0.74rem;color:#9bafc4;font-family:monospace;">' + person.id + '</span></td>' +
+          '<td>' + position   + '</td>' +
+          '<td>' + startDate  + '</td>' +
+          '<td>' + dobCell    + '</td>' +
+          '<td>' + idCell     + '</td>' +
+          '<td>' + dbsNumCell + '</td>' +
+          '<td>Enhanced</td>' +
+          '<td>' + certCell   + '</td>' +
+          '<td>' + barredCell + '</td>' +
+          '<td>' + rtwCell    + '</td>' +
+          '<td>' + overseasCell + '</td>' +
+          '<td>' + docCell(c.reference1Path) + '</td>' +
+          '<td>' + docCell(c.reference2Path) + '</td>' +
+          '<td>' + docCell(c.selfDeclarationDocPath) + '</td>' +
+          '<td>' + inductionCell + '</td>' +
+          '<td>' + statusCell    + '</td>' +
+        '</tr>';
+      }
+
+      var rows = [];
+      getAllStaff().forEach(function (p) { rows.push(buildRow(p, 'staff')); });
+
+      document.getElementById('scr-staff-body').innerHTML = rows.length
+        ? rows.join('')
+        : '<tr><td colspan="16" style="text-align:center;padding:28px;color:#9bafc4;">No staff records found.</td></tr>';
+    }());
+    </script>
+  </body>
+</html>

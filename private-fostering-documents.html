@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document Archive — Private Fostering — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      .action-cell { display: flex; gap: 8px; align-items: center; }
+      .btn-sm { font-size: 0.8rem; padding: 5px 14px; }
+      .btn-danger { color: #e11d48; border-color: #fda4af; }
+      .btn-danger:hover { background: #fff1f2; border-color: #e11d48; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/compliance/private-fostering/documents</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Private Fostering</strong></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a><a class="nav-link" href="private-fostering.html">Private fostering</a><a class="nav-link" href="scr-dashboard.html">SCR Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="scr-staff.html" style="color: #63768b; text-decoration: none;">• Staff SCR</a><a href="scr-hosts.html" style="color: #63768b; text-decoration: none;">• Host SCR</a><a href="scr-drivers.html" style="color: #63768b; text-decoration: none;">• Driver SCR</a></div><a class="nav-link" href="audit-log.html">Audit trail</a><a class="nav-link" href="reporting-dashboard.html">Reporting</a></div>
+            <div class="nav-group"><div class="nav-label">Operations</div><a class="nav-link" href="students.html">Students</a><a class="nav-link" href="homestays.html">Homestays</a><a class="nav-link" href="travel.html">Travel</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">AEGIS Standard 8 — Private Fostering</span>
+                <h2>Document Archive</h2>
+                <p>All generated LA notification letters and evidence ZIP packages. Records are stored locally and listed here for audit reference.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="private-fostering.html">Back to Private Fostering</a>
+                <a class="button" href="private-fostering-notification.html">Notify Local Authority</a>
+              </div>
+            </div>
+            <div class="metrics">
+              <article class="metric featured"><h4>Total documents</h4><div class="metric-value" id="metric-total">0</div><p class="metric-meta">Generated in this session</p></article>
+              <article class="metric"><h4>Notification letters</h4><div class="metric-value" id="metric-pdf">0</div><p class="metric-meta">PDF documents</p></article>
+              <article class="metric"><h4>Evidence packages</h4><div class="metric-value" id="metric-zip">0</div><p class="metric-meta">ZIP archives</p></article>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Date generated</th>
+                    <th>Document type</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="doc-table-body"></tbody>
+              </table>
+            </div>
+            <div class="note brutal" style="margin-top:24px;">
+              <h4>Re-downloading documents</h4>
+              <ul>
+                <li>Generated files are not stored in the browser — only the metadata record is kept here.</li>
+                <li>To obtain the file again, return to <a href="private-fostering-notification.html">Notify Local Authority</a> and regenerate for the relevant student.</li>
+                <li>Keep a copy of every sent notification letter on your document management system as permanent evidence.</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script>
+      var OG_PF_DOCS_KEY = 'og_pf_documents';
+
+      function fmtDate(iso) {
+        if (!iso) return '—';
+        var d = new Date(iso);
+        if (isNaN(d.getTime())) return iso;
+        return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+      }
+
+      function loadRecords() {
+        try { return JSON.parse(localStorage.getItem(OG_PF_DOCS_KEY)) || []; } catch (e) { return []; }
+      }
+
+      function saveRecords(records) {
+        localStorage.setItem(OG_PF_DOCS_KEY, JSON.stringify(records));
+      }
+
+      function renderMetrics(records) {
+        var pdfCount = records.filter(function (r) { return r.type === 'PDF'; }).length;
+        var zipCount = records.filter(function (r) { return r.type === 'ZIP'; }).length;
+        document.getElementById('metric-total').textContent = records.length;
+        document.getElementById('metric-pdf').textContent   = pdfCount;
+        document.getElementById('metric-zip').textContent   = zipCount;
+      }
+
+      function renderTable() {
+        var records = loadRecords();
+        renderMetrics(records);
+
+        var tbody = document.getElementById('doc-table-body');
+        if (!records.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="5" style="text-align:center;padding:32px;color:#94a3b8;">' +
+            'No documents generated yet. Use ' +
+            '<a href="private-fostering-notification.html">Notify Local Authority</a> ' +
+            'to create records.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = records.map(function (rec, idx) {
+          var isPDF      = rec.type === 'PDF';
+          var typeBadge  = isPDF
+            ? '<span class="badge red">PDF — Notification Letter</span>'
+            : '<span class="badge amber">ZIP — Evidence Package</span>';
+          var statusBadge = '<span class="badge green">' + (rec.status || 'Generated') + '</span>';
+
+          return '<tr>' +
+            '<td><strong>' + (rec.studentName || '—') + '</strong></td>' +
+            '<td>' + fmtDate(rec.date) + '</td>' +
+            '<td>' + typeBadge + '</td>' +
+            '<td>' + statusBadge + '</td>' +
+            '<td class="action-cell">' +
+              '<button class="button-alt btn-sm" onclick="handleDownload(' + idx + ')">Download</button>' +
+              '<button class="button-alt btn-sm btn-danger" onclick="handleDelete(' + idx + ')">Delete</button>' +
+            '</td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      function handleDelete(idx) {
+        if (!confirm('Remove this document record? This cannot be undone.')) return;
+        var records = loadRecords();
+        records.splice(idx, 1);
+        saveRecords(records);
+        renderTable();
+      }
+
+      function handleDownload(idx) {
+        var rec = loadRecords()[idx];
+        if (!rec) return;
+        alert(
+          'File not available for re-download.\n\n' +
+          'Generated files are not stored in the browser. To obtain the ' + rec.type +
+          ' for ' + rec.studentName + ', return to the notification form and regenerate.'
+        );
+      }
+
+      renderTable();
+    </script>
+  </body>
+</html>

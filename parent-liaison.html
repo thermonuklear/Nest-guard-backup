@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parent Liaison Log — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small>Route /admin/communications/parent-liaison</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Parent Liaison</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">People</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="parents.html">Parents</a>
+              <a class="nav-link nav-link-sub active" href="parent-liaison.html">Communication log</a>
+              <a class="nav-link nav-link-sub" href="parent-log-create.html">Log contact</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Parent communications</span>
+                <h2>Every parent contact should be timestamped, attributable, and follow-up driven.</h2>
+                <p>If contact with parents lives in email inboxes and memory, the organisation cannot prove what was agreed, what was escalated, or who owned the next step.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button" href="parent-log-create.html">Log parent contact</a>
+              </div>
+            </div>
+
+            <div class="metrics">
+              <article class="metric featured">
+                <h4>Total parent contacts</h4>
+                <div class="metric-value" id="metric-total">—</div>
+                <p class="metric-meta">All logged contacts across every parent and guardian</p>
+              </article>
+              <article class="metric">
+                <h4>Recent contacts (7 days)</h4>
+                <div class="metric-value" id="metric-recent">—</div>
+                <p class="metric-meta">Contacts logged in the past seven days</p>
+              </article>
+              <article class="metric">
+                <h4>Pending follow-ups</h4>
+                <div class="metric-value" id="metric-pending">—</div>
+                <p class="metric-meta">Entries awaiting a parent response or next action</p>
+              </article>
+              <article class="metric">
+                <h4>Parents contacted</h4>
+                <div class="metric-value" id="metric-welfare">—</div>
+                <p class="metric-meta">Distinct parents with at least one log entry</p>
+              </article>
+            </div>
+
+            <div class="cols-2">
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Timestamp</th><th>Parent / relationship</th><th>Contact type</th><th>Summary</th><th>Next step</th></tr>
+                  </thead>
+                  <tbody id="logs-tbody"></tbody>
+                </table>
+              </div>
+              <div>
+                <div class="card">
+                  <h4>Linked routes</h4>
+                  <div class="inline-links">
+                    <a class="link-pill" href="parent-log-create.html">Log parent contact</a>
+                    <a class="link-pill" href="parents.html">Parent directory</a>
+                  </div>
+                </div>
+                <div class="card">
+                  <h4>Follow-up owners</h4>
+                  <div class="list">
+                    <div class="list-item"><strong>Jay Ray</strong><small>DSL / welfare and sensitive parent communication</small></div>
+                    <div class="list-item"><strong>Zuko Fire</strong><small>Operations / service confirmation and onboarding</small></div>
+                    <div class="list-item"><strong>Priya Shah</strong><small>Travel coordination / arrival and departure updates</small></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+  <script src="assets/db.js"></script>
+  <script>
+    function renderLogs() {
+      var tbody = document.getElementById('logs-tbody');
+      var logs = getParentLogs();
+
+      if (logs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:32px;color:#94a3b8;">No parent contact logs recorded yet. <a href="parent-log-create.html">Log the first one.</a></td></tr>';
+        return;
+      }
+
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+      function esc(str) {
+        return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      tbody.innerHTML = logs.map(function(log) {
+        var dt = new Date(log.loggedAt || log.date);
+        var timestamp = String(dt.getDate()).padStart(2,'0') + ' ' + months[dt.getMonth()] +
+                        ' / ' + String(dt.getHours()).padStart(2,'0') + ':' + String(dt.getMinutes()).padStart(2,'0');
+
+        var parent = getParentById(log.parentId);
+        var relationLine = parent ? esc(parent.relationship || '') : '';
+
+        return '<tr>' +
+          '<td><strong>' + timestamp + '</strong></td>' +
+          '<td><strong>' + esc(log.parentName) + '</strong>' + (relationLine ? '<small>' + relationLine + '</small>' : '') + '</td>' +
+          '<td>' + esc(log.contactType) + '</td>' +
+          '<td>' + esc(log.summaryNotes) + '</td>' +
+          '<td><span class="badge amber">Pending</span></td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderMetrics(logs) {
+      document.getElementById('metric-total').textContent = logs.length;
+
+      var cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+      var recent = logs.filter(function(l) {
+        return new Date(l.loggedAt || l.date).getTime() >= cutoff;
+      });
+      document.getElementById('metric-recent').textContent = recent.length;
+
+      document.getElementById('metric-pending').textContent = logs.length;
+
+      var parentSet = {};
+      logs.forEach(function(l) { if (l.parentName) parentSet[l.parentName] = true; });
+      document.getElementById('metric-welfare').textContent = Object.keys(parentSet).length;
+    }
+
+    renderLogs();
+    renderMetrics(getParentLogs());
+  </script>
+</html>

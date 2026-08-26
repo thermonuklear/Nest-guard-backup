@@ -1,0 +1,1217 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Student Profile — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Global colour overrides ── */
+      body {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+      }
+
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+      }
+
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+      }
+
+      h2, h3, h4 { color: #0f2340 !important; }
+      p           { color: #3b536e; }
+      .eyebrow    { color: #2a6096 !important; }
+      .toolbar p  { color: #3b536e !important; }
+
+      .info-block {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+      }
+
+      .kv-row { border-top-color: #e8eef6 !important; }
+      .kv-row small { color: #6b85a0 !important; }
+      .kv-row div   { color: #0f2340 !important; }
+
+      .card {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+      }
+
+      .card h4 { color: #0f2340 !important; }
+      .card p  { color: #3b536e !important; }
+
+      .timeline-item { border-top-color: #e8eef6 !important; }
+      .timeline-item time   { color: #6b85a0 !important; }
+      .timeline-item strong { color: #0f2340 !important; }
+      .timeline-item small  { color: #6b85a0 !important; }
+
+      .topnav a {
+        background: #f0f4f8 !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .topnav a:hover { background: #e2e9f3 !important; }
+
+      .inline-links a { color: #1a4080 !important; }
+
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      /* ── Student sub-nav ── */
+      .subnav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 0 14px;
+        border-bottom: 1px solid #d5dce8;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .subnav a {
+        padding: 6px 16px;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        border: 1px solid transparent;
+        transition: background 0.15s, border-color 0.15s;
+      }
+
+      .subnav a:hover {
+        background: #e8eef6;
+        border-color: #d5dce8;
+      }
+
+      .subnav a.active {
+        background: #0f2340;
+        border-color: #0f2340;
+        color: #ffffff;
+      }
+
+      /* ── Tab buttons in subnav ── */
+      .subnav button {
+        padding: 6px 16px;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: #3b536e;
+        background: transparent;
+        border: 1px solid transparent;
+        cursor: pointer;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+      }
+
+      .subnav button:hover {
+        background: #e8eef6;
+        border-color: #d5dce8;
+      }
+
+      .subnav button.active {
+        background: #0f2340;
+        border-color: #0f2340;
+        color: #ffffff;
+      }
+
+      /* ── Tab content panels ── */
+      .tab-content { display: none; }
+      .tab-content.active { display: block; }
+
+      /* ── Upload tab layout ── */
+      .tab-upload-section {
+        max-width: 640px;
+      }
+
+      .tab-upload-section .upload-controls {
+        margin-bottom: 20px;
+      }
+
+      /* ── Upload cards ── */
+      .upload-card {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 20px;
+        padding: 18px;
+      }
+
+      .upload-card h4 { margin-bottom: 14px; color: #0f2340 !important; }
+
+      .upload-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+
+      .upload-controls input[type="file"] {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.86rem;
+        color: #3b536e;
+        cursor: pointer;
+        max-width: 100%;
+      }
+
+      .doc-name-input {
+        flex: 1;
+        min-width: 150px;
+        padding: 9px 13px;
+        border: 1.5px solid #d5dce8;
+        border-radius: 10px;
+        background: #f0f4f8;
+        color: #0f2340;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s, background 0.15s;
+      }
+
+      .doc-name-input::placeholder { color: #9bafc4; }
+      .doc-name-input:focus { border-color: #0f2340; background: #ffffff; }
+
+      .doc-list { display: grid; gap: 8px; }
+
+      .doc-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 13px;
+        background: #f0f4f8;
+        border: 1px solid #d5dce8;
+        border-radius: 12px;
+      }
+
+      .doc-item-info { display: flex; align-items: center; gap: 10px; }
+
+      .doc-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: #0f2340;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .doc-icon.acad { background: #1a4080; }
+
+      .doc-icon svg { width: 15px; height: 15px; stroke: #ffffff; fill: none; }
+
+      .doc-item-name { font-size: 0.88rem; font-weight: 600; color: #0f2340; }
+      .doc-item-meta { font-size: 0.76rem; color: #6b85a0; margin-top: 1px; }
+
+      .doc-remove {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #9bafc4;
+        font-size: 0.95rem;
+        padding: 4px 6px;
+        border-radius: 6px;
+        transition: color 0.15s, background 0.15s;
+        line-height: 1;
+      }
+
+      .doc-remove:hover { color: #7f3034; background: #f3dddd; }
+
+      .doc-empty {
+        text-align: center;
+        padding: 24px 16px;
+        color: #9bafc4;
+        font-size: 0.86rem;
+        border: 1.5px dashed #d5dce8;
+        border-radius: 12px;
+      }
+
+      /* ── Deep Dive navigation ── */
+      .deepdive-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+        background: #edf2f8;
+        border-radius: 14px;
+        padding: 10px 14px;
+        border: 1px solid #d5dce8;
+      }
+
+      .deepdive-nav .deepdive-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: #6b85a0;
+        margin-right: 4px;
+        white-space: nowrap;
+      }
+
+      .deepdive-nav a {
+        padding: 5px 14px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+      }
+
+      .deepdive-nav a:hover {
+        background: #e2e9f3;
+        border-color: #b0bfcf;
+        color: #0f2340;
+      }
+
+      /* ── Finances tab (AEGIS 2.9.2) ── */
+      .fin-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 18px; }
+      .fin-kpi { background: #ffffff; border: 1px solid #d5dce8; border-radius: 16px; padding: 18px 20px; transition: background 0.15s, border-color 0.15s; }
+      .fin-kpi h4 { font-size: 0.76rem; font-weight: 700; color: #6b85a0; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+      .fin-kpi-value { font-family: "Outfit", sans-serif; font-size: 1.6rem; font-weight: 700; color: #0f2340; }
+      .fin-kpi-sub { font-size: 0.78rem; color: #6b85a0; margin-top: 4px; }
+      .fin-kpi.balance-good  { background: #dfece5; border-color: #16a34a; }
+      .fin-kpi.balance-good  .fin-kpi-value { color: #16532f; }
+      .fin-kpi.balance-low   { background: #fff8e6; border-color: #d97706; }
+      .fin-kpi.balance-low   .fin-kpi-value { color: #7a4900; }
+      .fin-kpi.balance-over  { background: #f3dddd; border-color: #dc2626; }
+      .fin-kpi.balance-over  .fin-kpi-value { color: #7f3034; }
+      @media (max-width: 760px) { .fin-kpis { grid-template-columns: 1fr; } }
+
+      .fin-actions { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+
+      .fin-table-wrap { background: #ffffff; border: 1px solid #d5dce8; border-radius: 16px; overflow: hidden; overflow-x: auto; }
+      .fin-table-wrap table { width: 100%; border-collapse: collapse; min-width: 860px; }
+      .fin-table-wrap th { text-align: left; padding: 10px 14px; background: #f6f8fb; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: #6b85a0; border-bottom: 1px solid #d5dce8; white-space: nowrap; }
+      .fin-table-wrap td { padding: 10px 14px; border-bottom: 1px solid #edf2f8; font-size: 0.85rem; color: #3b536e; vertical-align: middle; }
+      .fin-table-wrap tr:last-child td { border-bottom: none; }
+      .fin-amount-in  { color: #16a34a; font-weight: 700; }
+      .fin-amount-out { color: #dc2626; font-weight: 700; }
+      .fin-receipt-ok    { color: #16a34a; font-weight: 600; font-size: 0.78rem; }
+      .fin-receipt-miss  { color: #dc2626; font-weight: 600; font-size: 0.78rem; }
+      .fin-empty { text-align: center; padding: 32px; color: #6b85a0; font-size: 0.88rem; }
+      .fin-del-btn { background: none; border: none; cursor: pointer; color: #9bafc4; font-size: 0.9rem; padding: 4px 6px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+      .fin-del-btn:hover { color: #7f3034; background: #f3dddd; }
+
+      /* ── Finances modal ── */
+      .modal-overlay {
+        position: fixed; inset: 0; background: rgba(15, 35, 64, 0.55);
+        display: flex; align-items: center; justify-content: center;
+        z-index: 1000; padding: 24px;
+      }
+      .modal-panel {
+        background: #ffffff; border-radius: 16px; width: 100%; max-width: 640px;
+        max-height: 90vh; overflow-y: auto; padding: 28px;
+        box-shadow: 0 20px 60px rgba(15, 35, 64, 0.25);
+      }
+      .modal-title { margin: 0 0 20px; font-size: 1.05rem; font-weight: 700; color: #0f2340 !important; font-family: "Outfit", sans-serif; }
+      .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .form-group { display: flex; flex-direction: column; gap: 5px; }
+      .form-full { grid-column: 1 / -1; }
+      .form-group label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #3b536e; }
+      .form-group input, .form-group select, .form-group textarea {
+        min-height: 36px; padding: 6px 10px; border: 1px solid #d5dce8; border-radius: 8px;
+        background: #ffffff; color: #0f2340; font-size: 0.86rem;
+        font-family: "Plus Jakarta Sans", sans-serif; outline: none; box-sizing: border-box;
+      }
+      .form-group textarea { min-height: 60px; resize: vertical; padding: 8px 10px; }
+      .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+        border-color: #0f2340; box-shadow: 0 0 0 3px rgba(15,35,64,0.1);
+      }
+      .modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #edf2f8; }
+
+      /* ── Not-found state ── */
+      .not-found {
+        padding: 48px 24px;
+        text-align: center;
+        color: #3b536e;
+      }
+
+      .not-found h3 { color: #0f2340 !important; margin-bottom: 10px; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small id="chrome-route">Route /admin/students/profile</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Student Profile</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link active" href="students.html">Students</a>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <section class="main" id="main-content">
+
+            <!-- Student sub-nav -->
+            <nav class="subnav">
+              <button class="active" data-tab="tab-overview">Profile Overview</button>
+              <button data-tab="tab-documents">Documents</button>
+              <button data-tab="tab-academic">Academic</button>
+              <button data-tab="tab-homestays">Homestays</button>
+              <button data-tab="tab-travel">Travel</button>
+              <button type="button" class="tab-btn" data-tab="tab-finances">Finances &amp; Pocket Money (2.9.2)</button>
+            </nav>
+
+            <!-- Deep Dive navigation -->
+            <div class="deepdive-nav">
+              <span class="deepdive-label">Deep Dive:</span>
+              <a id="link-health"   href="student-health.html">Health &amp; Medical</a>
+              <a id="link-family"   href="student-family.html">Family &amp; Contacts</a>
+              <a id="link-legal"    href="student-legal.html">Legal &amp; Agency</a>
+              <a id="link-pastoral" href="student-pastoral.html">Pastoral &amp; Visits</a>
+              <a id="link-risk"     href="student-risk.html">Risk Assessment</a>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Student profile</span>
+                <h2 id="student-name">—</h2>
+                <p>Appendix 13-aligned view. Personal, medical, school, homestay, permissions, and welfare data all visible without making staff open six different records.</p>
+              </div>
+              <div class="toolbar-actions">
+                <span id="status-badge" class="badge">—</span>
+                <a class="button-alt" href="students.html">Back to list</a>
+                <a class="button-alt" href="student-edit.html">Edit record</a>
+                <a class="button-alt" href="student-archive.html">Archive record</a>
+                <a class="button-alt" href="student-delete.html">Delete record</a>
+                <a class="button-alt" href="exeat-approval.html">Review exeat</a>
+                <a class="button-alt" href="welfare-note-create.html">Log welfare note</a>
+                <a class="button" href="travel.html">View travel</a>
+              </div>
+            </div>
+
+            <!-- ── Tab: Profile Overview ── -->
+            <div id="tab-overview" class="tab-content active">
+
+            <!-- Info grid -->
+            <div class="info-grid">
+              <article class="info-block">
+                <h4>Identity and school</h4>
+                <div class="kv">
+                  <div class="kv-row"><small>Full name</small>      <div id="kv-full-name">—</div></div>
+                  <div class="kv-row"><small>Preferred name</small>  <div id="kv-preferred-name">—</div></div>
+                  <div class="kv-row"><small>Date of birth</small>   <div id="kv-dob">—</div></div>
+                  <div class="kv-row"><small>Nationality</small>     <div id="kv-nationality">—</div></div>
+                  <div class="kv-row"><small>School</small>          <div id="kv-school">—</div></div>
+                  <div class="kv-row"><small>Accommodation</small>   <div id="kv-accommodation">—</div></div>
+                  <div class="kv-row"><small>Passport / BRP</small>  <div id="kv-passport">BRP copy held in secure documents</div></div>
+                </div>
+              </article>
+              <article class="info-block">
+                <h4>Parents and contacts</h4>
+                <div class="kv">
+                  <div class="kv-row"><small>Primary parent</small>       <div id="kv-parent1">—</div></div>
+                  <div class="kv-row"><small>Second parent</small>        <div id="kv-parent2">—</div></div>
+                  <div class="kv-row"><small>UK emergency contact</small> <div>None recorded / Oxford Guardians acting as named local contact</div></div>
+                  <div class="kv-row"><small>Agent</small>                <div>Kiyama Education Services / Mika Sato</div></div>
+                </div>
+              </article>
+              <article class="info-block">
+                <h4>Health and welfare</h4>
+                <div class="kv">
+                  <div class="kv-row"><small>Conditions</small>  <div>Mild asthma / inhaler carried</div></div>
+                  <div class="kv-row"><small>Allergies</small>   <div>Peanuts</div></div>
+                  <div class="kv-row"><small>Medication</small>  <div>Ventolin inhaler / logged with homestay and school nurse</div></div>
+                  <div class="kv-row"><small>Insurance</small>   <div>Toyo International Student Cover / policy TI-UK-33819</div></div>
+                  <div class="kv-row"><small>Dietary</small>     <div>No peanuts / prefers pescatarian meals during exeat stays</div></div>
+                </div>
+              </article>
+              <article class="info-block">
+                <h4>Placement and permissions</h4>
+                <div class="kv">
+                  <div class="kv-row"><small>Travel consent</small>        <div>Signed 02 Sep 2025</div></div>
+                  <div class="kv-row"><small>Medical consent</small>       <div>Signed 02 Sep 2025</div></div>
+                  <div class="kv-row"><small>Photo consent</small>         <div>Declined</div></div>
+                  <div class="kv-row"><small>Data sharing consent</small>  <div>Signed / school + homestay + AEGIS inspection anonymised use only</div></div>
+                  <div class="kv-row"><small>24/7 Emergency Pack</small>   <div id="kv-emergency-pack">—</div></div>
+                </div>
+              </article>
+            </div>
+
+            <!-- Welfare log + quick links -->
+            <div class="cols-2" style="margin-top:16px;">
+              <article class="card">
+                <h4>Welfare log</h4>
+                <div class="timeline" id="welfare-timeline"></div>
+                <div class="inline-links" style="margin-top:12px;">
+                  <a style="font-weight:700; color:#2a6096;" href="#" id="mh-suite-link">Manage Mental Health Case</a><span class="sep">|</span>
+                  <a id="welfare-note-link" href="welfare-note-create.html">Log welfare note</a><span class="sep">|</span>
+                  <a href="welfare-notes.html">All welfare notes</a><span class="sep">|</span>
+                  <a href="concerns-low-level.html">Low-level concerns</a><span class="sep">|</span>
+                  <a href="concerns-escalated.html">Escalate concern</a>
+                </div>
+              </article>
+              <article class="card">
+                <h4>Quick links</h4>
+                <p>Access related views and linked records for this student.</p>
+                <div class="topnav">
+                  <a href="parent-portal.html">Preview parent view</a>
+                  <a href="student-portal.html">Preview student view</a>
+                  <a href="school-liaison.html">School liaison log</a>
+                  <a href="handoff-record.html">Latest handoff</a>
+                </div>
+              </article>
+            </div><!-- /cols-2 -->
+            </div><!-- /tab-overview -->
+
+            <!-- ── Tab: Documents ── -->
+            <div id="tab-documents" class="tab-content">
+              <div class="tab-upload-section">
+                <div class="upload-card">
+                  <h4>Upload Document</h4>
+                  <div class="upload-controls">
+                    <input type="file" id="doc-file" />
+                    <input class="doc-name-input" type="text" id="doc-name" placeholder="Enter document name..." />
+                    <button class="button" id="upload-btn">Upload</button>
+                  </div>
+                  <div id="document-list" class="doc-list"></div>
+                </div>
+              </div>
+            </div><!-- /tab-documents -->
+
+            <!-- ── Tab: Academic ── -->
+            <div id="tab-academic" class="tab-content">
+              <div class="tab-upload-section">
+                <div class="upload-card">
+                  <h4>Upload Academic Report</h4>
+                  <div class="upload-controls">
+                    <input type="file" id="acad-file" />
+                    <input class="doc-name-input" type="text" id="acad-name" placeholder="Enter report name..." />
+                    <button class="button" id="upload-acad-btn">Upload</button>
+                  </div>
+                  <div id="academic-list" class="doc-list"></div>
+                </div>
+              </div>
+            </div><!-- /tab-academic -->
+
+            <!-- ── Tab: Homestays ── -->
+            <div id="tab-homestays" class="tab-content">
+              <div class="upload-card">
+                <h4>Connected Homestays</h4>
+                <div id="student-homestays-list"></div>
+              </div>
+            </div>
+
+            <!-- ── Tab: Travel ── -->
+            <div id="tab-travel" class="tab-content">
+              <div class="upload-card">
+                <h4>Connected Travel</h4>
+                <div id="student-travel-list"></div>
+              </div>
+            </div>
+
+            <!-- ── Tab: Finances & Pocket Money (AEGIS 2.9.2) ── -->
+            <div id="tab-finances" class="tab-content">
+
+              <div class="fin-kpis">
+                <div class="fin-kpi">
+                  <h4>Total Deposits Held</h4>
+                  <div class="fin-kpi-value" id="fin-kpi-deposits">£0.00</div>
+                  <p class="fin-kpi-sub">Lifetime funds received</p>
+                </div>
+                <div class="fin-kpi">
+                  <h4>Total Released / Spent</h4>
+                  <div class="fin-kpi-value" id="fin-kpi-released">£0.00</div>
+                  <p class="fin-kpi-sub">Lifetime funds disbursed</p>
+                </div>
+                <div class="fin-kpi" id="fin-kpi-balance-card">
+                  <h4>Current Available Balance</h4>
+                  <div class="fin-kpi-value" id="fin-kpi-balance">£0.00</div>
+                  <p class="fin-kpi-sub" id="fin-kpi-balance-sub">—</p>
+                </div>
+              </div>
+
+              <div class="fin-actions">
+                <button type="button" class="button" id="btn-fin-deposit">+ Receive New Deposit / Funds</button>
+                <button type="button" class="button-alt" id="btn-fin-release">- Disburse Pocket Money / Release Funds</button>
+              </div>
+
+              <div class="fin-table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Ref</th>
+                      <th>Type</th>
+                      <th>Purpose</th>
+                      <th>Amount</th>
+                      <th>Running Balance</th>
+                      <th>Approved By (Role)</th>
+                      <th>Receipt / Voucher</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="fin-ledger-body"></tbody>
+                </table>
+              </div>
+
+              <!-- Deposit / Release modal -->
+              <div id="finModal" class="modal-overlay" style="display:none;">
+                <div class="modal-panel">
+                  <h3 class="modal-title" id="finModalTitle">Record Transaction</h3>
+                  <form id="finForm" autocomplete="off">
+                    <div class="modal-grid">
+
+                      <div class="form-group">
+                        <label for="fin-date">Date</label>
+                        <input type="date" id="fin-date" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="fin-type">Transaction Type</label>
+                        <select id="fin-type" required>
+                          <option value="deposit">Deposit Received</option>
+                          <option value="release">Fund Release</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="fin-amount">Amount (£)</label>
+                        <input type="number" id="fin-amount" min="0.01" step="0.01" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="fin-purpose">Purpose</label>
+                        <select id="fin-purpose" required>
+                          <option value="Pocket Money">Pocket Money</option>
+                          <option value="Emergency Reserve">Emergency Reserve</option>
+                          <option value="Exeat Spending">Exeat Spending</option>
+                          <option value="Travel / Transport Advance">Travel / Transport Advance</option>
+                          <option value="Medical / Dental">Medical / Dental</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="fin-approved-by">Approved by Role</label>
+                        <select id="fin-approved-by" required>
+                          <option value="DSL Lead">DSL Lead</option>
+                          <option value="Operations Manager">Operations Manager</option>
+                          <option value="Director">Director</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="fin-receipt">Receipt Attached?</label>
+                        <input type="file" id="fin-receipt" accept=".pdf,.jpg,.jpeg,.png">
+                      </div>
+
+                      <div class="form-group form-full">
+                        <label for="fin-notes">Notes</label>
+                        <textarea id="fin-notes" placeholder="Additional context…"></textarea>
+                      </div>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="button-alt" id="fin-cancel-btn">Cancel</button>
+                      <button type="submit" class="button">Save Transaction</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div><!-- /tab-finances -->
+
+            <!-- ── Safeguarding concerns strip ── -->
+            <div class="card" id="concern-strip" style="display:none;">
+              <h4>⚠ Open Concerns</h4>
+              <div id="concern-list" class="list"></div>
+              <p style="margin-top:12px;">
+                <a href="concerns-dashboard.html" class="link-pill">View all concerns →</a>
+              </p>
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      // ── URL param extraction ──────────────────────────────────────────────
+      var params    = new URLSearchParams(window.location.search);
+      var studentId = params.get('id') || 'STU10492';
+      var student   = getStudentById(studentId);
+
+      // ── Not found ─────────────────────────────────────────────────────────
+      if (!student) {
+        document.getElementById('main-content').innerHTML =
+          '<div class="not-found">' +
+            '<h3>Student not found</h3>' +
+            '<p>No record exists for ID <strong>' + studentId + '</strong>. ' +
+            '<a href="students.html">Return to student list.</a></p>' +
+          '</div>';
+        throw new Error('Student not found: ' + studentId);
+      }
+
+      // ── Helpers ───────────────────────────────────────────────────────────
+      function formatDob(iso) {
+        if (!iso) return '—';
+        var d = new Date(iso);
+        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      }
+
+      function statusClass(status) {
+        var map = { 'Active': 'green', 'Monitor': 'amber', 'Pending': 'amber' };
+        return map[status] || 'navy';
+      }
+
+      function escapeHtml(str) {
+        return str
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function nowDate() {
+        return new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      }
+
+      // ── Populate page elements ────────────────────────────────────────────
+      var fullName = student.firstName + ' ' + student.lastName;
+
+      document.getElementById('page-title').textContent   = fullName + ' — Oxford Guardians';
+      document.getElementById('chrome-route').textContent = 'Route /admin/students/' + student.id;
+      document.getElementById('student-name').innerHTML = fullName +
+        ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + student.id + '</span>';
+
+      var badge = document.getElementById('status-badge');
+      badge.textContent = student.status;
+      badge.className   = 'badge ' + statusClass(student.status);
+
+      document.getElementById('kv-full-name').textContent      = fullName;
+      document.getElementById('kv-preferred-name').textContent = student.preferredName || fullName;
+      document.getElementById('kv-dob').textContent            = formatDob(student.dob);
+      document.getElementById('kv-nationality').textContent    = student.nationality;
+      document.getElementById('kv-school').textContent         =
+        student.school +
+        (student.schoolYear   ? ' / ' + student.schoolYear   : '') +
+        (student.tutorOrHouse ? ' / ' + student.tutorOrHouse : '');
+      document.getElementById('kv-accommodation').textContent = student.accommodationType || 'Boarding Student';
+
+      var p1Parts = [student.parent1Name, student.parent1Email, student.parent1Phone].filter(Boolean);
+      document.getElementById('kv-parent1').textContent = p1Parts.length ? p1Parts.join(' / ') : '—';
+
+      var p2Parts = [student.parent2Name, student.parent2Email, student.parent2Phone].filter(Boolean);
+      document.getElementById('kv-parent2').textContent = p2Parts.length ? p2Parts.join(' / ') : 'Not recorded';
+
+      // AEGIS Standards 2.6.1 & 10.2 — in-person handover of the 24/7 emergency
+      // rota / welcome pack, signed off by whichever staff member conducted it.
+      function renderEmergencyPackStatus() {
+        var box = document.getElementById('kv-emergency-pack');
+        if (student.emergencyNumberIssued === true) {
+          box.innerHTML =
+            '<span class="badge green">&#10003; Handed Over in Person</span>' +
+            '<span style="font-size:0.82rem; color:#6b85a0; margin-left:6px;">' +
+              'Logged ' + escapeHtml(student.emergencyNumberIssuedDate || '') + ' by <strong>' + escapeHtml(student.emergencyPackIssuedBy || 'Staff') + '</strong>' +
+            '</span>';
+        } else {
+          box.innerHTML =
+            '<div style="display:flex; align-items:center; gap:8px;">' +
+              '<span class="badge amber">Pending Arrival Handover</span>' +
+              '<button type="button" class="button-alt button-sm" onclick="logEmergencyPackHandover()" style="padding:3px 10px; font-size:0.78rem;">Log Pack Handed Over</button>' +
+            '</div>';
+        }
+      }
+      renderEmergencyPackStatus();
+
+      function logEmergencyPackHandover() {
+        if (!student || !student.id) return;
+        var staff = prompt('Staff member handing over the welcome pack & 24/7 emergency card:', 'Jay Ray (DSL / Operations)');
+        if (!staff) return;
+        recordEmergencyNumberIssued('student', student.id, staff);
+        location.reload();
+      }
+
+      document.querySelector('a[href="student-edit.html"]').href = 'student-edit.html?id=' + student.id;
+
+      document.getElementById('link-health').href   = 'student-health.html?id='   + student.id;
+      document.getElementById('link-family').href   = 'student-family.html?id='   + student.id;
+      document.getElementById('link-legal').href    = 'student-legal.html?id='    + student.id;
+      document.getElementById('link-pastoral').href = 'student-pastoral.html?id=' + student.id;
+      document.getElementById('link-risk').href     = 'student-risk.html?id='     + student.id;
+
+      // ── Tab switching ─────────────────────────────────────────────────────
+      var tabButtons  = document.querySelectorAll('.subnav button[data-tab]');
+      var tabPanels   = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var target = this.getAttribute('data-tab');
+
+          tabPanels.forEach(function (panel) {
+            panel.classList.remove('active');
+            panel.style.display = 'none';
+          });
+
+          tabButtons.forEach(function (b) { b.classList.remove('active'); });
+
+          var activePanel = document.getElementById(target);
+          if (activePanel) {
+            activePanel.classList.add('active');
+            activePanel.style.display = 'block';
+          }
+
+          this.classList.add('active');
+        });
+      });
+
+      // Ensure the initial active panel is visible
+      document.querySelectorAll('.tab-content').forEach(function (panel) {
+        panel.style.display = panel.classList.contains('active') ? 'block' : 'none';
+      });
+
+      // ── Generic upload widget factory ─────────────────────────────────────
+      // Builds a self-contained upload/render/remove system for any list.
+      function createUploadWidget(options) {
+        // options: { storageKey, fileInputId, nameInputId, btnId, listId, iconClass, emptyText }
+        var key = options.storageKey;
+
+        function load() {
+          try { return JSON.parse(localStorage.getItem(key)) || []; }
+          catch (e) { return []; }
+        }
+
+        function save(items) {
+          localStorage.setItem(key, JSON.stringify(items));
+        }
+
+        function render() {
+          var items = load();
+          var list  = document.getElementById(options.listId);
+
+          if (!items.length) {
+            list.innerHTML = '<div class="doc-empty">' + (options.emptyText || 'No files uploaded yet.') + '</div>';
+            return;
+          }
+
+          list.innerHTML = items.map(function (item, i) {
+            return '<div class="doc-item">' +
+              '<div class="doc-item-info">' +
+                '<div class="doc-icon' + (options.iconClass ? ' ' + options.iconClass : '') + '">' +
+                  '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                    '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>' +
+                    '<polyline points="14 2 14 8 20 8"></polyline>' +
+                  '</svg>' +
+                '</div>' +
+                '<div>' +
+                  '<div class="doc-item-name">' + escapeHtml(item.name) + '</div>' +
+                  '<div class="doc-item-meta">Uploaded ' + item.date + '</div>' +
+                '</div>' +
+              '</div>' +
+              (item.fileData ? '<a href="' + item.fileData + '" download="' + (item.fileName || 'download') + '" style="font-size: 0.8rem; margin-right: 10px; color: #2a6096; font-weight: 600; text-decoration: none;">Download</a>' : '') +
+              '<button class="doc-remove" data-index="' + i + '" title="Remove">&#x2715;</button>' +
+            '</div>';
+          }).join('');
+
+          list.querySelectorAll('.doc-remove').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              var items = load();
+              items.splice(parseInt(this.getAttribute('data-index'), 10), 1);
+              save(items);
+              render();
+            });
+          });
+        }
+
+        document.getElementById(options.btnId).addEventListener('click', function () {
+          var nameInput = document.getElementById(options.nameInputId);
+          var fileInput = document.getElementById(options.fileInputId);
+          var name = nameInput.value.trim();
+
+          if (!name) {
+            nameInput.style.borderColor = '#7f3034';
+            nameInput.focus();
+            return;
+          }
+
+          nameInput.style.borderColor = '';
+
+          var items = load();
+          if (fileInput.files.length > 0) {
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+              items.push({ name: name, date: nowDate(), fileData: reader.result, fileName: file.name });
+              save(items);
+              render();
+              nameInput.value = '';
+              fileInput.value = '';
+            };
+          } else {
+            items.push({ name: name, date: nowDate() });
+            save(items);
+            render();
+            nameInput.value = '';
+            fileInput.value = '';
+          }
+        });
+
+        render(); // initial render on page load
+      }
+
+      // ── Initialise Document upload ────────────────────────────────────────
+      createUploadWidget({
+        storageKey:  'docs_' + student.id,
+        fileInputId: 'doc-file',
+        nameInputId: 'doc-name',
+        btnId:       'upload-btn',
+        listId:      'document-list',
+        iconClass:   '',
+        emptyText:   'No documents uploaded yet.'
+      });
+
+      // ── Initialise Academic Report upload ─────────────────────────────────
+      createUploadWidget({
+        storageKey:  'acad_' + student.id,
+        fileInputId: 'acad-file',
+        nameInputId: 'acad-name',
+        btnId:       'upload-acad-btn',
+        listId:      'academic-list',
+        iconClass:   'acad',
+        emptyText:   'No academic reports uploaded yet.'
+      });
+      // ── Homestays tab: render connected exeat/placement records ──────────
+      (function () {
+        var studentFullName = student.firstName + ' ' + student.lastName;
+        var exeats = OG_DB.getAllExeats().filter(function (e) {
+          return e.studentName === studentFullName;
+        });
+        var container = document.getElementById('student-homestays-list');
+        if (!exeats.length) {
+          container.innerHTML = '<div class="doc-empty">No connected records found.</div>';
+          return;
+        }
+        var thStyle = 'text-align:left;padding:8px 10px;border-bottom:1px solid #d5dce8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.07em;color:#6b85a0;';
+        var tdStyle = 'padding:8px 10px;border-bottom:1px solid #edf2f8;font-size:0.85rem;color:#3b536e;';
+        container.innerHTML = '<table style="width:100%;border-collapse:collapse;">' +
+          '<thead><tr>' +
+            '<th style="' + thStyle + '">Break</th>' +
+            '<th style="' + thStyle + '">Host</th>' +
+            '<th style="' + thStyle + '">Start</th>' +
+            '<th style="' + thStyle + '">Return</th>' +
+          '</tr></thead><tbody>' +
+          exeats.map(function (e) {
+            return '<tr>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(e.breakType  || '—') + '</td>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(e.hostName   || '—') + '</td>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(e.startDate  || '—') + '</td>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(e.returnDate || '—') + '</td>' +
+              '</tr>';
+          }).join('') +
+          '</tbody></table>';
+      }());
+
+      // ── Travel tab: render connected transport records ────────────────────
+      (function () {
+        var studentFullName = student.firstName + ' ' + student.lastName;
+        var transports = OG_DB.getAllTransports().filter(function (t) {
+          return t.studentId === student.id || t.studentName === studentFullName;
+        });
+        var container = document.getElementById('student-travel-list');
+        if (!transports.length) {
+          container.innerHTML = '<div class="doc-empty">No connected records found.</div>';
+          return;
+        }
+        var thStyle = 'text-align:left;padding:8px 10px;border-bottom:1px solid #d5dce8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.07em;color:#6b85a0;';
+        var tdStyle = 'padding:8px 10px;border-bottom:1px solid #edf2f8;font-size:0.85rem;color:#3b536e;';
+        container.innerHTML = '<table style="width:100%;border-collapse:collapse;">' +
+          '<thead><tr>' +
+            '<th style="' + thStyle + '">Date</th>' +
+            '<th style="' + thStyle + '">Route</th>' +
+            '<th style="' + thStyle + '">Driver</th>' +
+            '<th style="' + thStyle + '">Status</th>' +
+          '</tr></thead><tbody>' +
+          transports.map(function (t) {
+            var route = t.from ? escapeHtml(t.from) + (t.to ? ' → ' + escapeHtml(t.to) : '') : '—';
+            return '<tr>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(t.date || '—') + '</td>' +
+              '<td style="' + tdStyle + '">' + route + '</td>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(t.driverName || t.driver || '—') + '</td>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(t.status || '—') + '</td>' +
+              '</tr>';
+          }).join('') +
+          '</tbody></table>';
+      }());
+
+      // ── Welfare log ───────────────────────────────────────────────────────
+      (function () {
+        var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+        function fmtDate(iso) {
+          if (!iso) return '—';
+          var d = new Date(iso);
+          if (isNaN(d.getTime())) return iso;
+          return d.getDate() + ' ' + MONTHS[d.getMonth()];
+        }
+
+        // Wire up "Log welfare note" link to carry the current studentId
+        var noteLink = document.getElementById('welfare-note-link');
+        if (noteLink) noteLink.href = 'welfare-note-create.html?id=' + studentId;
+
+        document.getElementById('mh-suite-link').href = 'mental-health-referral.html?id=' + studentId;
+
+        var container = document.getElementById('welfare-timeline');
+        if (!container) return;
+
+        var logs = getWelfareLogsForStudent(studentId);
+
+        if (!logs.length) {
+          container.innerHTML =
+            '<p style="color:#6b85a0;font-size:0.9rem;padding:8px 0;">No welfare records or check-ins found.</p>';
+          return;
+        }
+
+        container.innerHTML = logs.map(function (log) {
+          return '<div class="timeline-item">' +
+            '<time>' + escapeHtml(fmtDate(log.date)) + '</time>' +
+            '<div>' +
+              '<strong>' + escapeHtml(log.summary || '') + '</strong>' +
+              '<small>' + escapeHtml(log.details  || '') + '</small>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }());
+
+      // ── Safeguarding concerns strip ──────────────────────────────────────
+      (function () {
+        var getConcerns = (typeof getConcernsForPerson === 'function')
+          ? getConcernsForPerson
+          : (window.OG_DB && window.OG_DB.getConcernsForPerson);
+        if (!getConcerns) return;
+
+        var stripEl = document.getElementById('concern-strip');
+        var listEl  = document.getElementById('concern-list');
+        if (!stripEl || !listEl) return;
+
+        var openConcerns = getConcerns(studentId).filter(function (c) {
+          return c.status !== 'Closed';
+        });
+        if (!openConcerns.length) return;
+
+        stripEl.style.display = 'block';
+        listEl.innerHTML = openConcerns.map(function (c) {
+          return '<div class="list-item">' +
+            '<strong>' + escapeHtml(c.title) + '</strong>' +
+            '<p>' + escapeHtml(c.category) + ' · ' + escapeHtml(c.tier) + '</p>' +
+            '<small>Logged ' + escapeHtml(c.loggedDate) + ' · Status: ' + escapeHtml(c.status) + '</small>' +
+          '</div>';
+        }).join('');
+      }());
+
+      // ── Finances & Pocket Money tab (AEGIS Standard 2.9.2) ─────────────────
+      (function () {
+        var listBody   = document.getElementById('fin-ledger-body');
+        var modal      = document.getElementById('finModal');
+        var form       = document.getElementById('finForm');
+        var modalTitle = document.getElementById('finModalTitle');
+
+        function fmtMoney(n) {
+          var v = Number(n) || 0;
+          return '£' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function fmtFinDate(d) {
+          if (!d) return '—';
+          var p = new Date(d);
+          if (isNaN(p.getTime())) return d;
+          var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          return p.getDate() + ' ' + M[p.getMonth()] + ' ' + p.getFullYear();
+        }
+
+        function renderFinancesTab() {
+          var summary = getStudentFundSummary(student.id);
+          var txs     = getStudentHeldFunds(student.id);
+
+          document.getElementById('fin-kpi-deposits').textContent = fmtMoney(summary.totalDeposited);
+          document.getElementById('fin-kpi-released').textContent = fmtMoney(summary.totalReleased);
+          document.getElementById('fin-kpi-balance').textContent  = fmtMoney(summary.balanceHeld);
+
+          var balanceCard = document.getElementById('fin-kpi-balance-card');
+          var balanceSub  = document.getElementById('fin-kpi-balance-sub');
+          balanceCard.classList.remove('balance-good', 'balance-low', 'balance-over');
+          if (summary.balanceHeld < 0) {
+            balanceCard.classList.add('balance-over');
+            balanceSub.textContent = 'Overdrawn — requires urgent review (Standard 2.9.2)';
+          } else if (summary.balanceHeld < 50) {
+            balanceCard.classList.add('balance-low');
+            balanceSub.textContent = 'Low balance';
+          } else {
+            balanceCard.classList.add('balance-good');
+            balanceSub.textContent = summary.transactionCount + ' transaction' + (summary.transactionCount === 1 ? '' : 's') + ' on file';
+          }
+
+          if (!txs.length) {
+            listBody.innerHTML = '<tr><td colspan="9" class="fin-empty">No deposits or releases recorded for this student yet.</td></tr>';
+            return;
+          }
+
+          listBody.innerHTML = txs.slice().reverse().map(function (tx) {
+            var isDeposit  = tx.type === 'deposit';
+            var typeBadge  = isDeposit
+              ? '<span class="badge green" style="font-size:0.72rem;">Deposit In</span>'
+              : '<span class="badge red" style="font-size:0.72rem;">Release Out</span>';
+            var amountHtml = isDeposit
+              ? '<span class="fin-amount-in">+' + fmtMoney(tx.amount) + '</span>'
+              : '<span class="fin-amount-out">−' + fmtMoney(tx.amountReleased) + '</span>';
+            var receiptHtml = (tx.receiptHeld || tx.receiptDocPath)
+              ? '<span class="fin-receipt-ok">&#10003; On file</span>'
+              : '<span class="fin-receipt-miss">&#10007; Missing</span>';
+
+            return '<tr>' +
+              '<td>' + escapeHtml(fmtFinDate(tx.dateReceived)) + '</td>' +
+              '<td>' + escapeHtml(tx.id || '—') + '</td>' +
+              '<td>' + typeBadge + '</td>' +
+              '<td>' + escapeHtml(tx.purpose || '—') + '</td>' +
+              '<td>' + amountHtml + '</td>' +
+              '<td>' + fmtMoney(tx.balanceHeld) + '</td>' +
+              '<td>' + escapeHtml(tx.approvedBy || '—') + '</td>' +
+              '<td>' + receiptHtml + '</td>' +
+              '<td><button type="button" class="fin-del-btn" data-id="' + escapeHtml(tx.id) + '" title="Delete record">&#x2715;</button></td>' +
+            '</tr>';
+          }).join('');
+
+          listBody.querySelectorAll('.fin-del-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              if (!confirm('Delete this transaction record? This cannot be undone.')) return;
+              deleteStudentHeldFundTransaction(this.getAttribute('data-id'));
+              renderFinancesTab();
+            });
+          });
+        }
+
+        function openFinModal(type) {
+          form.reset();
+          document.getElementById('fin-type').value = type;
+          modalTitle.textContent = type === 'release'
+            ? 'Disburse Pocket Money / Release Funds'
+            : 'Receive New Deposit / Funds';
+          var t = new Date();
+          document.getElementById('fin-date').value = t.getFullYear() + '-' +
+            String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+          modal.style.display = 'flex';
+        }
+
+        function closeFinModal() {
+          modal.style.display = 'none';
+        }
+
+        document.getElementById('btn-fin-deposit').addEventListener('click', function () { openFinModal('deposit'); });
+        document.getElementById('btn-fin-release').addEventListener('click', function () { openFinModal('release'); });
+        document.getElementById('fin-cancel-btn').addEventListener('click', closeFinModal);
+        modal.addEventListener('click', function (e) { if (e.target === this) closeFinModal(); });
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          var type      = document.getElementById('fin-type').value;
+          var date      = document.getElementById('fin-date').value;
+          var amount    = parseFloat(document.getElementById('fin-amount').value) || 0;
+          var purpose   = document.getElementById('fin-purpose').value;
+          var approved  = document.getElementById('fin-approved-by').value;
+          var notes     = document.getElementById('fin-notes').value.trim();
+          var fileInput = document.getElementById('fin-receipt');
+
+          function buildAndSave(receiptDocPath) {
+            var tx = {
+              studentId:      student.id,
+              studentName:    fullName,
+              dateReceived:   date,
+              type:           type,
+              amount:         type === 'deposit' ? amount : 0,
+              currency:       'GBP',
+              purpose:        purpose,
+              releasedDate:   type === 'release' ? date : null,
+              amountReleased: type === 'release' ? amount : 0,
+              approvedBy:     approved,
+              receiptHeld:    !!receiptDocPath,
+              receiptDocPath: receiptDocPath || '',
+              recordLocation: 'Finance Archive',
+              notes:          notes
+            };
+            saveStudentHeldFundTransaction(tx);
+            closeFinModal();
+            renderFinancesTab();
+          }
+
+          if (fileInput.files.length > 0) {
+            var reader = new FileReader();
+            reader.onload = function (evt) { buildAndSave(evt.target.result); };
+            reader.readAsDataURL(fileInput.files[0]);
+          } else {
+            buildAndSave('');
+          }
+        });
+
+        renderFinancesTab();
+      }());
+    </script>
+  </body>
+</html>

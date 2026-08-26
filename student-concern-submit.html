@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Report Concern — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+    <style>
+      .form-label {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-3);
+        font-size: 0.76rem;
+        margin-bottom: 5px;
+      }
+      .form-control {
+        width: 100%;
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--ink);
+        background: #faf6ee;
+        border: 1px solid #d8cbb2;
+        border-radius: 14px;
+        padding: 11px 14px;
+        appearance: none;
+        box-sizing: border-box;
+        transition: border-color 0.15s, box-shadow 0.15s;
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: #2a6096;
+        box-shadow: 0 0 0 3px rgba(42, 96, 150, 0.12);
+      }
+      select.form-control {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b85a0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 36px;
+        cursor: pointer;
+      }
+      textarea.form-control { min-height: 140px; resize: vertical; }
+      .form-field { display: grid; gap: 0; }
+      .identity-banner {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 18px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="section" style="padding:28px;">
+        <span class="eyebrow">Report a concern</span>
+        <h1>Private route to DSL.</h1>
+
+        <div class="banner identity-banner">
+          <h4 style="margin:0;">Reporting for: <span id="identity-name">Loading…</span> — <span id="identity-school">—</span></h4>
+        </div>
+
+        <div class="banner red" style="margin-top:18px;">
+          <h4>This goes straight to Oxford Guardians safeguarding staff.</h4>
+          <p>Students should know who sees this and why. Vague safety language is useless when someone is stressed.</p>
+        </div>
+
+        <div class="panel" style="padding:22px; margin-top:18px;">
+          <form id="concern-form" novalidate>
+            <div class="form-grid">
+
+              <div class="form-field">
+                <label class="form-label" for="f-concern-type">Concern type</label>
+                <select class="form-control" id="f-concern-type" required>
+                  <option>Bullying / feeling unsafe</option>
+                  <option>Homestay / placement concern</option>
+                  <option>Travel or driver issue</option>
+                  <option>School / academic distress</option>
+                  <option>Mental health / personal worry</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="f-urgency">Urgency</label>
+                <select class="form-control" id="f-urgency" required>
+                  <option>Need reply today</option>
+                  <option>Within 24–48 hours</option>
+                  <option>Urgent / Emergency</option>
+                </select>
+              </div>
+
+              <div class="form-field form-span-2">
+                <label class="form-label" for="f-details">What happened?</label>
+                <textarea class="form-control" id="f-details" required placeholder="Share as much as you feel comfortable with. There's no wrong way to write this — even a few lines helps Jay understand what's going on."></textarea>
+              </div>
+
+              <div class="form-field form-span-2">
+                <label class="form-label" for="f-contact-pref">Preferred follow-up method</label>
+                <select class="form-control" id="f-contact-pref">
+                  <option>Phone call from Jay Ray (DSL)</option>
+                  <option>WhatsApp / text message</option>
+                  <option>Private in-person visit at school</option>
+                </select>
+              </div>
+
+            </div>
+            <div class="action-row" style="margin-top:18px;">
+              <a class="button-alt" id="back-portal-btn" href="student-portal.html">Back to portal</a>
+              <button type="submit" class="button">Submit concern to DSL</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <script>
+    (function () {
+      var params    = new URLSearchParams(window.location.search);
+      var studentId = params.get('id') || '';
+      var student   = studentId ? getStudentById(studentId) : null;
+
+      document.getElementById('identity-name').textContent   = student ? (student.firstName + ' ' + student.lastName) : (studentId || 'Unknown student');
+      document.getElementById('identity-school').textContent = student ? (student.school || 'School not on file') : '—';
+
+      if (studentId) {
+        document.getElementById('back-portal-btn').href = 'student-portal.html?id=' + studentId;
+      }
+
+      document.getElementById('concern-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var type = document.getElementById('f-concern-type').value;
+        var urgency = document.getElementById('f-urgency').value;
+        var details = document.getElementById('f-details').value.trim();
+        var contactPref = document.getElementById('f-contact-pref').value;
+
+        if (!details) {
+          alert('Please describe what happened before submitting.');
+          return;
+        }
+
+        var concernId = generateConcernId();
+        var todayISO = new Date().toISOString().slice(0, 10);
+        var studentName = student ? (student.firstName + ' ' + student.lastName) : 'Student';
+
+        saveConcern({
+          id: concernId,
+          subjectName: studentName,
+          subjectRole: 'Student',
+          subjectId: studentId,
+          tier: urgency === 'Urgent / Emergency' ? 'escalated' : 'DSL',
+          category: 'Student Self-Report: ' + type,
+          title: 'Student portal report — ' + type,
+          description: details + '\n\nUrgency: ' + urgency + '\nPreferred contact: ' + contactPref,
+          source: 'Student Portal (Self-Report)',
+          loggedDate: todayISO,
+          status: 'Pending triage'
+        });
+
+        saveWelfareLog({
+          id: 'WL' + Date.now(),
+          studentId: studentId,
+          type: 'student-concern',
+          date: todayISO,
+          summary: 'Self-reported concern: ' + type,
+          details: 'Urgency: ' + urgency + '\nDetails: ' + details + '\nLinked Concern: ' + concernId
+        });
+
+        window.location.href = 'student-concern-success.html?id=' + studentId;
+      });
+    }());
+    </script>
+  </body>
+</html>

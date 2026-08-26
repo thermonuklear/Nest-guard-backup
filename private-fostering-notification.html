@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notify Local Authority — Private Fostering — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+      #student-selector {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1.5px solid #d1dbe7;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        color: #0f172a;
+        background: #fff;
+        outline: none;
+        cursor: pointer;
+        appearance: auto;
+      }
+      #student-selector:focus { border-color: #06b6d4; }
+      input[type="file"].field-input {
+        width: 100%;
+        padding: 6px 2px;
+        font-family: inherit;
+        font-size: 0.875rem;
+        color: #0f172a;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/compliance/private-fostering/notify</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>LA Notification</strong></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a><a class="nav-link" href="private-fostering.html">Private fostering</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow" id="notification-eyebrow">Private fostering notification</span>
+                <h2>This generates the letter. You still have to send it.</h2>
+                <p>The system prepares the notification, but the actual submission to the local authority is your responsibility. Keep the dated letter and any acknowledgement as evidence.</p>
+              </div>
+            </div>
+            <div class="card">
+              <h4>Arrangement details</h4>
+              <div class="form-grid">
+                <div>
+                  <label>Student</label>
+                  <select id="student-selector"><option value="">— Select a student —</option></select>
+                </div>
+                <div>
+                  <label>Date of birth</label>
+                  <input type="text" id="input-dob" placeholder="Auto-filled on student selection" />
+                </div>
+                <div>
+                  <label>Age at arrangement start</label>
+                  <input type="text" id="input-age" placeholder="Auto-filled on student selection" />
+                </div>
+                <div>
+                  <label>School</label>
+                  <input type="text" id="input-school" placeholder="Auto-filled on student selection" />
+                </div>
+                <div>
+                  <label>Homestay household</label>
+                  <input type="text" id="input-homestay" placeholder="Auto-filled on student selection" />
+                </div>
+                <div>
+                  <label>Primary carer</label>
+                  <input type="text" id="input-carer" placeholder="Enter primary carer name" />
+                </div>
+                <div>
+                  <label>Arrangement start date</label>
+                  <input type="text" id="input-start-date" placeholder="Auto-filled on student selection" />
+                </div>
+                <div>
+                  <label>Expected end date</label>
+                  <input type="text" id="input-end-date" placeholder="e.g. 20 Jun 2026 (end of summer term)" />
+                </div>
+                <div>
+                  <label>Total days</label>
+                  <input type="text" id="input-total-days" placeholder="e.g. 81 days (exceeds 28-day threshold)" />
+                </div>
+                <div>
+                  <label>28-day threshold date</label>
+                  <input type="text" id="input-threshold" placeholder="Auto-filled on student selection" />
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h4>Local authority details</h4>
+              <div class="form-grid">
+                <div>
+                  <label>Responsible local authority</label>
+                  <input type="text" id="input-la-name" value="Peterborough City Council" readonly />
+                </div>
+                <div>
+                  <label>Children's services contact</label>
+                  <input type="text" id="input-la-email" value="privatefostering@peterborough.gov.uk" />
+                </div>
+                <div>
+                  <label>Phone</label>
+                  <input type="text" id="input-la-phone" value="01733 747474" />
+                </div>
+                <div>
+                  <label>Address</label>
+                  <input type="text" id="input-la-address" value="Children's Services, Sand Martin House, Bittern Way, Peterborough PE2 8TY" />
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h4>Notification content</h4>
+              <div class="form-grid">
+                <div class="form-span-2">
+                  <label>Reason for arrangement</label>
+                  <textarea id="textarea-reason" class="textarea-box" rows="3"></textarea>
+                </div>
+                <div class="form-span-2">
+                  <label>Parent/guardian consent confirmation</label>
+                  <textarea id="textarea-consent" class="textarea-box" rows="2"></textarea>
+                </div>
+                <div class="form-span-2">
+                  <label>School notification confirmation</label>
+                  <textarea id="textarea-school" class="textarea-box" rows="2"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h4>Evidence checklist</h4>
+              <div class="form-grid">
+                <div class="form-span-2">
+                  <label for="file-parent-consent">Parent consent letter</label>
+                  <input type="file" id="file-parent-consent" class="field-input">
+                </div>
+                <div class="form-span-2">
+                  <label for="file-school-notification">School notification email</label>
+                  <input type="file" id="file-school-notification" class="field-input">
+                </div>
+                <div class="form-span-2">
+                  <label for="file-homestay-dbs">Homestay DBS certificate</label>
+                  <input type="file" id="file-homestay-dbs" class="field-input">
+                </div>
+                <div class="form-span-2">
+                  <label for="file-homestay-awareness">Homestay awareness form</label>
+                  <input type="file" id="file-homestay-awareness" class="field-input">
+                </div>
+                <div class="form-span-2">
+                  <label for="file-la-acknowledgement">LA acknowledgement</label>
+                  <input type="file" id="file-la-acknowledgement" class="field-input">
+                </div>
+              </div>
+            </div>
+            <div class="action-row">
+              <button id="btn-generate-pdf" class="button">Generate notification letter</button>
+              <button id="btn-generate-zip" class="button-alt">Create ZIP of Evidence</button>
+              <a class="button-alt" href="private-fostering.html">Cancel</a>
+            </div>
+            <div class="note brutal" style="margin-top:24px;">
+              <h4>This is not optional</h4>
+              <ul>
+                <li>Failure to notify is a criminal offence for the person caring for the child.</li>
+                <li>Guardianship organisations have a duty to ensure notification happens even if they're not the direct carer.</li>
+                <li>The LA may visit the homestay — prepare the homestay for this possibility.</li>
+                <li>Keep all correspondence with the LA permanently as part of the student and homestay record.</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      function fmtDateGB(iso) {
+        if (!iso) return '';
+        var d = new Date(iso);
+        if (isNaN(d.getTime())) return '';
+        return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+      }
+
+      function calcAgeAt(dobStr, atDateStr) {
+        if (!dobStr) return null;
+        var dob    = new Date(dobStr);
+        var atDate = atDateStr ? new Date(atDateStr) : new Date();
+        if (isNaN(atDate.getTime())) atDate = new Date();
+        var age = atDate.getFullYear() - dob.getFullYear();
+        if (atDate.getMonth() < dob.getMonth() ||
+            (atDate.getMonth() === dob.getMonth() && atDate.getDate() < dob.getDate())) {
+          age--;
+        }
+        return age;
+      }
+
+      function addDays(isoDate, days) {
+        var d = new Date(isoDate);
+        d.setDate(d.getDate() + days);
+        return d.toISOString().split('T')[0];
+      }
+
+      // Populate dropdown
+      var selector = document.getElementById('student-selector');
+      getAllStudents().forEach(function (s) {
+        var opt = document.createElement('option');
+        opt.value       = s.id;
+        opt.textContent = s.firstName + ' ' + s.lastName + (s.school ? ' (' + s.school + ')' : '');
+        selector.appendChild(opt);
+      });
+
+      // Auto-fill fields on selection
+      selector.onchange = function () {
+        var id = this.value;
+
+        if (!id) {
+          ['input-dob','input-age','input-school','input-homestay',
+           'input-carer','input-start-date','input-end-date',
+           'input-total-days','input-threshold'].forEach(function (elId) {
+            document.getElementById(elId).value = '';
+          });
+          document.getElementById('notification-eyebrow').textContent =
+            'Private fostering notification';
+          return;
+        }
+
+        var s  = getStudentById(id);
+        if (!s) return;
+        var pf = s.privateFostering || {};
+
+        document.getElementById('notification-eyebrow').textContent =
+          'Private fostering notification / ' + s.firstName + ' ' + s.lastName;
+
+        document.getElementById('input-dob').value =
+          fmtDateGB(s.dob);
+
+        var startISO = pf.proposedStartDate || '';
+        var ageVal   = calcAgeAt(s.dob, startISO || null);
+        document.getElementById('input-age').value =
+          ageVal !== null ? ageVal + ' years' : '';
+
+        document.getElementById('input-school').value = s.school || '';
+
+        var homestayParts = [s.homestayFamily, s.homestayDetails].filter(Boolean);
+        document.getElementById('input-homestay').value = homestayParts.join(', ');
+
+        document.getElementById('input-carer').value   = s.homestayFamily || '';
+        document.getElementById('input-start-date').value = fmtDateGB(startISO);
+        document.getElementById('input-end-date').value   = '';
+        document.getElementById('input-total-days').value = '';
+        document.getElementById('input-threshold').value  =
+          startISO ? fmtDateGB(addDays(startISO, 28)) : '';
+      };
+    </script>
+    <script>
+      // ── Shared helpers ────────────────────────────────────────────────────────
+
+      function getStudentName() {
+        var sel = document.getElementById('student-selector');
+        if (!sel.value) return 'Unknown Student';
+        var s = getStudentById(sel.value);
+        return s ? s.firstName + ' ' + s.lastName : 'Unknown Student';
+      }
+
+      function todayISOStr() {
+        return new Date().toISOString().split('T')[0];
+      }
+
+      function val(id) {
+        var el = document.getElementById(id);
+        return el ? el.value.trim() : '';
+      }
+
+      function savePFDocument(studentName, type) {
+        var records = [];
+        try { records = JSON.parse(localStorage.getItem('og_pf_documents')) || []; } catch (e) {}
+        records.push({ studentName: studentName, date: todayISOStr(), type: type, status: 'Generated' });
+        localStorage.setItem('og_pf_documents', JSON.stringify(records));
+      }
+
+      // ── PDF generation ────────────────────────────────────────────────────────
+
+      document.getElementById('btn-generate-pdf').onclick = function () {
+        var studentName = getStudentName();
+        var today       = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+        var doc         = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
+        var lm = 20, rm = 190, pw = rm - lm, y = 20;
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(11);
+
+        function checkPage() {
+          if (y > 268) { doc.addPage(); y = 20; }
+        }
+
+        function ln(text, bold, size, gap) {
+          checkPage();
+          doc.setFont('helvetica', bold ? 'bold' : 'normal');
+          doc.setFontSize(size || 11);
+          var wrapped = doc.splitTextToSize(String(text), pw);
+          doc.text(wrapped, lm, y);
+          y += wrapped.length * ((size || 11) * 0.45) + (gap !== undefined ? gap : 4);
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(11);
+        }
+
+        function rule() {
+          checkPage();
+          doc.setDrawColor(209, 219, 231);
+          doc.line(lm, y, rm, y);
+          y += 5;
+        }
+
+        // Letterhead
+        ln('Oxford Guardians', true, 14, 3);
+        ln(today, false, 11, 8);
+        rule();
+
+        // LA address block
+        var laName = val('input-la-name'), laAddr = val('input-la-address');
+        if (laName) ln(laName, false, 11, 2);
+        if (laAddr) ln(laAddr, false, 11, 8);
+
+        ln("Dear Children's Services,", false, 11, 6);
+        ln('RE: PRIVATE FOSTERING NOTIFICATION — ' + studentName.toUpperCase(), true, 11, 6);
+        ln('We write to formally notify ' + (laName || 'the local authority') +
+          ' of a private fostering arrangement involving a child in our guardianship, as required under Section 67 of the Children Act 1989 and the Children (Private Arrangements for Fostering) Regulations 2005.',
+          false, 11, 6);
+
+        rule();
+        ln('ARRANGEMENT DETAILS', true, 10, 5);
+
+        var fields = [
+          ['Student',                     studentName],
+          ['Date of birth',               val('input-dob')],
+          ['Age at arrangement start',    val('input-age')],
+          ['School',                      val('input-school')],
+          ['Private fostering household', val('input-homestay')],
+          ['Primary carer',               val('input-carer')],
+          ['Arrangement start date',      val('input-start-date')],
+          ['Expected end date',           val('input-end-date')],
+          ['Total duration',              val('input-total-days')],
+          ['28-day threshold date',       val('input-threshold')]
+        ];
+
+        fields.forEach(function (f) {
+          if (!f[1]) return;
+          checkPage();
+          var label = f[0] + ':  ';
+          doc.setFont('helvetica', 'bold');
+          var lw = doc.getTextWidth(label);
+          doc.text(label, lm, y);
+          doc.setFont('helvetica', 'normal');
+          var vLines = doc.splitTextToSize(f[1], pw - lw);
+          doc.text(vLines, lm + lw, y);
+          y += vLines.length * 5 + 2;
+        });
+        y += 3;
+
+        var reason = val('textarea-reason');
+        if (reason) { rule(); ln('REASON FOR ARRANGEMENT', true, 10, 4); ln(reason, false, 11, 4); }
+
+        var consent = val('textarea-consent');
+        if (consent) { rule(); ln('CONSENT', true, 10, 4); ln(consent, false, 11, 4); }
+
+        var schoolNote = val('textarea-school');
+        if (schoolNote) { rule(); ln('SCHOOL NOTIFICATION', true, 10, 4); ln(schoolNote, false, 11, 4); }
+
+        rule();
+        ln('Please acknowledge receipt of this notification in writing and advise if a home visit to the fostering household is required.', false, 11, 8);
+        ln('Yours faithfully,', false, 11, 10);
+        ln('Oxford Guardians', true, 11, 2);
+        ln('compliance@oxfordguardians.co.uk', false, 11, 2);
+
+        doc.save(studentName + ' - LA Notification.pdf');
+        savePFDocument(studentName, 'PDF');
+      };
+
+      // ── ZIP generation ────────────────────────────────────────────────────────
+
+      document.getElementById('btn-generate-zip').onclick = function () {
+        var studentName = getStudentName();
+        var dateStr     = todayISOStr();
+        var zip         = new JSZip();
+
+        var fileInputs = [
+          { id: 'file-parent-consent',      label: 'Parent Consent Letter' },
+          { id: 'file-school-notification', label: 'School Notification' },
+          { id: 'file-homestay-dbs',        label: 'Homestay DBS' },
+          { id: 'file-homestay-awareness',  label: 'Homestay Awareness Form' },
+          { id: 'file-la-acknowledgement',  label: 'LA Acknowledgement' }
+        ];
+
+        var added = 0, pending = fileInputs.length;
+
+        fileInputs.forEach(function (fi) {
+          var input = document.getElementById(fi.id);
+          var file  = input && input.files && input.files[0];
+          if (!file) { pending--; if (pending === 0) finalise(); return; }
+          var dot  = file.name.lastIndexOf('.');
+          var ext  = dot !== -1 ? file.name.slice(dot + 1) : 'bin';
+          var name = studentName + ' - ' + dateStr + ' - ' + fi.label + '.' + ext;
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            zip.file(name, e.target.result);
+            added++;
+            pending--;
+            if (pending === 0) finalise();
+          };
+          reader.readAsArrayBuffer(file);
+        });
+
+        function finalise() {
+          if (!added) { alert('No files have been attached to the evidence checklist.'); return; }
+          zip.generateAsync({ type: 'blob' }).then(function (blob) {
+            var a      = document.createElement('a');
+            a.href     = URL.createObjectURL(blob);
+            a.download = studentName + ' - ' + dateStr + ' - Evidence.zip';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+            savePFDocument(studentName, 'ZIP');
+          });
+        }
+      };
+    </script>
+  </body>
+</html>

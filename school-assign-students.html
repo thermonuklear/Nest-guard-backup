@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assign Students — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      .field-input {
+        width: 100%;
+        margin-top: 6px;
+        padding: 8px 10px;
+        border: 1.5px solid #d1dbe7;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        color: #0f172a;
+        background: #fff;
+        outline: none;
+        box-sizing: border-box;
+      }
+      .field-input:focus { border-color: #06b6d4; }
+      .assign-legend { display: flex; gap: 18px; align-items: center; font-size: 0.82rem; color: #64748b; margin: 0 0 14px; }
+      .assign-legend span { display: inline-flex; align-items: center; gap: 6px; }
+      .legend-swatch { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
+      table td { vertical-align: middle; }
+      .assign-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: #0f2340; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/school-directory/assign-students</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Standard 9</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="schools.html">Schools</a>
+              <a class="nav-link nav-link-sub active" href="school-directory.html">School directory</a>
+              <a class="nav-link nav-link-sub" href="school-liaison.html">Communication log</a>
+              <a class="nav-link nav-link-sub" href="school-log-create.html">Log contact</a>
+              <a class="nav-link nav-link-sub" href="school-welfare-notification.html">Welfare notification</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Operations — Schools</span>
+                <h2 id="page-title">Assign Students</h2>
+                <p>Tick students to enrol them at this school. Unticking a student who is currently enrolled here removes them from this school (they become unassigned, not deleted).</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" id="back-link" href="school-directory.html">← Back to profile</a>
+              </div>
+            </div>
+
+            <div id="not-found" class="card" style="display:none;">
+              <h4>School not found</h4>
+              <p style="margin:0;color:#64748b;"><a href="school-directory.html">Return to the school directory</a></p>
+            </div>
+
+            <div id="assign-panel" class="card">
+              <h4>Students</h4>
+              <div class="assign-legend">
+                <span><span class="legend-swatch" style="background:var(--red-soft);border:1px solid var(--red);"></span> Already has a school assigned</span>
+                <span><span class="legend-swatch" style="background:var(--green-soft);border:1px solid var(--green);"></span> Unassigned</span>
+              </div>
+              <input type="text" id="student-search" class="field-input" style="max-width:320px;margin-bottom:14px;" placeholder="Search students by name…" />
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th style="width:40px;"></th><th>Name</th><th>Year Group</th><th>Current School</th></tr>
+                  </thead>
+                  <tbody id="assign-tbody"></tbody>
+                </table>
+              </div>
+              <div class="action-row" style="margin-top:16px;">
+                <a class="button-alt" id="cancel-link" href="school-directory.html">Cancel</a>
+                <button type="button" class="button" id="assign-btn">Save Assignments</button>
+              </div>
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      function esc(str) {
+        return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
+      var params = new URLSearchParams(window.location.search);
+      var schoolId = params.get('id');
+      var school = schoolId ? getSchoolById(schoolId) : null;
+
+      if (!school) {
+        document.getElementById('not-found').style.display = 'block';
+        document.getElementById('assign-panel').style.display = 'none';
+      } else {
+        document.title = 'Assign Students — ' + school.name + ' — Oxford Guardians Platform';
+        document.getElementById('page-title').textContent = 'Assign Students — ' + school.name;
+
+        var profileUrl = 'school-profile.html?id=' + encodeURIComponent(school.id);
+        document.getElementById('back-link').href = profileUrl;
+        document.getElementById('cancel-link').href = profileUrl;
+
+        // User's explicit checkbox choices in this session, keyed by student id.
+        // Persists selections across search filtering, which otherwise re-renders the table.
+        var overrides = {};
+
+        function studentIsAtThisSchool(s) {
+          return s.schoolId === school.id || s.school === school.name;
+        }
+
+        function studentHasAnySchool(s) {
+          return !!(s.schoolId || (s.school && s.school.trim()));
+        }
+
+        function isChecked(s) {
+          if (Object.prototype.hasOwnProperty.call(overrides, s.id)) return overrides[s.id];
+          return studentIsAtThisSchool(s);
+        }
+
+        function renderList(filterText) {
+          var students = getAllStudents().slice().sort(function (a, b) {
+            return (a.firstName + a.lastName).localeCompare(b.firstName + b.lastName);
+          });
+
+          if (filterText) {
+            var f = filterText.trim().toLowerCase();
+            students = students.filter(function (s) {
+              return (s.firstName + ' ' + s.lastName).toLowerCase().indexOf(f) !== -1;
+            });
+          }
+
+          var tbody = document.getElementById('assign-tbody');
+
+          if (!students.length) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:#94a3b8;">No students found.</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = students.map(function (s) {
+            var hasSchool = studentHasAnySchool(s);
+            var rowStyle = hasSchool ? 'background:var(--red-soft);' : 'background:var(--green-soft);';
+            var badge = hasSchool
+              ? '<span class="badge red">' + esc(s.school || 'Assigned') + '</span>'
+              : '<span class="badge green">Unassigned</span>';
+            var name = (s.preferredName || s.firstName || '') + ' ' + (s.lastName || '');
+            return '<tr style="' + rowStyle + '">' +
+              '<td><input type="checkbox" class="assign-checkbox" data-id="' + esc(s.id) + '"' + (isChecked(s) ? ' checked' : '') + ' /></td>' +
+              '<td><strong>' + esc(name.trim()) + '</strong></td>' +
+              '<td>' + esc(s.schoolYear || '—') + '</td>' +
+              '<td>' + badge + '</td>' +
+            '</tr>';
+          }).join('');
+        }
+
+        // Event delegation — survives tbody re-renders from search filtering.
+        document.getElementById('assign-tbody').addEventListener('change', function (e) {
+          if (e.target.classList.contains('assign-checkbox')) {
+            overrides[e.target.getAttribute('data-id')] = e.target.checked;
+          }
+        });
+
+        document.getElementById('student-search').addEventListener('input', function (e) {
+          renderList(e.target.value);
+        });
+
+        document.getElementById('assign-btn').addEventListener('click', function () {
+          getAllStudents().forEach(function (s) {
+            var checked = isChecked(s);
+            if (checked) {
+              if (s.schoolId !== school.id || s.school !== school.name) {
+                s.schoolId = school.id;
+                s.school = school.name;
+                upsertStudent(s);
+              }
+            } else if (studentIsAtThisSchool(s)) {
+              s.schoolId = '';
+              s.school = '';
+              upsertStudent(s);
+            }
+          });
+          window.location.href = profileUrl;
+        });
+
+        renderList('');
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Host Families Single Central Record — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style> .shell { grid-template-columns: 248px minmax(0, 1fr) !important; } .main { min-width: 0; } </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/compliance/scr/hosts</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Host SCR</strong></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a><a class="nav-link" href="private-fostering.html">Private fostering</a><a class="nav-link active" href="scr-dashboard.html">SCR Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="scr-staff.html" style="color: #63768b; text-decoration: none;">• Staff SCR</a><a href="scr-hosts.html" style="color: #e8f0fa; font-weight: 600; text-decoration: none;">• Host SCR</a><a href="scr-drivers.html" style="color: #63768b; text-decoration: none;">• Driver SCR</a></div><a class="nav-link" href="audit-log.html">Audit trail</a><a class="nav-link" href="reporting-dashboard.html">Reporting</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">AEGIS Appendix 7 — Host Family Records</span>
+                <h2>Host Families Single Central Record</h2>
+                <p>Safer recruitment evidence for all approved host families. Every field maps to an AEGIS/KCSIE requirement. Gaps here are compliance failures.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button-alt" href="admin-dashboard.html">Back to Dashboard</a><a class="button-alt" href="scr-dashboard.html">Back to SCR Dashboard</a><a class="button" href="#">Export CSV</a></div>
+            </div>
+            <div class="table-wrap" style="overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; display: block; border: 1px solid #e1e7ec; border-radius: 8px; padding-bottom: 15px;">
+              <table style="min-width: max-content; width: 100%; font-size: 0.85rem; border-collapse: collapse; white-space: nowrap;">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Start date</th>
+                    <th>DOB</th>
+                    <th>ID check</th>
+                    <th>DBS number</th>
+                    <th>DBS level</th>
+                    <th>Certificate seen</th>
+                    <th>Barred list</th>
+                    <th>Right to work</th>
+                    <th>Overseas check</th>
+                    <th>Ref 1</th>
+                    <th>Ref 2</th>
+                    <th>Self-dec</th>
+                    <th>Induction</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="scr-hosts-body"></tbody>
+              </table>
+            </div>
+            <div class="cols-2" style="margin-top:24px;">
+              <div class="card">
+                <h4>SCR field requirements (Appendix 7)</h4>
+                <div class="list">
+                  <div class="list-item"><strong>Position and start date</strong><small>Role title and date person began hosting</small></div>
+                  <div class="list-item"><strong>Name and DOB</strong><small>Full legal name and date of birth</small></div>
+                  <div class="list-item"><strong>ID check</strong><small>Document type, date checked, checker initials</small></div>
+                  <div class="list-item"><strong>DBS details</strong><small>Certificate number, level (enhanced), date seen, who saw original</small></div>
+                  <div class="list-item"><strong>Barred list check</strong><small>Separate check for regulated activity — date and outcome</small></div>
+                  <div class="list-item"><strong>Right to work</strong><small>Evidence type and verification date</small></div>
+                  <div class="list-item"><strong>Overseas check</strong><small>Required if lived/worked abroad >3 months in last 5 years</small></div>
+                  <div class="list-item"><strong>References</strong><small>Two references, both verified with dates and checker</small></div>
+                  <div class="list-item"><strong>Self-declaration</strong><small>Date completed</small></div>
+                  <div class="list-item"><strong>Induction</strong><small>Date completed (primary carer)</small></div>
+                </div>
+              </div>
+              <div class="note brutal">
+                <h4>Why SCRs fail inspection</h4>
+                <ul>
+                  <li>Certificate "seen" but no record of who saw it or when.</li>
+                  <li>References "obtained" but not verified — no phone call or written confirmation.</li>
+                  <li>Household members over 16 missing DBS checks entirely.</li>
+                  <li>Overseas checks forgotten for hosts who lived abroad.</li>
+                  <li>Barred list check conflated with DBS — they're separate requirements for regulated activity.</li>
+                  <li>Update service not being used — 3-year renewals become compliance debt.</li>
+                </ul>
+              </div>
+            </div>
+            <p class="inline-links">Related: <a href="scr-dashboard.html">SCR Dashboard</a> · <a href="scr-staff.html">Staff SCR</a> · <a href="scr-drivers.html">Driver SCR</a> · <a href="hosts.html">Host list</a> · <a href="compliance.html">AEGIS control room</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+    (function () {
+      function tick() {
+        return '<span style="color:#1a6632;font-weight:600;">&#10003;</span>';
+      }
+      function missingBadge() {
+        return '<span class="badge red" style="font-size:0.73rem;padding:2px 7px;">Missing</span>';
+      }
+      function exemptBadge(label) {
+        return '<span class="badge amber" style="font-size:0.73rem;padding:2px 7px;">' + label + '</span>';
+      }
+      function naCell() {
+        return '<span style="color:#9bafc4;">N/A</span>';
+      }
+      function docCell(path) {
+        return path ? tick() : missingBadge();
+      }
+
+      var today = new Date();
+
+      // AEGIS 6.3 — safeguarding training expires 3 years after completion for hosts/drivers.
+      function isSafeguardingExpired(c) {
+        return !!(c.safeguardingTrainingExpiry && new Date(c.safeguardingTrainingExpiry) < today);
+      }
+
+      // ── AEGIS 5.1.3 household member helpers ──────────────────────────────────
+      function ageFromDob(dob) {
+        if (!dob) return null;
+        var d = new Date(dob);
+        if (isNaN(d.getTime())) return null;
+        var years = (Date.now() - d.getTime()) / (365.25 * 24 * 60 * 60 * 1000);
+        return Math.floor(years);
+      }
+      function isMemberOver16(m) {
+        if (typeof m.isOver16 === 'boolean') return m.isOver16;
+        var age = ageFromDob(m.dob);
+        if (age !== null) return age >= 16;
+        return typeof m.age === 'number' ? m.age >= 16 : false;
+      }
+      function fmtDob(d) {
+        if (!d) return null;
+        var p = new Date(d);
+        if (isNaN(p.getTime())) return d;
+        var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return p.getDate() + ' ' + M[p.getMonth()] + ' ' + p.getFullYear();
+      }
+      // The primary host is conventionally also present as their own entry in
+      // householdMembers (real seed data does this) — that is the one place a real
+      // DOB exists for the primary carer today, so we read it from there rather
+      // than fabricating a value. Genuinely absent → honest "Not recorded".
+      function getHostSelfMember(host) {
+        var fullName = (host.firstName + ' ' + host.lastName).trim().toLowerCase();
+        return (host.householdMembers || []).find(function (m) {
+          return ((m.fullName || m.name || '').trim().toLowerCase()) === fullName;
+        }) || null;
+      }
+      function dobCellFor(dob) {
+        return dob
+          ? '<span>' + fmtDob(dob) + '</span>'
+          : '<span style="color:#9bafc4;">Not recorded</span>';
+      }
+      function selfDecCellFor(date, docPath) {
+        if (date || docPath) {
+          return '<span class="badge green">Signed' + (date ? ' (' + fmtDob(date) + ')' : '') + '</span>';
+        }
+        return '<span class="badge amber">Not signed</span>';
+      }
+      function barredCellFor(date) {
+        return date
+          ? '<span class="badge green">Checked ' + fmtDob(date) + '</span>'
+          : '<span class="badge amber">Pending Check</span>';
+      }
+
+      // Sub-row for one household member aged 16+ (excluding the primary host's own
+      // self-entry, which is already represented by the main row above it).
+      function buildMemberSubRow(host, member) {
+        var name = member.fullName || member.name || 'Unnamed';
+        var dbsCell = member.dbsNumber
+          ? '<span style="font-family:monospace;font-size:0.82rem;">' + member.dbsNumber + '</span>'
+          : missingBadge();
+        var dbsLevelCell = member.dbsNumber ? 'Enhanced' : naCell();
+
+        return '<tr style="background:#f8fafc;">' +
+          '<td style="padding-left:28px;"><a href="host-compliance.html?id=' + host.id + '" style="text-decoration:none;color:inherit;">&#8618; ' + name + '</a>' +
+            '<br><span style="font-size:0.74rem;color:#9bafc4;">' + (member.relationship || 'Household member') + '</span></td>' +
+          '<td>Household member</td>' +
+          '<td>' + (member.residentStatus || '—') + '</td>' +
+          '<td>' + dobCellFor(member.dob) + '</td>' +
+          '<td>' + naCell() + '</td>' +
+          '<td>' + dbsCell + '</td>' +
+          '<td>' + dbsLevelCell + '</td>' +
+          '<td>' + naCell() + '</td>' +
+          '<td>' + barredCellFor(member.barredListCheckDate) + '</td>' +
+          '<td>' + naCell() + '</td>' +
+          '<td>' + naCell() + '</td>' +
+          '<td>' + naCell() + '</td>' +
+          '<td>' + naCell() + '</td>' +
+          '<td>' + selfDecCellFor(member.selfDeclarationDate) + '</td>' +
+          '<td>' + naCell() + '</td>' +
+          '<td>' + (member.dbsNumber && member.barredListCheckDate && member.selfDeclarationDate
+                      ? '<span class="badge green">Complete</span>'
+                      : '<span class="badge red">Incomplete</span>') + '</td>' +
+        '</tr>';
+      }
+
+      function rowStatus(c) {
+        if (c.worksOutsideUK) return 'exempt';
+        var missing =
+          !c.idDocumentPath ||
+          (!c.dbsNumber && !c.dbsCertificatePath) ||
+          (!c.isCitizen && !c.rightToWorkCheckPath) ||
+          !c.reference1Path ||
+          !c.reference2Path ||
+          (c.livedAbroad && !c.overseasCheckDocPath) ||
+          (!c.safeguardingTrainingDate && !c.safeguardingCertificatePath) ||
+          isSafeguardingExpired(c);
+        return missing ? 'incomplete' : 'complete';
+      }
+
+      function buildRow(person, type) {
+        var c = person.compliance || {};
+        var name     = person.firstName + ' ' + person.lastName;
+        var position, startDate;
+
+        if (type === 'staff') {
+          position  = person.title || person.role || 'Staff';
+          startDate = person.startDate || '—';
+        } else if (type === 'host') {
+          position  = 'Homestay carer';
+          startDate = person.hostSince || '—';
+        } else {
+          position  = 'Licensed driver';
+          startDate = '—';
+        }
+
+        var idCell   = docCell(c.idDocumentPath);
+        var dbsNum   = c.dbsNumber || person.dbsCertNumber || '';
+        var dbsNumCell;
+        if (c.worksOutsideUK) {
+          dbsNumCell = exemptBadge('Exempt (Non-UK)');
+        } else {
+          dbsNumCell = dbsNum
+            ? '<span style="font-family:monospace;font-size:0.82rem;">' + dbsNum + '</span>'
+            : missingBadge();
+        }
+
+        var certCell = c.worksOutsideUK ? exemptBadge('Exempt (Non-UK)') : docCell(c.dbsCertificatePath);
+
+        // AEGIS 5.1.3 — the barred list check is a separate requirement from the DBS
+        // certificate; it reads its own dedicated date rather than being inferred from
+        // dbsStatus. Primary hosts often carry this on their own householdMembers
+        // self-entry (see getHostSelfMember) since that's where the vetting form saves it.
+        var selfMember = (type === 'host') ? getHostSelfMember(person) : null;
+        var barredCell;
+        if (c.worksOutsideUK) {
+          barredCell = exemptBadge('Exempt (Non-UK)');
+        } else {
+          barredCell = barredCellFor(c.barredListCheckDate || (selfMember && selfMember.barredListCheckDate));
+        }
+
+        var rtwCell;
+        if (c.worksOutsideUK) {
+          rtwCell = exemptBadge('Exempt (Non-UK)');
+        } else if (c.isCitizen) {
+          rtwCell = exemptBadge('Citizen (No Expiry)');
+        } else {
+          rtwCell = docCell(c.rightToWorkCheckPath);
+        }
+
+        var overseasCell = c.livedAbroad ? docCell(c.overseasCheckDocPath) : naCell();
+
+        // AEGIS 6.3 — Missing / Expired / Due soon (within 60 days) / Valid, driven by
+        // safeguardingTrainingExpiry (3 years after safeguardingTrainingDate).
+        var inductionCell;
+        if (!c.safeguardingTrainingDate) {
+          inductionCell = '<span class="badge red">Missing</span>';
+        } else if (isSafeguardingExpired(c)) {
+          inductionCell = '<span class="badge red">Expired (' + c.safeguardingTrainingExpiry + ')</span>';
+        } else if (c.safeguardingTrainingExpiry && Math.floor((new Date(c.safeguardingTrainingExpiry) - today) / 86400000) <= 60) {
+          inductionCell = '<span class="badge amber">Due soon (' + c.safeguardingTrainingExpiry + ')</span>';
+        } else {
+          inductionCell = '<span class="badge green">Valid to ' + (c.safeguardingTrainingExpiry || '—') + '</span>' +
+            ' <span style="font-size:0.8rem;color:#3b536e;">(' + c.safeguardingTrainingDate + ')</span>';
+        }
+
+        var status = rowStatus(c);
+        var statusCell =
+          status === 'complete' ? '<span class="badge green">Complete</span>'  :
+          status === 'exempt'   ? '<span class="badge amber">Exempt</span>'    :
+                                  '<span class="badge red">Incomplete</span>';
+
+        var editUrl = type === 'staff' ? 'staff-compliance.html?id=' + person.id :
+                      type === 'host'  ? 'host-compliance.html?id='  + person.id :
+                                         'driver-compliance.html?id=' + person.id;
+
+        return '<tr>' +
+          '<td><a href="' + editUrl + '" style="text-decoration:none;color:inherit;"><strong>' + name + '</strong></a>' +
+            '<br><span style="font-size:0.74rem;color:#9bafc4;font-family:monospace;">' + person.id + '</span></td>' +
+          '<td>' + position   + '</td>' +
+          '<td>' + startDate  + '</td>' +
+          '<td>' + (type === 'host' ? dobCellFor(selfMember && selfMember.dob) : '<span style="color:#9bafc4;">Not recorded</span>') + '</td>' +
+          '<td>' + idCell     + '</td>' +
+          '<td>' + dbsNumCell + '</td>' +
+          '<td>Enhanced</td>' +
+          '<td>' + certCell   + '</td>' +
+          '<td>' + barredCell + '</td>' +
+          '<td>' + rtwCell    + '</td>' +
+          '<td>' + overseasCell + '</td>' +
+          '<td>' + docCell(c.reference1Path) + '</td>' +
+          '<td>' + docCell(c.reference2Path) + '</td>' +
+          '<td>' + selfDecCellFor(c.selfDeclarationDate, c.selfDeclarationDocPath) + '</td>' +
+          '<td>' + inductionCell + '</td>' +
+          '<td>' + statusCell    + '</td>' +
+        '</tr>';
+      }
+
+      var rows = [];
+      getAllHosts().forEach(function (p) {
+        rows.push(buildRow(p, 'host'));
+
+        // AEGIS 5.1.3 — every household member aged 16+ appears as a sub-row so
+        // inspectors can verify Enhanced DBS + Barred List coverage for the whole
+        // household, not just the primary carer. The primary host's own self-entry
+        // (see getHostSelfMember) is already represented by the row above, so skip it.
+        var selfMember = getHostSelfMember(p);
+        (p.householdMembers || []).forEach(function (m) {
+          if (m === selfMember) return;
+          if (!isMemberOver16(m)) return;
+          rows.push(buildMemberSubRow(p, m));
+        });
+      });
+
+      document.getElementById('scr-hosts-body').innerHTML = rows.length
+        ? rows.join('')
+        : '<tr><td colspan="16" style="text-align:center;padding:28px;color:#9bafc4;">No host records found.</td></tr>';
+    }());
+    </script>
+  </body>
+</html>

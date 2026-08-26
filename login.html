@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="section split-hero">
+        <section class="login-brand">
+          <div>
+            <span class="eyebrow">Sign in gateway</span>
+            <h2>Three roles. One controlled entrance.</h2>
+            <p>
+              Staff, parents, and students all enter here. Same front door, different visibility after login. That is cleaner than pretending each role needs a different public entry page.
+            </p>
+            <div class="signal-grid">
+              <div class="signal">
+                <strong>Admin</strong>
+                <p>Students, users, homestays, travel, documents, compliance, and audit-sensitive actions.</p>
+              </div>
+              <div class="signal">
+                <strong>Parent</strong>
+                <p>Child status, welfare feed, consent records, and emergency information.</p>
+              </div>
+              <div class="signal">
+                <strong>Student</strong>
+                <p>Emergency contact, handbook, check-ins, homestay details, and concern reporting.</p>
+              </div>
+              <div class="signal">
+                <strong>Brutal note</strong>
+                <p>Do not build self-service sign-up for a system managing children and safeguarding records.</p>
+              </div>
+            </div>
+          </div>
+          <div class="note brutal">
+            <h4>PRD gap</h4>
+            <p>Epic 1 says authentication matters but never defines invite, reset, lockout, role boundaries, or first-login mechanics. That is not a small omission. That is the operational skeleton.</p>
+          </div>
+        </section>
+        <section class="login-panel">
+          <div class="form-card">
+            <span class="badge navy">Invited accounts only</span>
+            <h3 style="margin-top: 14px;">Secure sign in</h3>
+            <p class="lead" style="margin-top: 10px; font-size: 0.98rem;">
+              Example account shown below is for Jay Ray, DSL. In the real system this page would route by role after successful authentication.
+            </p>
+            <div class="field-list">
+              <div class="field">
+                <small>Email address</small>
+                <strong>jay.ray@oxfordguardians.co.uk</strong>
+              </div>
+              <div class="field">
+                <small>Password</small>
+                <strong>••••••••••••</strong>
+              </div>
+              <div class="field">
+                <small>Account role</small>
+                <strong>Admin / DSL access</strong>
+              </div>
+              <div class="field">
+                <small>Session policy</small>
+                <strong>Trusted device / 12-hour session / audit logging enabled</strong>
+              </div>
+            </div>
+            <div class="toolbar-actions" style="margin-top: 22px; justify-content: space-between;">
+              <a class="button-alt" href="index.html">Back to app map</a>
+              <a class="button" href="admin-dashboard.html">Sign in</a>
+            </div>
+            <div class="topnav" style="margin-top: 18px;">
+              <a href="parent-portal.html">Preview parent landing</a>
+              <a href="student-portal.html">Preview student landing</a>
+              <a href="first-login-setup.html">First login setup</a>
+              <a href="password-reset-request.html">Reset password</a>
+              <a href="account-lockout.html">Locked account state</a>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
