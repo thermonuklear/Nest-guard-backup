@@ -1,0 +1,1954 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Host Profile — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Global colour overrides ── */
+      body, .page, .shell, main {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important;
+      }
+
+      /* ── Chrome bar ── */
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-right: 16px !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .chrome-nav-link {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        transition: background 0.15s, color 0.15s;
+        white-space: nowrap;
+      }
+
+      .chrome-nav-link:hover {
+        background: rgba(15,35,64,0.07);
+        color: #0f2340;
+      }
+
+      /* ── Sidebar ── */
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+      }
+
+      .nav-link-sub {
+        padding-left: 36px !important;
+        font-size: 0.85em !important;
+        opacity: 0.85;
+      }
+
+      /* ── Main ── */
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+      }
+
+      h2, h3, h4 { color: #0f2340 !important; }
+      p           { color: #3b536e; }
+      .eyebrow    { color: #2a6096 !important; }
+      .toolbar p  { color: #3b536e !important; }
+
+      /* ── Buttons ── */
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      /* ── Form controls ── */
+      .field-input,
+      .field-select,
+      .field-textarea {
+        width: 100%;
+        margin-top: 6px;
+        padding: 10px 12px;
+        border: 1px solid #d5dce8 !important;
+        border-radius: 10px;
+        background: #ffffff !important;
+        color: #0f2340;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.92rem;
+        outline: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+        box-sizing: border-box;
+      }
+
+      .field-input::placeholder,
+      .field-textarea::placeholder { color: #9bafc4; }
+
+      .field-input:focus,
+      .field-select:focus,
+      .field-textarea:focus {
+        border-color: #0f2340 !important;
+        box-shadow: 0 0 0 3px rgba(15,35,64,0.1);
+      }
+
+      .field-select { appearance: none; cursor: pointer; }
+      .field-textarea { resize: vertical; min-height: 80px; }
+
+      /* ── Form layout ── */
+      .form-section { margin-bottom: 28px; }
+
+      .form-section-title {
+        font-family: "Outfit", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #2a6096;
+        margin-bottom: 14px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #e8eef6;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .form-grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 14px;
+      }
+
+      .form-span-2 { grid-column: span 2; }
+      .form-span-3 { grid-column: span 3; }
+
+      .field small {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #3b536e;
+      }
+
+      .field-hint {
+        font-size: 0.75rem;
+        color: #6b85a0;
+        margin-top: 3px;
+      }
+
+      /* ── Panel ── */
+      .create-panel {
+        background: #ffffff !important;
+        border: 1px solid #d5dce8 !important;
+        border-radius: 16px;
+        padding: 28px;
+        margin: 0 0 24px;
+      }
+
+      .action-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding-top: 8px;
+      }
+
+      /* ── Host avatar in toolbar ── */
+      .host-avatar-lg {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0f2340 0%, #1a3459 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Outfit", sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+        color: #e8f0fa;
+        border: 2px solid #d5dce8;
+        flex-shrink: 0;
+      }
+
+      /* ── Not-found state ── */
+      .not-found {
+        padding: 60px 32px;
+        text-align: center;
+        color: #3b536e;
+      }
+
+      .not-found h3 { color: #0f2340 !important; margin-bottom: 10px; }
+
+      /* ── Save toast ── */
+      .save-toast {
+        position: fixed;
+        top: 20px;
+        right: 24px;
+        z-index: 9999;
+        background: #0f2340;
+        color: #ffffff;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.88rem;
+        font-weight: 600;
+        padding: 12px 20px;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(15,35,64,0.25);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        opacity: 0;
+        transform: translateY(-8px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        pointer-events: none;
+      }
+
+      .save-toast.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .save-toast-icon {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #28a745;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 11px;
+      }
+
+      /* ── Tab bar (buttons styled via app.css .topnav / .link-pill) ── */
+      .topnav .link-pill {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        cursor: pointer;
+        appearance: none;
+      }
+
+      /* ── Required docs checklist ── */
+      .req-docs {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 20px;
+        padding: 18px 20px;
+        margin-bottom: 16px;
+        max-width: 640px;
+      }
+
+      .req-docs h4 { margin-bottom: 14px; color: #0f2340 !important; }
+      .req-doc-list { display: grid; gap: 8px; }
+
+      .req-doc-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 12px;
+        background: #f4f7fb;
+        border: 1px solid #e2e9f3;
+        border-radius: 10px;
+      }
+
+      .req-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #7b9abf;
+        margin-top: 5px;
+        flex-shrink: 0;
+      }
+
+      .req-doc-item strong { display: block; font-size: 0.88rem; color: #0f2340; }
+      .req-doc-item small  { font-size: 0.76rem; color: #6b85a0; }
+
+      /* ── Upload card ── */
+      .upload-card {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 20px;
+        padding: 18px;
+        max-width: 640px;
+      }
+
+      .upload-card h4 { margin-bottom: 14px; color: #0f2340 !important; }
+
+      .upload-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+
+      .upload-controls input[type="file"] {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.86rem;
+        color: #3b536e;
+        cursor: pointer;
+        max-width: 100%;
+      }
+
+      .doc-name-input {
+        flex: 1;
+        min-width: 150px;
+        padding: 9px 13px;
+        border: 1.5px solid #d5dce8;
+        border-radius: 10px;
+        background: #f0f4f8;
+        color: #0f2340;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s, background 0.15s;
+      }
+
+      .doc-name-input::placeholder { color: #9bafc4; }
+      .doc-name-input:focus { border-color: #0f2340; background: #ffffff; }
+
+      .doc-list { display: grid; gap: 8px; }
+
+      .doc-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 13px;
+        background: #f0f4f8;
+        border: 1px solid #d5dce8;
+        border-radius: 12px;
+      }
+
+      .doc-item-info { display: flex; align-items: center; gap: 10px; }
+
+      .doc-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: #0f2340;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .doc-icon svg { width: 15px; height: 15px; stroke: #ffffff; fill: none; }
+
+      .doc-item-name { font-size: 0.88rem; font-weight: 600; color: #0f2340; }
+      .doc-item-meta { font-size: 0.76rem; color: #6b85a0; margin-top: 1px; }
+
+      .doc-remove {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #9bafc4;
+        font-size: 0.95rem;
+        padding: 4px 6px;
+        border-radius: 6px;
+        transition: color 0.15s, background 0.15s;
+        line-height: 1;
+      }
+
+      .doc-remove:hover { color: #7f3034; background: #f3dddd; }
+
+      .doc-empty {
+        text-align: center;
+        padding: 24px 16px;
+        color: #9bafc4;
+        font-size: 0.86rem;
+        border: 1.5px dashed #d5dce8;
+        border-radius: 12px;
+      }
+
+      @media (max-width: 760px) {
+        .form-grid, .form-grid-3 { grid-template-columns: 1fr; }
+        .form-span-2, .form-span-3 { grid-column: span 1; }
+        .create-panel { padding: 18px; }
+      }
+    </style>
+  </head>
+  <body>
+
+  <!-- Save toast -->
+  <div class="save-toast" id="save-toast">
+    <div class="save-toast-icon">✓</div>
+    <span>Profile saved successfully</span>
+  </div>
+
+  <main class="page">
+    <div class="app-frame">
+
+      <!-- Chrome bar -->
+      <div class="chrome">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <nav class="chrome-nav">
+          <a class="chrome-nav-link" href="admin-dashboard.html">Dashboard</a>
+          <a class="chrome-nav-link" href="notifications.html">Notifications</a>
+        </nav>
+      </div>
+
+      <div class="shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="brand">
+            <small>Oxford Guardians</small>
+            <strong id="sidebar-label">Host Profile</strong>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Operations</div>
+            <a class="nav-link" href="homestays.html">Homestays</a>
+            <a class="nav-link nav-link-sub active" href="hosts.html">Hosts</a>
+            <a class="nav-link nav-link-sub" href="hosts.html?status=pending">Pending Approval</a>
+            <a class="nav-link nav-link-sub" href="homestay-visit.html">Annual visits</a>
+            <a class="nav-link nav-link-sub" href="homestay-incidents.html">Incident log</a>
+            <a class="nav-link" href="documents.html">Documents</a>
+
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Compliance</div>
+            <a class="nav-link" href="compliance.html">AEGIS control room</a>
+          </div>
+        </aside>
+
+        <!-- Main content -->
+        <section class="main" id="main-content">
+
+          <!-- Toolbar (populated by JS) -->
+          <div class="toolbar" id="profile-toolbar">
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div class="host-avatar-lg" id="toolbar-avatar">—</div>
+              <div>
+                <span class="eyebrow">Host profile</span>
+                <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
+                <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;">—</p>
+              </div>
+            </div>
+            <div class="toolbar-actions">
+              <span id="toolbar-status-badge" class="badge">—</span>
+              <a class="button" id="compliance-btn" href="host-compliance.html" style="text-decoration:none;">View Compliance Record</a>
+              <a class="button-alt" id="btn-delete-draft" href="#" style="display:none;color:#9f4347;">Delete Draft</a>
+              <a class="button-alt" href="hosts.html">Back to Hosts</a>
+              <a class="button-alt" id="btn-log-visit" href="homestay-visit-report.html">Log Visit / Assessment</a>
+              <a class="button-alt" id="btn-hs-checklist" href="homestay-hs-checklist.html">H&amp;S checklist</a>
+              <a class="button-alt" id="btn-view-shareable-profile" href="#" target="_blank" style="display:inline-flex; align-items:center; gap:6px;">
+                <span>📄</span> View Shareable Profile (Student / Parent / Agent)
+              </a>
+            </div>
+          </div>
+
+          <!-- Pending Approval readiness gate — compliance evidence check for unapproved hosts -->
+          <div class="banner" id="pending-approval-gate" style="display:none;margin-bottom:14px;">
+            <h4 id="pending-approval-title"></h4>
+            <p id="pending-approval-text"></p>
+          </div>
+
+          <!-- Safeguarding concerns strip -->
+          <div class="card" id="concern-strip" style="display:none;">
+            <h4>⚠ Open Concerns</h4>
+            <div id="concern-list" class="list"></div>
+            <p style="margin-top:12px;">
+              <a href="concerns-dashboard.html" class="link-pill">View all concerns →</a>
+            </p>
+          </div>
+
+          <!-- AEGIS Standard 5.10.1.1 Annual In-Person Assessment Compliance Warning Banner -->
+          <div class="card" id="annual-visit-warning-strip" style="display:none;margin-bottom:14px;border-left:5px solid #dc2626;background:#fff5f5;padding:16px 20px;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;">
+              <div style="flex:1;min-width:280px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                  <span class="badge red" id="visit-warning-badge">Standard 5.10.1.1 Block</span>
+                  <strong style="color:#991b1b;font-size:0.95rem;" id="visit-warning-title">No In-Person Assessment Visit Recorded This Year</strong>
+                </div>
+                <p id="visit-warning-text" style="color:#7f1d1d;font-size:0.88rem;margin:0;line-height:1.5;">
+                  AEGIS Standard 5.10.1.1: No approved in-person assessment visit has been conducted for this homestay this year. <strong>Do not assign or place students with this host</strong> until an in-person assessment has been completed and signed off.
+                </p>
+              </div>
+              <div>
+                <a id="btn-visit-warning-action" href="homestay-visit-report.html" class="button" style="background:#b91c1c;border-color:#b91c1c;white-space:nowrap;font-size:0.84rem;">
+                  Conduct In-Person Visit Now
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- AEGIS Standard 6.3.1 Pre-Start Safeguarding Compliance Warning Banner -->
+          <div id="safeguarding-warning-strip" style="display:none;">
+            <div class="alert alert-warning" style="background:#fff3cd;border:1px solid #ffeeba;color:#856404;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:0.88rem;font-weight:600;">
+              Warning: This host has students assigned but introductory safeguarding training is missing or expired. Training must be verified before student arrival (AEGIS Standard 6.3.1).
+            </div>
+          </div>
+
+          <!-- Tab bar -->
+          <nav class="topnav" id="profile-tabs">
+            <button type="button" class="link-pill current" data-tab="overview">Overview</button>
+            <button type="button" class="link-pill" data-tab="visits">Visits &amp; Assessments</button>
+            <button type="button" class="link-pill" data-tab="compliance">Compliance</button>
+            <button type="button" class="link-pill" data-tab="contracts">Contracts</button>
+            <button type="button" class="link-pill" data-tab="students">Connected Students</button>
+            <button type="button" class="link-pill" data-tab="hs-checklist">H&amp;S Checklist</button>
+            <button type="button" class="link-pill" data-tab="incidents">Incidents</button>
+          </nav>
+
+          <!-- ── Tab: Overview (profile + household) ── -->
+          <div class="tab-panel" data-tab="overview">
+
+          <!-- Form panel -->
+          <div class="create-panel" id="profile-form-panel">
+            <form id="host-form" novalidate>
+
+              <!-- ── Section 1: Identity ── -->
+              <div class="form-section">
+                <div class="form-section-title">Identity</div>
+                <div class="form-grid">
+                  <div class="field">
+                    <small>First Name *</small>
+                    <input class="field-input" type="text" id="f-first-name" />
+                  </div>
+                  <div class="field">
+                    <small>Last Name *</small>
+                    <input class="field-input" type="text" id="f-last-name" />
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Home Address</small>
+                    <input class="field-input" type="text" id="f-address" />
+                  </div>
+                  <div class="field">
+                    <small>Mobile</small>
+                    <input class="field-input" type="tel" id="f-mobile" />
+                  </div>
+                  <div class="field">
+                    <small>Email</small>
+                    <input class="field-input" type="email" id="f-email" />
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Preferred Contact Method</small>
+                    <input class="field-input" type="text" id="f-preferred-contact" placeholder="e.g. WhatsApp / mobile — responds same day" />
+                  </div>
+                  <div class="field">
+                    <small>Host Since</small>
+                    <input class="field-input" type="text" id="f-host-since" placeholder="e.g. September 2022" />
+                  </div>
+                  <div class="field">
+                    <small>Overall Status</small>
+                    <select class="field-select" id="f-status">
+                      <option value="approved">Approved</option>
+                      <option value="pending">Pending</option>
+                      <option value="inactive">Inactive</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <small>Legal Status</small>
+                    <select class="field-select" id="f-legal-status">
+                      <option value="">— Select status —</option>
+                      <option value="Citizen">Citizen</option>
+                      <option value="Settled">Settled</option>
+                      <option value="Fixed Term Legal Resident">Fixed Term Legal Resident</option>
+                    </select>
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Homestay Self-Declaration (Appendix 5)</small>
+                    <input class="field-input" type="file" id="f-self-declaration" accept="application/pdf,image/*" style="padding:8px 12px; background:#faf6ee !important;" />
+                    <p class="field-hint">Upload the signed self-declaration document here to update compliance.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Section 3: DBS & Compliance ── -->
+              <div class="form-section">
+                <div class="form-section-title">DBS &amp; Compliance</div>
+                <div class="form-grid">
+                  <div class="field">
+                    <small>DBS Status *</small>
+                    <select class="field-select" id="f-dbs-status">
+                      <option value="clear">Enhanced DBS — Clear</option>
+                      <option value="amber">DBS — Action Required</option>
+                      <option value="expired">DBS — Expired</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <small>DBS Certificate Number</small>
+                    <input class="field-input" type="text" id="f-dbs-cert" placeholder="e.g. 001-338-7742-6" />
+                  </div>
+                  <div class="field">
+                    <small>DBS Issue Date</small>
+                    <input class="field-input" type="text" id="f-dbs-issue" placeholder="e.g. 03 Aug 2023" />
+                  </div>
+                  <div class="field">
+                    <small>DBS Renewal Due</small>
+                    <input class="field-input" type="text" id="f-dbs-renewal" placeholder="e.g. 03 Aug 2026" />
+                  </div>
+                  <div class="field form-span-2">
+                    <small>DBS Update Service</small>
+                    <input class="field-input" type="text" id="f-dbs-update" placeholder="e.g. Subscribed — last verified 10 Apr 2026" />
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Secondary Adult DBS</small>
+                    <input class="field-input" type="text" id="f-secondary-dbs" placeholder="e.g. Richard Ashworth — Enhanced DBS clear / issued 03 Aug 2023" />
+                  </div>
+                </div>
+
+                <div class="form-grid-3" style="margin-top:14px;">
+                  <div class="field">
+                    <small>Annual Visit Status</small>
+                    <select class="field-select" id="f-annual-visit-status">
+                      <option value="complete">Complete</option>
+                      <option value="due">Due</option>
+                      <option value="overdue">Overdue</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <small>Annual Visit Due</small>
+                    <input class="field-input" type="text" id="f-annual-visit-due" placeholder="e.g. Due 14 May 2026" />
+                  </div>
+                  <div class="field">
+                    <small>Annual Visit Last Completed</small>
+                    <input class="field-input" type="text" id="f-annual-visit-last" placeholder="e.g. Last completed 14 May 2025" />
+                  </div>
+                </div>
+
+                <div class="form-grid" style="margin-top:14px;">
+                  <div class="field">
+                    <small>H&amp;S Checklist Status</small>
+                    <select class="field-select" id="f-hs-checklist">
+                      <option value="complete">Complete</option>
+                      <option value="incomplete">Incomplete</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <small>H&amp;S Checklist Detail</small>
+                    <input class="field-input" type="text" id="f-hs-checklist-detail" placeholder="e.g. All items passed. Smoke alarms tested 14 May 2025." />
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Safe Recruitment</small>
+                    <input class="field-input" type="text" id="f-safe-recruitment" placeholder="e.g. Completed Sep 2022 — records held in secure documents" />
+                  </div>
+                  <div class="field form-span-2">
+                    <small>References</small>
+                    <input class="field-input" type="text" id="f-references" placeholder="e.g. 2 of 2 received and verified — on file" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Section 4: Performance & Feedback ── -->
+              <div class="form-section">
+                <div class="form-section-title">Performance &amp; Feedback</div>
+                <div class="form-grid">
+                  <div class="field">
+                    <small>Punctuality (% on-time)</small>
+                    <input class="field-input" type="number" id="f-punctuality-pct" min="0" max="100" />
+                    <p class="field-hint">0–100</p>
+                  </div>
+                  <div class="field">
+                    <small>Punctuality Detail</small>
+                    <input class="field-input" type="text" id="f-punctuality-detail" placeholder="e.g. 100% on-time across all assignments" />
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Welfare Incidents</small>
+                    <input class="field-input" type="text" id="f-welfare-incidents" placeholder="e.g. 0 — no safeguarding incidents recorded" />
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Parent Feedback</small>
+                    <textarea class="field-textarea" id="f-parent-feedback"></textarea>
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Student Feedback</small>
+                    <textarea class="field-textarea" id="f-student-feedback"></textarea>
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Completed Stays</small>
+                    <input class="field-input" type="text" id="f-completed-stays" placeholder="e.g. 14 student-stays across 3 academic years." />
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Internal Notes</small>
+                    <textarea class="field-textarea" id="f-notes" style="min-height:100px;"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Submit ── -->
+              <div class="action-row">
+                <button type="submit" class="button">Save profile</button>
+                <a class="button-alt" href="hosts.html">Cancel</a>
+              </div>
+
+            </form>
+          </div><!-- /create-panel -->
+
+          <!-- Household (merged into Overview tab) -->
+          <div class="create-panel">
+              <div class="form-section">
+                <div class="form-section-title">Capacity &amp; Arrangements</div>
+                <div class="form-grid-3">
+                  <div class="field">
+                    <small>Max Student Capacity</small>
+                    <input class="field-input" type="number" id="f-capacity-max" min="1" max="5" />
+                  </div>
+                  <div class="field">
+                    <small>Current Occupancy</small>
+                    <input class="field-input" type="number" id="f-capacity-current" min="0" max="5" />
+                  </div>
+                  <div class="field">
+                    <small>Current Students</small>
+                    <input class="field-input" type="text" id="f-current-students" placeholder="e.g. Yuki Tanaka / Mei Lin" />
+                  </div>
+                </div>
+                <div class="form-grid" style="margin-top:14px;">
+                  <div class="field">
+                    <small>Smoking Policy (AEGIS Standard 5.2.1 / 5.5.1.8) *</small>
+                    <select class="field-select" id="f-smoker-status">
+                      <option value="non-smoking">Strictly Non-Smoking Household</option>
+                      <option value="smoker-outside">Smoker — Outside Property Only (Garden/Patio)</option>
+                      <option value="smoker-inside">Smoker — Inside Property</option>
+                    </select>
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Pets</small>
+                    <input class="field-input" type="text" id="f-pets" placeholder="e.g. 1 cat (Mochi) — noted in allergy records" />
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Overnight Visitors Policy</small>
+                    <textarea class="field-textarea" id="f-overnight-visitors"></textarea>
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Student Bedrooms</small>
+                    <div id="rooms-display" style="display:flex; flex-direction:column; gap:12px; margin-top:10px;"></div>
+                    <button type="button" class="button-alt" id="add-room-btn" style="margin-top:10px; padding:6px 12px; font-size:0.85rem; max-width:140px;">+ Add Room</button>
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Dietary Provision</small>
+                    <textarea class="field-textarea" id="f-dietary-provision"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="form-section">
+                <div class="form-section-title">Household Residents (Aged 16+)</div>
+                <p style="color:#64748b; font-size:0.82rem; margin:-4px 0 12px;">All 9 statutory member fields (AEGIS Standard 5.2.1): name, date of birth, age, gender, occupation, interests/hobbies, and religion/faith.</p>
+                <div id="resident-list" style="display:flex; flex-direction:column; gap:12px;"></div>
+                <button type="button" class="button-alt" id="add-resident-btn" style="margin-top:14px; padding:6px 12px; font-size:0.85rem;">+ Add Resident</button>
+              </div>
+
+              <div class="form-section" style="margin-top:24px;">
+                <div class="form-section-title">Regular Visitors &amp; Overnight Guests (AEGIS Standard 5.2.2)</div>
+                <p style="color:#64748b; font-size:0.82rem; margin-bottom:12px;">Capture frequent visitors and identify if they stay overnight for DBS vetting cross-check.</p>
+                <div id="visitor-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+                <button type="button" class="button-alt" id="add-visitor-btn" style="margin-top:10px; padding:6px 12px; font-size:0.85rem;">+ Add Regular Visitor</button>
+              </div>
+
+              <div class="form-section" style="margin-top:24px;">
+                <div class="form-section-title">Emergency Provision &amp; Short-Notice Hosting (AEGIS Standard 5.4.1 / Standard 2.6)</div>
+                <div class="form-grid">
+                  <div class="field">
+                    <small>Emergency Host Status *</small>
+                    <select class="field-select" id="f-emergency-provision">
+                      <option value="true">Approved for Emergency Placements (24/7 Standby)</option>
+                      <option value="false">Standard Placements Only (No Short-Notice Emergency)</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <small>Minimum Notice Required</small>
+                    <select class="field-select" id="f-emergency-notice">
+                      <option value="2">Immediate (&lt; 2 hours notice)</option>
+                      <option value="4">Short-Notice (&lt; 4 hours notice)</option>
+                      <option value="12">Same-Day (&lt; 12 hours notice)</option>
+                      <option value="24">24 Hours Notice</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <small>Emergency Bed Standby Allocation</small>
+                    <input class="field-input" type="number" id="f-emergency-capacity" min="1" max="2" value="1" />
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Emergency Notes &amp; Preparation Protocol</small>
+                    <input class="field-input" type="text" id="f-emergency-notes" placeholder="e.g. Ground-floor room ready for short-notice suspension or medical isolation placement." />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section" style="margin-top:24px;">
+                <div class="form-section-title">Academic Availability &amp; Exeat Calendar (Standard 5.4.1)</div>
+                <p style="color:#64748b; font-size:0.82rem; margin-bottom:12px;">Manage hosting availability across upcoming exeat weekends and holiday periods.</p>
+                <div id="availability-calendar-container" style="display:flex; flex-direction:column; gap:8px;"></div>
+              </div>
+
+              <div class="action-row">
+                <button type="button" class="button" id="save-household-btn">Save Household Details</button>
+              </div>
+            </div>
+          </div><!-- /tab-panel: overview -->
+
+          <!-- ── Tab: Compliance (required docs + upload) ── -->
+          <div class="tab-panel" data-tab="compliance" style="display:none;">
+
+            <div class="req-docs">
+              <h4>Required documents</h4>
+              <div class="req-doc-list">
+                <div class="req-doc-item"><div class="req-dot"></div><div><strong>Enhanced DBS Certificate — Primary Host</strong><small>Must be current. Issue date, cert number, and Update Service status held on file.</small></div></div>
+                <div class="req-doc-item"><div class="req-dot"></div><div><strong>Enhanced DBS Certificate — Secondary Adults</strong><small>Required for all adults aged 18+ resident in the home. One entry per person.</small></div></div>
+                <div class="req-doc-item"><div class="req-dot"></div><div><strong>Gas Safety Certificate</strong><small>Annual CP12 certificate. Must be in-date at placement start and renewed each year.</small></div></div>
+                <div class="req-doc-item"><div class="req-dot"></div><div><strong>Home Insurance Policy</strong><small>Must explicitly cover student hosting / paying guests. Upload policy schedule page.</small></div></div>
+                <div class="req-doc-item"><div class="req-dot"></div><div><strong>Smoke &amp; Fire Alarm Evidence</strong><small>Photo evidence or sign-off confirming working smoke and carbon monoxide alarms on each floor.</small></div></div>
+              </div>
+            </div>
+
+            <div class="upload-card">
+              <h4>Upload document</h4>
+              <div class="upload-controls">
+                <input type="file" id="doc-file" />
+                <input class="doc-name-input" type="text" id="doc-name" placeholder="Enter document name…" />
+                <button class="button" id="upload-btn">Upload</button>
+              </div>
+              <div id="document-list" class="doc-list"></div>
+            </div>
+
+          </div><!-- /tab-panel: compliance -->
+
+          <!-- ── Tab: Contracts ── -->
+          <div class="tab-panel" data-tab="contracts" style="display:none;">
+            <section class="section">
+              <div class="toolbar">
+                <h3>Agreements &amp; Contracts</h3>
+              </div>
+              <div id="contracts-list"></div>
+            </section>
+          </div><!-- /tab-panel: contracts -->
+
+
+          <!-- ── Tab: Visits & Assessments ── -->
+          <div class="tab-panel" data-tab="visits" style="display:none;">
+            <div class="upload-card" style="max-width:100%;padding:0;overflow:hidden;margin-bottom:18px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px 14px;border-bottom:1px solid #e8eef6;">
+                <div>
+                  <h4 style="margin:0;">In-Person Visit Reports &amp; Assessments</h4>
+                  <small style="color:#6b85a0;">AEGIS Standard 5.10.1.1 &amp; Standard 5.10.3 compliance requirement</small>
+                </div>
+                <a id="btn-new-visit-tab" href="homestay-visit-report.html" class="button" style="display:inline-block;text-decoration:none;font-size:0.84rem;padding:7px 16px;border-radius:8px;">+ Log New Visit</a>
+              </div>
+              <div id="host-visits-list" style="padding:16px 20px;"></div>
+            </div>
+
+            <!-- Suitability Assessments -->
+            <div class="upload-card" style="max-width:100%;padding:20px;margin-bottom:18px;">
+              <h4>Suitability Assessments</h4>
+              <div class="upload-controls">
+                <input type="file" id="assessment-file" />
+                <input class="doc-name-input" type="text" id="assessment-name" placeholder="Enter assessment name…" />
+                <button class="button" id="assessment-upload-btn">Upload</button>
+              </div>
+              <div id="assessment-list" class="doc-list"></div>
+            </div>
+
+            <!-- Standard 5.10.3 Annual Review Notes & Observations -->
+            <div class="upload-card" style="max-width:100%;padding:20px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;border-bottom:1px solid #e8eef6;padding-bottom:10px;">
+                <div>
+                  <h4 style="margin:0;color:#0f2340;">Annual Review Notes &amp; Observations (Standard 5.10.3)</h4>
+                  <small style="color:#6b85a0;">Record annual developmental feedback, student and parent reflections, and property observations</small>
+                </div>
+                <button type="button" class="button-alt" onclick="toggleAddNoteForm()" style="font-size:0.82rem;padding:6px 12px;">+ Add Review Note</button>
+              </div>
+
+              <!-- Add note inline form -->
+              <div id="add-note-card" style="display:none;background:#f6f8fb;border:1px solid #d5dce8;border-radius:10px;padding:14px;margin-bottom:16px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+                  <div>
+                    <label style="font-size:0.78rem;font-weight:600;color:#3b536e;display:block;margin-bottom:4px;">Date *</label>
+                    <input type="date" id="new-note-date" class="field-input" style="padding:6px 10px;font-size:0.85rem;" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.78rem;font-weight:600;color:#3b536e;display:block;margin-bottom:4px;">Note Category</label>
+                    <select id="new-note-type" class="field-select" style="padding:6px 10px;font-size:0.85rem;">
+                      <option value="Annual Review Observation">Annual Review Observation</option>
+                      <option value="Student / Host Feedback">Student / Host Feedback</option>
+                      <option value="Accommodation Inspection Follow-up">Accommodation Inspection Follow-up</option>
+                      <option value="Action Item / Developmental Goal">Action Item / Developmental Goal</option>
+                    </select>
+                  </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                  <label style="font-size:0.78rem;font-weight:600;color:#3b536e;display:block;margin-bottom:4px;">Notes &amp; Details *</label>
+                  <textarea id="new-note-content" class="field-input" style="width:100%;min-height:70px;padding:8px;font-size:0.85rem;box-sizing:border-box;" placeholder="Enter annual review notes, host feedback, or follow-up action plan..."></textarea>
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:8px;">
+                  <button type="button" class="button-alt" onclick="toggleAddNoteForm()" style="font-size:0.8rem;padding:6px 12px;">Cancel</button>
+                  <button type="button" class="button" onclick="saveNewReviewNote()" style="font-size:0.8rem;padding:6px 14px;">Save Note</button>
+                </div>
+              </div>
+
+              <!-- Notes timeline container -->
+              <div id="annual-review-notes-list">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div><!-- /tab-panel: visits -->
+
+          <!-- ── Tab: Connected Students ── -->
+          <div class="tab-panel" data-tab="students" style="display:none;"><div class="upload-card" style="max-width:100%;"><h4>Connected Students</h4><div id="host-homestays-list"></div></div></div><!-- /tab-panel: students -->
+
+          <!-- ── Tab: H&S Checklist (read-only summary) ── -->
+          <div class="tab-panel" data-tab="hs-checklist" style="display:none;">
+            <div class="upload-card" style="max-width:100%;padding:0;overflow:hidden;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px 14px;border-bottom:1px solid #e8eef6;">
+                <h4 style="margin:0;">H&amp;S Checklist</h4>
+                <a id="btn-hs-checklist-tab" href="homestay-hs-checklist.html" class="button" style="display:inline-block;text-decoration:none;font-size:0.84rem;padding:7px 16px;border-radius:8px;">Open H&amp;S Checklist →</a>
+              </div>
+              <div id="host-hs-checklist-summary" style="padding:16px 20px;"></div>
+            </div>
+          </div><!-- /tab-panel: hs-checklist -->
+
+          <!-- ── Tab: Incidents (read-only summary) ── -->
+          <div class="tab-panel" data-tab="incidents" style="display:none;">
+            <div class="upload-card" style="max-width:100%;padding:0;overflow:hidden;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px 14px;border-bottom:1px solid #e8eef6;">
+                <h4 style="margin:0;">Incidents</h4>
+                <a id="btn-new-incident-tab" href="homestay-incident-create.html" class="button" style="display:inline-block;text-decoration:none;font-size:0.84rem;padding:7px 16px;border-radius:8px;">+ Log New Incident</a>
+              </div>
+              <div id="host-incidents-list" style="padding:16px 20px;"></div>
+            </div>
+          </div><!-- /tab-panel: incidents -->
+
+        </section>
+      </div><!-- /shell -->
+    </div><!-- /app-frame -->
+  </main>
+
+  <script src="assets/db.js"></script>
+  <script>
+    // ── Read URL param ─────────────────────────────────────────────────────────
+    var params = new URLSearchParams(window.location.search);
+    var hostId = params.get('id') || 'HST29104';
+    var host   = getHostById(hostId);
+
+    // ── Not-found state ────────────────────────────────────────────────────────
+    if (!host) {
+      document.getElementById('main-content').innerHTML =
+        '<div class="not-found">' +
+          '<h3>Host not found</h3>' +
+          '<p>' + (hostId ? 'No record exists for ID <strong>' + hostId + '</strong>.' : 'No host ID was provided.') + '</p>' +
+          '<p><a href="hosts.html" style="color:#2a6096;font-weight:600;">Return to Hosts Directory</a></p>' +
+        '</div>';
+      throw new Error('Host not found: ' + hostId);
+    }
+
+    // ── Safeguarding concerns strip ────────────────────────────────────────────
+    (function () {
+      if (!(OG_DB && OG_DB.getConcernsForPerson)) return;
+
+      var stripEl = document.getElementById('concern-strip');
+      var listEl  = document.getElementById('concern-list');
+      if (!stripEl || !listEl) return;
+
+      var openConcerns = OG_DB.getConcernsForPerson(host.id).filter(function (c) {
+        return c.status !== 'Closed';
+      });
+      if (!openConcerns.length) return;
+
+      stripEl.style.display = 'block';
+      listEl.innerHTML = openConcerns.map(function (c) {
+        return '<div class="list-item">' +
+          '<strong>' + escapeHtml(c.title) + '</strong>' +
+          '<p>' + escapeHtml(c.category) + ' · ' + escapeHtml(c.tier) + '</p>' +
+          '<small>Logged ' + escapeHtml(c.loggedDate) + ' · Status: ' + escapeHtml(c.status) + '</small>' +
+        '</div>';
+      }).join('');
+    }());
+
+    // ── AEGIS Standard 5.10.1.1 Annual In-Person Assessment Compliance Warning ──
+    function renderAnnualVisitComplianceBanner() {
+      if (!(OG_DB && OG_DB.getHostInPersonVisitStatus)) return;
+      var visitStatus = OG_DB.getHostInPersonVisitStatus(host.id);
+      var bannerEl = document.getElementById('annual-visit-warning-strip');
+      if (!bannerEl) return;
+
+      var actionBtn = document.getElementById('btn-visit-warning-action');
+      if (actionBtn) {
+        actionBtn.href = 'homestay-visit-report.html?hostId=' + host.id;
+      }
+
+      if (!visitStatus.isCurrent) {
+        bannerEl.style.display = 'block';
+        bannerEl.style.background = '#fff5f5';
+        bannerEl.style.borderLeftColor = '#dc2626';
+        document.getElementById('visit-warning-badge').className = 'badge red';
+        document.getElementById('visit-warning-badge').textContent = 'AEGIS 5.10.1.1 Block';
+        document.getElementById('visit-warning-title').textContent = (visitStatus.status === 'missing') ? 'No In-Person Assessment Visit Recorded This Year' : 'Annual In-Person Visit Overdue';
+        document.getElementById('visit-warning-title').style.color = '#991b1b';
+        document.getElementById('visit-warning-text').innerHTML = escapeHtml(visitStatus.warning).replace('Do not assign or place students with this host', '<strong>Do not assign or place students with this host</strong>').replace('Do not allocate new student placements', '<strong>Do not allocate new student placements</strong>');
+      } else if (visitStatus.status === 'expiring_soon') {
+        bannerEl.style.display = 'block';
+        bannerEl.style.background = '#fffbeb';
+        bannerEl.style.borderLeftColor = '#d97706';
+        document.getElementById('visit-warning-badge').className = 'badge amber';
+        document.getElementById('visit-warning-badge').textContent = 'Standard 5.10.3 Notice';
+        document.getElementById('visit-warning-title').textContent = 'Annual Assessment Visit Expiring Soon';
+        document.getElementById('visit-warning-title').style.color = '#92400e';
+        document.getElementById('visit-warning-text').textContent = visitStatus.warning;
+      } else {
+        // Current and compliant (in-person visit completed within past 12 months) -> hide warning banner!
+        bannerEl.style.display = 'none';
+      }
+    }
+    renderAnnualVisitComplianceBanner();
+
+    // ── AEGIS Standard 6.3.1 Pre-Start Safeguarding Compliance Warning ──────────
+    function renderSafeguardingWarningBanner() {
+      var bannerEl = document.getElementById('safeguarding-warning-strip');
+      if (!bannerEl) return;
+
+      var c = host.compliance || {};
+      var hasActivePlacements = (host.capacityCurrent > 0) || (host.linkedStudents && host.linkedStudents.length > 0);
+      var safeguardingInvalid = !c.safeguardingTrainingDate ||
+        (c.safeguardingTrainingExpiry && new Date(c.safeguardingTrainingExpiry) < new Date());
+
+      bannerEl.style.display = (hasActivePlacements && safeguardingInvalid) ? 'block' : 'none';
+    }
+    renderSafeguardingWarningBanner();
+
+    // ── AEGIS Standard 5.10.3 Annual Review Notes Handlers ─────────────────────
+    window.toggleAddNoteForm = function() {
+      var el = document.getElementById('add-note-card');
+      if (el) {
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        if (el.style.display === 'block') {
+          document.getElementById('new-note-date').value = new Date().toISOString().slice(0, 10);
+          document.getElementById('new-note-content').value = '';
+          document.getElementById('new-note-content').focus();
+        }
+      }
+    };
+
+    window.saveNewReviewNote = function() {
+      var d = document.getElementById('new-note-date').value;
+      var t = document.getElementById('new-note-type').value;
+      var c = document.getElementById('new-note-content').value.trim();
+      if (!d || !c) {
+        alert('Please enter both date and note details.');
+        return;
+      }
+
+      if (!host.annualReviewNotes) host.annualReviewNotes = [];
+      host.annualReviewNotes.unshift({
+        id: 'ARN-' + Date.now().toString().slice(-6),
+        date: d,
+        category: t,
+        content: c,
+        author: 'Staff Officer / DSL',
+        createdAt: new Date().toISOString()
+      });
+
+      OG_DB.saveHost(host);
+      window.toggleAddNoteForm();
+      renderAnnualReviewNotes();
+      showToast();
+    };
+
+    function renderAnnualReviewNotes() {
+      var listEl = document.getElementById('annual-review-notes-list');
+      if (!listEl) return;
+      var notes = host.annualReviewNotes || [];
+      if (!notes.length) {
+        listEl.innerHTML = '<div style="text-align:center;padding:24px 16px;color:#9bafc4;font-size:0.85rem;border:1.5px dashed #d5dce8;border-radius:8px;">No annual review notes or observations recorded yet. Click "+ Add Review Note" above to record annual review findings.</div>';
+        return;
+      }
+
+      listEl.innerHTML = notes.map(function(n) {
+        return '<div style="background:#f8fafc;border:1px solid #e8eef6;border-radius:8px;padding:12px 14px;margin-bottom:10px;">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">' +
+            '<span class="badge blue" style="font-size:0.75rem;">' + escapeHtml(n.category || 'Observation') + '</span>' +
+            '<small style="color:#6b85a0;font-weight:600;">' + escapeHtml(n.date || '—') + ' · ' + escapeHtml(n.author || 'Staff') + '</small>' +
+          '</div>' +
+          '<p style="margin:0;font-size:0.88rem;color:#1e3a5f;line-height:1.5;white-space:pre-wrap;">' + escapeHtml(n.content) + '</p>' +
+        '</div>';
+      }).join('');
+    }
+
+    // ── Helpers ────────────────────────────────────────────────────────────────
+    function initials(first, last) {
+      return ((first || '').charAt(0) + (last || '').charAt(0)).toUpperCase();
+    }
+
+    function statusBadgeClass(s) {
+      return { approved: 'green', pending: 'amber', inactive: 'grey' }[s] || 'grey';
+    }
+
+    function statusBadgeLabel(s) {
+      return s ? s.charAt(0).toUpperCase() + s.slice(1) : '—';
+    }
+
+    function setVal(id, value) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      if (el.tagName === 'SELECT') {
+        el.value = value || '';
+      } else {
+        el.value = (value != null) ? value : '';
+      }
+    }
+
+    // ── Populate toolbar ───────────────────────────────────────────────────────
+    var fullName = host.firstName + ' ' + host.lastName;
+
+    document.title = fullName + ' — Oxford Guardians';
+    document.getElementById('sidebar-label').textContent = host.firstName + ' ' + host.lastName;
+    document.getElementById('toolbar-avatar').textContent = initials(host.firstName, host.lastName);
+    document.getElementById('toolbar-name').innerHTML = fullName +
+      ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + host.id + '</span>';
+    document.getElementById('toolbar-subtitle').textContent =
+      statusBadgeLabel(host.status) + ' host since ' + host.hostSince + ' · ' +
+      (host.capacityCurrent || 0) + ' of ' + (host.capacityMax || 3) + ' places occupied';
+
+    var statusBadge = document.getElementById('toolbar-status-badge');
+    statusBadge.textContent = statusBadgeLabel(host.status);
+    statusBadge.className   = 'badge ' + statusBadgeClass(host.status);
+
+    // Only unapproved (pending/draft) hosts can be deleted — approved/inactive hosts must be archived instead.
+    var deleteDraftBtn = document.getElementById('btn-delete-draft');
+    if (host.status === 'pending' || host.status === 'draft') {
+      deleteDraftBtn.href = 'host-delete.html?id=' + encodeURIComponent(host.id);
+      deleteDraftBtn.style.display = '';
+    }
+
+    // ── Pending Approval readiness gate — compliance evidence check ─────────
+    if (host.status === 'pending') {
+      var gc = host.compliance || {};
+
+      var hasAssessment = false;
+      try {
+        var rawAssessments = localStorage.getItem('host_assessments_' + host.id);
+        var parsedAssessments = rawAssessments ? JSON.parse(rawAssessments) : null;
+        hasAssessment = Array.isArray(parsedAssessments)
+          ? parsedAssessments.length > 0
+          : !!(parsedAssessments && Object.keys(parsedAssessments).length > 0);
+      } catch (e) {
+        hasAssessment = false;
+      }
+
+      var readyForApproval = !!(
+        gc.dbsCertificatePath &&
+        gc.idDocumentPath &&
+        gc.reference1Path &&
+        gc.reference2Path &&
+        hasAssessment
+      );
+
+      var gate      = document.getElementById('pending-approval-gate');
+      var gateTitle = document.getElementById('pending-approval-title');
+      var gateText  = document.getElementById('pending-approval-text');
+
+      gate.style.display = 'block';
+      if (readyForApproval) {
+        gate.classList.add('green');
+        gateTitle.textContent = 'Ready for Approval';
+        gateText.textContent  = 'All compliance evidence is on file.';
+      } else {
+        gate.style.borderColor = '#d9c79a';
+        gate.style.background  = 'linear-gradient(135deg, #f2e2ca 0%, #f8f0e2 100%)';
+        gateTitle.textContent = 'Not Ready for Approval';
+        gateText.textContent  = 'Missing compliance evidence.';
+      }
+    }
+
+    document.getElementById('compliance-btn').href     = 'host-compliance.html?id=' + host.id;
+    document.getElementById('btn-log-visit').href      = 'homestay-visit-report.html?hostId=' + host.id;
+    document.getElementById('btn-hs-checklist').href   = 'homestay-hs-checklist.html?id=' + host.id;
+    document.getElementById('btn-view-shareable-profile').href = 'homestay-profile-view.html?id=' + encodeURIComponent(host.id);
+    document.getElementById('btn-new-visit-tab').href  = 'homestay-visit-report.html?hostId=' + host.id;
+    document.getElementById('btn-hs-checklist-tab').href = 'homestay-hs-checklist.html?id=' + host.id;
+    document.getElementById('btn-new-incident-tab').href = 'homestay-incident-create.html?hostId=' + host.id;
+
+    // ── Populate form fields ───────────────────────────────────────────────────
+    setVal('f-first-name',          host.firstName);
+    setVal('f-last-name',           host.lastName);
+    setVal('f-address',             host.address);
+    setVal('f-mobile',              host.mobile);
+    setVal('f-email',               host.email);
+    setVal('f-preferred-contact',   host.preferredContact);
+    setVal('f-host-since',          host.hostSince);
+    setVal('f-status',              host.status);
+    setVal('f-legal-status',        host.legalStatus);
+
+    setVal('f-capacity-max',        host.capacityMax);
+    setVal('f-capacity-current',    host.capacityCurrent);
+    setVal('f-current-students',    host.currentStudents);
+    setVal('f-household-residents', host.householdResidents);
+    setVal('f-smoker-status',       host.smokerStatus || 'non-smoking');
+    setVal('f-emergency-provision', host.emergencyProvision ? 'true' : 'false');
+    setVal('f-emergency-notice',    host.emergencyNoticeHours != null ? String(host.emergencyNoticeHours) : '2');
+    setVal('f-emergency-capacity',  host.emergencyCapacity != null ? host.emergencyCapacity : 1);
+    setVal('f-emergency-notes',     host.emergencyNotes);
+    setVal('f-pets',                host.pets);
+    setVal('f-overnight-visitors',  host.overnightVisitors);
+    var roomsDisplay = document.getElementById('rooms-display');
+    var roomsArr = host.rooms ? host.rooms.map(function(r){ return Object.assign({}, r); }) : [];
+    function renderRooms() {
+      roomsDisplay.innerHTML = '';
+      if (!roomsArr.length) {
+        roomsDisplay.innerHTML = '<p style="font-size:0.88rem; color:#6b85a0; margin:0; padding-left:4px;">No rooms added.</p>';
+      } else {
+        roomsArr.forEach(function(r, idx) {
+          var card = document.createElement('div');
+          card.style.cssText = 'background:#f4f7fb; padding:14px; border-radius:8px; border:1px solid #d5dce8; position:relative;';
+          card.innerHTML =
+            '<button type="button" class="doc-remove r-remove" style="position:absolute; top:10px; right:10px; color:#d9444a; background:none; border:none; cursor:pointer; font-weight:bold; font-size:1.2rem;" title="Remove Room">&times;</button>' +
+            '<div class="form-grid-3" style="margin-bottom:12px; padding-right:20px;">' +
+              '<div class="field"><small>Room Label</small><input type="text" class="field-input r-label" value="' + escapeHtml(r.label || '') + '" placeholder="e.g. Bedroom 1"></div>' +
+              '<div class="field"><small>Capacity</small><input type="number" class="field-input r-cap" value="' + (r.capacity || 1) + '" min="1" max="4"></div>' +
+              '<div class="field"><small>Bed Type</small><select class="field-input r-bed"><option ' + (r.bedType === 'Single' || !r.bedType ? 'selected' : '') + '>Single</option><option ' + (r.bedType === 'Twin' ? 'selected' : '') + '>Twin</option><option ' + (r.bedType === 'Bunk' ? 'selected' : '') + '>Bunk</option></select></div>' +
+            '</div>' +
+            '<div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; border-top:1px solid #e8eef6; padding-top:10px;">' +
+              '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-ensuite" ' + (r.enSuite ? 'checked' : '') + '> En-Suite</label>' +
+              '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-desk" ' + (r.deskSpace ? 'checked' : '') + '> Desk Space</label>' +
+              '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-storage" ' + (r.storage ? 'checked' : '') + '> Storage</label>' +
+              '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-smoke" ' + (r.smokeAlarm ? 'checked' : '') + '> Smoke Alarm</label>' +
+              '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-lock" ' + (r.lockableDoor ? 'checked' : '') + '> Lockable Door</label>' +
+            '</div>';
+          card.querySelector('.r-label').addEventListener('input', function(e){ roomsArr[idx].label = e.target.value; });
+          card.querySelector('.r-cap').addEventListener('input', function(e){ roomsArr[idx].capacity = parseInt(e.target.value, 10); });
+          card.querySelector('.r-bed').addEventListener('change', function(e){ roomsArr[idx].bedType = e.target.value; });
+          card.querySelector('.r-ensuite').addEventListener('change', function(e){ roomsArr[idx].enSuite = e.target.checked; });
+          card.querySelector('.r-desk').addEventListener('change', function(e){ roomsArr[idx].deskSpace = e.target.checked; });
+          card.querySelector('.r-storage').addEventListener('change', function(e){ roomsArr[idx].storage = e.target.checked; });
+          card.querySelector('.r-smoke').addEventListener('change', function(e){ roomsArr[idx].smokeAlarm = e.target.checked; });
+          card.querySelector('.r-lock').addEventListener('change', function(e){ roomsArr[idx].lockableDoor = e.target.checked; });
+          card.querySelector('.r-remove').addEventListener('click', function(){ roomsArr.splice(idx, 1); renderRooms(); });
+          roomsDisplay.appendChild(card);
+        });
+      }
+    }
+    document.getElementById('add-room-btn').addEventListener('click', function() {
+      roomsArr.push({ label: '', capacity: 1, bedType: 'Single', enSuite: false, deskSpace: false, storage: false, smokeAlarm: false, lockableDoor: false });
+      renderRooms();
+    });
+    renderRooms();
+    setVal('f-dietary-provision',   host.dietaryProvision);
+
+    setVal('f-dbs-status',          host.dbsStatus);
+    setVal('f-dbs-cert',            host.dbsCertNumber);
+    setVal('f-dbs-issue',           host.dbsIssueDate);
+    setVal('f-dbs-renewal',         host.dbsRenewalDue);
+    setVal('f-dbs-update',          host.dbsUpdateService);
+    setVal('f-secondary-dbs',       host.secondaryAdultDbs);
+    setVal('f-annual-visit-status', host.annualVisitStatus);
+    setVal('f-annual-visit-due',    host.annualVisitDue);
+    setVal('f-annual-visit-last',   host.annualVisitLast);
+    setVal('f-hs-checklist',        host.hsChecklist);
+    setVal('f-hs-checklist-detail', host.hsChecklistDetail);
+    setVal('f-safe-recruitment',    host.safeRecruitment);
+    setVal('f-references',          host.references);
+
+    setVal('f-punctuality-pct',     host.punctualityPct);
+    setVal('f-punctuality-detail',  host.punctualityDetail);
+    setVal('f-welfare-incidents',   host.welfareIncidents);
+    setVal('f-parent-feedback',     host.parentFeedback);
+    setVal('f-student-feedback',    host.studentFeedback);
+    setVal('f-completed-stays',     host.completedStays);
+    setVal('f-notes',               host.notes);
+
+    // ── Toast ──────────────────────────────────────────────────────────────────
+    function showToast() {
+      var toast = document.getElementById('save-toast');
+      toast.classList.add('visible');
+      setTimeout(function () { toast.classList.remove('visible'); }, 3000);
+    }
+
+    // ── Self Declaration Upload Logic ──────────────────────────────────────────
+    var selfDeclarationBase64 = host.homestayDeclarationFile || '';
+    document.getElementById('f-self-declaration').addEventListener('change', function () {
+      var file = this.files[0];
+      if (file) {
+        var reader = new FileReader();
+        reader.onload = function (e) { selfDeclarationBase64 = e.target.result; };
+        reader.readAsDataURL(file);
+      } else {
+        selfDeclarationBase64 = '';
+      }
+    });
+
+    // ── Save handler ───────────────────────────────────────────────────────────
+    document.getElementById('host-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      function val(id) {
+        var el = document.getElementById(id);
+        return el ? el.value.trim() : '';
+      }
+
+      var pctRaw = parseInt(val('f-punctuality-pct'), 10);
+      var updatedHost = {
+        // Preserve fields not on this form
+        id:                  host.id,
+        linkedStudents:      host.linkedStudents      || [],
+        preferredStudentId:  host.preferredStudentId  || null,
+
+        // Identity
+        firstName:           val('f-first-name')        || host.firstName,
+        lastName:            val('f-last-name')          || host.lastName,
+        address:             val('f-address'),
+        mobile:              val('f-mobile'),
+        email:               val('f-email'),
+        preferredContact:    val('f-preferred-contact'),
+        hostSince:           val('f-host-since'),
+        status:              val('f-status')             || 'pending',
+        legalStatus:         val('f-legal-status'),
+        homestayDeclarationFile: selfDeclarationBase64,
+
+        // DBS & compliance
+        dbsStatus:           val('f-dbs-status')          || 'amber',
+        dbsCertNumber:       val('f-dbs-cert'),
+        dbsIssueDate:        val('f-dbs-issue'),
+        dbsRenewalDue:       val('f-dbs-renewal'),
+        dbsUpdateService:    val('f-dbs-update'),
+        secondaryAdultDbs:   val('f-secondary-dbs'),
+        annualVisitStatus:   val('f-annual-visit-status') || 'due',
+        annualVisitDue:      val('f-annual-visit-due'),
+        annualVisitLast:     val('f-annual-visit-last'),
+        hsChecklist:         val('f-hs-checklist')        || 'incomplete',
+        hsChecklistDetail:   val('f-hs-checklist-detail'),
+        safeRecruitment:     val('f-safe-recruitment'),
+        references:          val('f-references'),
+
+        // Performance
+        punctualityPct:      isNaN(pctRaw) ? host.punctualityPct : Math.min(100, Math.max(0, pctRaw)),
+        punctualityDetail:   val('f-punctuality-detail'),
+        welfareIncidents:    val('f-welfare-incidents'),
+        parentFeedback:      val('f-parent-feedback'),
+        studentFeedback:     val('f-student-feedback'),
+        completedStays:      val('f-completed-stays'),
+        notes:               val('f-notes'),
+        compliance:          host.compliance
+      };
+
+      saveHost(updatedHost);
+
+      // Update the in-memory host reference so repeated saves are consistent
+      host = updatedHost;
+
+      // Refresh toolbar
+      var newName = updatedHost.firstName + ' ' + updatedHost.lastName;
+      document.getElementById('toolbar-name').innerHTML = newName +
+        ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + updatedHost.id + '</span>';
+      document.getElementById('toolbar-avatar').textContent =
+        initials(updatedHost.firstName, updatedHost.lastName);
+      document.getElementById('toolbar-subtitle').textContent =
+        statusBadgeLabel(updatedHost.status) + ' host since ' + updatedHost.hostSince + ' · ' +
+        updatedHost.capacityCurrent + ' of ' + updatedHost.capacityMax + ' places occupied';
+      var sb = document.getElementById('toolbar-status-badge');
+      sb.textContent = statusBadgeLabel(updatedHost.status);
+      sb.className   = 'badge ' + statusBadgeClass(updatedHost.status);
+
+      showToast();
+    });
+
+    // ── Household Tab Logic ────────────────────────────────────────────────────
+    var residentList = document.getElementById('resident-list');
+
+    var GENDER_OPTIONS = ['Male', 'Female', 'Other', 'Prefer not to say'];
+
+    function genderOptionsHtml(selected) {
+      return GENDER_OPTIONS.map(function (g) {
+        return '<option value="' + g + '"' + (selected === g ? ' selected' : '') + '>' + g + '</option>';
+      }).join('');
+    }
+
+    function calcAge(dob) {
+      if (!dob) return '';
+      var b = new Date(dob);
+      if (isNaN(b.getTime())) return '';
+      var today = new Date();
+      var age = today.getFullYear() - b.getFullYear();
+      var m = today.getMonth() - b.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < b.getDate())) age--;
+      return age >= 0 ? age : '';
+    }
+
+    function createResidentRow(res) {
+      var div = document.createElement('div');
+      div.className = 'resident-row';
+      div.style.cssText = 'background:#f4f7fb; padding:14px; border-radius:8px; border:1px solid #d5dce8; position:relative;';
+      div.innerHTML =
+        '<button type="button" class="doc-remove remove-res-btn" style="position:absolute; top:10px; right:10px; color:#d9444a; background:none; border:none; cursor:pointer; font-weight:bold; font-size:1.2rem;" title="Remove Resident">&times;</button>' +
+        '<div class="form-grid-3" style="padding-right:20px;">' +
+          '<div class="field"><small>Full Name</small><input type="text" class="field-input res-name" placeholder="Full Name" value="' + escapeHtml(res.name || '') + '" /></div>' +
+          '<div class="field"><small>Date of Birth</small><input type="date" class="field-input res-dob" value="' + escapeHtml(res.dob || '') + '" /></div>' +
+          '<div class="field"><small>Age (derived)</small><input type="number" class="field-input res-age" placeholder="Age" value="' + escapeHtml(res.age || '') + '" /></div>' +
+          '<div class="field"><small>Gender</small><select class="field-select res-gender">' + genderOptionsHtml(res.gender || '') + '</select></div>' +
+          '<div class="field"><small>Occupation</small><input type="text" class="field-input res-occ" placeholder="Occupation" value="' + escapeHtml(res.occupation || '') + '" /></div>' +
+          '<div class="field"><small>Interests &amp; Hobbies</small><input type="text" class="field-input res-interests" placeholder="e.g. Gardening, piano, football" value="' + escapeHtml(res.interests || '') + '" /></div>' +
+          '<div class="field"><small>Religion / Faith</small><input type="text" class="field-input res-religion" placeholder="e.g. Christian, Muslim, Non-religious, Buddhist, Hindu, Jewish" value="' + escapeHtml(res.religion || '') + '" /></div>' +
+        '</div>';
+      div.querySelector('.remove-res-btn').addEventListener('click', function () {
+        div.remove();
+      });
+      div.querySelector('.res-dob').addEventListener('change', function (e) {
+        var derived = calcAge(e.target.value);
+        if (derived !== '') { div.querySelector('.res-age').value = derived; }
+      });
+      return div;
+    }
+
+    function renderResidents() {
+      residentList.innerHTML = '';
+      var members = host.householdMembers || [];
+      members.forEach(function (m) { residentList.appendChild(createResidentRow(m)); });
+      if (members.length === 0) { residentList.appendChild(createResidentRow({})); }
+    }
+
+    renderResidents();
+
+    document.getElementById('add-resident-btn').addEventListener('click', function () {
+      residentList.appendChild(createResidentRow({}));
+    });
+
+    // ── Regular Visitors & Overnight Guests (AEGIS Standard 5.2.2) ─────────────
+    var visitorList = document.getElementById('visitor-list');
+    var visitorSeq = 0;
+
+    function createVisitorRow(v) {
+      var div = document.createElement('div');
+      div.className = 'visitor-row';
+      div.style.cssText = 'background:#f4f7fb; padding:14px; border-radius:8px; border:1px solid #d5dce8; position:relative;';
+      var overnight = v.staysOvernight === true;
+      div.innerHTML =
+        '<button type="button" class="doc-remove remove-visitor-btn" style="position:absolute; top:10px; right:10px; color:#d9444a; background:none; border:none; cursor:pointer; font-weight:bold; font-size:1.2rem;" title="Remove Visitor">&times;</button>' +
+        '<input type="hidden" class="vis-id" value="' + escapeHtml(v.id || ('VIS-' + Date.now() + '-' + (visitorSeq++))) + '" />' +
+        '<div class="form-grid-3" style="padding-right:20px;">' +
+          '<div class="field"><small>Name</small><input type="text" class="field-input vis-name" placeholder="e.g. Margaret Vance (Grandmother)" value="' + escapeHtml(v.name || '') + '" /></div>' +
+          '<div class="field"><small>Relationship</small><input type="text" class="field-input vis-relationship" placeholder="e.g. Maternal Grandmother" value="' + escapeHtml(v.relationship || '') + '" /></div>' +
+          '<div class="field"><small>Visit Frequency</small><input type="text" class="field-input vis-frequency" placeholder="e.g. Weekly Sunday dinner visitor" value="' + escapeHtml(v.frequency || '') + '" /></div>' +
+          '<div class="field"><small>Overnight Stay?</small><select class="field-select vis-overnight"><option value="no"' + (!overnight ? ' selected' : '') + '>No</option><option value="yes"' + (overnight ? ' selected' : '') + '>Yes</option></select></div>' +
+          '<div class="field form-span-2"><small>DBS Status / Vetting Notes</small><input type="text" class="field-input vis-dbs" placeholder="e.g. Supervised Daytime Visitor / Enhanced DBS clear" value="' + escapeHtml(v.dbsStatus || '') + '" /></div>' +
+        '</div>';
+      div.querySelector('.remove-visitor-btn').addEventListener('click', function () {
+        div.remove();
+      });
+      return div;
+    }
+
+    function renderVisitors() {
+      visitorList.innerHTML = '';
+      var visitors = host.regularVisitors || [];
+      visitors.forEach(function (v) { visitorList.appendChild(createVisitorRow(v)); });
+    }
+
+    renderVisitors();
+
+    document.getElementById('add-visitor-btn').addEventListener('click', function () {
+      visitorList.appendChild(createVisitorRow({}));
+    });
+
+    // ── Academic Availability & Exeat Calendar (AEGIS Standard 5.4.1) ──────────
+    var availabilityContainer = document.getElementById('availability-calendar-container');
+    var availabilityArr = (host.availabilityCalendar || []).map(function (p) { return Object.assign({}, p); });
+
+    function renderAvailabilityCalendar() {
+      availabilityContainer.innerHTML = '';
+      if (!availabilityArr.length) {
+        availabilityContainer.innerHTML = '<p style="font-size:0.88rem; color:#6b85a0; margin:0; padding-left:4px;">No availability periods configured yet.</p>';
+        return;
+      }
+      availabilityArr.forEach(function (period, idx) {
+        var isAvailable = period.status === 'available';
+        var row = document.createElement('div');
+        row.className = 'availability-row';
+        row.style.cssText = 'display:grid; grid-template-columns:1.6fr 1.6fr auto auto auto; gap:12px; align-items:center; background:#f4f7fb; padding:12px 16px; border-radius:8px; border:1px solid #e2e9f3;';
+        row.innerHTML =
+          '<strong style="font-size:0.9rem;">' + escapeHtml(period.name || period.periodId) + '</strong>' +
+          '<span style="font-size:0.85rem; color:#3b536e;">' + escapeHtml(period.dates || '') + '</span>' +
+          '<span class="badge' + (isAvailable ? ' green' : '') + '" style="' + (isAvailable ? '' : 'background:#e2e8f0; color:#475569;') + '">' + (isAvailable ? 'Available' : 'Unavailable') + '</span>' +
+          '<span style="font-size:0.85rem; color:#3b536e;">Max ' + (period.maxStudents != null ? period.maxStudents : 0) + ' student(s)</span>' +
+          '<button type="button" class="button-alt toggle-availability-btn" style="padding:6px 12px; font-size:0.8rem;">Toggle Availability</button>';
+        row.querySelector('.toggle-availability-btn').addEventListener('click', function () {
+          availabilityArr[idx].status = isAvailable ? 'unavailable' : 'available';
+          renderAvailabilityCalendar();
+        });
+        availabilityContainer.appendChild(row);
+      });
+    }
+
+    renderAvailabilityCalendar();
+
+    document.getElementById('save-household-btn').addEventListener('click', function () {
+      function hval(id) {
+        var el = document.getElementById(id);
+        return el ? el.value.trim() : '';
+      }
+      var capMax = parseInt(hval('f-capacity-max'), 10);
+      var capCur = parseInt(hval('f-capacity-current'), 10);
+
+      var members = [];
+      residentList.querySelectorAll('.resident-row').forEach(function (row) {
+        var name = row.querySelector('.res-name').value.trim();
+        if (name) {
+          members.push({
+            name:       name,
+            dob:        row.querySelector('.res-dob').value,
+            age:        row.querySelector('.res-age').value,
+            gender:     row.querySelector('.res-gender').value,
+            occupation: row.querySelector('.res-occ').value,
+            interests:  row.querySelector('.res-interests').value,
+            religion:   row.querySelector('.res-religion').value
+          });
+        }
+      });
+
+      var visitors = [];
+      visitorList.querySelectorAll('.visitor-row').forEach(function (row) {
+        var vName = row.querySelector('.vis-name').value.trim();
+        if (vName) {
+          visitors.push({
+            id:             row.querySelector('.vis-id').value,
+            name:           vName,
+            relationship:   row.querySelector('.vis-relationship').value,
+            frequency:      row.querySelector('.vis-frequency').value,
+            staysOvernight: row.querySelector('.vis-overnight').value === 'yes',
+            dbsStatus:      row.querySelector('.vis-dbs').value
+          });
+        }
+      });
+
+      var emergencyCapRaw = parseInt(hval('f-emergency-capacity'), 10);
+
+      var updatedHost = Object.assign({}, host, {
+        capacityMax:      isNaN(capMax) ? host.capacityMax      : capMax,
+        capacityCurrent:  isNaN(capCur) ? host.capacityCurrent  : capCur,
+        currentStudents:  hval('f-current-students'),
+        smokerStatus:     hval('f-smoker-status') || 'non-smoking',
+        emergencyProvision:    hval('f-emergency-provision') === 'true',
+        emergencyNoticeHours:  parseInt(hval('f-emergency-notice'), 10) || 2,
+        emergencyCapacity:     isNaN(emergencyCapRaw) ? 1 : emergencyCapRaw,
+        emergencyNotes:        hval('f-emergency-notes'),
+        availabilityCalendar:  availabilityArr,
+        pets:             hval('f-pets'),
+        overnightVisitors: hval('f-overnight-visitors'),
+        rooms:            roomsArr,
+        dietaryProvision: hval('f-dietary-provision'),
+        householdMembers: members,
+        regularVisitors:  visitors
+      });
+      delete updatedHost.householdResidents;
+
+      saveHost(updatedHost);
+      host = updatedHost;
+
+      document.getElementById('toolbar-subtitle').textContent =
+        (host.status ? host.status.charAt(0).toUpperCase() + host.status.slice(1) : '—') +
+        ' host · ' + updatedHost.capacityCurrent + ' of ' + updatedHost.capacityMax + ' places occupied';
+
+      renderSafeguardingWarningBanner();
+      showToast();
+    });
+
+    // ── Tab switching (lazy render on first click) ─────────────────────────────
+    var tabButtons   = document.querySelectorAll('.topnav .link-pill[data-tab]');
+    var tabPanels    = document.querySelectorAll('.tab-panel[data-tab]');
+    var tabRenderers = {
+      visits:         renderVisitsTab,
+      compliance:     renderComplianceTab,
+      contracts:      renderContractsTab,
+      students:       renderPlacementsTab,
+      'hs-checklist': renderHsChecklistTab,
+      incidents:      renderIncidentsTab
+    };
+    var tabRendered = {};
+
+    function switchTab(tabName) {
+      tabPanels.forEach(function (p) { p.style.display = (p.getAttribute('data-tab') === tabName) ? 'block' : 'none'; });
+      tabButtons.forEach(function (b) { b.classList.toggle('current', b.getAttribute('data-tab') === tabName); });
+      if (!tabRendered[tabName] && tabRenderers[tabName]) {
+        tabRenderers[tabName]();
+        tabRendered[tabName] = true;
+      }
+    }
+
+    tabButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        switchTab(this.getAttribute('data-tab'));
+      });
+    });
+
+    // Deep-link support, e.g. host-profile.html?tab=visits
+    var initialTab = params.get('tab');
+    if (initialTab && tabRenderers[initialTab]) {
+      switchTab(initialTab);
+    }
+
+    // ── Helpers ────────────────────────────────────────────────────────────────
+    function escapeHtml(str) {
+      return String(str == null ? '' : str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function nowDate() {
+      return new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function fmtShortDate(d) {
+      if (!d) return '—';
+      var p = new Date(d);
+      if (isNaN(p.getTime())) return d;
+      var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return p.getDate() + ' ' + M[p.getMonth()] + ' ' + p.getFullYear();
+    }
+
+    // ── Generic upload widget factory ──────────────────────────────────────────
+    function createUploadWidget(options) {
+      var key = options.storageKey;
+
+      function load() {
+        try { return JSON.parse(localStorage.getItem(key)) || []; } catch (e) { return []; }
+      }
+
+      function save(items) { localStorage.setItem(key, JSON.stringify(items)); }
+
+      function render() {
+        var items = load();
+        var list  = document.getElementById(options.listId);
+        if (!items.length) {
+          list.innerHTML = '<div class="doc-empty">' + (options.emptyText || 'No files uploaded yet.') + '</div>';
+          return;
+        }
+        list.innerHTML = items.map(function (item, i) {
+          return '<div class="doc-item">' +
+            '<div class="doc-item-info">' +
+              '<div class="doc-icon">' +
+                '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                  '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>' +
+                  '<polyline points="14 2 14 8 20 8"></polyline>' +
+                '</svg>' +
+              '</div>' +
+              '<div><div class="doc-item-name">' + escapeHtml(item.name) + '</div>' +
+              '<div class="doc-item-meta">Uploaded ' + item.date + '</div></div>' +
+            '</div>' +
+            '<button class="doc-remove" data-index="' + i + '" title="Remove">&#x2715;</button>' +
+          '</div>';
+        }).join('');
+        list.querySelectorAll('.doc-remove').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var items = load();
+            items.splice(parseInt(this.getAttribute('data-index'), 10), 1);
+            save(items); render();
+          });
+        });
+      }
+
+      document.getElementById(options.btnId).addEventListener('click', function () {
+        var nameInput = document.getElementById(options.nameInputId);
+        var fileInput = document.getElementById(options.fileInputId);
+        var name = nameInput.value.trim();
+        if (!name) { nameInput.style.borderColor = '#7f3034'; nameInput.focus(); return; }
+        nameInput.style.borderColor = '';
+        var items = load();
+        items.push({ name: name, date: nowDate() });
+        save(items); render();
+        nameInput.value = ''; fileInput.value = '';
+      });
+
+      render();
+    }
+
+    // ── Compliance Tab (required docs + upload) ────────────────────────────────
+    function renderComplianceTab() {
+      createUploadWidget({
+        storageKey:  'host_docs_' + host.id,
+        fileInputId: 'doc-file',
+        nameInputId: 'doc-name',
+        btnId:       'upload-btn',
+        listId:      'document-list',
+        emptyText:   'No documents uploaded yet. Use the form above to add files.'
+      });
+    }
+
+    // ── Visits & Assessments Tab ───────────────────────────────────────────────
+    function renderVisitsTab() {
+      // Suitability Assessments upload trail — placed first so it always wires up,
+      // regardless of the early-return below when there are no visit reports yet.
+      createUploadWidget({
+        storageKey:  'host_assessments_' + host.id,
+        fileInputId: 'assessment-file',
+        nameInputId: 'assessment-name',
+        btnId:       'assessment-upload-btn',
+        listId:      'assessment-list',
+        emptyText:   'No suitability assessments uploaded yet.'
+      });
+
+      var OUTCOME_LABELS = {
+        'approved':               'Approved for placement',
+        'approved_after_actions': 'Approved — actions pending',
+        'not_approved':           'Not approved',
+        'suspended':              'Suspended / withdrawn'
+      };
+      var OUTCOME_COLORS = {
+        'approved':               '#16a34a',
+        'approved_after_actions': '#d97706',
+        'not_approved':           '#dc2626',
+        'suspended':              '#7c3aed'
+      };
+
+      function fmtDate(d) {
+        if (!d) return '—';
+        var p = new Date(d);
+        if (isNaN(p.getTime())) return d;
+        var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return p.getDate() + ' ' + M[p.getMonth()] + ' ' + p.getFullYear();
+      }
+
+      var reports = OG_DB.getVisitReportsForHost(host.id);
+      var listEl  = document.getElementById('host-visits-list');
+
+      if (!reports.length) {
+        listEl.innerHTML =
+          '<div style="text-align:center;padding:36px 16px;color:#9bafc4;font-size:0.88rem;border:1.5px dashed #d5dce8;border-radius:10px;">' +
+            'No visit reports on file. Use "+ Log New Visit" to record the first assessment.' +
+          '</div>';
+        return;
+      }
+
+      listEl.innerHTML =
+        '<table style="width:100%;border-collapse:collapse;font-size:0.87rem;">' +
+          '<thead><tr style="border-bottom:2px solid #d5dce8;text-align:left;">' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">ID</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Visit Type</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Date</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Staff</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Outcome</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Next Review</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+          reports.map(function(r) {
+            var outcome      = r.outcome || '';
+            var outcomeLabel = OUTCOME_LABELS[outcome] || '—';
+            var outcomeColor = OUTCOME_COLORS[outcome] || '#0f2340';
+            return '<tr style="border-bottom:1px solid #edf2f8;">' +
+              '<td style="padding:8px 12px;color:#9bafc4;font-family:monospace;font-size:0.78rem;">' + escapeHtml(r.id || '—') + '</td>' +
+              '<td style="padding:8px 12px;font-weight:600;color:#0f2340;">' + escapeHtml(r.visitType || '—') + '</td>' +
+              '<td style="padding:8px 12px;color:#3b536e;">' + fmtDate(r.dateOfVisit) + '</td>' +
+              '<td style="padding:8px 12px;color:#3b536e;">' + escapeHtml(r.staffMember || '—') + '</td>' +
+              '<td style="padding:8px 12px;font-weight:600;color:' + outcomeColor + ';">' + escapeHtml(outcomeLabel) + '</td>' +
+              '<td style="padding:8px 12px;color:#3b536e;">' + fmtDate(r.nextReviewDue) + '</td>' +
+            '</tr>';
+          }).join('') +
+          '</tbody>' +
+        '</table>' +
+        '<div style="padding:12px 0 0;"><a href="' + escapeHtml('homestay-visit-report.html?hostId=' + host.id) + '" style="font-size:0.84rem;font-weight:600;color:#2a6096;text-decoration:none;">View full report details →</a></div>';
+
+      renderAnnualReviewNotes();
+      renderAnnualVisitComplianceBanner();
+    }
+
+    // ── Connected Students (placements) ────────────────────────────────────────
+    function renderPlacementsTab() {
+      var placements = OG_DB.getAllPlacements().filter(function (p) {
+        return p.hostId === host.id;
+      });
+      var listEl = document.getElementById('host-homestays-list');
+      if (!placements.length) {
+        listEl.innerHTML = '<div class="doc-empty">No connected homestays.</div>';
+        return;
+      }
+      listEl.innerHTML =
+        '<table style="width:100%;border-collapse:collapse;font-size:0.88rem;">' +
+          '<thead><tr style="border-bottom:2px solid #d5dce8;text-align:left;">' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">ID</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Student</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Start date</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">End date</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Status</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+          placements.map(function (p) {
+            var studentLink = p.studentId
+              ? '<a href="student-profile.html?id=' + escapeHtml(p.studentId) + '" style="color:#1a4080;font-weight:600;text-decoration:none;">' + escapeHtml(p.studentName || p.studentId) + '</a>'
+              : escapeHtml(p.studentName || '—');
+            return '<tr style="border-bottom:1px solid #edf2f8;">' +
+              '<td style="padding:8px 12px;color:#6b85a0;">'  + escapeHtml(p.id        || '—') + '</td>' +
+              '<td style="padding:8px 12px;">'                + studentLink                     + '</td>' +
+              '<td style="padding:8px 12px;">'  + escapeHtml(p.startDate  || '—') + '</td>' +
+              '<td style="padding:8px 12px;">'  + escapeHtml(p.endDate    || '—') + '</td>' +
+              '<td style="padding:8px 12px;">'  + escapeHtml(p.status     || '—') + '</td>' +
+            '</tr>';
+          }).join('') +
+          '</tbody></table>';
+    }
+
+
+    // ── H&S Checklist Tab (read-only summary of latest assessment) ────────────
+    function renderHsChecklistTab() {
+      var listEl     = document.getElementById('host-hs-checklist-summary');
+      var checklists = OG_DB.getHsChecklistsForHost(host.id);
+
+      if (!checklists.length) {
+        listEl.innerHTML =
+          '<div style="text-align:center;padding:36px 16px;color:#9bafc4;font-size:0.88rem;border:1.5px dashed #d5dce8;border-radius:10px;">' +
+            'No H&amp;S checklist on file yet. Use "Open H&amp;S Checklist" above to start the first assessment.' +
+          '</div>';
+        return;
+      }
+
+      var latest  = checklists[0];
+      var items   = latest.items || {};
+      var noCount = 0, yesCount = 0;
+      Object.keys(items).forEach(function (k) {
+        if (items[k] === 'no') noCount++; else if (items[k] === 'yes') yesCount++;
+      });
+      var flagged     = noCount > 0;
+      var hazardCount = (latest.hazards || []).length;
+
+      listEl.innerHTML =
+        '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">' +
+          '<div>' +
+            '<strong style="display:block;color:#0f2340;font-size:0.95rem;">' + escapeHtml(latest.visitType || 'H&S Assessment') + '</strong>' +
+            '<span style="font-size:0.82rem;color:#6b85a0;">Assessed by ' + escapeHtml(latest.assessedBy || '—') + ' · ' + fmtShortDate(latest.date) + '</span>' +
+          '</div>' +
+          '<span class="badge ' + (flagged ? 'red' : 'green') + '">' + (flagged ? 'Review needed' : 'Pass') + '</span>' +
+        '</div>' +
+        '<div style="display:flex;gap:18px;flex-wrap:wrap;font-size:0.85rem;color:#3b536e;">' +
+          '<span>' + yesCount + ' item' + (yesCount === 1 ? '' : 's') + ' passed</span>' +
+          (noCount > 0 ? '<span style="color:#dc2626;font-weight:600;">' + noCount + ' item' + (noCount === 1 ? ' needs' : 's need') + ' attention</span>' : '') +
+          (hazardCount > 0 ? '<span style="color:#dc2626;">' + hazardCount + ' hazard' + (hazardCount === 1 ? '' : 's') + ' logged</span>' : '') +
+          '<span>' + checklists.length + ' assessment' + (checklists.length === 1 ? '' : 's') + ' on file</span>' +
+        '</div>';
+    }
+
+    // ── Incidents Tab (read-only summary linked to this host) ─────────────────
+    function renderIncidentsTab() {
+      var listEl    = document.getElementById('host-incidents-list');
+      var incidents = OG_DB.getAllIncidents()
+        .filter(function (inc) { return inc.hostId === host.id; })
+        .sort(function (a, b) { return (b.date || '').localeCompare(a.date || ''); });
+
+      if (!incidents.length) {
+        listEl.innerHTML =
+          '<div style="text-align:center;padding:36px 16px;color:#9bafc4;font-size:0.88rem;border:1.5px dashed #d5dce8;border-radius:10px;">' +
+            'No incidents recorded for this host.' +
+          '</div>';
+        return;
+      }
+
+      var STATUS_CLASS = { resolved: 'green', pending: 'amber', escalated: 'red' };
+
+      listEl.innerHTML =
+        '<table style="width:100%;border-collapse:collapse;font-size:0.87rem;">' +
+          '<thead><tr style="border-bottom:2px solid #d5dce8;text-align:left;">' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Date</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Type</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Student</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Severity</th>' +
+            '<th style="padding:8px 12px;color:#6b85a0;font-weight:600;">Status</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+          incidents.map(function (inc) {
+            var statusClass = STATUS_CLASS[(inc.status || '').toLowerCase()] || 'navy';
+            return '<tr style="border-bottom:1px solid #edf2f8;">' +
+              '<td style="padding:8px 12px;color:#3b536e;">' + fmtShortDate(inc.date) + '</td>' +
+              '<td style="padding:8px 12px;font-weight:600;color:#0f2340;">' + escapeHtml(inc.incidentType || '—') + '</td>' +
+              '<td style="padding:8px 12px;color:#3b536e;">' + escapeHtml(inc.studentName || '—') + '</td>' +
+              '<td style="padding:8px 12px;color:#3b536e;">' + escapeHtml(inc.severity || '—') + '</td>' +
+              '<td style="padding:8px 12px;"><span class="badge ' + statusClass + '">' + escapeHtml(inc.status || '—') + '</span></td>' +
+            '</tr>';
+          }).join('') +
+          '</tbody>' +
+        '</table>';
+    }
+
+    // ── Contracts ──────────────────────────────────────────────────────────────
+    function renderContractsTab() {
+      var contractsList = document.getElementById('contracts-list');
+      if (!contractsList) return;
+      var entityType = '';
+      var entityId = '';
+      if (typeof member !== 'undefined' && member.id) { entityType = 'Staff'; entityId = member.id; }
+      else if (typeof parentData !== 'undefined' && parentData.id) { entityType = 'Parent'; entityId = parentData.id; }
+      else if (typeof host !== 'undefined' && host.id) { entityType = 'Homestay'; entityId = host.id; }
+      
+      var contracts = typeof getContractsByEntity !== 'undefined' ? getContractsByEntity(entityType, entityId) : [];
+      if (!contracts.length) {
+        contractsList.innerHTML = '<div class="doc-empty">No contracts found for this profile.</div>';
+        return;
+      }
+      var html = '';
+      contracts.forEach(function(c) {
+        var statusColor = c.status === 'Active' ? 'green' : (c.status === 'Expiring Soon' ? 'amber' : (c.status === 'Draft' ? 'slate' : 'blue'));
+        html += '<div class="card" style="margin-bottom:16px;">' +
+                  '<div style="display:flex; justify-content:space-between; align-items:flex-start;">' +
+                    '<div>' +
+                      '<h4 style="margin:0 0 8px 0;">' + escapeHtml(c.title) + '</h4>' +
+                      '<p style="margin:0; font-size:0.9em; color:#3b536e;">Valid: ' + escapeHtml(c.validFrom || '—') + ' to ' + escapeHtml(c.validTo || '—') + '</p>' +
+                    '</div>' +
+                    '<span class="badge ' + statusColor + '">' + escapeHtml(c.status) + '</span>' +
+                  '</div>' +
+                  '<div style="margin-top:16px; display:flex; gap:8px;">' +
+                    '<button class="button-sm button-alt" onclick="updateContractStatus(\'' + c.id + '\', \'Awaiting Signature\')">Request Signature</button>' +
+                    '<button class="button-sm button" onclick="updateContractStatus(\'' + c.id + '\', \'Active\')">Upload Signed Copy</button>' +
+                    '<button class="button-sm button-alt" style="color:var(--red);" onclick="updateContractStatus(\'' + c.id + '\', \'Terminated\')">Terminate</button>' +
+                  '</div>' +
+                '</div>';
+      });
+      contractsList.innerHTML = html;
+    }
+    
+    window.updateContractStatus = function(cid, newStatus) {
+      if (typeof getContracts === 'undefined' || typeof saveContract === 'undefined') return;
+      var all = getContracts();
+      var c = all.find(function(x) { return x.id === cid; });
+      if (c) {
+        c.status = newStatus;
+        saveContract(c);
+        
+        // The saveContract function forces the status back to Draft if there is a safeguarding block.
+        // Let's re-fetch to see if our change was rejected.
+        var updatedAll = getContracts();
+        var updatedC = updatedAll.find(function(x) { return x.id === cid; });
+        if (updatedC && updatedC.status !== newStatus && newStatus === 'Active') {
+          alert('Safeguarding block! Cannot activate contract due to missing/expired compliance records.');
+        }
+        renderContractsTab();
+      }
+    };
+  </script>
+
+  </body>
+</html>

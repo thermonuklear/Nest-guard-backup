@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accident &amp; Incident Book — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      .nav-link-sub { padding-left: 36px !important; font-size: 0.85em !important; opacity: 0.85; }
+      .nav-link-sub.active { opacity: 1; }
+      .badge-resolved   { display:inline-block; padding:3px 9px; border-radius:999px; font-size:0.75rem; font-weight:700; background:#d1fae5; color:#065f46; }
+      .badge-pending    { display:inline-block; padding:3px 9px; border-radius:999px; font-size:0.75rem; font-weight:700; background:#fef3c7; color:#92400e; }
+      .badge-escalated  { display:inline-block; padding:3px 9px; border-radius:999px; font-size:0.75rem; font-weight:700; background:#fee2e2; color:#991b1b; }
+      
+      .role-pill { display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; }
+      .role-student { background:#e0f2fe; color:#0369a1; }
+      .role-host    { background:#f3e8ff; color:#6b21a8; }
+      .role-staff   { background:#e0e7ff; color:#3730a3; }
+      .role-driver  { background:#fef9c3; color:#854d0e; }
+      .role-other   { background:#f1f5f9; color:#475569; }
+
+      .filter-bar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; margin-bottom:16px; }
+      .filter-group { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+      .filter-pill { background:#f1f5f9; border:1px solid #cbd5e1; color:#334155; padding:5px 12px; border-radius:999px; font-size:0.8rem; font-weight:600; cursor:pointer; text-decoration:none; transition:all 0.15s ease; }
+      .filter-pill:hover { background:#e2e8f0; }
+      .filter-pill.active { background:#0f2340; color:#fff; border-color:#0f2340; }
+
+      .btn-sm { padding:4px 10px; font-size:0.75rem; border-radius:6px; border:1px solid; cursor:pointer; font-family:inherit; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:4px; }
+      .btn-edit   { background:#fff; border-color:#d5dce8; color:#0f2340; }
+      .btn-delete { background:#fff; border-color:#fecaca; color:#dc2626; }
+      .btn-edit:hover   { background:#edf2f8; }
+      .btn-delete:hover { background:#fee2e2; }
+      .action-cell { white-space:nowrap; display:flex; gap:6px; align-items:center; }
+      .tag-flag { display:inline-block; font-size:0.7rem; font-weight:700; padding:1px 6px; border-radius:3px; background:#fee2e2; color:#991b1b; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/safety/accident-book</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Safety &amp; Compliance</strong>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
+              <a class="nav-link nav-link-sub" href="hosts.html?status=pending">Pending Approval</a>
+              <a class="nav-link nav-link-sub" href="homestay-visit.html">Annual visits</a>
+              <a class="nav-link nav-link-sub active" href="homestay-incidents.html">Accident Book</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+              <a class="nav-link" href="policy-viewer.html">Statutory Policies</a>
+            </div>
+          </aside>
+
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">AEGIS Standard 5.10.1.2 &amp; UK H&amp;S Compliance</span>
+                <h2>Accident &amp; Incident Book</h2>
+                <p>Central recordable register for all injuries, accidents, illnesses, and near-misses across students, hosts, staff, and drivers.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="homestays.html">Homestays</a>
+                <a class="button-alt" href="homestay-visit.html">Annual Visits</a>
+                <a class="button" href="homestay-incident-create.html">+ Log Accident / Incident</a>
+              </div>
+            </div>
+
+            <div class="metrics">
+              <article class="metric featured"><h4>Total recorded incidents</h4><div class="metric-value" id="metric-total">—</div><p class="metric-meta">All roles (all-time)</p></article>
+              <article class="metric"><h4>This academic year</h4><div class="metric-value" id="metric-year">—</div><p class="metric-meta">Sep 2025 – present</p></article>
+              <article class="metric"><h4>Pending follow-up</h4><div class="metric-value" id="metric-pending">—</div><p class="metric-meta">Open investigation / care</p></article>
+              <article class="metric"><h4>RIDDOR / DSL Escalated</h4><div class="metric-value" id="metric-escalated">—</div><p class="metric-meta">Safeguarding / Statutory</p></article>
+            </div>
+
+            <!-- Role & Status Filter Bar -->
+            <div class="filter-bar">
+              <div class="filter-group" id="role-filters">
+                <button type="button" class="filter-pill active" data-role="all">All Roles (<span id="count-all">0</span>)</button>
+                <button type="button" class="filter-pill" data-role="Student">Students (<span id="count-students">0</span>)</button>
+                <button type="button" class="filter-pill" data-role="Host">Hosts (<span id="count-hosts">0</span>)</button>
+                <button type="button" class="filter-pill" data-role="Staff">Staff (<span id="count-staff">0</span>)</button>
+                <button type="button" class="filter-pill" data-role="Driver">Drivers (<span id="count-drivers">0</span>)</button>
+              </div>
+
+              <div class="filter-group">
+                <input type="text" id="search-incidents" placeholder="Search by person, injury, location…" style="padding:6px 12px; font-size:0.84rem; border-radius:6px; border:1px solid #cbd5e1; width:220px;" />
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date &amp; Time</th>
+                    <th>Role &amp; Person</th>
+                    <th>Location / Homestay</th>
+                    <th>Incident Type</th>
+                    <th>Action Taken &amp; First Aid</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="incident-tbody">
+                  <tr><td colspan="7" style="text-align:center; padding:32px; color:#6b85a0;">Loading accident log…</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="card" style="margin-top:20px; border-left:4px solid #1a4080;">
+              <h4>AEGIS Standard 5.10.1.2 &amp; RIDDOR Governance Requirements</h4>
+              <div class="list">
+                <div class="list-item"><strong>Universal Role Coverage:</strong> All accidents, minor injuries, illnesses, or near-misses involving students, homestay families, operational staff, or transport drivers must be recorded immediately.</div>
+                <div class="list-item"><strong>First Aid &amp; Medication:</strong> Ensure the certified first aider's name and any medication administered (with dosage and time) are documented.</div>
+                <div class="list-item"><strong>Pattern Detection:</strong> Recurring minor incidents at a single homestay address or travel route trigger immediate risk assessment reviews.</div>
+                <div class="list-item"><strong>Statutory RIDDOR &amp; DSL Escalations:</strong> Incidents involving hospitalization &gt;24h, fractures, or safeguarding disclosures require immediate DSL notification and statutory reporting.</div>
+              </div>
+            </div>
+
+            <div class="inline-links" style="margin-top:16px;">
+              <a href="homestay-incident-create.html">+ Log new incident</a>
+              <span class="sep">|</span>
+              <a href="homestay-visit.html">Annual host visits</a>
+              <span class="sep">|</span>
+              <a href="homestay-hs-checklist.html">H&amp;S checklists</a>
+              <span class="sep">|</span>
+              <a href="policy-viewer.html">Health &amp; Safety Policy</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      var currentRoleFilter = 'all';
+      var searchQuery = '';
+
+      function getRoleClass(role) {
+        var r = (role || '').toLowerCase();
+        if (r === 'student') return 'role-student';
+        if (r === 'host')    return 'role-host';
+        if (r === 'staff')   return 'role-staff';
+        if (r === 'driver')  return 'role-driver';
+        return 'role-other';
+      }
+
+      function renderAccidentBook() {
+        var allIncidents = OG_DB.getAllIncidents();
+
+        // Role counts
+        var countAll      = allIncidents.length;
+        var countStudents = allIncidents.filter(function(i) { return (i.affectedRole || 'Student').toLowerCase() === 'student'; }).length;
+        var countHosts    = allIncidents.filter(function(i) { return (i.affectedRole || '').toLowerCase() === 'host'; }).length;
+        var countStaff    = allIncidents.filter(function(i) { return (i.affectedRole || '').toLowerCase() === 'staff'; }).length;
+        var countDrivers  = allIncidents.filter(function(i) { return (i.affectedRole || '').toLowerCase() === 'driver'; }).length;
+
+        document.getElementById('count-all').textContent      = countAll;
+        document.getElementById('count-students').textContent = countStudents;
+        document.getElementById('count-hosts').textContent    = countHosts;
+        document.getElementById('count-staff').textContent    = countStaff;
+        document.getElementById('count-drivers').textContent  = countDrivers;
+
+        // Metrics
+        var yearStart = new Date('2025-09-01').getTime();
+        var thisYear  = allIncidents.filter(function(inc) {
+          return inc.date && new Date(inc.date).getTime() >= yearStart;
+        }).length;
+        var pending   = allIncidents.filter(function(inc) {
+          var s = (inc.status || '').toLowerCase();
+          return s !== 'resolved';
+        }).length;
+        var escalated = allIncidents.filter(function(inc) {
+          return (inc.status || '').toLowerCase() === 'escalated' || inc.riddorReportable === 'yes' || (inc.notifications && inc.notifications.dsl);
+        }).length;
+
+        document.getElementById('metric-total').textContent     = countAll;
+        document.getElementById('metric-year').textContent      = thisYear;
+        document.getElementById('metric-pending').textContent   = pending;
+        document.getElementById('metric-escalated').textContent = escalated;
+
+        // Filter by role
+        var filtered = allIncidents.filter(function(inc) {
+          var incRole = inc.affectedRole || 'Student';
+          if (currentRoleFilter !== 'all' && incRole.toLowerCase() !== currentRoleFilter.toLowerCase()) {
+            return false;
+          }
+          if (searchQuery) {
+            var q = searchQuery.toLowerCase();
+            var haystack = [
+              inc.id,
+              inc.personName,
+              inc.studentName,
+              inc.hostName,
+              inc.incidentType,
+              inc.description,
+              inc.location,
+              inc.actionTaken,
+              inc.firstAider
+            ].join(' ').toLowerCase();
+            if (haystack.indexOf(q) === -1) return false;
+          }
+          return true;
+        });
+
+        // Sort newest first
+        filtered.sort(function(a, b) {
+          return new Date(b.date || 0) - new Date(a.date || 0);
+        });
+
+        var tbody = document.getElementById('incident-tbody');
+
+        if (!filtered.length) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:40px; color:#6b85a0;">No incidents match the selected filter. <a href="homestay-incident-create.html">+ Log a new incident</a></td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = filtered.map(function(inc) {
+          var status = inc.status || 'Pending';
+          var statusLower = status.toLowerCase();
+          var badgeClass = statusLower === 'resolved'  ? 'badge-resolved'
+                         : statusLower === 'escalated' ? 'badge-escalated'
+                         : 'badge-pending';
+
+          var role = inc.affectedRole || 'Student';
+          var roleClass = getRoleClass(role);
+          var personName = inc.personName || inc.studentName || inc.hostName || '—';
+
+          var displayDate = inc.date || '—';
+          if (inc.date) {
+            try {
+              var d = new Date(inc.date + 'T00:00:00');
+              var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+              displayDate = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+            } catch(e) {}
+          }
+          if (inc.time) {
+            displayDate += '<br><small style="color:#888;">' + inc.time + '</small>';
+          }
+
+          var flagsHtml = '';
+          if (inc.riddorReportable === 'yes') {
+            flagsHtml += '<span class="tag-flag" style="margin-left:4px;">RIDDOR</span> ';
+          }
+          if (inc.hospitalAttended === 'yes') {
+            flagsHtml += '<span class="tag-flag" style="background:#fef3c7;color:#92400e;margin-left:4px;">A&amp;E</span> ';
+          }
+          if (inc.notifications && inc.notifications.dsl) {
+            flagsHtml += '<span class="tag-flag" style="background:#e0e7ff;color:#3730a3;margin-left:4px;">DSL Notified</span>';
+          }
+
+          var locationDisplay = inc.location || (inc.hostName ? 'Homestay (' + inc.hostName + ')' : '—');
+
+          return '<tr>' +
+            '<td style="white-space:nowrap;">' + displayDate + '</td>' +
+            '<td>' +
+              '<span class="role-pill ' + roleClass + '">' + role + '</span> ' +
+              '<strong>' + escapeHtml(personName) + '</strong>' +
+            '</td>' +
+            '<td><span style="color:#334155;">' + escapeHtml(locationDisplay) + '</span></td>' +
+            '<td>' +
+              '<strong>' + escapeHtml(inc.incidentType || 'Incident') + '</strong>' +
+              (inc.severity ? '<br><small style="color:#64748b;">' + escapeHtml(inc.severity) + '</small>' : '') +
+            '</td>' +
+            '<td>' +
+              '<div style="max-width:280px; font-size:0.85rem; line-height:1.4; color:#1e293b;">' + escapeHtml(inc.actionTaken || inc.description || '—') + '</div>' +
+              (inc.firstAider ? '<small style="color:#64748b;">First Aider: ' + escapeHtml(inc.firstAider) + '</small>' : '') +
+            '</td>' +
+            '<td>' +
+              '<span class="' + badgeClass + '">' + status + '</span>' +
+              (flagsHtml ? '<div style="margin-top:4px;">' + flagsHtml + '</div>' : '') +
+            '</td>' +
+            '<td>' +
+              '<div class="action-cell">' +
+                '<a class="btn-sm btn-edit" href="homestay-incident-create.html?id=' + inc.id + '">✏️ Edit</a>' +
+                '<button class="btn-sm btn-delete" data-id="' + inc.id + '">🗑️</button>' +
+              '</div>' +
+            '</td>' +
+          '</tr>';
+        }).join('');
+
+        tbody.querySelectorAll('.btn-delete').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            if (!confirm('Are you sure you want to permanently delete this accident record?')) return;
+            OG_DB.deleteIncidentById(this.getAttribute('data-id'));
+            renderAccidentBook();
+          });
+        });
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      // Filter click listeners
+      document.querySelectorAll('#role-filters .filter-pill').forEach(function(pill) {
+        pill.addEventListener('click', function() {
+          document.querySelectorAll('#role-filters .filter-pill').forEach(function(p) { p.classList.remove('active'); });
+          this.classList.add('active');
+          currentRoleFilter = this.getAttribute('data-role');
+          renderAccidentBook();
+        });
+      });
+
+      // Search input listener
+      var searchEl = document.getElementById('search-incidents');
+      if (searchEl) {
+        searchEl.addEventListener('input', function() {
+          searchQuery = this.value.trim();
+          renderAccidentBook();
+        });
+      }
+
+      // Initial render
+      renderAccidentBook();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Host — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    /* ── Global colour overrides ── */
+    body, .page, .shell, main { background: #f0f4f8 !important; color: #0f2340 !important; }
+
+    .app-frame {
+      background: #f8fafc !important;
+      border-color: #d5dce8 !important;
+      box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important;
+    }
+
+    .chrome { background: #e8eef6 !important; border-bottom-color: #d5dce8 !important; }
+    .chrome small { color: #3b536e !important; }
+    .dots span { background: #7b9abf !important; }
+
+    .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important; }
+    .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+    .brand small  { color: #7fb3d3 !important; }
+    .brand strong { color: #e8f0fa !important; }
+    .nav-label { color: #7b9abf !important; }
+    .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+    .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+    .nav-link.active {
+      background: rgba(255,255,255,0.1) !important;
+      border-color: rgba(255,255,255,0.14) !important;
+      color: #e8f0fa !important;
+    }
+
+    .main { background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important; }
+    h2, h3, h4 { color: #0f2340 !important; }
+    p { color: #3b536e; }
+    .eyebrow { color: #2a6096 !important; }
+    .toolbar p { color: #3b536e !important; }
+
+    .button {
+      background: #0f2340 !important;
+      border-color: #0f2340 !important;
+      color: #ffffff !important;
+    }
+    .button:hover { opacity: 0.88; }
+    .button-alt {
+      background: #ffffff !important;
+      border-color: #d5dce8 !important;
+      color: #0f2340 !important;
+    }
+    .button-alt:hover { background: #edf2f8 !important; }
+
+    /* ── Form controls ── */
+    .field-input,
+    .field-select,
+    .field-textarea {
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px 12px;
+      border: 1px solid #d5dce8 !important;
+      border-radius: 10px;
+      background: #ffffff !important;
+      color: #0f2340;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-sizing: border-box;
+    }
+
+    .field-input::placeholder,
+    .field-textarea::placeholder { color: #9bafc4; }
+
+    .field-input:focus,
+    .field-select:focus,
+    .field-textarea:focus {
+      border-color: #0f2340;
+      box-shadow: 0 0 0 3px rgba(15,35,64,0.1);
+    }
+
+    .field-select { appearance: none; cursor: pointer; }
+    .field-textarea { resize: vertical; min-height: 96px; }
+
+    /* ── Form layout ── */
+    .form-section { margin-bottom: 28px; }
+
+    .form-section-title {
+      font-family: "Outfit", sans-serif;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #2a6096;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e8eef6;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .form-span-2 { grid-column: span 2; }
+
+    .field small {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #3b536e;
+    }
+
+    .field-hint {
+      font-size: 0.76rem;
+      color: #6b85a0;
+      margin-top: 4px;
+    }
+
+    /* ── Capacity stepper ── */
+    .capacity-stepper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .capacity-stepper button {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid #d5dce8 !important;
+      background: #ffffff !important;
+      color: #0f2340;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1;
+      transition: background 0.12s;
+      flex-shrink: 0;
+    }
+
+    .capacity-stepper button:hover { background: #edf2f8; }
+
+    .capacity-stepper input {
+      width: 60px;
+      text-align: center;
+      padding: 8px 10px;
+      border: 1px solid #d5dce8;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0f2340;
+      background: #ffffff !important;
+      outline: none;
+      font-family: "Plus Jakarta Sans", sans-serif;
+    }
+
+    .capacity-stepper input:focus {
+      border-color: #0f2340;
+      box-shadow: 0 0 0 3px rgba(15,35,64,0.1);
+    }
+
+    .capacity-pips-preview {
+      display: flex;
+      gap: 5px;
+      margin-left: 6px;
+    }
+
+    .cap-pip {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid #d5dce8;
+      background: #f0f4f8;
+    }
+
+    /* ── Validation ── */
+    .form-error {
+      display: none;
+      color: #7f3034;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: #f3dddd;
+      border: 1px solid #d8afb2;
+      border-radius: 8px;
+    }
+
+    .field-error .field-input,
+    .field-error .field-select,
+    .field-error .field-textarea {
+      border-color: #7f3034;
+      box-shadow: 0 0 0 3px rgba(127,48,52,0.1);
+    }
+
+    /* ── Panel ── */
+    .create-panel {
+      background: #ffffff !important;
+      border: 1px solid #d5dce8 !important;
+      border-radius: 16px;
+      padding: 28px;
+      margin: 0 0 24px;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<main class="page">
+  <div class="app-frame">
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small>Route /admin/hosts/new</small>
+    </div>
+    <div class="shell">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong>Create Host</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Overview</div>
+          <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+          <a class="nav-link" href="notifications.html">Notifications</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Operations</div>
+          <a class="nav-link" href="students.html">Students</a>
+          <a class="nav-link" href="homestays.html">Homestays</a>
+          <a class="nav-link active" href="hosts.html">Hosts</a>
+          <a class="nav-link" href="travel.html">Travel</a>
+          <a class="nav-link" href="documents.html">Documents</a>
+
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Compliance</div>
+          <a class="nav-link" href="compliance.html">AEGIS control room</a>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <section class="main">
+        <div class="toolbar">
+          <div>
+            <span class="eyebrow">Create host</span>
+            <h2>New homestay host record.</h2>
+            <p>Capture personal details, household information, and compliance data. DBS status and capacity are required before a student can be placed.</p>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" href="homestays.html">Cancel</a>
+          </div>
+        </div>
+
+        <div class="create-panel">
+          <form id="host-form" novalidate>
+
+            <!-- ── Section 1: Personal details ── -->
+            <div class="form-section">
+              <div class="form-section-title">Personal Details</div>
+              <div class="form-grid">
+                <div class="field" id="field-first-name">
+                  <small>First Name *</small>
+                  <input class="field-input" type="text" id="first-name" placeholder="e.g. Eleanor" autocomplete="given-name" />
+                </div>
+                <div class="field" id="field-last-name">
+                  <small>Last Name *</small>
+                  <input class="field-input" type="text" id="last-name" placeholder="e.g. Ashworth" autocomplete="family-name" />
+                </div>
+                <div class="field form-span-2">
+                  <small>Home Address</small>
+                  <input class="field-input" type="text" id="address" placeholder="e.g. 47 Lonsdale Road, Summertown, Oxford, OX2 7ET" autocomplete="street-address" />
+                </div>
+                <div class="field">
+                  <small>Mobile</small>
+                  <input class="field-input" type="tel" id="mobile" placeholder="e.g. 07700 900 305" autocomplete="tel" />
+                </div>
+                <div class="field">
+                  <small>Email</small>
+                  <input class="field-input" type="email" id="email" placeholder="e.g. e.ashworth@gmail.com" autocomplete="email" />
+                </div>
+                <div class="field">
+                  <small>Preferred Contact Method</small>
+                  <select class="field-select" id="preferred-contact">
+                    <option value="">Select…</option>
+                    <option value="WhatsApp / mobile — responds same day">WhatsApp / mobile</option>
+                    <option value="Email — responds within 4 hours during school hours">Email (business hours)</option>
+                    <option value="Phone call only">Phone call only</option>
+                    <option value="Text message preferred">Text message</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>Host Since</small>
+                  <input class="field-input" type="month" id="host-since" />
+                  <p class="field-hint">Month and year the family was first approved.</p>
+                </div>
+                <div class="field">
+                  <small>Gender (AEGIS Standard 5.2.1)</small>
+                  <select class="field-select" id="gender">
+                    <option value="">Select…</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                    <option value="Prefer not to say">Prefer not to say</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>Interests &amp; Hobbies</small>
+                  <input class="field-input" type="text" id="interests" placeholder="e.g. Gardening, piano, football" />
+                </div>
+                <div class="field">
+                  <small>Religion / Faith</small>
+                  <input class="field-input" type="text" id="religion" placeholder="e.g. Christian, Muslim, Non-religious, Buddhist, Hindu, Jewish" />
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Section 2: Household ── -->
+            <div class="form-section">
+              <div class="form-section-title">Household &amp; Capacity</div>
+              <div class="form-grid">
+                <div class="field" id="field-capacity">
+                  <small>Maximum Student Capacity *</small>
+                  <div class="capacity-stepper">
+                    <button type="button" id="cap-minus">−</button>
+                    <input type="number" id="capacity" value="2" min="1" max="3" readonly />
+                    <button type="button" id="cap-plus">+</button>
+                    <div class="capacity-pips-preview" id="cap-pips"></div>
+                  </div>
+                  <p class="field-hint">Maximum permitted by policy: 3 students.</p>
+                </div>
+                <div class="field">
+                  <small>Household Residents</small>
+                  <input class="field-input" type="text" id="residents" placeholder="e.g. 4 — 2 adults, 2 children (ages 10 and 13)" />
+                </div>
+                <div class="field">
+                  <small>Smoking Policy (AEGIS Standard 5.2.1 / 5.5.1.8) *</small>
+                  <select class="field-select" id="smoker-status">
+                    <option value="non-smoking">Strictly Non-Smoking Household</option>
+                    <option value="smoker-outside">Smoker — Outside Property Only (Garden/Patio)</option>
+                    <option value="smoker-inside">Smoker — Inside Property</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>Emergency Host Status (AEGIS Standard 5.4.1 / Standard 2.6)</small>
+                  <select class="field-select" id="emergency-provision">
+                    <option value="false">Standard Placements Only (No Short-Notice Emergency)</option>
+                    <option value="true">Approved for Emergency Placements (24/7 Standby)</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>Minimum Notice Required</small>
+                  <select class="field-select" id="emergency-notice">
+                    <option value="2">Immediate (&lt; 2 hours notice)</option>
+                    <option value="4">Short-Notice (&lt; 4 hours notice)</option>
+                    <option value="12">Same-Day (&lt; 12 hours notice)</option>
+                    <option value="24">24 Hours Notice</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>Pets</small>
+                  <input class="field-input" type="text" id="pets" placeholder="e.g. 1 cat — noted in allergy records, or None" />
+                </div>
+                <div class="field form-span-2">
+                  <small>Overnight Visitor Policy</small>
+                  <input class="field-input" type="text" id="overnight" placeholder="e.g. None regular. Family will notify Oxford Guardians of any guest during placement." />
+                </div>
+                <div class="field form-span-2">
+                  <small>Student Bedrooms</small>
+                  <div id="rooms-display" style="display:flex; flex-direction:column; gap:12px; margin-top:10px;"></div>
+                  <button type="button" class="button-alt" id="add-room-btn" style="margin-top:10px; padding:6px 12px; font-size:0.85rem; max-width:140px;">+ Add Room</button>
+                </div>
+                <div class="field form-span-2">
+                  <small>Dietary Provision</small>
+                  <input class="field-input" type="text" id="dietary" placeholder="e.g. Pescatarian-friendly. No nuts in household." />
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Section 3: DBS & compliance ── -->
+            <div class="form-section">
+              <div class="form-section-title">DBS &amp; Compliance</div>
+              <div class="form-grid">
+                <div class="field" id="field-dbs-status">
+                  <small>DBS Status *</small>
+                  <select class="field-select" id="dbs-status">
+                    <option value="">Select status…</option>
+                    <option value="clear">Enhanced DBS — Clear</option>
+                    <option value="amber">DBS — Action Required</option>
+                    <option value="expired">DBS — Expired</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>DBS Certificate Number</small>
+                  <input class="field-input" type="text" id="dbs-cert" placeholder="e.g. 001-338-7742-6" />
+                </div>
+                <div class="field">
+                  <small>DBS Issue Date</small>
+                  <input class="field-input" type="date" id="dbs-issue" />
+                </div>
+                <div class="field">
+                  <small>DBS Renewal Due</small>
+                  <input class="field-input" type="date" id="dbs-renewal" />
+                </div>
+                <div class="field form-span-2">
+                  <small>DBS Update Service</small>
+                  <input class="field-input" type="text" id="dbs-update" placeholder="e.g. Subscribed — last verified 10 Apr 2026" />
+                </div>
+                <div class="field form-span-2">
+                  <small>Secondary Adult DBS (if applicable)</small>
+                  <input class="field-input" type="text" id="secondary-dbs" placeholder="e.g. Richard Ashworth — Enhanced DBS clear / issued 03 Aug 2023" />
+                </div>
+                <div class="field">
+                  <small>Annual Visit Status</small>
+                  <select class="field-select" id="annual-visit-status">
+                    <option value="complete">Complete — in date</option>
+                    <option value="due">Due soon</option>
+                    <option value="overdue">Overdue</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>Annual Visit Due Date</small>
+                  <input class="field-input" type="date" id="annual-visit-due" />
+                </div>
+                <div class="field">
+                  <small>H&amp;S Checklist</small>
+                  <select class="field-select" id="hs-checklist">
+                    <option value="complete">Complete — all items passed</option>
+                    <option value="incomplete">Incomplete — items outstanding</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <small>Safe Recruitment Interview</small>
+                  <input class="field-input" type="text" id="safe-recruitment" placeholder="e.g. Completed Sep 2022 — records held in secure documents" />
+                </div>
+                <div class="field form-span-2">
+                  <small>References</small>
+                  <input class="field-input" type="text" id="references" placeholder="e.g. 2 of 2 received and verified — on file" />
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Section 4: Performance & notes ── -->
+            <div class="form-section">
+              <div class="form-section-title">Performance &amp; Notes</div>
+              <div class="form-grid">
+                <div class="field">
+                  <small>Punctuality (% on-time)</small>
+                  <input class="field-input" type="number" id="punctuality" min="0" max="100" placeholder="e.g. 100" />
+                </div>
+                <div class="field">
+                  <small>Completed Stays</small>
+                  <input class="field-input" type="text" id="completed-stays" placeholder="e.g. 14 stays across 3 academic years" />
+                </div>
+                <div class="field form-span-2">
+                  <small>Parent Feedback</small>
+                  <input class="field-input" type="text" id="parent-feedback" placeholder="e.g. Consistently positive. Rated 5/5 in last parent survey." />
+                </div>
+                <div class="field form-span-2">
+                  <small>Student Feedback</small>
+                  <input class="field-input" type="text" id="student-feedback" placeholder="e.g. Student described the household as welcoming and well-structured." />
+                </div>
+                <div class="field form-span-2">
+                  <small>Notes</small>
+                  <textarea class="field-textarea" id="notes" placeholder="Any additional notes about this host family…"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Submit ── -->
+            <div class="action-row">
+              <button type="submit" class="button">Save host record</button>
+              <a class="button-alt" href="homestays.html">Cancel</a>
+            </div>
+            <p class="form-error" id="form-error">Please fill in all required fields before saving.</p>
+
+          </form>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="assets/db.js"></script>
+<script>
+  // ── Capacity stepper + pip preview ────────────────────────────────────────
+  var capInput = document.getElementById('capacity');
+  var capPips  = document.getElementById('cap-pips');
+
+  function renderPips() {
+    var n = parseInt(capInput.value, 10) || 2;
+    var html = '';
+    for (var i = 0; i < n; i++) html += '<div class="cap-pip"></div>';
+    capPips.innerHTML = html;
+  }
+
+  document.getElementById('cap-minus').addEventListener('click', function () {
+    var v = parseInt(capInput.value, 10);
+    if (v > 1) { capInput.value = v - 1; renderPips(); }
+  });
+
+  document.getElementById('cap-plus').addEventListener('click', function () {
+    var v = parseInt(capInput.value, 10);
+    if (v < 3) { capInput.value = v + 1; renderPips(); }
+  });
+
+  renderPips(); // initial render
+
+  // ── Room Builder ─────────────────────────────────────────────────────────
+  var roomsArr = [];
+  var roomsDisplay = document.getElementById('rooms-display');
+
+  function escapeHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function renderRooms() {
+    roomsDisplay.innerHTML = '';
+    if (!roomsArr.length) {
+      roomsDisplay.innerHTML = '<p style="font-size:0.88rem; color:#6b85a0; margin:0; padding-left:4px;">No rooms added.</p>';
+    } else {
+      roomsArr.forEach(function(r, idx) {
+        var card = document.createElement('div');
+        card.style.cssText = 'background:#f4f7fb; padding:14px; border-radius:8px; border:1px solid #d5dce8; position:relative;';
+        card.innerHTML =
+          '<button type="button" class="r-remove" style="position:absolute; top:10px; right:10px; color:#d9444a; background:none; border:none; cursor:pointer; font-weight:bold; font-size:1.2rem;" title="Remove Room">&times;</button>' +
+          '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:12px; padding-right:20px;">' +
+            '<div class="field"><small>Room Label</small><input type="text" class="field-input r-label" value="' + escapeHtml(r.label || '') + '" placeholder="e.g. Bedroom 1"></div>' +
+            '<div class="field"><small>Capacity</small><input type="number" class="field-input r-cap" value="' + (r.capacity || 1) + '" min="1" max="4"></div>' +
+            '<div class="field"><small>Bed Type</small><select class="field-input r-bed"><option ' + (r.bedType === 'Single' || !r.bedType ? 'selected' : '') + '>Single</option><option ' + (r.bedType === 'Twin' ? 'selected' : '') + '>Twin</option><option ' + (r.bedType === 'Bunk' ? 'selected' : '') + '>Bunk</option></select></div>' +
+          '</div>' +
+          '<div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; border-top:1px solid #e8eef6; padding-top:10px;">' +
+            '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-ensuite" ' + (r.enSuite ? 'checked' : '') + '> En-Suite</label>' +
+            '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-desk" ' + (r.deskSpace ? 'checked' : '') + '> Desk Space</label>' +
+            '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-storage" ' + (r.storage ? 'checked' : '') + '> Storage</label>' +
+            '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-smoke" ' + (r.smokeAlarm ? 'checked' : '') + '> Smoke Alarm</label>' +
+            '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-lock" ' + (r.lockableDoor ? 'checked' : '') + '> Lockable Door</label>' +
+          '</div>';
+        card.querySelector('.r-label').addEventListener('input', function(e){ roomsArr[idx].label = e.target.value; });
+        card.querySelector('.r-cap').addEventListener('input', function(e){ roomsArr[idx].capacity = parseInt(e.target.value, 10); });
+        card.querySelector('.r-bed').addEventListener('change', function(e){ roomsArr[idx].bedType = e.target.value; });
+        card.querySelector('.r-ensuite').addEventListener('change', function(e){ roomsArr[idx].enSuite = e.target.checked; });
+        card.querySelector('.r-desk').addEventListener('change', function(e){ roomsArr[idx].deskSpace = e.target.checked; });
+        card.querySelector('.r-storage').addEventListener('change', function(e){ roomsArr[idx].storage = e.target.checked; });
+        card.querySelector('.r-smoke').addEventListener('change', function(e){ roomsArr[idx].smokeAlarm = e.target.checked; });
+        card.querySelector('.r-lock').addEventListener('change', function(e){ roomsArr[idx].lockableDoor = e.target.checked; });
+        card.querySelector('.r-remove').addEventListener('click', function(){ roomsArr.splice(idx, 1); renderRooms(); });
+        roomsDisplay.appendChild(card);
+      });
+    }
+  }
+
+  document.getElementById('add-room-btn').addEventListener('click', function() {
+    roomsArr.push({ label: '', capacity: 1, bedType: 'Single', enSuite: false, deskSpace: false, storage: false, smokeAlarm: false, lockableDoor: false });
+    renderRooms();
+  });
+
+  // Start with one empty room
+  roomsArr.push({ label: '', capacity: 1, bedType: 'Single', enSuite: false, deskSpace: false, storage: false, smokeAlarm: false, lockableDoor: false });
+  renderRooms();
+
+  // ── Form submission ───────────────────────────────────────────────────────
+  document.getElementById('host-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Required field validation
+    var required = [
+      { id: 'first-name', wrap: 'field-first-name' },
+      { id: 'last-name',  wrap: 'field-last-name'  },
+      { id: 'capacity',   wrap: 'field-capacity'   },
+      { id: 'dbs-status', wrap: 'field-dbs-status' }
+    ];
+
+    required.forEach(function (f) {
+      var wrap = document.getElementById(f.wrap);
+      if (wrap) wrap.classList.remove('field-error');
+    });
+
+    var valid = true;
+    required.forEach(function (f) {
+      var el = document.getElementById(f.id);
+      if (!el || !el.value.toString().trim()) {
+        valid = false;
+        var wrap = document.getElementById(f.wrap);
+        if (wrap) wrap.classList.add('field-error');
+      }
+    });
+
+    var errorMsg = document.getElementById('form-error');
+    if (!valid) { errorMsg.style.display = 'block'; return; }
+    errorMsg.style.display = 'none';
+
+    // Read values
+    function val(id) {
+      var el = document.getElementById(id);
+      return el ? el.value.trim() : '';
+    }
+
+    var firstName = val('first-name');
+    var lastName  = val('last-name');
+
+    // Format dates
+    function fmtDate(iso) {
+      if (!iso) return '';
+      var d = new Date(iso + 'T00:00:00');
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    // Format host-since (month input returns "YYYY-MM")
+    function fmtMonth(ym) {
+      if (!ym) return '';
+      var parts = ym.split('-');
+      var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, 1);
+      return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+    }
+
+    var pctRaw = parseInt(val('punctuality'), 10);
+    var pct    = isNaN(pctRaw) ? 100 : Math.min(100, Math.max(0, pctRaw));
+    var capMax = parseInt(capInput.value, 10) || 2;
+
+    var dbsIssue      = val('dbs-issue');
+    var dbsRenewal    = val('dbs-renewal');
+    var annualDue     = val('annual-visit-due');
+    var annualStatus  = val('annual-visit-status') || 'complete';
+    var hsStatus      = val('hs-checklist') || 'complete';
+
+    // Capacity label
+    var capLabel = annualStatus === 'complete'
+      ? 'Due ' + fmtDate(annualDue)
+      : fmtDate(annualDue) || 'Not yet scheduled';
+
+    // Generate unique ID
+    var baseId = (firstName + '-' + lastName)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+
+    var existingIds = getAllHosts().map(function (h) { return h.id; });
+    var uniqueId    = baseId;
+    var counter     = 2;
+    while (existingIds.indexOf(uniqueId) !== -1) {
+      uniqueId = baseId + '-' + counter;
+      counter++;
+    }
+
+    // Build host object — mirrors the initialHosts schema in db.js exactly
+    var newHost = {
+      id:                uniqueId,
+      firstName:         firstName,
+      lastName:          lastName,
+      address:           val('address'),
+      mobile:            val('mobile'),
+      email:             val('email'),
+      preferredContact:  val('preferred-contact') || 'Not specified',
+      hostSince:         fmtMonth(val('host-since')) || 'Not specified',
+      capacityMax:       capMax,
+      capacityCurrent:   0,
+      currentStudents:   'None — new host record',
+      householdResidents: val('residents') || 'Not specified',
+      smokerStatus:      val('smoker-status') || 'non-smoking',
+      pets:              val('pets') || 'Not specified',
+      overnightVisitors: val('overnight') || 'Not specified',
+      rooms:             roomsArr,
+      dietaryProvision:  val('dietary') || 'Not specified',
+      householdMembers: [{
+        name:       firstName + ' ' + lastName,
+        dob:        '',
+        age:        '',
+        gender:     val('gender'),
+        occupation: '',
+        interests:  val('interests'),
+        religion:   val('religion')
+      }],
+      regularVisitors:   [],
+      emergencyProvision:   val('emergency-provision') === 'true',
+      emergencyNoticeHours: parseInt(val('emergency-notice'), 10) || 2,
+      emergencyCapacity:    1,
+      emergencyNotes:       '',
+      availabilityCalendar: [],
+      dbsStatus:         val('dbs-status'),
+      dbsCertNumber:     val('dbs-cert'),
+      dbsIssueDate:      fmtDate(dbsIssue)   || dbsIssue,
+      dbsRenewalDue:     fmtDate(dbsRenewal) || dbsRenewal,
+      dbsUpdateService:  val('dbs-update') || 'Not yet subscribed',
+      secondaryAdultDbs: val('secondary-dbs') || 'Not provided',
+      annualVisitStatus: annualStatus,
+      annualVisitDue:    annualDue ? (annualStatus === 'due' ? 'Due ' + fmtDate(annualDue) : fmtDate(annualDue)) : 'Not yet scheduled',
+      annualVisitLast:   'No visits on record yet',
+      hsChecklist:       hsStatus,
+      hsChecklistDetail: hsStatus === 'complete'
+        ? 'All items passed on initial assessment.'
+        : 'Outstanding items — follow-up required.',
+      safeRecruitment:   val('safe-recruitment') || 'Not yet completed',
+      references:        val('references') || 'Not yet received',
+      punctualityPct:    pct,
+      punctualityDetail: pct + '% on-time (record started ' + new Date().toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) + ')',
+      welfareIncidents:  '0 — no incidents recorded yet',
+      parentFeedback:    val('parent-feedback') || 'No feedback recorded yet.',
+      studentFeedback:   val('student-feedback') || 'No feedback recorded yet.',
+      completedStays:    val('completed-stays') || '0 — new host record',
+      notes:             val('notes'),
+      status:            'pending',
+      linkedStudents:    [],
+      preferredStudentId: null,
+      compliance: {
+        idDocumentPath:           '',
+        rightToWorkCheckPath:     '',
+        isCitizen:                true,
+        worksOutsideUK:           false,
+        rightToWorkExpiry:        '',
+        dbsNumber:                '',
+        dbsLastChecked:           '',
+        dbsCertificatePath:       '',
+        dbsUpdateService:         false,
+        dbsExpiry:                '',
+        reference1Path:           '',
+        reference2Path:           '',
+        livedAbroad:              false,
+        overseasCheckDocPath:     '',
+        safeguardingTrainingDate: '',
+        safeguardingCertificatePath: ''
+      }
+    };
+
+    // Persist & redirect
+    saveHost(newHost);
+    window.location.href = 'hosts.html?id=' + uniqueId;
+  });
+</script>
+
+</body>
+</html>

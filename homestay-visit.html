@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Annual Visits — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      .nav-link-sub { padding-left: 36px !important; font-size: 0.85em !important; opacity: 0.85; }
+      .nav-link-sub.active { opacity: 1; }
+      .empty-row td { text-align: center; color: var(--ink-3); padding: 32px 16px; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/homestays/visits</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Homestay Operations</strong>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
+              <a class="nav-link nav-link-sub" href="hosts.html?status=pending">Pending Approval</a>
+              <a class="nav-link nav-link-sub active" href="homestay-visit.html">Annual visits</a>
+              <a class="nav-link nav-link-sub" href="homestay-incidents.html">Incident log</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Homestay annual visit log</span>
+                <h2>Every homestay, every year, in person</h2>
+                <p>AEGIS Standard 5.10.3 requires annual in-person visits to every active homestay. This is the operational tracker.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button-alt" href="homestays.html">Back to homestays</a><a class="button-alt" href="homestay-hs-checklist.html">H&S checklist</a><a class="button" id="btn-log-visit" href="homestay-visit-report.html">Log annual visit</a></div>
+            </div>
+            <div class="metrics">
+              <article class="metric featured"><h4>Visit compliance</h4><div class="metric-value" id="metric-compliance">—</div><p class="metric-meta" id="metric-compliance-meta">—</p></article>
+              <article class="metric"><h4>Due this month</h4><div class="metric-value" id="metric-due">0</div><p class="metric-meta" id="metric-due-meta">—</p></article>
+              <article class="metric"><h4>Overdue</h4><div class="metric-value" id="metric-overdue">0</div><p class="metric-meta" id="metric-overdue-meta">—</p></article>
+              <article class="metric"><h4>Completed this academic year</h4><div class="metric-value" id="metric-completed">0</div><p class="metric-meta" id="metric-completed-meta">Since 1 Sep 2025</p></article>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Homestay</th><th>Last visit</th><th>Conducting staff</th><th>Latest outcome</th><th>Next due</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="visit-table-body"></tbody>
+              </table>
+            </div>
+            <div class="card" style="margin-top:16px;">
+              <h4>What the annual visit must cover (5.10.2, 5.10.3)</h4>
+              <div class="list">
+                <div class="list-item"><strong>Smoke alarms</strong><small>Test all alarms. Confirm presence on each floor.</small></div>
+                <div class="list-item"><strong>CO alarm</strong><small>Test if gas appliances present. Confirm location near boiler.</small></div>
+                <div class="list-item"><strong>Gas safety certificate</strong><small>Check expiry date. Must be valid.</small></div>
+                <div class="list-item"><strong>Electrical safety</strong><small>Visual check. No frayed cables, overloaded sockets, or unsafe appliances.</small></div>
+                <div class="list-item"><strong>Evacuation route</strong><small>Discuss and confirm clear route from student bedroom to exit.</small></div>
+                <div class="list-item"><strong>First aid basics</strong><small>Confirm first aid kit present and carers know location.</small></div>
+                <div class="list-item"><strong>Medication storage</strong><small>Secure storage for any student medications. Alcohol secured from minors.</small></div>
+                <div class="list-item"><strong>Food hygiene</strong><small>Kitchen cleanliness. Allergen awareness discussed.</small></div>
+                <div class="list-item"><strong>Household changes</strong><small>Confirm no new residents since last visit. Any new DBS needed?</small></div>
+              </div>
+            </div>
+            <div class="inline-links"><a href="homestay-visit-report.html">Log new visit</a><span class="sep">|</span><a href="host-profile.html?tab=visits">Initial assessments</a><span class="sep">|</span><a href="homestay-hs-checklist.html">H&S checklist</a><span class="sep">|</span><a href="homestay-incidents.html">Incident log</a></div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      function esc(s) {
+        return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      function formatDate(d) {
+        if (!d) return '—';
+        var p = new Date(d);
+        if (isNaN(p.getTime())) return String(d);
+        var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return p.getDate() + ' ' + M[p.getMonth()] + ' ' + p.getFullYear();
+      }
+
+      var OUTCOME_BADGES = {
+        'approved':               { label: 'Approved',        cls: 'green' },
+        'approved_after_actions': { label: 'Actions Pending',  cls: 'amber' },
+        'not_approved':           { label: 'Not Approved',     cls: 'red'   },
+        'suspended':              { label: 'Suspended',        cls: 'navy'  }
+      };
+
+      var COMPLIANCE_BADGES = {
+        'current':       { label: 'Current',                  cls: 'green' },
+        'due_soon':       { label: 'Due soon',                 cls: 'amber' },
+        'overdue':        { label: 'Overdue',                  cls: 'red'   },
+        'needs_initial':  { label: 'Needs Initial Assessment', cls: 'navy'  }
+      };
+
+      function badge(info) {
+        return '<span class="badge ' + info.cls + '">' + esc(info.label) + '</span>';
+      }
+
+      // Best available "next due" date for a host: explicit next review from
+      // the latest visit report, else last visit + 12 months, else whatever
+      // is recorded on the host record.
+      function computeNextDue(host, latestVisit) {
+        if (latestVisit && latestVisit.nextReviewDue) {
+          var d = new Date(latestVisit.nextReviewDue);
+          if (!isNaN(d.getTime())) return d;
+        }
+        if (latestVisit && latestVisit.dateOfVisit) {
+          var d2 = new Date(latestVisit.dateOfVisit);
+          if (!isNaN(d2.getTime())) { d2.setFullYear(d2.getFullYear() + 1); return d2; }
+        }
+        if (host.annualVisitDue) {
+          var d3 = new Date(host.annualVisitDue);
+          if (!isNaN(d3.getTime())) return d3;
+        }
+        return null;
+      }
+
+      function renderPage() {
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        var in30 = new Date(today.getTime() + 30 * 86400000);
+        var academicYearStart = new Date('2025-09-01T00:00:00.000Z');
+
+        var hosts       = getAllHosts();
+        var activeHosts = hosts.filter(function (h) { return h.status === 'approved'; });
+        var allReports  = getAllVisitReports();
+
+        var visitedWithin365 = 0;
+        var dueThisMonth      = 0;
+        var overdueCount      = 0;
+
+        var rows = activeHosts.map(function (host) {
+          var reports     = getVisitReportsForHost(host.id);
+          var latestVisit = reports.length > 0 ? reports[0] : null;
+          var nextDue     = computeNextDue(host, latestVisit);
+
+          var status;
+          if (!latestVisit) {
+            status = 'needs_initial';
+          } else {
+            var visitDate = new Date(latestVisit.dateOfVisit);
+            var daysSinceVisit = isNaN(visitDate.getTime()) ? null : Math.floor((today - visitDate) / 86400000);
+            if (daysSinceVisit !== null && daysSinceVisit > 365) {
+              status = 'overdue';
+            } else if (nextDue && nextDue <= in30) {
+              status = 'due_soon';
+            } else {
+              status = 'current';
+            }
+          }
+
+          if (status === 'overdue' || status === 'needs_initial') overdueCount++;
+          if (latestVisit) {
+            var vd = new Date(latestVisit.dateOfVisit);
+            if (!isNaN(vd.getTime()) && (today - vd) / 86400000 <= 365) visitedWithin365++;
+          }
+          if (nextDue && nextDue >= today && nextDue <= in30) dueThisMonth++;
+
+          var outcomeBadge = latestVisit && OUTCOME_BADGES[latestVisit.outcome]
+            ? badge(OUTCOME_BADGES[latestVisit.outcome])
+            : '—';
+
+          return '<tr>' +
+            '<td><strong>' + esc(host.firstName + ' ' + host.lastName) + '</strong><small>' + esc(host.address || '—') + '</small></td>' +
+            '<td>' + (latestVisit ? esc(formatDate(latestVisit.dateOfVisit)) + '<small>' + esc(latestVisit.visitType || '—') + '</small>' : '—') + '</td>' +
+            '<td>' + (latestVisit ? esc(latestVisit.staffMember || '—') : '—') + '</td>' +
+            '<td>' + outcomeBadge + '</td>' +
+            '<td>' + (nextDue ? esc(formatDate(nextDue)) : '—') + '</td>' +
+            '<td>' + badge(COMPLIANCE_BADGES[status]) + '</td>' +
+            '<td><a class="button-alt" style="padding:6px 12px;font-size:0.8rem;" href="homestay-visit-report.html?hostId=' + esc(host.id) + '">View / Log Visit</a></td>' +
+          '</tr>';
+        });
+
+        var tbody = document.getElementById('visit-table-body');
+        tbody.innerHTML = rows.length > 0 ? rows.join('') :
+          '<tr class="empty-row"><td colspan="7">No active homestays on file.</td></tr>';
+
+        var totalActive = activeHosts.length;
+        var compliancePct = totalActive > 0 ? Math.round((visitedWithin365 / totalActive) * 100) : 0;
+        document.getElementById('metric-compliance').textContent = compliancePct + '%';
+        document.getElementById('metric-compliance-meta').textContent =
+          visitedWithin365 + ' of ' + totalActive + ' active homestays visited within last 12 months';
+
+        document.getElementById('metric-due').textContent = dueThisMonth;
+        document.getElementById('metric-due-meta').textContent = dueThisMonth === 1 ? '1 homestay due within 30 days' : dueThisMonth + ' homestays due within 30 days';
+
+        document.getElementById('metric-overdue').textContent = overdueCount;
+        document.getElementById('metric-overdue-meta').textContent = overdueCount === 1 ? '1 homestay needs attention' : overdueCount + ' homestays need attention';
+
+        var completedThisYear = allReports.filter(function (r) {
+          var d = new Date(r.dateOfVisit);
+          return !isNaN(d.getTime()) && d >= academicYearStart;
+        }).length;
+        document.getElementById('metric-completed').textContent = completedThisYear;
+      }
+
+      renderPage();
+    </script>
+  </body>
+</html>

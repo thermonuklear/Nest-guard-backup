@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emergency — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+    <style>
+      .field-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); font-weight: 700; margin-bottom: 2px; }
+      .field-value { font-weight: 600; color: var(--ink); }
+      .field-full { grid-column: 1 / -1; }
+      .lone-working-box { grid-column: 1 / -1; background: var(--surface-2); border-radius: 12px; padding: 12px 14px; display: grid; gap: 6px; }
+      .issuance-summary { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+      .issuance-summary .big { font-family: "Outfit", sans-serif; font-size: 2.2rem; font-weight: 700; color: var(--green); }
+      .progress-track { background: var(--surface-2); border-radius: 999px; height: 8px; width: 100%; overflow: hidden; }
+      .progress-fill { background: var(--green); height: 100%; border-radius: 999px; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/emergency</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Emergency</strong></div>
+            <div class="nav-group"><div class="nav-label">Emergency</div><a class="nav-link active" href="emergency-procedures.html">Emergency</a><a class="nav-link" href="emergency-incident.html">Log incident</a><a class="nav-link" href="incident-logs.html">Incident logs</a><a class="nav-link" href="emergency-protocols.html">Protocols</a></div>
+            <div class="nav-group"><div class="nav-label">Operations</div><a class="nav-link" href="admin-dashboard.html">Dashboard</a><a class="nav-link" href="students.html">Students</a><a class="nav-link" href="homestays.html">Homestays</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">AEGIS Standard 2.6 — Emergency</span>
+                <h2>24-hour means someone actually answers.</h2>
+                <p>Emergency dashboard — who responds, how to reach them, and what's happened recently.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button-alt" href="admin-dashboard.html">Back to dashboard</a><a class="button" href="emergency-incident.html">Log incident</a></div>
+            </div>
+            <div class="metrics">
+              <article class="metric featured"><h4>24-hour emergency line</h4><div class="metric-value">+44 7700 900 999</div><p class="metric-meta">Staffed rotation: Jay Ray (DSL), Zuko Fire, Priya Shah</p></article>
+              <article class="metric"><h4>Incidents this year</h4><div class="metric-value" id="metric-incidents-count">—</div><p class="metric-meta" id="metric-incidents-breakdown">Loading…</p></article>
+              <article class="metric"><h4>Average response time</h4><div class="metric-value" id="metric-avg-response">—</div><p class="metric-meta">Time to first staff acknowledgement</p></article>
+              <article class="metric">
+                <h4>24/7 Number Issuance</h4>
+                <div class="metric-value" id="metric-issuance-rate">100%</div>
+                <p class="metric-meta" id="metric-issuance-sub">Evidenced across all 4 parties</p>
+              </article>
+            </div>
+            <div class="cols-2">
+              <div class="card">
+                <h4>Emergency coverage rota</h4>
+                <div class="list">
+                  <div class="list-item"><strong>Mon–Fri daytime (08:00–18:00)</strong><small>Office line → Zuko Fire (primary), Priya Shah (backup)</small></div>
+                  <div class="list-item"><strong>Mon–Fri evening (18:00–22:00)</strong><small>Mobile → Priya Shah (primary), Jay Ray (backup)</small></div>
+                  <div class="list-item"><strong>Overnight (22:00–08:00)</strong><small>Mobile → Jay Ray (primary), Zuko Fire (backup)</small></div>
+                  <div class="list-item"><strong>Weekends and bank holidays</strong><small>Rotating — see current rota. Jay Ray always reachable for DSL escalation.</small></div>
+                </div>
+              </div>
+              <div class="card">
+                <h4>Escalation contacts</h4>
+                <div class="list">
+                  <div class="list-item"><strong>Police (emergency)</strong><small>999</small></div>
+                  <div class="list-item"><strong>Police (non-emergency)</strong><small>101</small></div>
+                  <div class="list-item"><strong>NHS (urgent)</strong><small>111</small></div>
+                  <div class="list-item"><strong>Gloucestershire LADO</strong><small>01452 426994</small></div>
+                  <div class="list-item"><strong>Oxfordshire LADO</strong><small>01865 810603</small></div>
+                  <div class="list-item"><strong>Cambridgeshire LADO</strong><small>01733 864038</small></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:20px; border-left:4px solid #0284c7;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+                <div>
+                  <span class="eyebrow" style="color:#0284c7;">AEGIS Standard 2.6.3 — Emergency Cover &amp; Resilience</span>
+                  <h4 style="margin:4px 0 0;">Reciprocal Backup Guardian &amp; Lone Worker Governance</h4>
+                </div>
+                <span class="badge green" id="cover-status-badge">✓ Active &amp; DBS Vetted</span>
+              </div>
+              <div class="grid-2" style="margin-top:14px; gap:16px;" id="cover-arrangement-details">
+                <!-- Dynamically populated from OG_DB.getEmergencyCoverArrangements() -->
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:20px;">
+              <h4>24-Hour Emergency Number Issuance Evidence (AEGIS Standard 2.6.1)</h4>
+              <p style="color:#64748b; font-size:0.85rem; margin:2px 0 12px;">Auditable verification that the 24/7 emergency contact number was formally issued upon onboarding.</p>
+              <div id="issuance-stats-table">
+                <!-- Dynamically populated from OG_DB.getEmergencyIssuanceStats() -->
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:24px;">
+              <h4>Recent incidents</h4>
+              <div class="list" id="recent-incidents-list">
+                <div class="list-item"><small>Loading…</small></div>
+              </div>
+            </div>
+            <p class="inline-links">Related: <a href="emergency-protocols.html">Response protocols</a> · <a href="incident-logs.html">Full incident log</a> · <a href="concerns-escalated.html">Safeguarding concerns</a> · <a href="welfare-notes.html">Welfare notes</a> · <a href="homestay-incidents.html">Incident log</a> · <a href="compliance.html">AEGIS control room</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script>
+      (function () {
+        function escapeHtml(str) {
+          return String(str == null ? '' : str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+        }
+
+        function field(label, valueHtml, full) {
+          return (
+            '<div' + (full ? ' class="field-full"' : '') + '>' +
+              '<div class="field-label">' + escapeHtml(label) + '</div>' +
+              '<div class="field-value">' + valueHtml + '</div>' +
+            '</div>'
+          );
+        }
+
+        // ── Emergency Cover & Lone-Working Arrangement (Standard 2.6.3) ──
+        var cover = OG_DB.getEmergencyCoverArrangements();
+        var badge = document.getElementById('cover-status-badge');
+        badge.textContent = cover.agreementStatus === 'Active & Verified'
+          ? '✓ Active & DBS Vetted'
+          : cover.agreementStatus;
+
+        var telHref = 'tel:' + String(cover.directPhone || '').replace(/\s+/g, '');
+        var coverHtml =
+          field('Partnership', escapeHtml(cover.partnershipName)) +
+          field('Partner Organisation', escapeHtml(cover.partnerOrg)) +
+          field('Lead Cover Officer', escapeHtml(cover.leadCoverOfficer)) +
+          field('DBS Certificate', escapeHtml(cover.dbsCertNumber)) +
+          field('Direct Phone', '<a href="' + telHref + '">' + escapeHtml(cover.directPhone) + '</a>') +
+          field('Effective → Renewal', escapeHtml(cover.effectiveDate) + ' → ' + escapeHtml(cover.renewalDate)) +
+          field('Scope', escapeHtml(cover.scope), true) +
+          (
+            '<div class="lone-working-box">' +
+              '<div class="field-label">Lone Working Safety — ' + escapeHtml(cover.loneWorkingSafety.protocolRef) +
+                ' <span class="badge green" style="margin-left:6px;">' + escapeHtml(cover.loneWorkingSafety.status) + '</span></div>' +
+              '<div class="field-value" style="font-weight:500;">' + escapeHtml(cover.loneWorkingSafety.checkInRequirement) + '</div>' +
+              '<div class="field-value" style="font-weight:500;">' + escapeHtml(cover.loneWorkingSafety.emergencyEscalation) + '</div>' +
+            '</div>'
+          );
+        document.getElementById('cover-arrangement-details').innerHTML = coverHtml;
+
+        // ── 24-Hour Number Issuance Evidence (Standard 2.6.1) ──
+        var stats = OG_DB.getEmergencyIssuanceStats();
+        document.getElementById('metric-issuance-rate').textContent = stats.percentage + '%';
+        document.getElementById('metric-issuance-sub').textContent =
+          stats.percentage >= 100 ? 'Evidenced across all 4 parties' : 'Evidenced across students, parents, hosts & schools';
+
+        function issuanceRow(label, group) {
+          var pct = group.total ? Math.round((group.issued / group.total) * 100) : 100;
+          return (
+            '<tr>' +
+              '<td><strong>' + escapeHtml(label) + '</strong></td>' +
+              '<td>' + group.issued + ' / ' + group.total + '</td>' +
+              '<td>' +
+                '<div style="display:flex; align-items:center; gap:10px;">' +
+                  '<div class="progress-track" style="max-width:160px;"><div class="progress-fill" style="width:' + pct + '%;"></div></div>' +
+                  '<span>' + pct + '%</span>' +
+                '</div>' +
+              '</td>' +
+            '</tr>'
+          );
+        }
+
+        var issuanceHtml =
+          '<div class="issuance-summary"><span class="big">' + stats.percentage + '%</span><span style="color:var(--ink-3);">overall issuance compliance</span></div>' +
+          '<div class="table-wrap"><table>' +
+            '<thead><tr><th>Party</th><th>Issued / Total</th><th>Coverage</th></tr></thead>' +
+            '<tbody>' +
+              issuanceRow('Students', stats.students) +
+              issuanceRow('Parents', stats.parents) +
+              issuanceRow('Homestays', stats.hosts) +
+              issuanceRow('Partner Schools', stats.schools) +
+            '</tbody>' +
+          '</table></div>';
+        document.getElementById('issuance-stats-table').innerHTML = issuanceHtml;
+      })();
+
+      (function () {
+        var incidents = OG_DB.getAllIncidents();
+
+        // ── Incidents this year (dynamic) ──
+        var currentYear = new Date().getFullYear();
+        var thisYear = incidents.filter(function (inc) {
+          return new Date(inc.date).getFullYear() === currentYear;
+        });
+
+        document.getElementById('metric-incidents-count').textContent = thisYear.length;
+
+        // Build breakdown by type
+        var typeCounts = {};
+        thisYear.forEach(function (inc) {
+          var t = inc.type || 'Other';
+          typeCounts[t] = (typeCounts[t] || 0) + 1;
+        });
+        var parts = [];
+        for (var t in typeCounts) {
+          parts.push(typeCounts[t] + ' ' + t.toLowerCase());
+        }
+        document.getElementById('metric-incidents-breakdown').textContent =
+          parts.length ? parts.join(', ') : 'No incidents recorded';
+
+        // ── Average response time ──
+        var totalMin = 0;
+        var countWithTime = 0;
+        incidents.forEach(function (inc) {
+          if (inc.responseTime) {
+            var match = inc.responseTime.match(/(\d+)/);
+            if (match) {
+              totalMin += parseInt(match[1], 10);
+              countWithTime++;
+            }
+          }
+        });
+        var avgEl = document.getElementById('metric-avg-response');
+        avgEl.textContent = countWithTime ? Math.round(totalMin / countWithTime) + ' min' : '—';
+
+        // ── Recent incidents (last 6) ──
+        var sorted = incidents.slice().sort(function (a, b) {
+          return new Date(b.date) - new Date(a.date);
+        });
+        var recent = sorted.slice(0, 6);
+
+        var container = document.getElementById('recent-incidents-list');
+        container.innerHTML = '';
+
+        if (recent.length === 0) {
+          container.innerHTML = '<div class="list-item"><small>No incidents recorded yet. <a href="emergency-incident.html">Log your first incident</a>.</small></div>';
+          return;
+        }
+
+        recent.forEach(function (inc) {
+          var dateStr = new Date(inc.date).toLocaleDateString('en-GB', {
+            day: '2-digit', month: 'short', year: 'numeric'
+          });
+          var div = document.createElement('div');
+          div.className = 'list-item';
+          div.style.cursor = 'pointer';
+          div.innerHTML =
+            '<strong>' + dateStr + ' — ' + (inc.type || 'Incident') + '</strong>' +
+            '<small>' + (inc.studentName || 'Unknown student') + '. ' + (inc.description || '') + '</small>';
+          div.addEventListener('click', function () {
+            window.location.href = 'incident-logs.html?highlight=' + inc.id;
+          });
+          container.appendChild(div);
+        });
+      })();
+    </script>
+  </body>
+</html>

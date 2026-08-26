@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Host — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    body, .page, .shell, main { background: #f0f4f8 !important; color: #0f2340 !important; }
+    .app-frame { background: #f8fafc !important; border-color: #d5dce8 !important; box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important; }
+    .chrome { background: #e8eef6 !important; border-bottom-color: #d5dce8 !important; }
+    .chrome small { color: #3b536e !important; }
+    .dots span { background: #7b9abf !important; }
+    .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important; }
+    .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+    .brand small  { color: #7fb3d3 !important; }
+    .brand strong { color: #e8f0fa !important; }
+    .nav-label { color: #7b9abf !important; }
+    .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+    .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+    .nav-link.active { background: rgba(255,255,255,0.1) !important; border-color: rgba(255,255,255,0.14) !important; color: #e8f0fa !important; }
+    .main { background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important; }
+    h2, h3, h4 { color: #0f2340 !important; }
+    p { color: #3b536e; }
+    .eyebrow { color: #2a6096 !important; }
+    .toolbar p { color: #3b536e !important; }
+    .button { background: #0f2340 !important; border-color: #0f2340 !important; color: #ffffff !important; }
+    .button:hover { opacity: 0.88; }
+    .button-alt { background: #ffffff !important; border-color: #d5dce8 !important; color: #0f2340 !important; }
+    .button-alt:hover { background: #edf2f8 !important; }
+
+    .field-input, .field-select, .field-textarea {
+      width: 100%; margin-top: 6px; padding: 10px 12px;
+      border: 1px solid #d5dce8 !important; border-radius: 10px;
+      background: #ffffff !important; color: #0f2340;
+      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.92rem;
+      outline: none; transition: border-color 0.15s, box-shadow 0.15s; box-sizing: border-box;
+    }
+    .field-input::placeholder, .field-textarea::placeholder { color: #9bafc4; }
+    .field-input:focus, .field-select:focus, .field-textarea:focus {
+      border-color: #0f2340 !important; box-shadow: 0 0 0 3px rgba(15,35,64,0.1);
+    }
+    .field-select { appearance: none; cursor: pointer; }
+    .field-textarea { resize: vertical; min-height: 80px; }
+    .form-section { margin-bottom: 28px; }
+    .form-section-title {
+      font-family: "Outfit", sans-serif; font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; color: #2a6096;
+      margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #e8eef6;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .form-span-2 { grid-column: span 2; }
+    .form-span-3 { grid-column: span 3; }
+    .field small { display: block; font-size: 0.8rem; font-weight: 600; color: #3b536e; }
+    .field-hint { font-size: 0.75rem; color: #6b85a0; margin-top: 3px; }
+    .create-panel { background: #ffffff !important; border: 1px solid #d5dce8 !important; border-radius: 16px; padding: 28px; margin: 0 0 24px; }
+    .action-row { display: flex; gap: 10px; align-items: center; padding-top: 8px; }
+    .save-toast {
+      position: fixed; top: 20px; right: 24px; z-index: 9999;
+      background: #0f2340; color: #ffffff;
+      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.88rem; font-weight: 600;
+      padding: 12px 20px; border-radius: 10px; box-shadow: 0 8px 24px rgba(15,35,64,0.25);
+      display: flex; align-items: center; gap: 10px;
+      opacity: 0; transform: translateY(-8px);
+      transition: opacity 0.2s ease, transform 0.2s ease; pointer-events: none;
+    }
+    .save-toast.visible { opacity: 1; transform: translateY(0); }
+    .save-toast-icon { width: 18px; height: 18px; border-radius: 50%; background: #28a745; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
+    .scr-sub { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b85a0; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #e8eef6; }
+    .check-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; cursor: pointer; font-size: 0.9rem; color: #0f2340; }
+    .field-file { margin-top: 6px; font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.85rem; cursor: pointer; color: #3b536e; }
+    .not-found { padding: 48px 32px; text-align: center; color: #3b536e; }
+    .not-found h3 { color: #0f2340 !important; margin-bottom: 10px; }
+    @media (max-width: 760px) {
+      .form-grid, .form-grid-3 { grid-template-columns: 1fr; }
+      .form-span-2, .form-span-3 { grid-column: span 1; }
+      .create-panel { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="save-toast" id="save-toast">
+  <div class="save-toast-icon">✓</div>
+  <span>Profile saved successfully</span>
+</div>
+
+<main class="page">
+  <div class="app-frame">
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small id="chrome-route">Route /admin/hosts/edit</small>
+    </div>
+    <div class="shell">
+
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong id="sidebar-label">Edit Host</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Operations</div>
+          <a class="nav-link" href="homestays.html">Homestays</a>
+          <a class="nav-link nav-link-sub active" href="hosts.html">Hosts</a>
+          <a class="nav-link" href="documents.html">Documents</a>
+
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Compliance</div>
+          <a class="nav-link" href="compliance.html">AEGIS control room</a>
+        </div>
+      </aside>
+
+      <section class="main">
+        <div class="toolbar">
+          <div>
+            <span class="eyebrow">Edit host</span>
+            <h2 id="toolbar-title">Loading…</h2>
+            <p>Update host profile and household details. Compliance records are managed separately.</p>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" id="back-link" href="hosts.html">Discard</a>
+            <button class="button" type="submit" form="host-form">Save changes</button>
+          </div>
+        </div>
+
+        <div id="not-found" class="not-found" style="display:none;">
+          <h3>Host not found</h3>
+          <p><a href="hosts.html" style="color:#2a6096;font-weight:600;">Return to Hosts Directory</a></p>
+        </div>
+
+        <div class="create-panel" id="edit-panel">
+          <form id="host-form" novalidate>
+
+            <!-- ── Identity ── -->
+            <div class="form-section">
+              <div class="form-section-title">Identity</div>
+              <div class="form-grid">
+                <div class="field"><small>First Name *</small><input class="field-input" type="text" id="f-first-name" /></div>
+                <div class="field"><small>Last Name *</small><input class="field-input" type="text" id="f-last-name" /></div>
+                <div class="field form-span-2"><small>Home Address</small><input class="field-input" type="text" id="f-address" /></div>
+                <div class="field"><small>Mobile</small><input class="field-input" type="tel" id="f-mobile" /></div>
+                <div class="field"><small>Email</small><input class="field-input" type="email" id="f-email" /></div>
+                <div class="field form-span-2"><small>Preferred Contact Method</small><input class="field-input" type="text" id="f-preferred-contact" /></div>
+                <div class="field"><small>Host Since</small><input class="field-input" type="text" id="f-host-since" placeholder="e.g. September 2022" /></div>
+                <div class="field">
+                  <small>Overall Status</small>
+                  <select class="field-select" id="f-status">
+                    <option value="approved">Approved</option>
+                    <option value="pending">Pending</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Household & Capacity ── -->
+            <div class="form-section">
+              <div class="form-section-title">Household &amp; Capacity</div>
+              <div class="form-grid-3">
+                <div class="field"><small>Max Student Capacity</small><input class="field-input" type="number" id="f-capacity-max" min="1" max="5" /></div>
+                <div class="field"><small>Current Occupancy</small><input class="field-input" type="number" id="f-capacity-current" min="0" max="5" /></div>
+                <div class="field"><small>Current Students</small><input class="field-input" type="text" id="f-current-students" /></div>
+              </div>
+              <div class="form-grid" style="margin-top:14px;">
+                <div class="field form-span-2"><small>Household Residents</small><input class="field-input" type="text" id="f-household-residents" /></div>
+                <div class="field form-span-2"><small>Pets</small><input class="field-input" type="text" id="f-pets" /></div>
+                <div class="field form-span-2"><small>Overnight Visitors Policy</small><textarea class="field-textarea" id="f-overnight-visitors"></textarea></div>
+                <div class="field form-span-2">
+                  <small>Student Bedrooms</small>
+                  <div id="rooms-display" style="display:flex; flex-direction:column; gap:12px; margin-top:10px;"></div>
+                  <button type="button" class="button-alt" id="add-room-btn" style="margin-top:10px; padding:6px 12px; font-size:0.85rem; max-width:140px;">+ Add Room</button>
+                </div>
+                <div class="field form-span-2"><small>Dietary Provision</small><textarea class="field-textarea" id="f-dietary-provision"></textarea></div>
+              </div>
+            </div>
+
+            <!-- ── DBS & Compliance ── -->
+            <div class="form-section">
+              <div class="form-section-title">DBS &amp; Compliance</div>
+              <div class="form-grid">
+                <div class="field">
+                  <small>DBS Status *</small>
+                  <select class="field-select" id="f-dbs-status">
+                    <option value="clear">Enhanced DBS — Clear</option>
+                    <option value="amber">DBS — Action Required</option>
+                    <option value="expired">DBS — Expired</option>
+                  </select>
+                </div>
+                <div class="field"><small>DBS Certificate Number</small><input class="field-input" type="text" id="f-dbs-cert" /></div>
+                <div class="field"><small>DBS Issue Date</small><input class="field-input" type="text" id="f-dbs-issue" /></div>
+                <div class="field"><small>DBS Renewal Due</small><input class="field-input" type="text" id="f-dbs-renewal" /></div>
+                <div class="field form-span-2"><small>DBS Update Service</small><input class="field-input" type="text" id="f-dbs-update" /></div>
+                <div class="field form-span-2"><small>Secondary Adult DBS</small><input class="field-input" type="text" id="f-secondary-dbs" /></div>
+              </div>
+              <div class="form-grid-3" style="margin-top:14px;">
+                <div class="field">
+                  <small>Annual Visit Status</small>
+                  <select class="field-select" id="f-annual-visit-status">
+                    <option value="complete">Complete</option>
+                    <option value="due">Due</option>
+                    <option value="overdue">Overdue</option>
+                  </select>
+                </div>
+                <div class="field"><small>Annual Visit Due</small><input class="field-input" type="text" id="f-annual-visit-due" /></div>
+                <div class="field"><small>Annual Visit Last Completed</small><input class="field-input" type="text" id="f-annual-visit-last" /></div>
+              </div>
+              <div class="form-grid" style="margin-top:14px;">
+                <div class="field">
+                  <small>H&amp;S Checklist Status</small>
+                  <select class="field-select" id="f-hs-checklist">
+                    <option value="complete">Complete</option>
+                    <option value="incomplete">Incomplete</option>
+                  </select>
+                </div>
+                <div class="field"><small>H&amp;S Checklist Detail</small><input class="field-input" type="text" id="f-hs-checklist-detail" /></div>
+                <div class="field form-span-2"><small>Safe Recruitment</small><input class="field-input" type="text" id="f-safe-recruitment" /></div>
+                <div class="field form-span-2"><small>References</small><input class="field-input" type="text" id="f-references" /></div>
+              </div>
+            </div>
+
+            <!-- ── Performance & Feedback ── -->
+            <div class="form-section">
+              <div class="form-section-title">Performance &amp; Feedback</div>
+              <div class="form-grid">
+                <div class="field"><small>Punctuality (% on-time)</small><input class="field-input" type="number" id="f-punctuality-pct" min="0" max="100" /></div>
+                <div class="field"><small>Punctuality Detail</small><input class="field-input" type="text" id="f-punctuality-detail" /></div>
+                <div class="field form-span-2"><small>Welfare Incidents</small><input class="field-input" type="text" id="f-welfare-incidents" /></div>
+                <div class="field form-span-2"><small>Parent Feedback</small><textarea class="field-textarea" id="f-parent-feedback"></textarea></div>
+                <div class="field form-span-2"><small>Student Feedback</small><textarea class="field-textarea" id="f-student-feedback"></textarea></div>
+                <div class="field form-span-2"><small>Completed Stays</small><input class="field-input" type="text" id="f-completed-stays" /></div>
+                <div class="field form-span-2"><small>Internal Notes</small><textarea class="field-textarea" id="f-notes" style="min-height:100px;"></textarea></div>
+              </div>
+            </div>
+
+            <div style="margin:16px 0 8px;padding:14px 18px;background:var(--surface-2,#f1f5f9);border:1px solid var(--line,#e1e7ec);border-radius:10px;font-size:0.88rem;color:var(--ink-2,#3b536e);">
+              Compliance records are now managed separately.
+              <a id="compliance-banner-link" href="host-compliance.html" style="color:var(--gold,#0891b2);font-weight:600;">Manage Compliance Record →</a>
+            </div>
+
+            <div class="action-row">
+              <button type="submit" class="button">Save changes</button>
+              <a class="button-alt" id="cancel-link" href="hosts.html">Cancel</a>
+            </div>
+
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="assets/db.js"></script>
+<script>
+  var params = new URLSearchParams(window.location.search);
+  var hostId = params.get('id');
+  var host   = hostId ? getHostById(hostId) : null;
+
+  // ── Room Builder ─────────────────────────────────────────────────────────
+  var roomsArr = [];
+  var roomsDisplay = document.getElementById('rooms-display');
+
+  function escapeHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function renderRooms() {
+    roomsDisplay.innerHTML = '';
+    if (!roomsArr.length) {
+      roomsDisplay.innerHTML = '<p style="font-size:0.88rem; color:#6b85a0; margin:0; padding-left:4px;">No rooms added.</p>';
+    } else {
+      roomsArr.forEach(function(r, idx) {
+        var card = document.createElement('div');
+        card.style.cssText = 'background:#f4f7fb; padding:14px; border-radius:8px; border:1px solid #d5dce8; position:relative;';
+        card.innerHTML =
+          '<button type="button" class="r-remove" style="position:absolute; top:10px; right:10px; color:#d9444a; background:none; border:none; cursor:pointer; font-weight:bold; font-size:1.2rem;" title="Remove Room">&times;</button>' +
+          '<div class="form-grid-3" style="margin-bottom:12px; padding-right:20px;">' +
+            '<div class="field"><small>Room Label</small><input type="text" class="field-input r-label" value="' + escapeHtml(r.label || '') + '" placeholder="e.g. Bedroom 1"></div>' +
+            '<div class="field"><small>Capacity</small><input type="number" class="field-input r-cap" value="' + (r.capacity || 1) + '" min="1" max="4"></div>' +
+            '<div class="field"><small>Bed Type</small><select class="field-input r-bed"><option ' + (r.bedType === 'Single' || !r.bedType ? 'selected' : '') + '>Single</option><option ' + (r.bedType === 'Twin' ? 'selected' : '') + '>Twin</option><option ' + (r.bedType === 'Bunk' ? 'selected' : '') + '>Bunk</option></select></div>' +
+          '</div>' +
+          '<div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; border-top:1px solid #e8eef6; padding-top:10px;">' +
+            '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-ensuite" ' + (r.enSuite ? 'checked' : '') + '> En-Suite</label>' +
+            '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-desk" ' + (r.deskSpace ? 'checked' : '') + '> Desk Space</label>' +
+            '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-storage" ' + (r.storage ? 'checked' : '') + '> Storage</label>' +
+            '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-smoke" ' + (r.smokeAlarm ? 'checked' : '') + '> Smoke Alarm</label>' +
+            '<label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#0f2340; cursor:pointer;"><input type="checkbox" class="r-lock" ' + (r.lockableDoor ? 'checked' : '') + '> Lockable Door</label>' +
+          '</div>';
+        card.querySelector('.r-label').addEventListener('input', function(e){ roomsArr[idx].label = e.target.value; });
+        card.querySelector('.r-cap').addEventListener('input', function(e){ roomsArr[idx].capacity = parseInt(e.target.value, 10); });
+        card.querySelector('.r-bed').addEventListener('change', function(e){ roomsArr[idx].bedType = e.target.value; });
+        card.querySelector('.r-ensuite').addEventListener('change', function(e){ roomsArr[idx].enSuite = e.target.checked; });
+        card.querySelector('.r-desk').addEventListener('change', function(e){ roomsArr[idx].deskSpace = e.target.checked; });
+        card.querySelector('.r-storage').addEventListener('change', function(e){ roomsArr[idx].storage = e.target.checked; });
+        card.querySelector('.r-smoke').addEventListener('change', function(e){ roomsArr[idx].smokeAlarm = e.target.checked; });
+        card.querySelector('.r-lock').addEventListener('change', function(e){ roomsArr[idx].lockableDoor = e.target.checked; });
+        card.querySelector('.r-remove').addEventListener('click', function(){ roomsArr.splice(idx, 1); renderRooms(); });
+        roomsDisplay.appendChild(card);
+      });
+    }
+  }
+
+  document.getElementById('add-room-btn').addEventListener('click', function() {
+    roomsArr.push({ label: '', capacity: 1, bedType: 'Single', enSuite: false, deskSpace: false, storage: false, smokeAlarm: false, lockableDoor: false });
+    renderRooms();
+  });
+
+  if (!host) {
+    document.getElementById('not-found').style.display  = 'block';
+    document.getElementById('edit-panel').style.display = 'none';
+  } else {
+    var fullName = host.firstName + ' ' + host.lastName;
+    document.title = 'Edit ' + fullName + ' — Oxford Guardians';
+    document.getElementById('toolbar-title').textContent  = fullName;
+    document.getElementById('sidebar-label').textContent  = fullName;
+    document.getElementById('chrome-route').textContent   = 'Route /admin/hosts/' + host.id + '/edit';
+    document.getElementById('back-link').href   = 'host-profile.html?id=' + host.id;
+    document.getElementById('cancel-link').href = 'host-profile.html?id=' + host.id;
+
+    function sv(id, val) { var el = document.getElementById(id); if (el) el.value = (val != null) ? val : ''; }
+    sv('f-first-name',          host.firstName);
+    sv('f-last-name',           host.lastName);
+    sv('f-address',             host.address);
+    sv('f-mobile',              host.mobile);
+    sv('f-email',               host.email);
+    sv('f-preferred-contact',   host.preferredContact);
+    sv('f-host-since',          host.hostSince);
+    sv('f-status',              host.status);
+    sv('f-capacity-max',        host.capacityMax);
+    sv('f-capacity-current',    host.capacityCurrent);
+    sv('f-current-students',    host.currentStudents);
+    sv('f-household-residents', host.householdResidents);
+    sv('f-pets',                host.pets);
+    sv('f-overnight-visitors',  host.overnightVisitors);
+    roomsArr = host.rooms ? host.rooms.map(function(r){ return Object.assign({}, r); }) : [];
+    if (!roomsArr.length) roomsArr.push({ label: '', capacity: 1, bedType: 'Single', enSuite: false, deskSpace: false, storage: false, smokeAlarm: false, lockableDoor: false });
+    renderRooms();
+    sv('f-dietary-provision',   host.dietaryProvision);
+    sv('f-dbs-status',          host.dbsStatus);
+    sv('f-dbs-cert',            host.dbsCertNumber);
+    sv('f-dbs-issue',           host.dbsIssueDate);
+    sv('f-dbs-renewal',         host.dbsRenewalDue);
+    sv('f-dbs-update',          host.dbsUpdateService);
+    sv('f-secondary-dbs',       host.secondaryAdultDbs);
+    sv('f-annual-visit-status', host.annualVisitStatus);
+    sv('f-annual-visit-due',    host.annualVisitDue);
+    sv('f-annual-visit-last',   host.annualVisitLast);
+    sv('f-hs-checklist',        host.hsChecklist);
+    sv('f-hs-checklist-detail', host.hsChecklistDetail);
+    sv('f-safe-recruitment',    host.safeRecruitment);
+    sv('f-references',          host.references);
+    sv('f-punctuality-pct',     host.punctualityPct);
+    sv('f-punctuality-detail',  host.punctualityDetail);
+    sv('f-welfare-incidents',   host.welfareIncidents);
+    sv('f-parent-feedback',     host.parentFeedback);
+    sv('f-student-feedback',    host.studentFeedback);
+    sv('f-completed-stays',     host.completedStays);
+    sv('f-notes',               host.notes);
+
+    document.getElementById('compliance-banner-link').href = 'host-compliance.html?id=' + host.id;
+  }
+
+  document.getElementById('host-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!host) return;
+
+    function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+    function fileVal(id, existing) {
+      var inp = document.getElementById(id);
+      return (inp && inp.files && inp.files[0]) ? inp.files[0].name : (existing || '');
+    }
+
+    var pctRaw = parseInt(val('f-punctuality-pct'), 10);
+    var capMax = parseInt(val('f-capacity-max'), 10);
+    var capCur = parseInt(val('f-capacity-current'), 10);
+    var updated = {
+      id:                  host.id,
+      linkedStudents:      host.linkedStudents     || [],
+      preferredStudentId:  host.preferredStudentId || null,
+      firstName:           val('f-first-name')        || host.firstName,
+      lastName:            val('f-last-name')          || host.lastName,
+      address:             val('f-address'),
+      mobile:              val('f-mobile'),
+      email:               val('f-email'),
+      preferredContact:    val('f-preferred-contact'),
+      hostSince:           val('f-host-since'),
+      status:              val('f-status')             || 'pending',
+      capacityMax:         isNaN(capMax) ? host.capacityMax     : capMax,
+      capacityCurrent:     isNaN(capCur) ? host.capacityCurrent : capCur,
+      currentStudents:     val('f-current-students'),
+      householdResidents:  val('f-household-residents'),
+      pets:                val('f-pets'),
+      overnightVisitors:   val('f-overnight-visitors'),
+      rooms:               roomsArr,
+      dietaryProvision:    val('f-dietary-provision'),
+      dbsStatus:           val('f-dbs-status')         || 'amber',
+      dbsCertNumber:       val('f-dbs-cert'),
+      dbsIssueDate:        val('f-dbs-issue'),
+      dbsRenewalDue:       val('f-dbs-renewal'),
+      dbsUpdateService:    val('f-dbs-update'),
+      secondaryAdultDbs:   val('f-secondary-dbs'),
+      annualVisitStatus:   val('f-annual-visit-status') || 'due',
+      annualVisitDue:      val('f-annual-visit-due'),
+      annualVisitLast:     val('f-annual-visit-last'),
+      hsChecklist:         val('f-hs-checklist')        || 'incomplete',
+      hsChecklistDetail:   val('f-hs-checklist-detail'),
+      safeRecruitment:     val('f-safe-recruitment'),
+      references:          val('f-references'),
+      punctualityPct:      isNaN(pctRaw) ? host.punctualityPct : Math.min(100, Math.max(0, pctRaw)),
+      punctualityDetail:   val('f-punctuality-detail'),
+      welfareIncidents:    val('f-welfare-incidents'),
+      parentFeedback:      val('f-parent-feedback'),
+      studentFeedback:     val('f-student-feedback'),
+      completedStays:      val('f-completed-stays'),
+      notes:               val('f-notes'),
+      compliance: host.compliance || {}
+    };
+
+    saveHost(updated);
+    host = updated;
+    showToast();
+  });
+
+  function showToast() {
+    var t = document.getElementById('save-toast');
+    t.classList.add('visible');
+    setTimeout(function () { t.classList.remove('visible'); }, 3000);
+  }
+</script>
+
+</body>
+</html>

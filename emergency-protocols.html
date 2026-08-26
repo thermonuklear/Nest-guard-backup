@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Response Protocols — Emergency — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+    <style>
+      .tab-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 4px;
+        background: #f0f4f8;
+        border-radius: 10px;
+        width: fit-content;
+        margin-bottom: 18px;
+      }
+      .tab-btn {
+        padding: 7px 20px;
+        border: none;
+        border-radius: 7px;
+        font-family: inherit;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #63768b;
+        background: transparent;
+        cursor: pointer;
+        transition: background 0.14s, color 0.14s;
+      }
+      .tab-btn:hover { background: #e2e8f0; color: #0f172a; }
+      .tab-btn.active {
+        background: #fff;
+        color: #0f172a;
+        box-shadow: 0 1px 4px rgba(15,23,42,0.10);
+      }
+      .button-sm { padding: 6px 12px; font-size: 0.82rem; border-radius: 999px; }
+      .scenario-grid { display: grid; gap: 16px; }
+      .scenario-card {
+        background: #fffdf9;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 18px;
+        display: grid;
+        gap: 14px;
+      }
+      .scenario-card-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .scenario-card-head h3 { font-size: 1.15rem; }
+      .scenario-leads {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+        background: var(--surface-2);
+        border-radius: 12px;
+        padding: 12px 14px;
+      }
+      .scenario-leads .lead-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); font-weight: 700; margin-bottom: 2px; }
+      .scenario-leads .lead-value { font-weight: 700; color: var(--ink); }
+      .scenario-block .lead-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); font-weight: 700; margin-bottom: 4px; }
+      .scenario-card-foot { display: flex; justify-content: flex-end; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/emergency/protocols</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Response Protocols</strong></div>
+            <div class="nav-group"><div class="nav-label">Emergency</div><a class="nav-link" href="emergency-procedures.html">Emergency</a><a class="nav-link" href="emergency-incident.html">Log incident</a><a class="nav-link" href="incident-logs.html">Incident logs</a><a class="nav-link active" href="emergency-protocols.html">Protocols</a></div>
+            <div class="nav-group"><div class="nav-label">Operations</div><a class="nav-link" href="admin-dashboard.html">Dashboard</a><a class="nav-link" href="students.html">Students</a><a class="nav-link" href="homestays.html">Homestays</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">AEGIS Standard 2.6 — Response Protocols</span>
+                <h2>What to do when it happens.</h2>
+                <p>Step-by-step response protocols for every emergency type. Each protocol specifies the named lead responder, immediate action, escalation chain, and documentation requirements.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="emergency-procedures.html">Back to emergency</a>
+                <a class="button-alt" href="policy-viewer.html?id=POL-EMG-001" target="_blank" style="display:inline-flex; align-items:center; gap:6px;">
+                  <span>📄</span> Emergency Plan Document (POL-EMG-001)
+                </a>
+                <a class="button" href="emergency-incident.html">Log incident</a>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:24px;">
+              <h4>Emergency types and response protocols</h4>
+              <div class="tab-nav" id="scenario-tabs">
+                <button class="tab-btn active" data-group="all">All Scenarios</button>
+                <button class="tab-btn" data-group="health">Health &amp; Medical</button>
+                <button class="tab-btn" data-group="safeguarding">Safeguarding &amp; Critical</button>
+                <button class="tab-btn" data-group="logistics">Logistics &amp; Accommodation</button>
+              </div>
+              <div id="protocols-container" class="scenario-grid"></div>
+            </div>
+
+            <div class="note brutal" style="margin-top:24px;">
+              <h4>What the PRD gets wrong about emergencies</h4>
+              <ul>
+                <li>"24-hour contact" without specifying who, how, and what happens when they don't answer.</li>
+                <li>No mention of sole-guardian backup — Standard 2.6.3 requires vetted emergency cover.</li>
+                <li>No death/serious injury protocol — this needs to exist even if you hope it's never used.</li>
+                <li>Pandemic procedures are not optional post-2020 — Standard 2.6.2 explicitly includes this.</li>
+                <li>Response times should be tracked. "We have a number" is not the same as "we respond quickly."</li>
+              </ul>
+            </div>
+            <p class="inline-links">Related: <a href="concerns-escalated.html">Safeguarding concerns</a> · <a href="welfare-notes.html">Welfare notes</a> · <a href="homestay-incidents.html">Incident log</a> · <a href="compliance.html">AEGIS control room</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Category → filter-tab group mapping for the 7 statutory scenarios.
+      var CATEGORY_GROUPS = {
+        'Health & Medical': 'health',
+        'Public Health': 'health',
+        'Critical Safeguarding': 'safeguarding',
+        'Child Protection': 'safeguarding',
+        'Critical Incident': 'safeguarding',
+        'Logistics & Travel': 'logistics',
+        'Accommodation': 'logistics'
+      };
+
+      function escapeHtml(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function scenarioCardHtml(s) {
+        var group = CATEGORY_GROUPS[s.category] || 'all';
+        var phoneHref = 'tel:' + String(s.leadPhone || '').replace(/\s+/g, '');
+        return (
+          '<article class="scenario-card" data-id="' + escapeHtml(s.id) + '" data-group="' + group + '">' +
+            '<div class="scenario-card-head">' +
+              '<h3>' + escapeHtml(s.type) + '</h3>' +
+              '<span class="badge navy">' + escapeHtml(s.category) + '</span>' +
+            '</div>' +
+            '<div class="scenario-leads">' +
+              '<div><div class="lead-label">Primary lead</div><div class="lead-value">' + escapeHtml(s.leadName) + '</div><div>' + escapeHtml(s.leadRole) + '</div></div>' +
+              '<div><div class="lead-label">Direct phone</div><div class="lead-value"><a href="' + phoneHref + '">' + escapeHtml(s.leadPhone) + '</a></div></div>' +
+              '<div><div class="lead-label">Named backup</div><div class="lead-value">' + escapeHtml(s.backupName) + '</div></div>' +
+            '</div>' +
+            '<div class="scenario-block"><div class="lead-label">Immediate action</div><p>' + escapeHtml(s.immediateAction) + '</p></div>' +
+            '<div class="scenario-block"><div class="lead-label">Escalation hierarchy &amp; mandatory timelines</div><p>' + escapeHtml(s.escalationTimeline) + '</p></div>' +
+            '<div class="scenario-block"><div class="lead-label">Documentation &amp; case logging</div><p>' + escapeHtml(s.documentation) + '</p></div>' +
+            '<div class="scenario-card-foot">' +
+              '<a href="emergency-incident.html?type=' + encodeURIComponent(s.type) + '" class="button-alt button-sm">Log ' + escapeHtml(s.type) + ' Incident &rarr;</a>' +
+            '</div>' +
+          '</article>'
+        );
+      }
+
+      function renderProtocols() {
+        var container = document.getElementById('protocols-container');
+        var scenarios = (window.OG_DB && OG_DB.getEmergencyScenarioLeads) ? OG_DB.getEmergencyScenarioLeads() : [];
+        container.innerHTML = scenarios.map(scenarioCardHtml).join('');
+        applyFilter(currentGroup);
+      }
+
+      var currentGroup = 'all';
+      function applyFilter(group) {
+        currentGroup = group;
+        var cards = document.querySelectorAll('#protocols-container .scenario-card');
+        cards.forEach(function (card) {
+          var show = group === 'all' || card.getAttribute('data-group') === group;
+          card.style.display = show ? '' : 'none';
+        });
+      }
+
+      document.querySelectorAll('#scenario-tabs .tab-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('#scenario-tabs .tab-btn').forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          applyFilter(btn.getAttribute('data-group'));
+        });
+      });
+
+      renderProtocols();
+    </script>
+  </body>
+</html>

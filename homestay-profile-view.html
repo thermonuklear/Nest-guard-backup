@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homestay Profile — Oxford Guardians</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f0f4f8;
+        --surface: #ffffff;
+        --surface-2: #f4f7fb;
+        --ink: #0f2340;
+        --ink-2: #3b536e;
+        --ink-3: #6b85a0;
+        --line: #d5dce8;
+        --navy: #0f2340;
+        --navy-2: #1a3459;
+        --gold: #2a6096;
+        --gold-soft: #dce8f5;
+        --green: #235842;
+        --green-soft: #dfece5;
+        --amber: #87531d;
+        --amber-soft: #f2e2ca;
+        --red: #7f3034;
+        --red-soft: #f3dddd;
+        --shadow: 0 20px 40px rgba(15, 35, 64, 0.08);
+        --shadow-tight: 0 10px 22px rgba(15, 35, 64, 0.06);
+        --radius-xl: 28px;
+        --radius-lg: 20px;
+        --radius-md: 14px;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        line-height: 1.6;
+        padding-bottom: 60px;
+      }
+      h1, h2, h3, h4 { font-family: "Outfit", sans-serif; color: var(--ink); line-height: 1.15; }
+      a { color: var(--gold); }
+      img { max-width: 100%; display: block; }
+
+      /* ── Toolbar ───────────────────────────────────────────────────────────── */
+      .toolbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(240, 244, 248, 0.92);
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid var(--line);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .toolbar-left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+      .back-link {
+        display: inline-flex; align-items: center; gap: 6px;
+        font-weight: 700; font-size: 0.85rem; color: var(--ink-2);
+        text-decoration: none; padding: 8px 14px; border-radius: 999px;
+        border: 1px solid var(--line); background: var(--surface);
+      }
+      .back-link:hover { background: var(--surface-2); }
+
+      .mode-toggle {
+        display: inline-flex; background: var(--surface); border: 1px solid var(--line);
+        border-radius: 999px; padding: 3px; gap: 2px;
+      }
+      .mode-btn {
+        border: none; background: transparent; cursor: pointer;
+        font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700; font-size: 0.78rem;
+        color: var(--ink-2); padding: 8px 14px; border-radius: 999px;
+        transition: background 0.15s, color 0.15s;
+        white-space: nowrap;
+      }
+      .mode-btn.active { background: var(--navy); color: #fff8eb; }
+
+      .toolbar-right { display: flex; align-items: center; gap: 10px; }
+      .print-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: var(--navy); color: #fff8eb; font-weight: 700; font-size: 0.85rem;
+        border: none; padding: 10px 18px; border-radius: 999px; cursor: pointer;
+      }
+      .print-btn:hover { opacity: 0.9; }
+
+      .redact-note {
+        font-size: 0.74rem; color: var(--ink-3); max-width: 220px; line-height: 1.35;
+      }
+
+      /* ── Page shell ────────────────────────────────────────────────────────── */
+      .sheet {
+        max-width: 880px;
+        margin: 32px auto 0;
+        padding: 0 24px;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-tight);
+        padding: 28px 30px;
+        margin-bottom: 22px;
+      }
+      .card h2 {
+        font-size: 1.3rem;
+        margin-bottom: 4px;
+      }
+      .card .section-kicker {
+        font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+        color: var(--gold); margin-bottom: 6px;
+      }
+      .card .section-intro {
+        color: var(--ink-2); font-size: 0.92rem; margin: 8px 0 18px;
+      }
+
+      /* ── Hero ──────────────────────────────────────────────────────────────── */
+      .hero {
+        background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+        color: #f4f8fc;
+        border-radius: var(--radius-xl);
+        padding: 34px 34px 30px;
+        display: flex;
+        align-items: center;
+        gap: 26px;
+        box-shadow: var(--shadow);
+        margin-bottom: 22px;
+        flex-wrap: wrap;
+      }
+      .hero-photo {
+        width: 128px; height: 128px; border-radius: 50%;
+        border: 4px solid rgba(255,255,255,0.25);
+        object-fit: cover; background: rgba(255,255,255,0.1);
+        flex-shrink: 0;
+      }
+      .hero-body { flex: 1; min-width: 240px; }
+      .hero-eyebrow {
+        font-size: 0.74rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+        color: #9fc2e6; margin-bottom: 6px;
+      }
+      .hero h1 { font-size: 2rem; color: #ffffff; margin-bottom: 10px; }
+      .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+      .chip {
+        display: inline-flex; align-items: center; gap: 6px;
+        font-size: 0.78rem; font-weight: 700; padding: 6px 12px; border-radius: 999px;
+      }
+      .chip-approved { background: rgba(223, 236, 229, 0.92); color: var(--green); }
+      .chip-info { background: rgba(255,255,255,0.14); color: #eaf2fb; }
+
+      /* ── Family member grid ──────────────────────────────────────────────── */
+      .member-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+      }
+      .member-card {
+        background: var(--surface-2);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        padding: 16px 18px;
+      }
+      .member-card .member-name { font-family: "Outfit", sans-serif; font-weight: 700; font-size: 1.02rem; margin-bottom: 2px; }
+      .member-card .member-age-gender { color: var(--ink-3); font-size: 0.8rem; margin-bottom: 10px; }
+      .member-fact { font-size: 0.82rem; margin-bottom: 6px; }
+      .member-fact strong { color: var(--ink-2); font-weight: 700; }
+
+      /* ── Rooms ─────────────────────────────────────────────────────────────── */
+      .room-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 14px;
+        margin-bottom: 6px;
+      }
+      .room-card {
+        border: 1px solid var(--line); border-radius: var(--radius-md);
+        padding: 16px 18px; background: var(--surface-2);
+      }
+      .room-card h4 { font-size: 0.98rem; margin-bottom: 8px; }
+      .amenity-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+      .amenity-list li { font-size: 0.82rem; color: var(--ink-2); display: flex; align-items: center; gap: 7px; }
+      .amenity-list li.no::before { content: "—"; color: var(--ink-3); width: 14px; }
+      .amenity-list li.yes::before { content: "✓"; color: var(--green); font-weight: 700; width: 14px; }
+      .no-rooms-note {
+        border: 1.5px dashed var(--line); border-radius: var(--radius-md);
+        padding: 18px; text-align: center; color: var(--ink-3); font-size: 0.86rem;
+      }
+      .amenity-footnote { font-size: 0.78rem; color: var(--ink-3); margin-top: 12px; }
+
+      /* ── Household living ──────────────────────────────────────────────────── */
+      .living-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 18px;
+      }
+      .living-item .living-label {
+        font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+        color: var(--ink-3); margin-bottom: 6px;
+      }
+      .living-item p { font-size: 0.9rem; color: var(--ink-2); }
+      .smoke-badge {
+        display: inline-flex; align-items: center; gap: 7px;
+        padding: 7px 13px; border-radius: 999px; font-weight: 700; font-size: 0.82rem;
+      }
+      .smoke-badge.non-smoking { background: var(--green-soft); color: var(--green); }
+      .smoke-badge.smoker-outside { background: var(--amber-soft); color: var(--amber); }
+      .smoke-badge.smoker-inside { background: var(--red-soft); color: var(--red); }
+
+      /* ── Local area ────────────────────────────────────────────────────────── */
+      .area-fact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 14px;
+      }
+      .area-fact {
+        background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-md);
+        padding: 14px 16px;
+      }
+      .area-fact .area-fact-value { font-family: "Outfit", sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+      .area-fact .area-fact-label { font-size: 0.78rem; color: var(--ink-3); margin-top: 2px; }
+
+      /* ── Assurance / footer ────────────────────────────────────────────────── */
+      .assurance-card {
+        background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+        color: #eef4fb;
+        border-radius: var(--radius-lg);
+        padding: 28px 30px;
+        text-align: center;
+      }
+      .assurance-card h2 { color: #ffffff; }
+      .assurance-card p { color: #cfe0f2; font-size: 0.9rem; max-width: 560px; margin: 10px auto 18px; }
+      .emergency-line {
+        display: inline-flex; flex-direction: column; align-items: center; gap: 2px;
+        background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22);
+        border-radius: var(--radius-md); padding: 14px 26px;
+      }
+      .emergency-line .num { font-family: "Outfit", sans-serif; font-size: 1.5rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; }
+      .emergency-line .lbl { font-size: 0.74rem; color: #a9c6e4; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+
+      .redacted-note {
+        margin-top: 16px; font-size: 0.76rem; color: #a9c6e4;
+      }
+
+      .footer-print-meta {
+        text-align: center; color: var(--ink-3); font-size: 0.76rem; margin-top: 18px;
+      }
+
+      .not-found {
+        max-width: 520px; margin: 80px auto; text-align: center; padding: 40px;
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg);
+      }
+      .not-found h3 { margin-bottom: 8px; }
+      .not-found p { color: var(--ink-2); }
+
+      /* ── Print styles ──────────────────────────────────────────────────────── */
+      @media print {
+        body { background: #ffffff; padding: 0; }
+        .toolbar { display: none !important; }
+        .sheet { max-width: 100%; margin: 0; padding: 0 8mm; }
+        .card, .hero, .assurance-card {
+          box-shadow: none !important;
+          break-inside: avoid;
+          page-break-inside: avoid;
+        }
+        .hero { margin-top: 0; }
+        a { color: inherit; text-decoration: none; }
+      }
+
+      @media (max-width: 640px) {
+        .hero { flex-direction: column; text-align: center; }
+        .hero-meta { justify-content: center; }
+        .toolbar { justify-content: center; text-align: center; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ── Toolbar (hidden on print) ── -->
+    <div class="toolbar" id="page-toolbar">
+      <div class="toolbar-left">
+        <a class="back-link" id="btn-back" href="hosts.html">&larr; Back to Host Admin</a>
+        <div class="mode-toggle" role="group" aria-label="Redaction mode">
+          <button type="button" class="mode-btn active" id="mode-full" data-mode="full">Full Placement Details</button>
+          <button type="button" class="mode-btn" id="mode-redacted" data-mode="redacted">Agent / Pre-Placement (Redacted)</button>
+        </div>
+      </div>
+      <div class="toolbar-right">
+        <p class="redact-note" id="mode-explainer">Complete address and direct host contact — use only once a placement is confirmed.</p>
+        <button type="button" class="print-btn" id="btn-print">🖨️ Print / Export PDF</button>
+      </div>
+    </div>
+
+    <div class="sheet" id="sheet-root">
+      <!-- Populated by JS -->
+    </div>
+
+    <script src="assets/db.js"></script>
+    <script>
+      var params  = new URLSearchParams(window.location.search);
+      var hostId  = params.get('id') || '';
+      var sheet   = document.getElementById('sheet-root');
+      var isRedacted = false;
+      var OG_EMERGENCY_LINE = '+44 7700 900 999';
+
+      // ── Referrer-aware back link ────────────────────────────────────────────
+      (function () {
+        var backLink = document.getElementById('btn-back');
+        if (hostId) { backLink.href = 'host-profile.html?id=' + encodeURIComponent(hostId); }
+      })();
+
+      function esc(str) {
+        return String(str == null ? '' : str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function smokeLabel(status) {
+        return {
+          'non-smoking':    '🚭 Strictly Non-Smoking Household',
+          'smoker-outside': '🚬 Smoker — Outside Only (Garden/Patio)',
+          'smoker-inside':  '🚬 Smoker — Inside Property'
+        }[status] || '🚭 Strictly Non-Smoking Household';
+      }
+
+      function renderMemberCard(m) {
+        return (
+          '<div class="member-card">' +
+            '<div class="member-name">' + esc(m.name) + '</div>' +
+            '<div class="member-age-gender">' + esc(m.age || '—') + (m.age ? ' yrs' : '') + ' &middot; ' + esc(m.gender || '—') + '</div>' +
+            '<div class="member-fact"><strong>Occupation:</strong> ' + esc(m.occupation || '—') + '</div>' +
+            '<div class="member-fact"><strong>Hobbies &amp; Interests:</strong> ' + esc(m.interests || '—') + '</div>' +
+            '<div class="member-fact"><strong>Religion:</strong> ' + esc(m.religion || '—') + '</div>' +
+          '</div>'
+        );
+      }
+
+      function renderRoomCard(r) {
+        var bathroom = r.enSuite ? 'Private en-suite bathroom' : 'Shared family bathroom';
+        return (
+          '<div class="room-card">' +
+            '<h4>' + esc(r.label || 'Student Bedroom') + '</h4>' +
+            '<ul class="amenity-list">' +
+              '<li class="yes">Bed type: ' + esc(r.bedType || 'Single') + '</li>' +
+              '<li class="yes">Sleeps up to ' + esc(r.capacity || 1) + '</li>' +
+              '<li class="' + (r.enSuite ? 'yes' : 'no') + '">' + bathroom + '</li>' +
+              '<li class="' + (r.deskSpace ? 'yes' : 'no') + '">Desk / study space</li>' +
+              '<li class="' + (r.storage ? 'yes' : 'no') + '">Wardrobe / storage</li>' +
+              '<li class="' + (r.smokeAlarm ? 'yes' : 'no') + '">Smoke alarm fitted</li>' +
+              '<li class="' + (r.lockableDoor ? 'yes' : 'no') + '">Lockable door</li>' +
+            '</ul>' +
+          '</div>'
+        );
+      }
+
+      function render(profile) {
+        if (!profile) {
+          sheet.innerHTML =
+            '<div class="not-found">' +
+              '<h3>Homestay profile not found</h3>' +
+              '<p>' + (hostId ? 'No shareable profile exists for host ID <strong>' + esc(hostId) + '</strong>.' : 'No host ID was provided in the link.') + '</p>' +
+            '</div>';
+          return;
+        }
+
+        document.title = profile.familyName + ' — Homestay Profile — Oxford Guardians';
+
+        var members = profile.householdMembers || [];
+        var memberCardsHtml = members.length
+          ? members.map(renderMemberCard).join('')
+          : '<div class="no-rooms-note">Household member details will be added shortly.</div>';
+
+        var rooms = profile.rooms || [];
+        var roomsHtml = rooms.length
+          ? '<div class="room-grid">' + rooms.map(renderRoomCard).join('') + '</div>'
+          : '<div class="no-rooms-note">Bedroom details will be confirmed ahead of arrival.</div>';
+
+        var occupancyLabel = (profile.capacityCurrent != null && profile.capacityMax != null)
+          ? profile.capacityCurrent + ' of ' + profile.capacityMax + ' student place(s) currently placed'
+          : '';
+
+        sheet.innerHTML =
+          '<div class="hero">' +
+            (profile.profilePhoto
+              ? '<img class="hero-photo" src="' + profile.profilePhoto + '" alt="' + esc(profile.familyName) + '" />'
+              : '<div class="hero-photo"></div>') +
+            '<div class="hero-body">' +
+              '<div class="hero-eyebrow">Oxford Guardians &middot; Shareable Homestay Profile</div>' +
+              '<h1>The ' + esc(profile.familyName.replace(/ Family$/, '')) + ' Family</h1>' +
+              '<div class="hero-meta">' +
+                '<span class="chip chip-approved">✓ AEGIS Inspected &amp; DBS Vetted</span>' +
+                '<span class="chip chip-info">📍 ' + esc(profile.area) + '</span>' +
+                '<span class="chip chip-info">🏡 Host since ' + esc(profile.hostSince) + '</span>' +
+                (occupancyLabel ? '<span class="chip chip-info">👥 ' + esc(occupancyLabel) + '</span>' : '') +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="card">' +
+            '<div class="section-kicker">' + (profile.isRedacted ? 'Agent / Pre-Placement (Redacted)' : 'Full Placement Details') + '</div>' +
+            '<h2>Address &amp; Host Contact</h2>' +
+            '<div class="living-grid" style="margin-top:14px;">' +
+              '<div class="living-item">' +
+                '<div class="living-label">Home Address</div>' +
+                '<p>' + esc(profile.address) + '</p>' +
+              '</div>' +
+              '<div class="living-item">' +
+                '<div class="living-label">Host Phone</div>' +
+                '<p>' + esc(profile.phone) + '</p>' +
+              '</div>' +
+              '<div class="living-item">' +
+                '<div class="living-label">Host Email</div>' +
+                '<p>' + esc(profile.email) + '</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="card">' +
+            '<div class="section-kicker">AEGIS Standard 5.2.1</div>' +
+            '<h2>Meet Your Host Family</h2>' +
+            '<p class="section-intro">The ' + esc(profile.familyName.replace(/ Family$/, '')) + ' family are approved, DBS-vetted hosts working with Oxford Guardians. Here is a little about the household your student will be joining.</p>' +
+            '<div class="member-grid">' + memberCardsHtml + '</div>' +
+          '</div>' +
+
+          '<div class="card">' +
+            '<div class="section-kicker">Your Home Away From Home</div>' +
+            '<h2>Accommodation &amp; Bedroom Amenities</h2>' +
+            '<p class="section-intro">' + esc(profile.studentBedrooms) + '</p>' +
+            roomsHtml +
+            '<p class="amenity-footnote">All host bedrooms include central heating and household Wi-Fi access, and are fitted with working smoke alarms as standard.</p>' +
+          '</div>' +
+
+          '<div class="card">' +
+            '<div class="section-kicker">Everyday Home Life</div>' +
+            '<h2>Household Living &amp; Daily Life</h2>' +
+            '<div class="living-grid" style="margin-top:14px;">' +
+              '<div class="living-item">' +
+                '<div class="living-label">Dietary Specialisms</div>' +
+                '<p>' + esc(profile.dietaryProvision) + '</p>' +
+              '</div>' +
+              '<div class="living-item">' +
+                '<div class="living-label">Pets in Home</div>' +
+                '<p>' + esc(profile.pets) + '</p>' +
+              '</div>' +
+              '<div class="living-item">' +
+                '<div class="living-label">Environmental &amp; Smoking Policy (Standard 5.5.1.8)</div>' +
+                '<span class="smoke-badge ' + esc(profile.smokerStatus) + '">' + smokeLabel(profile.smokerStatus) + '</span>' +
+              '</div>' +
+              '<div class="living-item">' +
+                '<div class="living-label">Regular Visitors</div>' +
+                '<p>' + esc(profile.regularVisitorsSummary) + '</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="card">' +
+            '<div class="section-kicker">Getting Around</div>' +
+            '<h2>Local Area &amp; Commute</h2>' +
+            '<p class="section-intro">' + esc(profile.area) + ' is a leafy, residential neighbourhood popular with families and academics, a short and well-served journey from Oxford city centre.</p>' +
+            '<div class="area-fact-grid">' +
+              '<div class="area-fact"><div class="area-fact-value">~15–20 min</div><div class="area-fact-label">To Oxford city centre by bus</div></div>' +
+              '<div class="area-fact"><div class="area-fact-value">S1 / S2 / 2</div><div class="area-fact-label">Frequent local bus routes</div></div>' +
+              '<div class="area-fact"><div class="area-fact-value">10–15 min</div><div class="area-fact-label">Typical walk to nearest school bus stop</div></div>' +
+              '<div class="area-fact"><div class="area-fact-value">Local amenities</div><div class="area-fact-label">Shops, parks and pharmacies within walking distance</div></div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="assurance-card">' +
+            '<div class="section-kicker" style="color:#9fc2e6;">' + esc(profile.safeguardingSummary) + '</div>' +
+            '<h2>Oxford Guardians Assurance &amp; 24/7 Support</h2>' +
+            '<p>Every homestay is safeguarding-checked, annually inspected, and supported by our welfare team around the clock. Students and parents can reach us any time, day or night.</p>' +
+            '<div class="emergency-line">' +
+              '<span class="num">' + OG_EMERGENCY_LINE + '</span>' +
+              '<span class="lbl">24/7 Emergency &amp; Welfare Line</span>' +
+            '</div>' +
+            (profile.isRedacted
+              ? '<p class="redacted-note">This profile is shown in Agent / Pre-Placement mode. Full home address and direct host contact details are shared automatically once a placement is confirmed.</p>'
+              : '') +
+          '</div>' +
+
+          '<p class="footer-print-meta">Generated by Oxford Guardians on ' + new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ' &middot; Host ID ' + esc(profile.id) + ' &middot; ' + (profile.isRedacted ? 'Redacted / pre-placement copy' : 'Full placement copy — confidential') +
+          '</p>';
+      }
+
+      function loadAndRender() {
+        var db = window.OG_DB;
+        var profile = (db && hostId) ? db.getShareableHostProfile(hostId, { redactContact: isRedacted }) : null;
+        render(profile);
+      }
+
+      function setMode(mode) {
+        isRedacted = (mode === 'redacted');
+        document.getElementById('mode-full').classList.toggle('active', !isRedacted);
+        document.getElementById('mode-redacted').classList.toggle('active', isRedacted);
+        document.getElementById('mode-explainer').textContent = isRedacted
+          ? 'Address shown as area only; phone/email routed to Oxford Guardians HQ — safe to share pre-contract.'
+          : 'Complete address and direct host contact — use only once a placement is confirmed.';
+        loadAndRender();
+      }
+
+      document.getElementById('mode-full').addEventListener('click', function () { setMode('full'); });
+      document.getElementById('mode-redacted').addEventListener('click', function () { setMode('redacted'); });
+      document.getElementById('btn-print').addEventListener('click', function () { window.print(); });
+
+      setMode('full');
+    </script>
+  </body>
+</html>

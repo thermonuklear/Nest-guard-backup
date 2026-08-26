@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hosts Directory — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Global colour overrides ── */
+      body, .page, .shell {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+      }
+
+      /* ── Chrome bar ── */
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-right: 16px !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .chrome-nav-link {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        transition: background 0.15s, color 0.15s;
+        white-space: nowrap;
+      }
+
+      .chrome-nav-link:hover {
+        background: rgba(15, 35, 64, 0.07);
+        color: #0f2340;
+      }
+
+      /* ── Sidebar ── */
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+      }
+
+      .nav-link-sub {
+        padding-left: 36px !important;
+        font-size: 0.85em !important;
+        opacity: 0.85;
+      }
+
+      /* ── Main ── */
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+        overflow-y: auto;
+      }
+
+      h2, h3, h4 { color: #0f2340 !important; }
+      p           { color: #3b536e; }
+      .eyebrow    { color: #2a6096 !important; }
+      .toolbar p  { color: #3b536e !important; }
+
+      /* ── Buttons ── */
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      /* ── Two-column layout ── */
+      .content-cols {
+        display: grid;
+        grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr);
+        gap: 20px;
+        padding: 0 24px 28px;
+      }
+
+      /* ── Filter row ── */
+      .filter-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .filter-field {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 12px;
+        padding: 10px 14px;
+      }
+
+      .filter-field small {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #6b85a0;
+        font-size: 0.7rem;
+        margin-bottom: 3px;
+      }
+
+      .filter-input,
+      .filter-select {
+        width: 100%;
+        margin-top: 2px;
+        padding: 5px 0;
+        border: none;
+        border-bottom: 1px solid #d5dce8;
+        background: transparent;
+        color: #0f2340;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.88rem;
+        font-weight: 600;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+
+      .filter-input::placeholder { color: #9bafc4; font-weight: 400; }
+      .filter-input:focus,
+      .filter-select:focus { border-bottom-color: #0f2340; }
+      .filter-select { appearance: none; cursor: pointer; }
+
+      /* ── Result count ── */
+      .result-count {
+        font-size: 0.78rem;
+        color: #6b85a0;
+        margin-bottom: 8px;
+      }
+
+      /* ── Section header ── */
+      .section-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .section-header h3 {
+        font-family: "Outfit", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #0f2340 !important;
+        margin: 0;
+      }
+
+      .section-header a {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #2a6096;
+        text-decoration: none;
+      }
+
+      .section-header a:hover { text-decoration: underline; }
+
+      /* ── Table ── */
+      .table-wrap {
+        background: #ffffff !important;
+        border: 1px solid #d5dce8 !important;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+
+      table { width: 100%; border-collapse: collapse; }
+
+      th {
+        background: #e8eef6 !important;
+        color: #3b536e !important;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        padding: 11px 14px;
+        text-align: left;
+        border-bottom: 1px solid #d5dce8 !important;
+        white-space: nowrap;
+      }
+
+      td {
+        padding: 13px 14px;
+        border-bottom: 1px solid #edf2f8 !important;
+        color: #3b536e !important;
+        font-size: 0.87rem;
+        vertical-align: middle;
+      }
+
+      tr:last-child td { border-bottom: 0 !important; }
+      tbody tr { transition: background 0.12s; }
+      tbody tr:hover td { background: #f4f7fb; }
+
+      td strong { color: #0f2340 !important; font-weight: 600; }
+      td small  { display: block; color: #6b85a0 !important; font-size: 0.78rem; margin-top: 1px; }
+
+      /* ── Host name link + avatar ── */
+      .host-name-cell {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .host-avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0f2340 0%, #1a3459 100%);
+        color: #e8f0fa;
+        font-family: "Outfit", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        flex-shrink: 0;
+        border: 2px solid #d5dce8;
+      }
+
+      .host-name-link {
+        font-weight: 700;
+        color: #0f2340 !important;
+        text-decoration: none;
+      }
+
+      .host-name-link:hover {
+        color: #2a6096 !important;
+        text-decoration: underline;
+      }
+
+      /* ── Capacity pips ── */
+      .capacity-pips {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+      }
+
+      .capacity-pip {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 1.5px solid #d5dce8;
+        background: #f0f4f8;
+      }
+
+      .capacity-pip.filled     { background: #0f2340; border-color: #0f2340; }
+      .capacity-pip.filled.warn { background: #b45309; border-color: #b45309; }
+
+      .capacity-text {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #0f2340;
+        margin-left: 6px;
+      }
+
+      /* ── Empty state ── */
+      .empty-state {
+        text-align: center;
+        padding: 36px 24px;
+        color: #6b85a0;
+        font-size: 0.88rem;
+      }
+
+      /* ── Alerts panel ── */
+      .alerts-panel { display: flex; flex-direction: column; }
+
+      .alert-card {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 14px;
+        padding: 14px 16px;
+        margin-bottom: 12px;
+        border-left-width: 4px;
+        position: relative;
+      }
+
+      .alert-card:last-child { margin-bottom: 0; }
+
+      .alert-card.alert-warning { border-left-color: #d97706; background: #fffcf0; }
+      .alert-card.alert-danger  { border-left-color: #dc2626; background: #fff8f8; }
+      .alert-card.alert-info    { border-left-color: #2a6096; background: #f0f6ff; }
+
+      .alert-type {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        margin-bottom: 4px;
+      }
+
+      .alert-card.alert-warning .alert-type { color: #b45309; }
+      .alert-card.alert-danger  .alert-type { color: #b91c1c; }
+      .alert-card.alert-info    .alert-type { color: #1e4d7b; }
+
+      .alert-title {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: #0f2340;
+        margin: 0 0 3px;
+        line-height: 1.3;
+      }
+
+      .alert-body {
+        font-size: 0.8rem;
+        color: #4b6280;
+        line-height: 1.45;
+        margin: 0 0 10px;
+      }
+
+      .alert-action {
+        display: inline-block;
+        font-size: 0.76rem;
+        font-weight: 700;
+        color: #0f2340;
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 6px;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        transition: background 0.13s;
+      }
+
+      .alert-action:hover { background: #e8eef6; }
+
+      .alert-timestamp {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        font-size: 0.71rem;
+        color: #9bafc4;
+        font-weight: 500;
+      }
+
+      .row-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .button-sm {
+        font-size: 0.76rem !important;
+        padding: 5px 10px !important;
+        border-radius: 8px !important;
+        white-space: nowrap;
+      }
+
+      @media (max-width: 900px) {
+        .content-cols { grid-template-columns: 1fr; }
+        .filter-row   { grid-template-columns: 1fr 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+
+        <!-- Chrome bar -->
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <nav class="chrome-nav">
+            <a class="chrome-nav-link" href="admin-dashboard.html">Dashboard</a>
+            <a class="chrome-nav-link" href="notifications.html">Notifications</a>
+          </nav>
+        </div>
+
+        <div class="shell">
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Homestay Operations</strong>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Access</div>
+              <a class="nav-link" href="users.html">Users &amp; roles</a>
+              <a class="nav-link nav-link-sub" href="students.html">Students</a>
+              <a class="nav-link nav-link-sub" href="staff-list.html">Staff</a>
+              <a class="nav-link nav-link-sub" href="drivers.html">Drivers</a>
+              <a class="nav-link nav-link-sub active" href="hosts.html">Hosts</a>
+              <a class="nav-link nav-link-sub" href="parent-list.html">Parents</a>
+              <a class="nav-link nav-link-sub" href="contracts.html">Contracts</a>
+              <a class="nav-link nav-link-sub" href="agents.html">Agents</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
+              <a class="nav-link nav-link-sub" href="hosts.html?status=pending">Pending Approval</a>
+              <a class="nav-link nav-link-sub" href="homestay-visit.html">Annual visits</a>
+              <a class="nav-link nav-link-sub" href="homestay-incidents.html">Incident log</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <!-- Main content -->
+          <section class="main">
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Homestay Operations</span>
+                <h2>Hosts Directory</h2>
+                <p>All approved and pending host families — DBS state, capacity, and visit schedule at a glance.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="homestays.html">Back to Homestays</a>
+                <a class="button" href="host-create.html">Add Homestay Host</a>
+              </div>
+            </div>
+
+            <!-- Homestay Supply & Emergency Headroom Metric Bar (AEGIS Standard 5.4.1) -->
+            <div id="supply-analytics-bar" style="background:#ffffff; border:1px solid #d5dce8; border-radius:14px; padding:18px 24px; margin-bottom:24px; box-shadow:0 4px 12px rgba(15,35,64,0.04);">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span style="font-family:'Outfit',sans-serif; font-size:1.1rem; font-weight:700; color:#0f2340;">Homestay Supply &amp; Availability Overview</span>
+                  <span class="badge green" id="supply-status-badge">AEGIS Standard 5.4.1 Compliant</span>
+                </div>
+                <span style="font-size:0.8rem; color:#64748b;">Live Headroom against Student Caseload</span>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:14px;">
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
+                  <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Total Approved Beds</small>
+                  <strong style="font-size:1.4rem; color:#0f2340;" id="stat-total-beds">—</strong>
+                </div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
+                  <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Currently Placed</small>
+                  <strong style="font-size:1.4rem; color:#0284c7;" id="stat-occupied-beds">—</strong>
+                </div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
+                  <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Standard Beds Free</small>
+                  <strong style="font-size:1.4rem; color:#16a34a;" id="stat-available-beds">—</strong>
+                </div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
+                  <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Emergency Standby (Std 2.6)</small>
+                  <strong style="font-size:1.4rem; color:#d97706;" id="stat-emergency-beds">—</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Two-column layout -->
+            <div class="content-cols">
+
+              <!-- Left: Hosts list -->
+              <div>
+                <div class="section-header">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <button type="button" class="link-pill current" id="tab-all-hosts" style="padding:6px 14px;font-size:0.85rem;">All Hosts</button>
+                    <button type="button" class="link-pill" id="tab-pending-approval" style="padding:6px 14px;font-size:0.85rem;">Pending Approval</button>
+                  </div>
+                  <a href="host-create.html">+ Add host</a>
+                </div>
+
+                <!-- Filter row -->
+                <div class="filter-row">
+                  <div class="filter-field">
+                    <small>Search</small>
+                    <input
+                      class="filter-input"
+                      type="text"
+                      id="search-input"
+                      placeholder="Search name or location…"
+                      autocomplete="off"
+                    />
+                  </div>
+                  <div class="filter-field">
+                    <small>Status</small>
+                    <select class="filter-select" id="status-filter">
+                      <option value="">All statuses</option>
+                      <option value="approved">Approved</option>
+                      <option value="pending">Pending</option>
+                      <option value="inactive">Inactive</option>
+                    </select>
+                  </div>
+                  <div class="filter-field">
+                    <small>DBS</small>
+                    <select class="filter-select" id="dbs-filter">
+                      <option value="">All</option>
+                      <option value="clear">Clear</option>
+                      <option value="amber">Action Required</option>
+                      <option value="expired">Expired</option>
+                    </select>
+                  </div>
+                  <div class="filter-field">
+                    <small>Emergency Ready</small>
+                    <select class="filter-select" id="emergency-filter">
+                      <option value="">All Hosts</option>
+                      <option value="emergency">⚡ Emergency Ready Only (Std 2.6)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <p class="result-count" id="result-count">Loading…</p>
+
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Host Name</th>
+                        <th>Location / Area</th>
+                        <th>Capacity</th>
+                        <th>DBS Status</th>
+                        <th>Next Visit Due</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="hosts-table-body"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Right: Alerts & Actions -->
+              <div>
+                <div class="section-header">
+                  <h3>Alerts &amp; Actions</h3>
+                  <a href="compliance.html">View all</a>
+                </div>
+                <div class="alerts-panel">
+
+                  <div class="alert-card alert-danger">
+                    <span class="alert-timestamp">Overdue</span>
+                    <div class="alert-type">DBS Check</div>
+                    <p class="alert-title">Helen Finch — DBS expiring</p>
+                    <p class="alert-body">DBS certificate expires in 14 days (18 Nov 2025). Renewal submitted but certificate not received. Cannot host until renewed.</p>
+                    <a class="alert-action" href="host-profile.html?id=helen-finch">Review record</a>
+                  </div>
+
+                  <div class="alert-card alert-warning">
+                    <span class="alert-timestamp">Due soon</span>
+                    <div class="alert-type">Annual Visit</div>
+                    <p class="alert-title">Eleanor Ashworth — visit due next week</p>
+                    <p class="alert-body">Annual inspection due 14 May 2026. Last completed 14 May 2025. Schedule before summer placements begin.</p>
+                    <a class="alert-action" href="homestay-visit.html">Book visit</a>
+                  </div>
+
+                  <div class="alert-card alert-warning">
+                    <span class="alert-timestamp">Pending</span>
+                    <div class="alert-type">Approval Blocked</div>
+                    <p class="alert-title">Ellis Family — document missing</p>
+                    <p class="alert-body">DBS upload outstanding. Sofia Petrova reserved for this placement. Approval cannot proceed until document is on file.</p>
+                    <a class="alert-action" href="hosts.html?status=pending">Resolve</a>
+                  </div>
+
+                  <div class="alert-card alert-info">
+                    <span class="alert-timestamp">Upcoming</span>
+                    <div class="alert-type">Annual Visit</div>
+                    <p class="alert-title">Brennan Family — visit due 2 Jun 2026</p>
+                    <p class="alert-body">Fire evacuation discussion logged at last visit. Confirm updated route before scheduling follow-up.</p>
+                    <a class="alert-action" href="homestay-visit.html">Schedule</a>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- /content-cols -->
+
+          </section>
+        </div><!-- /shell -->
+      </div><!-- /app-frame -->
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      var searchInput = document.getElementById('search-input');
+      var statusFilter = document.getElementById('status-filter');
+      var dbsFilter    = document.getElementById('dbs-filter');
+      var emergencyFilter = document.getElementById('emergency-filter');
+      var resultCount  = document.getElementById('result-count');
+
+      function initials(first, last) {
+        return ((first || '').charAt(0) + (last || '').charAt(0)).toUpperCase();
+      }
+
+      function locationFromAddress(address) {
+        if (!address) return '—';
+        // Return city/area: last meaningful part before postcode
+        var parts = address.split(',');
+        return parts.length >= 2 ? parts[parts.length - 2].trim() : parts[0].trim();
+      }
+
+      function dbsBadgeClass(status) {
+        var map = { clear: 'green', amber: 'amber', expired: 'red' };
+        return map[status] || 'grey';
+      }
+
+      function dbsBadgeLabel(status) {
+        var map = { clear: 'DBS Clear', amber: 'Action Required', expired: 'Expired' };
+        return map[status] || 'Unknown';
+      }
+
+      function statusBadgeClass(status) {
+        var map = { approved: 'green', pending: 'amber', inactive: 'grey' };
+        return map[status] || 'grey';
+      }
+
+      function statusBadgeLabel(status) {
+        return status ? status.charAt(0).toUpperCase() + status.slice(1) : '—';
+      }
+
+      function visitBadgeClass(status) {
+        var map = { complete: 'green', due: 'amber', overdue: 'red' };
+        return map[status] || 'grey';
+      }
+
+      // ── Exeat availability badge (AEGIS Standard 5.4.1) ─────────────────────
+      function parsePeriodEndDate(period) {
+        var str = (period && period.dates) || '';
+        var parts = str.split(/[–-]/).map(function (s) { return s.trim(); });
+        var last = parts[parts.length - 1];
+        var d = new Date(last);
+        return isNaN(d.getTime()) ? null : d;
+      }
+
+      function currentAvailabilityBadge(host) {
+        var cal = host.availabilityCalendar || [];
+        if (!cal.length) return '';
+        var today = new Date();
+        var upcoming = cal.filter(function (p) {
+          var end = parsePeriodEndDate(p);
+          return !end || end >= today;
+        });
+        var period = upcoming.length ? upcoming[0] : cal[cal.length - 1];
+        var isAvailable = period.status === 'available';
+        return '<span class="badge' + (isAvailable ? ' green' : '') + '" style="font-size:0.7rem;' +
+          (isAvailable ? '' : 'background:#e2e8f0; color:#475569;') + '">' +
+          (isAvailable ? '✓ Available' : '✕ Unavailable') + ' — ' + (period.name || period.periodId) +
+        '</span>';
+      }
+
+      function capacityPips(current, max) {
+        var html = '<div class="capacity-pips">';
+        for (var i = 0; i < max; i++) {
+          var filled  = i < current;
+          var warning = filled && current === max;
+          html += '<div class="capacity-pip' +
+            (filled ? ' filled' : '') +
+            (warning ? ' warn' : '') + '"></div>';
+        }
+        html += '<span class="capacity-text">' + current + ' / ' + max + '</span></div>';
+        return html;
+      }
+
+      function renderTable(data) {
+        var tbody = document.getElementById('hosts-table-body');
+        resultCount.textContent = data.length + ' host' + (data.length !== 1 ? 's' : '');
+
+        if (!data.length) {
+          tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No hosts match the current filters.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = data.map(function (h) {
+          var fullName = h.firstName + ' ' + h.lastName;
+          var avt      = initials(h.firstName, h.lastName);
+          var location = locationFromAddress(h.address);
+          var availBadge = currentAvailabilityBadge(h);
+
+          return '<tr>' +
+            '<td>' +
+              '<div class="host-name-cell">' +
+                '<div class="host-avatar">' + avt + '</div>' +
+                '<div>' +
+                  '<a class="host-name-link" href="host-profile.html?id=' + h.id + '">' + fullName + '</a>' +
+                  '<small>' + (h.email || h.mobile || '—') + '</small>' +
+                '</div>' +
+              '</div>' +
+            '</td>' +
+            '<td>' +
+              '<strong>' + location + '</strong>' +
+              (h.address ? '<small>' + h.address.split(',')[0].trim() + '</small>' : '') +
+            '</td>' +
+            '<td>' + capacityPips(h.capacityCurrent || 0, h.capacityMax || 3) + '</td>' +
+            '<td>' +
+              '<span class="badge ' + dbsBadgeClass(h.dbsStatus) + '">' + dbsBadgeLabel(h.dbsStatus) + '</span>' +
+              (h.dbsRenewalDue ? '<small>Renewal: ' + h.dbsRenewalDue + '</small>' : '') +
+            '</td>' +
+            '<td>' +
+              '<span class="badge ' + visitBadgeClass(h.annualVisitStatus) + '">' + (h.annualVisitDue || '—') + '</span>' +
+              (h.annualVisitLast ? '<small>' + h.annualVisitLast + '</small>' : '') +
+            '</td>' +
+            '<td>' +
+              '<span class="badge ' + statusBadgeClass(h.status) + '">' + statusBadgeLabel(h.status) + '</span>' +
+              (h.emergencyProvision
+                ? '<br /><span class="badge amber" style="font-size:0.7rem; margin-top:4px; display:inline-block;">⚡ Emergency Ready (&lt;' + (h.emergencyNoticeHours || 2) + 'h)</span>'
+                : '') +
+              (availBadge ? '<br />' + availBadge : '') +
+            '</td>' +
+            '<td>' +
+              '<div class="row-actions">' +
+                '<a class="button-alt button-sm" href="host-profile.html?id=' + h.id + '">View Record</a>' +
+                '<a class="button-alt button-sm" href="homestay-profile-view.html?id=' + h.id + '" target="_blank">Share Profile</a>' +
+              '</div>' +
+            '</td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      function applyFilters() {
+        var search    = searchInput.value.trim().toLowerCase();
+        var status    = statusFilter.value.toLowerCase();
+        var dbs       = dbsFilter.value.toLowerCase();
+        var emergency = emergencyFilter.value;
+
+        var data = getAllHosts().filter(function (h) {
+          var searchable = [
+            h.firstName, h.lastName, h.address,
+            h.email, h.mobile, h.currentStudents
+          ].join(' ').toLowerCase();
+
+          var matchSearch    = !search    || searchable.includes(search);
+          var matchStatus    = !status    || (h.status || '').toLowerCase() === status;
+          var matchDbs       = !dbs       || (h.dbsStatus || '').toLowerCase() === dbs;
+          var matchEmergency = !emergency || h.emergencyProvision === true;
+
+          return matchSearch && matchStatus && matchDbs && matchEmergency;
+        });
+
+        renderTable(data);
+      }
+
+      // ── Homestay Supply & Emergency Headroom Metric Bar (AEGIS Standard 5.4.1) ──
+      function renderSupplyAnalytics() {
+        var stats = OG_DB.getHomestaySupplyAnalytics();
+        document.getElementById('stat-total-beds').textContent     = stats.totalApprovedBeds;
+        document.getElementById('stat-occupied-beds').textContent  = stats.totalOccupiedBeds;
+        document.getElementById('stat-available-beds').textContent = stats.availableStandardBeds;
+        document.getElementById('stat-emergency-beds').textContent = stats.emergencyStandbyBeds;
+
+        var badge = document.getElementById('supply-status-badge');
+        badge.textContent = stats.statusBadge;
+        badge.className   = 'badge ' + (stats.isSufficient ? 'green' : 'amber');
+      }
+
+      // ── "All Hosts" / "Pending Approval" quick tabs ──────────────────────────
+      var tabAllHosts        = document.getElementById('tab-all-hosts');
+      var tabPendingApproval = document.getElementById('tab-pending-approval');
+
+      function setActiveTab(tab) {
+        tabAllHosts.classList.toggle('current', tab !== 'pending');
+        tabPendingApproval.classList.toggle('current', tab === 'pending');
+      }
+
+      tabAllHosts.addEventListener('click', function () {
+        statusFilter.value = '';
+        setActiveTab('all');
+        applyFilters();
+      });
+
+      tabPendingApproval.addEventListener('click', function () {
+        statusFilter.value = 'pending';
+        setActiveTab('pending');
+        applyFilters();
+      });
+
+      // Keep the tabs in sync if the Status dropdown is changed directly.
+      statusFilter.addEventListener('change', function () {
+        setActiveTab(statusFilter.value === 'pending' ? 'pending' : 'all');
+      });
+
+      searchInput.addEventListener('input', applyFilters);
+      statusFilter.addEventListener('change', applyFilters);
+      dbsFilter.addEventListener('change', applyFilters);
+      emergencyFilter.addEventListener('change', applyFilters);
+
+      // Deep-link support, e.g. hosts.html?status=pending
+      var initialStatus = new URLSearchParams(window.location.search).get('status');
+      if (initialStatus) {
+        statusFilter.value = initialStatus.toLowerCase();
+        setActiveTab(initialStatus.toLowerCase() === 'pending' ? 'pending' : 'all');
+      }
+
+      applyFilters();
+      renderSupplyAnalytics();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+<!doctype html><html lang="en-GB"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Delete Host — Oxford Guardians Platform</title><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" /><link rel="stylesheet" href="assets/app.css" /></head><body><main class="page"><section class="section" style="padding:28px;"><span class="eyebrow">Delete host draft</span><h1>Allowed only when no active placements depend on it.</h1><div class="alert-box" style="margin-top:18px;"><h4 id="record-heading">Record selected: Loading…</h4><p id="record-desc">This route shows deletion of a pending, unapproved host application. Approved or historically used hosts should be archived/deactivated instead.</p></div><div class="action-row"><a class="button-alt" href="hosts.html">Cancel</a><button type="button" class="button" id="confirm-delete-btn">Confirm delete pending draft</button></div></section></main>
+<script src="assets/db.js"></script>
+<script>
+  var params = new URLSearchParams(window.location.search);
+  var id = params.get('id');
+  var host = id ? getHostById(id) : null;
+
+  var headingEl = document.getElementById('record-heading');
+  var descEl = document.getElementById('record-desc');
+  var deleteBtn = document.getElementById('confirm-delete-btn');
+
+  if (!host) {
+    headingEl.textContent = 'Host not found';
+    descEl.textContent = 'No host record matches this ID. Return to the host directory.';
+    deleteBtn.style.display = 'none';
+  } else {
+    var fullName = host.firstName + ' ' + host.lastName;
+    document.title = 'Delete ' + fullName + ' — Oxford Guardians Platform';
+    headingEl.textContent = 'Record selected: ' + fullName + ' (' + (host.status || 'unknown') + ')';
+
+    var isDeletable = host.status === 'pending' || host.status === 'draft';
+
+    if (!isDeletable) {
+      deleteBtn.style.display = 'none';
+      alert('Active or historically approved hosts cannot be deleted. They must be archived via their profile.');
+    } else {
+      deleteBtn.addEventListener('click', function () {
+        deleteHostById(host.id);
+        window.location.href = 'hosts.html';
+      });
+    }
+  }
+</script>
+</body></html>

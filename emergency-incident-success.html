@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Incident Logged — Emergency — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/emergency/log/success</small></div>
+        <div class="shell">
+          <section class="main" style="max-width:680px;margin:0 auto;">
+            <div class="alert-box" style="background:var(--green-bg);border-color:var(--green);">
+              <h3 style="color:var(--green);">Incident recorded</h3>
+              <p id="success-subtitle">The emergency incident has been logged.</p>
+            </div>
+            <div class="card">
+              <h4>What was recorded</h4>
+              <div class="list" id="recorded-details">
+                <div class="list-item"><small>Loading…</small></div>
+              </div>
+            </div>
+            <div class="action-row">
+              <a class="button" href="emergency-procedures.html">Back to emergency</a>
+              <a class="button-alt" href="incident-logs.html">View all incidents</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var incidentId = params.get('id');
+        if (!incidentId) return;
+
+        var inc = OG_DB.getIncidentById(incidentId);
+        if (!inc) return;
+
+        document.getElementById('success-subtitle').textContent =
+          'The emergency incident for ' + (inc.studentName || 'unknown student') + ' has been logged with full details.';
+
+        var details = [
+          { label: 'Reference', value: inc.id },
+          { label: 'Type', value: inc.type + ' — ' + inc.severity },
+          { label: 'Student', value: inc.studentName || '—' },
+          { label: 'Date/time', value: inc.dateTime ? new Date(inc.dateTime).toLocaleString('en-GB') : '—' },
+          { label: 'Reported by', value: inc.reportedBy || '—' },
+          { label: 'Response time', value: inc.responseTime || '—' },
+          { label: 'Status', value: inc.status || '—' },
+          { label: 'Host involved', value: inc.hostName || '—' },
+          { label: 'Driver involved', value: inc.driverName || '—' },
+          { label: 'External actors', value: inc.externalActors || '—' }
+        ];
+
+        var container = document.getElementById('recorded-details');
+        container.innerHTML = '';
+        details.forEach(function (d) {
+          var div = document.createElement('div');
+          div.className = 'list-item';
+          div.innerHTML = '<strong>' + d.label + '</strong><small>' + d.value + '</small>';
+          container.appendChild(div);
+        });
+      })();
+    </script>
+  </body>
+</html>

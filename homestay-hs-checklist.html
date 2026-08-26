@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>H&S Checklist — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    body, .page, .shell, main { background: #f0f4f8 !important; color: #0f2340 !important; }
+    .app-frame { background: #f8fafc !important; border-color: #d5dce8 !important; box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important; }
+    .chrome { background: #e8eef6 !important; border-bottom-color: #d5dce8 !important; }
+    .chrome small { color: #3b536e !important; }
+    .dots span { background: #7b9abf !important; }
+    .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important; }
+    .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+    .brand small  { color: #7fb3d3 !important; }
+    .brand strong { color: #e8f0fa !important; }
+    .nav-label { color: #7b9abf !important; }
+    .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+    .nav-link:hover  { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+    .nav-link.active { background: rgba(255,255,255,0.1)  !important; border-color: rgba(255,255,255,0.14) !important; color: #e8f0fa !important; }
+    .nav-link-sub { padding-left: 36px !important; font-size: 0.85em !important; opacity: 0.85; }
+    .main { background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important; }
+    h2, h3, h4 { color: #0f2340 !important; }
+    .eyebrow { color: #2a6096 !important; }
+    .button     { background: #0f2340 !important; border-color: #0f2340 !important; color: #fff !important; cursor: pointer; }
+    .button:hover { opacity: 0.88; }
+    .button-alt { background: #fff !important; border-color: #d5dce8 !important; color: #0f2340 !important; cursor: pointer; }
+    .button-alt:hover { background: #edf2f8 !important; }
+
+    .host-avatar-lg {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, #0f2340 0%, #1a3459 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: "Outfit", sans-serif; font-size: 17px; font-weight: 700;
+      color: #e8f0fa; border: 2px solid #d5dce8; flex-shrink: 0;
+    }
+
+    /* ── Form sections ── */
+    .form-section {
+      background: #fff; border: 1px solid #d5dce8;
+      border-radius: 14px; padding: 20px 22px; margin-bottom: 14px;
+    }
+    .form-section-title {
+      font-family: "Outfit", sans-serif; font-size: 0.93rem; font-weight: 700;
+      color: #0f2340; margin: 0 0 3px;
+    }
+    .form-section-desc { font-size: 0.82rem; color: #4b6080; margin: 0 0 14px; line-height: 1.5; }
+    .form-subsection-title {
+      font-size: 0.74rem; font-weight: 700; color: #2a6096;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      margin: 16px 0 8px; padding-top: 12px;
+      border-top: 1px solid #edf2f8;
+    }
+    .form-subsection-title.first { margin-top: 0; padding-top: 0; border-top: none; }
+    .file-upload-group { margin-top: 14px; }
+    .file-upload-group label { display: block; font-size: 0.8rem; font-weight: 600; color: #4b6080; margin-bottom: 5px; }
+    .s11-panel-heading {
+      font-family: "Outfit", sans-serif; font-size: 0.72rem; font-weight: 700;
+      color: #9bafc4; text-transform: uppercase; letter-spacing: 0.09em;
+      margin: 14px 0 6px; padding-top: 14px; border-top: 1px dashed #e4eaf3;
+    }
+    .s11-panel-heading:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+
+    /* ── Session detail fields ── */
+    .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 640px) { .fields-grid { grid-template-columns: 1fr; } }
+    .field-group label { display: block; font-size: 0.8rem; font-weight: 600; color: #4b6080; margin-bottom: 4px; }
+    .field-group input, .field-group select {
+      width: 100%; padding: 9px 12px; border: 1px solid #d5dce8; border-radius: 8px;
+      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.86rem; color: #0f2340;
+      background: #f6f8fb; box-sizing: border-box;
+    }
+    .field-group input:focus, .field-group select:focus { outline: none; border-color: #0f2340; background: #fff; }
+    .field-group input:disabled { color: #6b85a0; background: #edf2f8; cursor: default; }
+
+    /* ── S11 checklist rows ── */
+    .s11-grid { display: grid; gap: 7px; }
+    .s11-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 9px 11px; background: #f6f8fb;
+      border: 1px solid #e4eaf3; border-radius: 9px;
+    }
+    .s11-label { flex: 1; font-size: 0.84rem; color: #1a3459; line-height: 1.45; padding-top: 2px; }
+    .yn-group { display: flex; gap: 5px; flex-shrink: 0; padding-top: 1px; }
+    .yn-group input[type="radio"] { display: none; }
+    .yn-group label {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 27px; border: 1px solid #d5dce8; border-radius: 6px;
+      cursor: pointer; font-size: 0.74rem; font-weight: 600;
+      color: #4b6080; background: #fff; transition: all 0.13s; user-select: none;
+    }
+    .yn-group label:hover { border-color: #0f2340; color: #0f2340; }
+    .yn-group input[value="yes"]:checked + label { background: #16a34a; border-color: #16a34a; color: #fff; }
+    .yn-group input[value="no"]:checked  + label { background: #dc2626; border-color: #dc2626; color: #fff; }
+    .yn-group input[value="na"]:checked  + label { background: #6b7280; border-color: #6b7280; color: #fff; }
+
+    /* ── Hazard builder table ── */
+    .hazard-table-wrap { overflow-x: auto; margin-bottom: 12px; border: 1px solid #d5dce8; border-radius: 10px; overflow: hidden; }
+    .hazard-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .hazard-table th {
+      background: #0f2340; color: #e8f0fa;
+      font-family: "Outfit", sans-serif; font-size: 0.74rem; font-weight: 700;
+      padding: 9px 10px; text-align: left; white-space: nowrap;
+    }
+    .hazard-table td { padding: 5px 6px; border-bottom: 1px solid #e4eaf3; vertical-align: middle; }
+    .hazard-table tr:last-child td { border-bottom: none; }
+    .hazard-table tr:nth-child(even) td { background: #f8fafc; }
+    .hazard-table input[type="text"],
+    .hazard-table input[type="date"] {
+      width: 100%; padding: 5px 8px; border: 1px solid #d5dce8; border-radius: 5px;
+      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.81rem; color: #0f2340;
+      background: #fff; box-sizing: border-box;
+    }
+    .hazard-table input[type="text"]:focus,
+    .hazard-table input[type="date"]:focus { outline: none; border-color: #0f2340; }
+    .hazard-table input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; margin: 0 auto; display: block; accent-color: #0f2340; }
+    .btn-remove-hazard {
+      background: none; border: 1px solid #e4eaf3; border-radius: 5px;
+      color: #dc2626; font-size: 1rem; line-height: 1;
+      width: 26px; height: 26px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .btn-remove-hazard:hover { background: #fef2f2; border-color: #dc2626; }
+    .no-hazards-msg { text-align: center; padding: 18px; font-size: 0.83rem; color: #9bafc4; font-style: italic; }
+
+    /* ── List view — metrics ── */
+    .hs-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .hs-metric { background: #fff; border: 1px solid #d5dce8; border-radius: 12px; padding: 14px 16px; }
+    .hs-metric h4 { font-size: 0.79rem; font-weight: 600; color: #4b6080; margin-bottom: 4px; }
+    .hs-metric-value { font-family: "Outfit", sans-serif; font-size: 1.45rem; font-weight: 700; color: #0f2340; }
+    .hs-metric-sub { font-size: 0.75rem; color: #6b85a0; margin-top: 2px; }
+
+    /* ── Checklist cards ── */
+    .checklist-cards-grid { display: grid; gap: 14px; }
+    .checklist-card { background: #fff; border: 1px solid #d5dce8; border-radius: 14px; overflow: hidden; }
+    .cc-header {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+      padding: 15px 20px 13px; border-bottom: 1px solid #edf2f8;
+    }
+    .cc-title { font-family: "Outfit", sans-serif; font-size: 0.98rem; font-weight: 700; color: #0f2340; margin: 0 0 2px; }
+    .cc-meta { font-size: 0.81rem; color: #4b6080; margin: 0; }
+    .cc-date { font-family: "Outfit", sans-serif; font-size: 0.87rem; font-weight: 600; color: #2a6096; flex-shrink: 0; }
+    .cc-summary {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      padding: 10px 20px; background: #f8fafc; border-bottom: 1px solid #edf2f8;
+    }
+    .cc-pill { display: flex; align-items: center; gap: 5px; font-size: 0.79rem; font-weight: 600; color: #3b536e; }
+    .cc-pill .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .dot-green { background: #16a34a; }
+    .dot-red   { background: #dc2626; }
+    .dot-grey  { background: #9bafc4; }
+    .checklist-card details summary {
+      padding: 10px 20px; font-size: 0.82rem; font-weight: 600; color: #2a6096;
+      cursor: pointer; list-style: none; display: flex; align-items: center; gap: 6px;
+      transition: background 0.12s;
+    }
+    .checklist-card details summary::-webkit-details-marker { display: none; }
+    .checklist-card details summary::before { content: '▸'; font-size: 0.7rem; transition: transform 0.14s; display: inline-block; }
+    .checklist-card details[open] summary::before { transform: rotate(90deg); }
+    .checklist-card details[open] summary { border-bottom: 1px solid #edf2f8; }
+    .checklist-card details summary:hover { background: #f6f8fb; }
+    .cc-detail { padding: 16px 20px; display: grid; gap: 14px; }
+    .s11-detail-section {}
+    .s11-detail-title {
+      font-family: "Outfit", sans-serif; font-size: 0.75rem; font-weight: 700;
+      color: #6b85a0; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 6px;
+    }
+    .s11-detail-grid { display: grid; gap: 4px; }
+    .s11-detail-row { display: flex; align-items: flex-start; gap: 8px; font-size: 0.81rem; color: #3b536e; line-height: 1.4; }
+    .s11-badge { font-size: 0.68rem; font-weight: 700; border-radius: 4px; padding: 1px 5px; flex-shrink: 0; margin-top: 2px; }
+    .s11-badge.yes { background: #dfece5; color: #235842; }
+    .s11-badge.no  { background: #f3dddd; color: #7f3034; }
+    .s11-badge.na  { background: #e8eef6; color: #3b536e; }
+    .s11-badge.blank { background: #f0f4f8; color: #9bafc4; }
+    .hazard-display-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .hazard-display-table th { background: #edf2f8; color: #4b6080; font-weight: 700; padding: 6px 10px; text-align: left; font-size: 0.74rem; }
+    .hazard-display-table td { padding: 6px 10px; border-top: 1px solid #edf2f8; color: #3b536e; }
+    .hazard-display-table tr.closed-row td { opacity: 0.5; text-decoration: line-through; }
+    .notes-box {
+      font-size: 0.82rem; color: #3b536e;
+      background: #fff9ed; border: 1px solid #e8d5a3;
+      border-radius: 6px; padding: 9px 12px; line-height: 1.5; margin: 0;
+      white-space: pre-wrap;
+    }
+    .empty-state {
+      text-align: center; padding: 56px 32px;
+      background: #fff; border: 1px solid #d5dce8; border-radius: 14px;
+    }
+    .empty-state h3 { color: #0f2340; margin-bottom: 8px; }
+    .empty-state p { color: #4b6080; font-size: 0.9rem; max-width: 44ch; margin: 0 auto 20px; line-height: 1.5; }
+    .form-footer { display: flex; gap: 10px; justify-content: flex-end; padding: 0 0 28px; }
+  </style>
+</head>
+<body>
+<main class="page">
+  <div class="app-frame">
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <small id="chrome-route">Route /admin/host/hs-checklist</small>
+    </div>
+    <div class="shell">
+
+      <aside class="sidebar">
+        <div class="brand">
+          <small>Oxford Guardians</small>
+          <strong>H&amp;S Assessment</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Operations</div>
+          <a class="nav-link" href="homestays.html">Homestays</a>
+          <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
+          <a class="nav-link nav-link-sub active" href="#">H&amp;S Checklists</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Compliance</div>
+          <a class="nav-link" href="compliance.html">AEGIS control room</a>
+        </div>
+      </aside>
+
+      <section class="main">
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div class="host-avatar-lg" id="host-avatar">?</div>
+            <div>
+              <span class="eyebrow">Health &amp; Safety Checklist</span>
+              <h2 id="toolbar-name" style="margin:2px 0 4px;">H&amp;S Assessment</h2>
+              <p id="toolbar-sub" style="margin:0;font-size:0.88rem;color:#3b536e;">Section 11 — Nest Guardians Property Risk Assessment</p>
+            </div>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button-alt" id="back-link" href="hosts.html">Back to Compliance</a>
+            <button type="button" class="button"     id="btn-new-assessment">New Assessment</button>
+            <button type="button" class="button-alt" id="btn-cancel-form" style="display:none;">Cancel</button>
+          </div>
+        </div>
+
+        <!-- ── LIST VIEW ── -->
+        <div id="list-view">
+          <div class="hs-metrics" id="metrics-strip" style="display:none;">
+            <div class="hs-metric">
+              <h4>Assessments on file</h4>
+              <div class="hs-metric-value" id="metric-total">0</div>
+              <p class="hs-metric-sub">Total records</p>
+            </div>
+            <div class="hs-metric">
+              <h4>Latest assessment</h4>
+              <div class="hs-metric-value" id="metric-latest-date">—</div>
+              <p class="hs-metric-sub" id="metric-latest-by">—</p>
+            </div>
+            <div class="hs-metric">
+              <h4>Overall status</h4>
+              <div class="hs-metric-value" id="metric-status">—</div>
+              <p class="hs-metric-sub" id="metric-status-sub">—</p>
+            </div>
+          </div>
+          <div class="checklist-cards-grid" id="checklist-cards"></div>
+        </div>
+
+        <!-- ── FORM VIEW ── -->
+        <div id="form-view" style="display:none;">
+          <form id="hs-form" autocomplete="off">
+
+            <!-- Session details -->
+            <div class="form-section">
+              <p class="form-section-title">Assessment Details</p>
+              <p class="form-section-desc">Record who carried out this assessment, when, and the context (initial approval visit, annual review, etc.).</p>
+              <div class="fields-grid">
+                <div class="field-group">
+                  <label>Host Name</label>
+                  <input type="text" id="field-host-name" disabled placeholder="—" />
+                </div>
+                <div class="field-group">
+                  <label>Host ID</label>
+                  <input type="text" id="field-host-id" disabled placeholder="—" />
+                </div>
+                <div class="field-group">
+                  <label>Date of Assessment *</label>
+                  <input type="date" id="field-date" required />
+                </div>
+                <div class="field-group">
+                  <label>Assessed by (staff name) *</label>
+                  <input type="text" id="field-staff" placeholder="e.g. Priya Shah" required />
+                </div>
+                <div class="field-group">
+                  <label>Assessment Type</label>
+                  <select id="field-visit-type">
+                    <option value="Initial Approval Assessment">Initial Approval Assessment</option>
+                    <option value="Annual Visit Assessment">Annual Visit Assessment</option>
+                    <option value="Follow-up Assessment">Follow-up Assessment</option>
+                    <option value="Complaint / Incident Review">Complaint / Incident Review</option>
+                    <option value="Unannounced Visit">Unannounced Visit</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label>Gas Safety Certificate No. (if applicable)</label>
+                  <input type="text" id="field-gas-cert" placeholder="e.g. GSC/2026/EA-001" />
+                </div>
+              </div>
+            </div>
+
+            <!-- S11 sections — populated by JS -->
+            <div id="s11-form-content"></div>
+
+            <!-- Panel 4: Hazard Remediation Tracker -->
+            <div class="form-section">
+              <p class="form-section-title">Hazard Remediation Tracker</p>
+              <p class="form-section-desc">Record any hazards, risks, or concerns found during this assessment. Capture existing controls and any outstanding actions with owners and due dates.</p>
+              <div class="hazard-table-wrap">
+                <table class="hazard-table">
+                  <thead>
+                    <tr>
+                      <th style="min-width:160px;">Hazard or concern</th>
+                      <th style="min-width:140px;">Existing control</th>
+                      <th style="min-width:140px;">Action required</th>
+                      <th style="min-width:110px;">Owner</th>
+                      <th style="min-width:108px;">Due date</th>
+                      <th style="width:54px;text-align:center;">Closed</th>
+                      <th style="width:36px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="hazard-rows">
+                    <tr id="no-hazards-row">
+                      <td colspan="7" class="no-hazards-msg">No hazards added yet — click "Add Identified Hazard" to record one.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <button type="button" id="add-hazard-btn" class="button-alt" style="padding:7px 16px;border-radius:7px;font-family:'Outfit',sans-serif;font-size:0.84rem;font-weight:600;">+ Add Identified Hazard</button>
+              <div class="file-upload-group">
+                <label>Upload Photographic Evidence of Hazards/Fixes</label>
+                <input type="file" id="hazardPhotosUpload" accept="image/*" multiple />
+              </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="form-section">
+              <p class="form-section-title">Additional Notes</p>
+              <p class="form-section-desc">Overall outcome summary, follow-up actions agreed with the host, and any items for review before the next visit.</p>
+              <textarea id="field-notes" style="width:100%;min-height:80px;padding:9px 12px;border:1px solid #d5dce8;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.84rem;color:#0f2340;background:#f6f8fb;resize:vertical;box-sizing:border-box;line-height:1.5;" placeholder="e.g. All items passed. No action required. Next annual assessment due Feb 2027. Eleanor confirmed she has read and understood all guidance."></textarea>
+            </div>
+
+            <div class="form-footer">
+              <button type="button" id="form-cancel-btn" class="button-alt" style="padding:10px 20px;border:1px solid #d5dce8;border-radius:8px;font-family:'Outfit',sans-serif;font-size:0.88rem;">Cancel</button>
+              <button type="submit" class="button" style="padding:10px 22px;border:1px solid #0f2340;border-radius:8px;font-family:'Outfit',sans-serif;font-size:0.9rem;font-weight:600;">Save Assessment</button>
+            </div>
+
+          </form>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="assets/db.js"></script>
+<script>
+  // ── Section 11 data ───────────────────────────────────────────────────────
+  // panel: 1 = Fire & Gas Safety, 2 = Electrical & General Safety, 3 = Household Hazards & Storage
+  var S11_SECTIONS = [
+    // ── Panel 1: Fire & Gas Safety ──────────────────────────────────────────
+    { panel: 1, title: 'Fire Detection', items: [
+      { key: 'smokeAlarmEveryStorey', label: 'Smoke alarm installed on every storey and working confirmation recorded.' },
+      { key: 'coAlarmGasAppliance',   label: 'Carbon monoxide alarm installed in any room containing a gas, liquid or solid fuel burning appliance.' },
+      { key: 'coAlarmWorking',        label: 'CO alarm installed in any room with a gas, liquid or solid fuel burning appliance and working confirmation recorded.' }
+    ]},
+    { panel: 1, title: 'Gas & Fuel Safety', items: [
+      { key: 'gasCertSeen',     label: 'Landlord gas safety certificate seen where applicable.' },
+      { key: 'gasCertRetained', label: 'Landlord gas safety certificate seen and retained where applicable.' }
+    ]},
+    { panel: 1, title: 'Fire Evacuation', items: [
+      { key: 'evacuationRouteDiscussed', label: 'Fire evacuation routes discussed; students will know where door/window keys are kept.' },
+      { key: 'evacuationRouteDetailed',  label: 'Fire evacuation routes discussed; student will know exit routes and where keys are kept if doors or windows are locked.' },
+      { key: 'fireExtinguisherServiced', label: 'Fire extinguishers or blankets, if present, are suitably serviced.' }
+    ]},
+    // ── Panel 2: Electrical & General Safety ────────────────────────────────
+    { panel: 2, title: 'Electrical Safety', items: [
+      { key: 'electricalVisualCheck',     label: 'Visual electrical safety check completed; sockets and light fittings secure and not overloaded.' },
+      { key: 'electricalDetailCheck',     label: 'Electrical safety visually checked, including sockets, plugs, extension leads, student appliances and overloaded sockets.' },
+      { key: 'electricalApplianceSafety', label: 'Electrical appliance safety considered for appliances used by students.' }
+    ]},
+    { panel: 2, title: 'Open Fires & Ignition Sources', items: [
+      { key: 'openFireGuard',         label: 'Open fires, if used, have a suitable fire guard.' },
+      { key: 'openFireSafety',        label: 'Open fires, candles, matches and lighters are safely managed and stored.' },
+      { key: 'matchesLightersStored', label: 'Matches and lighters stored appropriately.' }
+    ]},
+    { panel: 2, title: 'First Aid Provision', items: [
+      { key: 'firstAidKitAvailable', label: 'Basic first aid kit available.' },
+      { key: 'firstAidKitComplete',  label: 'Basic first aid kit is available, complete and accessible.' }
+    ]},
+    { panel: 2, title: 'Accident Reporting', items: [
+      { key: 'accidentReportingExplained', label: 'Accident reporting process explained.' }
+    ]},
+    // ── Panel 3: Household Hazards & Storage ────────────────────────────────
+    { panel: 3, title: 'Medication & Substance Storage', items: [
+      { key: 'medicationStoredSafely',   label: 'Prescription medication and drugs stored safely.' },
+      { key: 'medicationAndHazardsSafe', label: 'Prescription medication, drugs, alcohol, cleaning products and other hazardous items are safely stored.' },
+      { key: 'alcoholStored',            label: 'Alcohol stored appropriately.' }
+    ]},
+    { panel: 3, title: 'Food Safety', items: [
+      { key: 'foodHygieneAwareness', label: 'Food hygiene awareness discussed.' },
+      { key: 'foodPreparationClean', label: 'Food preparation areas are clean and homestay understands basic food hygiene when preparing meals for students.' }
+    ]},
+    { panel: 3, title: 'Hazard Identification & Online Safety', items: [
+      { key: 'hazardsIdentifiedControlled', label: 'Trip, slip, stair, balcony, window, garden, water-feature, animal or other household hazards are identified and controlled.' },
+      { key: 'wifiAndOnlineSafety',         label: 'Wi-Fi access, filtering/controls, age-appropriate boundaries and online safety expectations discussed.' },
+      { key: 'riskAssessmentCompleted',     label: 'Property risk assessment completed or updated during this visit and attached to the homestay file.' }
+    ]}
+  ];
+
+  var ALL_S11_ITEMS = [];
+  S11_SECTIONS.forEach(function(s) { s.items.forEach(function(i) { ALL_S11_ITEMS.push(i); }); });
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  function tallyItems(items) {
+    var yes = 0, no = 0, na = 0, blank = 0;
+    ALL_S11_ITEMS.forEach(function(i) {
+      var v = (items || {})[i.key] || '';
+      if (v === 'yes') yes++; else if (v === 'no') no++; else if (v === 'na') na++; else blank++;
+    });
+    return { yes: yes, no: no, na: na, blank: blank };
+  }
+
+  function formatDate(d) {
+    if (!d) return '—';
+    var p = new Date(d);
+    if (isNaN(p.getTime())) return d;
+    var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return p.getDate() + ' ' + M[p.getMonth()] + ' ' + p.getFullYear();
+  }
+
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── Page init ─────────────────────────────────────────────────────────────
+  var params = new URLSearchParams(window.location.search);
+  var hostId = params.get('id');
+  var host   = hostId ? getHostById(hostId) : null;
+
+  if (host) {
+    var fullName = host.firstName + ' ' + host.lastName;
+    document.title = fullName + ' — H&S Checklist — Oxford Guardians';
+    document.getElementById('chrome-route').textContent = 'Route /admin/host/' + host.id + '/hs-checklist';
+    document.getElementById('host-avatar').textContent  = (host.firstName.charAt(0) + host.lastName.charAt(0)).toUpperCase();
+    document.getElementById('toolbar-name').innerHTML   = esc(fullName) + ' <span style="color:#6b85a0;font-size:0.8em;font-weight:normal;margin-left:8px;">' + esc(host.id) + '</span>';
+    document.getElementById('toolbar-sub').textContent  = 'H&S Property Risk Assessment — Section 11';
+    document.getElementById('back-link').href           = 'host-compliance.html?id=' + host.id;
+    document.getElementById('field-host-name').value   = fullName;
+    document.getElementById('field-host-id').value     = host.id;
+  }
+
+  // Default date
+  (function() {
+    var t = new Date();
+    document.getElementById('field-date').value = t.getFullYear() + '-' +
+      String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+  })();
+
+  // ── Build S11 form sections (3 grouped panels) ───────────────────────────
+  (function() {
+    var container = document.getElementById('s11-form-content');
+    var PANEL_CONFIG = [
+      { panel: 1, title: 'Fire & Gas Safety',          desc: 'Smoke and CO detection, landlord gas certification, evacuation routes and fire suppression equipment.' },
+      { panel: 2, title: 'Electrical & General Safety', desc: 'Electrical condition, open fires and ignition sources, first aid provision, and accident reporting.' },
+      { panel: 3, title: 'Household Hazards & Storage', desc: 'Safe storage of medication and hazardous substances, food hygiene standards, and online safety expectations.' }
+    ];
+
+    PANEL_CONFIG.forEach(function(cfg) {
+      var panelDiv = document.createElement('div');
+      panelDiv.className = 'form-section';
+
+      var html = '<p class="form-section-title">' + esc(cfg.title) + '</p>' +
+                 '<p class="form-section-desc">' + esc(cfg.desc) + '</p>';
+
+      var panelSections = S11_SECTIONS.filter(function(s) { return s.panel === cfg.panel; });
+      panelSections.forEach(function(section, si) {
+        html += '<p class="form-subsection-title' + (si === 0 ? ' first' : '') + '">' + esc(section.title) + '</p>';
+        html += '<div class="s11-grid">';
+        section.items.forEach(function(item) {
+          var k = item.key;
+          html +=
+            '<div class="s11-row">' +
+              '<span class="s11-label">' + esc(item.label) + '</span>' +
+              '<div class="yn-group">' +
+                '<input type="radio" name="s11_' + k + '" id="s11_' + k + '_yes" value="yes" />' +
+                '<label for="s11_' + k + '_yes">Yes</label>' +
+                '<input type="radio" name="s11_' + k + '" id="s11_' + k + '_no"  value="no"  />' +
+                '<label for="s11_' + k + '_no">No</label>' +
+                '<input type="radio" name="s11_' + k + '" id="s11_' + k + '_na"  value="na"  />' +
+                '<label for="s11_' + k + '_na">N/A</label>' +
+              '</div>' +
+            '</div>';
+        });
+        html += '</div>';
+
+        // Inject gas cert upload directly after Gas & Fuel Safety rows (Panel 1 only)
+        if (cfg.panel === 1 && section.title === 'Gas & Fuel Safety') {
+          html +=
+            '<div class="file-upload-group">' +
+              '<label>Upload Gas Safety Certificate (PDF/Image)</label>' +
+              '<input type="file" id="gasCertUpload" accept="application/pdf,image/*" />' +
+            '</div>';
+        }
+      });
+
+      panelDiv.innerHTML = html;
+      container.appendChild(panelDiv);
+    });
+  })();
+
+  // ── Hazard builder ────────────────────────────────────────────────────────
+  function ensureNoHazardsMsg() {
+    var tbody = document.getElementById('hazard-rows');
+    if (!tbody.querySelector('tr:not(#no-hazards-row)')) {
+      if (!document.getElementById('no-hazards-row')) {
+        var tr = document.createElement('tr');
+        tr.id = 'no-hazards-row';
+        tr.innerHTML = '<td colspan="7" class="no-hazards-msg">No hazards added yet — click "Add Identified Hazard" to record one.</td>';
+        tbody.appendChild(tr);
+      }
+    }
+  }
+
+  function addHazardRow(h) {
+    h = h || {};
+    var noMsg = document.getElementById('no-hazards-row');
+    if (noMsg) noMsg.remove();
+    var row = document.createElement('tr');
+    row.innerHTML =
+      '<td><input type="text"  class="hz-hazard"  value="' + esc(h.hazard  || '') + '" placeholder="Describe hazard…" /></td>' +
+      '<td><input type="text"  class="hz-control" value="' + esc(h.control || '') + '" placeholder="Existing control…" /></td>' +
+      '<td><input type="text"  class="hz-action"  value="' + esc(h.action  || '') + '" placeholder="Action required…" /></td>' +
+      '<td><input type="text"  class="hz-owner"   value="' + esc(h.owner   || '') + '" placeholder="Owner…" /></td>' +
+      '<td><input type="date"  class="hz-due"     value="' + esc(h.dueDate || '') + '" /></td>' +
+      '<td style="text-align:center;"><input type="checkbox" class="hz-closed"' + (h.closed ? ' checked' : '') + ' /></td>' +
+      '<td><button type="button" class="btn-remove-hazard" title="Remove row">&times;</button></td>';
+    row.querySelector('.btn-remove-hazard').addEventListener('click', function() {
+      row.remove();
+      ensureNoHazardsMsg();
+    });
+    document.getElementById('hazard-rows').appendChild(row);
+  }
+
+  function collectHazards() {
+    var hazards = [];
+    document.querySelectorAll('#hazard-rows tr:not(#no-hazards-row)').forEach(function(row) {
+      var hazard = row.querySelector('.hz-hazard').value.trim();
+      if (hazard) {
+        hazards.push({
+          hazard:  hazard,
+          control: row.querySelector('.hz-control').value.trim(),
+          action:  row.querySelector('.hz-action').value.trim(),
+          owner:   row.querySelector('.hz-owner').value.trim(),
+          dueDate: row.querySelector('.hz-due').value,
+          closed:  row.querySelector('.hz-closed').checked
+        });
+      }
+    });
+    return hazards;
+  }
+
+  document.getElementById('add-hazard-btn').addEventListener('click', function() { addHazardRow(); });
+
+  // ── View switching ────────────────────────────────────────────────────────
+  function showForm() {
+    document.getElementById('list-view').style.display         = 'none';
+    document.getElementById('form-view').style.display         = '';
+    document.getElementById('btn-new-assessment').style.display = 'none';
+    document.getElementById('btn-cancel-form').style.display    = '';
+    // Reset fields
+    document.getElementById('field-staff').value    = '';
+    document.getElementById('field-gas-cert').value = '';
+    document.getElementById('field-notes').value    = '';
+    document.getElementById('field-visit-type').selectedIndex = 0;
+    document.getElementById('gasCertUpload').value      = '';
+    document.getElementById('hazardPhotosUpload').value = '';
+    ALL_S11_ITEMS.forEach(function(item) {
+      document.querySelectorAll('input[name="s11_' + item.key + '"]').forEach(function(r) { r.checked = false; });
+    });
+    document.getElementById('hazard-rows').innerHTML =
+      '<tr id="no-hazards-row"><td colspan="7" class="no-hazards-msg">No hazards added yet — click "Add Identified Hazard" to record one.</td></tr>';
+    var t = new Date();
+    document.getElementById('field-date').value = t.getFullYear() + '-' +
+      String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+    document.getElementById('form-view').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showList() {
+    document.getElementById('form-view').style.display         = 'none';
+    document.getElementById('list-view').style.display         = '';
+    document.getElementById('btn-new-assessment').style.display = '';
+    document.getElementById('btn-cancel-form').style.display    = 'none';
+    renderListView();
+  }
+
+  document.getElementById('btn-new-assessment').addEventListener('click', showForm);
+  document.getElementById('btn-cancel-form').addEventListener('click', showList);
+  document.getElementById('form-cancel-btn').addEventListener('click', showList);
+
+  // ── Build checklist display card ──────────────────────────────────────────
+  function buildChecklistCard(cl) {
+    var tally    = tallyItems(cl.items);
+    var hasFlags = tally.no > 0;
+    var badge    = hasFlags
+      ? '<span class="badge red"   style="font-size:0.74rem;">Review Required</span>'
+      : '<span class="badge green" style="font-size:0.74rem;">Pass</span>';
+
+    var s11Html = S11_SECTIONS.map(function(section) {
+      var rows = section.items.map(function(item) {
+        var v  = (cl.items || {})[item.key] || '';
+        var bc = v === 'yes' ? 'yes' : v === 'no' ? 'no' : v === 'na' ? 'na' : 'blank';
+        var bl = v === 'yes' ? 'Yes' : v === 'no' ? 'No'  : v === 'na' ? 'N/A' : '—';
+        return '<div class="s11-detail-row">' +
+          '<span class="s11-badge ' + bc + '">' + bl + '</span>' +
+          '<span>' + esc(item.label) + '</span>' +
+        '</div>';
+      }).join('');
+      return '<div class="s11-detail-section">' +
+        '<p class="s11-detail-title">' + esc(section.title) + '</p>' +
+        '<div class="s11-detail-grid">' + rows + '</div>' +
+      '</div>';
+    }).join('');
+
+    var hazardHtml = '';
+    if (cl.hazards && cl.hazards.length > 0) {
+      var hRows = cl.hazards.map(function(h) {
+        return '<tr' + (h.closed ? ' class="closed-row"' : '') + '>' +
+          '<td>' + esc(h.hazard)  + '</td>' +
+          '<td>' + esc(h.control) + '</td>' +
+          '<td>' + esc(h.action)  + '</td>' +
+          '<td>' + esc(h.owner)   + '</td>' +
+          '<td>' + (h.dueDate ? formatDate(h.dueDate) : '—') + '</td>' +
+          '<td style="text-align:center;">' + (h.closed ? '&#10003;' : '') + '</td>' +
+        '</tr>';
+      }).join('');
+      hazardHtml = '<div>' +
+        '<p class="s11-detail-title" style="margin-bottom:8px;">Identified Hazards (' + cl.hazards.length + ')</p>' +
+        '<table class="hazard-display-table">' +
+          '<thead><tr><th>Hazard</th><th>Control</th><th>Action</th><th>Owner</th><th>Due</th><th style="text-align:center;">Closed</th></tr></thead>' +
+          '<tbody>' + hRows + '</tbody>' +
+        '</table>' +
+      '</div>';
+    }
+
+    var notesHtml = cl.notes
+      ? '<div><p class="s11-detail-title" style="margin-bottom:6px;">Notes</p><p class="notes-box">' + esc(cl.notes) + '</p></div>'
+      : '';
+
+    var attachLink = 'display:inline-flex;align-items:center;gap:5px;padding:5px 13px;' +
+      'border:1px solid #d5dce8;border-radius:7px;font-family:\'Outfit\',sans-serif;' +
+      'font-size:0.78rem;font-weight:600;color:#2a6096;background:#f0f6ff;' +
+      'text-decoration:none;white-space:nowrap;margin-right:8px;margin-bottom:6px;';
+    var attachmentsHtml = '';
+    if (cl.gasCertPath) {
+      attachmentsHtml += '<a href="' + esc(cl.gasCertPath) + '" target="_blank" rel="noopener noreferrer" style="' + attachLink + '">&#128196; View Gas Safety Certificate</a>';
+    }
+    if (cl.hazardPhotos && cl.hazardPhotos.length > 0) {
+      cl.hazardPhotos.forEach(function(photo, i) {
+        attachmentsHtml += '<a href="' + esc(photo) + '" target="_blank" rel="noopener noreferrer" style="' + attachLink + '">&#128247; Hazard Photo ' + (i + 1) + '</a>';
+      });
+    }
+    var attachmentsSection = attachmentsHtml
+      ? '<div><p class="s11-detail-title" style="margin-bottom:8px;">Attachments</p><div style="display:flex;flex-wrap:wrap;">' + attachmentsHtml + '</div></div>'
+      : '';
+
+    var pillsHtml =
+      '<span class="cc-pill"><span class="dot dot-green"></span>' + tally.yes + ' Yes</span>' +
+      (tally.no    > 0 ? '<span class="cc-pill"><span class="dot dot-red"></span>'  + tally.no  + ' No</span>'           : '') +
+      (tally.na    > 0 ? '<span class="cc-pill"><span class="dot dot-grey"></span>' + tally.na  + ' N/A</span>'          : '') +
+      (tally.blank > 0 ? '<span class="cc-pill"><span class="dot dot-grey"></span>' + tally.blank + ' not answered</span>' : '') +
+      (cl.hazards && cl.hazards.length > 0
+        ? '<span class="cc-pill" style="margin-left:auto;"><span class="dot dot-red"></span>' + cl.hazards.length + ' hazard' + (cl.hazards.length === 1 ? '' : 's') + ' recorded</span>'
+        : '');
+
+    return '<div class="checklist-card">' +
+      '<div class="cc-header">' +
+        '<div>' +
+          '<p class="cc-title">' + esc(cl.visitType || 'H&S Assessment') + '</p>' +
+          '<p class="cc-meta">Assessed by <strong>' + esc(cl.assessedBy || '—') + '</strong>' +
+            (cl.gasCertRef ? ' &nbsp;·&nbsp; Gas cert: ' + esc(cl.gasCertRef) : '') +
+          '</p>' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:10px;">' + badge + '<span class="cc-date">' + esc(formatDate(cl.date)) + '</span></div>' +
+      '</div>' +
+      '<div class="cc-summary">' + pillsHtml + '</div>' +
+      '<details>' +
+        '<summary>View full assessment</summary>' +
+        '<div class="cc-detail">' + s11Html + hazardHtml + notesHtml + attachmentsSection + '</div>' +
+      '</details>' +
+    '</div>';
+  }
+
+  // ── Render list view ──────────────────────────────────────────────────────
+  function renderListView() {
+    var checklists  = hostId ? getHsChecklistsForHost(hostId) : [];
+    var container   = document.getElementById('checklist-cards');
+    var metricsEl   = document.getElementById('metrics-strip');
+
+    if (checklists.length === 0) {
+      metricsEl.style.display = 'none';
+      container.innerHTML =
+        '<div class="empty-state">' +
+          '<h3>No assessments recorded yet</h3>' +
+          '<p>Complete a Health &amp; Safety property assessment and it will appear here as a permanent record.</p>' +
+          '<button type="button" class="button" onclick="showForm()" style="padding:10px 22px;border:1px solid #0f2340;border-radius:8px;font-family:\'Outfit\',sans-serif;font-size:0.9rem;font-weight:600;">Start First Assessment</button>' +
+        '</div>';
+    } else {
+      metricsEl.style.display = '';
+      var latest = checklists[0];
+      var tally  = tallyItems(latest.items);
+      var flags  = tally.no > 0;
+      document.getElementById('metric-total').textContent       = checklists.length;
+      document.getElementById('metric-latest-date').textContent = formatDate(latest.date);
+      document.getElementById('metric-latest-by').textContent   = 'By ' + (latest.assessedBy || '—');
+      document.getElementById('metric-status').textContent      = flags ? 'Review' : 'Pass';
+      document.getElementById('metric-status').style.color      = flags ? '#dc2626' : '#16a34a';
+      document.getElementById('metric-status-sub').textContent  = flags
+        ? tally.no + ' item' + (tally.no === 1 ? '' : 's') + ' require attention'
+        : 'All items passed / N/A';
+      container.innerHTML = checklists.map(buildChecklistCard).join('');
+    }
+  }
+
+  // ── Form submission ───────────────────────────────────────────────────────
+  document.getElementById('hs-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var items = {};
+    ALL_S11_ITEMS.forEach(function(item) {
+      var checked = document.querySelector('input[name="s11_' + item.key + '"]:checked');
+      items[item.key] = checked ? checked.value : '';
+    });
+
+    var checklist = {
+      hostId:     hostId || '',
+      hostName:   host ? (host.firstName + ' ' + host.lastName) : '',
+      date:       document.getElementById('field-date').value,
+      assessedBy: document.getElementById('field-staff').value.trim(),
+      visitType:  document.getElementById('field-visit-type').value,
+      gasCertRef: document.getElementById('field-gas-cert').value.trim(),
+      items:      items,
+      hazards:    collectHazards(),
+      notes:      document.getElementById('field-notes').value.trim(),
+      createdAt:  new Date().toISOString()
+    };
+
+    function toBase64(file) {
+      return new Promise(function(resolve) {
+        var r = new FileReader();
+        r.onload = function(evt) { resolve(evt.target.result); };
+        r.readAsDataURL(file);
+      });
+    }
+
+    var gasCertFile      = document.getElementById('gasCertUpload').files[0];
+    var hazardPhotoFiles = Array.from(document.getElementById('hazardPhotosUpload').files);
+    var pending          = [];
+
+    if (gasCertFile) {
+      pending.push(toBase64(gasCertFile).then(function(r) { checklist.gasCertPath = r; }));
+    }
+    if (hazardPhotoFiles.length > 0) {
+      pending.push(
+        Promise.all(hazardPhotoFiles.map(toBase64)).then(function(arr) { checklist.hazardPhotos = arr; })
+      );
+    }
+
+    Promise.all(pending).then(function() {
+      saveHsChecklist(checklist);
+      showList();
+    });
+  });
+
+  // ── Boot ──────────────────────────────────────────────────────────────────
+  renderListView();
+</script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log Incident — Emergency — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/emergency/log</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Log Incident</strong></div>
+            <div class="nav-group"><div class="nav-label">Emergency</div><a class="nav-link" href="emergency-procedures.html">Emergency</a><a class="nav-link active" href="emergency-incident.html">Log incident</a><a class="nav-link" href="incident-logs.html">Incident logs</a><a class="nav-link" href="emergency-protocols.html">Protocols</a></div>
+            <div class="nav-group"><div class="nav-label">Operations</div><a class="nav-link" href="admin-dashboard.html">Dashboard</a><a class="nav-link" href="students.html">Students</a><a class="nav-link" href="homestays.html">Homestays</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Emergency incident log</span>
+                <h2>Record it now. Details fade fast.</h2>
+                <p>Log the incident as soon as safely possible. Accuracy matters more than polish — you can update the record later, but initial timestamps and facts are critical for accountability.</p>
+              </div>
+            </div>
+            <form id="incident-form">
+              <div class="card">
+                <h4>Incident details</h4>
+                <div class="form-grid">
+                  <div>
+                    <label>Incident type</label>
+                    <select id="f-type" required>
+                      <option value="">— Select type —</option>
+                      <option>Medical emergency</option>
+                      <option>Injury</option>
+                      <option>Missing student</option>
+                      <option>Safeguarding concern</option>
+                      <option>Travel disruption</option>
+                      <option>Homestay emergency</option>
+                      <option>Death or serious harm</option>
+                      <option>Pandemic/outbreak</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Severity</label>
+                    <select id="f-severity" required>
+                      <option value="">— Select severity —</option>
+                      <option>Minor — no lasting impact</option>
+                      <option>Moderate — required intervention</option>
+                      <option>Serious — significant harm or risk</option>
+                      <option>Critical — life-threatening or fatal</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Date and time</label>
+                    <input type="datetime-local" id="f-datetime" required />
+                  </div>
+                  <div>
+                    <label>Reported by</label>
+                    <input type="text" id="f-reported-by" placeholder="e.g. Priya Shah" required />
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <h4>People involved</h4>
+                <div class="form-grid">
+                  <div>
+                    <label>Student</label>
+                    <select id="f-student">
+                      <option value="">— Select student —</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Homestay host (if applicable)</label>
+                    <select id="f-host">
+                      <option value="">— None —</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Driver (if applicable)</label>
+                    <select id="f-driver">
+                      <option value="">— None —</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>External actors</label>
+                    <input type="text" id="f-external-actors" placeholder="e.g. Police, hospital staff, airline" />
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <h4>What happened</h4>
+                <div class="form-grid">
+                  <div class="form-span-2">
+                    <label>Description of incident</label>
+                    <textarea class="textarea-box" rows="4" id="f-description" required placeholder="Describe what happened — include timeline and key facts"></textarea>
+                  </div>
+                  <div class="form-span-2">
+                    <label>Location</label>
+                    <input type="text" id="f-location" placeholder="e.g. Heathrow Terminal 5 arrivals" />
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <h4>Response and actions</h4>
+                <div class="form-grid">
+                  <div class="form-span-2">
+                    <label>Immediate action taken</label>
+                    <textarea class="textarea-box" rows="3" id="f-action-taken" placeholder="List actions taken in order"></textarea>
+                  </div>
+                  <div>
+                    <label>Response time</label>
+                    <input type="text" id="f-response-time" placeholder="e.g. 2 minutes" />
+                  </div>
+                  <div>
+                    <label>Primary responder</label>
+                    <input type="text" id="f-responder" placeholder="e.g. Priya Shah" />
+                  </div>
+                  <div class="form-span-2">
+                    <label>Escalations</label>
+                    <textarea class="textarea-box" rows="2" id="f-escalations" placeholder="Who was notified and when"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <h4>Outcome and follow-up</h4>
+                <div class="form-grid">
+                  <div>
+                    <label>Current status</label>
+                    <select id="f-status">
+                      <option>Open — still in progress</option>
+                      <option>Resolved — no further action</option>
+                      <option>Resolved — follow-up scheduled</option>
+                      <option>Escalated — external involvement</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Resolution time</label>
+                    <input type="text" id="f-resolution-time" placeholder="e.g. 2 hours 15 minutes" />
+                  </div>
+                  <div class="form-span-2">
+                    <label>Outcome summary</label>
+                    <textarea class="textarea-box" rows="2" id="f-outcome" placeholder="Final outcome and current state"></textarea>
+                  </div>
+                  <div class="form-span-2">
+                    <label>Lessons learned / process improvement</label>
+                    <textarea class="textarea-box" rows="2" id="f-lessons" placeholder="What could be improved for next time"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="action-row">
+                <button type="submit" class="button">Save incident record</button>
+                <a class="button-alt" href="emergency-procedures.html">Cancel</a>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script>
+      (function () {
+        // Populate student dropdown
+        var studentSelect = document.getElementById('f-student');
+        OG_DB.getAllStudents().forEach(function (s) {
+          var opt = document.createElement('option');
+          opt.value = s.id;
+          opt.textContent = s.firstName + ' ' + s.lastName + ' (' + s.id + ')';
+          studentSelect.appendChild(opt);
+        });
+
+        // Populate host dropdown
+        var hostSelect = document.getElementById('f-host');
+        OG_DB.getAllHosts().forEach(function (h) {
+          var opt = document.createElement('option');
+          opt.value = h.id;
+          opt.textContent = h.firstName + ' ' + h.lastName;
+          hostSelect.appendChild(opt);
+        });
+
+        // Populate driver dropdown
+        var driverSelect = document.getElementById('f-driver');
+        OG_DB.getAllDrivers().forEach(function (d) {
+          var opt = document.createElement('option');
+          opt.value = d.id;
+          opt.textContent = d.firstName + ' ' + d.lastName;
+          driverSelect.appendChild(opt);
+        });
+
+        // Set default datetime to now
+        var now = new Date();
+        var pad = function (n) { return String(n).padStart(2, '0'); };
+        document.getElementById('f-datetime').value =
+          now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) +
+          'T' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+
+        // Form submit handler
+        document.getElementById('incident-form').addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          var studentOpt = studentSelect.options[studentSelect.selectedIndex];
+          var hostOpt = hostSelect.options[hostSelect.selectedIndex];
+          var driverOpt = driverSelect.options[driverSelect.selectedIndex];
+
+          var incident = {
+            id: OG_DB.generateIncidentId(),
+            type: document.getElementById('f-type').value,
+            severity: document.getElementById('f-severity').value,
+            dateTime: document.getElementById('f-datetime').value,
+            reportedBy: document.getElementById('f-reported-by').value,
+            studentId: studentSelect.value,
+            studentName: studentSelect.value ? studentOpt.textContent.replace(/\s*\(.*\)/, '') : '',
+            hostId: hostSelect.value,
+            hostName: hostSelect.value ? hostOpt.textContent : '',
+            driverId: driverSelect.value,
+            driverName: driverSelect.value ? driverOpt.textContent : '',
+            externalActors: document.getElementById('f-external-actors').value,
+            description: document.getElementById('f-description').value,
+            location: document.getElementById('f-location').value,
+            actionTaken: document.getElementById('f-action-taken').value,
+            responseTime: document.getElementById('f-response-time').value,
+            primaryResponder: document.getElementById('f-responder').value,
+            escalations: document.getElementById('f-escalations').value,
+            status: document.getElementById('f-status').value,
+            resolutionTime: document.getElementById('f-resolution-time').value,
+            outcomeSummary: document.getElementById('f-outcome').value,
+            lessonsLearned: document.getElementById('f-lessons').value,
+            createdAt: new Date().toISOString()
+          };
+
+          OG_DB.saveIncident(incident);
+
+          if (incident.severity.includes('Serious') || incident.severity.includes('Critical')) {
+            var student = OG_DB.getStudentById(incident.studentId);
+            var parentName = student ? (student.parent1Name || 'Parent/Guardian') : 'Parent/Guardian';
+
+            OG_DB.saveParentLog({
+              parentName: parentName,
+              studentName: incident.studentName,
+              contactType: 'Emergency Notification',
+              date: incident.dateTime.split('T')[0],
+              summaryNotes: 'Automated log: Emergency incident (' + incident.type + ') triggered parent notification sequence.',
+              loggedAt: incident.createdAt
+            });
+          }
+
+          window.location.href = 'emergency-incident-success.html?id=' + incident.id;
+        });
+      })();
+    </script>
+  </body>
+</html>

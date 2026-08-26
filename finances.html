@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en-GB">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finances — Oxford Guardians Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <style>
+    /* ── Global colour overrides ── */
+    body,
+    .page,
+    .shell {
+      background: #f0f4f8 !important;
+      color: #0f2340 !important;
+    }
+
+    .app-frame {
+      background: #f8fafc !important;
+      border-color: #d5dce8 !important;
+      box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+    }
+
+    /* ── Chrome bar ── */
+    .chrome {
+      background: #e8eef6 !important;
+      border-bottom-color: #d5dce8 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding-right: 16px !important;
+    }
+
+    .chrome small {
+      color: #3b536e !important;
+    }
+
+    .dots span {
+      background: #7b9abf !important;
+    }
+
+    .chrome-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .chrome-nav-link {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: #3b536e;
+      text-decoration: none;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    .chrome-nav-link:hover {
+      background: rgba(15, 35, 64, 0.07);
+      color: #0f2340;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+    }
+
+    .brand {
+      border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .brand small {
+      color: #7fb3d3 !important;
+    }
+
+    .brand strong {
+      color: #e8f0fa !important;
+    }
+
+    .nav-label {
+      color: #7b9abf !important;
+    }
+
+    .nav-link {
+      color: #c8d8ee !important;
+      border-color: transparent !important;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.07) !important;
+      color: #e8f0fa !important;
+    }
+
+    .nav-link.active {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border-color: rgba(255, 255, 255, 0.14) !important;
+      color: #e8f0fa !important;
+      box-shadow: 0 0 10px rgba(127, 179, 211, 0.35), 0 0 3px rgba(255, 255, 255, 0.12) !important;
+    }
+
+    .nav-link-sub {
+      padding-left: 36px !important;
+      font-size: 0.85em !important;
+      opacity: 0.85;
+    }
+
+    /* ── Main ── */
+    .main {
+      background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+      overflow-y: auto;
+    }
+
+    h2,
+    h3,
+    h4 {
+      color: #0f2340 !important;
+    }
+
+    p {
+      color: #3b536e;
+    }
+
+    .eyebrow {
+      color: #2a6096 !important;
+    }
+
+    .toolbar p {
+      color: #3b536e !important;
+    }
+
+    /* ── Buttons ── */
+    .button {
+      background: #0f2340 !important;
+      border-color: #0f2340 !important;
+      color: #ffffff !important;
+    }
+
+    .button:hover {
+      opacity: 0.88;
+    }
+
+    .button-alt {
+      background: #ffffff !important;
+      border-color: #d5dce8 !important;
+      color: #0f2340 !important;
+    }
+
+    .button-alt:hover {
+      background: #edf2f8 !important;
+    }
+
+    /* ── 2×2 grid ── */
+    .finance-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 0 24px 28px;
+    }
+
+    /* ── Finance card ── */
+    .finance-card {
+      background: #ffffff;
+      border: 1px solid #d5dce8;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .finance-card-header {
+      background: #e8eef6;
+      border-bottom: 1px solid #d5dce8;
+      padding: 11px 16px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .finance-card-header h3 {
+      font-family: "Outfit", sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #0f2340 !important;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .finance-card-header span {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #6b85a0;
+    }
+
+    .finance-card-body {
+      padding: 0;
+      flex: 1;
+    }
+
+    /* ── Invoice rows ── */
+    .invoice-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 11px 16px;
+      border-bottom: 1px solid #edf2f8;
+      gap: 12px;
+    }
+
+    .invoice-row:last-child {
+      border-bottom: 0;
+    }
+
+    .invoice-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .invoice-info strong {
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #0f2340;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .invoice-info small {
+      display: block;
+      font-size: 0.76rem;
+      color: #6b85a0;
+      margin-top: 1px;
+    }
+
+    .invoice-amount {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .invoice-amount strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #0f2340;
+    }
+
+    .invoice-amount small {
+      display: block;
+      font-size: 0.73rem;
+      color: #9bafc4;
+      margin-top: 1px;
+    }
+
+    /* ── Due-date badge ── */
+    .due-soon {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.71rem;
+      font-weight: 700;
+      background: #fef3c7;
+      color: #92400e;
+      margin-top: 3px;
+    }
+
+    .due-overdue {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.71rem;
+      font-weight: 700;
+      background: #fee2e2;
+      color: #991b1b;
+      margin-top: 3px;
+    }
+
+    .due-ok {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.71rem;
+      font-weight: 700;
+      background: #d1fae5;
+      color: #065f46;
+      margin-top: 3px;
+    }
+
+    /* ── Budget alert card body ── */
+    .budget-body {
+      padding: 18px 18px 20px;
+    }
+
+    .budget-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 7px;
+    }
+
+    .budget-stat-label {
+      font-size: 0.8rem;
+      color: #6b85a0;
+      font-weight: 500;
+    }
+
+    .budget-stat-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #0f2340;
+    }
+
+    .budget-bar-track {
+      height: 10px;
+      border-radius: 999px;
+      background: #e8eef6;
+      overflow: hidden;
+      margin: 12px 0 14px;
+    }
+
+    .budget-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .budget-bar-fill.safe {
+      background: linear-gradient(90deg, #34d399, #059669);
+    }
+
+    .budget-bar-fill.warning {
+      background: linear-gradient(90deg, #fbbf24, #d97706);
+    }
+
+    .budget-bar-fill.danger {
+      background: linear-gradient(90deg, #f87171, #dc2626);
+    }
+
+    .budget-remaining {
+      text-align: center;
+      padding: 10px 0 2px;
+      border-top: 1px solid #edf2f8;
+      margin-top: 4px;
+    }
+
+    .budget-remaining-value {
+      font-family: "Outfit", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f2340;
+      display: block;
+    }
+
+    .budget-remaining-label {
+      font-size: 0.76rem;
+      color: #6b85a0;
+      font-weight: 500;
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* ── VAT label ── */
+    .vat-label {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.71rem;
+      font-weight: 700;
+      background: #ede9fe;
+      color: #5b21b6;
+      margin-top: 3px;
+    }
+
+    /* ── Upcoming tag ── */
+    .upcoming-label {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.71rem;
+      font-weight: 700;
+      background: #dbeafe;
+      color: #1e40af;
+      margin-top: 3px;
+    }
+
+    /* ── Empty state ── */
+    .empty-state {
+      padding: 28px 16px;
+      text-align: center;
+      color: #9bafc4;
+      font-size: 0.84rem;
+    }
+
+    /* ── Link pills ── */
+    .inline-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 24px 28px;
+    }
+
+    .link-pill {
+      background: #ffffff !important;
+      border: 1px solid #d5dce8 !important;
+      color: #0f2340 !important;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: background 0.13s, border-color 0.13s;
+    }
+
+    .link-pill:hover {
+      background: #e8eef6 !important;
+      border-color: #b0bfcf !important;
+    }
+
+    @media (max-width: 900px) {
+      .finance-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Student Held Funds banner ── */
+    .held-funds-banner {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      background: #ffffff;
+      border: 1px solid #d5dce8;
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 0 24px 20px;
+    }
+
+    .held-funds-banner h3 {
+      font-family: "Outfit", sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0f2340 !important;
+      margin: 0 0 4px;
+    }
+
+    .held-funds-banner h3 span {
+      font-weight: 500;
+      opacity: 0.7;
+      font-size: 0.85em;
+    }
+
+    .held-funds-banner p {
+      font-size: 0.84rem;
+      color: #6b85a0;
+      margin: 0;
+      max-width: 420px;
+    }
+
+    .held-funds-value-block {
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .held-funds-value {
+      font-family: "Outfit", sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #16532f;
+    }
+
+    .held-funds-sub {
+      font-size: 0.76rem;
+      color: #6b85a0;
+      margin-top: 2px;
+    }
+
+    @media (max-width: 760px) {
+      .held-funds-banner { flex-direction: column; align-items: flex-start; }
+      .held-funds-value-block { margin-left: 0; text-align: left; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <div class="app-frame">
+
+      <!-- Chrome bar -->
+      <div class="chrome">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <nav class="chrome-nav">
+          <a class="chrome-nav-link" href="admin-dashboard.html">Dashboard</a>
+          <a class="chrome-nav-link" href="notifications.html">Notifications</a>
+        </nav>
+      </div>
+
+      <div class="shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="brand">
+            <small>Oxford Guardians</small>
+            <strong>Finance Operations</strong>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Operations</div>
+            <a class="nav-link active" href="finances.html">Finances</a>
+            <a class="nav-link nav-link-sub" href="finances-tracker.html">Expenditure Tracker</a>
+            <a class="nav-link nav-link-sub" href="finances-archived.html" style="font-size: 0.8em !important; padding-left: 42px !important;">Archived Expenditure</a>
+            <a class="nav-link nav-link-sub" href="vat-reclamation.html" style="font-size: 0.8em !important; padding-left: 42px !important;">VAT Reclamation</a>
+            <a class="nav-link nav-link-sub" href="revenue.html">Revenue</a>
+            <a class="nav-link nav-link-sub" href="archived-revenue.html" style="font-size: 0.8em !important; padding-left: 42px !important;">Archived Revenue</a>
+            <a class="nav-link nav-link-sub" href="student-funds.html">Student Held Funds</a>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Compliance</div>
+            <a class="nav-link" href="compliance.html">AEGIS control room</a>
+          </div>
+        </aside>
+
+        <!-- Main content -->
+        <section class="main">
+
+          <!-- Toolbar -->
+          <div class="toolbar">
+            <div>
+              <span class="eyebrow">Finance management</span>
+              <h2>Budget, invoices, and upcoming expenditure.</h2>
+              <p>Track pending and paid invoices, monitor budget health, and plan ahead for known future costs — all in
+                one place.</p>
+            </div>
+          </div>
+
+          <!-- Student Held Funds banner -->
+          <div class="held-funds-banner">
+            <div>
+              <h3>Student Held Funds &amp; Pocket Money <span>(AEGIS 2.9.2)</span></h3>
+              <p>Total funds currently held in escrow on behalf of students across all active held-fund accounts.</p>
+            </div>
+            <div class="held-funds-value-block">
+              <div class="held-funds-value" id="held-funds-total">£0.00</div>
+              <div class="held-funds-sub" id="held-funds-sub">— accounts</div>
+            </div>
+            <a class="button-alt" href="student-funds.html">View Student Held Funds Register →</a>
+          </div>
+
+          <!-- 2×2 Finance grid -->
+          <div class="finance-grid">
+
+            <!-- TOP-LEFT: Invoices to Pay -->
+            <div class="finance-card">
+              <div class="finance-card-header">
+                <h3>Invoices to Pay</h3>
+                <span id="pending-count">—</span>
+              </div>
+              <div class="finance-card-body" id="pending-list">
+                <div class="empty-state">Loading…</div>
+              </div>
+            </div>
+
+            <!-- TOP-RIGHT: Finance Alert -->
+            <div class="finance-card">
+              <div class="finance-card-header">
+                <h3>Finance Alert</h3>
+                <span id="budget-pct-label">—</span>
+              </div>
+              <div class="finance-card-body budget-body" id="budget-body">
+                <div class="empty-state">Loading…</div>
+              </div>
+            </div>
+
+            <!-- BOTTOM-LEFT: Invoices Paid (VAT Reclaimable) -->
+            <div class="finance-card">
+              <div class="finance-card-header">
+                <h3>Invoices Paid <span style="font-size:0.8em;opacity:0.7;font-weight:500;">(VAT Reclaimable)</span>
+                </h3>
+                <span id="paid-count">—</span>
+              </div>
+              <div class="finance-card-body" id="paid-list">
+                <div class="empty-state">Loading…</div>
+              </div>
+            </div>
+
+            <!-- BOTTOM-RIGHT: Upcoming Revenue -->
+            <div class="finance-card">
+              <div class="finance-card-header">
+                <h3>Upcoming Revenue</h3>
+                <span id="upcoming-count">—</span>
+              </div>
+              <div class="finance-card-body" id="upcoming-list">
+                <div class="empty-state">Loading…</div>
+              </div>
+            </div>
+
+          </div><!-- /finance-grid -->
+
+
+        </section>
+      </div><!-- /shell -->
+    </div><!-- /app-frame -->
+  </main>
+
+  <script src="assets/finance-data.js"></script>
+  <script src="assets/db.js"></script>
+  <script>
+    function fmt(n) {
+      return '£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function formatGB(dateStr) {
+      if (!dateStr) return '';
+      var d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr;
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function dueBadge(dateStr) {
+      if (!dateStr) return '';
+      var due = new Date(dateStr);
+      var now = new Date();
+      var diff = (due - now) / (1000 * 60 * 60 * 24);
+      if (diff < 0) return '<span class="due-overdue">Overdue</span>';
+      if (diff <= 7) return '<span class="due-soon">Due ' + formatGB(dateStr) + '</span>';
+      return '<span class="due-ok">Due ' + formatGB(dateStr) + '</span>';
+    }
+
+    /* ── Pending invoices ── */
+    (function () {
+      var list = document.getElementById('pending-list');
+      var count = document.getElementById('pending-count');
+      var events = JSON.parse(localStorage.getItem('og_finance_events') || '[]');
+      var unpaid = events.filter(function(e) { return !e.archived && e.paid === false && e.deadline; });
+      unpaid.sort(function(a, b) { return new Date(a.deadline) - new Date(b.deadline); });
+      count.textContent = unpaid.length + ' pending';
+      unpaid = unpaid.slice(0, 4);
+      if (!unpaid.length) { list.innerHTML = '<div class="empty-state">No pending invoices.</div>'; return; }
+      list.innerHTML = unpaid.map(function (inv) {
+        return '<div class="invoice-row">' +
+          '<a href="finances-tracker.html?focus=' + (inv.id || '') + '" style="display:flex;width:100%;text-decoration:none;color:inherit;justify-content:space-between;align-items:flex-start;gap:12px;">' +
+          '<div class="invoice-info">' +
+          '<strong>' + (inv.providerId || 'No ID') + '</strong>' +
+          '<small>' + (inv.label || 'Unknown Service') + '</small>' +
+          dueBadge(inv.deadline) +
+          '</div>' +
+          '<div class="invoice-amount">' +
+          '<strong>' + fmt(inv.cost || 0) + '</strong>' +
+          '<small>' + (inv.deadline ? formatGB(inv.deadline) : '') + '</small>' +
+          '</div>' +
+          '</a>' +
+          '</div>';
+      }).join('');
+    }());
+
+    /* ── Budget alert ── */
+    (function () {
+      var body = document.getElementById('budget-body');
+      var pctLabel = document.getElementById('budget-pct-label');
+      var total = Number(localStorage.getItem('og_finance_budget')) || 0;
+      var events = JSON.parse(localStorage.getItem('og_finance_events') || '[]');
+      var activeEvents = events.filter(function(e) { return !e.archived; });
+      var spent = activeEvents.reduce(function(sum, e) { return sum + (Number(e.cost || e.totalCost || e.amount) || 0); }, 0);
+      var remaining = total - spent;
+      var pctLeft = total > 0 ? Math.round((remaining / total) * 100) : 0;
+      var barWidth = Math.min(100, (spent / total) * 100) || 0;
+      var fillClass = barWidth >= 90 ? 'danger' : barWidth >= 70 ? 'warning' : 'safe';
+
+      pctLabel.textContent = pctLeft + '% left of budget';
+
+      body.innerHTML =
+        '<div class="budget-stat"><span class="budget-stat-label">Total budget</span><span class="budget-stat-value">' + fmt(total) + '</span></div>' +
+        '<div class="budget-stat"><span class="budget-stat-label">Spent so far</span><span class="budget-stat-value">' + fmt(spent) + '</span></div>' +
+        '<div class="budget-bar-track"><div class="budget-bar-fill ' + fillClass + '" style="width:' + barWidth + '%"></div></div>' +
+        '<div class="budget-remaining">' +
+        '<span class="budget-remaining-value">' + fmt(remaining) + '</span>' +
+        '<span class="budget-remaining-label">remaining balance</span>' +
+        '</div>';
+    }());
+
+    /* ── Paid invoices ── */
+    (function () {
+      var list = document.getElementById('paid-list');
+      var count = document.getElementById('paid-count');
+      var events = JSON.parse(localStorage.getItem('og_finance_events') || '[]');
+      var paidEvents = events.filter(function(e) { return !e.archived && e.paid === true; });
+      paidEvents.sort(function(a, b) { return new Date(b.date || b.deadline) - new Date(a.date || a.deadline); });
+      count.textContent = paidEvents.length + ' paid';
+      paidEvents = paidEvents.slice(0, 4);
+      if (!paidEvents.length) { list.innerHTML = '<div class="empty-state">No paid invoices.</div>'; return; }
+      list.innerHTML = paidEvents.map(function (inv) {
+        var vatStr = inv.vat ? '£' + inv.vat + ' VAT' : '';
+        return '<div class="invoice-row">' +
+          '<a href="finances-tracker.html?focus=' + (inv.id || '') + '" style="display:flex;width:100%;text-decoration:none;color:inherit;justify-content:space-between;align-items:flex-start;gap:12px;">' +
+          '<div class="invoice-info">' +
+          '<strong>' + (inv.providerId || 'Provider') + ' (for ' + (inv.student || 'N/A') + ')</strong>' +
+          '<small>' + (inv.label || '') + '</small>' +
+          (vatStr ? '<span class="vat-label">' + vatStr + '</span>' : '') +
+          '</div>' +
+          '<div class="invoice-amount">' +
+          '<strong>' + fmt(inv.cost || 0) + '</strong>' +
+          '<small>' + formatGB(inv.date || inv.deadline || '') + '</small>' +
+          '</div>' +
+          '</a>' +
+          '</div>';
+      }).join('');
+    }());
+
+    /* ── Student Held Funds banner ── */
+    (function () {
+      var totalEl = document.getElementById('held-funds-total');
+      var subEl   = document.getElementById('held-funds-sub');
+      if (typeof getAllStudentHeldFunds !== 'function') return;
+
+      var studentIds = [];
+      getAllStudentHeldFunds().forEach(function (tx) {
+        if (tx.studentId && studentIds.indexOf(tx.studentId) === -1) studentIds.push(tx.studentId);
+      });
+
+      var totalHeld = 0;
+      var activeAccounts = 0;
+      studentIds.forEach(function (sid) {
+        var summary = getStudentFundSummary(sid);
+        if (summary.balanceHeld > 0) {
+          totalHeld += summary.balanceHeld;
+          activeAccounts++;
+        }
+      });
+
+      totalEl.textContent = fmt(totalHeld);
+      subEl.textContent = activeAccounts + ' active student account' + (activeAccounts === 1 ? '' : 's');
+    }());
+
+    /* ── Upcoming revenue ── */
+    (function () {
+      var list = document.getElementById('upcoming-list');
+      var count = document.getElementById('upcoming-count');
+      var revEvents = JSON.parse(localStorage.getItem('og_revenue_events') || '[]');
+      var upcoming = revEvents.filter(function(e) { return !e.archived && !e.datePayment && e.date; });
+      upcoming.sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
+      count.textContent = upcoming.length + ' items';
+      upcoming = upcoming.slice(0, 4);
+      if (!upcoming.length) { list.innerHTML = '<div class="empty-state">No upcoming revenue.</div>'; return; }
+      list.innerHTML = upcoming.map(function (item) {
+        return '<div class="invoice-row">' +
+          '<a href="revenue.html?focus=' + (item.id || '') + '" style="display:flex;width:100%;text-decoration:none;color:inherit;justify-content:space-between;align-items:flex-start;gap:12px;">' +
+          '<div class="invoice-info">' +
+          '<strong>' + (item.providerId || 'No ID') + '</strong>' +
+          '<small>' + (item.label || 'Unknown Service') + '</small>' +
+          dueBadge(item.date) +
+          '</div>' +
+          '<div class="invoice-amount">' +
+          '<strong>' + fmt(item.cost || 0) + '</strong>' +
+          '<small>' + (item.date ? formatGB(item.date) : '') + '</small>' +
+          '</div>' +
+          '</a>' +
+          '</div>';
+      }).join('');
+    }());
+  </script>
+
+</body>
+
+</html>

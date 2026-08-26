@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Log Accident &amp; Incident — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      .checkbox-group { display:flex; flex-direction:column; gap:8px; margin-top:4px; }
+      .checkbox-group label { display:flex; align-items:center; gap:8px; font-weight:500; font-size:0.9rem; color:#0f2340; text-transform:none; letter-spacing:0; }
+      .checkbox-group input[type="checkbox"] { width:16px; height:16px; accent-color:#0f2340; flex-shrink:0; }
+      #medication-details-row { display:none; }
+      .role-badge { display:inline-block; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px; text-transform:uppercase; margin-left:6px; }
+      .hint { font-size:0.8rem; color:#6b85a0; margin-top:4px; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="section" style="padding:28px; max-width:860px; margin:0 auto;">
+        <span class="eyebrow">Accident &amp; Incident Book</span>
+        <h2 id="page-heading">Record an Incident or Accident</h2>
+        <p class="lead">AEGIS Standard 5.10.1.2: Mandatory accident and incident register for all recordable events involving students, homestays, staff, and drivers.</p>
+
+        <form class="form-grid" id="incident-form" style="margin-top:20px;">
+          <div>
+            <label for="field-affected-role">Affected Role *</label>
+            <select id="field-affected-role">
+              <option value="Student" selected>Student</option>
+              <option value="Host">Homestay Host</option>
+              <option value="Staff">Staff Member</option>
+              <option value="Driver">Driver / Transport</option>
+              <option value="Other">Other / Visitor</option>
+            </select>
+          </div>
+
+          <div id="person-select-container">
+            <label for="field-person" id="person-label">Student Involved *</label>
+            <select id="field-person">
+              <option value="">— Select student —</option>
+            </select>
+            <input type="text" id="field-custom-person" placeholder="Enter person name…" style="display:none; margin-top:6px;" />
+          </div>
+
+          <div id="homestay-row">
+            <label for="field-homestay">Associated Homestay</label>
+            <select id="field-homestay">
+              <option value="">— Optional / Not Applicable —</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="field-location">Location of Incident *</label>
+            <input type="text" id="field-location" placeholder="e.g. Homestay Kitchen, Office, Oxford Station Drop-off" />
+          </div>
+
+          <div>
+            <label for="field-date">Incident Date *</label>
+            <input type="date" id="field-date" />
+          </div>
+
+          <div>
+            <label for="field-time">Incident Time</label>
+            <input type="time" id="field-time" />
+          </div>
+
+          <div>
+            <label for="field-type">Incident Category *</label>
+            <select id="field-type">
+              <option value="Minor injury / Accident" selected>Minor injury / Accident</option>
+              <option value="Slip / Trip / Fall">Slip / Trip / Fall</option>
+              <option value="Illness episode">Illness episode</option>
+              <option value="Allergic reaction">Allergic reaction</option>
+              <option value="Medicine administration">Medicine administration</option>
+              <option value="Road Traffic / Travel Incident">Road Traffic / Travel Incident</option>
+              <option value="Near-miss / Hazard noticed">Near-miss / Hazard noticed</option>
+              <option value="Property damage / Breakage">Property damage / Breakage</option>
+              <option value="Behavioral / Welfare concern">Behavioral / Welfare concern</option>
+              <option value="Safeguarding / Escalation">Safeguarding / Escalation</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="field-severity">Severity Level</label>
+            <select id="field-severity">
+              <option value="Minor — first aid only" selected>Minor — first aid only</option>
+              <option value="Moderate — monitoring needed">Moderate — monitoring needed</option>
+              <option value="Significant — medical attention required">Significant — medical attention required</option>
+              <option value="Serious — emergency services involved">Serious — emergency services involved</option>
+            </select>
+          </div>
+
+          <div class="form-span-2" id="medication-details-row">
+            <label for="field-medication">Medication Details (AEGIS Standard 3.4.4)</label>
+            <textarea class="textarea-box" id="field-medication" style="min-height:60px;" placeholder="Medicine name, dosage, time administered, prescribing physician, and supervising adult…"></textarea>
+          </div>
+
+          <div class="form-span-2">
+            <label for="field-description">Detailed Description of What Happened *</label>
+            <textarea class="textarea-box" id="field-description" placeholder="Describe the incident, circumstances, and any witnesses in full…"></textarea>
+          </div>
+
+          <div class="form-span-2">
+            <label for="field-action">Action Taken &amp; First Aid Treatment *</label>
+            <textarea class="textarea-box" id="field-action" style="min-height:70px;" placeholder="Details of first aid treatment, medication administered, or immediate preventative measures…"></textarea>
+          </div>
+
+          <div>
+            <label for="field-first-aider">First Aider / Responder Name</label>
+            <input type="text" id="field-first-aider" placeholder="Name of person administering first aid" />
+          </div>
+
+          <div>
+            <label for="field-reported-by">Reported By</label>
+            <input type="text" id="field-reported-by" placeholder="e.g. Eleanor Ashworth (Host Carer)" />
+          </div>
+
+          <div>
+            <label for="field-hospital">Hospital / A&amp;E Attended?</label>
+            <select id="field-hospital">
+              <option value="no" selected>No — managed on site</option>
+              <option value="yes">Yes — attended hospital / walk-in clinic</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="field-riddor">RIDDOR Reportable (HSE)?</label>
+            <select id="field-riddor">
+              <option value="no" selected>No</option>
+              <option value="yes">Yes — reportable to HSE RIDDOR</option>
+            </select>
+            <div class="hint">UK statutory reporting for major fractures, hospitalisation &gt;24h, or 7+ day incapacitation.</div>
+          </div>
+
+          <div>
+            <label for="field-status">Incident Status</label>
+            <select id="field-status">
+              <option value="Resolved" selected>Resolved</option>
+              <option value="Pending">Pending — follow-up monitoring needed</option>
+              <option value="Escalated">Escalated to DSL</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="field-logged-by">Logged By (Staff Officer)</label>
+            <input type="text" id="field-logged-by" value="Jay Ray (DSL)" placeholder="Staff member recording this entry" />
+          </div>
+
+          <div class="form-span-2">
+            <label>Notifications &amp; Multi-Agency Informing</label>
+            <div class="checkbox-group">
+              <label><input type="checkbox" id="notif-parents" /> Parents / emergency contacts informed</label>
+              <label><input type="checkbox" id="notif-school" /> School pastoral / medical lead informed</label>
+              <label><input type="checkbox" id="notif-dsl" /> Designated Safeguarding Lead (DSL) notified</label>
+              <label><input type="checkbox" id="notif-host" /> Homestay host notified</label>
+            </div>
+          </div>
+        </form>
+
+        <div class="action-row" style="margin-top:24px;">
+          <a class="button-alt" href="homestay-incidents.html">Cancel</a>
+          <button class="button" id="btn-save-incident" type="button">Save Incident Record</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      // ── Edit mode detection ───────────────────────────────────────────────────
+      var urlParams = new URLSearchParams(window.location.search);
+      var editId = urlParams.get('id');
+      var existingIncident = editId ? OG_DB.getIncidentById(editId) : null;
+
+      if (existingIncident) {
+        document.getElementById('page-title').textContent   = 'Edit Incident ' + editId + ' — Oxford Guardians';
+        document.getElementById('page-heading').textContent = 'Edit Incident Record (' + editId + ')';
+      } else {
+        document.getElementById('field-date').value = new Date().toISOString().slice(0, 10);
+      }
+
+      // ── Role and Entity Dropdown Setup ────────────────────────────────────────
+      var roleSelect      = document.getElementById('field-affected-role');
+      var personLabel     = document.getElementById('person-label');
+      var personSelect    = document.getElementById('field-person');
+      var customPerson    = document.getElementById('field-custom-person');
+      var homestaySelect  = document.getElementById('field-homestay');
+      var homestayRow     = document.getElementById('homestay-row');
+
+      // Populate Homestay Dropdown
+      OG_DB.getAllHosts().forEach(function(h) {
+        var opt = document.createElement('option');
+        opt.value       = h.id;
+        opt.textContent = (h.familyName || h.lastName || h.id) + ' (' + (h.city || 'Oxford') + ')';
+        homestaySelect.appendChild(opt);
+      });
+
+      function updatePersonOptions(selectedRole, currentPersonId, currentPersonName) {
+        personSelect.innerHTML = '';
+        customPerson.style.display = 'none';
+        personSelect.style.display = 'block';
+
+        if (selectedRole === 'Student') {
+          personLabel.textContent = 'Student Involved *';
+          var defaultOpt = document.createElement('option');
+          defaultOpt.value = '';
+          defaultOpt.textContent = '— Select student —';
+          personSelect.appendChild(defaultOpt);
+
+          OG_DB.getAllStudents().forEach(function(s) {
+            var opt = document.createElement('option');
+            opt.value = s.id;
+            opt.textContent = s.firstName + ' ' + s.lastName + ' (' + (s.yearGroup || 'Student') + ')';
+            if (currentPersonId === s.id || currentPersonName === (s.firstName + ' ' + s.lastName)) {
+              opt.selected = true;
+            }
+            personSelect.appendChild(opt);
+          });
+          homestayRow.style.display = 'block';
+
+        } else if (selectedRole === 'Host') {
+          personLabel.textContent = 'Host Carer Involved *';
+          var defaultOpt = document.createElement('option');
+          defaultOpt.value = '';
+          defaultOpt.textContent = '— Select host carer —';
+          personSelect.appendChild(defaultOpt);
+
+          OG_DB.getAllHosts().forEach(function(h) {
+            var opt = document.createElement('option');
+            opt.value = h.id;
+            opt.textContent = (h.primaryCarer || h.familyName || h.id);
+            if (currentPersonId === h.id || currentPersonName === (h.primaryCarer || h.familyName)) {
+              opt.selected = true;
+            }
+            personSelect.appendChild(opt);
+          });
+          homestayRow.style.display = 'block';
+
+        } else if (selectedRole === 'Staff') {
+          personLabel.textContent = 'Staff Member Involved *';
+          var defaultOpt = document.createElement('option');
+          defaultOpt.value = '';
+          defaultOpt.textContent = '— Select staff member —';
+          personSelect.appendChild(defaultOpt);
+
+          var staffList = (OG_DB.getAllStaff && OG_DB.getAllStaff()) || [
+            { id: 'STF001', name: 'Jay Ray (DSL / Operations Lead)' },
+            { id: 'STF002', name: 'Sarah Jenkins (Operations Officer)' },
+            { id: 'STF003', name: 'Michael Thorne (Student Welfare)' }
+          ];
+
+          staffList.forEach(function(st) {
+            var opt = document.createElement('option');
+            opt.value = st.id;
+            opt.textContent = st.name || (st.firstName + ' ' + st.lastName);
+            if (currentPersonId === st.id || currentPersonName === (st.name || (st.firstName + ' ' + st.lastName))) {
+              opt.selected = true;
+            }
+            personSelect.appendChild(opt);
+          });
+          homestayRow.style.display = 'none';
+
+        } else if (selectedRole === 'Driver') {
+          personLabel.textContent = 'Driver Involved *';
+          var defaultOpt = document.createElement('option');
+          defaultOpt.value = '';
+          defaultOpt.textContent = '— Select driver —';
+          personSelect.appendChild(defaultOpt);
+
+          var driversList = (OG_DB.getAllDrivers && OG_DB.getAllDrivers()) || [
+            { id: 'DRV001', name: 'David Palmer (Approved Driver)' },
+            { id: 'DRV002', name: 'Marcus Vance (Approved Driver)' }
+          ];
+
+          driversList.forEach(function(drv) {
+            var opt = document.createElement('option');
+            opt.value = drv.id;
+            opt.textContent = drv.name || (drv.firstName + ' ' + drv.lastName);
+            if (currentPersonId === drv.id || currentPersonName === (drv.name || (drv.firstName + ' ' + drv.lastName))) {
+              opt.selected = true;
+            }
+            personSelect.appendChild(opt);
+          });
+          homestayRow.style.display = 'none';
+
+        } else {
+          personLabel.textContent = 'Person Involved *';
+          personSelect.style.display = 'none';
+          customPerson.style.display = 'block';
+          customPerson.value = currentPersonName || '';
+          homestayRow.style.display = 'block';
+        }
+      }
+
+      roleSelect.addEventListener('change', function() {
+        updatePersonOptions(this.value);
+      });
+
+      // ── Show medication details field when type is medicine administration ────
+      var typeSelect = document.getElementById('field-type');
+      var medRow     = document.getElementById('medication-details-row');
+      typeSelect.addEventListener('change', function() {
+        medRow.style.display = this.value === 'Medicine administration' ? 'block' : 'none';
+      });
+
+      // ── Pre-fill form in edit mode ────────────────────────────────────────────
+      if (existingIncident) {
+        var inc = existingIncident;
+        roleSelect.value = inc.affectedRole || 'Student';
+        updatePersonOptions(roleSelect.value, inc.personId || inc.studentId || inc.hostId, inc.personName || inc.studentName || inc.hostName);
+
+        if (inc.hostId) {
+          homestaySelect.value = inc.hostId;
+        }
+
+        document.getElementById('field-location').value    = inc.location || '';
+        document.getElementById('field-date').value        = inc.date || '';
+        document.getElementById('field-time').value        = inc.time || '';
+        document.getElementById('field-type').value        = inc.incidentType || 'Minor injury / Accident';
+        document.getElementById('field-severity').value    = inc.severity || 'Minor — first aid only';
+        document.getElementById('field-description').value = inc.description || '';
+        document.getElementById('field-action').value      = inc.actionTaken || '';
+        document.getElementById('field-first-aider').value = inc.firstAider || '';
+        document.getElementById('field-reported-by').value = inc.reportedBy || '';
+        document.getElementById('field-hospital').value    = inc.hospitalAttended || 'no';
+        document.getElementById('field-riddor').value      = inc.riddorReportable || 'no';
+        document.getElementById('field-status').value      = inc.status || 'Resolved';
+        document.getElementById('field-logged-by').value   = inc.loggedBy || '';
+        document.getElementById('field-medication').value  = inc.medicationDetails || '';
+
+        if (inc.incidentType === 'Medicine administration') {
+          medRow.style.display = 'block';
+        }
+
+        if (inc.notifications) {
+          document.getElementById('notif-parents').checked = !!inc.notifications.parents;
+          document.getElementById('notif-school').checked  = !!inc.notifications.school;
+          document.getElementById('notif-dsl').checked     = !!inc.notifications.dsl;
+          document.getElementById('notif-host').checked    = !!inc.notifications.host;
+        }
+      } else {
+        updatePersonOptions('Student');
+      }
+
+      // ── Save handler ──────────────────────────────────────────────────────────
+      document.getElementById('btn-save-incident').addEventListener('click', function() {
+        var role = roleSelect.value;
+        var personId = '';
+        var personName = '';
+
+        if (role === 'Other') {
+          personName = customPerson.value.trim();
+          if (!personName) {
+            alert('Please enter the name of the person involved.');
+            customPerson.focus();
+            return;
+          }
+        } else {
+          personId = personSelect.value;
+          var selOpt = personSelect.options[personSelect.selectedIndex];
+          personName = selOpt && personId ? selOpt.textContent : '';
+          if (!personId) {
+            alert('Please select the person involved in the incident.');
+            personSelect.focus();
+            return;
+          }
+        }
+
+        var dateVal = document.getElementById('field-date').value;
+        var descVal = document.getElementById('field-description').value.trim();
+        var actionVal = document.getElementById('field-action').value.trim();
+
+        if (!dateVal || !descVal || !actionVal) {
+          alert('Please complete all required fields: Date, Description, and Action Taken.');
+          return;
+        }
+
+        var homestayOpt = homestaySelect.options[homestaySelect.selectedIndex];
+        var hostId = homestaySelect.value;
+        var hostName = (hostId && homestayOpt) ? homestayOpt.textContent : '';
+
+        var incident = {
+          id:                existingIncident ? existingIncident.id : OG_DB.generateIncidentId(),
+          category:          (role === 'Staff') ? 'Head Office' : (role === 'Driver' ? 'Transport' : 'Homestay'),
+          affectedRole:      role,
+          personId:          personId,
+          personName:        personName,
+          hostId:            hostId,
+          hostName:          hostName,
+          studentId:         (role === 'Student') ? personId : '',
+          studentName:       (role === 'Student') ? personName : '',
+          location:          document.getElementById('field-location').value.trim() || (hostName ? 'Homestay' : 'Operations'),
+          date:              dateVal,
+          time:              document.getElementById('field-time').value,
+          incidentType:      document.getElementById('field-type').value,
+          severity:          document.getElementById('field-severity').value,
+          description:       descVal,
+          actionTaken:       actionVal,
+          firstAider:        document.getElementById('field-first-aider').value.trim(),
+          reportedBy:        document.getElementById('field-reported-by').value.trim(),
+          hospitalAttended:  document.getElementById('field-hospital').value,
+          riddorReportable:  document.getElementById('field-riddor').value,
+          status:            document.getElementById('field-status').value,
+          loggedBy:          document.getElementById('field-logged-by').value.trim(),
+          medicationDetails: document.getElementById('field-medication').value.trim(),
+          notifications: {
+            parents: document.getElementById('notif-parents').checked,
+            school:  document.getElementById('notif-school').checked,
+            dsl:     document.getElementById('notif-dsl').checked,
+            host:    document.getElementById('notif-host').checked
+          }
+        };
+
+        OG_DB.saveIncident(incident);
+        window.location.href = 'homestay-incidents.html';
+      });
+    </script>
+  </body>
+</html>

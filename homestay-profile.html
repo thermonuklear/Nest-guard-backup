@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting… — Oxford Guardians Platform</title>
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      body { background: #f0f4f8; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+      .redirect-card { background: #ffffff; border: 1px solid #d5dce8; border-radius: 20px; padding: 32px 40px; text-align: center; }
+      .redirect-card h3 { color: #0f2340; margin-bottom: 8px; }
+      .redirect-card p  { color: #6b85a0; font-size: 0.9rem; }
+    </style>
+  </head>
+  <body>
+    <div class="redirect-card">
+      <h3>Redirecting&hellip;</h3>
+      <p>Taking you to the host profile.</p>
+    </div>
+    <script src="assets/db.js"></script>
+    <script>
+      var id = new URLSearchParams(window.location.search).get('id');
+      window.location.replace(id ? 'host-profile.html?id=' + encodeURIComponent(id) : 'hosts.html');
+    </script>
+  </body>
+</html>

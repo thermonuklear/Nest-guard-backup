@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homestays — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Global colour overrides ── */
+      body, .page, .shell {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+      }
+
+      /* ── Chrome bar ── */
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-right: 16px !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .chrome-nav-link {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        transition: background 0.15s, color 0.15s;
+        white-space: nowrap;
+      }
+
+      .chrome-nav-link:hover {
+        background: rgba(15, 35, 64, 0.07);
+        color: #0f2340;
+      }
+
+      /* ── Sidebar ── */
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+      }
+
+      .nav-link-sub {
+        padding-left: 36px !important;
+        font-size: 0.85em !important;
+        opacity: 0.85;
+      }
+
+      /* ── Main ── */
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+        overflow-y: auto;
+      }
+
+      h2, h3, h4 { color: #0f2340 !important; }
+      p           { color: #3b536e; }
+      .eyebrow    { color: #2a6096 !important; }
+      .toolbar p  { color: #3b536e !important; }
+
+      /* ── Buttons ── */
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      /* ── Two-column content layout ── */
+      .content-cols {
+        display: grid;
+        grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr);
+        gap: 20px;
+        padding: 0 24px 28px;
+      }
+
+      /* ── Section headers ── */
+      .section-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .section-header h3 {
+        font-family: "Outfit", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #0f2340 !important;
+        margin: 0;
+      }
+
+      .section-header a {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #2a6096;
+        text-decoration: none;
+      }
+
+      .section-header a:hover { text-decoration: underline; }
+
+      /* ── Upcoming homestays table ── */
+      .table-wrap {
+        background: #ffffff !important;
+        border: 1px solid #d5dce8 !important;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+
+      table { width: 100%; border-collapse: collapse; }
+
+      th {
+        background: #e8eef6 !important;
+        color: #3b536e !important;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        padding: 11px 14px;
+        text-align: left;
+        border-bottom: 1px solid #d5dce8 !important;
+        white-space: nowrap;
+      }
+
+      td {
+        padding: 12px 14px;
+        border-bottom: 1px solid #edf2f8 !important;
+        color: #3b536e !important;
+        font-size: 0.87rem;
+        vertical-align: top;
+      }
+
+      tr:last-child td { border-bottom: 0 !important; }
+      tbody tr { transition: background 0.12s; }
+      tbody tr:hover td { background: #f4f7fb; }
+
+      td strong { color: #0f2340 !important; font-weight: 600; }
+      td small  { display: block; color: #6b85a0 !important; font-size: 0.78rem; margin-top: 1px; }
+
+      /* ── Status badges ── */
+      .badge-confirmed {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        background: #d1fae5;
+        color: #065f46;
+        white-space: nowrap;
+      }
+
+      .badge-upcoming {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        background: #dbeafe;
+        color: #1e40af;
+        white-space: nowrap;
+      }
+
+      .badge-pending {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        background: #fef3c7;
+        color: #92400e;
+        white-space: nowrap;
+      }
+
+      .badge-completed {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        background: #f1f5f9;
+        color: #475569;
+        white-space: nowrap;
+      }
+
+      .badge-complimentary {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        background: #dbeafe;
+        color: #1e40af;
+        white-space: nowrap;
+      }
+
+      /* ── Alerts panel ── */
+      .alerts-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      /* ── Alert card ── */
+      .alert-card {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 14px;
+        padding: 14px 16px;
+        margin-bottom: 12px;
+        border-left-width: 4px;
+        position: relative;
+      }
+
+      .alert-card:last-child { margin-bottom: 0; }
+
+      .alert-card.alert-warning {
+        border-left-color: #d97706;
+        background: #fffcf0;
+      }
+
+      .alert-card.alert-danger {
+        border-left-color: #dc2626;
+        background: #fff8f8;
+      }
+
+      .alert-card.alert-info {
+        border-left-color: #2a6096;
+        background: #f0f6ff;
+      }
+
+      .alert-type {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        margin-bottom: 4px;
+      }
+
+      .alert-card.alert-warning .alert-type { color: #b45309; }
+      .alert-card.alert-danger  .alert-type { color: #b91c1c; }
+      .alert-card.alert-info    .alert-type { color: #1e4d7b; }
+
+      .alert-title {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: #0f2340;
+        margin: 0 0 3px;
+        line-height: 1.3;
+      }
+
+      .alert-body {
+        font-size: 0.8rem;
+        color: #4b6280;
+        line-height: 1.45;
+        margin: 0 0 10px;
+      }
+
+      .alert-action {
+        display: inline-block;
+        font-size: 0.76rem;
+        font-weight: 700;
+        color: #0f2340;
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 6px;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        transition: background 0.13s;
+      }
+
+      .alert-action:hover { background: #e8eef6; }
+
+      .alert-timestamp {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        font-size: 0.71rem;
+        color: #9bafc4;
+        font-weight: 500;
+      }
+
+      /* ── Link pills ── */
+      .inline-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0 24px 28px;
+      }
+
+      .link-pill {
+        background: #ffffff !important;
+        border: 1px solid #d5dce8 !important;
+        color: #0f2340 !important;
+        font-weight: 600;
+        padding: 7px 14px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        text-decoration: none;
+        transition: background 0.13s, border-color 0.13s;
+      }
+
+      .link-pill:hover {
+        background: #e8eef6 !important;
+        border-color: #b0bfcf !important;
+      }
+
+      @media (max-width: 900px) {
+        .content-cols { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+
+        <!-- Chrome bar -->
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <nav class="chrome-nav">
+            <a class="chrome-nav-link" href="admin-dashboard.html">Dashboard</a>
+            <a class="chrome-nav-link" href="notifications.html">Notifications</a>
+          </nav>
+        </div>
+
+        <div class="shell">
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Homestay Operations</strong>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link active" href="homestays.html">Homestays</a>
+              <a class="nav-link nav-link-sub" href="homestay-todo.html">To-do</a>
+              <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
+              <a class="nav-link nav-link-sub" href="host-profile.html">Host Profile</a>
+              <a class="nav-link nav-link-sub" href="hosts.html?status=pending">Pending Approval</a>
+              <a class="nav-link nav-link-sub" href="homestay-visit.html">Annual visits</a>
+              <a class="nav-link nav-link-sub" href="homestay-incidents.html">Incident log</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <!-- Main content -->
+          <section class="main">
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Homestay management</span>
+                <h2>Approved families, capacity, safety, and DBS state.</h2>
+                <p>Household records with capacity rules, safety checks, and evidence trails — not just a list of surnames.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="homestay-profile.html">Open sample profile</a>
+                <a class="button" href="homestay-create.html">Create homestay</a>
+              </div>
+            </div>
+
+            <!-- Homestay Supply & Emergency Headroom Metric Bar (AEGIS Standard 5.4.1) -->
+            <div id="supply-analytics-bar" style="background:#ffffff; border:1px solid #d5dce8; border-radius:14px; padding:18px 24px; margin-bottom:24px; box-shadow:0 4px 12px rgba(15,35,64,0.04);">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span style="font-family:'Outfit',sans-serif; font-size:1.1rem; font-weight:700; color:#0f2340;">Homestay Supply &amp; Availability Overview</span>
+                  <span class="badge green" id="supply-status-badge">AEGIS Standard 5.4.1 Compliant</span>
+                </div>
+                <span style="font-size:0.8rem; color:#64748b;">Live Headroom against Student Caseload</span>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:14px;">
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
+                  <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Total Approved Beds</small>
+                  <strong style="font-size:1.4rem; color:#0f2340;" id="stat-total-beds">—</strong>
+                </div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
+                  <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Currently Placed</small>
+                  <strong style="font-size:1.4rem; color:#0284c7;" id="stat-occupied-beds">—</strong>
+                </div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
+                  <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Standard Beds Free</small>
+                  <strong style="font-size:1.4rem; color:#16a34a;" id="stat-available-beds">—</strong>
+                </div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
+                  <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Emergency Standby (Std 2.6)</small>
+                  <strong style="font-size:1.4rem; color:#d97706;" id="stat-emergency-beds">—</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Two-column layout -->
+            <div class="content-cols">
+
+              <!-- Left: Upcoming Homestays table -->
+              <div>
+                <div class="section-header">
+                  <h3>Upcoming Homestays</h3>
+                  <a href="homestay-create.html">+ Add stay</a>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Student</th>
+                        <th>Host Family</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Type of Service</th>
+                      </tr>
+                    </thead>
+                    <tbody id="placements-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Right: Alerts & Actions panel -->
+              <div>
+                <div class="section-header">
+                  <h3>Alerts &amp; Actions</h3>
+                  <a href="compliance.html">View all</a>
+                </div>
+                <div class="alerts-panel">
+
+                  <div class="alert-card alert-danger">
+                    <span class="alert-timestamp">Overdue</span>
+                    <div class="alert-type">DBS Check</div>
+                    <p class="alert-title">Helen Finch — DBS expiring</p>
+                    <p class="alert-body">DBS certificate expires in 14 days (18 Nov 2025). Renewal application submitted but certificate not yet received. Cannot host until renewed.</p>
+                    <a class="alert-action" href="homestay-profile.html">Review record</a>
+                  </div>
+
+                  <div class="alert-card alert-warning">
+                    <span class="alert-timestamp">Due soon</span>
+                    <div class="alert-type">Annual Visit</div>
+                    <p class="alert-title">Eleanor Ashworth — visit due next week</p>
+                    <p class="alert-body">Annual inspection due 14 May 2026. Last completed 14 May 2025. Schedule now to avoid a compliance gap before summer placements.</p>
+                    <a class="alert-action" href="homestay-visit.html">Book visit</a>
+                  </div>
+
+                  <div class="alert-card alert-warning">
+                    <span class="alert-timestamp">Pending</span>
+                    <div class="alert-type">Approval Blocked</div>
+                    <p class="alert-title">Ellis Family — 1 document missing</p>
+                    <p class="alert-body">DBS upload outstanding. Sofia Petrova is reserved for this placement. Approval cannot proceed until the document is on file.</p>
+                    <a class="alert-action" href="hosts.html?status=pending">Resolve</a>
+                  </div>
+
+                  <div class="alert-card alert-info">
+                    <span class="alert-timestamp">Upcoming</span>
+                    <div class="alert-type">Annual Visit</div>
+                    <p class="alert-title">Brennan Family — visit due 2 Jun 2026</p>
+                    <p class="alert-body">Fire evacuation discussion logged at last visit. Confirm route has been updated before scheduling the follow-up.</p>
+                    <a class="alert-action" href="homestay-visit.html">Schedule</a>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- /content-cols -->
+
+            <!-- Link pills -->
+            <div class="inline-links">
+              <a class="link-pill" href="homestay-create.html">Create new homestay</a>
+              <a class="link-pill" href="hosts.html?status=pending">Approve Ellis Family</a>
+              <a class="link-pill" href="homestay-archive.html">Archive inactive homestay</a>
+              <a class="link-pill" href="homestay-edit.html">Edit Ashworth Family</a>
+              <a class="link-pill" href="host-profile.html?tab=visits">Initial assessment</a>
+              <a class="link-pill" href="homestay-hs-checklist.html">H&amp;S checklist</a>
+            </div>
+
+          </section>
+        </div><!-- /shell -->
+      </div><!-- /app-frame -->
+    </main>
+    <script src="assets/db.js"></script>
+    <script>
+      function parseLocalDate(iso) {
+        var p = iso.split('-');
+        return new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
+      }
+
+      function formatDate(iso) {
+        if (!iso) return '—';
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var p = iso.split('-');
+        return parseInt(p[2], 10) + ' ' + months[parseInt(p[1], 10) - 1] + ' ' + p[0];
+      }
+
+      function renderPlacements() {
+        var placements = OG_DB.getAllPlacements();
+        var tbody = document.getElementById('placements-tbody');
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (!placements.length) {
+          tbody.innerHTML = '<tr><td colspan="6" class="empty-state" style="text-align: center; padding: 24px; color: #6b85a0;">No upcoming homestays found.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = placements.map(function (p) {
+          var start = parseLocalDate(p.startDate);
+          var end   = parseLocalDate(p.endDate);
+          var badgeClass, badgeLabel;
+
+          if (today > end) {
+            badgeClass = 'badge-completed';
+            badgeLabel = 'Completed';
+          } else if (today >= start) {
+            badgeClass = 'badge-confirmed';
+            badgeLabel = 'Active';
+          } else {
+            badgeClass = 'badge-upcoming';
+            badgeLabel = 'Upcoming';
+          }
+
+          var svcBadge = p.serviceType === 'Complimentary'
+            ? '<span class="badge-complimentary">Complimentary</span>'
+            : (p.serviceType || '—');
+          return '<tr>' +
+            '<td><strong>' + p.studentName + '</strong></td>' +
+            '<td><strong>' + p.hostName + '</strong></td>' +
+            '<td>' + formatDate(p.startDate) + '</td>' +
+            '<td>' + formatDate(p.endDate) + '</td>' +
+            '<td><span class="' + badgeClass + '">' + badgeLabel + '</span></td>' +
+            '<td>' + svcBadge + '</td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      // ── Homestay Supply & Emergency Headroom Metric Bar (AEGIS Standard 5.4.1) ──
+      function renderSupplyAnalytics() {
+        var stats = OG_DB.getHomestaySupplyAnalytics();
+        document.getElementById('stat-total-beds').textContent     = stats.totalApprovedBeds;
+        document.getElementById('stat-occupied-beds').textContent  = stats.totalOccupiedBeds;
+        document.getElementById('stat-available-beds').textContent = stats.availableStandardBeds;
+        document.getElementById('stat-emergency-beds').textContent = stats.emergencyStandbyBeds;
+
+        var badge = document.getElementById('supply-status-badge');
+        badge.textContent = stats.statusBadge;
+        badge.className   = 'badge ' + (stats.isSufficient ? 'green' : 'amber');
+      }
+
+      renderPlacements();
+      renderSupplyAnalytics();
+    </script>
+  </body>
+</html>
