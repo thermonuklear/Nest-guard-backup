@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit User Role — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small>Route /admin/users/priya-shah/role</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Edit Role</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Access</div>
+              <a class="nav-link active" href="users.html">Users & roles</a>
+              <a class="nav-link" href="account-lockout.html">Lockout state</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Role edit</span>
+                <h2>Priya Shah should not be treated like a super-admin.</h2>
+                <p>Local coordinators need enough power to run travel and host handoffs, but not unrestricted access to every safeguarding document or policy control.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="users.html">Discard</a>
+                <a class="button" href="users.html">Save role changes</a>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="panel" style="padding: 22px;">
+                <h3 style="margin-bottom: 14px;">Account summary</h3>
+                <div class="field-list">
+                  <div class="field"><small>User</small><strong>Priya Shah</strong></div>
+                  <div class="field"><small>Current role</small><strong>Admin / Local coordinator</strong></div>
+                  <div class="field"><small>Current state</small><strong>Locked pending review</strong></div>
+                  <div class="field"><small>Primary work</small><strong>Airport pickup, host liaison, school handoff coordination</strong></div>
+                </div>
+              </div>
+              <div class="panel" style="padding: 22px;">
+                <h3 style="margin-bottom: 14px;">Permission model</h3>
+                <div class="field-list">
+                  <div class="field"><small>Allow</small><strong>Student travel briefs, homestay contact details, parent contact numbers, welfare notes flagged for travel relevance</strong></div>
+                  <div class="field"><small>Restrict</small><strong>Policy approval, DSL-only concern logs, SCR export, full document administration</strong></div>
+                  <div class="field"><small>Escalation path</small><strong>Jay Ray for safeguarding, Zuko Fire for operational override</strong></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" style="padding: 22px; margin-top: 16px;">
+              <div class="form-grid">
+                <div class="field"><small>Travel coordination</small><strong>Enabled</strong></div>
+                <div class="field"><small>Homestay contact access</small><strong>Enabled</strong></div>
+                <div class="field"><small>Student medical summary</small><strong>Read only</strong></div>
+                <div class="field"><small>Concern case notes</small><strong>Restricted</strong></div>
+                <div class="field"><small>Document approval</small><strong>Restricted</strong></div>
+                <div class="field"><small>Compliance threshold editing</small><strong>Restricted</strong></div>
+                <div class="field form-span-2"><small>Role rationale</small><div class="textarea-box">Priya requires operational visibility for pickups, exeats, emergency contacts, and host handoffs. She should not hold broad access to policy control or DSL-only safeguarding records.</div></div>
+              </div>
+              <div class="action-row">
+                <a class="button" href="users.html">Save role boundary</a>
+                <a class="button-alt" href="account-lockout.html">Review lockout state</a>
+                <a class="button-alt" href="admin-dashboard.html">Back to dashboard</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

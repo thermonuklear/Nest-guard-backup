@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log Travel Incident — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      body { background: #f0f4f8 !important; color: #0f2340 !important; }
+      .app-frame { background: #f8fafc !important; border-color: #d5dce8 !important; box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important; }
+      .chrome { background: #e8eef6 !important; border-bottom-color: #d5dce8 !important; display:flex !important; align-items:center !important; justify-content:space-between !important; padding-right:16px !important; }
+      .chrome small { color: #3b536e !important; }
+      .dots span { background: #7b9abf !important; }
+      .chrome-nav { display:flex; align-items:center; gap:4px; }
+      .chrome-nav-link { font-family:"Plus Jakarta Sans",sans-serif; font-size:12px; font-weight:600; color:#3b536e; text-decoration:none; padding:4px 10px; border-radius:4px; border:1px solid transparent; transition:background 0.15s,color 0.15s; white-space:nowrap; }
+      .chrome-nav-link:hover { background:rgba(15,35,64,0.07); color:#0f2340; }
+      .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important; }
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small { color:#7fb3d3 !important; }
+      .brand strong { color:#e8f0fa !important; }
+      .nav-label { color:#7b9abf !important; }
+      .nav-link { color:#c8d8ee !important; border-color:transparent !important; }
+      .nav-link:hover { background:rgba(255,255,255,0.07) !important; color:#e8f0fa !important; }
+      .nav-link.active { background:rgba(255,255,255,0.1) !important; border-color:rgba(255,255,255,0.14) !important; color:#e8f0fa !important; }
+      .main { background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important; padding:28px 32px 40px; overflow-y:auto; }
+      h2, h3, h4 { color:#0f2340 !important; }
+      p { color:#3b536e; }
+      .eyebrow { color:#2a6096 !important; }
+      .toolbar p { color:#3b536e !important; }
+      .button { background:#0f2340 !important; border-color:#0f2340 !important; color:#ffffff !important; }
+      .button:hover { opacity:0.88; }
+      .button-alt { background:#ffffff !important; border-color:#d5dce8 !important; color:#0f2340 !important; }
+      .button-alt:hover { background:#edf2f8 !important; }
+      .nav-link-sub { padding-left:36px !important; font-size:0.85em !important; opacity:0.85; }
+      /* Form styles */
+      .health-form { max-width:760px; display:grid; gap:20px; }
+      .form-card { background:#ffffff; border:1px solid #d5dce8; border-radius:20px; padding:24px 28px; }
+      .form-card h4 { margin-bottom:20px; font-size:1rem; padding-bottom:12px; border-bottom:1px solid #edf2f8; }
+      .field-group { display:grid; gap:18px; }
+      .field { display:flex; flex-direction:column; gap:6px; }
+      .field label { font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:#6b85a0; }
+      .field input, .field select, .field textarea {
+        padding:10px 14px; border:1.5px solid #d5dce8; border-radius:10px;
+        background:#f8fafc; color:#0f2340; font-family:"Plus Jakarta Sans",sans-serif;
+        font-size:0.9rem; outline:none; transition:border-color 0.15s, background 0.15s;
+      }
+      .field input:focus, .field select:focus, .field textarea:focus { border-color:#0f2340; background:#ffffff; }
+      .field textarea { min-height:90px; line-height:1.55; resize:vertical; }
+      .field input::placeholder, .field textarea::placeholder { color:#9bafc4; }
+      .form-actions { display:flex; align-items:center; gap:12px; }
+      .notif-row { display:flex; gap:20px; margin-top:4px; flex-wrap:wrap; }
+      .notif-row label { display:flex; align-items:center; gap:6px; font-size:0.88rem; font-weight:600; color:#0f2340; cursor:pointer; }
+      .notif-row input[type="checkbox"] { width:16px; height:16px; accent-color:#0f2340; flex-shrink:0; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <nav class="chrome-nav">
+            <a class="chrome-nav-link" href="admin-dashboard.html">Dashboard</a>
+            <a class="chrome-nav-link" href="notifications.html">Notifications</a>
+          </nav>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Travel Coordination</strong>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link nav-link-sub" href="travel-todo.html">To-do</a>
+              <a class="nav-link nav-link-sub" href="driver-list.html">Drivers</a>
+              <a class="nav-link nav-link-sub" href="transportation.html">Transportation</a>
+              <a class="nav-link nav-link-sub active" href="travel-incidents.html">Incident log</a>
+              <a class="nav-link nav-link-sub" href="documents.html">Documents</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Log incident</span>
+                <h2 id="page-title">Record Travel Incident</h2>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="travel-incidents.html">Cancel</a>
+              </div>
+            </div>
+
+            <form class="health-form" id="incident-form" onsubmit="return false;">
+              <div class="form-card">
+                <h4>Incident Details</h4>
+                <div class="field-group" style="grid-template-columns: 1fr 1fr;">
+                  <div class="field">
+                    <label for="field-driver">Driver involved</label>
+                    <select id="field-driver"><option value="">Select Driver…</option></select>
+                  </div>
+                  <div class="field">
+                    <label for="field-student">Student involved</label>
+                    <select id="field-student"><option value="">Select Student…</option></select>
+                  </div>
+                  <div class="field">
+                    <label for="field-date">Date</label>
+                    <input type="date" id="field-date" />
+                  </div>
+                  <div class="field">
+                    <label for="field-time">Time</label>
+                    <input type="time" id="field-time" />
+                  </div>
+                  <div class="field">
+                    <label for="field-type">Incident type</label>
+                    <select id="field-type">
+                      <option>Traffic accident / Collision</option>
+                      <option>Student missing / Failed handover</option>
+                      <option>Flight/Train delay or cancellation</option>
+                      <option>Driver No-Show / Late arrival</option>
+                      <option>Minor injury / Sickness in transit</option>
+                      <option>Luggage lost / Damaged</option>
+                      <option>Visa / Border control issue</option>
+                      <option>Safeguarding / Welfare concern</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="field-severity">Severity</label>
+                    <select id="field-severity">
+                      <option>Minor — delay/inconvenience only</option>
+                      <option>Moderate — monitoring needed</option>
+                      <option>Significant — medical/police attention</option>
+                      <option>Serious — emergency services</option>
+                    </select>
+                  </div>
+                  <div class="field" style="grid-column: 1 / -1;">
+                    <label for="field-location">Location / Route</label>
+                    <input type="text" id="field-location" placeholder="e.g. M40 Northbound, Heathrow Terminal 5" />
+                  </div>
+                  <div class="field" style="grid-column: 1 / -1;">
+                    <label for="field-description">What happened?</label>
+                    <textarea id="field-description" placeholder="Provide full details of the incident…"></textarea>
+                  </div>
+                  <div class="field" style="grid-column: 1 / -1;">
+                    <label for="field-action">Action taken</label>
+                    <textarea id="field-action" placeholder="What was done immediately to resolve this?" style="min-height:70px;"></textarea>
+                  </div>
+                  <div class="field" style="grid-column: 1 / -1;">
+                    <label>Notifications Sent</label>
+                    <div class="notif-row">
+                      <label><input type="checkbox" id="field-notif-parent" /> Parents informed</label>
+                      <label><input type="checkbox" id="field-notif-school" /> School informed</label>
+                      <label><input type="checkbox" id="field-notif-dsl" /> DSL informed</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="button" id="btn-save">Save incident</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      (function() {
+        // Populate dropdowns
+        var driverSelect  = document.getElementById('field-driver');
+        var studentSelect = document.getElementById('field-student');
+
+        OG_DB.getAllDrivers().forEach(function(d) {
+          var opt = document.createElement('option');
+          opt.value       = d.id;
+          opt.textContent = d.firstName + ' ' + d.lastName;
+          driverSelect.appendChild(opt);
+        });
+
+        OG_DB.getAllStudents().forEach(function(s) {
+          var opt = document.createElement('option');
+          opt.value       = s.id;
+          opt.textContent = s.firstName + ' ' + s.lastName;
+          studentSelect.appendChild(opt);
+        });
+
+        // Edit mode detection
+        var params      = new URLSearchParams(window.location.search);
+        var editId      = params.get('id');
+        var existingInc = editId ? OG_DB.getIncidentById(editId) : null;
+
+        if (existingInc) {
+          document.getElementById('page-title').textContent = 'Edit Travel Incident';
+          document.getElementById('field-driver').value      = existingInc.driverId    || '';
+          document.getElementById('field-student').value     = existingInc.studentId   || '';
+          document.getElementById('field-date').value        = existingInc.incidentDate || '';
+          document.getElementById('field-time').value        = existingInc.incidentTime || '';
+          document.getElementById('field-type').value        = existingInc.incidentType || '';
+          document.getElementById('field-severity').value    = existingInc.severity     || '';
+          document.getElementById('field-location').value    = existingInc.location     || '';
+          document.getElementById('field-description').value = existingInc.description  || '';
+          document.getElementById('field-action').value      = existingInc.actionTaken  || '';
+          if (existingInc.notifications) {
+            document.getElementById('field-notif-parent').checked = !!existingInc.notifications.parent;
+            document.getElementById('field-notif-school').checked = !!existingInc.notifications.school;
+            document.getElementById('field-notif-dsl').checked    = !!existingInc.notifications.dsl;
+          }
+        }
+
+        // Save handler
+        document.getElementById('btn-save').addEventListener('click', function() {
+          var driverOpt  = driverSelect.options[driverSelect.selectedIndex];
+          var studentOpt = studentSelect.options[studentSelect.selectedIndex];
+
+          var inc = existingInc || { id: OG_DB.generateIncidentId(), createdAt: new Date().toISOString() };
+
+          inc.category     = 'Travel';
+          inc.driverId     = driverSelect.value;
+          inc.driverName   = driverSelect.value ? driverOpt.textContent : '';
+          inc.studentId    = studentSelect.value;
+          inc.studentName  = studentSelect.value ? studentOpt.textContent : '';
+          inc.incidentDate = document.getElementById('field-date').value;
+          inc.incidentTime = document.getElementById('field-time').value;
+          inc.dateTime     = inc.incidentDate + 'T' + (inc.incidentTime || '00:00');
+          inc.incidentType = document.getElementById('field-type').value;
+          inc.type         = inc.incidentType;
+          inc.severity     = document.getElementById('field-severity').value;
+          inc.location     = document.getElementById('field-location').value.trim();
+          inc.description  = document.getElementById('field-description').value.trim();
+          inc.actionTaken  = document.getElementById('field-action').value.trim();
+          inc.status       = inc.severity.indexOf('Minor') === 0 ? 'Resolved' : 'Open';
+          inc.notifications = {
+            parent: document.getElementById('field-notif-parent').checked,
+            school: document.getElementById('field-notif-school').checked,
+            dsl:    document.getElementById('field-notif-dsl').checked
+          };
+
+          OG_DB.saveIncident(inc);
+          window.location.href = 'travel-incidents.html';
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Past Transportation — Oxford Guardians</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Global colour overrides ── */
+      body, .page, .shell {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      /* ── App frame ── */
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+      }
+
+      /* ── Chrome bar ── */
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-right: 16px !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .chrome-nav-link {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        transition: background 0.15s, color 0.15s;
+        white-space: nowrap;
+      }
+
+      .chrome-nav-link:hover {
+        background: rgba(15, 35, 64, 0.07);
+        color: #0f2340;
+      }
+
+      /* ── Sidebar ── */
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+      }
+
+      .nav-link-sub {
+        padding-left: 36px !important;
+        font-size: 0.85em !important;
+        opacity: 0.85;
+      }
+
+      /* ── Main content ── */
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+        padding: 28px 32px 40px;
+        overflow-y: auto;
+      }
+
+      /* ── Page header ── */
+      .page-header {
+        margin-bottom: 24px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .page-header h2 {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.65rem;
+        font-weight: 700;
+        color: #0f2340 !important;
+        letter-spacing: -0.03em;
+        margin: 0 0 4px;
+      }
+
+      .eyebrow {
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: #2a6096 !important;
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .page-header p {
+        color: #3b536e;
+        font-size: 0.9rem;
+        margin: 0;
+      }
+
+      .toolbar-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-shrink: 0;
+      }
+
+      /* ── Buttons ── */
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      /* ── Filter row ── */
+      .filter-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+
+      .filter-field {
+        background: #ffffff !important;
+        border: 1px solid #d5dce8 !important;
+        border-radius: 14px;
+        padding: 12px 14px;
+      }
+
+      .filter-field small {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #6b85a0;
+        font-size: 0.72rem;
+        margin-bottom: 4px;
+      }
+
+      .filter-input,
+      .filter-select {
+        width: 100%;
+        margin-top: 2px;
+        padding: 6px 0;
+        border: none;
+        border-bottom: 1px solid #d5dce8;
+        background: transparent;
+        color: #0f2340;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+
+      .filter-input::placeholder { color: #9bafc4; font-weight: 400; }
+      .filter-input:focus,
+      .filter-select:focus { border-bottom-color: #0f2340; }
+      .filter-select { appearance: none; cursor: pointer; }
+
+      /* ── Result count ── */
+      .result-count {
+        font-size: 0.82rem;
+        color: #6b85a0;
+        margin-bottom: 10px;
+      }
+
+      /* ── Table ── */
+      h2, h3, h4, td strong, th { color: #0f2340 !important; }
+      td small { color: #6b85a0 !important; }
+
+      .table-wrap {
+        background: #ffffff !important;
+        border: 1px solid #d5dce8 !important;
+        border-radius: 20px;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+
+      table { width: 100%; border-collapse: collapse; }
+
+      th {
+        background: #e8eef6 !important;
+        color: #3b536e !important;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        padding: 13px 14px;
+        text-align: left;
+        border-bottom: 1px solid #d5dce8 !important;
+        white-space: nowrap;
+      }
+
+      td {
+        padding: 13px 14px;
+        border-bottom: 1px solid #e8eef6 !important;
+        vertical-align: top;
+        color: #3b536e !important;
+        font-size: 0.88rem;
+        white-space: nowrap;
+      }
+
+      tr:last-child td { border-bottom: 0 !important; }
+
+      tbody tr { transition: background 0.12s; }
+      tbody tr:hover td { background: #f4f7fb; }
+
+      .transport-id-link {
+        font-family: "Outfit", sans-serif;
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: #0f2340 !important;
+        text-decoration: none;
+        letter-spacing: 0.01em;
+      }
+
+      .transport-id-link:hover {
+        color: #2a6096 !important;
+        text-decoration: underline;
+      }
+
+      /* ── Route cell ── */
+      .route-cell {
+        max-width: 220px;
+      }
+
+      .route-start {
+        display: block;
+        font-weight: 600;
+        color: #0f2340 !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+      }
+
+      .route-arrow {
+        display: block;
+        font-size: 0.75rem;
+        color: #9bafc4;
+        margin: 1px 0;
+      }
+
+      .route-dest {
+        display: block;
+        font-size: 0.82rem;
+        color: #6b85a0 !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+      }
+
+      /* ── Confirmation badges ── */
+      .badge-confirmed {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        background: #d1fae5;
+        color: #065f46;
+        white-space: nowrap;
+      }
+
+      .badge-awaiting {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        background: #fef3c7;
+        color: #92400e;
+        white-space: nowrap;
+      }
+
+      .badge-not-required {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        background: #f1f5f9;
+        color: #64748b;
+        white-space: nowrap;
+      }
+
+      /* ── Empty state ── */
+      .empty-state {
+        text-align: center;
+        padding: 40px 24px;
+        color: #6b85a0;
+        font-size: 0.9rem;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 900px) {
+        .main { padding: 18px 16px 32px; }
+        .filter-row { grid-template-columns: 1fr 1fr; }
+        .page-header { flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+
+        <!-- Chrome bar -->
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <nav class="chrome-nav">
+            <a class="chrome-nav-link" href="admin-dashboard.html">Dashboard</a>
+            <a class="chrome-nav-link" href="notifications.html">Notifications</a>
+          </nav>
+        </div>
+
+        <div class="shell">
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Travel Coordination</strong>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link nav-link-sub" href="travel-todo.html">To-do</a>
+              <a class="nav-link nav-link-sub" href="driver-list.html">Drivers</a>
+              <a class="nav-link nav-link-sub active" href="transportation.html">Transportation</a>
+              <a class="nav-link nav-link-sub" href="travel-incidents.html">Incident log</a>
+              <a class="nav-link nav-link-sub" href="documents.html">Documents</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <!-- Main content -->
+          <section class="main">
+
+            <!-- Page header -->
+            <div class="page-header">
+              <div>
+                <span class="eyebrow">Operations</span>
+                <h2>Past Transportation</h2>
+                <p>Completed journeys — student, driver, route, mileage, and parent confirmation at a glance.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="travel.html">Travel dashboard</a>
+                <a class="button" href="travel-create.html">Create transport</a>
+              </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filter-row">
+              <div class="filter-field">
+                <small>Search</small>
+                <input
+                  class="filter-input"
+                  type="text"
+                  id="search-input"
+                  placeholder="Search student, driver, or route…"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="filter-field">
+                <small>Sort by date</small>
+                <select class="filter-select" id="sort-select">
+                  <option value="date-desc">Latest first</option>
+                  <option value="date-asc">Earliest first</option>
+                </select>
+              </div>
+              <div class="filter-field">
+                <small>Showing</small>
+                <strong id="result-label" style="font-size:0.9rem;font-weight:700;color:#0f2340;display:block;margin-top:6px;">— journeys</strong>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Transport ID</th>
+                    <th>Date of Journey</th>
+                    <th>Time of Journey</th>
+                    <th>Name of Student</th>
+                    <th>Name of Driver</th>
+                    <th>Starting Point</th>
+                    <th>Destination</th>
+                    <th>Passengers</th>
+                    <th>Luggage</th>
+                    <th>Miles</th>
+                    <th>Cost</th>
+                    <th>Revenue</th>
+                    <th>Parent Confirmation</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="transport-table-body"></tbody>
+              </table>
+            </div>
+
+          </section>
+        </div><!-- /shell -->
+      </div><!-- /app-frame -->
+    </main>
+
+    <script src="assets/db.js"></script>
+    <script>
+      var searchInput = document.getElementById('search-input');
+      var sortSelect  = document.getElementById('sort-select');
+      var resultLabel = document.getElementById('result-label');
+
+      // Parse date strings like "14 Feb 2026" → comparable number
+      function parseDateValue(dateStr) {
+        if (!dateStr) return 0;
+        var d = new Date(dateStr);
+        if (!isNaN(d)) return d.getTime();
+        // Fallback: try re-ordering "14 Feb 2026"
+        var months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5,
+                       Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
+        var parts = dateStr.split(' ');
+        if (parts.length === 3) {
+          var day = parseInt(parts[0], 10);
+          var mon = months[parts[1]];
+          var yr  = parseInt(parts[2], 10);
+          if (!isNaN(day) && mon !== undefined && !isNaN(yr)) {
+            return new Date(yr, mon, day).getTime();
+          }
+        }
+        return 0;
+      }
+
+      function confirmationBadge(value) {
+        if (!value) return '<span class="badge-not-required">—</span>';
+        var v = value.toLowerCase();
+        if (v === 'confirmed')    return '<span class="badge-confirmed">Confirmed</span>';
+        if (v === 'awaiting')     return '<span class="badge-awaiting">Awaiting</span>';
+        return '<span class="badge-not-required">Not required</span>';
+      }
+
+      // Shorten a location string to just the first comma-delimited segment
+      function shortLocation(loc) {
+        if (!loc) return '—';
+        return loc.split(',')[0].trim();
+      }
+
+      function renderTable(data) {
+        var tbody = document.getElementById('transport-table-body');
+        resultLabel.textContent = data.length + ' journey' + (data.length !== 1 ? 's' : '');
+
+        if (!data.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="14" class="empty-state">No journeys match the current filters.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = data.map(function (t) {
+          return '<tr>' +
+            '<td><a class="transport-id-link" href="#">' + (t.id || '—') + '</a></td>' +
+            '<td>' + (t.date || '—') + '</td>' +
+            '<td>' + (t.time || '—') + '</td>' +
+            '<td>' + (t.studentName || '—') + '</td>' +
+            '<td>' + (t.driverName || '—') + '</td>' +
+            '<td>' + (t.startPoint || '—') + '</td>' +
+            '<td>' + (t.destination || '—') + '</td>' +
+            '<td>' + (t.passengers != null ? t.passengers : '—') + '</td>' +
+            '<td>' + (t.luggage != null ? t.luggage : '—') + '</td>' +
+            '<td>' + (t.miles != null ? t.miles : '—') + '</td>' +
+            '<td>' + (t.cost || '—') + '</td>' +
+            '<td>' + (t.revenue || '—') + '</td>' +
+            '<td>' + confirmationBadge(t.parentConfirmation) + '</td>' +
+            '<td style="white-space:nowrap;">' +
+              '<a class="button-alt" href="travel-create.html?id=' + t.id + '" style="padding:4px 8px; font-size:0.75rem; color:#0f2340; border-color:#d5dce8; text-decoration:none; margin-right:6px;">✏️ Edit</a>' +
+              '<button type="button" class="button-alt delete-transport-btn" data-id="' + t.id + '" style="padding:4px 8px; font-size:0.75rem; color:#dc2626; border-color:#fecaca;">🗑️ Delete</button>' +
+            '</td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      var todayStart = new Date();
+      todayStart.setHours(0, 0, 0, 0);
+
+      function applyFilters() {
+        var search = searchInput.value.trim().toLowerCase();
+        var sort   = sortSelect.value;
+
+        var data = getAllTransports().filter(function (t) {
+          if (parseDateValue(t.date) >= todayStart.getTime()) return false;
+          if (!search) return true;
+          var searchable = [
+            t.id, t.studentName, t.driverName,
+            t.startPoint, t.destination, t.date
+          ].join(' ').toLowerCase();
+          return searchable.includes(search);
+        });
+
+        data.sort(function (a, b) {
+          var da = parseDateValue(a.date);
+          var db = parseDateValue(b.date);
+          return sort === 'date-desc' ? db - da : da - db;
+        });
+
+        renderTable(data);
+      }
+
+      searchInput.addEventListener('input', applyFilters);
+      sortSelect.addEventListener('change', applyFilters);
+
+      applyFilters();
+
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('delete-transport-btn')) {
+          if (!confirm('Are you sure you want to permanently delete this trip?')) return;
+          var id = e.target.getAttribute('data-id');
+          var transports = getAllTransports().filter(function(t) { return t.id !== id; });
+          saveAllTransports(transports);
+          window.location.reload();
+        }
+      });
+    </script>
+  </body>
+</html>

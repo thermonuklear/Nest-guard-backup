@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upcoming Travel — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Global colour overrides ── */
+      body {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      /* ── App frame ── */
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+      }
+
+      /* ── Chrome bar — extended to hold top-right nav ── */
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-right: 16px !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      /* ── Top-right nav links (sit inside .chrome) ── */
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .chrome-nav-link {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        transition: background 0.15s, color 0.15s;
+        white-space: nowrap;
+      }
+
+      .chrome-nav-link:hover {
+        background: rgba(15, 35, 64, 0.07);
+        color: #0f2340;
+      }
+
+      /* ── Sidebar ── */
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+      }
+
+      /* ── Main content ── */
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+      }
+
+      h2, h3, h4 { color: #0f2340 !important; }
+      p           { color: #3b536e; }
+      .eyebrow    { color: #2a6096 !important; }
+      .toolbar p  { color: #3b536e !important; }
+
+      /* ── Table ── */
+      .table-wrap {
+        background: #ffffff !important;
+        border: 1px solid #d5dce8 !important;
+        border-radius: 20px;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+
+      table { width: 100%; border-collapse: collapse; }
+
+      th {
+        background: #e8eef6 !important;
+        color: #3b536e !important;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        padding: 13px 14px;
+        text-align: left;
+        border-bottom: 1px solid #d5dce8 !important;
+        white-space: nowrap;
+      }
+
+      td {
+        padding: 13px 14px;
+        border-bottom: 1px solid #edf2f8 !important;
+        color: #3b536e !important;
+        font-size: 0.88rem;
+        vertical-align: top;
+        white-space: nowrap;
+      }
+
+      tr:last-child td { border-bottom: 0 !important; }
+      tbody tr:hover td { background: #f4f7fb; }
+
+      td strong { color: #0f2340 !important; }
+      td small  { color: #6b85a0 !important; }
+
+      .badge-confirmed {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        background: #d1fae5;
+        color: #065f46;
+        white-space: nowrap;
+      }
+
+      .badge-awaiting {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        background: #fef3c7;
+        color: #92400e;
+        white-space: nowrap;
+      }
+
+      .badge-not-required {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        background: #f1f5f9;
+        color: #64748b;
+        white-space: nowrap;
+      }
+
+      .badge-complimentary {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        background: #dbeafe;
+        color: #1e40af;
+        white-space: nowrap;
+      }
+
+      /* ── Card ── */
+      .card {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+      }
+
+      .card h4 { color: #0f2340 !important; }
+
+      /* ── Unbooked list ── */
+      .unbooked-list {
+        display: grid;
+        gap: 0;
+        margin-top: 4px;
+      }
+
+      .unbooked-item {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 13px 0;
+        border-top: 1px solid #e8eef6;
+      }
+
+      .unbooked-item:first-child { border-top: none; }
+
+      .unbooked-item-body { flex: 1; min-width: 0; }
+
+      .unbooked-item-body strong {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        color: #0f2340;
+        line-height: 1.3;
+      }
+
+      .unbooked-item-body small {
+        display: block;
+        font-size: 12px;
+        color: #6b85a0;
+        margin-top: 2px;
+        line-height: 1.4;
+      }
+
+      .unbooked-item-date {
+        font-size: 11px;
+        font-weight: 700;
+        color: #2a6096;
+        white-space: nowrap;
+        padding-top: 2px;
+        flex-shrink: 0;
+      }
+
+      /* ── Buttons ── */
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      /* ── Sub-branch nav links ── */
+      .nav-link-sub {
+        padding-left: 36px !important;
+        font-size: 0.85em !important;
+        opacity: 0.85;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+
+        <!-- Chrome bar — dots left, global nav right -->
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <nav class="chrome-nav">
+            <a class="chrome-nav-link" href="admin-dashboard.html">Dashboard</a>
+            <a class="chrome-nav-link" href="notifications.html">Notifications</a>
+          </nav>
+        </div>
+
+        <div class="shell">
+
+          <!-- Sidebar — operational tools only -->
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Travel Coordination</strong>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link active" href="travel.html">Travel</a>
+              <a class="nav-link nav-link-sub" href="travel-todo.html">To-do</a>
+              <a class="nav-link nav-link-sub" href="driver-list.html">Drivers</a>
+              <a class="nav-link nav-link-sub" href="transportation.html">Transportation</a>
+              <a class="nav-link nav-link-sub" href="travel-incidents.html">Incident log</a>
+              <a class="nav-link nav-link-sub" href="documents.html">Documents</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <!-- Main -->
+          <section class="main">
+
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Travel</span>
+                <h2>Upcoming Travel</h2>
+                <p>Journeys scheduled from today — confirm drivers, check parent status, and coordinate handoffs.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="school-liaison.html">School liaison log</a>
+                <a class="button-alt" href="documents.html">Permission templates</a>
+                <a class="button" href="travel-create.html">Create travel request</a>
+              </div>
+            </div>
+
+            <div class="cols-2">
+
+              <!-- Left: upcoming travel table — dynamic -->
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Student</th>
+                      <th>Type of Service</th>
+                      <th>Driver</th>
+                      <th>Route</th>
+                      <th>Parent Confirmation</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="upcoming-tbody"></tbody>
+                </table>
+              </div>
+
+              <!-- Right: unbooked transports -->
+              <div class="card">
+                <h4>Unbooked transports</h4>
+                <p style="font-size:13px; color:#6b85a0; margin-bottom:4px;">Transport requests with no driver assigned. Action in date order.</p>
+
+                <div class="unbooked-list">
+
+                  <div class="unbooked-item">
+                    <div class="unbooked-item-body">
+                      <strong>Chen Wei — Oundle School collection</strong>
+                      <small>Exeat start 28 Apr / train link Peterborough → Oxford / guardian to collect from Oxford station / no driver yet assigned</small>
+                    </div>
+                    <span class="unbooked-item-date">28 Apr</span>
+                  </div>
+
+                  <div class="unbooked-item">
+                    <div class="unbooked-item-body">
+                      <strong>Yuki Tanaka — Summer exeat return to CLC</strong>
+                      <small>Return 3 Jun / Osei family drop to Oxford station / CLC collection from station end — no driver confirmed</small>
+                    </div>
+                    <span class="unbooked-item-date">3 Jun</span>
+                  </div>
+
+                  <div class="unbooked-item">
+                    <div class="unbooked-item-body">
+                      <strong>Daniel Kim — Rugby School break-up collection</strong>
+                      <small>Summer holiday starts 2 Jul / Rugby School gate 12:00 / Brennan family pickup — no partner driver booked for leg</small>
+                    </div>
+                    <span class="unbooked-item-date">2 Jul</span>
+                  </div>
+
+                  <div class="unbooked-item">
+                    <div class="unbooked-item-body">
+                      <strong>Yuki Tanaka — Heathrow T3 airport transfer</strong>
+                      <small>Departure 26 Jul / Osei family to Oxford station, then guardian-arranged taxi to Heathrow T3 — not yet booked</small>
+                    </div>
+                    <span class="unbooked-item-date">26 Jul</span>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- /cols-2 -->
+
+          </section>
+        </div><!-- /shell -->
+      </div><!-- /app-frame -->
+    </main>
+  <script src="assets/db.js"></script>
+  <script>
+    function parseDateValue(dateStr) {
+      if (!dateStr) return 0;
+      var d = new Date(dateStr);
+      if (!isNaN(d)) return d.getTime();
+      var months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5,
+                     Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
+      var parts = dateStr.split(' ');
+      if (parts.length === 3) {
+        var day = parseInt(parts[0], 10);
+        var mon = months[parts[1]];
+        var yr  = parseInt(parts[2], 10);
+        if (!isNaN(day) && mon !== undefined && !isNaN(yr)) {
+          return new Date(yr, mon, day).getTime();
+        }
+      }
+      return 0;
+    }
+
+    function confirmationBadge(value) {
+      if (!value) return '<span class="badge-not-required">—</span>';
+      var v = value.toLowerCase();
+      if (v === 'confirmed') return '<span class="badge-confirmed">Confirmed</span>';
+      if (v === 'awaiting')  return '<span class="badge-awaiting">Awaiting</span>';
+      return '<span class="badge-not-required">Not required</span>';
+    }
+
+    var todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    var upcoming = getAllTransports().filter(function (t) {
+      return parseDateValue(t.date) >= todayStart.getTime();
+    });
+
+    upcoming.sort(function (a, b) {
+      return parseDateValue(a.date) - parseDateValue(b.date);
+    });
+
+    var tbody = document.getElementById('upcoming-tbody');
+    if (!upcoming.length) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:32px;color:#6b85a0;">No upcoming journeys scheduled.</td></tr>';
+    } else {
+      tbody.innerHTML = upcoming.map(function (t) {
+        var route = (t.startPoint || '—').split(',')[0].trim() +
+                    ' → ' +
+                    (t.destination || '—').split(',')[0].trim();
+        var svcBadge = t.serviceType === 'Complimentary'
+          ? '<span class="badge-complimentary">Complimentary</span>'
+          : (t.serviceType || '—');
+        return '<tr>' +
+          '<td><strong>' + (t.date || '—') + '</strong></td>' +
+          '<td>' + (t.time || '—') + '</td>' +
+          '<td>' + (t.studentName || '—') + '</td>' +
+          '<td>' + svcBadge + '</td>' +
+          '<td>' + (t.driverName  || '<em style="color:#9bafc4">TBC</em>') + '</td>' +
+          '<td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + route + '</td>' +
+          '<td>' + confirmationBadge(t.parentConfirmation) + '</td>' +
+          '<td style="display:flex; gap:6px;">' +
+            (t.permissionScreenshot ? '<button type="button" class="button-alt view-screenshot-btn" data-id="' + t.id + '" style="padding:4px 8px; font-size:0.75rem;">🖼️ View Evidence</button>' : '') +
+            '<button type="button" class="button-alt copy-share-btn" ' +
+              'data-student="' + String(t.studentName || '').replace(/"/g, '&quot;') + '" ' +
+              'data-date="'    + String(t.date        || '').replace(/"/g, '&quot;') + '" ' +
+              'data-time="'    + String(t.time        || '').replace(/"/g, '&quot;') + '" ' +
+              'data-start="'   + String(t.startPoint  || '').replace(/"/g, '&quot;') + '" ' +
+              'data-dest="'    + String(t.destination || '').replace(/"/g, '&quot;') + '" ' +
+              'data-driver="'  + String(t.driverName  || 'TBC').replace(/"/g, '&quot;') + '" ' +
+              'data-luggage="' + String(t.luggage     || '0').replace(/"/g, '&quot;') + '" ' +
+              'style="padding:4px 8px; font-size:0.75rem; min-width:105px;">📋 Copy Details</button>' +
+            '<a class="button-alt" href="travel-create.html?id=' + t.id + '" style="padding:4px 8px; font-size:0.75rem; color:#0f2340; border-color:#d5dce8; text-decoration:none;">✏️</a>' +
+            '<button type="button" class="button-alt delete-transport-btn" data-id="' + t.id + '" style="padding:4px 8px; font-size:0.75rem; color:#dc2626; border-color:#fecaca;">🗑️</button>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+
+      // ── Copy to Clipboard Logic ───────────────────────────────────────────
+      document.querySelectorAll('.copy-share-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var b   = this;
+          var msg = '✈️ *Travel Details for ' + b.getAttribute('data-student') + '*\n' +
+                    '*Date:* ' + b.getAttribute('data-date') + ' at ' + b.getAttribute('data-time') + '\n' +
+                    '*Route:* ' + b.getAttribute('data-start') + ' ➡️ ' + b.getAttribute('data-dest') + '\n' +
+                    '*Driver:* ' + b.getAttribute('data-driver') + '\n' +
+                    '*Luggage:* ' + b.getAttribute('data-luggage') + ' items\n\n' +
+                    'Please confirm receipt of these details. If any issues arise, please contact Oxford Guardians.';
+          navigator.clipboard.writeText(msg).then(function () {
+            var route = b.getAttribute('data-start') + ' → ' + b.getAttribute('data-dest');
+            var today = new Date();
+            var todayStr = today.getFullYear() + '-' +
+                           String(today.getMonth() + 1).padStart(2, '0') + '-' +
+                           String(today.getDate()).padStart(2, '0');
+            saveSchoolLog({
+              studentName: b.getAttribute('data-student'),
+              type: 'Travel Notification',
+              date: todayStr,
+              notes: 'Automated log: Travel arrangements for ' + route + ' sent to school.',
+              loggedAt: today.toISOString()
+            });
+            var orig = b.innerHTML;
+            b.innerHTML = '✅ Copied!';
+            b.style.background   = '#d1fae5';
+            b.style.borderColor  = '#065f46';
+            b.style.color        = '#065f46';
+            setTimeout(function () {
+              b.innerHTML = orig;
+              b.style.background  = '';
+              b.style.borderColor = '';
+              b.style.color       = '';
+            }, 2000);
+          });
+        });
+      });
+
+      // ── View Screenshot Logic ─────────────────────────────────────────────
+      document.querySelectorAll('.view-screenshot-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var tId    = this.getAttribute('data-id');
+          var record = getAllTransports().find(function (x) { return x.id === tId; });
+          if (record && record.permissionScreenshot) {
+            var win = window.open('');
+            if (win) {
+              win.document.write(
+                '<html><head><title>Evidence Preview</title></head>' +
+                '<body style="margin:0;display:flex;justify-content:center;align-items:center;background:#0f2340;">' +
+                '<img src="' + record.permissionScreenshot + '" style="max-width:100%;max-height:100vh;box-shadow:0 10px 40px rgba(0,0,0,0.5);"/>' +
+                '</body></html>'
+              );
+            } else {
+              alert('Please allow popups to view the evidence.');
+            }
+          }
+        });
+      });
+    }
+
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('delete-transport-btn')) {
+        if (!confirm('Are you sure you want to permanently delete this trip?')) return;
+        var id = e.target.getAttribute('data-id');
+        var transports = getAllTransports().filter(function(t) { return t.id !== id; });
+        saveAllTransports(transports);
+        window.location.reload();
+      }
+    });
+  </script>
+  </body>
+</html>

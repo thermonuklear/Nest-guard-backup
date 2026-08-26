@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log Welfare Note — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+    <style>
+      .form-grid label {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-3);
+        font-size: 0.76rem;
+        margin-bottom: 5px;
+      }
+      .form-grid input,
+      .form-grid select,
+      .form-grid textarea {
+        width: 100%;
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--ink);
+        background: #faf6ee;
+        border: 1px solid #d8cbb2;
+        border-radius: 14px;
+        padding: 11px 14px;
+        appearance: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+      }
+      .form-grid input:focus,
+      .form-grid select:focus,
+      .form-grid textarea:focus {
+        outline: none;
+        border-color: #2a6096;
+        box-shadow: 0 0 0 3px rgba(42, 96, 150, 0.12);
+      }
+      .form-grid input:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .form-grid select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b85a0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 36px;
+        cursor: pointer;
+      }
+      .form-grid textarea { min-height: 140px; resize: vertical; }
+      .form-grid > div { display: grid; gap: 0; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="section" style="padding:28px;">
+        <span class="eyebrow">Create welfare note</span>
+        <h2 id="page-heading">Log a welfare contact</h2>
+        <p class="lead">Every welfare contact becomes a timestamped record. If something escalates later, this is the evidence trail.</p>
+        <div class="note brutal" style="margin:18px 0;">
+          <h4>Brutal product note</h4>
+          <p>The PRD never specifies what a welfare note contains. This form forces structure: who was contacted, how, what was said, what happens next. If your welfare log is just a free-text box, you're building a liability not a safeguarding system.</p>
+        </div>
+        <form class="form-grid" id="welfare-form" novalidate>
+
+          <div>
+            <label for="f-student">Student</label>
+            <input type="text" id="f-student" disabled />
+          </div>
+
+          <div>
+            <label for="f-note-type">Note type</label>
+            <select id="f-note-type">
+              <option>Routine check-in</option>
+              <option selected>Follow-up contact</option>
+              <option>Post-travel welfare call</option>
+              <option>Post-homestay stay check</option>
+              <option>School-initiated contact</option>
+              <option>Concern response</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="f-method">Contact method</label>
+            <select id="f-method">
+              <option selected>Phone call</option>
+              <option>In-person visit</option>
+              <option>Video call</option>
+              <option>School email relay</option>
+              <option>Homestay relay</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="f-date">Date and time</label>
+            <input type="text" id="f-date" placeholder="e.g. 08 Apr 2026 08:30" />
+          </div>
+
+          <div>
+            <label for="f-owner">Owner</label>
+            <select id="f-owner">
+              <option selected>Jay Ray (DSL)</option>
+              <option>Zuko Fire</option>
+              <option>Priya Shah</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="f-duration">Duration</label>
+            <input type="text" id="f-duration" placeholder="e.g. 12 minutes" />
+          </div>
+
+          <div class="form-span-2">
+            <label for="f-title">Note title</label>
+            <input type="text" id="f-title" placeholder="e.g. Pastoral follow-up after homesickness pattern flagged" required />
+          </div>
+
+          <div class="form-span-2">
+            <label for="f-summary">Summary</label>
+            <textarea id="f-summary" placeholder="What was discussed, observed, or agreed…" required></textarea>
+          </div>
+
+          <div>
+            <label for="f-outcome">Outcome</label>
+            <select id="f-outcome">
+              <option>No further action</option>
+              <option selected>Follow-up scheduled</option>
+              <option>Escalate to low-level concern</option>
+              <option>Escalate to DSL concern</option>
+              <option>Refer to school safeguarding lead</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="f-next-action">Next action due</label>
+            <input type="text" id="f-next-action" placeholder="e.g. 15 Apr 2026" />
+          </div>
+
+          <div class="form-span-2">
+            <label for="f-school-note">School liaison note (optional)</label>
+            <textarea id="f-school-note" style="min-height:70px;" placeholder="Any notes for the school contact…"></textarea>
+          </div>
+
+        </form>
+        <div class="action-row" style="margin-top:18px;">
+          <a class="button-alt" id="cancel-link" href="welfare-notes.html">Cancel</a>
+          <a class="button-alt" href="concerns-low-level.html">Escalate to low-level concern instead</a>
+          <button type="button" class="button" id="save-btn">Save welfare note</button>
+        </div>
+      </section>
+    </main>
+
+    <script>
+    (function () {
+      var params    = new URLSearchParams(window.location.search);
+      var studentId = params.get('id') || '';
+
+      // Populate student field and page heading
+      var student = studentId ? getStudentById(studentId) : null;
+      var studentName = student
+        ? student.firstName + ' ' + student.lastName
+        : (studentId || 'Unknown student');
+
+      document.getElementById('f-student').value = student
+        ? studentName + ' — ' + (student.school || '') + ' — ' + (student.schoolYear || '')
+        : studentName;
+
+      document.getElementById('page-heading').textContent =
+        'Log a welfare contact for ' + studentName;
+
+      // Update cancel link to go back to the student profile if we have an id
+      if (studentId) {
+        document.getElementById('cancel-link').href = 'student-profile.html?id=' + studentId;
+      }
+
+      // Default date to today
+      var now = new Date();
+      var pad = function (n) { return String(n).padStart(2, '0'); };
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      document.getElementById('f-date').value =
+        pad(now.getDate()) + ' ' + months[now.getMonth()] + ' ' + now.getFullYear()
+        + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+
+      document.getElementById('save-btn').addEventListener('click', function () {
+        var title   = document.getElementById('f-title').value.trim();
+        var summary = document.getElementById('f-summary').value.trim();
+
+        if (!title) {
+          alert('Please enter a note title before saving.');
+          document.getElementById('f-title').focus();
+          return;
+        }
+        if (!summary) {
+          alert('Please enter a summary before saving.');
+          document.getElementById('f-summary').focus();
+          return;
+        }
+
+        var dateRaw    = document.getElementById('f-date').value.trim();
+        var noteType   = document.getElementById('f-note-type').value;
+        var method     = document.getElementById('f-method').value;
+        var owner      = document.getElementById('f-owner').value;
+        var duration   = document.getElementById('f-duration').value.trim();
+        var outcome    = document.getElementById('f-outcome').value;
+        var nextAction = document.getElementById('f-next-action').value.trim();
+        var schoolNote = document.getElementById('f-school-note').value.trim();
+
+        // Parse date to ISO YYYY-MM-DD; fall back to today if unparseable
+        var parsedDate = new Date(dateRaw);
+        var isoDate = isNaN(parsedDate.getTime())
+          ? new Date().toISOString().slice(0, 10)
+          : parsedDate.toISOString().slice(0, 10);
+
+        var isEscalatedToDSL = outcome === 'Escalate to DSL concern';
+        var isLowLevel       = outcome === 'Escalate to low-level concern';
+
+        var noteId     = 'WL' + Date.now();
+        var concernRef = null;
+
+        if (isEscalatedToDSL || isLowLevel) {
+          concernRef = generateConcernId();
+          var concern = {
+            id:            concernRef,
+            subjectName:   student ? (student.firstName + ' ' + student.lastName) : (studentId || 'Unknown Student'),
+            subjectRole:   'Student',
+            subjectId:     studentId,
+            tier:          isLowLevel ? 'low-level' : 'escalated',
+            category:      isLowLevel ? 'Welfare / Low-level' : 'Safeguarding / DSL Escalation',
+            title:         title,
+            description:   summary + '\n\nLogged during welfare contact by ' + owner + ' (' + method + ').\nNext action: ' + (nextAction || 'Pending DSL triage') + (schoolNote ? '\nSchool note: ' + schoolNote : ''),
+            source:        'Welfare note (' + owner + ')',
+            loggedDate:    isoDate,
+            status:        isLowLevel ? 'Monitoring' : 'Pending triage',
+            reviewDate:    nextAction || '',
+            welfareNoteId: noteId
+          };
+          saveConcern(concern);
+        }
+
+        var details = 'Note type: '       + noteType
+          + '\nContact method: '           + method
+          + '\nOwner: '                    + owner
+          + (duration   ? '\nDuration: '          + duration   : '')
+          + '\nSummary: '                  + summary
+          + '\nOutcome: '                  + outcome
+          + (concernRef ? '\nLinked Concern: '    + concernRef : '')
+          + (nextAction ? '\nNext action due: '   + nextAction : '')
+          + (schoolNote ? '\nSchool liaison: '    + schoolNote : '');
+
+        saveWelfareLog({
+          id:        noteId,
+          studentId: studentId,
+          type:      'staff-note',
+          date:      isoDate,
+          summary:   title,
+          details:   details
+        });
+
+        if (concernRef) {
+          alert('Welfare note logged and formal concern created (' + concernRef + ') dispatched to DSL triage.');
+        }
+
+        window.location.href = 'student-profile.html?id=' + studentId;
+      });
+    }());
+    </script>
+  </body>
+</html>

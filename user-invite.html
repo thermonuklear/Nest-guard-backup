@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invite User — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small>Route /admin/users/invite</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Invite User</strong></div>
+            <div class="nav-group">
+              <div class="nav-label">Access</div>
+              <a class="nav-link active" href="users.html">Users & roles</a>
+              <a class="nav-link" href="login.html">Login gateway</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Role previews</div>
+              <a class="nav-link" href="parent-portal.html">Parent portal</a>
+              <a class="nav-link" href="student-portal.html">Student portal</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Invite flow</span>
+                <h2>New accounts should be created by relationship, not by free-form sign-up.</h2>
+                <p>This example invites Emma Sanz to the parent portal for Lucia Herrera. The invite captures role, linked person, expiry, and who approved access.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="users.html">Cancel</a>
+                <a class="button" href="user-invite-success.html">Send invite</a>
+              </div>
+            </div>
+
+            <div class="banner">
+              <h4>Why this matters</h4>
+              <p>Guardian platforms handle children and safeguarding records. The system should never allow random account creation without a linked student or staff relationship.</p>
+            </div>
+
+            <div class="panel" style="padding: 22px;">
+              <div class="form-grid">
+                <div class="field"><small>Invitee name</small><strong>Emma Sanz</strong></div>
+                <div class="field"><small>Email address</small><strong>emma.sanz@example.es</strong></div>
+                <div class="field"><small>Role</small><strong>Parent</strong></div>
+                <div class="field"><small>Linked student</small><strong>Lucia Herrera</strong></div>
+                <div class="field"><small>Relationship</small><strong>Mother / legal guardian</strong></div>
+                <div class="field"><small>Invited by</small><strong>Zuko Fire</strong></div>
+                <div class="field"><small>Invite expiry</small><strong>11 Apr 2026 / 17:00 UK time</strong></div>
+                <div class="field"><small>First-login policy</small><strong>Password creation required / audit log starts on acceptance</strong></div>
+                <div class="field"><small>Allowed visibility</small><strong>Lucia status, travel, consent, documents, emergency contacts</strong></div>
+                <div class="field"><small>Blocked visibility</small><strong>Other students, staff records, compliance data</strong></div>
+                <div class="field form-span-2"><small>Invite note</small><div class="textarea-box">Emma is joining ahead of Lucia's arrival. Parent portal should open directly into travel readiness and onboarding documents, not generic marketing copy.</div></div>
+              </div>
+              <div class="action-row">
+                <a class="button" href="user-invite-success.html">Issue invite</a>
+                <a class="button-alt" href="first-login-setup.html">Preview first login</a>
+                <a class="button-alt" href="users.html">Back to user list</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Transport — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Global colour overrides ── */
+      body, .page, .shell, main {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important;
+      }
+
+      /* ── Chrome ── */
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-right: 16px !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .chrome-nav-link {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        transition: background 0.15s, color 0.15s;
+        white-space: nowrap;
+      }
+
+      .chrome-nav-link:hover {
+        background: rgba(15, 35, 64, 0.07);
+        color: #0f2340;
+      }
+
+      /* ── Sidebar ── */
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+      }
+
+      .nav-link-sub {
+        padding-left: 36px !important;
+        font-size: 0.85em !important;
+        opacity: 0.85;
+      }
+
+      /* ── Main ── */
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+      }
+
+      h2, h3, h4 { color: #0f2340 !important; }
+      p { color: #3b536e; }
+      .eyebrow { color: #2a6096 !important; }
+      .toolbar p { color: #3b536e !important; }
+
+      /* ── Buttons ── */
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      /* ── Form controls ── */
+      .field-input,
+      .field-select,
+      .field-textarea {
+        width: 100%;
+        margin-top: 6px;
+        padding: 10px 12px;
+        border: 1px solid #d5dce8 !important;
+        border-radius: 10px;
+        background: #ffffff !important;
+        color: #0f2340;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+        box-sizing: border-box;
+      }
+
+      .field-input::placeholder,
+      .field-textarea::placeholder { color: #9bafc4; }
+
+      .field-input:focus,
+      .field-select:focus,
+      .field-textarea:focus {
+        border-color: #0f2340 !important;
+        box-shadow: 0 0 0 3px rgba(15,35,64,0.1);
+      }
+
+      .field-input[readonly] {
+        background: #f4f7fb !important;
+        color: #3b536e;
+        cursor: default;
+      }
+
+      .field-select { appearance: none; cursor: pointer; }
+      .field-textarea { resize: vertical; min-height: 80px; }
+
+      /* ── Form layout ── */
+      .form-section { margin-bottom: 28px; }
+
+      .form-section-title {
+        font-family: "Outfit", sans-serif;
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #2a6096;
+        margin-bottom: 14px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #e8eef6;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .form-grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 14px;
+      }
+
+      .form-span-2 { grid-column: span 2; }
+      .form-span-3 { grid-column: span 3; }
+
+      .field small {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #3b536e;
+      }
+
+      .field-hint {
+        font-size: 0.76rem;
+        color: #6b85a0;
+        margin-top: 4px;
+      }
+
+      /* ── Validation ── */
+      .form-error {
+        display: none;
+        color: #7f3034;
+        font-size: 0.88rem;
+        font-weight: 600;
+        margin-top: 14px;
+        padding: 10px 14px;
+        background: #f8fafc;
+        border: 1px solid #0f2340;
+        border-radius: 8px;
+      }
+
+      .field-error .field-input,
+      .field-error .field-select {
+        border-color: #7f3034 !important;
+        box-shadow: 0 0 0 3px rgba(127,48,52,0.1);
+      }
+
+      /* ── Panel ── */
+      .create-panel {
+        background: #ffffff !important;
+        border: 1px solid #d5dce8 !important;
+        border-radius: 16px;
+        padding: 28px;
+        margin: 0 0 24px;
+      }
+
+      .action-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding-top: 8px;
+      }
+
+      /* ── ID chip ── */
+      .id-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #e8eef6;
+        border: 1px solid #d5dce8;
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-family: "Outfit", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #0f2340;
+        margin-bottom: 24px;
+      }
+
+      .id-chip span {
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: #6b85a0;
+      }
+
+      @media (max-width: 760px) {
+        .form-grid, .form-grid-3 { grid-template-columns: 1fr; }
+        .form-span-2, .form-span-3 { grid-column: span 1; }
+      }
+    </style>
+  </head>
+  <body>
+
+  <main class="page">
+    <div class="app-frame">
+
+      <!-- Chrome bar -->
+      <div class="chrome">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <nav class="chrome-nav">
+          <a class="chrome-nav-link" href="admin-dashboard.html">Dashboard</a>
+          <a class="chrome-nav-link" href="notifications.html">Notifications</a>
+        </nav>
+      </div>
+
+      <div class="shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="brand">
+            <small>Oxford Guardians</small>
+            <strong>Travel Coordination</strong>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Operations</div>
+            <a class="nav-link" href="travel.html">Travel</a>
+            <a class="nav-link nav-link-sub" href="travel-todo.html">To-do</a>
+            <a class="nav-link nav-link-sub" href="driver-list.html">Drivers</a>
+            <a class="nav-link nav-link-sub active" href="transportation.html">Transportation</a>
+            <a class="nav-link nav-link-sub" href="documents.html">Documents</a>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">Compliance</div>
+            <a class="nav-link" href="compliance.html">AEGIS control room</a>
+          </div>
+        </aside>
+
+        <!-- Main content -->
+        <section class="main">
+          <div class="toolbar">
+            <div>
+              <span class="eyebrow">Transportation</span>
+              <h2>Create transport record</h2>
+              <p>Log a journey — exeat, holiday, or airport transfer. Required fields are marked with *.</p>
+            </div>
+            <div class="toolbar-actions">
+              <a class="button-alt" href="transportation.html">Cancel</a>
+            </div>
+          </div>
+
+          <div class="create-panel">
+            <form id="transport-form" novalidate>
+
+              <!-- Auto-generated ID -->
+              <div class="id-chip">
+                <span>Transport ID</span>
+                <span id="transport-id-display">—</span>
+              </div>
+              <input type="hidden" id="transport-id" />
+
+              <!-- ── Section 1: Journey Details ── -->
+              <div class="form-section">
+                <div class="form-section-title">Journey Details</div>
+                <div class="form-grid">
+                  <div class="field" id="field-date">
+                    <small>Date of Journey *</small>
+                    <input class="field-input" type="date" id="journey-date" />
+                  </div>
+                  <div class="field" id="field-time">
+                    <small>Time of Journey *</small>
+                    <input class="field-input" type="time" id="journey-time" />
+                  </div>
+                  <div class="field" id="field-start">
+                    <small>Starting Point *</small>
+                    <input class="field-input" type="text" id="start-point" placeholder="e.g. Rugby School, Lawrence Sheriff St, Rugby CV22 5EH" />
+                  </div>
+                  <div class="field" id="field-dest">
+                    <small>Destination *</small>
+                    <input class="field-input" type="text" id="destination" placeholder="e.g. Brennan Family, Cambridge" />
+                  </div>
+                </div>
+                <div class="form-grid-3" style="margin-top:14px;">
+                  <div class="field">
+                    <small>Number of Passengers</small>
+                    <input class="field-input" type="number" id="passengers" min="1" max="8" placeholder="1" />
+                  </div>
+                  <div class="field">
+                    <small>Number of Luggage Items</small>
+                    <input class="field-input" type="number" id="luggage" min="0" max="20" placeholder="1" />
+                  </div>
+                  <div class="field">
+                    <small>Number of Miles</small>
+                    <input class="field-input" type="number" id="miles" min="0" placeholder="e.g. 62" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Section 2: People ── -->
+              <div class="form-section">
+                <div class="form-section-title">People</div>
+                <div class="form-grid">
+                  <div class="field" id="field-student">
+                    <small>Name of Student *</small>
+                    <select class="field-select" id="student-name">
+                      <option value="">Select a student…</option>
+                    </select>
+                  </div>
+                  <div class="field" id="field-driver">
+                    <small>Name of Driver</small>
+                    <select class="field-select" id="driver-name">
+                      <option value="">Select a driver…</option>
+                    </select>
+                  </div>
+                  <div class="field form-span-2">
+                    <small>Confirmation from Parents</small>
+                    <select class="field-select" id="parent-confirmation">
+                      <option value="Awaiting">Awaiting</option>
+                      <option value="Confirmed">Confirmed</option>
+                      <option value="Not required">Not required</option>
+                    </select>
+                  </div>
+                  <div class="field form-span-2" id="field-permission-screenshot" style="display:none; margin-top:10px;">
+                    <small>Permission Evidence (Screenshot)</small>
+                    <input type="file" class="field-input" id="permission-screenshot" accept="image/*" style="padding:8px 12px; background:#faf6ee !important;" />
+                    <p class="field-hint">Upload a screenshot of the WhatsApp or email confirmation.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Section 3: Financials ── -->
+              <div class="form-section">
+                <div class="form-section-title">Financials</div>
+                <div class="form-grid">
+                  <div class="field">
+                    <small>Cost (£)</small>
+                    <input class="field-input" type="text" id="cost" placeholder="e.g. £34.10" />
+                    <p class="field-hint">Enter as £34.10 or 34.10</p>
+                  </div>
+                  <div class="field">
+                    <small>Revenue (£)</small>
+                    <input class="field-input" type="text" id="revenue" placeholder="e.g. £52.00" />
+                    <p class="field-hint">Enter as £52.00 or 52.00</p>
+                  </div>
+                  <div class="field form-span-2" id="field-service-type">
+                    <label class="field-label" for="service-type">Type of Service</label>
+                    <select class="field-select" id="service-type">
+                      <option value="Chargeable">Chargeable</option>
+                      <option value="Complimentary">Complimentary</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Submit ── -->
+              <div class="action-row">
+                <button type="submit" class="button">Save transport record</button>
+                <a class="button-alt" href="transportation.html">Cancel</a>
+              </div>
+              <p class="form-error" id="form-error">Please fill in all required fields before saving.</p>
+
+            </form>
+          </div>
+
+        </section>
+      </div><!-- /shell -->
+    </div><!-- /app-frame -->
+  </main>
+
+  <script src="assets/db.js"></script>
+  <script>
+    // ── Generate Transport ID on load ──────────────────────────────────────────
+    function generateTransportId() {
+      var digits = Math.floor(100000 + Math.random() * 900000).toString();
+      return 'TR' + digits;
+    }
+
+    // ── Populate dropdowns ─────────────────────────────────────────────────────
+    var studentSelect = document.getElementById('student-name');
+    var driverSelect  = document.getElementById('driver-name');
+
+    OG_DB.getAllStudents().forEach(function (s) {
+      var opt = document.createElement('option');
+      opt.value       = s.id;
+      opt.textContent = s.firstName + ' ' + s.lastName + ' (' + s.id + ')';
+      studentSelect.appendChild(opt);
+    });
+
+    OG_DB.getAllDrivers().forEach(function (d) {
+      var opt = document.createElement('option');
+      opt.value       = d.id;
+      opt.textContent = d.firstName + ' ' + d.lastName + ' (' + d.id + ')';
+      driverSelect.appendChild(opt);
+    });
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var editId = urlParams.get('id');
+    if (editId) {
+      var transport = getTransportById(editId);
+      if (transport) {
+        // Change header to "Edit Mode"
+        document.querySelector('h2').textContent = 'Edit transportation record';
+        document.getElementById('transport-id').value = transport.id;
+        document.getElementById('transport-id-display').textContent = transport.id;
+        // Helper to convert "14 May 2026" back to "2026-05-14" for the calendar input
+        function reverseFmtDate(dateStr) {
+          if (!dateStr) return '';
+          var months = { Jan:'01', Feb:'02', Mar:'03', Apr:'04', May:'05', Jun:'06', Jul:'07', Aug:'08', Sep:'09', Oct:'10', Nov:'11', Dec:'12' };
+          var p = dateStr.split(' ');
+          if (p.length === 3) return p[2] + '-' + months[p[1]] + '-' + p[0].padStart(2, '0');
+          return '';
+        }
+        // Populate fields
+        document.getElementById('journey-date').value = reverseFmtDate(transport.date);
+        document.getElementById('journey-time').value = transport.time;
+        document.getElementById('student-name').value = transport.studentId || '';
+        document.getElementById('driver-name').value = transport.driverId || '';
+        document.getElementById('parent-confirmation').value = transport.parentConfirmation || 'Awaiting';
+        document.getElementById('start-point').value = transport.startPoint || '';
+        document.getElementById('destination').value = transport.destination || '';
+        document.getElementById('passengers').value = transport.passengers || '';
+        document.getElementById('luggage').value = transport.luggage || '';
+        document.getElementById('miles').value = transport.miles || '';
+        document.getElementById('cost').value = (transport.cost || '').replace('£', '');
+        document.getElementById('revenue').value = (transport.revenue || '').replace('£', '');
+        document.getElementById('service-type').value = transport.serviceType || 'Chargeable';
+        // Load existing screenshot if one exists
+        if (transport.parentConfirmation === 'Confirmed') {
+          var screenshotField = document.getElementById('field-permission-screenshot');
+          screenshotField.style.display = 'block';
+          if (transport.permissionScreenshot) {
+            window.screenshotBase64 = transport.permissionScreenshot;
+            var hint = screenshotField.querySelector('.field-hint');
+            hint.innerHTML = '<span style="color:#16a34a; font-weight:600;">✓ Existing screenshot loaded.</span> Upload a new file below if you wish to replace it.';
+          }
+        }
+      }
+    } else {
+      // Regular "Create Mode"
+      var newId = generateTransportId();
+      var existingIds = getAllTransports().map(function (t) { return t.id; });
+      while (existingIds.indexOf(newId) !== -1) {
+        newId = generateTransportId();
+      }
+      document.getElementById('transport-id').value = newId;
+      document.getElementById('transport-id-display').textContent = newId;
+    }
+
+    // ── Permission Screenshot Logic ────────────────────────────────────────────
+    var parentConfSelect  = document.getElementById('parent-confirmation');
+    var screenshotField   = document.getElementById('field-permission-screenshot');
+    var screenshotInput   = document.getElementById('permission-screenshot');
+    var screenshotBase64  = '';
+
+    parentConfSelect.addEventListener('change', function () {
+      screenshotField.style.display = this.value === 'Confirmed' ? 'block' : 'none';
+    });
+
+    screenshotInput.addEventListener('change', function () {
+      var file = this.files[0];
+      if (file) {
+        var reader = new FileReader();
+        reader.onload = function (e) { screenshotBase64 = e.target.result; };
+        reader.readAsDataURL(file);
+      } else {
+        screenshotBase64 = '';
+      }
+    });
+
+    // ── Format date for display (ISO → "14 Feb 2026") ─────────────────────────
+    function fmtDate(iso) {
+      if (!iso) return '';
+      var d = new Date(iso + 'T00:00:00');
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    // ── Format time for display ("15:30" → "15:30") ───────────────────────────
+    function fmtTime(t) {
+      return t || '';
+    }
+
+    // ── Ensure £ prefix ───────────────────────────────────────────────────────
+    function fmtMoney(raw) {
+      if (!raw) return '';
+      raw = raw.trim();
+      return raw.charAt(0) === '£' ? raw : '£' + raw;
+    }
+
+    // ── Form submission ────────────────────────────────────────────────────────
+    document.getElementById('transport-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var required = [
+        { id: 'journey-date', wrap: 'field-date'    },
+        { id: 'journey-time', wrap: 'field-time'    },
+        { id: 'start-point',  wrap: 'field-start'   },
+        { id: 'destination',  wrap: 'field-dest'    },
+        { id: 'student-name', wrap: 'field-student' }
+      ];
+
+      // Clear previous errors
+      required.forEach(function (f) {
+        var wrap = document.getElementById(f.wrap);
+        if (wrap) wrap.classList.remove('field-error');
+      });
+
+      var valid = true;
+      required.forEach(function (f) {
+        var el = document.getElementById(f.id);
+        if (!el || !el.value.trim()) {
+          valid = false;
+          var wrap = document.getElementById(f.wrap);
+          if (wrap) wrap.classList.add('field-error');
+        }
+      });
+
+      var errorMsg = document.getElementById('form-error');
+      if (!valid) { errorMsg.style.display = 'block'; return; }
+      errorMsg.style.display = 'none';
+
+      function val(id) {
+        var el = document.getElementById(id);
+        return el ? el.value.trim() : '';
+      }
+
+      var milesRaw  = parseInt(val('miles'), 10);
+      var passRaw   = parseInt(val('passengers'), 10);
+      var lugRaw    = parseInt(val('luggage'), 10);
+
+      var newTransport = {
+        id:                 document.getElementById('transport-id').value,
+        date:               fmtDate(val('journey-date')),
+        time:               fmtTime(val('journey-time')),
+        studentId:          val('student-name'),
+        studentName:        studentSelect.value ? studentSelect.options[studentSelect.selectedIndex].text.split(' (')[0] : '',
+        driverId:           val('driver-name'),
+        driverName:         driverSelect.value ? driverSelect.options[driverSelect.selectedIndex].text.split(' (')[0] : '',
+        parentConfirmation: val('parent-confirmation') || 'Awaiting',
+        startPoint:         val('start-point'),
+        destination:        val('destination'),
+        passengers:         isNaN(passRaw) ? 1 : passRaw,
+        luggage:            isNaN(lugRaw)  ? 0 : lugRaw,
+        miles:              isNaN(milesRaw) ? 0 : milesRaw,
+        cost:               fmtMoney(val('cost')),
+        revenue:            fmtMoney(val('revenue')),
+        serviceType:         document.getElementById('service-type').value,
+        permissionScreenshot: screenshotBase64 || window.screenshotBase64 || ''
+      };
+
+      saveTransport(newTransport);
+      window.location.href = 'transportation.html';
+    });
+  </script>
+
+  </body>
+</html>

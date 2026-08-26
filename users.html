@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users & Roles — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small>Route /admin/users</small>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Admin Console</strong></div>
+
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+              <a class="nav-link" href="reports.html">Reports</a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Access</div>
+              <a class="nav-link active" href="users.html">Users &amp; roles</a>
+              <a class="nav-link nav-link-sub" href="students.html">Students</a>
+              <a class="nav-link nav-link-sub" href="staff-list.html">Staff</a>
+              <a class="nav-link nav-link-sub" href="drivers.html">Drivers</a>
+              <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
+              <a class="nav-link nav-link-sub" href="parent-list.html">Parents</a>
+              <a class="nav-link nav-link-sub" href="contracts.html">Contracts</a>
+              <a class="nav-link nav-link-sub" href="agents.html">Agents</a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+
+              <a class="nav-link" href="exeats.html">Exeats</a>
+              <a class="nav-link" href="finances.html">Finances</a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Safeguarding</div>
+              <a class="nav-link" href="welfare-notes.html">Welfare notes</a>
+              <a class="nav-link" href="concerns-dashboard.html">Concerns Dashboard</a>
+              <a class="nav-link" href="emergency-procedures.html">Emergency</a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Access control</span>
+                <h2>Invites, roles, and locked accounts need their own home.</h2>
+                <p>This is where admin staff manage who gets in, what they can see, and which accounts need intervention. If this stays hidden inside generic settings, safeguarding operations will drift.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="admin-dashboard.html">Back to dashboard</a>
+                <a class="button" href="user-invite.html">Invite user</a>
+              </div>
+            </div>
+
+            <div class="banner amber">
+              <h4>Brutal product note</h4>
+              <p>The PRD treats authentication like a checkbox. In reality, invite expiry, role boundaries, password reset, and lockout review are operational workflows with audit consequences.</p>
+            </div>
+
+            <div class="metrics">
+              <article class="metric featured">
+                <h4>Total active accounts</h4>
+                <div class="metric-value" id="dynamic-total-value">Loading...</div>
+                <p class="metric-meta" id="dynamic-total-breakdown">Calculating accounts...</p>
+              </article>
+              <article class="metric">
+                <h4>Pending invites</h4>
+                <div class="metric-value">3</div>
+                <p class="metric-meta">2 parent / 1 student / oldest expires in 48 hours</p>
+              </article>
+              <article class="metric">
+                <h4>Locked accounts</h4>
+                <div class="metric-value">1</div>
+                <p class="metric-meta">Priya Shah requires identity check before unlock</p>
+              </article>
+              <article class="metric">
+                <h4>Password resets today</h4>
+                <div class="metric-value">2</div>
+                <p class="metric-meta">1 parent self-service / 1 admin-triggered</p>
+              </article>
+            </div>
+
+            <div class="cols-2">
+              <div>
+                <div class="inline-links">
+                  <a class="link-pill" href="user-role-edit.html">Edit Priya's role</a>
+                  <a class="link-pill" href="user-invite.html">Invite Emma properly</a>
+                  <a class="link-pill" href="password-reset-request.html">Preview reset request</a>
+                  <a class="link-pill" href="account-lockout.html">Preview lockout state</a>
+                </div>
+              </div>
+              <div>
+                <div class="card">
+                  <h4>Access design rules</h4>
+                  <div class="list">
+                    <div class="list-item"><strong>Parents only see their linked children</strong><small>No global student directory, no compliance pages, no finance drift.</small></div>
+                    <div class="list-item"><strong>Students get safety-first access</strong><small>Emergency contact, check-ins, concern reporting, and travel visibility.</small></div>
+                    <div class="list-item"><strong>Admin roles are split on purpose</strong><small>DSL, operations, and coordinators should not all receive the same powers.</small></div>
+                  </div>
+                </div>
+                <div class="card">
+                  <h4>Pending access events</h4>
+                  <div class="timeline">
+                    <div class="timeline-item">
+                      <time>09 Apr</time>
+                      <div>
+                        <strong>Invite issued to Emma Sanz</strong>
+                        <p>Parent account linked to Lucia Herrera. Expires 11 Apr at 17:00 UK time.</p>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <time>Today</time>
+                      <div>
+                        <strong>Lockout triggered for Priya Shah</strong>
+                        <p>Five failed attempts from one device. Admin review required before unlock or forced reset.</p>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <time>Today</time>
+                      <div>
+                        <strong>Password reset requested by Isabel Herrera</strong>
+                        <p>Self-service email sent. Token expires at 09:14 tomorrow.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <h4>Recommended next routes</h4>
+                  <div class="inline-links">
+                    <a class="link-pill" href="user-invite-success.html">Invite success</a>
+                    <a class="link-pill" href="first-login-setup.html">First login setup</a>
+                    <a class="link-pill" href="password-reset-sent.html">Reset sent state</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  <script src="assets/db.js"></script>
+  <script>
+    function updateAccountTally() {
+      var staffCount   = getAllStaff().length;
+      var parentsCount = getAllParents().length;
+      var studentsCount = getAllStudents().length;
+      var driversCount = (typeof getAllDrivers === 'function') ? getAllDrivers().length : 0;
+      var hostsCount   = (typeof getAllHosts === 'function') ? getAllHosts().length : 0;
+
+      var total = staffCount + parentsCount + studentsCount + driversCount + hostsCount;
+
+      document.getElementById('dynamic-total-value').textContent = total;
+
+      var breakdown = staffCount + ' staff / ' +
+                      parentsCount + ' parents / ' +
+                      studentsCount + ' students / ' +
+                      driversCount + ' drivers / ' +
+                      hostsCount + ' hosts';
+
+      document.getElementById('dynamic-total-breakdown').textContent = breakdown;
+    }
+
+    updateAccountTally();
+  </script>
+  </body>
+</html>

@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VAT Reclamation — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+      /* ── Global colour overrides ── */
+      body, .page, .shell {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+
+      .app-frame {
+        background: #f8fafc !important;
+        border-color: #d5dce8 !important;
+        box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
+      }
+
+      /* ── Chrome bar ── */
+      .chrome {
+        background: #e8eef6 !important;
+        border-bottom-color: #d5dce8 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-right: 16px !important;
+      }
+
+      .chrome small { color: #3b536e !important; }
+      .dots span    { background: #7b9abf !important; }
+
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .chrome-nav-link {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        transition: background 0.15s, color 0.15s;
+        white-space: nowrap;
+      }
+
+      .chrome-nav-link:hover {
+        background: rgba(15, 35, 64, 0.07);
+        color: #0f2340;
+      }
+
+      /* ── Sidebar ── */
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+      }
+
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+
+      .nav-label { color: #7b9abf !important; }
+      .nav-link  { color: #c8d8ee !important; border-color: transparent !important; }
+      .nav-link:hover { background: rgba(255,255,255,0.07) !important; color: #e8f0fa !important; }
+      .nav-link.active {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.14) !important;
+        color: #e8f0fa !important;
+        box-shadow: 0 0 10px rgba(127, 179, 211, 0.35), 0 0 3px rgba(255,255,255,0.12) !important;
+      }
+
+      .nav-link-sub {
+        padding-left: 36px !important;
+        font-size: 0.85em !important;
+        opacity: 0.85;
+      }
+
+      /* ── Main ── */
+      .main {
+        background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
+        overflow-y: auto;
+      }
+
+      h2, h3, h4 { color: #0f2340 !important; }
+      p           { color: #3b536e; }
+      .eyebrow    { color: #2a6096 !important; }
+      .toolbar p  { color: #3b536e !important; }
+
+      /* ── Buttons ── */
+      .button {
+        background: #0f2340 !important;
+        border-color: #0f2340 !important;
+        color: #ffffff !important;
+      }
+
+      .button:hover { opacity: 0.88; }
+
+      .button-alt {
+        background: #ffffff !important;
+        border-color: #d5dce8 !important;
+        color: #0f2340 !important;
+      }
+
+      .button-alt:hover { background: #edf2f8 !important; }
+
+      .button-sm {
+        font-size: 0.8rem;
+        padding: 5px 12px;
+        border-radius: 6px;
+        border: 1px solid;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        transition: opacity 0.15s, background 0.15s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      /* ── Content padding ── */
+      .tracker-content {
+        padding: 0 24px 28px;
+      }
+
+      /* ── Filter row ── */
+      .filter-bar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .filter-group label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #6b85a0;
+      }
+
+      .filter-select {
+        background: #ffffff;
+        border: 1px solid #d5dce8;
+        border-radius: 8px;
+        padding: 6px 28px 6px 10px;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: #0f2340;
+        appearance: none;
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b85a0' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 9px center;
+        transition: border-color 0.15s;
+      }
+
+      .filter-select:focus {
+        outline: none;
+        border-color: #0f2340;
+      }
+
+      .filter-meta {
+        margin-left: auto;
+        font-size: 0.8rem;
+        color: #6b85a0;
+        font-weight: 500;
+        align-self: flex-end;
+        padding-bottom: 1px;
+      }
+
+      /* ── Table ── */
+      .table-wrap {
+        background: #ffffff !important;
+        border: 1px solid #d5dce8 !important;
+        border-radius: 16px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 8px;
+      }
+
+      table { width: 100%; border-collapse: collapse; min-width: 1100px; }
+
+      th {
+        background: #e8eef6 !important;
+        color: #3b536e !important;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        padding: 11px 12px;
+        text-align: left;
+        border-bottom: 1px solid #d5dce8 !important;
+        white-space: nowrap;
+      }
+
+      td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #edf2f8 !important;
+        color: #3b536e !important;
+        font-size: 0.85rem;
+        vertical-align: middle;
+      }
+
+      tr:last-child td { border-bottom: 0 !important; }
+      tbody tr { transition: background 0.12s; }
+      tbody tr:hover td { background: #f4f7fb; }
+
+      td strong { color: #0f2340 !important; font-weight: 600; }
+      td small  { display: block; color: #6b85a0 !important; font-size: 0.76rem; margin-top: 1px; }
+
+      td.money { font-variant-numeric: tabular-nums; text-align: right; color: #0f2340 !important; font-weight: 600; }
+      th.money { text-align: right; }
+
+      td.cumulative { color: #1a3459 !important; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+
+      .badge-comp {
+        display: inline-block; padding: 2px 8px; border-radius: 999px;
+        font-size: 0.71rem; font-weight: 700;
+        background: #d1fae5; color: #065f46;
+      }
+
+      .badge-chargeable {
+        display: inline-block; padding: 2px 8px; border-radius: 999px;
+        font-size: 0.71rem; font-weight: 700;
+        background: #dbeafe; color: #1e40af;
+      }
+
+      /* ── Show more bar ── */
+      .show-more-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      /* ── Link pills ── */
+      .inline-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding-top: 4px;
+      }
+
+      .link-pill {
+        background: #ffffff !important;
+        border: 1px solid #d5dce8 !important;
+        color: #0f2340 !important;
+        font-weight: 600;
+        padding: 7px 14px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        text-decoration: none;
+        transition: background 0.13s, border-color 0.13s;
+      }
+
+      .link-pill:hover {
+        background: #e8eef6 !important;
+        border-color: #b0bfcf !important;
+      }
+
+      @media (max-width: 900px) {
+        .filter-bar { gap: 8px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+
+        <!-- Chrome bar -->
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <nav class="chrome-nav">
+            <a class="chrome-nav-link" href="admin-dashboard.html">Dashboard</a>
+            <a class="chrome-nav-link" href="notifications.html">Notifications</a>
+          </nav>
+        </div>
+
+        <div class="shell">
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>VAT Reclamation</strong>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="finances.html">Finances</a>
+              <a class="nav-link nav-link-sub" href="finances-tracker.html">Expenditure Tracker</a>
+              <a class="nav-link nav-link-sub" href="finances-archived.html" style="font-size: 0.8em !important; padding-left: 42px !important;">Archived Expenditure</a>
+              <a class="nav-link nav-link-sub active" href="vat-reclamation.html" style="font-size: 0.8em !important; padding-left: 42px !important;">VAT Reclamation</a>
+              <a class="nav-link nav-link-sub" href="revenue.html">Revenue</a>
+              <a class="nav-link nav-link-sub" href="archived-revenue.html" style="font-size: 0.8em !important; padding-left: 42px !important;">Archived Revenue</a>
+              <a class="nav-link nav-link-sub" href="student-funds.html">Student Held Funds</a>
+            </div>
+            <div class="nav-group">
+              <div class="nav-label">Compliance</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+            </div>
+          </aside>
+
+          <!-- Main content -->
+          <section class="main">
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">VAT Reclamation</span>
+                <h2>VAT Reclamation</h2>
+                <p>Track and manage all paid, VAT-reclaimable expenditures.</p>
+              </div>
+              <div class="toolbar-actions">
+                <a class="button-alt" href="finances-tracker.html">Expenditure Tracker</a>
+              </div>
+            </div>
+
+            <div class="tracker-content">
+
+              <!-- Filter bar -->
+              <div class="filter-bar">
+                <div class="filter-group">
+                  <label for="f-month">Month</label>
+                  <select class="filter-select" id="f-month">
+                    <option value="">All</option>
+                    <option value="2025-09">Sep 2025</option>
+                    <option value="2025-10">Oct 2025</option>
+                    <option value="2025-11">Nov 2025</option>
+                    <option value="2025-12">Dec 2025</option>
+                    <option value="2026-01">Jan 2026</option>
+                    <option value="2026-02">Feb 2026</option>
+                    <option value="2026-03">Mar 2026</option>
+                    <option value="2026-04">Apr 2026</option>
+                  </select>
+                </div>
+                <div class="filter-group">
+                  <label for="f-student">Student</label>
+                  <select class="filter-select" id="f-student">
+                    <option value="">All</option>
+                  </select>
+                </div>
+                <div class="filter-group">
+                  <label for="f-type">Type</label>
+                  <select class="filter-select" id="f-type">
+                    <option value="">All</option>
+                    <option value="Complimentary">Complimentary</option>
+                    <option value="Chargeable">Chargeable</option>
+                  </select>
+                </div>
+                <span class="filter-meta" id="row-meta">— rows</span>
+              </div>
+
+              <!-- Table -->
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th>Date</th>
+                      <th>Item Label</th>
+                      <th>Student</th>
+                      <th>Type</th>
+                      <th>Service Provider ID</th>
+                      <th>Payment Deadline</th>
+                      <th class="money">Item Cost</th>
+                      <th class="money">Total Cost</th>
+                      <th class="money">VAT Amount</th>
+                      <th class="money">Cumulative</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tracker-tbody"></tbody>
+                </table>
+              </div>
+
+              <!-- Show more -->
+              <div class="show-more-bar">
+                <span id="showing-label" style="font-size:0.8rem;color:#9bafc4;"></span>
+                <button class="button-sm button-alt" id="show-more-btn" style="display:none;">Show 50</button>
+              </div>
+
+              <!-- Link pills -->
+              <div class="inline-links">
+                <a class="link-pill" href="finances-tracker.html">Expenditure Tracker</a>
+                <a class="link-pill" href="finances.html">Back to Finances</a>
+                <a class="link-pill" href="admin-dashboard.html">Dashboard</a>
+                <a class="link-pill" href="compliance.html">AEGIS control room</a>
+              </div>
+
+            </div><!-- /tracker-content -->
+
+          </section>
+        </div><!-- /shell -->
+      </div><!-- /app-frame -->
+    </main>
+
+    <script src="assets/finance-data.js"></script>
+    <script>
+      /* ─────────────────────────────────────────────
+         State
+      ───────────────────────────────────────────── */
+      var storedEvents = localStorage.getItem('og_finance_events');
+      var events;
+      if (storedEvents) {
+        events = JSON.parse(storedEvents);
+      } else {
+        events = (typeof FINANCE_EVENTS !== 'undefined') ? FINANCE_EVENTS.slice() : [];
+        localStorage.setItem('og_finance_events', JSON.stringify(events));
+      }
+
+      var rowLimit = 20;
+
+      /* ─────────────────────────────────────────────
+         Helpers
+      ───────────────────────────────────────────── */
+      function fmt(n) {
+        return '£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      function fmtDateDisplay(iso) {
+        if (!iso) return '';
+        var parts = iso.split('-');
+        if (parts.length < 3) return iso;
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return parseInt(parts[2], 10) + ' ' + months[parseInt(parts[1], 10) - 1] + ' ' + parts[0];
+      }
+
+      function isoMonth(iso) {
+        if (!iso) return '';
+        return iso.slice(0, 7);
+      }
+
+      /* ─────────────────────────────────────────────
+         Populate student filter from VAT-eligible events
+      ───────────────────────────────────────────── */
+      function populateFilters() {
+        var vatEvents = events.filter(function (e) { return !e.archived && e.paid === true && e.vatReclaimable === true; });
+        var studentSel = document.getElementById('f-student');
+        var names = {};
+        vatEvents.forEach(function (e) { if (e.student) names[e.student] = true; });
+        Object.keys(names).sort().forEach(function (name) {
+          var opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          studentSel.appendChild(opt);
+        });
+      }
+
+      /* ─────────────────────────────────────────────
+         Build sorted rows — active, paid, VAT-reclaimable only
+      ───────────────────────────────────────────── */
+      function buildRows() {
+        events.forEach(function (row, i) { row._evIdx = i; });
+        var sorted = events
+          .filter(function (row) { return !row.archived && row.paid === true && row.vatReclaimable === true; })
+          .slice()
+          .sort(function (a, b) { return (a.date || '').localeCompare(b.date || ''); });
+
+        var groupTotals = {};
+        sorted.forEach(function (row) {
+          var key = (row.event || '') + '|' + (row.date || '');
+          groupTotals[key] = (groupTotals[key] || 0) + Number(row.cost || 0);
+        });
+
+        var cumulative = 0;
+        sorted.forEach(function (row) {
+          cumulative += Number(row.cost || 0);
+          row._cumulative = cumulative;
+          var key = (row.event || '') + '|' + (row.date || '');
+          row._groupTotal = groupTotals[key];
+        });
+
+        return sorted;
+      }
+
+      /* ─────────────────────────────────────────────
+         Render table
+      ───────────────────────────────────────────── */
+      function renderTable() {
+        var allRows = buildRows();
+
+        var monthVal   = document.getElementById('f-month').value;
+        var studentVal = document.getElementById('f-student').value;
+        var typeVal    = document.getElementById('f-type').value;
+
+        var filtered = allRows.filter(function (row) {
+          if (monthVal   && isoMonth(row.date) !== monthVal)   return false;
+          if (studentVal && row.student         !== studentVal) return false;
+          if (typeVal    && row.type            !== typeVal)    return false;
+          return true;
+        });
+
+        document.getElementById('row-meta').textContent = filtered.length + ' row' + (filtered.length !== 1 ? 's' : '');
+
+        var visible = filtered.slice(0, rowLimit);
+        var tbody   = document.getElementById('tracker-tbody');
+
+        if (!filtered.length) {
+          tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:28px;color:#9bafc4;font-size:0.84rem;">No paid, VAT-reclaimable events match the current filters.</td></tr>';
+          document.getElementById('showing-label').textContent = '';
+          document.getElementById('show-more-btn').style.display = 'none';
+          return;
+        }
+
+        tbody.innerHTML = visible.map(function (row) {
+          var typeBadge = row.type === 'Complimentary'
+            ? '<span class="badge-comp">Complimentary</span>'
+            : '<span class="badge-chargeable">Chargeable</span>';
+          var vatAmt = Number(row.totalCost || row.amount || 0) - Number(row.cost || 0);
+          return '<tr>' +
+            '<td><strong>' + (row.event || '—') + '</strong></td>' +
+            '<td>' + fmtDateDisplay(row.date) + '</td>' +
+            '<td>' + (row.label || '—') + '</td>' +
+            '<td>' + (row.student || '—') + '</td>' +
+            '<td>' + typeBadge + '</td>' +
+            '<td>' + (row.providerId || '—') + '</td>' +
+            '<td>' + (row.deadline ? fmtDateDisplay(row.deadline) : '—') + '</td>' +
+            '<td class="money">' + fmt(row.cost || 0) + '</td>' +
+            '<td class="money">' + fmt(row._groupTotal || 0) + '</td>' +
+            '<td class="money">£' + vatAmt.toFixed(2) + '</td>' +
+            '<td class="cumulative">' + fmt(row._cumulative || 0) + '</td>' +
+            '</tr>';
+        }).join('');
+
+        var showMoreBtn = document.getElementById('show-more-btn');
+        document.getElementById('showing-label').textContent =
+          'Showing ' + Math.min(rowLimit, filtered.length) + ' of ' + filtered.length + ' rows';
+
+        if (filtered.length > rowLimit && rowLimit < 50) {
+          showMoreBtn.style.display = 'inline-block';
+          showMoreBtn.textContent   = 'Show 50';
+        } else {
+          showMoreBtn.style.display = 'none';
+        }
+      }
+
+      /* ─────────────────────────────────────────────
+         Event listeners
+      ───────────────────────────────────────────── */
+      document.getElementById('show-more-btn').addEventListener('click', function () {
+        rowLimit = 50;
+        renderTable();
+      });
+
+      ['f-month', 'f-student', 'f-type'].forEach(function (id) {
+        document.getElementById(id).addEventListener('change', function () {
+          rowLimit = 20;
+          renderTable();
+        });
+      });
+
+      /* ─────────────────────────────────────────────
+         Init
+      ───────────────────────────────────────────── */
+      populateFilters();
+      renderTable();
+    </script>
+
+  </body>
+</html>

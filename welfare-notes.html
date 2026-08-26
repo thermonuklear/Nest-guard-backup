@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welfare Notes — Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/db.js"></script>
+    <style>
+      .filter-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .filter-bar label {
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--ink-3);
+      }
+      .filter-bar select {
+        background: #fffdf9;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 7px 30px 7px 12px;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.86rem;
+        font-weight: 600;
+        color: var(--ink);
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-frame">
+        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/welfare/notes</small></div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><small>Oxford Guardians</small><strong>Welfare Notes</strong></div>
+            <div class="nav-group"><div class="nav-label">Overview</div><a class="nav-link" href="admin-dashboard.html">Dashboard</a><a class="nav-link" href="notifications.html">Notifications</a></div>
+            <div class="nav-group"><div class="nav-label">Operations</div><a class="nav-link" href="students.html">Students</a><a class="nav-link" href="homestays.html">Homestays</a><a class="nav-link" href="travel.html">Travel</a><a class="nav-link" href="documents.html">Documents</a>
+</div>
+            <div class="nav-group"><div class="nav-label">Safeguarding</div><a class="nav-link active" href="welfare-notes.html">Welfare notes</a><a class="nav-link" href="concerns-dashboard.html">Concerns Dashboard</a><a class="nav-link" href="emergency-procedures.html">Emergency</a></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a></div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Welfare timeline</span>
+                <h2>Every welfare contact is a record, not a memory</h2>
+                <p>AEGIS Standard 3.2 requires regular student check-ins with documented follow-up. This surface is where that actually happens—not buried inside student profiles.</p>
+              </div>
+              <div class="toolbar-actions"><a class="button-alt" href="students.html">Filter by student</a><a class="button-alt" href="concerns-low-level.html">Low-level concerns</a><a class="button" href="welfare-note-create.html">Log welfare note</a></div>
+            </div>
+            <div class="metrics">
+              <article class="metric featured"><h4>Welfare check cadence</h4><div class="metric-value">Weekly</div><p class="metric-meta">All active boarding students contacted minimum weekly during term / homestay stays trigger same-day check-in.</p></article>
+              <article class="metric"><h4>Open follow-ups</h4><div class="metric-value" id="metric-open-followups">—</div><p class="metric-meta">Contacts awaiting next action or resolution</p></article>
+              <article class="metric"><h4>Notes this month</h4><div class="metric-value" id="metric-notes-month">—</div><p class="metric-meta">Term is busy. Travel season generates additional welfare contacts.</p></article>
+              <article class="metric"><h4>Escalated to DSL</h4><div class="metric-value" id="metric-escalated-dsl">—</div><p class="metric-meta">Formal concerns raised directly from a welfare contact</p></article>
+            </div>
+            <div class="note brutal">
+              <h4>Brutal product note</h4>
+              <p>The PRD mentions "welfare tracking" exactly once. It says nothing about cadence, log structure, follow-up ownership, or how notes relate to concern escalation. What you're looking at is what the PRD should have specified: welfare notes are first-class operational records, not "comments on a student profile." Every note has an owner, a timestamp, and an explicit next action. Some notes escalate. Some resolve. All are auditable.</p>
+            </div>
+            <div class="filter-bar">
+              <label for="filter-student">Student</label>
+              <select id="filter-student">
+                <option value="">All students</option>
+              </select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Student</th><th>Note</th><th>Owner / Contact</th><th>When</th><th>Next action</th><th>Status</th></tr></thead>
+                <tbody id="welfare-tbody"></tbody>
+              </table>
+            </div>
+            <div class="inline-links"><a href="welfare-note-create.html">Create welfare note</a><span class="sep">|</span><a href="welfare-note-success.html">View note success state</a><span class="sep">|</span><a href="concerns-escalated.html">Escalate a note to DSL</a><span class="sep">|</span><a href="concerns-low-level.html">View low-level concerns</a><span class="sep">|</span><a href="mental-health-referral.html">Mental health referral</a><span class="sep">|</span><a href="student-profile.html">Student profile welfare log</a></div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script>
+    (function () {
+      function esc(s) {
+        return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      function fmtDate(iso) {
+        if (!iso) return '—';
+        var d = new Date(iso);
+        if (isNaN(d.getTime())) return iso;
+        var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return d.getDate() + ' ' + M[d.getMonth()] + ' ' + d.getFullYear();
+      }
+
+      // Welfare log `details` is a structured "Label: value" free-text block —
+      // pull specific fields back out of it for the table columns.
+      function field(details, label) {
+        if (!details) return '';
+        var m = details.match(new RegExp('^' + label + ':\\s*(.*)$', 'm'));
+        return m ? m[1].trim() : '';
+      }
+
+      function deriveStatus(log) {
+        var details = log.details || '';
+        if (/Linked Concern:/.test(details)) return { label: 'Escalated', cls: 'red' };
+
+        var outcome = field(details, 'Outcome');
+        if (outcome) {
+          if (/Escalate/i.test(outcome)) return { label: 'Escalated', cls: 'red' };
+          if (/No further action/i.test(outcome)) return { label: 'Resolved', cls: 'green' };
+          if (/Follow-up scheduled|Refer to school/i.test(outcome)) return { label: 'Follow-up', cls: 'amber' };
+        }
+
+        var followUpNeeded = field(details, 'Follow-up needed');
+        if (followUpNeeded) {
+          return /yes/i.test(followUpNeeded) ? { label: 'Follow-up', cls: 'amber' } : { label: 'Resolved', cls: 'green' };
+        }
+
+        if (/Follow-up|Next action/i.test(details)) return { label: 'Follow-up', cls: 'amber' };
+        return { label: 'Resolved', cls: 'green' };
+      }
+
+      function studentInfo(studentId) {
+        var s = studentId ? getStudentById(studentId) : null;
+        return {
+          name:   s ? (s.firstName + ' ' + s.lastName) : (studentId || 'Unknown student'),
+          school: s ? (s.school || '') : ''
+        };
+      }
+
+      function renderMetrics(logs) {
+        var openFollowUps = logs.filter(function (l) {
+          return /Follow-up|Next action/i.test(l.details || '');
+        }).length;
+
+        var now = new Date();
+        var notesThisMonth = logs.filter(function (l) {
+          var d = new Date(l.date);
+          return !isNaN(d.getTime()) && d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+        }).length;
+
+        var escalatedToDSL = getAllConcerns().filter(function (c) { return c.tier === 'escalated'; }).length;
+
+        document.getElementById('metric-open-followups').textContent = openFollowUps;
+        document.getElementById('metric-notes-month').textContent    = notesThisMonth;
+        document.getElementById('metric-escalated-dsl').textContent  = escalatedToDSL;
+      }
+
+      function renderTable(logs, filterStudentId) {
+        var tbody = document.getElementById('welfare-tbody');
+        var rows = logs
+          .filter(function (l) { return !filterStudentId || l.studentId === filterStudentId; })
+          .sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+
+        if (!rows.length) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:28px;color:var(--ink-3);">No welfare notes match the current filter.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = rows.map(function (log) {
+          var details = log.details || '';
+          var student = studentInfo(log.studentId);
+          var owner   = field(details, 'Owner');
+          var method  = field(details, 'Contact method');
+          var summaryLine = field(details, 'Summary') || details;
+          var nextAction  = field(details, 'Next action due') || 'None';
+          var status = deriveStatus(log);
+
+          var ownerCell = owner
+            ? esc(owner) + (method ? '<small>' + esc(method) + '</small>' : '')
+            : (log.type === 'check-in' ? 'Student self check-in' : '—');
+
+          return '<tr>' +
+            '<td><strong>' + esc(student.name) + '</strong>' + (student.school ? '<small>' + esc(student.school) + '</small>' : '') + '</td>' +
+            '<td><strong>' + esc(log.summary || '') + '</strong><small>' + esc(summaryLine) + '</small></td>' +
+            '<td>' + ownerCell + '</td>' +
+            '<td>' + esc(fmtDate(log.date)) + '</td>' +
+            '<td>' + esc(nextAction) + '</td>' +
+            '<td><span class="badge ' + status.cls + '">' + status.label + '</span></td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      function populateStudentFilter(logs) {
+        var sel = document.getElementById('filter-student');
+        var seen = {};
+        logs.forEach(function (l) {
+          if (l.studentId && !seen[l.studentId]) {
+            seen[l.studentId] = true;
+            var info = studentInfo(l.studentId);
+            var opt = document.createElement('option');
+            opt.value = l.studentId;
+            opt.textContent = info.name;
+            sel.appendChild(opt);
+          }
+        });
+        sel.addEventListener('change', function () {
+          renderTable(logs, sel.value);
+        });
+      }
+
+      var logs = getAllWelfareLogs();
+      renderMetrics(logs);
+      populateStudentFilter(logs);
+      renderTable(logs, '');
+    }());
+    </script>
+  </body>
+</html>
