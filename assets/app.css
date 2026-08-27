@@ -204,6 +204,7 @@ p, li, td, th, small, span { font-size: 0.98rem; }
   border-radius: 14px;
   color: #dde5f1;
   border: 1px solid transparent;
+  font-size: 0.94rem;
 }
 .nav-link.active {
   background: rgba(255,248,235,0.1);
