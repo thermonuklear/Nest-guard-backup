@@ -12,9 +12,33 @@
     /* ── Global colour overrides (matches finances.html / student-profile.html) ── */
     body, .page, .shell, main { background: #f0f4f8 !important; color: #0f2340 !important; }
     .app-frame { background: #f8fafc !important; border-color: #d5dce8 !important; box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important; }
-    .chrome { background: #e8eef6 !important; border-bottom-color: #d5dce8 !important; }
-    .chrome small { color: #3b536e !important; }
+    .chrome {
+      background: #e8eef6 !important;
+      border-bottom-color: #d5dce8 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding-right: 16px !important;
+    }
+    .chrome small { color: #3b536e !important; letter-spacing: 0.04em; }
     .dots span { background: #7b9abf !important; }
+
+    .chrome-nav { display: flex; align-items: center; gap: 6px; }
+    .chrome-nav a, .chrome-nav-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid #d5dce8;
+      background: #ffffff;
+      color: #0f2340;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .chrome-nav a:hover, .chrome-nav-link:hover { background: #dce8f4; }
     .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important; }
     .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
     .brand small  { color: #7fb3d3 !important; }
@@ -95,8 +119,14 @@
   <main class="page">
     <div class="app-frame">
       <div class="chrome">
-        <div class="dots"><span></span><span></span><span></span></div>
-        <small>Route /admin/finance/student-held-funds</small>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <small>Route /admin/finance/student-held-funds</small>
+        </div>
+        <nav class="chrome-nav">
+          <a href="admin-dashboard.html">Dashboard</a>
+          <a href="notifications.html">Notifications</a>
+        </nav>
       </div>
       <div class="shell">
 
