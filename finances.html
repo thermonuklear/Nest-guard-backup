@@ -95,8 +95,8 @@
     .nav-link {
       color: #c8d8ee !important;
       border-color: transparent !important;
-      font-size: 0.82rem !important;
-      font-weight: 400 !important;
+      font-size: 1.07rem !important;
+      font-weight: 500 !important;
       padding: 7px 16px !important;
       border-left: 3px solid transparent !important;
       border-radius: 0 !important;
@@ -428,17 +428,11 @@
       font-size: 0.82rem;
       text-decoration: none;
       transition: background 0.13s, border-color 0.13s;
-    }
+}
 
     .link-pill:hover {
       background: #e8eef6 !important;
       border-color: #b0bfcf !important;
-    }
-
-    @media (max-width: 900px) {
-      .finance-grid {
-        grid-template-columns: 1fr;
-      }
     }
 
     /* ── Student Held Funds banner ── */
@@ -497,6 +491,12 @@
       .held-funds-banner { flex-direction: column; align-items: flex-start; }
       .held-funds-value-block { margin-left: 0; text-align: left; }
     }
+
+    @media (max-width: 900px) {
+      .finance-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 
@@ -528,10 +528,10 @@
             <div class="nav-label">Operations</div>
             <a class="nav-link active" href="finances.html">Finances</a>
             <a class="nav-link nav-link-sub" href="finances-tracker.html">Expenditure Tracker</a>
-            <a class="nav-link nav-link-sub" href="finances-archived.html" style="font-size: 0.8em !important; padding-left: 42px !important;">Archived Expenditure</a>
-            <a class="nav-link nav-link-sub" href="vat-reclamation.html" style="font-size: 0.8em !important; padding-left: 42px !important;">VAT Reclamation</a>
+            <a class="nav-link nav-link-sub" href="finances-archived.html">Archived Expenditure</a>
+            <a class="nav-link nav-link-sub" href="vat-reclamation.html">VAT Reclamation</a>
             <a class="nav-link nav-link-sub" href="revenue.html">Revenue</a>
-            <a class="nav-link nav-link-sub" href="archived-revenue.html" style="font-size: 0.8em !important; padding-left: 42px !important;">Archived Revenue</a>
+            <a class="nav-link nav-link-sub" href="archived-revenue.html">Archived Revenue</a>
             <a class="nav-link nav-link-sub" href="student-funds.html">Student Held Funds</a>
           </div>
           <div class="nav-group">
