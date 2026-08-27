@@ -20,18 +20,90 @@
       .quick-card small { font-size: 0.8rem; color: #64748b; }
       .list-link { text-decoration: none; color: inherit; display: block; border-radius: 8px; padding: 4px 6px; margin: -4px -6px; transition: background 0.15s; }
       .list-link:hover { background: #f1f5f9; }
+    
+      .topbar {
+        background: #ffffff;
+        border-bottom: 1px solid #d5dce8;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        gap: 24px;
+      }
+      .topbar-brand {
+        font-family: "Outfit", sans-serif;
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #0f2340;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+      .topbar-nav {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-left: auto;
+      }
+      .topbar-nav a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        transition: background 0.15s, color 0.15s;
+      }
+      .topbar-nav a:hover {
+        background: #e8eef6;
+        color: #0f2340;
+      }
+      .topbar-nav a.active {
+        background: #0f2340;
+        color: #ffffff;
+      }
+    
+      .shell {
+        height: calc(100vh - 61px);
+        min-height: 0;
+      }
+      .sidebar {
+        height: 100%;
+        overflow-y: auto;
+      }
+      .main {
+        height: 100%;
+        overflow-y: auto;
+        background: #fbfaf7; /* match the old app-frame background */
+      }
+    
+      .shell {
+        transition: grid-template-columns 0.3s ease;
+      }
+      .shell.sidebar-shrunk {
+        grid-template-columns: 180px 1fr;
+      }
+      .shell.sidebar-shrunk .nav-link,
+      .shell.sidebar-shrunk .nav-link-sub {
+        font-size: 0.82rem !important; /* Slightly smaller text */
+        padding-left: 8px !important;
+      }
+      .shell.sidebar-shrunk .nav-link-sub {
+        padding-left: 20px !important; /* keep indentation */
+      }
+      .shell.sidebar-shrunk .brand strong {
+        font-size: 1rem;
+      }
     </style>
   </head>
   <body>
-    <main class="page">
-      <div class="app-frame">
-        <div class="chrome">
-          <div class="dots"><span></span><span></span><span></span></div>
-          <small>Route /admin/dashboard</small>
+    
+                <div class="topbar">
+          <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
         </div>
         <div class="shell">
           <aside class="sidebar">
-            <div class="brand"><small>Oxford Guardians</small><strong>Admin Console</strong></div>
+            <div class="brand"><strong>Admin Console</strong></div>
 
             <div class="nav-group">
               <div class="nav-label">Overview</div>
@@ -249,7 +321,21 @@
             </div>
           </section>
         </div>
-      </div>
-    </main>
+          <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const main = document.querySelector('.main');
+        const shell = document.querySelector('.shell');
+        
+        if (main && shell) {
+          main.addEventListener('scroll', function() {
+            if (main.scrollTop > 20) {
+              shell.classList.add('sidebar-shrunk');
+            } else {
+              shell.classList.remove('sidebar-shrunk');
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>
