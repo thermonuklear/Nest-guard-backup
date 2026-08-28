@@ -411,25 +411,60 @@
         padding-top: 16px;
         border-top: 1px solid #edf2f8;
       }
+    
+      .topbar {
+        background: #ffffff;
+        border-bottom: 1px solid #d5dce8;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        gap: 24px;
+      }
+      .topbar-brand {
+        font-family: "Outfit", sans-serif;
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #0f2340;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .chrome-nav a {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 12px;
+        border-radius: 999px;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        color: #0f2340;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .chrome-nav a:hover {
+        background: #dce8f4;
+      }
+
     </style>
   </head>
   <body>
-    <main class="page">
-      <div class="app-frame">
+    <!-- Topbar -->
+    <div class="topbar">
+      <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+      <nav class="chrome-nav">
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="notifications.html">Notifications</a>
+      </nav>
+    </div>
 
-        <!-- Chrome dots -->
-        <div class="chrome">
-          <div class="dots"><span></span><span></span><span></span></div>
-        </div>
-
-        <!-- Top nav bar -->
-        <div class="top-nav">
-          <span class="top-nav-brand">Oxford Guardians</span>
-          <div class="top-nav-right">
-            <a class="top-nav-link" href="admin-dashboard.html">Dashboard</a>
-            <a class="top-nav-link" href="notifications.html">Notifications</a>
-          </div>
-        </div>
+        
 
         <!-- Full-width content (no sidebar) -->
         <div class="shell-full exeat-main">
@@ -443,7 +478,6 @@
             </div>
             <div class="toolbar-actions">
               <a class="button-alt" href="exeat-calendar.html">Exeat calendar</a>
-              <a class="button-alt" href="admin-dashboard.html">Back to dashboard</a>
               <button class="button" onclick="openExeatModal()">+ Add exeat</button>
             </div>
           </div>
@@ -605,8 +639,6 @@
           </div>
 
         </div><!-- /shell-full -->
-      </div><!-- /app-frame -->
-    </main>
 
     <script src="assets/db.js"></script>
     <script>

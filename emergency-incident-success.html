@@ -9,11 +9,98 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <script src="assets/db.js"></script>
+  <style>
+      .topbar {
+        background: #ffffff;
+        border-bottom: 1px solid #d5dce8;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        gap: 24px;
+      }
+      .topbar-brand {
+        font-family: "Outfit", sans-serif;
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #0f2340;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .chrome-nav a {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 12px;
+        border-radius: 999px;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        color: #0f2340;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .chrome-nav a:hover {
+        background: #dce8f4;
+      }
+      .shell {
+        height: calc(100vh - 61px);
+        min-height: 0;
+        transition: grid-template-columns 0.3s ease;
+      }
+      .shell.sidebar-shrunk {
+        grid-template-columns: 180px 1fr;
+      }
+      .shell.sidebar-shrunk .nav-link, 
+      .shell.sidebar-shrunk .nav-link-sub { 
+        font-size: 0.82rem !important; 
+        padding-left: 8px !important; 
+      }
+      .shell.sidebar-shrunk .nav-link-sub { 
+        padding-left: 20px !important; 
+      }
+      .shell.sidebar-shrunk .brand strong { 
+        font-size: 1rem; 
+      }
+      .sidebar {
+        height: 100%;
+        overflow-y: auto;
+      }
+      .main {
+        height: 100%;
+        overflow-y: auto;
+      }
+    </style>
+    <script>
+      // Sidebar shrink effect
+      const mainEl = document.querySelector(".main");
+      const shellEl = document.querySelector(".shell");
+      if (mainEl && shellEl) {
+        mainEl.addEventListener("scroll", () => {
+          if (mainEl.scrollTop > 20) {
+            shellEl.classList.add("sidebar-shrunk");
+          } else {
+            shellEl.classList.remove("sidebar-shrunk");
+          }
+        });
+      }
+    </script>
   </head>
   <body>
-    <main class="page">
-      <div class="app-frame">
-        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/emergency/log/success</small></div>
+    <!-- Topbar -->
+      <div class="topbar">
+        <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+        <nav class="chrome-nav">
+          <a href="admin-dashboard.html">Dashboard</a>
+          <a href="notifications.html">Notifications</a>
+        </nav>
+      </div>
         <div class="shell">
           <section class="main" style="max-width:680px;margin:0 auto;">
             <div class="alert-box" style="background:var(--green-bg);border-color:var(--green);">
@@ -32,8 +119,6 @@
             </div>
           </section>
         </div>
-      </div>
-    </main>
     <script>
       (function () {
         var params = new URLSearchParams(window.location.search);
@@ -68,6 +153,19 @@
           container.appendChild(div);
         });
       })();
+    
+      // Sidebar shrink effect
+      const mainEl = document.querySelector(".main");
+      const shellEl = document.querySelector(".shell");
+      if (mainEl && shellEl) {
+        mainEl.addEventListener("scroll", () => {
+          if (mainEl.scrollTop > 20) {
+            shellEl.classList.add("sidebar-shrunk");
+          } else {
+            shellEl.classList.remove("sidebar-shrunk");
+          }
+        });
+      }
     </script>
   </body>
 </html>

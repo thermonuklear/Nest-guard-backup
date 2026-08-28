@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      .nav-link-sub { padding-left: 32px !important; font-size: 0.85em !important; opacity: 0.85; }
+
       .nav-link-sub:hover, .nav-link-sub.active { opacity: 1; }
       .card-link { text-decoration: none; color: inherit; display: block; }
       .card-link:hover { opacity: 0.95; }
@@ -38,6 +38,27 @@
         color: #0f2340;
         white-space: nowrap;
         text-decoration: none;
+      }
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .chrome-nav a {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 12px;
+        border-radius: 999px;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        color: #0f2340;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .chrome-nav a:hover {
+        background: #dce8f4;
       }
       .topbar-nav {
         display: flex;
