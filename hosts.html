@@ -415,30 +415,73 @@
         .content-cols { grid-template-columns: 1fr; }
         .filter-row   { grid-template-columns: 1fr 1fr; }
       }
+    
+      .topbar {
+        background: #ffffff;
+        border-bottom: 1px solid #d5dce8;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        gap: 24px;
+      }
+      .topbar-brand {
+        font-family: "Outfit", sans-serif;
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #0f2340;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+      .shell {
+        height: calc(100vh - 61px);
+        min-height: 0;
+        transition: grid-template-columns 0.3s ease;
+      }
+      .shell.sidebar-shrunk {
+        grid-template-columns: 180px 1fr;
+      }
+      .shell.sidebar-shrunk .nav-link, 
+      .shell.sidebar-shrunk .nav-link-sub { 
+        font-size: 0.82rem !important; 
+        padding-left: 8px !important; 
+      }
+      .shell.sidebar-shrunk .nav-link-sub { 
+        padding-left: 20px !important; 
+      }
+      .shell.sidebar-shrunk .brand strong { 
+        font-size: 1rem; 
+      }
+      .sidebar {
+        height: 100%;
+        overflow-y: auto;
+      }
+      .main {
+        height: 100%;
+        overflow-y: auto;
+      }
+
     </style>
   </head>
   <body>
-    <main class="page">
-      <div class="app-frame">
+    
+      
 
-        <!-- Chrome bar -->
-        <div class="chrome">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div class="dots"><span></span><span></span><span></span></div>
-            <small>Route /admin/hosts</small>
-          </div>
-          <nav class="chrome-nav">
-            <a href="admin-dashboard.html">Dashboard</a>
-            <a href="notifications.html">Notifications</a>
-          </nav>
-        </div>
+        <!-- Topbar -->
+      <div class="topbar">
+        <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+        <nav class="chrome-nav">
+          <a href="admin-dashboard.html">Dashboard</a>
+          <a href="notifications.html">Notifications</a>
+        </nav>
+      </div>
 
         <div class="shell">
 
           <!-- Sidebar -->
           <aside class="sidebar">
             <div class="brand">
-              <small>Oxford Guardians</small>
               <strong>Homestay Operations</strong>
             </div>
             <div class="nav-group">
@@ -446,7 +489,7 @@
               <a class="nav-link" href="homestays.html">Homestays</a>
               <a class="nav-link nav-link-sub" href="homestay-todo.html">To-do</a>
               <a class="nav-link nav-link-sub active" href="hosts.html">Hosts</a>
-              <a class="nav-link nav-link-sub" href="hosts.html?status=pending">Pending Approval</a>
+              <a class="nav-link nav-link-sub" href="host-profile.html">Host Profile</a>
               <a class="nav-link nav-link-sub" href="homestay-visit.html">Annual visits</a>
               <a class="nav-link nav-link-sub" href="homestay-incidents.html">Incident log</a>
               <a class="nav-link" href="documents.html">Documents</a>
@@ -625,7 +668,20 @@
       </div><!-- /app-frame -->
     </main>
 
-    <script src="assets/db.js"></script>
+    <script src="assets/db.js">
+      // Sidebar shrink effect
+      const mainEl = document.querySelector(".main");
+      const shellEl = document.querySelector(".shell");
+      if (mainEl && shellEl) {
+        mainEl.addEventListener("scroll", () => {
+          if (mainEl.scrollTop > 20) {
+            shellEl.classList.add("sidebar-shrunk");
+          } else {
+            shellEl.classList.remove("sidebar-shrunk");
+          }
+        });
+      }
+    </script>
     <script>
       var searchInput = document.getElementById('search-input');
       var statusFilter = document.getElementById('status-filter');
@@ -837,6 +893,19 @@
 
       applyFilters();
       renderSupplyAnalytics();
+    
+      // Sidebar shrink effect
+      const mainEl = document.querySelector(".main");
+      const shellEl = document.querySelector(".shell");
+      if (mainEl && shellEl) {
+        mainEl.addEventListener("scroll", () => {
+          if (mainEl.scrollTop > 20) {
+            shellEl.classList.add("sidebar-shrunk");
+          } else {
+            shellEl.classList.remove("sidebar-shrunk");
+          }
+        });
+      }
     </script>
   </body>
 </html>

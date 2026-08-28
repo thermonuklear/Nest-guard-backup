@@ -434,6 +434,53 @@
         .form-span-2, .form-span-3 { grid-column: span 1; }
         .create-panel { padding: 18px; }
       }
+    
+      .topbar {
+        background: #ffffff;
+        border-bottom: 1px solid #d5dce8;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        gap: 24px;
+      }
+      .topbar-brand {
+        font-family: "Outfit", sans-serif;
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #0f2340;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+      .shell {
+        height: calc(100vh - 61px);
+        min-height: 0;
+        transition: grid-template-columns 0.3s ease;
+      }
+      .shell.sidebar-shrunk {
+        grid-template-columns: 180px 1fr;
+      }
+      .shell.sidebar-shrunk .nav-link, 
+      .shell.sidebar-shrunk .nav-link-sub { 
+        font-size: 0.82rem !important; 
+        padding-left: 8px !important; 
+      }
+      .shell.sidebar-shrunk .nav-link-sub { 
+        padding-left: 20px !important; 
+      }
+      .shell.sidebar-shrunk .brand strong { 
+        font-size: 1rem; 
+      }
+      .sidebar {
+        height: 100%;
+        overflow-y: auto;
+      }
+      .main {
+        height: 100%;
+        overflow-y: auto;
+      }
+
     </style>
   </head>
   <body>
@@ -444,15 +491,15 @@
     <span>Profile saved successfully</span>
   </div>
 
-  <main class="page">
-    <div class="app-frame">
+  
+    
 
-      <!-- Chrome bar -->
-      <div class="chrome">
-        <div class="dots"><span></span><span></span><span></span></div>
+      <!-- Topbar -->
+      <div class="topbar">
+        <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
         <nav class="chrome-nav">
-          <a class="chrome-nav-link" href="admin-dashboard.html">Dashboard</a>
-          <a class="chrome-nav-link" href="notifications.html">Notifications</a>
+          <a href="admin-dashboard.html">Dashboard</a>
+          <a href="notifications.html">Notifications</a>
         </nav>
       </div>
 
@@ -468,8 +515,8 @@
             <div class="nav-label">Operations</div>
             <a class="nav-link" href="homestays.html">Homestays</a>
             <a class="nav-link nav-link-sub" href="homestay-todo.html">To-do</a>
-            <a class="nav-link nav-link-sub active" href="hosts.html">Hosts</a>
-            <a class="nav-link nav-link-sub" href="hosts.html?status=pending">Pending Approval</a>
+            <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
+            <a class="nav-link nav-link-sub active" href="host-profile.html">Host Profile</a>
             <a class="nav-link nav-link-sub" href="homestay-visit.html">Annual visits</a>
             <a class="nav-link nav-link-sub" href="homestay-incidents.html">Incident log</a>
             <a class="nav-link" href="documents.html">Documents</a>
@@ -982,7 +1029,20 @@
     </div><!-- /app-frame -->
   </main>
 
-  <script src="assets/db.js"></script>
+  <script src="assets/db.js">
+      // Sidebar shrink effect
+      const mainEl = document.querySelector(".main");
+      const shellEl = document.querySelector(".shell");
+      if (mainEl && shellEl) {
+        mainEl.addEventListener("scroll", () => {
+          if (mainEl.scrollTop > 20) {
+            shellEl.classList.add("sidebar-shrunk");
+          } else {
+            shellEl.classList.remove("sidebar-shrunk");
+          }
+        });
+      }
+    </script>
   <script>
     // ── Read URL param ─────────────────────────────────────────────────────────
     var params = new URLSearchParams(window.location.search);
@@ -1973,7 +2033,20 @@
         renderContractsTab();
       }
     };
-  </script>
+  
+      // Sidebar shrink effect
+      const mainEl = document.querySelector(".main");
+      const shellEl = document.querySelector(".shell");
+      if (mainEl && shellEl) {
+        mainEl.addEventListener("scroll", () => {
+          if (mainEl.scrollTop > 20) {
+            shellEl.classList.add("sidebar-shrunk");
+          } else {
+            shellEl.classList.remove("sidebar-shrunk");
+          }
+        });
+      }
+    </script>
 
   </body>
 </html>
