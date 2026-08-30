@@ -8,17 +8,101 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
+  <style>
+      .topbar {
+        background: #ffffff;
+        border-bottom: 1px solid #d5dce8;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        gap: 24px;
+      }
+      .topbar-brand {
+        font-family: "Outfit", sans-serif;
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #0f2340;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .chrome-nav a {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 12px;
+        border-radius: 999px;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        color: #0f2340;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .chrome-nav a:hover {
+        background: #dce8f4;
+      }
+      .shell {
+        height: calc(100vh - 61px);
+        min-height: 0;
+        transition: grid-template-columns 0.3s ease;
+      }
+      .shell.sidebar-shrunk {
+        grid-template-columns: 180px 1fr;
+      }
+      .shell.sidebar-shrunk .nav-link, 
+      .shell.sidebar-shrunk .nav-link-sub { 
+        font-size: 0.82rem !important; 
+        padding-left: 8px !important; 
+      }
+      .shell.sidebar-shrunk .nav-link-sub { 
+        padding-left: 20px !important; 
+      }
+      .shell.sidebar-shrunk .brand strong { 
+        font-size: 1rem; 
+      }
+      .sidebar {
+        height: 100%;
+        overflow-y: auto;
+      }
+      .main {
+        height: 100%;
+        overflow-y: auto;
+      }
+    </style>
+    <script>
+      // Sidebar shrink effect
+      const mainEl = document.querySelector(".main");
+      const shellEl = document.querySelector(".shell");
+      if (mainEl && shellEl) {
+        mainEl.addEventListener("scroll", () => {
+          if (mainEl.scrollTop > 20) {
+            shellEl.classList.add("sidebar-shrunk");
+          } else {
+            shellEl.classList.remove("sidebar-shrunk");
+          }
+        });
+      }
+    </script>
   </head>
   <body>
-    <main class="page">
-      <div class="app-frame">
-        <div class="chrome">
-          <div class="dots"><span></span><span></span><span></span></div>
-          <small>Route /admin/communications/school-liaison</small>
-        </div>
+    <!-- Topbar -->
+      <div class="topbar">
+        <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+        <nav class="chrome-nav">
+          <a href="admin-dashboard.html">Dashboard</a>
+          <a href="notifications.html">Notifications</a>
+        </nav>
+      </div>
         <div class="shell">
           <aside class="sidebar">
-            <div class="brand"><small>Oxford Guardians</small><strong>School Liaison</strong></div>
+            <div class="brand"><strong>Schools</strong></div>
             <div class="nav-group">
               <div class="nav-label">Overview</div>
               <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
@@ -29,6 +113,7 @@
               <a class="nav-link" href="students.html">Students</a>
               <a class="nav-link" href="travel.html">Travel</a>
               <a class="nav-link" href="schools.html">Schools</a>
+              <a class="nav-link nav-link-sub" href="school-directory.html">School directory</a>
               <a class="nav-link nav-link-sub active" href="school-liaison.html">Communication log</a>
               <a class="nav-link nav-link-sub" href="school-log-create.html">Log contact</a>
               <a class="nav-link nav-link-sub" href="school-welfare-notification.html">Welfare notification</a>
@@ -47,9 +132,7 @@
                 <h2>Every school contact should be timestamped, attributable, and follow-up driven.</h2>
                 <p>Standard 9.7 is not admin garnish. If contact with schools lives in email inboxes and memory, the organisation cannot prove what was agreed, what was escalated, or who owned the next step.</p>
               </div>
-              <div class="toolbar-actions">
-                <a class="button-alt" href="school-directory.html">View School Directory</a>
-                <a class="button" href="school-log-create.html">Log school contact</a>
+              <div class="toolbar-actions">                <a class="button" href="school-log-create.html">Log school contact</a>
               </div>
             </div>
 
@@ -103,8 +186,6 @@
             </div>
           </section>
         </div>
-      </div>
-    </main>
   </body>
   <script src="assets/db.js"></script>
   <script>
