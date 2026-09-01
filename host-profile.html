@@ -512,11 +512,13 @@
               <a class="nav-link" href="safeguarding.html">Safeguarding</a>
 
           </div>
-          <div class="nav-group">
-            <div class="nav-label">Compliance</div>
-            <a class="nav-link" href="aegis control room.html">AEGIS control room</a>
-          </div>
-        </aside>
+                      <div class="nav-group">
+              <div class="nav-label">Compliance &amp; IT</div>
+              <a class="nav-link" href="aegis-control-room.html">AEGIS control room</a>
+              <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+              <a class="nav-link" href="compliance.html">Compliance</a>
+            </div>
+          </aside>
 
         <!-- Main content -->
         <section class="main" id="main-content">
@@ -533,7 +535,7 @@
             </div>
             <div class="toolbar-actions">
               <span id="toolbar-status-badge" class="badge">—</span>
-              <a class="button" id="compliance-btn" href="host-compliance.html" style="text-decoration:none;">View Compliance Record</a>
+              <a class="button" id="compliance-btn" href="host-aegis-control-room.html" style="text-decoration:none;">View Compliance Record</a>
               <a class="button-alt" id="btn-delete-draft" href="#" style="display:none;color:#9f4347;">Delete Draft</a>
               <a class="button-alt" href="hosts.html">Back to Hosts</a>
               <a class="button-alt" id="btn-log-visit" href="homestay-visit-report.html">Log Visit / Assessment</a>
@@ -1268,7 +1270,7 @@
       }
     }
 
-    document.getElementById('compliance-btn').href     = 'host-compliance.html?id=' + host.id;
+    document.getElementById('compliance-btn').href     = 'host-aegis-control-room.html?id=' + host.id;
     document.getElementById('btn-log-visit').href      = 'homestay-visit-report.html?hostId=' + host.id;
     document.getElementById('btn-hs-checklist').href   = 'homestay-hs-checklist.html?id=' + host.id;
     document.getElementById('btn-view-shareable-profile').href = 'homestay-profile-view.html?id=' + encodeURIComponent(host.id);
@@ -2040,6 +2042,9 @@
 
   </body>
 </html>
+
+
+
 
 
 

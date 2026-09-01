@@ -112,11 +112,13 @@
               <a class="nav-link" href="safeguarding.html">Safeguarding</a>
 
         </div>
-        <div class="nav-group">
-          <div class="nav-label">Compliance</div>
-          <a class="nav-link" href="aegis control room.html">AEGIS control room</a>
-        </div>
-      </aside>
+                    <div class="nav-group">
+              <div class="nav-label">Compliance &amp; IT</div>
+              <a class="nav-link" href="aegis-control-room.html">AEGIS control room</a>
+              <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+              <a class="nav-link" href="compliance.html">Compliance</a>
+            </div>
+          </aside>
 
       <section class="main">
         <div class="toolbar">
@@ -242,7 +244,7 @@
 
             <div style="margin:16px 0 8px;padding:14px 18px;background:var(--surface-2,#f1f5f9);border:1px solid var(--line,#e1e7ec);border-radius:10px;font-size:0.88rem;color:var(--ink-2,#3b536e);">
               Compliance records are now managed separately.
-              <a id="compliance-banner-link" href="host-compliance.html" style="color:var(--gold,#0891b2);font-weight:600;">Manage Compliance Record →</a>
+              <a id="compliance-banner-link" href="host-aegis-control-room.html" style="color:var(--gold,#0891b2);font-weight:600;">Manage Compliance Record →</a>
             </div>
 
             <div class="action-row">
@@ -364,7 +366,7 @@
     sv('f-completed-stays',     host.completedStays);
     sv('f-notes',               host.notes);
 
-    document.getElementById('compliance-banner-link').href = 'host-compliance.html?id=' + host.id;
+    document.getElementById('compliance-banner-link').href = 'host-aegis-control-room.html?id=' + host.id;
   }
 
   document.getElementById('host-form').addEventListener('submit', function (e) {
@@ -437,6 +439,9 @@
 
 </body>
 </html>
+
+
+
 
 
 

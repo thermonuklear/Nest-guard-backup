@@ -75,10 +75,12 @@
           <a class="nav-link" href="students.html">Students</a>
           <a class="nav-link" href="hosts.html">Hosts</a>
         </div>
-        <div class="nav-group">
-          <div class="nav-label">Compliance</div>
-          <a class="nav-link" href="aegis control room.html">AEGIS control room</a>
-        </div>
+                    <div class="nav-group">
+              <div class="nav-label">Compliance &amp; IT</div>
+              <a class="nav-link" href="aegis-control-room.html">AEGIS control room</a>
+              <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+              <a class="nav-link" href="compliance.html">Compliance</a>
+            </div>
       </aside>
 
       <section class="main">
@@ -93,7 +95,7 @@
             </div>
           </div>
           <div class="toolbar-actions">
-            <a class="button-alt" id="back-link" href="staff-compliance.html">Back to Compliance Overview</a>
+            <a class="button-alt" id="back-link" href="staff-aegis-control-room.html">Back to Compliance Overview</a>
           </div>
         </div>
 
@@ -127,7 +129,7 @@
 
             <div class="action-row">
               <button type="submit" class="button">Save changes</button>
-              <a class="button-alt" id="cancel-link" href="staff-compliance.html">Cancel</a>
+              <a class="button-alt" id="cancel-link" href="staff-aegis-control-room.html">Cancel</a>
             </div>
 
           </form>
@@ -154,8 +156,8 @@
     document.getElementById('toolbar-subtitle').textContent = (member.role || '—') + ' · ' + (member.title || '—');
     document.getElementById('toolbar-avatar').textContent =
       ((member.firstName||'').charAt(0) + (member.lastName||'').charAt(0)).toUpperCase();
-    document.getElementById('back-link').href   = 'staff-compliance.html?id=' + member.id;
-    document.getElementById('cancel-link').href = 'staff-compliance.html?id=' + member.id;
+    document.getElementById('back-link').href   = 'staff-aegis-control-room.html?id=' + member.id;
+    document.getElementById('cancel-link').href = 'staff-aegis-control-room.html?id=' + member.id;
 
     var c = member.compliance || {};
     [['c-ref1-hint', c.reference1Path],
@@ -181,12 +183,14 @@
     member.compliance = c;
 
     saveStaffMember(member);
-    window.location.href = 'staff-compliance.html?id=' + member.id;
+    window.location.href = 'staff-aegis-control-room.html?id=' + member.id;
   });
 </script>
 
 </body>
 </html>
+
+
 
 
 

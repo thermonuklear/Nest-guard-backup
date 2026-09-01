@@ -215,12 +215,13 @@
           <a class="nav-link nav-link-sub" href="homestay-todo.html">To-do</a>
           <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
         </div>
-        <div class="nav-group">
-          <div class="nav-label">Compliance</div>
-          <a class="nav-link" href="aegis control room.html">AEGIS control room</a>
-          <a class="nav-link active" href="training-log.html">Training records</a>
-        </div>
-      </aside>
+                    <div class="nav-group">
+              <div class="nav-label">Compliance &amp; IT</div>
+              <a class="nav-link" href="aegis-control-room.html">AEGIS control room</a>
+              <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+              <a class="nav-link" href="compliance.html">Compliance</a>
+            </div>
+          </aside>
 
       <section class="main">
         <div class="toolbar">
@@ -438,7 +439,7 @@
     document.getElementById('chrome-route').textContent  = 'Route /admin/' + lockedType + '/' + lockedRecord.id + '/training/new';
     document.title = 'Log Training — ' + fullName + ' — Oxford Guardians';
 
-    backUrl = lockedType === 'host' ? ('training-log.html?id=' + lockedRecord.id) : ('staff-compliance.html?id=' + lockedRecord.id);
+    backUrl = lockedType === 'host' ? ('training-log.html?id=' + lockedRecord.id) : ('staff-aegis-control-room.html?id=' + lockedRecord.id);
   } else if (hostIdParam || personIdParam) {
     // A param was given but didn't resolve to a real record — fall back to the open picker.
     document.getElementById('field-person').placeholder = 'Record not found — check ID in URL';
@@ -757,6 +758,9 @@
 </script>
 </body>
 </html>
+
+
+
 
 
 

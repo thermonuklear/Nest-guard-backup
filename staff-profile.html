@@ -327,10 +327,12 @@
             <a class="nav-link" href="students.html">Students</a>
             <a class="nav-link" href="hosts.html">Hosts</a>
           </div>
-          <div class="nav-group">
-            <div class="nav-label">Compliance</div>
-            <a class="nav-link" href="aegis control room.html">AEGIS control room</a>
-          </div>
+                      <div class="nav-group">
+              <div class="nav-label">Compliance &amp; IT</div>
+              <a class="nav-link" href="aegis-control-room.html">AEGIS control room</a>
+              <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+              <a class="nav-link" href="compliance.html">Compliance</a>
+            </div>
         </aside>
 
         <!-- Main content -->
@@ -348,7 +350,7 @@
             </div>
             <div class="toolbar-actions">
               <span id="toolbar-status-badge" class="badge">—</span>
-              <a class="button" id="compliance-btn" href="staff-compliance.html" style="text-decoration:none;">View Compliance Record</a>
+              <a class="button" id="compliance-btn" href="staff-aegis-control-room.html" style="text-decoration:none;">View Compliance Record</a>
               <a class="button-alt" href="staff-list.html">Back to Staff</a>
             </div>
           </div>
@@ -607,7 +609,7 @@
 
     document.title = fullName + ' — Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/staff/' + member.id;
-    document.getElementById('compliance-btn').href = 'staff-compliance.html?id=' + member.id;
+    document.getElementById('compliance-btn').href = 'staff-aegis-control-room.html?id=' + member.id;
 
     document.getElementById('toolbar-avatar').textContent = initials(member.firstName, member.lastName);
     document.getElementById('toolbar-name').innerHTML =
@@ -828,6 +830,8 @@
 
   </body>
 </html>
+
+
 
 
 

@@ -219,11 +219,13 @@
           <a class="nav-link nav-link-sub" href="host-profile.html">Host Profile</a>
           <a class="nav-link nav-link-sub active" href="#">H&amp;S Checklists</a>
         </div>
-        <div class="nav-group">
-          <div class="nav-label">Compliance</div>
-          <a class="nav-link" href="aegis control room.html">AEGIS control room</a>
-        </div>
-      </aside>
+                    <div class="nav-group">
+              <div class="nav-label">Compliance &amp; IT</div>
+              <a class="nav-link" href="aegis-control-room.html">AEGIS control room</a>
+              <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+              <a class="nav-link" href="compliance.html">Compliance</a>
+            </div>
+          </aside>
 
       <section class="main">
 
@@ -454,7 +456,7 @@
     document.getElementById('host-avatar').textContent  = (host.firstName.charAt(0) + host.lastName.charAt(0)).toUpperCase();
     document.getElementById('toolbar-name').innerHTML   = esc(fullName) + ' <span style="color:#6b85a0;font-size:0.8em;font-weight:normal;margin-left:8px;">' + esc(host.id) + '</span>';
     document.getElementById('toolbar-sub').textContent  = 'H&S Property Risk Assessment — Section 11';
-    document.getElementById('back-link').href           = 'host-compliance.html?id=' + host.id;
+    document.getElementById('back-link').href           = 'host-aegis-control-room.html?id=' + host.id;
     document.getElementById('field-host-name').value   = fullName;
     document.getElementById('field-host-id').value     = host.id;
   }
@@ -786,6 +788,9 @@
 </script>
 </body>
 </html>
+
+
+
 
 
 

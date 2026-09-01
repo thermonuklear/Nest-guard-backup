@@ -90,11 +90,13 @@
               <a class="nav-link" href="safeguarding.html">Safeguarding</a>
 
         </div>
-        <div class="nav-group">
-          <div class="nav-label">Compliance</div>
-          <a class="nav-link" href="aegis control room.html">AEGIS control room</a>
-        </div>
-      </aside>
+                    <div class="nav-group">
+              <div class="nav-label">Compliance &amp; IT</div>
+              <a class="nav-link" href="aegis-control-room.html">AEGIS control room</a>
+              <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+              <a class="nav-link" href="compliance.html">Compliance</a>
+            </div>
+          </aside>
 
       <section class="main">
         <div class="toolbar">
@@ -107,7 +109,7 @@
             </div>
           </div>
           <div class="toolbar-actions">
-            <a class="button-alt" id="back-link" href="driver-compliance.html">Back to Compliance Overview</a>
+            <a class="button-alt" id="back-link" href="driver-aegis-control-room.html">Back to Compliance Overview</a>
           </div>
         </div>
 
@@ -143,7 +145,7 @@
 
             <div class="action-row">
               <button type="submit" class="button">Save changes</button>
-              <a class="button-alt" id="cancel-link" href="driver-compliance.html">Cancel</a>
+              <a class="button-alt" id="cancel-link" href="driver-aegis-control-room.html">Cancel</a>
             </div>
           </form>
         </div>
@@ -167,8 +169,8 @@
     document.getElementById('driver-name').textContent   = driver.firstName + ' ' + driver.lastName;
     document.getElementById('driver-subtitle').textContent = (driver.carMake ? driver.carMake + ' ' + (driver.carModel || '') : '—');
     document.getElementById('driver-avatar').textContent = ((driver.firstName||'').charAt(0) + (driver.lastName||'').charAt(0)).toUpperCase();
-    document.getElementById('back-link').href   = 'driver-compliance.html?id=' + driver.id;
-    document.getElementById('cancel-link').href = 'driver-compliance.html?id=' + driver.id;
+    document.getElementById('back-link').href   = 'driver-aegis-control-room.html?id=' + driver.id;
+    document.getElementById('cancel-link').href = 'driver-aegis-control-room.html?id=' + driver.id;
 
     var c = driver.compliance || {};
     document.getElementById('c-lived-abroad').value =
@@ -202,12 +204,15 @@
     driver.compliance = c;
 
     saveDriver(driver);
-    window.location.href = 'driver-compliance.html?id=' + driver.id;
+    window.location.href = 'driver-aegis-control-room.html?id=' + driver.id;
   });
 </script>
 
 </body>
 </html>
+
+
+
 
 
 

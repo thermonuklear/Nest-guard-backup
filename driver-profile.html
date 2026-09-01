@@ -439,9 +439,11 @@
               <a class="nav-link" href="safeguarding.html">Safeguarding</a>
 
             </div>
-            <div class="nav-group">
-              <div class="nav-label">Compliance</div>
-              <a class="nav-link" href="aegis control room.html">AEGIS control room</a>
+                        <div class="nav-group">
+              <div class="nav-label">Compliance &amp; IT</div>
+              <a class="nav-link" href="aegis-control-room.html">AEGIS control room</a>
+              <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+              <a class="nav-link" href="compliance.html">Compliance</a>
             </div>
           </aside>
 
@@ -460,7 +462,7 @@
                 <span id="driver-dbs-badge" class="badge">—</span>
                 <a class="button-alt" href="travel.html">Back to Travel</a>
                 <a class="button-alt" id="edit-btn" href="#">Edit record</a>
-                <a class="button" id="compliance-btn" href="driver-compliance.html" style="text-decoration:none;">View Compliance Record</a>
+                <a class="button" id="compliance-btn" href="driver-aegis-control-room.html" style="text-decoration:none;">View Compliance Record</a>
                 <a class="button" href="travel-create.html">Assign to trip</a>
               </div>
             </div>
@@ -664,7 +666,7 @@
       // Edit links
       document.getElementById('edit-btn').href        = 'driver-edit.html?id=' + driver.id;
       document.getElementById('inline-edit-link').href = 'driver-edit.html?id=' + driver.id;
-      document.getElementById('compliance-btn').href = 'driver-compliance.html?id=' + driver.id;
+      document.getElementById('compliance-btn').href = 'driver-aegis-control-room.html?id=' + driver.id;
 
       document.getElementById('driver-avatar').textContent = initials(driver.firstName, driver.lastName);
       document.getElementById('driver-name').innerHTML = fullName +
@@ -905,6 +907,9 @@
     </script>
   </body>
 </html>
+
+
+
 
 
 

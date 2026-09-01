@@ -25,7 +25,7 @@
               <strong>Compliance</strong>
             </div>
             <div class="nav-group">
-              <a class="nav-link" href="aegis control room.html">AEGIS control room</a>
+              <a class="nav-link" href="aegis-control-room.html">AEGIS control room</a>
               <a class="nav-link" href="audit-log.html">Audit trail</a>
               <a class="nav-link" href="scr-dashboard.html">SCR Dashboard</a>
               <a class="nav-link nav-link-sub active" href="scr-staff.html">Staff SCR</a>
@@ -95,7 +95,7 @@
                 </ul>
               </div>
             </div>
-            <p class="inline-links">Related: <a href="scr-dashboard.html">SCR Dashboard</a> · <a href="scr-hosts.html">Host SCR</a> · <a href="scr-drivers.html">Driver SCR</a> · <a href="staff-list.html">Staff list</a> · <a href="aegis control room.html">AEGIS control room</a></p>
+            <p class="inline-links">Related: <a href="scr-dashboard.html">SCR Dashboard</a> · <a href="scr-hosts.html">Host SCR</a> · <a href="scr-drivers.html">Driver SCR</a> · <a href="staff-list.html">Staff list</a> · <a href="aegis-control-room.html">AEGIS control room</a></p>
           </section>
         </div>
     <script src="assets/db.js"></script>
@@ -234,9 +234,9 @@
           status === 'exempt'   ? '<span class="badge amber">Exempt</span>'    :
                                   '<span class="badge red">Incomplete</span>';
 
-        var editUrl = type === 'staff' ? 'staff-compliance.html?id=' + person.id :
-                      type === 'host'  ? 'host-compliance.html?id='  + person.id :
-                                         'driver-compliance.html?id=' + person.id;
+        var editUrl = type === 'staff' ? 'staff-aegis-control-room.html?id=' + person.id :
+                      type === 'host'  ? 'host-aegis-control-room.html?id='  + person.id :
+                                         'driver-aegis-control-room.html?id=' + person.id;
 
         return '<tr>' +
           '<td><a href="' + editUrl + '" style="text-decoration:none;color:inherit;"><strong>' + name + '</strong></a>' +
@@ -284,6 +284,8 @@
     </script>
   </body>
 </html>
+
+
 
 
 
