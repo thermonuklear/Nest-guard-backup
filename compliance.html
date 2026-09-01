@@ -52,9 +52,13 @@
     </style>
   </head>
   <body>
-    <main class="page">
-      <div class="app-frame">
-        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/compliance</small></div>
+      <div class="topbar">
+        <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+        <nav class="chrome-nav">
+          <a href="admin-dashboard.html">Dashboard</a>
+          <a href="notifications.html">Notifications</a>
+        </nav>
+      </div>
         <div class="shell">
           <aside class="sidebar">
             <div class="brand"><small>Oxford Guardians</small><strong>AEGIS Control Room</strong></div>
@@ -63,7 +67,7 @@
               <a class="nav-link" href="safeguarding.html">Safeguarding</a>
 </div>
             <div class="nav-group"><div class="nav-label">Safeguarding</div><a class="nav-link" href="welfare-notes.html">Welfare notes</a><a class="nav-link" href="concerns-dashboard.html">Concerns Dashboard</a><a class="nav-link" href="emergency-procedures.html">Emergency</a></div>
-            <div class="nav-group"><div class="nav-label">Compliance &amp; IT</div><a class="nav-link active" href="compliance.html">AEGIS control room</a><a class="nav-link" href="it-control-room.html">IT Control Room</a><a class="nav-link" href="organisation-profile.html">Organisation &amp; Governance</a><a class="nav-link" href="complaints.html">Complaints Register</a><a class="nav-link" href="private-fostering.html">Private fostering</a><a class="nav-link" href="scr-dashboard.html">SCR Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="scr-staff.html" style="color: #63768b; text-decoration: none;">• Staff SCR</a><a href="scr-hosts.html" style="color: #63768b; text-decoration: none;">• Host SCR</a><a href="scr-drivers.html" style="color: #63768b; text-decoration: none;">• Driver SCR</a></div><a class="nav-link" href="audit-log.html">Audit trail</a><a class="nav-link" href="reporting-dashboard.html">Reporting</a><a class="nav-link" href="training-log.html">Training records</a><a class="nav-link" href="induction-checklist.html">Inductions</a></div>
+            <div class="nav-group"><div class="nav-label">Compliance &amp; IT</div><a class="nav-link active" href="aegis control room.html">AEGIS control room</a><a class="nav-link" href="it-control-room.html">IT Control Room</a><a class="nav-link" href="organisation-profile.html">Organisation &amp; Governance</a><a class="nav-link" href="complaints.html">Complaints Register</a><a class="nav-link" href="private-fostering.html">Private fostering</a><a class="nav-link" href="scr-dashboard.html">SCR Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="scr-staff.html" style="color: #63768b; text-decoration: none;">• Staff SCR</a><a href="scr-hosts.html" style="color: #63768b; text-decoration: none;">• Host SCR</a><a href="scr-drivers.html" style="color: #63768b; text-decoration: none;">• Driver SCR</a></div><a class="nav-link" href="audit-log.html">Audit trail</a><a class="nav-link" href="reporting-dashboard.html">Reporting</a><a class="nav-link" href="training-log.html">Training records</a><a class="nav-link" href="induction-checklist.html">Inductions</a></div>
           </aside>
           <section class="main">
             <div class="toolbar">
@@ -177,8 +181,6 @@
             </div>
           </section>
         </div>
-      </div>
-    </main>
 
     <!-- ── Export Inspection Bundle Modal ─────────────────────────────────────── -->
     <div class="modal-backdrop" id="modal-export">
@@ -563,7 +565,22 @@
           '<h1>Redacted Single Central Record — ' + escapeHtml(org.name) + '</h1>' +
           '<p class="meta">Generated ' + escapeHtml(fmtDate(new Date().toISOString())) + ' for AEGIS inspection submission. DBS certificate numbers masked to the last 4 digits; addresses reduced to town / postcode area per Data Protection Act 2018.</p>' +
           '<table><thead><tr><th>Name</th><th>Type</th><th>Role</th><th>DBS Number</th><th>DBS Status</th><th>Address</th></tr></thead><tbody>' + rowsHtml + '</tbody></table>' +
-          '<script>window.onload=function(){window.print();};</' + 'script></body></html>';
+          '<script>window.onload=function(){window.print();};</' + 'script>    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const main = document.querySelector('.main');
+        const shell = document.querySelector('.shell');
+        if (main && shell) {
+          main.addEventListener('scroll', function() {
+            if (main.scrollTop > 20) {
+              shell.classList.add('sidebar-shrunk');
+            } else {
+              shell.classList.remove('sidebar-shrunk');
+            }
+          });
+        }
+      });
+    </script>
+  </body></html>';
         var w = window.open('', '_blank');
         if (!w) { alert('Please allow pop-ups to open the print view.'); return; }
         w.document.open(); w.document.write(html); w.document.close();
@@ -618,14 +635,47 @@
         var html = '<!doctype html><html><head><title>Digital Evidence Manifest — ' + escapeHtml(org.name) + '</title>' +
           '<style>body{font-family:Arial,sans-serif;padding:32px;color:#0f2340;} h1{font-size:1.4rem;} h2{font-size:1.05rem;margin-top:22px;border-bottom:1px solid #ccc;padding-bottom:4px;} p{font-size:0.88rem;}</style></head><body>' +
           '<h1>Digital Evidence Manifest</h1>' + bodyHtml +
-          '<script>window.onload=function(){window.print();};</' + 'script></body></html>';
+          '<script>window.onload=function(){window.print();};</' + 'script>    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const main = document.querySelector('.main');
+        const shell = document.querySelector('.shell');
+        if (main && shell) {
+          main.addEventListener('scroll', function() {
+            if (main.scrollTop > 20) {
+              shell.classList.add('sidebar-shrunk');
+            } else {
+              shell.classList.remove('sidebar-shrunk');
+            }
+          });
+        }
+      });
+    </script>
+  </body></html>';
         var w = window.open('', '_blank');
         if (!w) { alert('Please allow pop-ups to open the print view.'); return; }
         w.document.open(); w.document.write(html); w.document.close();
       }
     </script>
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const main = document.querySelector('.main');
+        const shell = document.querySelector('.shell');
+        if (main && shell) {
+          main.addEventListener('scroll', function() {
+            if (main.scrollTop > 20) {
+              shell.classList.add('sidebar-shrunk');
+            } else {
+              shell.classList.remove('sidebar-shrunk');
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>
+
+
+
 
 
 

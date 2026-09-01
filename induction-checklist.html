@@ -10,9 +10,13 @@
     <link rel="stylesheet" href="assets/app.css" />
   </head>
   <body>
-    <main class="page">
-      <div class="app-frame">
-        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/compliance/inductions</small></div>
+      <div class="topbar">
+        <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+        <nav class="chrome-nav">
+          <a href="admin-dashboard.html">Dashboard</a>
+          <a href="notifications.html">Notifications</a>
+        </nav>
+      </div>
         <div class="shell">
           <aside class="sidebar">
             <div class="brand"><small>Oxford Guardians</small><strong>Inductions</strong></div>
@@ -20,7 +24,7 @@
             <div class="nav-group"><div class="nav-label">Operations</div><a class="nav-link" href="students.html">Students</a><a class="nav-link" href="homestays.html">Homestays</a><a class="nav-link" href="travel.html">Travel</a><a class="nav-link" href="documents.html">Documents</a>
               <a class="nav-link" href="safeguarding.html">Safeguarding</a>
 </div>
-            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a><a class="nav-link" href="training-log.html">Training records</a><a class="nav-link active" href="induction-checklist.html">Inductions</a></div>
+            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="aegis control room.html">AEGIS control room</a><a class="nav-link" href="training-log.html">Training records</a><a class="nav-link active" href="induction-checklist.html">Inductions</a></div>
           </aside>
           <section class="main">
             <div class="toolbar">
@@ -29,7 +33,7 @@
                 <h2>No one starts without completing induction</h2>
                 <p>AEGIS Standard 2.1.4 requires induction for new staff, volunteers, and homestays, including safeguarding content.</p>
               </div>
-              <div class="toolbar-actions"><a class="button-alt" href="compliance.html">Back to compliance</a><a class="button-alt" href="training-log.html">Training log</a><a class="button" href="induction-create.html">Log induction</a></div>
+              <div class="toolbar-actions"><a class="button-alt" href="aegis control room.html">Back to compliance</a><a class="button-alt" href="training-log.html">Training log</a><a class="button" href="induction-create.html">Log induction</a></div>
             </div>
             <div class="metrics">
               <article class="metric featured"><h4>Induction compliance</h4><div class="metric-value">100%</div><p class="metric-meta">All active staff and homestays have completed induction</p></article>
@@ -122,13 +126,30 @@
                 </div>
               </div>
             </div>
-            <div class="inline-links"><a href="induction-create.html">Log induction</a><span class="sep">|</span><a href="training-log.html">Training log</a><span class="sep">|</span><a href="compliance.html">Compliance</a><span class="sep">|</span><a href="homestays.html">Homestays</a></div>
+            <div class="inline-links"><a href="induction-create.html">Log induction</a><span class="sep">|</span><a href="training-log.html">Training log</a><span class="sep">|</span><a href="aegis control room.html">Compliance</a><span class="sep">|</span><a href="homestays.html">Homestays</a></div>
           </section>
         </div>
-      </div>
-    </main>
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const main = document.querySelector('.main');
+        const shell = document.querySelector('.shell');
+        if (main && shell) {
+          main.addEventListener('scroll', function() {
+            if (main.scrollTop > 20) {
+              shell.classList.add('sidebar-shrunk');
+            } else {
+              shell.classList.remove('sidebar-shrunk');
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>
+
+
+
+
 
 
 

@@ -109,7 +109,7 @@
       .form-span-2, .form-span-3 { grid-column: span 1; }
       .gov-card { padding: 18px; }
     }
-  </style>
+    </style>
 </head>
 <body>
 
@@ -118,15 +118,14 @@
   <span id="save-toast-text">Saved</span>
 </div>
 
-<main class="page">
-  <div class="app-frame">
-
-    <div class="chrome">
-      <div class="dots"><span></span><span></span><span></span></div>
-      <small>Route /governance/organisation-profile</small>
-    </div>
-
-    <div class="shell">
+      <div class="topbar">
+        <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+        <nav class="chrome-nav">
+          <a href="admin-dashboard.html">Dashboard</a>
+          <a href="notifications.html">Notifications</a>
+        </nav>
+      </div>
+        <div class="shell">
 
       <aside class="sidebar">
         <div class="brand">
@@ -139,7 +138,7 @@
         </div>
         <div class="nav-group">
           <div class="nav-label">Compliance &amp; IT</div>
-          <a class="nav-link" href="compliance.html">AEGIS Control Room</a>
+          <a class="nav-link" href="aegis control room.html">AEGIS Control Room</a>
           <a class="nav-link" href="it-control-room.html">IT Control Room</a>
           <a class="nav-link active" href="organisation-profile.html">Organisation &amp; Governance</a>
           <a class="nav-link" href="complaints.html">Complaints Register</a>
@@ -156,7 +155,7 @@
             <p>Corporate compliance prerequisites — ICO registration, insurance, statement of aims, company structure, and the 14-day significant changes register (AEGIS Standards 1.1, 2.1.1, 2.4.1, 2.7.2, 2.11.1).</p>
           </div>
           <div class="toolbar-actions">
-            <a class="button-alt" href="compliance.html">AEGIS Control Room</a>
+            <a class="button-alt" href="aegis control room.html">AEGIS Control Room</a>
           </div>
         </div>
 
@@ -340,9 +339,7 @@
         </div>
 
       </section>
-    </div>
-  </div>
-</main>
+        </div>
 
 <!-- Modal: Log Operational Change -->
 <div class="modal-backdrop" id="modal-change">
@@ -809,7 +806,26 @@
   }
 </script>
 
-</body>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const main = document.querySelector('.main');
+        const shell = document.querySelector('.shell');
+        if (main && shell) {
+          main.addEventListener('scroll', function() {
+            if (main.scrollTop > 20) {
+              shell.classList.add('sidebar-shrunk');
+            } else {
+              shell.classList.remove('sidebar-shrunk');
+            }
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
+
+
+
+
 
 

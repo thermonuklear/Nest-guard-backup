@@ -102,7 +102,7 @@
 
     @media (max-width: 1200px) { .stat-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .posture-grid { grid-template-columns: 1fr; } }
     @media (max-width: 700px) { .stat-grid { grid-template-columns: 1fr; } }
-  </style>
+    </style>
 </head>
 <body>
 
@@ -111,15 +111,14 @@
   <span id="save-toast-text">Saved</span>
 </div>
 
-<main class="page">
-  <div class="app-frame">
-
-    <div class="chrome">
-      <div class="dots"><span></span><span></span><span></span></div>
-      <small>Route /admin/compliance/it-security</small>
-    </div>
-
-    <div class="shell">
+      <div class="topbar">
+        <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+        <nav class="chrome-nav">
+          <a href="admin-dashboard.html">Dashboard</a>
+          <a href="notifications.html">Notifications</a>
+        </nav>
+      </div>
+        <div class="shell">
 
       <aside class="sidebar">
         <div class="brand">
@@ -132,7 +131,7 @@
         </div>
         <div class="nav-group">
           <div class="nav-label">Compliance &amp; IT</div>
-          <a class="nav-link" href="compliance.html">AEGIS Control Room</a>
+          <a class="nav-link" href="aegis control room.html">AEGIS Control Room</a>
           <a class="nav-link active" href="it-control-room.html">IT Control Room</a>
           <a class="nav-link" href="organisation-profile.html">Organisation &amp; Governance</a>
           <a class="nav-link" href="complaints.html">Complaints Register</a>
@@ -149,7 +148,7 @@
             <p>Cyber Essentials, UK GDPR &amp; AEGIS Standard 2.7 technical controls, access management, and disaster recovery.</p>
           </div>
           <div class="toolbar-actions">
-            <a class="button-alt" href="compliance.html">AEGIS Control Room</a>
+            <a class="button-alt" href="aegis control room.html">AEGIS Control Room</a>
           </div>
         </div>
 
@@ -290,9 +289,7 @@
         </div>
 
       </section>
-    </div>
-  </div>
-</main>
+        </div>
 
 <!-- Log New SAR Modal -->
 <div class="modal-backdrop" id="modal-sar">
@@ -627,7 +624,26 @@
   }
 </script>
 
-</body>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const main = document.querySelector('.main');
+        const shell = document.querySelector('.shell');
+        if (main && shell) {
+          main.addEventListener('scroll', function() {
+            if (main.scrollTop > 20) {
+              shell.classList.add('sidebar-shrunk');
+            } else {
+              shell.classList.remove('sidebar-shrunk');
+            }
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
+
+
+
+
 
 

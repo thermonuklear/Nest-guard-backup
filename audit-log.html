@@ -10,13 +10,28 @@
     <link rel="stylesheet" href="assets/app.css" />
   </head>
   <body>
-    <main class="page">
-      <div class="app-frame">
-        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><small>Route /admin/compliance/audit</small></div>
+      <div class="topbar">
+        <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+        <nav class="chrome-nav">
+          <a href="admin-dashboard.html">Dashboard</a>
+          <a href="notifications.html">Notifications</a>
+        </nav>
+      </div>
         <div class="shell">
-          <aside class="sidebar">
-            <div class="brand"><small>Oxford Guardians</small><strong>Audit Trail</strong></div>
-            <div class="nav-group"><div class="nav-label">Compliance</div><a class="nav-link" href="compliance.html">AEGIS control room</a><a class="nav-link" href="private-fostering.html">Private fostering</a><a class="nav-link" href="scr-dashboard.html">SCR Dashboard</a><div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;"><a href="scr-staff.html" style="color: #63768b; text-decoration: none;">• Staff SCR</a><a href="scr-hosts.html" style="color: #63768b; text-decoration: none;">• Host SCR</a><a href="scr-drivers.html" style="color: #63768b; text-decoration: none;">• Driver SCR</a></div><a class="nav-link active" href="audit-log.html">Audit trail</a><a class="nav-link" href="reporting-dashboard.html">Reporting</a></div>
+                    <aside class="sidebar">
+            <div class="brand">
+              <small>Oxford Guardians</small>
+              <strong>Compliance</strong>
+            </div>
+            <div class="nav-group">
+              <a class="nav-link" href="aegis control room.html">AEGIS control room</a>
+              <a class="nav-link active" href="audit-log.html">Audit trail</a>
+              <a class="nav-link" href="scr-dashboard.html">SCR Dashboard</a>
+              <a class="nav-link nav-link-sub" href="scr-staff.html">Staff SCR</a>
+              <a class="nav-link nav-link-sub" href="scr-hosts.html">Host SCR</a>
+              <a class="nav-link nav-link-sub" href="scr-drivers.html">Driver SCR</a>
+              <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+            </div>
           </aside>
           <section class="main">
             <div class="toolbar">
@@ -25,7 +40,7 @@
                 <h2>Who changed what, when. No exceptions.</h2>
                 <p>Every significant action is logged with timestamp, user, and before/after state. This is your evidence that records weren't tampered with and processes were followed.</p>
               </div>
-              <div class="toolbar-actions"><a class="button-alt" href="compliance.html">Back to compliance</a><a class="button" href="#">Export audit log</a></div>
+              <div class="toolbar-actions"><a class="button-alt" href="aegis control room.html">Back to compliance</a><a class="button" href="#">Export audit log</a></div>
             </div>
             <div class="metrics">
               <article class="metric featured"><h4>Audit entries (30 days)</h4><div class="metric-value">847</div><p class="metric-meta">Average 28 entries per day</p></article>
@@ -115,11 +130,9 @@
                 <li>The PRD doesn't mention audit trails at all. This is infrastructure, not a feature — but it's essential.</li>
               </ul>
             </div>
-            <p class="inline-links">Related: <a href="compliance.html">AEGIS control room</a> · <a href="scr-dashboard.html">SCR Dashboard</a> · <a href="users.html">User directory</a> · <a href="reporting-dashboard.html">Reporting</a></p>
+            <p class="inline-links">Related: <a href="aegis control room.html">AEGIS control room</a> · <a href="scr-dashboard.html">SCR Dashboard</a> · <a href="users.html">User directory</a> · <a href="reporting-dashboard.html">Reporting</a></p>
           </section>
         </div>
-      </div>
-    </main>
     <script src="assets/db.js"></script>
     <script>
       function esc(str) {
@@ -173,7 +186,25 @@
 
       renderAuditLog();
     </script>
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const main = document.querySelector('.main');
+        const shell = document.querySelector('.shell');
+        if (main && shell) {
+          main.addEventListener('scroll', function() {
+            if (main.scrollTop > 20) {
+              shell.classList.add('sidebar-shrunk');
+            } else {
+              shell.classList.remove('sidebar-shrunk');
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>
+
+
+
 
 
