@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en-GB">
 
 <head>
@@ -538,26 +538,86 @@
         grid-template-columns: 1fr 1fr;
       }
     }
-  </style>
+  
+      .topbar {
+        background: #ffffff;
+        border-bottom: 1px solid #d5dce8;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        gap: 24px;
+      }
+      .topbar-brand {
+        font-family: "Outfit", sans-serif;
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #0f2340;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .chrome-nav a {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 12px;
+        border-radius: 999px;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        color: #0f2340;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .chrome-nav a:hover {
+        background: #dce8f4;
+      }
+      .shell {
+        height: calc(100vh - 61px);
+        min-height: 0;
+        transition: grid-template-columns 0.3s ease;
+      }
+      .shell.sidebar-shrunk {
+        grid-template-columns: 180px 1fr;
+      }
+      .shell.sidebar-shrunk .nav-link, 
+      .shell.sidebar-shrunk .nav-link-sub { 
+        font-size: 0.82rem !important; 
+        padding-left: 8px !important; 
+      }
+      .shell.sidebar-shrunk .nav-link-sub { 
+        padding-left: 20px !important; 
+      }
+      .shell.sidebar-shrunk .brand strong { 
+        font-size: 1rem; 
+      }
+      .sidebar {
+        height: 100%;
+        overflow-y: auto;
+      }
+      .main {
+        height: 100%;
+        overflow-y: auto;
+        background: #fbfaf7;
+      }
+    </style>
 </head>
 
 <body>
-  <main class="page">
-    <div class="app-frame">
-
-      <!-- Chrome bar -->
-      <div class="chrome">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div class="dots"><span></span><span></span><span></span></div>
-          <small>Route /admin/finance/expenditure-tracker</small>
-        </div>
+      <div class="topbar">
+        <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
         <nav class="chrome-nav">
           <a href="admin-dashboard.html">Dashboard</a>
           <a href="notifications.html">Notifications</a>
         </nav>
       </div>
-
-      <div class="shell">
+        <div class="shell">
 
         <!-- Sidebar -->
         <aside class="sidebar">
@@ -574,6 +634,8 @@
             <a class="nav-link nav-link-sub" href="revenue.html">Revenue</a>
             <a class="nav-link nav-link-sub" href="archived-revenue.html">Archived Revenue</a>
             <a class="nav-link nav-link-sub" href="student-funds.html">Student Held Funds</a>
+            <a class="nav-link" href="documents.html">Documents</a>
+            <a class="nav-link" href="safeguarding.html">Safeguarding</a>
           </div>
           <div class="nav-group">
             <div class="nav-label">Compliance</div>
@@ -1537,6 +1599,24 @@
     window.addEventListener('resize', renderChart);
   </script>
 
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const main = document.querySelector('.main');
+        const shell = document.querySelector('.shell');
+        if (main && shell) {
+          main.addEventListener('scroll', function() {
+            if (main.scrollTop > 20) {
+              shell.classList.add('sidebar-shrunk');
+            } else {
+              shell.classList.remove('sidebar-shrunk');
+            }
+          });
+        }
+      });
+    </script>
 </body>
 
 </html>
+
+
+

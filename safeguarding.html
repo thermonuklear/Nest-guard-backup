@@ -1,0 +1,215 @@
+﻿<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard â€” Oxford Guardians Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <style>
+
+      .nav-link-sub:hover, .nav-link-sub.active { opacity: 1; }
+      .card-link { text-decoration: none; color: inherit; display: block; }
+      .card-link:hover { opacity: 0.95; }
+      .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 18px; }
+      .quick-card { background: #ffffff; border: 1px solid #d5dce8; border-radius: 12px; padding: 14px 16px; text-decoration: none; color: #0f2340; transition: all 0.2s ease; display: flex; flex-direction: column; gap: 4px; }
+      .quick-card:hover { transform: translateY(-2px); border-color: #1a4080; box-shadow: 0 6px 14px rgba(15,35,64,0.06); }
+      .quick-card strong { font-family: "Outfit", sans-serif; font-size: 0.95rem; color: #0f2340; display: flex; align-items: center; justify-content: space-between; }
+      .quick-card small { font-size: 0.8rem; color: #64748b; }
+      .list-link { text-decoration: none; color: inherit; display: block; border-radius: 8px; padding: 4px 6px; margin: -4px -6px; transition: background 0.15s; }
+      .list-link:hover { background: #f1f5f9; }
+    
+      .topbar {
+        background: #ffffff;
+        border-bottom: 1px solid #d5dce8;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        gap: 24px;
+      }
+      .topbar-brand {
+        font-family: "Outfit", sans-serif;
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #0f2340;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .chrome-nav a {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 12px;
+        border-radius: 999px;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        color: #0f2340;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .chrome-nav a:hover {
+        background: #dce8f4;
+      }
+      .topbar-nav {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-left: auto;
+      }
+      .topbar-nav a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #3b536e;
+        text-decoration: none;
+        transition: background 0.15s, color 0.15s;
+      }
+      .topbar-nav a:hover {
+        background: #e8eef6;
+        color: #0f2340;
+      }
+      .topbar-nav a.active {
+        background: #0f2340;
+        color: #ffffff;
+      }
+    
+      .shell {
+        height: calc(100vh - 61px);
+        min-height: 0;
+      }
+      .sidebar {
+        height: 100%;
+        overflow-y: auto;
+      }
+      .main {
+        height: 100%;
+        overflow-y: auto;
+        background: #fbfaf7; /* match the old app-frame background */
+      }
+    
+      .shell {
+        transition: grid-template-columns 0.3s ease;
+      }
+      .shell.sidebar-shrunk {
+        grid-template-columns: 180px 1fr;
+      }
+      .shell.sidebar-shrunk .nav-link,
+      .shell.sidebar-shrunk .nav-link-sub {
+        font-size: 0.82rem !important; /* Slightly smaller text */
+        padding-left: 8px !important;
+      }
+      .shell.sidebar-shrunk .nav-link-sub {
+        padding-left: 20px !important; /* keep indentation */
+      }
+      .shell.sidebar-shrunk .brand strong {
+        font-size: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    
+                <div class="topbar">
+          <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+        </div>
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="brand"><strong>Admin Console</strong></div>
+
+            <div class="nav-group">
+              <div class="nav-label">Overview</div>
+              <a class="nav-link" href="admin-dashboard.html">Dashboard</a>
+              <a class="nav-link" href="notifications.html">Notifications</a>
+              <a class="nav-link" href="reports.html">Reports</a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Access</div>
+              <a class="nav-link" href="users.html">Users &amp; roles</a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Operations</div>
+              <a class="nav-link" href="students.html">Students</a>
+              <a class="nav-link" href="homestays.html">Homestays</a>
+              <a class="nav-link" href="travel.html">Travel</a>
+              <a class="nav-link" href="schools.html">Schools</a>
+              <a class="nav-link" href="exeats.html">Exeats</a>
+              <a class="nav-link" href="finances.html">Finances</a>
+              <a class="nav-link" href="documents.html">Documents</a>
+              <a class="nav-link active" href="safeguarding.html">Safeguarding</a>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-label">Compliance &amp; IT</div>
+              <a class="nav-link" href="compliance.html">AEGIS control room</a>
+              <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+              <a class="nav-link" href="organisation-profile.html">Organisation &amp; Governance</a>
+              <a class="nav-link" href="complaints.html">Complaints Register</a>
+              <a class="nav-link" href="policy-viewer.html">Statutory Policies</a>
+              <a class="nav-link" href="scr-dashboard.html">SCR Dashboard</a>
+              <a class="nav-link" href="audit-log.html">Audit trail</a>
+            </div>
+
+            <div style="padding:8px 12px 16px;margin-top:auto;">
+              <button onclick="localStorage.clear();location.reload();" style="width:100%;padding:6px 10px;background:transparent;border:1px solid #2d4a6b;border-radius:6px;color:#6b85a0;font-size:0.73rem;cursor:pointer;font-family:inherit;letter-spacing:0.02em;">Reset DB Cache</button>
+            </div>
+          </aside>
+          <section class="main">
+            <div class="toolbar">
+              <div>
+                <span class="eyebrow">Safeguarding</span>
+                <h2>Safeguarding Hub</h2>
+                <p>Manage welfare notes, concerns, and emergencies.</p>
+              </div>
+            </div>
+
+            <div class="quick-grid">
+              <a class="quick-card" href="welfare-notes.html">
+                <strong>Welfare notes <span>&rarr;</span></strong>
+                <small>Log and track welfare check-ins</small>
+              </a>
+              <a class="quick-card" href="concerns-dashboard.html">
+                <strong>Concerns Dashboard <span>&rarr;</span></strong>
+                <small>Manage low-level and escalated concerns</small>
+              </a>
+              <a class="quick-card" href="emergency-procedures.html">
+                <strong>Emergency <span>&rarr;</span></strong>
+                <small>Emergency procedures and protocols</small>
+              </a>
+            </div>
+          </section>
+        </div>
+          <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const main = document.querySelector('.main');
+        const shell = document.querySelector('.shell');
+        
+        if (main && shell) {
+          main.addEventListener('scroll', function() {
+            if (main.scrollTop > 20) {
+              shell.classList.add('sidebar-shrunk');
+            } else {
+              shell.classList.remove('sidebar-shrunk');
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+
+
+
