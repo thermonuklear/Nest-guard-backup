@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
@@ -485,6 +485,7 @@
           <!-- Search & filter bar -->
           <div class="filter-bar">
             <select id="filterCriteria" aria-label="Search by">
+              <option value="all">All</option>
               <option value="1">Student Name</option>
               <option value="2">School Name</option>
               <option value="11">Host Name</option>
@@ -505,23 +506,23 @@
             <table id="exeatTable">
               <thead>
                 <tr>
-                  <th>School Breaks</th>
-                  <th>Names</th>
-                  <th>School Name</th>
-                  <th>Start Date</th>
-                  <th>Duration (nights)</th>
-                  <th>Return Date</th>
-                  <th>Additional Notes</th>
-                  <th>Confirmation from Parents</th>
-                  <th>Deadline for Prep</th>
-                  <th>To Do</th>
-                  <th>Homestay Info</th>
-                  <th>Homestay Host Name</th>
-                  <th>Host Contact</th>
-                  <th>Transportation Notes</th>
-                  <th>Driver</th>
-                  <th>Driver Contact</th>
-                  <th>School Calendar Link</th>
+                  <th data-col="0">School Breaks</th>
+                  <th data-col="1">Names</th>
+                  <th data-col="2">School Name</th>
+                  <th data-col="3">Start Date</th>
+                  <th data-col="4">Duration (nights)</th>
+                  <th data-col="5">Return Date</th>
+                  <th data-col="6">Additional Notes</th>
+                  <th data-col="7">Confirmation from Parents</th>
+                  <th data-col="8">Deadline for Prep</th>
+                  <th data-col="9">To Do</th>
+                  <th data-col="10">Homestay Info</th>
+                  <th data-col="11">Homestay Host Name</th>
+                  <th data-col="12">Host Contact</th>
+                  <th data-col="13">Transportation Notes</th>
+                  <th data-col="14">Driver</th>
+                  <th data-col="15">Driver Contact</th>
+                  <th data-col="16">School Calendar Link</th>
                 </tr>
               </thead>
               <tbody id="exeatBody"></tbody>
@@ -675,23 +676,23 @@
           var tr = document.createElement('tr');
           tr.className = rowClass(e);
           tr.innerHTML =
-            '<td>' + (e.breakType || '') + '</td>' +
-            '<td><strong>' + (e.studentName || '') + '</strong></td>' +
-            '<td>' + (e.schoolName || '') + '</td>' +
-            '<td>' + formatDate(e.startDate) + '</td>' +
-            '<td>' + (e.duration || '') + '</td>' +
-            '<td>' + formatDate(e.returnDate) + '</td>' +
-            '<td>' + (e.notes || '') + '</td>' +
-            '<td>' + badgeHtml(e.parentConfirmation) + '</td>' +
-            '<td>' + formatDate(e.prepDeadline) + '</td>' +
-            '<td>' + (e.toDo || '') + '</td>' +
-            '<td>' + (e.homestayInfo || '') + '</td>' +
-            '<td>' + (e.hostName || '') + '</td>' +
-            '<td>' + (e.hostContact || '') + '</td>' +
-            '<td>' + (e.transportNotes || '') + '</td>' +
-            '<td>' + (e.driverName || '') + '</td>' +
-            '<td>' + (e.driverContact || '') + '</td>' +
-            '<td><a href="#">' + (e.schoolCalendarLabel || '') + '</a></td>';
+            '<td data-col="0">' + (e.breakType || '') + '</td>' +
+            '<td data-col="1"><strong>' + (e.studentName || '') + '</strong></td>' +
+            '<td data-col="2">' + (e.schoolName || '') + '</td>' +
+            '<td data-col="3">' + formatDate(e.startDate) + '</td>' +
+            '<td data-col="4">' + (e.duration || '') + '</td>' +
+            '<td data-col="5">' + formatDate(e.returnDate) + '</td>' +
+            '<td data-col="6">' + (e.notes || '') + '</td>' +
+            '<td data-col="7">' + badgeHtml(e.parentConfirmation) + '</td>' +
+            '<td data-col="8">' + formatDate(e.prepDeadline) + '</td>' +
+            '<td data-col="9">' + (e.toDo || '') + '</td>' +
+            '<td data-col="10">' + (e.homestayInfo || '') + '</td>' +
+            '<td data-col="11">' + (e.hostName || '') + '</td>' +
+            '<td data-col="12">' + (e.hostContact || '') + '</td>' +
+            '<td data-col="13">' + (e.transportNotes || '') + '</td>' +
+            '<td data-col="14">' + (e.driverName || '') + '</td>' +
+            '<td data-col="15">' + (e.driverContact || '') + '</td>' +
+            '<td data-col="16"><a href="#">' + (e.schoolCalendarLabel || '') + '</a></td>';
           tbody.appendChild(tr);
         });
         applyFilter();
@@ -703,18 +704,36 @@
       var filterCount    = document.getElementById('filterCount');
       var noResults      = document.getElementById('noResults');
 
+      // Initialize original indices on headers
+      var theadTr = document.querySelector('#exeatTable thead tr');
+      Array.from(theadTr.children).forEach(function(th, i) {
+         th.dataset.origIdx = i;
+      });
+
       function applyFilter() {
         var term    = searchInput.value.trim().toLowerCase();
-        var colIdx  = parseInt(filterCriteria.value, 10);
+        var origIdx = filterCriteria.value;
+        
         var rows    = Array.from(document.getElementById('exeatBody').querySelectorAll('tr'));
         var visible = 0;
-        rows.forEach(function(row) {
-          var cell  = row.querySelectorAll('td')[colIdx];
-          var text  = cell ? cell.textContent.toLowerCase() : '';
-          var match = !term || text.indexOf(term) !== -1;
-          row.style.display = match ? '' : 'none';
-          if (match) visible++;
-        });
+
+        if (origIdx === 'all') {
+            rows.forEach(function(row) {
+                var text = row.textContent.toLowerCase();
+                var match = !term || text.indexOf(term) !== -1;
+                row.style.display = match ? '' : 'none';
+                if (match) visible++;
+            });
+        } else {
+            rows.forEach(function(row) {
+              var cell  = row.querySelector('td[data-col="' + origIdx + '"]');
+              var text  = cell ? cell.textContent.toLowerCase() : '';
+              var match = !term || text.indexOf(term) !== -1;
+              row.style.display = match ? '' : 'none';
+              if (match) visible++;
+            });
+        }
+        
         var total = rows.length;
         filterCount.textContent = term
           ? 'Showing ' + visible + ' of ' + total + ' rows'
@@ -723,9 +742,38 @@
       }
 
       searchInput.addEventListener('input', applyFilter);
+      
+      var origHeaderHtml = document.querySelector('#exeatTable thead tr').innerHTML;
+
       filterCriteria.addEventListener('change', function() {
-        if (searchInput.value.trim()) applyFilter();
+        var theadTr = document.querySelector('#exeatTable thead tr');
+        theadTr.innerHTML = origHeaderHtml;
+
+        renderTable(); // Reset body rows to pristine
+
+        if (this.value !== 'all') {
+            var colIdxStr = this.value;
+            
+            // Move if not 0 or 1
+            if (colIdxStr !== '0' && colIdxStr !== '1') {
+                var thToMove = theadTr.querySelector('th[data-col="' + colIdxStr + '"]');
+                if (thToMove) {
+                    theadTr.insertBefore(thToMove, theadTr.children[1]);
+                }
+
+                var rows = document.getElementById('exeatBody').querySelectorAll('tr');
+                rows.forEach(function(row) {
+                    var tdToMove = row.querySelector('td[data-col="' + colIdxStr + '"]');
+                    if (tdToMove) {
+                        row.insertBefore(tdToMove, row.children[1]);
+                    }
+                });
+            }
+        }
+        
+        document.getElementById('tableWrap').scrollTo({ left: 0, behavior: 'smooth' });
       });
+      setTimeout(function() { filterCriteria.dispatchEvent(new Event('change')); }, 100);
 
       // â”€â”€ Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       function openExeatModal() {
@@ -853,6 +901,7 @@
     </script>
   </body>
 </html>
+
 
 
 
