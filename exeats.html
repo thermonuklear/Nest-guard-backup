@@ -1,21 +1,21 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Exeats — Oxford Guardians Platform</title>
+    <title>Exeats â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      /* ── Global colour overrides ── */
+      /* â”€â”€ Global colour overrides â”€â”€ */
       body {
         background: #f0f4f8 !important;
         color: #0f2340 !important;
       }
 
-      /* ── App frame & chrome ── */
+      /* â”€â”€ App frame & chrome â”€â”€ */
       .app-frame {
         background: #f8fafc !important;
         border-color: #d5dce8 !important;
@@ -29,7 +29,7 @@
 
       .dots span { background: #7b9abf !important; }
 
-      /* ── Top nav bar ── */
+      /* â”€â”€ Top nav bar â”€â”€ */
       .top-nav {
         background: linear-gradient(90deg, #0f2340 0%, #1a3459 100%);
         display: flex;
@@ -71,7 +71,7 @@
         color: #e8f0fa;
       }
 
-      /* ── Main content area ── */
+      /* â”€â”€ Main content area â”€â”€ */
       .exeat-main {
         background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%);
         flex: 1;
@@ -81,7 +81,7 @@
         overflow: hidden;
       }
 
-      /* ── Toolbar ── */
+      /* â”€â”€ Toolbar â”€â”€ */
       .toolbar {
         padding: 24px 28px 16px;
         display: flex;
@@ -136,7 +136,7 @@
 
       .button-alt:hover { background: #edf2f8; }
 
-      /* ── Search & filter bar ── */
+      /* â”€â”€ Search & filter bar â”€â”€ */
       .filter-bar {
         padding: 0 28px 16px;
         display: flex;
@@ -193,7 +193,7 @@
         white-space: nowrap;
       }
 
-      /* ── Table scroll container ── */
+      /* â”€â”€ Table scroll container â”€â”€ */
       .table-scroll {
         flex: 1;
         overflow-x: auto;
@@ -270,7 +270,7 @@
 
       td a:hover { text-decoration: underline; }
 
-      /* ── Badges ── */
+      /* â”€â”€ Badges â”€â”€ */
       .badge {
         display: inline-block;
         padding: 2px 8px;
@@ -286,7 +286,7 @@
       .badge.blue   { background: #dce8f8; color: #1a4a7a; }
       .badge.grey   { background: #e8eef6; color: #3b536e; }
 
-      /* ── Row tinting ── */
+      /* â”€â”€ Row tinting â”€â”€ */
       .row-green td                { background: #edf7f1 !important; }
       .row-green td:first-child    { background: #e3f4ea !important; }
       .row-green:hover td          { background: #e0f2e8 !important; }
@@ -302,7 +302,7 @@
       .row-red:hover td            { background: #fce8e8 !important; }
       .row-red:hover td:first-child { background: #f8dcdc !important; }
 
-      /* ── No results ── */
+      /* â”€â”€ No results â”€â”€ */
       .no-results {
         text-align: center;
         padding: 48px 24px;
@@ -310,7 +310,7 @@
         font-size: 14px;
       }
 
-      /* ── Shell without sidebar ── */
+      /* â”€â”€ Shell without sidebar â”€â”€ */
       .shell-full {
         display: flex;
         flex-direction: column;
@@ -319,7 +319,7 @@
         overflow: hidden;
       }
 
-      /* ── Modal ── */
+      /* â”€â”€ Modal â”€â”€ */
       .modal-overlay {
         position: fixed;
         inset: 0;
@@ -487,12 +487,13 @@
             <select id="filterCriteria" aria-label="Search by">
               <option value="1">Student Name</option>
               <option value="2">School Name</option>
+              <option value="11">Host Name</option>
               <option value="14">Driver Name</option>
             </select>
             <input
               type="text"
               id="searchInput"
-              placeholder="Search…"
+              placeholder="Search..."
               aria-label="Search"
               autocomplete="off"
             />
@@ -544,8 +545,8 @@
                     <select id="mParentConf">
                       <option value="Confirmed">Confirmed</option>
                       <option value="Awaiting">Awaiting</option>
-                      <option value="No — self-managing, no help needed">No — self-managing, no help needed</option>
-                      <option value="No — family self-managing, no help required">No — family self-managing, no help required</option>
+                      <option value="No â€” self-managing, no help needed">No â€” self-managing, no help needed</option>
+                      <option value="No â€” family self-managing, no help required">No â€” family self-managing, no help required</option>
                     </select>
                   </div>
 
@@ -578,17 +579,17 @@
 
                   <div class="form-group form-full">
                     <label for="mNotes">Additional Notes</label>
-                    <textarea id="mNotes" rows="2" placeholder="Any additional notes…"></textarea>
+                    <textarea id="mNotes" rows="2" placeholder="Any additional notesâ€¦"></textarea>
                   </div>
 
                   <div class="form-group form-full">
                     <label for="mToDo">To Do</label>
-                    <textarea id="mToDo" rows="2" placeholder="Actions required…"></textarea>
+                    <textarea id="mToDo" rows="2" placeholder="Actions requiredâ€¦"></textarea>
                   </div>
 
                   <div class="form-group form-full">
                     <label for="mHomestayInfo">Homestay Info</label>
-                    <textarea id="mHomestayInfo" rows="2" placeholder="Homestay details…"></textarea>
+                    <textarea id="mHomestayInfo" rows="2" placeholder="Homestay detailsâ€¦"></textarea>
                   </div>
 
                   <div class="form-group">
@@ -611,7 +612,7 @@
 
                   <div class="form-group form-full">
                     <label for="mTransportNotes">Transport Notes</label>
-                    <textarea id="mTransportNotes" rows="2" placeholder="Transport details…"></textarea>
+                    <textarea id="mTransportNotes" rows="2" placeholder="Transport detailsâ€¦"></textarea>
                   </div>
 
                   <div class="form-group">
@@ -659,13 +660,13 @@
       }
 
       function badgeHtml(conf) {
-        if (!conf) return '<span class="badge grey">—</span>';
+        if (!conf) return '<span class="badge grey">â€”</span>';
         if (conf.indexOf('No') === 0) return '<span class="badge red">' + conf + '</span>';
         if (conf === 'Awaiting') return '<span class="badge amber">Awaiting</span>';
         return '<span class="badge green">' + conf + '</span>';
       }
 
-      // ── Render ──────────────────────────────────────────────────────────────
+      // â”€â”€ Render â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       function renderTable() {
         var exeats = OG_DB.getAllExeats();
         var tbody = document.getElementById('exeatBody');
@@ -696,7 +697,7 @@
         applyFilter();
       }
 
-      // ── Filter ──────────────────────────────────────────────────────────────
+      // â”€â”€ Filter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       var searchInput    = document.getElementById('searchInput');
       var filterCriteria = document.getElementById('filterCriteria');
       var filterCount    = document.getElementById('filterCount');
@@ -726,10 +727,10 @@
         if (searchInput.value.trim()) applyFilter();
       });
 
-      // ── Modal ──────────────────────────────────────────────────────────────
+      // â”€â”€ Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       function openExeatModal() {
         var studentSel = document.getElementById('mStudentId');
-        studentSel.innerHTML = '<option value="">— Select student —</option>';
+        studentSel.innerHTML = '<option value="">â€” Select student â€”</option>';
         OG_DB.getAllStudents().forEach(function(s) {
           var opt = document.createElement('option');
           opt.value = s.id;
@@ -739,7 +740,7 @@
         });
 
         var hostSel = document.getElementById('mHostId');
-        hostSel.innerHTML = '<option value="">— Select host —</option>';
+        hostSel.innerHTML = '<option value="">â€” Select host â€”</option>';
         OG_DB.getAllHosts().forEach(function(h) {
           var opt = document.createElement('option');
           opt.value = h.id;
@@ -749,7 +750,7 @@
         });
 
         var driverSel = document.getElementById('mDriverId');
-        driverSel.innerHTML = '<option value="">— Select driver —</option>';
+        driverSel.innerHTML = '<option value="">â€” Select driver â€”</option>';
         OG_DB.getAllDrivers().forEach(function(d) {
           var opt = document.createElement('option');
           opt.value = d.id;
@@ -833,7 +834,7 @@
         renderTable();
       });
 
-      // ── Auto-calculate duration ─────────────────────────────────────────────
+      // â”€â”€ Auto-calculate duration â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       function calculateDuration() {
         var startVal  = document.getElementById('mStartDate').value;
         var returnVal = document.getElementById('mReturnDate').value;
@@ -847,11 +848,12 @@
       document.getElementById('mStartDate').addEventListener('change', calculateDuration);
       document.getElementById('mReturnDate').addEventListener('change', calculateDuration);
 
-      // ── Init ────────────────────────────────────────────────────────────────
+      // â”€â”€ Init â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       renderTable();
     </script>
   </body>
 </html>
+
 
 
 
