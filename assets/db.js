@@ -2837,10 +2837,127 @@ function aggregateDocuments() {
 // ── Exeats ────────────────────────────────────────────────────────────────────
 var OG_EXEATS_KEY = 'og_exeats';
 
-var initialExeats = [];
+var initialExeats = [
+  {
+    id: 'EX-001',
+    breakType: 'Autumn Half Term',
+    studentId: 'STU10492',
+    studentName: 'Yuki Tanaka',
+    schoolName: "Cheltenham Ladies' College",
+    startDate: '2026-10-20',
+    duration: 14,
+    returnDate: '2026-11-03',
+    notes: 'Needs airport transfer to Heathrow.',
+    parentConfirmation: 'Confirmed',
+    prepDeadline: '2026-10-10',
+    toDo: 'Book taxi to Heathrow',
+    homestayInfo: 'N/A',
+    hostId: '',
+    hostName: '',
+    hostContact: '',
+    transportNotes: 'Flight JL043 from Heathrow T5 at 15:00',
+    driverId: 'DRV84920',
+    driverName: 'Matthew Clarke',
+    driverContact: '07700 900 441',
+    schoolCalendarLabel: 'CLC Autumn Term'
+  },
+  {
+    id: 'EX-002',
+    breakType: 'Exeat Weekend',
+    studentId: 'STU83921',
+    studentName: 'Chen Wei',
+    schoolName: 'Oundle School',
+    startDate: '2026-11-24',
+    duration: 2,
+    returnDate: '2026-11-26',
+    notes: 'Staying with host family in Cambridgeshire.',
+    parentConfirmation: 'Awaiting',
+    prepDeadline: '2026-11-15',
+    toDo: 'Confirm host availability',
+    homestayInfo: 'Brennan Family / 1 of 3 places',
+    hostId: '',
+    hostName: 'Brennan Family',
+    hostContact: '',
+    transportNotes: '',
+    driverId: 'DRV19482',
+    driverName: 'Sarah Bennett',
+    driverContact: '07700 900 558',
+    schoolCalendarLabel: 'Oundle Term Dates'
+  },
+  {
+    id: 'EX-003',
+    breakType: 'Christmas Holiday',
+    studentId: 'STU47291',
+    studentName: 'Sofia Petrova',
+    schoolName: "St Edward's Oxford",
+    startDate: '2026-12-15',
+    duration: 21,
+    returnDate: '2027-01-05',
+    notes: 'Flying back to Bulgaria. Flight details pending.',
+    parentConfirmation: 'Confirmed',
+    prepDeadline: '2026-12-01',
+    toDo: 'Get flight ticket from parents',
+    homestayInfo: 'N/A',
+    hostId: '',
+    hostName: '',
+    hostContact: '',
+    transportNotes: 'Needs transfer to Gatwick South',
+    driverId: '',
+    driverName: '',
+    driverContact: '',
+    schoolCalendarLabel: "St Edward's Calendar"
+  },
+  {
+    id: 'EX-004',
+    breakType: 'Spring Half Term',
+    studentId: 'STU93018',
+    studentName: 'Daniel Kim',
+    schoolName: 'Rugby School',
+    startDate: '2027-02-10',
+    duration: 9,
+    returnDate: '2027-02-19',
+    notes: 'Attending revision camp in Oxford.',
+    parentConfirmation: 'Confirmed',
+    prepDeadline: '2027-02-01',
+    toDo: 'Coordinate with revision camp staff',
+    homestayInfo: 'Revision camp accommodation',
+    hostId: '',
+    hostName: '',
+    hostContact: '',
+    transportNotes: 'Train to Oxford Parkway',
+    driverId: '',
+    driverName: '',
+    driverContact: '',
+    schoolCalendarLabel: 'Rugby Spring Term'
+  },
+  {
+    id: 'EX-005',
+    breakType: 'Easter Holiday',
+    studentId: 'STU61100',
+    studentName: 'Amara Osei',
+    schoolName: 'Magdalen College School',
+    startDate: '2027-03-22',
+    duration: 23,
+    returnDate: '2027-04-14',
+    notes: 'Requires homestay for the first week before flying.',
+    parentConfirmation: 'No — family self-managing, no help required',
+    prepDeadline: '2027-03-10',
+    toDo: 'Verify flight details for safeguarding',
+    homestayInfo: 'Patel Family (first week only)',
+    hostId: '',
+    hostName: 'Patel Family',
+    hostContact: '',
+    transportNotes: 'Heathrow T3',
+    driverId: '',
+    driverName: '',
+    driverContact: '',
+    schoolCalendarLabel: 'MCS Term Dates'
+  }
+];
 
 function initExeatDB() {
-  if (!localStorage.getItem(OG_EXEATS_KEY)) {
+  var existing = localStorage.getItem(OG_EXEATS_KEY);
+  if (!existing || existing === '[]') {
     localStorage.setItem(OG_EXEATS_KEY, JSON.stringify(initialExeats));
   }
 }
