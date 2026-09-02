@@ -452,6 +452,86 @@
         background: #dce8f4;
       }
 
+          /* â”€â”€ Mini Gantt Widget â”€â”€ */
+      .mini-gantt-widget {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 380px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #e1e8ef;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+      .mini-gantt-header {
+        padding: 12px 16px;
+        background: #0f2340;
+        color: white;
+        font-weight: 600;
+        border-radius: 8px 8px 0 0;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .mini-gantt-header:hover {
+        background: #1a365d;
+      }
+      .mini-gantt-body {
+        padding: 16px;
+        max-height: 350px;
+        overflow-y: auto;
+        display: block; /* Visible by default, user can toggle */
+      }
+      .mini-gantt-row {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #f0f4f8;
+      }
+      .mini-gantt-row:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+      .mini-gantt-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #0f2340;
+        margin-bottom: 4px;
+      }
+      .mini-gantt-details {
+        font-size: 11px;
+        color: #4a5568;
+        margin-bottom: 6px;
+      }
+      .mini-gantt-track {
+        width: 100%;
+        height: 8px;
+        background: #e1e8ef;
+        border-radius: 4px;
+        position: relative;
+        margin-bottom: 4px;
+      }
+      .mini-gantt-bar {
+        position: absolute;
+        height: 100%;
+        border-radius: 4px;
+        min-width: 4px;
+      }
+      .mini-gantt-dates {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        color: #718096;
+      }
+      /* Status Colors */
+      .gantt-bar-confirmed { background: #2e7d32; }
+      .gantt-bar-awaiting { background: #ed6c02; }
+      .gantt-bar-self { background: #718096; }
     </style>
   </head>
   <body>
@@ -675,6 +755,7 @@
         exeats.forEach(function(e) {
           var tr = document.createElement('tr');
           tr.className = rowClass(e);
+          tr.dataset.id = e.id;
           tr.innerHTML =
             '<td data-col="0">' + (e.breakType || '') + '</td>' +
             '<td data-col="1"><strong>' + (e.studentName || '') + '</strong></td>' +
@@ -739,6 +820,73 @@
           ? 'Showing ' + visible + ' of ' + total + ' rows'
           : 'Showing ' + total + ' of ' + total + ' rows';
         noResults.style.display = visible === 0 ? '' : 'none';
+        
+        if (typeof updateMiniGantt === 'function') {
+            updateMiniGantt();
+        }
+      }
+
+      function toggleMiniGantt() {
+        var body = document.getElementById('miniGanttBody');
+        var icon = document.getElementById('miniGanttToggleIcon');
+        if (body.style.display === 'none') {
+            body.style.display = 'block';
+            icon.textContent = 'â–¼';
+        } else {
+            body.style.display = 'none';
+            icon.textContent = 'â–²';
+        }
+      }
+
+      function updateMiniGantt() {
+        var widgetBody = document.getElementById('miniGanttBody');
+        if (!widgetBody) return;
+
+        var rows = Array.from(document.getElementById('exeatBody').querySelectorAll('tr'));
+        var visibleRows = rows.filter(function(r) { return r.style.display !== 'none'; });
+        
+        var exeats = OG_DB.getAllExeats();
+        var visibleExeats = visibleRows.map(function(r) {
+            return exeats.find(function(ex) { return ex.id === r.dataset.id; });
+        }).filter(Boolean);
+
+        if (visibleExeats.length === 0) {
+          widgetBody.innerHTML = '<div style="color: #6b85a0; text-align: center; padding: 20px 0;">No timeline data to display.</div>';
+          return;
+        }
+
+        var minTime = Math.min.apply(null, visibleExeats.map(function(e) { return new Date(e.startDate).getTime(); }));
+        var maxTime = Math.max.apply(null, visibleExeats.map(function(e) { return new Date(e.returnDate).getTime(); }));
+        var totalDuration = maxTime - minTime;
+        if (totalDuration === 0) totalDuration = 86400000; // fallback to 1 day
+
+        var html = '';
+        visibleExeats.forEach(function(e) {
+          var st = new Date(e.startDate).getTime();
+          var et = new Date(e.returnDate).getTime();
+          var leftPct = ((st - minTime) / totalDuration) * 100;
+          var widthPct = ((et - st) / totalDuration) * 100;
+          
+          var barClass = 'gantt-bar-self';
+          if (e.parentConfirmation === 'Confirmed') barClass = 'gantt-bar-confirmed';
+          else if (e.parentConfirmation === 'Awaiting') barClass = 'gantt-bar-awaiting';
+          
+          var driver = e.driverName ? e.driverName : 'TBC';
+          var host = e.hostName ? e.hostName : 'N/A';
+
+          html += '<div class="mini-gantt-row">' +
+                    '<div class="mini-gantt-title">' + e.studentName + ' <span style="color:#718096; font-size:11px; font-weight:400;">(' + e.breakType + ')</span></div>' +
+                    '<div class="mini-gantt-details">Host: <b>' + host + '</b> | Driver: <b>' + driver + '</b></div>' +
+                    '<div class="mini-gantt-track">' +
+                      '<div class="mini-gantt-bar ' + barClass + '" style="left: ' + leftPct + '%; width: ' + widthPct + '%;" title="' + formatDate(e.startDate) + ' - ' + formatDate(e.returnDate) + '"></div>' +
+                    '</div>' +
+                    '<div class="mini-gantt-dates">' +
+                      '<span>' + formatDate(e.startDate) + '</span>' +
+                      '<span>' + formatDate(e.returnDate) + '</span>' +
+                    '</div>' +
+                  '</div>';
+        });
+        widgetBody.innerHTML = html;
       }
 
       searchInput.addEventListener('input', applyFilter);
@@ -899,8 +1047,17 @@
       // â”€â”€ Init â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       renderTable();
     </script>
+      <!-- Mini Gantt Widget -->
+    <div id="miniGanttWidget" class="mini-gantt-widget">
+      <div class="mini-gantt-header" onclick="toggleMiniGantt()">
+        <span>Timeline Overview</span>
+        <span id="miniGanttToggleIcon">â–¼</span>
+      </div>
+      <div id="miniGanttBody" class="mini-gantt-body"></div>
+    </div>
   </body>
 </html>
+
 
 
 
