@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
@@ -246,22 +246,14 @@
     </style>
   </head>
   <body>
-    <main class="page">
-      <div class="app-frame">
-
-        <!-- Chrome bar -->
-        <div class="chrome">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div class="dots"><span></span><span></span><span></span></div>
-            <small>Route /admin/contracts</small>
-          </div>
-          <div style="display:flex;gap:8px;">
-            <a class="button-alt" style="padding:6px 14px;font-size:0.82rem;" href="admin-dashboard.html">Dashboard</a>
-            <a class="button-alt" style="padding:6px 14px;font-size:0.82rem;" href="notifications.html">Notifications</a>
-          </div>
-        </div>
-
-        <div class="shell">
+        <div class="topbar">
+      <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+      <nav class="chrome-nav">
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="notifications.html">Notifications</a>
+      </nav>
+    </div>
+    <div class="shell">
 
           <!-- Sidebar -->
           <aside class="sidebar">
@@ -277,11 +269,11 @@
             </div>
 
             <div class="nav-group">
-              <div class="nav-label">People</div>
+              <div class="nav-label">Access</div>
+              <a class="nav-link" href="users.html">Users &amp; roles</a>
               <a class="nav-link nav-link-sub" href="students.html">Students</a>
               <a class="nav-link nav-link-sub" href="staff-list.html">Staff</a>
               <a class="nav-link nav-link-sub" href="drivers.html">Drivers</a>
-              <a class="nav-link nav-link-sub" href="hosts.html">Hosts</a>
               <a class="nav-link nav-link-sub" href="parent-list.html">Parents</a>
               <a class="nav-link nav-link-sub active" href="contracts.html">Contracts</a>
               <a class="nav-link nav-link-sub" href="agents.html">Agents</a>
@@ -411,9 +403,7 @@
             </div>
 
           </section>
-        </div><!-- /shell -->
-      </div><!-- /app-frame -->
-    </main>
+        </div>
 
     <script src="assets/db.js"></script>
     <script>

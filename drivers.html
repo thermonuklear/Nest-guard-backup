@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
@@ -364,16 +364,14 @@
     </style>
   </head>
   <body>
-    <main class="page">
-      <div class="app-frame">
-
-        <!-- Chrome -->
-        <div class="chrome">
-          <div class="dots"><span></span><span></span><span></span></div>
-          <small id="chrome-route">Route /admin/drivers/profile</small>
-        </div>
-
-        <div class="shell">
+        <div class="topbar">
+      <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
+      <nav class="chrome-nav">
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="notifications.html">Notifications</a>
+      </nav>
+    </div>
+    <div class="shell">
 
           <!-- Sidebar -->
           <aside class="sidebar">
@@ -596,80 +594,7 @@
                 </div>
               </article>
 
-            </div><!-- /info-grid -->
-
-            <!-- ── Lower section ── -->
-            <div class="cols-2" style="margin-top: 16px;">
-
-              <article class="card">
-                <h4>Recent assignments</h4>
-                <div class="timeline" id="driver-timeline">
-                  <!-- populated by JS -->
-                </div>
-              </article>
-
-              <div>
-
-                <article class="card" style="margin-bottom: 14px;">
-                  <h4>Linked students</h4>
-                  <p>Students whose records reference this driver as a named or preferred collector.</p>
-                  <div class="student-chips" id="driver-linked-students">
-                    <!-- populated by JS -->
-                  </div>
-                </article>
-
-                <article class="card">
-                  <h4>Quick actions</h4>
-                  <p>Common tasks for this driver record.</p>
-                  <div class="topnav">
-                    <a href="travel-create.html">Assign to new trip</a>
-                    <a href="travel.html">View all travel records</a>
-                    <a href="#">Download DBS certificate</a>
-                    <a href="#">View invoices</a>
-                  </div>
-                  <div class="inline-links" style="margin-top: 12px;">
-                    <a href="#">Edit record</a><span class="sep">|</span>
-                    <a href="#">Archive driver</a><span class="sep">|</span>
-                    <a href="#">Flag for review</a>
-                  </div>
-                </article>
-
-              </div>
-            </div><!-- /cols-2 -->
-
-            </div><!-- /tab-overview -->
-
-            <!-- ── Tab: Documents ── -->
-            <div id="tab-documents" class="tab-content">
-
-              <div class="req-docs">
-                <h4>Required documents</h4>
-                <div class="req-doc-list">
-                  <div class="req-doc-item"><div class="req-dot"></div><div><strong>Enhanced DBS Certificate</strong><small>Current enhanced disclosure. Issue date, certificate number, and Update Service status must be on file.</small></div></div>
-                  <div class="req-doc-item"><div class="req-dot"></div><div><strong>MOT Certificate</strong><small>Valid MOT for the vehicle used for student transport. Upload each renewal.</small></div></div>
-                  <div class="req-doc-item"><div class="req-dot"></div><div><strong>Vehicle Insurance Policy — Hire &amp; Reward</strong><small>Policy must specifically cover hire &amp; reward use. Upload the policy schedule confirming this class of use.</small></div></div>
-                </div>
-              </div>
-
-              <div class="upload-card">
-                <h4>Upload document</h4>
-                <div class="upload-controls">
-                  <input type="file" id="doc-file" />
-                  <input class="doc-name-input" type="text" id="doc-name" placeholder="Enter document name…" />
-                  <button class="button" id="upload-btn">Upload</button>
-                </div>
-                <div id="document-list" class="doc-list"></div>
-              </div>
-
-            </div><!-- /tab-documents -->
-
-            <!-- ── Tab: Connected Trips ── -->
-            <div id="tab-travel" class="tab-content"><div class="upload-card" style="max-width:100%;"><h4>Connected Trips</h4><div id="driver-travel-list"></div></div></div>
-
-          </section>
-        </div><!-- /shell -->
-      </div><!-- /app-frame -->
-    </main>
+            </div>
 
     <script src="assets/db.js"></script>
     <script>
