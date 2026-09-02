@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
@@ -452,86 +452,138 @@
         background: #dce8f4;
       }
 
-          /* â”€â”€ Mini Gantt Widget â”€â”€ */
+          /* â”€â”€ Mini Gantt Widget (Upgraded Visuals) â”€â”€ */
       .mini-gantt-widget {
         position: fixed;
         bottom: 24px;
         right: 24px;
-        width: 380px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        width: 420px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 12px 36px rgba(15, 35, 64, 0.18);
         z-index: 1000;
         display: flex;
         flex-direction: column;
-        border: 1px solid #e1e8ef;
+        border: 1px solid #e2e8f0;
         font-family: 'Plus Jakarta Sans', sans-serif;
+        overflow: hidden;
       }
       .mini-gantt-header {
-        padding: 12px 16px;
-        background: #0f2340;
+        padding: 14px 18px;
+        background: linear-gradient(135deg, #0f2340 0%, #1e3a8a 100%);
         color: white;
         font-weight: 600;
-        border-radius: 8px 8px 0 0;
         cursor: pointer;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        transition: background 0.3s ease;
       }
       .mini-gantt-header:hover {
-        background: #1a365d;
+        background: linear-gradient(135deg, #1e3a8a 0%, #0f2340 100%);
+      }
+      .mini-gantt-header-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        letter-spacing: 0.3px;
       }
       .mini-gantt-body {
         padding: 16px;
-        max-height: 350px;
+        max-height: 400px;
         overflow-y: auto;
-        display: block; /* Visible by default, user can toggle */
+        display: block;
+        background: #f8fafc;
       }
       .mini-gantt-row {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 14px;
         margin-bottom: 12px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid #f0f4f8;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .mini-gantt-row:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.06);
       }
       .mini-gantt-row:last-child {
         margin-bottom: 0;
-        padding-bottom: 0;
-        border-bottom: none;
       }
       .mini-gantt-title {
         font-size: 13px;
-        font-weight: 600;
-        color: #0f2340;
-        margin-bottom: 4px;
+        font-weight: 700;
+        color: #0f172a;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .mini-gantt-badge {
+        background: #f1f5f9;
+        color: #475569;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
       .mini-gantt-details {
         font-size: 11px;
-        color: #4a5568;
-        margin-bottom: 6px;
+        color: #64748b;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        background: #f8fafc;
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1px solid #f1f5f9;
+      }
+      .mini-gantt-details span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
       .mini-gantt-track {
         width: 100%;
         height: 8px;
-        background: #e1e8ef;
+        background: #e2e8f0;
         border-radius: 4px;
         position: relative;
-        margin-bottom: 4px;
+        margin-bottom: 8px;
       }
       .mini-gantt-bar {
         position: absolute;
         height: 100%;
         border-radius: 4px;
-        min-width: 4px;
+        min-width: 8px;
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       }
       .mini-gantt-dates {
         display: flex;
         justify-content: space-between;
         font-size: 10px;
-        color: #718096;
+        color: #94a3b8;
+        font-weight: 600;
       }
-      /* Status Colors */
-      .gantt-bar-confirmed { background: #2e7d32; }
-      .gantt-bar-awaiting { background: #ed6c02; }
-      .gantt-bar-self { background: #718096; }
+      /* Status Gradients */
+      .gantt-bar-confirmed { 
+        background: linear-gradient(90deg, #10b981, #059669);
+        box-shadow: 0 2px 6px rgba(16,185,129,0.35);
+      }
+      .gantt-bar-awaiting { 
+        background: linear-gradient(90deg, #f59e0b, #d97706);
+        box-shadow: 0 2px 6px rgba(245,158,11,0.35);
+      }
+      .gantt-bar-self { 
+        background: linear-gradient(90deg, #64748b, #475569);
+        box-shadow: 0 2px 6px rgba(100,116,139,0.35);
+      }
+      /* SVG Icons styling */
+      .mg-icon { width: 13px; height: 13px; fill: currentColor; opacity: 0.7; }
+      .mg-header-icon { width: 18px; height: 18px; fill: currentColor; }
     </style>
   </head>
   <body>
@@ -851,7 +903,7 @@
         }).filter(Boolean);
 
         if (visibleExeats.length === 0) {
-          widgetBody.innerHTML = '<div style="color: #6b85a0; text-align: center; padding: 20px 0;">No timeline data to display.</div>';
+          widgetBody.innerHTML = '<div style="color: #94a3b8; text-align: center; padding: 30px 0; font-weight: 500;">No timeline data to display.</div>';
           return;
         }
 
@@ -861,6 +913,9 @@
         if (totalDuration === 0) totalDuration = 86400000; // fallback to 1 day
 
         var html = '';
+        var iconHost = '<svg class="mg-icon" viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 2.7l6 5.3v9.5h-2v-6H8v6H6v-9.5l6-5.3z"/></svg>';
+        var iconDriver = '<svg class="mg-icon" viewBox="0 0 24 24"><path d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z"/></svg>';
+
         visibleExeats.forEach(function(e) {
           var st = new Date(e.startDate).getTime();
           var et = new Date(e.returnDate).getTime();
@@ -875,8 +930,14 @@
           var host = e.hostName ? e.hostName : 'N/A';
 
           html += '<div class="mini-gantt-row">' +
-                    '<div class="mini-gantt-title">' + e.studentName + ' <span style="color:#718096; font-size:11px; font-weight:400;">(' + e.breakType + ')</span></div>' +
-                    '<div class="mini-gantt-details">Host: <b>' + host + '</b> | Driver: <b>' + driver + '</b></div>' +
+                    '<div class="mini-gantt-title">' + 
+                      '<span>' + e.studentName + '</span>' + 
+                      '<span class="mini-gantt-badge">' + e.breakType + '</span>' + 
+                    '</div>' +
+                    '<div class="mini-gantt-details">' +
+                      '<span>' + iconHost + ' <span><strong>Host:</strong> ' + host + '</span></span>' +
+                      '<span>' + iconDriver + ' <span><strong>Driver:</strong> ' + driver + '</span></span>' +
+                    '</div>' +
                     '<div class="mini-gantt-track">' +
                       '<div class="mini-gantt-bar ' + barClass + '" style="left: ' + leftPct + '%; width: ' + widthPct + '%;" title="' + formatDate(e.startDate) + ' - ' + formatDate(e.returnDate) + '"></div>' +
                     '</div>' +
@@ -1050,8 +1111,11 @@
       <!-- Mini Gantt Widget -->
     <div id="miniGanttWidget" class="mini-gantt-widget">
       <div class="mini-gantt-header" onclick="toggleMiniGantt()">
-        <span>Timeline Overview</span>
-        <span id="miniGanttToggleIcon">â–¼</span>
+        <div class="mini-gantt-header-title">
+          <svg class="mg-header-icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+          Timeline Overview
+        </div>
+        <span id="miniGanttToggleIcon">▼</span>
       </div>
       <div id="miniGanttBody" class="mini-gantt-body"></div>
     </div>
