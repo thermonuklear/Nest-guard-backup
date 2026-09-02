@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
@@ -9,20 +9,63 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/app.css" />
   <style>
-    body, .page, .shell, main { background: #f0f4f8 !important; color: #0f2340 !important; }
-    .app-frame { background: #f8fafc !important; border-color: #d5dce8 !important; box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important; }
-    .chrome { background: #e8eef6 !important; border-bottom-color: #d5dce8 !important; }
-    .chrome small { color: #3b536e !important; }
-    .dots span { background: #7b9abf !important; }
-    .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important; }
-    .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
-    .brand small  { color: #7fb3d3 !important; }
-    .brand strong { color: #e8f0fa !important; }
-
-
-
-
-    .main { background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important; }
+      .topbar {
+        background: #ffffff;
+        border-bottom: 1px solid #d5dce8;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        gap: 24px;
+      }
+      .topbar-brand {
+        font-family: "Outfit", sans-serif;
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #0f2340;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+      .chrome-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .chrome-nav a {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 12px;
+        border-radius: 999px;
+        border: 1px solid #d5dce8;
+        background: #ffffff;
+        color: #0f2340;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .chrome-nav a:hover {
+        background: #dce8f4;
+      }
+      .shell {
+        height: calc(100vh - 61px);
+        min-height: 0;
+        transition: grid-template-columns 0.3s ease;
+      }
+      .sidebar {
+        height: 100%;
+        overflow-y: auto;
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%); color: #edf2fa; padding: 24px 18px; display: grid; align-content: start; gap: 16px;
+      }
+      .main {
+        height: 100%;
+        overflow-y: auto;
+        background: #f0f4f8; padding: 24px;
+      }
+      .brand { padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .brand small { display: block; text-transform: uppercase; letter-spacing: 0.1em; color: #7fb3d3; margin-bottom: 6px; }
+      .brand strong { font-family: "Outfit", sans-serif; color: #e8f0fa; font-size: 1.3rem; }
     h2, h3, h4 { color: #0f2340 !important; }
     p { color: #3b536e; }
     .eyebrow { color: #2a6096 !important; }
@@ -122,20 +165,16 @@
 
       <aside class="sidebar">
         <div class="brand">
-          <small>Oxford Guardians</small>
           <strong>IT Control Room</strong>
         </div>
         <div class="nav-group">
-          <div class="nav-label">Navigation</div>
-          <a class="nav-link" href="admin-dashboard.html">&larr; Admin Dashboard</a>
-        </div>
-        <div class="nav-group">
           <div class="nav-label">Compliance &amp; IT</div>
+          <a class="nav-link active" href="javascript:void(0)" data-tab="tab-access">Access Management &amp; RBAC</a>
+          <a class="nav-link nav-link-sub" href="javascript:void(0)" data-tab="tab-gdpr">Data Protection &amp; GDPR</a>
+          <a class="nav-link nav-link-sub" href="javascript:void(0)" data-tab="tab-audit">Immutable Audit Log</a>
+          <a class="nav-link nav-link-sub" href="javascript:void(0)" data-tab="tab-dr">Disaster Recovery &amp; Backups</a>
           <a class="nav-link" href="aegis-control-room.html">AEGIS Control Room</a>
-          <a class="nav-link active" href="it-control-room.html">IT Control Room</a>
-          <a class="nav-link" href="organisation-profile.html">Organisation &amp; Governance</a>
-          <a class="nav-link" href="complaints.html">Complaints Register</a>
-          <a class="nav-link" href="policy-viewer.html">Statutory Policies</a>
+          <a class="nav-link" href="compliance.html">Compliance</a>
         </div>
       </aside>
 
@@ -176,13 +215,7 @@
           </div>
         </div>
 
-        <!-- ── Tabs ─────────────────────────────────────────────────────────── -->
-        <nav class="subnav">
-          <button class="active" data-tab="tab-access">Access Management &amp; RBAC</button>
-          <button data-tab="tab-gdpr">Data Protection &amp; GDPR</button>
-          <button data-tab="tab-audit">Immutable Audit Log</button>
-          <button data-tab="tab-dr">Disaster Recovery &amp; Backups</button>
-        </nav>
+        <!-- ── Tab Contents ─────────────────────────────────────────────────── -->
 
         <!-- ── Tab 1: Access Management & RBAC ─────────────────────────────── -->
         <div id="tab-access" class="tab-content active">
@@ -325,8 +358,8 @@
 
 <script src="assets/db.js"></script>
 <script>
-  // ── Tab switching (matches student-profile.html's subnav pattern) ─────────
-  var tabButtons = document.querySelectorAll('.subnav button[data-tab]');
+  // ── Tab switching (matches sidebar pattern) ─────────
+  var tabButtons = document.querySelectorAll('.sidebar a[data-tab]');
   var tabPanels  = document.querySelectorAll('.tab-content');
   tabButtons.forEach(function (btn) {
     btn.addEventListener('click', function () {
