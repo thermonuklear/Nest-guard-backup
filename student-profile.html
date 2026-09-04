@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="page-title">Student Profile — Oxford Guardians Platform</title>
+    <title id="page-title">Student Profile � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      /* ── Global colour overrides ── */
+      /* -- Global colour overrides -- */
       body {
         background: #f0f4f8 !important;
         color: #0f2340 !important;
@@ -98,7 +98,7 @@
 
       .button-alt:hover { background: #edf2f8 !important; }
 
-      /* ── Student sub-nav ── */
+      /* -- Student sub-nav -- */
       .subnav {
         display: flex;
         align-items: center;
@@ -131,7 +131,7 @@
         color: #ffffff;
       }
 
-      /* ── Tab buttons in subnav ── */
+      /* -- Tab buttons in subnav -- */
       .subnav button {
         padding: 6px 16px;
         border-radius: 999px;
@@ -156,11 +156,11 @@
         color: #ffffff;
       }
 
-      /* ── Tab content panels ── */
+      /* -- Tab content panels -- */
       .tab-content { display: none; }
       .tab-content.active { display: block; }
 
-      /* ── Upload tab layout ── */
+      /* -- Upload tab layout -- */
       .tab-upload-section {
         max-width: 640px;
       }
@@ -169,7 +169,7 @@
         margin-bottom: 20px;
       }
 
-      /* ── Upload cards ── */
+      /* -- Upload cards -- */
       .upload-card {
         background: #ffffff;
         border: 1px solid #d5dce8;
@@ -268,7 +268,7 @@
         border-radius: 12px;
       }
 
-      /* ── Deep Dive navigation ── */
+      /* -- Deep Dive navigation -- */
       .deepdive-nav {
         display: flex;
         align-items: center;
@@ -309,7 +309,7 @@
         color: #0f2340;
       }
 
-      /* ── Finances tab (AEGIS 2.9.2) ── */
+      /* -- Finances tab (AEGIS 2.9.2) -- */
       .fin-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 18px; }
       .fin-kpi { background: #ffffff; border: 1px solid #d5dce8; border-radius: 16px; padding: 18px 20px; transition: background 0.15s, border-color 0.15s; }
       .fin-kpi h4 { font-size: 0.76rem; font-weight: 700; color: #6b85a0; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -338,7 +338,7 @@
       .fin-del-btn { background: none; border: none; cursor: pointer; color: #9bafc4; font-size: 0.9rem; padding: 4px 6px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
       .fin-del-btn:hover { color: #7f3034; background: #f3dddd; }
 
-      /* ── Finances modal ── */
+      /* -- Finances modal -- */
       .modal-overlay {
         position: fixed; inset: 0; background: rgba(15, 35, 64, 0.55);
         display: flex; align-items: center; justify-content: center;
@@ -365,7 +365,7 @@
       }
       .modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #edf2f8; }
 
-      /* ── Not-found state ── */
+      /* -- Not-found state -- */
       .not-found {
         padding: 48px 24px;
         text-align: center;
@@ -433,11 +433,11 @@
             <div class="toolbar">
               <div>
                 <span class="eyebrow">Student profile</span>
-                <h2 id="student-name">—</h2>
+                <h2 id="student-name">�</h2>
                 <p>Appendix 13-aligned view. Personal, medical, school, homestay, permissions, and welfare data all visible without making staff open six different records.</p>
               </div>
               <div class="toolbar-actions">
-                <span id="status-badge" class="badge">—</span>
+                <span id="status-badge" class="badge">�</span>
                 <a class="button-alt" href="students.html">Back to list</a>
                 <a class="button-alt" href="student-edit.html">Edit record</a>
                 <a class="button-alt" href="student-archive.html">Archive record</a>
@@ -448,7 +448,7 @@
               </div>
             </div>
 
-            <!-- ── Tab: Profile Overview ── -->
+            <!-- -- Tab: Profile Overview -- -->
             <div id="tab-overview" class="tab-content active">
 
             <!-- Info grid -->
@@ -456,20 +456,20 @@
               <article class="info-block">
                 <h4>Identity and school</h4>
                 <div class="kv">
-                  <div class="kv-row"><small>Full name</small>      <div id="kv-full-name">—</div></div>
-                  <div class="kv-row"><small>Preferred name</small>  <div id="kv-preferred-name">—</div></div>
-                  <div class="kv-row"><small>Date of birth</small>   <div id="kv-dob">—</div></div>
-                  <div class="kv-row"><small>Nationality</small>     <div id="kv-nationality">—</div></div>
-                  <div class="kv-row"><small>School</small>          <div id="kv-school">—</div></div>
-                  <div class="kv-row"><small>Accommodation</small>   <div id="kv-accommodation">—</div></div>
+                  <div class="kv-row"><small>Full name</small>      <div id="kv-full-name">�</div></div>
+                  <div class="kv-row"><small>Preferred name</small>  <div id="kv-preferred-name">�</div></div>
+                  <div class="kv-row"><small>Date of birth</small>   <div id="kv-dob">�</div></div>
+                  <div class="kv-row"><small>Nationality</small>     <div id="kv-nationality">�</div></div>
+                  <div class="kv-row"><small>School</small>          <div id="kv-school">�</div></div>
+                  <div class="kv-row"><small>Accommodation</small>   <div id="kv-accommodation">�</div></div>
                   <div class="kv-row"><small>Passport / BRP</small>  <div id="kv-passport">BRP copy held in secure documents</div></div>
                 </div>
               </article>
               <article class="info-block">
                 <h4>Parents and contacts</h4>
                 <div class="kv">
-                  <div class="kv-row"><small>Primary parent</small>       <div id="kv-parent1">—</div></div>
-                  <div class="kv-row"><small>Second parent</small>        <div id="kv-parent2">—</div></div>
+                  <div class="kv-row"><small>Primary parent</small>       <div id="kv-parent1">�</div></div>
+                  <div class="kv-row"><small>Second parent</small>        <div id="kv-parent2">�</div></div>
                   <div class="kv-row"><small>UK emergency contact</small> <div>None recorded / Oxford Guardians acting as named local contact</div></div>
                   <div class="kv-row"><small>Agent</small>                <div>Kiyama Education Services / Mika Sato</div></div>
                 </div>
@@ -491,7 +491,7 @@
                   <div class="kv-row"><small>Medical consent</small>       <div>Signed 02 Sep 2025</div></div>
                   <div class="kv-row"><small>Photo consent</small>         <div>Declined</div></div>
                   <div class="kv-row"><small>Data sharing consent</small>  <div>Signed / school + homestay + AEGIS inspection anonymised use only</div></div>
-                  <div class="kv-row"><small>24/7 Emergency Pack</small>   <div id="kv-emergency-pack">—</div></div>
+                  <div class="kv-row"><small>24/7 Emergency Pack</small>   <div id="kv-emergency-pack">�</div></div>
                 </div>
               </article>
             </div>
@@ -522,7 +522,7 @@
             </div><!-- /cols-2 -->
             </div><!-- /tab-overview -->
 
-            <!-- ── Tab: Documents ── -->
+            <!-- -- Tab: Documents -- -->
             <div id="tab-documents" class="tab-content">
               <div class="tab-upload-section">
                 <div class="upload-card">
@@ -537,7 +537,7 @@
               </div>
             </div><!-- /tab-documents -->
 
-            <!-- ── Tab: Academic ── -->
+            <!-- -- Tab: Academic -- -->
             <div id="tab-academic" class="tab-content">
               <div class="tab-upload-section">
                 <div class="upload-card">
@@ -552,7 +552,7 @@
               </div>
             </div><!-- /tab-academic -->
 
-            <!-- ── Tab: Homestays ── -->
+            <!-- -- Tab: Homestays -- -->
             <div id="tab-homestays" class="tab-content">
               <div class="upload-card">
                 <h4>Connected Homestays</h4>
@@ -560,7 +560,7 @@
               </div>
             </div>
 
-            <!-- ── Tab: Travel ── -->
+            <!-- -- Tab: Travel -- -->
             <div id="tab-travel" class="tab-content">
               <div class="upload-card">
                 <h4>Connected Travel</h4>
@@ -568,24 +568,24 @@
               </div>
             </div>
 
-            <!-- ── Tab: Finances & Pocket Money (AEGIS 2.9.2) ── -->
+            <!-- -- Tab: Finances & Pocket Money (AEGIS 2.9.2) -- -->
             <div id="tab-finances" class="tab-content">
 
               <div class="fin-kpis">
                 <div class="fin-kpi">
                   <h4>Total Deposits Held</h4>
-                  <div class="fin-kpi-value" id="fin-kpi-deposits">£0.00</div>
+                  <div class="fin-kpi-value" id="fin-kpi-deposits">�0.00</div>
                   <p class="fin-kpi-sub">Lifetime funds received</p>
                 </div>
                 <div class="fin-kpi">
                   <h4>Total Released / Spent</h4>
-                  <div class="fin-kpi-value" id="fin-kpi-released">£0.00</div>
+                  <div class="fin-kpi-value" id="fin-kpi-released">�0.00</div>
                   <p class="fin-kpi-sub">Lifetime funds disbursed</p>
                 </div>
                 <div class="fin-kpi" id="fin-kpi-balance-card">
                   <h4>Current Available Balance</h4>
-                  <div class="fin-kpi-value" id="fin-kpi-balance">£0.00</div>
-                  <p class="fin-kpi-sub" id="fin-kpi-balance-sub">—</p>
+                  <div class="fin-kpi-value" id="fin-kpi-balance">�0.00</div>
+                  <p class="fin-kpi-sub" id="fin-kpi-balance-sub">�</p>
                 </div>
               </div>
 
@@ -633,7 +633,7 @@
                       </div>
 
                       <div class="form-group">
-                        <label for="fin-amount">Amount (£)</label>
+                        <label for="fin-amount">Amount (�)</label>
                         <input type="number" id="fin-amount" min="0.01" step="0.01" required>
                       </div>
                       <div class="form-group">
@@ -663,7 +663,7 @@
 
                       <div class="form-group form-full">
                         <label for="fin-notes">Notes</label>
-                        <textarea id="fin-notes" placeholder="Additional context…"></textarea>
+                        <textarea id="fin-notes" placeholder="Additional context�"></textarea>
                       </div>
 
                     </div>
@@ -677,12 +677,12 @@
 
             </div><!-- /tab-finances -->
 
-            <!-- ── Safeguarding concerns strip ── -->
+            <!-- -- Safeguarding concerns strip -- -->
             <div class="card" id="concern-strip" style="display:none;">
-              <h4>⚠ Open Concerns</h4>
+              <h4>? Open Concerns</h4>
               <div id="concern-list" class="list"></div>
               <p style="margin-top:12px;">
-                <a href="concerns-dashboard.html" class="link-pill">View all concerns →</a>
+                <a href="concerns-dashboard.html" class="link-pill">View all concerns ?</a>
               </p>
             </div>
 
@@ -693,12 +693,12 @@
 
     <script src="assets/db.js"></script>
     <script>
-      // ── URL param extraction ──────────────────────────────────────────────
+      // -- URL param extraction ----------------------------------------------
       var params    = new URLSearchParams(window.location.search);
       var studentId = params.get('id') || 'STU10492';
       var student   = getStudentById(studentId);
 
-      // ── Not found ─────────────────────────────────────────────────────────
+      // -- Not found ---------------------------------------------------------
       if (!student) {
         document.getElementById('main-content').innerHTML =
           '<div class="not-found">' +
@@ -709,9 +709,9 @@
         throw new Error('Student not found: ' + studentId);
       }
 
-      // ── Helpers ───────────────────────────────────────────────────────────
+      // -- Helpers -----------------------------------------------------------
       function formatDob(iso) {
-        if (!iso) return '—';
+        if (!iso) return '�';
         var d = new Date(iso);
         return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
       }
@@ -731,10 +731,10 @@
         return new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
       }
 
-      // ── Populate page elements ────────────────────────────────────────────
+      // -- Populate page elements --------------------------------------------
       var fullName = student.firstName + ' ' + student.lastName;
 
-      document.getElementById('page-title').textContent   = fullName + ' — Oxford Guardians';
+      document.getElementById('page-title').textContent   = fullName + ' � Oxford Guardians';
       document.getElementById('chrome-route').textContent = 'Route /admin/students/' + student.id;
       document.getElementById('student-name').innerHTML = fullName +
         ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + student.id + '</span>';
@@ -754,12 +754,12 @@
       document.getElementById('kv-accommodation').textContent = student.accommodationType || 'Boarding Student';
 
       var p1Parts = [student.parent1Name, student.parent1Email, student.parent1Phone].filter(Boolean);
-      document.getElementById('kv-parent1').textContent = p1Parts.length ? p1Parts.join(' / ') : '—';
+      document.getElementById('kv-parent1').textContent = p1Parts.length ? p1Parts.join(' / ') : '�';
 
       var p2Parts = [student.parent2Name, student.parent2Email, student.parent2Phone].filter(Boolean);
       document.getElementById('kv-parent2').textContent = p2Parts.length ? p2Parts.join(' / ') : 'Not recorded';
 
-      // AEGIS Standards 2.6.1 & 10.2 — in-person handover of the 24/7 emergency
+      // AEGIS Standards 2.6.1 & 10.2 � in-person handover of the 24/7 emergency
       // rota / welcome pack, signed off by whichever staff member conducted it.
       function renderEmergencyPackStatus() {
         var box = document.getElementById('kv-emergency-pack');
@@ -795,7 +795,7 @@
       document.getElementById('link-pastoral').href = 'student-pastoral.html?id=' + student.id;
       document.getElementById('link-risk').href     = 'student-risk.html?id='     + student.id;
 
-      // ── Tab switching ─────────────────────────────────────────────────────
+      // -- Tab switching -----------------------------------------------------
       var tabButtons  = document.querySelectorAll('.subnav button[data-tab]');
       var tabPanels   = document.querySelectorAll('.tab-content');
 
@@ -825,7 +825,7 @@
         panel.style.display = panel.classList.contains('active') ? 'block' : 'none';
       });
 
-      // ── Generic upload widget factory ─────────────────────────────────────
+      // -- Generic upload widget factory -------------------------------------
       // Builds a self-contained upload/render/remove system for any list.
       function createUploadWidget(options) {
         // options: { storageKey, fileInputId, nameInputId, btnId, listId, iconClass, emptyText }
@@ -915,7 +915,7 @@
         render(); // initial render on page load
       }
 
-      // ── Initialise Document upload ────────────────────────────────────────
+      // -- Initialise Document upload ----------------------------------------
       createUploadWidget({
         storageKey:  'docs_' + student.id,
         fileInputId: 'doc-file',
@@ -926,7 +926,7 @@
         emptyText:   'No documents uploaded yet.'
       });
 
-      // ── Initialise Academic Report upload ─────────────────────────────────
+      // -- Initialise Academic Report upload ---------------------------------
       createUploadWidget({
         storageKey:  'acad_' + student.id,
         fileInputId: 'acad-file',
@@ -936,7 +936,7 @@
         iconClass:   'acad',
         emptyText:   'No academic reports uploaded yet.'
       });
-      // ── Homestays tab: render connected exeat/placement records ──────────
+      // -- Homestays tab: render connected exeat/placement records ----------
       (function () {
         var studentFullName = student.firstName + ' ' + student.lastName;
         var exeats = OG_DB.getAllExeats().filter(function (e) {
@@ -958,16 +958,16 @@
           '</tr></thead><tbody>' +
           exeats.map(function (e) {
             return '<tr>' +
-              '<td style="' + tdStyle + '">' + escapeHtml(e.breakType  || '—') + '</td>' +
-              '<td style="' + tdStyle + '">' + escapeHtml(e.hostName   || '—') + '</td>' +
-              '<td style="' + tdStyle + '">' + escapeHtml(e.startDate  || '—') + '</td>' +
-              '<td style="' + tdStyle + '">' + escapeHtml(e.returnDate || '—') + '</td>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(e.breakType  || '�') + '</td>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(e.hostName   || '�') + '</td>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(e.startDate  || '�') + '</td>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(e.returnDate || '�') + '</td>' +
               '</tr>';
           }).join('') +
           '</tbody></table>';
       }());
 
-      // ── Travel tab: render connected transport records ────────────────────
+      // -- Travel tab: render connected transport records --------------------
       (function () {
         var studentFullName = student.firstName + ' ' + student.lastName;
         var transports = OG_DB.getAllTransports().filter(function (t) {
@@ -988,23 +988,23 @@
             '<th style="' + thStyle + '">Status</th>' +
           '</tr></thead><tbody>' +
           transports.map(function (t) {
-            var route = t.from ? escapeHtml(t.from) + (t.to ? ' → ' + escapeHtml(t.to) : '') : '—';
+            var route = t.from ? escapeHtml(t.from) + (t.to ? ' ? ' + escapeHtml(t.to) : '') : '�';
             return '<tr>' +
-              '<td style="' + tdStyle + '">' + escapeHtml(t.date || '—') + '</td>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(t.date || '�') + '</td>' +
               '<td style="' + tdStyle + '">' + route + '</td>' +
-              '<td style="' + tdStyle + '">' + escapeHtml(t.driverName || t.driver || '—') + '</td>' +
-              '<td style="' + tdStyle + '">' + escapeHtml(t.status || '—') + '</td>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(t.driverName || t.driver || '�') + '</td>' +
+              '<td style="' + tdStyle + '">' + escapeHtml(t.status || '�') + '</td>' +
               '</tr>';
           }).join('') +
           '</tbody></table>';
       }());
 
-      // ── Welfare log ───────────────────────────────────────────────────────
+      // -- Welfare log -------------------------------------------------------
       (function () {
         var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
         function fmtDate(iso) {
-          if (!iso) return '—';
+          if (!iso) return '�';
           var d = new Date(iso);
           if (isNaN(d.getTime())) return iso;
           return d.getDate() + ' ' + MONTHS[d.getMonth()];
@@ -1038,7 +1038,7 @@
         }).join('');
       }());
 
-      // ── Safeguarding concerns strip ──────────────────────────────────────
+      // -- Safeguarding concerns strip --------------------------------------
       (function () {
         var getConcerns = (typeof getConcernsForPerson === 'function')
           ? getConcernsForPerson
@@ -1058,13 +1058,13 @@
         listEl.innerHTML = openConcerns.map(function (c) {
           return '<div class="list-item">' +
             '<strong>' + escapeHtml(c.title) + '</strong>' +
-            '<p>' + escapeHtml(c.category) + ' · ' + escapeHtml(c.tier) + '</p>' +
-            '<small>Logged ' + escapeHtml(c.loggedDate) + ' · Status: ' + escapeHtml(c.status) + '</small>' +
+            '<p>' + escapeHtml(c.category) + ' � ' + escapeHtml(c.tier) + '</p>' +
+            '<small>Logged ' + escapeHtml(c.loggedDate) + ' � Status: ' + escapeHtml(c.status) + '</small>' +
           '</div>';
         }).join('');
       }());
 
-      // ── Finances & Pocket Money tab (AEGIS Standard 2.9.2) ─────────────────
+      // -- Finances & Pocket Money tab (AEGIS Standard 2.9.2) -----------------
       (function () {
         var listBody   = document.getElementById('fin-ledger-body');
         var modal      = document.getElementById('finModal');
@@ -1073,11 +1073,11 @@
 
         function fmtMoney(n) {
           var v = Number(n) || 0;
-          return '£' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          return '�' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
         function fmtFinDate(d) {
-          if (!d) return '—';
+          if (!d) return '�';
           var p = new Date(d);
           if (isNaN(p.getTime())) return d;
           var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -1097,7 +1097,7 @@
           balanceCard.classList.remove('balance-good', 'balance-low', 'balance-over');
           if (summary.balanceHeld < 0) {
             balanceCard.classList.add('balance-over');
-            balanceSub.textContent = 'Overdrawn — requires urgent review (Standard 2.9.2)';
+            balanceSub.textContent = 'Overdrawn � requires urgent review (Standard 2.9.2)';
           } else if (summary.balanceHeld < 50) {
             balanceCard.classList.add('balance-low');
             balanceSub.textContent = 'Low balance';
@@ -1118,19 +1118,19 @@
               : '<span class="badge red" style="font-size:0.72rem;">Release Out</span>';
             var amountHtml = isDeposit
               ? '<span class="fin-amount-in">+' + fmtMoney(tx.amount) + '</span>'
-              : '<span class="fin-amount-out">−' + fmtMoney(tx.amountReleased) + '</span>';
+              : '<span class="fin-amount-out">-' + fmtMoney(tx.amountReleased) + '</span>';
             var receiptHtml = (tx.receiptHeld || tx.receiptDocPath)
               ? '<span class="fin-receipt-ok">&#10003; On file</span>'
               : '<span class="fin-receipt-miss">&#10007; Missing</span>';
 
             return '<tr>' +
               '<td>' + escapeHtml(fmtFinDate(tx.dateReceived)) + '</td>' +
-              '<td>' + escapeHtml(tx.id || '—') + '</td>' +
+              '<td>' + escapeHtml(tx.id || '�') + '</td>' +
               '<td>' + typeBadge + '</td>' +
-              '<td>' + escapeHtml(tx.purpose || '—') + '</td>' +
+              '<td>' + escapeHtml(tx.purpose || '�') + '</td>' +
               '<td>' + amountHtml + '</td>' +
               '<td>' + fmtMoney(tx.balanceHeld) + '</td>' +
-              '<td>' + escapeHtml(tx.approvedBy || '—') + '</td>' +
+              '<td>' + escapeHtml(tx.approvedBy || '�') + '</td>' +
               '<td>' + receiptHtml + '</td>' +
               '<td><button type="button" class="fin-del-btn" data-id="' + escapeHtml(tx.id) + '" title="Delete record">&#x2715;</button></td>' +
             '</tr>';

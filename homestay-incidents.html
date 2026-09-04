@@ -1,9 +1,9 @@
-Ôªø<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Accident &amp; Incident Book ‚Äî Oxford Guardians Platform</title>
+    <title>Accident &amp; Incident Book ó Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -36,7 +36,7 @@
       .action-cell { white-space:nowrap; display:flex; gap:6px; align-items:center; }
       .tag-flag { display:inline-block; font-size:0.7rem; font-weight:700; padding:1px 6px; border-radius:3px; background:#fee2e2; color:#991b1b; }
       
-      /* ‚îÄ‚îÄ Chrome bar ‚îÄ‚îÄ */
+      /* -- Chrome bar -- */
       .chrome {
         background: #e8eef6 !important;
         border-bottom-color: #d5dce8 !important;
@@ -153,10 +153,10 @@
             </div>
 
             <div class="metrics">
-              <article class="metric featured"><h4>Total recorded incidents</h4><div class="metric-value" id="metric-total">‚Äî</div><p class="metric-meta">All roles (all-time)</p></article>
-              <article class="metric"><h4>This academic year</h4><div class="metric-value" id="metric-year">‚Äî</div><p class="metric-meta">Sep 2025 ‚Äì present</p></article>
-              <article class="metric"><h4>Pending follow-up</h4><div class="metric-value" id="metric-pending">‚Äî</div><p class="metric-meta">Open investigation / care</p></article>
-              <article class="metric"><h4>RIDDOR / DSL Escalated</h4><div class="metric-value" id="metric-escalated">‚Äî</div><p class="metric-meta">Safeguarding / Statutory</p></article>
+              <article class="metric featured"><h4>Total recorded incidents</h4><div class="metric-value" id="metric-total">ó</div><p class="metric-meta">All roles (all-time)</p></article>
+              <article class="metric"><h4>This academic year</h4><div class="metric-value" id="metric-year">ó</div><p class="metric-meta">Sep 2025 ñ present</p></article>
+              <article class="metric"><h4>Pending follow-up</h4><div class="metric-value" id="metric-pending">ó</div><p class="metric-meta">Open investigation / care</p></article>
+              <article class="metric"><h4>RIDDOR / DSL Escalated</h4><div class="metric-value" id="metric-escalated">ó</div><p class="metric-meta">Safeguarding / Statutory</p></article>
             </div>
 
             <!-- Role & Status Filter Bar -->
@@ -170,7 +170,7 @@
               </div>
 
               <div class="filter-group">
-                <input type="text" id="search-incidents" placeholder="Search by person, injury, location‚Ä¶" style="padding:6px 12px; font-size:0.84rem; border-radius:6px; border:1px solid #cbd5e1; width:220px;" />
+                <input type="text" id="search-incidents" placeholder="Search by person, injury, locationÖ" style="padding:6px 12px; font-size:0.84rem; border-radius:6px; border:1px solid #cbd5e1; width:220px;" />
               </div>
             </div>
 
@@ -188,7 +188,7 @@
                   </tr>
                 </thead>
                 <tbody id="incident-tbody">
-                  <tr><td colspan="7" style="text-align:center; padding:32px; color:#6b85a0;">Loading accident log‚Ä¶</td></tr>
+                  <tr><td colspan="7" style="text-align:center; padding:32px; color:#6b85a0;">Loading accident logÖ</td></tr>
                 </tbody>
               </table>
             </div>
@@ -321,9 +321,9 @@
 
           var role = inc.affectedRole || 'Student';
           var roleClass = getRoleClass(role);
-          var personName = inc.personName || inc.studentName || inc.hostName || '‚Äî';
+          var personName = inc.personName || inc.studentName || inc.hostName || 'ó';
 
-          var displayDate = inc.date || '‚Äî';
+          var displayDate = inc.date || 'ó';
           if (inc.date) {
             try {
               var d = new Date(inc.date + 'T00:00:00');
@@ -346,7 +346,7 @@
             flagsHtml += '<span class="tag-flag" style="background:#e0e7ff;color:#3730a3;margin-left:4px;">DSL Notified</span>';
           }
 
-          var locationDisplay = inc.location || (inc.hostName ? 'Homestay (' + inc.hostName + ')' : '‚Äî');
+          var locationDisplay = inc.location || (inc.hostName ? 'Homestay (' + inc.hostName + ')' : 'ó');
 
           return '<tr>' +
             '<td style="white-space:nowrap;">' + displayDate + '</td>' +
@@ -360,7 +360,7 @@
               (inc.severity ? '<br><small style="color:#64748b;">' + escapeHtml(inc.severity) + '</small>' : '') +
             '</td>' +
             '<td>' +
-              '<div style="max-width:280px; font-size:0.85rem; line-height:1.4; color:#1e293b;">' + escapeHtml(inc.actionTaken || inc.description || '‚Äî') + '</div>' +
+              '<div style="max-width:280px; font-size:0.85rem; line-height:1.4; color:#1e293b;">' + escapeHtml(inc.actionTaken || inc.description || 'ó') + '</div>' +
               (inc.firstAider ? '<small style="color:#64748b;">First Aider: ' + escapeHtml(inc.firstAider) + '</small>' : '') +
             '</td>' +
             '<td>' +
@@ -369,8 +369,8 @@
             '</td>' +
             '<td>' +
               '<div class="action-cell">' +
-                '<a class="btn-sm btn-edit" href="homestay-incident-create.html?id=' + inc.id + '">‚úèÔ∏è Edit</a>' +
-                '<button class="btn-sm btn-delete" data-id="' + inc.id + '">üóëÔ∏è</button>' +
+                '<a class="btn-sm btn-edit" href="homestay-incident-create.html?id=' + inc.id + '">?? Edit</a>' +
+                '<button class="btn-sm btn-delete" data-id="' + inc.id + '">???</button>' +
               '</div>' +
             '</td>' +
           '</tr>';

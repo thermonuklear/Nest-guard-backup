@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visit Report — Oxford Guardians Platform</title>
+  <title>Visit Report � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -41,7 +41,7 @@
       color: #e8f0fa; border: 2px solid #d5dce8; flex-shrink: 0;
     }
 
-    /* ── Form sections ── */
+    /* -- Form sections -- */
     .form-section {
       background: #fff; border: 1px solid #d5dce8;
       border-radius: 14px; padding: 20px 22px; margin-bottom: 14px;
@@ -67,7 +67,7 @@
     .field-group input:disabled { color: #6b85a0; background: #edf2f8; cursor: default; }
     .field-group textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
 
-    /* ── Inline transport radio (not Y/N chips — just 3 radio labels) ── */
+    /* -- Inline transport radio (not Y/N chips � just 3 radio labels) -- */
     .transport-row {
       display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
       padding: 9px 12px; background: #f6f8fb; border: 1px solid #e4eaf3;
@@ -76,7 +76,7 @@
     .transport-row label { font-size: 0.86rem; color: #1a3459; display: flex; align-items: center; gap: 5px; cursor: pointer; }
     .transport-row input[type="radio"] { accent-color: #0f2340; }
 
-    /* ── Y/N/NA chips ── */
+    /* -- Y/N/NA chips -- */
     .yn-grid { display: grid; gap: 7px; }
     .yn-row {
       display: flex; align-items: flex-start; gap: 12px;
@@ -97,7 +97,7 @@
     .yn-group input[value="no"]:checked  + label { background: #dc2626; border-color: #dc2626; color: #fff; }
     .yn-group input[value="na"]:checked  + label { background: #6b7280; border-color: #6b7280; color: #fff; }
 
-    /* ── Outcome radio chips ── */
+    /* -- Outcome radio chips -- */
     .outcome-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     @media (max-width: 580px) { .outcome-grid { grid-template-columns: 1fr; } }
     .outcome-option input[type="radio"] { display: none; }
@@ -118,14 +118,14 @@
     .outcome-option input[value="suspended"]:checked + label
       { background: #f0edf8; border-color: #7c3aed; color: #4a2080; }
 
-    /* ── Metrics strip ── */
+    /* -- Metrics strip -- */
     .vr-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
     .vr-metric { background: #fff; border: 1px solid #d5dce8; border-radius: 12px; padding: 14px 16px; }
     .vr-metric h4 { font-size: 0.79rem; font-weight: 600; color: #4b6080; margin-bottom: 4px; }
     .vr-metric-value { font-family: "Outfit", sans-serif; font-size: 1.45rem; font-weight: 700; color: #0f2340; }
     .vr-metric-sub { font-size: 0.75rem; color: #6b85a0; margin-top: 2px; }
 
-    /* ── Report cards ── */
+    /* -- Report cards -- */
     .report-cards { display: grid; gap: 14px; }
     .report-card { background: #fff; border: 1px solid #d5dce8; border-radius: 14px; overflow: hidden; }
     .rc-header {
@@ -153,7 +153,7 @@
       transition: background 0.12s;
     }
     .report-card details summary::-webkit-details-marker { display: none; }
-    .report-card details summary::before { content: '▸'; font-size: 0.7rem; transition: transform 0.14s; display: inline-block; }
+    .report-card details summary::before { content: '?'; font-size: 0.7rem; transition: transform 0.14s; display: inline-block; }
     .report-card details[open] summary::before { transform: rotate(90deg); }
     .report-card details[open] summary { border-bottom: 1px solid #edf2f8; }
     .report-card details summary:hover { background: #f6f8fb; }
@@ -252,7 +252,7 @@
           </div>
         </div>
 
-        <!-- ── LIST VIEW ── -->
+        <!-- -- LIST VIEW -- -->
         <div id="list-view">
           <div class="vr-metrics" id="metrics-strip" style="display:none;">
             <div class="vr-metric">
@@ -262,39 +262,39 @@
             </div>
             <div class="vr-metric">
               <h4>Latest visit</h4>
-              <div class="vr-metric-value" id="metric-latest-date">—</div>
-              <p class="vr-metric-sub" id="metric-latest-type">—</p>
+              <div class="vr-metric-value" id="metric-latest-date">�</div>
+              <p class="vr-metric-sub" id="metric-latest-type">�</p>
             </div>
             <div class="vr-metric">
               <h4>Latest outcome</h4>
-              <div class="vr-metric-value" id="metric-outcome">—</div>
-              <p class="vr-metric-sub" id="metric-next-review">—</p>
+              <div class="vr-metric-value" id="metric-outcome">�</div>
+              <p class="vr-metric-sub" id="metric-next-review">�</p>
             </div>
           </div>
           <div class="report-cards" id="report-cards"></div>
         </div>
 
-        <!-- ── FORM VIEW ── -->
+        <!-- -- FORM VIEW -- -->
         <div id="form-view" style="display:none;">
           <form id="visit-form" autocomplete="off">
 
             <!-- Section 1: Visit Details -->
             <div class="form-section">
-              <p class="form-section-title">Panel 1 — Visit Details</p>
+              <p class="form-section-title">Panel 1 � Visit Details</p>
               <p class="form-section-desc">Record the type and context of this visit, the Nest Guardians staff member completing it, and the capacity and transport approvals agreed during the visit.</p>
               <div class="fields-grid">
                 <div class="field-group">
                   <label>Host</label>
-                  <input type="text" id="f-host-name" disabled placeholder="—" />
+                  <input type="text" id="f-host-name" disabled placeholder="�" />
                 </div>
                 <div class="field-group">
                   <label>Host ID</label>
-                  <input type="text" id="f-host-id" disabled placeholder="—" />
+                  <input type="text" id="f-host-id" disabled placeholder="�" />
                 </div>
                 <div class="field-group">
                   <label>Visit Type *</label>
                   <select id="f-visit-type" required>
-                    <option value="">— Select —</option>
+                    <option value="">� Select �</option>
                     <option value="Initial pre-placement">Initial pre-placement</option>
                     <option value="Annual review">Annual review</option>
                     <option value="Return visit">Return visit</option>
@@ -320,7 +320,7 @@
                 </div>
                 <div class="field-group span-2">
                   <label>Approved student age range or restrictions</label>
-                  <input type="text" id="f-age-range" placeholder="e.g. 14–18. No students under 13." />
+                  <input type="text" id="f-age-range" placeholder="e.g. 14�18. No students under 13." />
                 </div>
                 <div class="field-group span-2">
                   <label>Transport by homestay authorised?</label>
@@ -339,8 +339,8 @@
 
             <!-- Section 10: Accommodation Walk-Through -->
             <div class="form-section">
-              <p class="form-section-title">Panel 2 — Accommodation Walk-Through</p>
-              <p class="form-section-desc">Complete a physical walkthrough of the accommodation. Mark each item Yes (confirmed), No (not met — action required), or N/A (not applicable to this placement).</p>
+              <p class="form-section-title">Panel 2 � Accommodation Walk-Through</p>
+              <p class="form-section-desc">Complete a physical walkthrough of the accommodation. Mark each item Yes (confirmed), No (not met � action required), or N/A (not applicable to this placement).</p>
               <div class="yn-grid" id="s10-form"></div>
               <div class="field-group" style="margin-top:14px;">
                 <label>Upload Accommodation Photos (Max 5)</label>
@@ -350,7 +350,7 @@
 
             <!-- Section 12: Student Care, Meals, Supervision -->
             <div class="form-section">
-              <p class="form-section-title">Panel 3 — Student Care, Meals, Supervision and Matching</p>
+              <p class="form-section-title">Panel 3 � Student Care, Meals, Supervision and Matching</p>
               <p class="form-section-desc">Discuss and verify care, meal, supervision and matching arrangements with the host. Record any placement-specific notes in the free-text field below.</p>
               <div class="yn-grid" id="s12-form"></div>
               <div style="margin-top:12px;">
@@ -361,7 +361,7 @@
 
             <!-- Section 14: Actions, Restrictions and Final Approval -->
             <div class="form-section">
-              <p class="form-section-title">Panel 4 — Actions, Restrictions and Final Approval</p>
+              <p class="form-section-title">Panel 4 � Actions, Restrictions and Final Approval</p>
               <p class="form-section-desc">Record the overall outcome of this visit, the authorising staff member, and any placement restrictions or conditions that must be noted before any student is placed.</p>
 
               <p style="font-size:0.8rem;font-weight:600;color:#4b6080;margin:0 0 8px;">Overall Outcome *</p>
@@ -422,7 +422,7 @@
 
 <script src="assets/db.js"></script>
 <script>
-  // ── Section 10 data ───────────────────────────────────────────────────────
+  // -- Section 10 data -------------------------------------------------------
   var S10_ITEMS = [
     { key: 'homeClean',              label: 'Home is clean, well kept and in good repair.' },
     { key: 'bedroomViewed',          label: 'Suitable bedroom viewed.' },
@@ -449,7 +449,7 @@
     { key: 'cctvRecorded',           label: 'CCTV, doorbell camera or other monitoring is recorded; lawful need, privacy, data protection and paper trail discussed where applicable.' }
   ];
 
-  // ── Section 12 data ───────────────────────────────────────────────────────
+  // -- Section 12 data -------------------------------------------------------
   var S12_ITEMS = [
     { key: 'fullBoard',           label: 'Full board meals will be provided: breakfast, lunch and dinner.' },
     { key: 'fullBoardChecked',    label: 'Full board meal arrangements checked: breakfast, lunch and dinner during the student stay, taking account of dietary needs.' },
@@ -476,13 +476,13 @@
     { key: 'contactScheduled',    label: 'Contact during the student stay is scheduled or assigned, and the follow-up/welfare check route is clear.' }
   ];
 
-  // ── Helpers ───────────────────────────────────────────────────────────────
+  // -- Helpers ---------------------------------------------------------------
   function esc(s) {
     return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
   function formatDate(d) {
-    if (!d) return '—';
+    if (!d) return '�';
     var p = new Date(d);
     if (isNaN(p.getTime())) return d;
     var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -500,19 +500,19 @@
 
   var OUTCOME_LABELS = {
     'approved':               'Approved for placement',
-    'approved_after_actions': 'Approved — actions pending',
+    'approved_after_actions': 'Approved � actions pending',
     'not_approved':           'Not approved',
     'suspended':              'Suspended / withdrawn'
   };
 
-  // ── Page init ─────────────────────────────────────────────────────────────
+  // -- Page init -------------------------------------------------------------
   var params  = new URLSearchParams(window.location.search);
   var hostId  = params.get('hostId') || params.get('id');
   var host    = hostId ? getHostById(hostId) : null;
 
   if (host) {
     var fullName = host.firstName + ' ' + host.lastName;
-    document.title = fullName + ' — Visit Reports — Oxford Guardians';
+    document.title = fullName + ' � Visit Reports � Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/host/' + host.id + '/visits';
     document.getElementById('host-avatar').textContent  = (host.firstName.charAt(0) + host.lastName.charAt(0)).toUpperCase();
     document.getElementById('toolbar-name').innerHTML   = esc(fullName) +
@@ -530,7 +530,7 @@
       String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
   })();
 
-  // ── Build Y/N/NA form rows ────────────────────────────────────────────────
+  // -- Build Y/N/NA form rows ------------------------------------------------
   function buildYNRows(items, containerId, prefix) {
     var container = document.getElementById(containerId);
     items.forEach(function(item) {
@@ -554,7 +554,7 @@
   buildYNRows(S10_ITEMS, 's10-form', 's10');
   buildYNRows(S12_ITEMS, 's12-form', 's12');
 
-  // ── Collect form values ───────────────────────────────────────────────────
+  // -- Collect form values ---------------------------------------------------
   function collectYN(items, prefix) {
     var result = {};
     items.forEach(function(item) {
@@ -571,7 +571,7 @@
     });
   }
 
-  // ── View switching ────────────────────────────────────────────────────────
+  // -- View switching --------------------------------------------------------
   function showForm() {
     document.getElementById('list-view').style.display         = 'none';
     document.getElementById('form-view').style.display         = '';
@@ -612,30 +612,30 @@
   document.getElementById('btn-cancel-form').addEventListener('click', showList);
   document.getElementById('form-cancel-btn').addEventListener('click', showList);
 
-  // ── Build report display card ─────────────────────────────────────────────
+  // -- Build report display card ---------------------------------------------
   function buildReportCard(r) {
     var t10     = tallyYN(S10_ITEMS, r.s10Items);
     var t12     = tallyYN(S12_ITEMS, r.s12Items);
     var outcome = r.outcome || '';
-    var outcomeLabel = OUTCOME_LABELS[outcome] || '—';
+    var outcomeLabel = OUTCOME_LABELS[outcome] || '�';
 
     var outcomeBadge;
     if (outcome === 'approved')               outcomeBadge = '<span class="badge green"  style="font-size:0.74rem;">Approved</span>';
-    else if (outcome === 'approved_after_actions') outcomeBadge = '<span class="badge amber"  style="font-size:0.74rem;">Approved — actions pending</span>';
+    else if (outcome === 'approved_after_actions') outcomeBadge = '<span class="badge amber"  style="font-size:0.74rem;">Approved � actions pending</span>';
     else if (outcome === 'not_approved')      outcomeBadge = '<span class="badge red"    style="font-size:0.74rem;">Not approved</span>';
     else if (outcome === 'suspended')         outcomeBadge = '<span class="badge navy"   style="font-size:0.74rem;">Suspended</span>';
     else outcomeBadge = '';
 
     // Capacity display
     var capBit = '';
-    if (r.approvedCapacity) capBit = ' &nbsp;·&nbsp; Capacity: ' + esc(r.approvedCapacity);
-    if (r.approvedAgeRange)  capBit += ' &nbsp;·&nbsp; Ages: ' + esc(r.approvedAgeRange);
+    if (r.approvedCapacity) capBit = ' &nbsp;�&nbsp; Capacity: ' + esc(r.approvedCapacity);
+    if (r.approvedAgeRange)  capBit += ' &nbsp;�&nbsp; Ages: ' + esc(r.approvedAgeRange);
 
     // S10 detail rows
     var s10Rows = S10_ITEMS.map(function(item) {
       var v  = (r.s10Items || {})[item.key] || '';
       var bc = v === 'yes' ? 'yes' : v === 'no' ? 'no' : v === 'na' ? 'na' : 'blank';
-      var bl = v === 'yes' ? 'Yes' : v === 'no' ? 'No' : v === 'na' ? 'N/A' : '—';
+      var bl = v === 'yes' ? 'Yes' : v === 'no' ? 'No' : v === 'na' ? 'N/A' : '�';
       return '<div class="detail-yn-row"><span class="yn-badge ' + bc + '">' + bl + '</span><span>' + esc(item.label) + '</span></div>';
     }).join('');
 
@@ -643,7 +643,7 @@
     var s12Rows = S12_ITEMS.map(function(item) {
       var v  = (r.s12Items || {})[item.key] || '';
       var bc = v === 'yes' ? 'yes' : v === 'no' ? 'no' : v === 'na' ? 'na' : 'blank';
-      var bl = v === 'yes' ? 'Yes' : v === 'no' ? 'No' : v === 'na' ? 'N/A' : '—';
+      var bl = v === 'yes' ? 'Yes' : v === 'no' ? 'No' : v === 'na' ? 'N/A' : '�';
       return '<div class="detail-yn-row"><span class="yn-badge ' + bc + '">' + bl + '</span><span>' + esc(item.label) + '</span></div>';
     }).join('');
 
@@ -659,10 +659,10 @@
       ? '<div><p class="rc-detail-title" style="margin-bottom:6px;">Placement Restrictions &amp; Conditions</p><p class="notes-box">' + esc(r.finalRestrictions) + '</p></div>'
       : '';
 
-    var nextReviewStr = r.nextReviewDue ? formatDate(r.nextReviewDue) : '—';
-    var authStr = r.authorisedBy ? esc(r.authorisedBy) + (r.authorisedDate ? ', ' + formatDate(r.authorisedDate) : '') : '—';
+    var nextReviewStr = r.nextReviewDue ? formatDate(r.nextReviewDue) : '�';
+    var authStr = r.authorisedBy ? esc(r.authorisedBy) + (r.authorisedDate ? ', ' + formatDate(r.authorisedDate) : '') : '�';
 
-    var transportStr = r.transportAuthorised === 'yes' ? 'Yes' : r.transportAuthorised === 'no' ? 'No' : r.transportAuthorised === 'na' ? 'N/A' : '—';
+    var transportStr = r.transportAuthorised === 'yes' ? 'Yes' : r.transportAuthorised === 'no' ? 'No' : r.transportAuthorised === 'na' ? 'N/A' : '�';
 
     var pillsHtml =
       '<span class="rc-pill"><span class="dot dot-grey"></span>S10:</span>' +
@@ -678,7 +678,7 @@
       '<div class="rc-header">' +
         '<div>' +
           '<p class="rc-title">' + esc(r.visitType || 'Visit Report') + '</p>' +
-          '<p class="rc-meta">By <strong>' + esc(r.staffMember || '—') + '</strong>' + capBit + '</p>' +
+          '<p class="rc-meta">By <strong>' + esc(r.staffMember || '�') + '</strong>' + capBit + '</p>' +
         '</div>' +
         '<div class="rc-right"><span class="rc-date">' + esc(formatDate(r.dateOfVisit)) + '</span></div>' +
       '</div>' +
@@ -688,19 +688,19 @@
         '<div class="rc-detail">' +
 
           '<div class="rc-detail-section">' +
-            '<p class="rc-detail-title">Panel 1 — Visit Details</p>' +
+            '<p class="rc-detail-title">Panel 1 � Visit Details</p>' +
             '<div class="rc-fields-grid">' +
               '<div class="rc-field"><div class="rc-field-label">Transport authorised</div><div class="rc-field-value">' + transportStr + '</div></div>' +
-              '<div class="rc-field"><div class="rc-field-label">Requested capacity</div><div class="rc-field-value">' + esc(r.requestedCapacity || '—') + '</div></div>' +
-              '<div class="rc-field"><div class="rc-field-label">Approved capacity</div><div class="rc-field-value">' + esc(r.approvedCapacity || '—') + '</div></div>' +
-              '<div class="rc-field"><div class="rc-field-label">Age range / restrictions</div><div class="rc-field-value">' + esc(r.approvedAgeRange || '—') + '</div></div>' +
+              '<div class="rc-field"><div class="rc-field-label">Requested capacity</div><div class="rc-field-value">' + esc(r.requestedCapacity || '�') + '</div></div>' +
+              '<div class="rc-field"><div class="rc-field-label">Approved capacity</div><div class="rc-field-value">' + esc(r.approvedCapacity || '�') + '</div></div>' +
+              '<div class="rc-field"><div class="rc-field-label">Age range / restrictions</div><div class="rc-field-value">' + esc(r.approvedAgeRange || '�') + '</div></div>' +
             '</div>' +
           '</div>' +
 
           changesSinceLastHtml +
 
           '<div class="rc-detail-section">' +
-            '<p class="rc-detail-title">Panel 2 — Accommodation Walk-Through</p>' +
+            '<p class="rc-detail-title">Panel 2 � Accommodation Walk-Through</p>' +
             '<div class="detail-yn-grid">' + s10Rows + '</div>' +
             (r.accommodationPhotos && r.accommodationPhotos.length > 0
               ? '<div style="margin-top:10px;"><p class="rc-detail-title" style="margin-bottom:6px;">Accommodation Photos</p><div style="display:flex;flex-wrap:wrap;gap:8px;">' +
@@ -712,14 +712,14 @@
           '</div>' +
 
           '<div class="rc-detail-section">' +
-            '<p class="rc-detail-title">Panel 3 — Student Care, Meals &amp; Supervision</p>' +
+            '<p class="rc-detail-title">Panel 3 � Student Care, Meals &amp; Supervision</p>' +
             '<div class="detail-yn-grid">' + s12Rows + '</div>' +
           '</div>' +
 
           placementNotesHtml +
 
           '<div class="rc-detail-section">' +
-            '<p class="rc-detail-title">Panel 4 — Final Approval</p>' +
+            '<p class="rc-detail-title">Panel 4 � Final Approval</p>' +
             '<div class="outcome-badge-block ' + esc(outcome) + '" style="margin-bottom:10px;">' + esc(outcomeLabel) + '</div>' +
             '<div class="rc-fields-grid">' +
               '<div class="rc-field"><div class="rc-field-label">Authorised by</div><div class="rc-field-value">' + authStr + '</div></div>' +
@@ -734,7 +734,7 @@
     '</div>';
   }
 
-  // ── Render list view ──────────────────────────────────────────────────────
+  // -- Render list view ------------------------------------------------------
   function renderListView() {
     var reports    = hostId ? getVisitReportsForHost(hostId) : [];
     var container  = document.getElementById('report-cards');
@@ -754,20 +754,20 @@
       var outcome = latest.outcome || '';
       document.getElementById('metric-total').textContent      = reports.length;
       document.getElementById('metric-latest-date').textContent = formatDate(latest.dateOfVisit);
-      document.getElementById('metric-latest-type').textContent = latest.visitType || '—';
-      document.getElementById('metric-outcome').textContent     = OUTCOME_LABELS[outcome] || '—';
+      document.getElementById('metric-latest-type').textContent = latest.visitType || '�';
+      document.getElementById('metric-outcome').textContent     = OUTCOME_LABELS[outcome] || '�';
       document.getElementById('metric-outcome').style.color     =
         outcome === 'approved' ? '#16a34a' :
         outcome === 'approved_after_actions' ? '#d97706' :
         outcome === 'not_approved' ? '#dc2626' :
         outcome === 'suspended' ? '#7c3aed' : '#0f2340';
       document.getElementById('metric-next-review').textContent = latest.nextReviewDue
-        ? 'Next review: ' + formatDate(latest.nextReviewDue) : '—';
+        ? 'Next review: ' + formatDate(latest.nextReviewDue) : '�';
       container.innerHTML = reports.map(buildReportCard).join('');
     }
   }
 
-  // ── Form submission ───────────────────────────────────────────────────────
+  // -- Form submission -------------------------------------------------------
   document.getElementById('visit-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -823,7 +823,7 @@
     }
   });
 
-  // ── Boot ──────────────────────────────────────────────────────────────────
+  // -- Boot ------------------------------------------------------------------
   renderListView();
 </script>
 </body>

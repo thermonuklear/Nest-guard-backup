@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>H&S Checklist — Oxford Guardians Platform</title>
+  <title>H&S Checklist � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -41,7 +41,7 @@
       color: #e8f0fa; border: 2px solid #d5dce8; flex-shrink: 0;
     }
 
-    /* ── Form sections ── */
+    /* -- Form sections -- */
     .form-section {
       background: #fff; border: 1px solid #d5dce8;
       border-radius: 14px; padding: 20px 22px; margin-bottom: 14px;
@@ -67,7 +67,7 @@
     }
     .s11-panel-heading:first-child { margin-top: 0; padding-top: 0; border-top: none; }
 
-    /* ── Session detail fields ── */
+    /* -- Session detail fields -- */
     .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     @media (max-width: 640px) { .fields-grid { grid-template-columns: 1fr; } }
     .field-group label { display: block; font-size: 0.8rem; font-weight: 600; color: #4b6080; margin-bottom: 4px; }
@@ -79,7 +79,7 @@
     .field-group input:focus, .field-group select:focus { outline: none; border-color: #0f2340; background: #fff; }
     .field-group input:disabled { color: #6b85a0; background: #edf2f8; cursor: default; }
 
-    /* ── S11 checklist rows ── */
+    /* -- S11 checklist rows -- */
     .s11-grid { display: grid; gap: 7px; }
     .s11-row {
       display: flex; align-items: flex-start; gap: 12px;
@@ -100,7 +100,7 @@
     .yn-group input[value="no"]:checked  + label { background: #dc2626; border-color: #dc2626; color: #fff; }
     .yn-group input[value="na"]:checked  + label { background: #6b7280; border-color: #6b7280; color: #fff; }
 
-    /* ── Hazard builder table ── */
+    /* -- Hazard builder table -- */
     .hazard-table-wrap { overflow-x: auto; margin-bottom: 12px; border: 1px solid #d5dce8; border-radius: 10px; overflow: hidden; }
     .hazard-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
     .hazard-table th {
@@ -129,14 +129,14 @@
     .btn-remove-hazard:hover { background: #fef2f2; border-color: #dc2626; }
     .no-hazards-msg { text-align: center; padding: 18px; font-size: 0.83rem; color: #9bafc4; font-style: italic; }
 
-    /* ── List view — metrics ── */
+    /* -- List view � metrics -- */
     .hs-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
     .hs-metric { background: #fff; border: 1px solid #d5dce8; border-radius: 12px; padding: 14px 16px; }
     .hs-metric h4 { font-size: 0.79rem; font-weight: 600; color: #4b6080; margin-bottom: 4px; }
     .hs-metric-value { font-family: "Outfit", sans-serif; font-size: 1.45rem; font-weight: 700; color: #0f2340; }
     .hs-metric-sub { font-size: 0.75rem; color: #6b85a0; margin-top: 2px; }
 
-    /* ── Checklist cards ── */
+    /* -- Checklist cards -- */
     .checklist-cards-grid { display: grid; gap: 14px; }
     .checklist-card { background: #fff; border: 1px solid #d5dce8; border-radius: 14px; overflow: hidden; }
     .cc-header {
@@ -161,7 +161,7 @@
       transition: background 0.12s;
     }
     .checklist-card details summary::-webkit-details-marker { display: none; }
-    .checklist-card details summary::before { content: '▸'; font-size: 0.7rem; transition: transform 0.14s; display: inline-block; }
+    .checklist-card details summary::before { content: '?'; font-size: 0.7rem; transition: transform 0.14s; display: inline-block; }
     .checklist-card details[open] summary::before { transform: rotate(90deg); }
     .checklist-card details[open] summary { border-bottom: 1px solid #edf2f8; }
     .checklist-card details summary:hover { background: #f6f8fb; }
@@ -236,7 +236,7 @@
             <div>
               <span class="eyebrow">Health &amp; Safety Checklist</span>
               <h2 id="toolbar-name" style="margin:2px 0 4px;">H&amp;S Assessment</h2>
-              <p id="toolbar-sub" style="margin:0;font-size:0.88rem;color:#3b536e;">Section 11 — Nest Guardians Property Risk Assessment</p>
+              <p id="toolbar-sub" style="margin:0;font-size:0.88rem;color:#3b536e;">Section 11 � Nest Guardians Property Risk Assessment</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -246,7 +246,7 @@
           </div>
         </div>
 
-        <!-- ── LIST VIEW ── -->
+        <!-- -- LIST VIEW -- -->
         <div id="list-view">
           <div class="hs-metrics" id="metrics-strip" style="display:none;">
             <div class="hs-metric">
@@ -256,19 +256,19 @@
             </div>
             <div class="hs-metric">
               <h4>Latest assessment</h4>
-              <div class="hs-metric-value" id="metric-latest-date">—</div>
-              <p class="hs-metric-sub" id="metric-latest-by">—</p>
+              <div class="hs-metric-value" id="metric-latest-date">�</div>
+              <p class="hs-metric-sub" id="metric-latest-by">�</p>
             </div>
             <div class="hs-metric">
               <h4>Overall status</h4>
-              <div class="hs-metric-value" id="metric-status">—</div>
-              <p class="hs-metric-sub" id="metric-status-sub">—</p>
+              <div class="hs-metric-value" id="metric-status">�</div>
+              <p class="hs-metric-sub" id="metric-status-sub">�</p>
             </div>
           </div>
           <div class="checklist-cards-grid" id="checklist-cards"></div>
         </div>
 
-        <!-- ── FORM VIEW ── -->
+        <!-- -- FORM VIEW -- -->
         <div id="form-view" style="display:none;">
           <form id="hs-form" autocomplete="off">
 
@@ -279,11 +279,11 @@
               <div class="fields-grid">
                 <div class="field-group">
                   <label>Host Name</label>
-                  <input type="text" id="field-host-name" disabled placeholder="—" />
+                  <input type="text" id="field-host-name" disabled placeholder="�" />
                 </div>
                 <div class="field-group">
                   <label>Host ID</label>
-                  <input type="text" id="field-host-id" disabled placeholder="—" />
+                  <input type="text" id="field-host-id" disabled placeholder="�" />
                 </div>
                 <div class="field-group">
                   <label>Date of Assessment *</label>
@@ -310,7 +310,7 @@
               </div>
             </div>
 
-            <!-- S11 sections — populated by JS -->
+            <!-- S11 sections � populated by JS -->
             <div id="s11-form-content"></div>
 
             <!-- Panel 4: Hazard Remediation Tracker -->
@@ -332,7 +332,7 @@
                   </thead>
                   <tbody id="hazard-rows">
                     <tr id="no-hazards-row">
-                      <td colspan="7" class="no-hazards-msg">No hazards added yet — click "Add Identified Hazard" to record one.</td>
+                      <td colspan="7" class="no-hazards-msg">No hazards added yet � click "Add Identified Hazard" to record one.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -366,10 +366,10 @@
 
 <script src="assets/db.js"></script>
 <script>
-  // ── Section 11 data ───────────────────────────────────────────────────────
+  // -- Section 11 data -------------------------------------------------------
   // panel: 1 = Fire & Gas Safety, 2 = Electrical & General Safety, 3 = Household Hazards & Storage
   var S11_SECTIONS = [
-    // ── Panel 1: Fire & Gas Safety ──────────────────────────────────────────
+    // -- Panel 1: Fire & Gas Safety ------------------------------------------
     { panel: 1, title: 'Fire Detection', items: [
       { key: 'smokeAlarmEveryStorey', label: 'Smoke alarm installed on every storey and working confirmation recorded.' },
       { key: 'coAlarmGasAppliance',   label: 'Carbon monoxide alarm installed in any room containing a gas, liquid or solid fuel burning appliance.' },
@@ -384,7 +384,7 @@
       { key: 'evacuationRouteDetailed',  label: 'Fire evacuation routes discussed; student will know exit routes and where keys are kept if doors or windows are locked.' },
       { key: 'fireExtinguisherServiced', label: 'Fire extinguishers or blankets, if present, are suitably serviced.' }
     ]},
-    // ── Panel 2: Electrical & General Safety ────────────────────────────────
+    // -- Panel 2: Electrical & General Safety --------------------------------
     { panel: 2, title: 'Electrical Safety', items: [
       { key: 'electricalVisualCheck',     label: 'Visual electrical safety check completed; sockets and light fittings secure and not overloaded.' },
       { key: 'electricalDetailCheck',     label: 'Electrical safety visually checked, including sockets, plugs, extension leads, student appliances and overloaded sockets.' },
@@ -402,7 +402,7 @@
     { panel: 2, title: 'Accident Reporting', items: [
       { key: 'accidentReportingExplained', label: 'Accident reporting process explained.' }
     ]},
-    // ── Panel 3: Household Hazards & Storage ────────────────────────────────
+    // -- Panel 3: Household Hazards & Storage --------------------------------
     { panel: 3, title: 'Medication & Substance Storage', items: [
       { key: 'medicationStoredSafely',   label: 'Prescription medication and drugs stored safely.' },
       { key: 'medicationAndHazardsSafe', label: 'Prescription medication, drugs, alcohol, cleaning products and other hazardous items are safely stored.' },
@@ -422,7 +422,7 @@
   var ALL_S11_ITEMS = [];
   S11_SECTIONS.forEach(function(s) { s.items.forEach(function(i) { ALL_S11_ITEMS.push(i); }); });
 
-  // ── Helpers ───────────────────────────────────────────────────────────────
+  // -- Helpers ---------------------------------------------------------------
   function tallyItems(items) {
     var yes = 0, no = 0, na = 0, blank = 0;
     ALL_S11_ITEMS.forEach(function(i) {
@@ -433,7 +433,7 @@
   }
 
   function formatDate(d) {
-    if (!d) return '—';
+    if (!d) return '�';
     var p = new Date(d);
     if (isNaN(p.getTime())) return d;
     var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -444,18 +444,18 @@
     return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  // ── Page init ─────────────────────────────────────────────────────────────
+  // -- Page init -------------------------------------------------------------
   var params = new URLSearchParams(window.location.search);
   var hostId = params.get('id');
   var host   = hostId ? getHostById(hostId) : null;
 
   if (host) {
     var fullName = host.firstName + ' ' + host.lastName;
-    document.title = fullName + ' — H&S Checklist — Oxford Guardians';
+    document.title = fullName + ' � H&S Checklist � Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/host/' + host.id + '/hs-checklist';
     document.getElementById('host-avatar').textContent  = (host.firstName.charAt(0) + host.lastName.charAt(0)).toUpperCase();
     document.getElementById('toolbar-name').innerHTML   = esc(fullName) + ' <span style="color:#6b85a0;font-size:0.8em;font-weight:normal;margin-left:8px;">' + esc(host.id) + '</span>';
-    document.getElementById('toolbar-sub').textContent  = 'H&S Property Risk Assessment — Section 11';
+    document.getElementById('toolbar-sub').textContent  = 'H&S Property Risk Assessment � Section 11';
     document.getElementById('back-link').href           = 'host-aegis-control-room.html?id=' + host.id;
     document.getElementById('field-host-name').value   = fullName;
     document.getElementById('field-host-id').value     = host.id;
@@ -468,7 +468,7 @@
       String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
   })();
 
-  // ── Build S11 form sections (3 grouped panels) ───────────────────────────
+  // -- Build S11 form sections (3 grouped panels) ---------------------------
   (function() {
     var container = document.getElementById('s11-form-content');
     var PANEL_CONFIG = [
@@ -520,14 +520,14 @@
     });
   })();
 
-  // ── Hazard builder ────────────────────────────────────────────────────────
+  // -- Hazard builder --------------------------------------------------------
   function ensureNoHazardsMsg() {
     var tbody = document.getElementById('hazard-rows');
     if (!tbody.querySelector('tr:not(#no-hazards-row)')) {
       if (!document.getElementById('no-hazards-row')) {
         var tr = document.createElement('tr');
         tr.id = 'no-hazards-row';
-        tr.innerHTML = '<td colspan="7" class="no-hazards-msg">No hazards added yet — click "Add Identified Hazard" to record one.</td>';
+        tr.innerHTML = '<td colspan="7" class="no-hazards-msg">No hazards added yet � click "Add Identified Hazard" to record one.</td>';
         tbody.appendChild(tr);
       }
     }
@@ -539,10 +539,10 @@
     if (noMsg) noMsg.remove();
     var row = document.createElement('tr');
     row.innerHTML =
-      '<td><input type="text"  class="hz-hazard"  value="' + esc(h.hazard  || '') + '" placeholder="Describe hazard…" /></td>' +
-      '<td><input type="text"  class="hz-control" value="' + esc(h.control || '') + '" placeholder="Existing control…" /></td>' +
-      '<td><input type="text"  class="hz-action"  value="' + esc(h.action  || '') + '" placeholder="Action required…" /></td>' +
-      '<td><input type="text"  class="hz-owner"   value="' + esc(h.owner   || '') + '" placeholder="Owner…" /></td>' +
+      '<td><input type="text"  class="hz-hazard"  value="' + esc(h.hazard  || '') + '" placeholder="Describe hazard�" /></td>' +
+      '<td><input type="text"  class="hz-control" value="' + esc(h.control || '') + '" placeholder="Existing control�" /></td>' +
+      '<td><input type="text"  class="hz-action"  value="' + esc(h.action  || '') + '" placeholder="Action required�" /></td>' +
+      '<td><input type="text"  class="hz-owner"   value="' + esc(h.owner   || '') + '" placeholder="Owner�" /></td>' +
       '<td><input type="date"  class="hz-due"     value="' + esc(h.dueDate || '') + '" /></td>' +
       '<td style="text-align:center;"><input type="checkbox" class="hz-closed"' + (h.closed ? ' checked' : '') + ' /></td>' +
       '<td><button type="button" class="btn-remove-hazard" title="Remove row">&times;</button></td>';
@@ -573,7 +573,7 @@
 
   document.getElementById('add-hazard-btn').addEventListener('click', function() { addHazardRow(); });
 
-  // ── View switching ────────────────────────────────────────────────────────
+  // -- View switching --------------------------------------------------------
   function showForm() {
     document.getElementById('list-view').style.display         = 'none';
     document.getElementById('form-view').style.display         = '';
@@ -590,7 +590,7 @@
       document.querySelectorAll('input[name="s11_' + item.key + '"]').forEach(function(r) { r.checked = false; });
     });
     document.getElementById('hazard-rows').innerHTML =
-      '<tr id="no-hazards-row"><td colspan="7" class="no-hazards-msg">No hazards added yet — click "Add Identified Hazard" to record one.</td></tr>';
+      '<tr id="no-hazards-row"><td colspan="7" class="no-hazards-msg">No hazards added yet � click "Add Identified Hazard" to record one.</td></tr>';
     var t = new Date();
     document.getElementById('field-date').value = t.getFullYear() + '-' +
       String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
@@ -609,7 +609,7 @@
   document.getElementById('btn-cancel-form').addEventListener('click', showList);
   document.getElementById('form-cancel-btn').addEventListener('click', showList);
 
-  // ── Build checklist display card ──────────────────────────────────────────
+  // -- Build checklist display card ------------------------------------------
   function buildChecklistCard(cl) {
     var tally    = tallyItems(cl.items);
     var hasFlags = tally.no > 0;
@@ -621,7 +621,7 @@
       var rows = section.items.map(function(item) {
         var v  = (cl.items || {})[item.key] || '';
         var bc = v === 'yes' ? 'yes' : v === 'no' ? 'no' : v === 'na' ? 'na' : 'blank';
-        var bl = v === 'yes' ? 'Yes' : v === 'no' ? 'No'  : v === 'na' ? 'N/A' : '—';
+        var bl = v === 'yes' ? 'Yes' : v === 'no' ? 'No'  : v === 'na' ? 'N/A' : '�';
         return '<div class="s11-detail-row">' +
           '<span class="s11-badge ' + bc + '">' + bl + '</span>' +
           '<span>' + esc(item.label) + '</span>' +
@@ -641,7 +641,7 @@
           '<td>' + esc(h.control) + '</td>' +
           '<td>' + esc(h.action)  + '</td>' +
           '<td>' + esc(h.owner)   + '</td>' +
-          '<td>' + (h.dueDate ? formatDate(h.dueDate) : '—') + '</td>' +
+          '<td>' + (h.dueDate ? formatDate(h.dueDate) : '�') + '</td>' +
           '<td style="text-align:center;">' + (h.closed ? '&#10003;' : '') + '</td>' +
         '</tr>';
       }).join('');
@@ -688,8 +688,8 @@
       '<div class="cc-header">' +
         '<div>' +
           '<p class="cc-title">' + esc(cl.visitType || 'H&S Assessment') + '</p>' +
-          '<p class="cc-meta">Assessed by <strong>' + esc(cl.assessedBy || '—') + '</strong>' +
-            (cl.gasCertRef ? ' &nbsp;·&nbsp; Gas cert: ' + esc(cl.gasCertRef) : '') +
+          '<p class="cc-meta">Assessed by <strong>' + esc(cl.assessedBy || '�') + '</strong>' +
+            (cl.gasCertRef ? ' &nbsp;�&nbsp; Gas cert: ' + esc(cl.gasCertRef) : '') +
           '</p>' +
         '</div>' +
         '<div style="display:flex;align-items:center;gap:10px;">' + badge + '<span class="cc-date">' + esc(formatDate(cl.date)) + '</span></div>' +
@@ -702,7 +702,7 @@
     '</div>';
   }
 
-  // ── Render list view ──────────────────────────────────────────────────────
+  // -- Render list view ------------------------------------------------------
   function renderListView() {
     var checklists  = hostId ? getHsChecklistsForHost(hostId) : [];
     var container   = document.getElementById('checklist-cards');
@@ -723,7 +723,7 @@
       var flags  = tally.no > 0;
       document.getElementById('metric-total').textContent       = checklists.length;
       document.getElementById('metric-latest-date').textContent = formatDate(latest.date);
-      document.getElementById('metric-latest-by').textContent   = 'By ' + (latest.assessedBy || '—');
+      document.getElementById('metric-latest-by').textContent   = 'By ' + (latest.assessedBy || '�');
       document.getElementById('metric-status').textContent      = flags ? 'Review' : 'Pass';
       document.getElementById('metric-status').style.color      = flags ? '#dc2626' : '#16a34a';
       document.getElementById('metric-status-sub').textContent  = flags
@@ -733,7 +733,7 @@
     }
   }
 
-  // ── Form submission ───────────────────────────────────────────────────────
+  // -- Form submission -------------------------------------------------------
   document.getElementById('hs-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -783,7 +783,7 @@
     });
   });
 
-  // ── Boot ──────────────────────────────────────────────────────────────────
+  // -- Boot ------------------------------------------------------------------
   renderListView();
 </script>
 </body>

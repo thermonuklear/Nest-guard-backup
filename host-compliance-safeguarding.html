@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Safeguarding Training — Oxford Guardians Platform</title>
+  <title>Safeguarding Training � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -76,7 +76,7 @@
 <body>
 
 <div class="save-toast" id="save-toast">
-  <div class="save-toast-icon">✓</div>
+  <div class="save-toast-icon">?</div>
   <span>Saved</span>
 </div>
 
@@ -119,11 +119,11 @@
 
         <div class="toolbar">
           <div style="display:flex;align-items:center;gap:14px;">
-            <div class="host-avatar-lg" id="toolbar-avatar">—</div>
+            <div class="host-avatar-lg" id="toolbar-avatar">�</div>
             <div>
-              <span class="eyebrow">Compliance — Safeguarding Training</span>
-              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
-              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">—</p>
+              <span class="eyebrow">Compliance � Safeguarding Training</span>
+              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading�</h2>
+              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">�</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -148,7 +148,7 @@
               <div class="field">
                 <small>Safeguarding Level</small>
                 <select class="field-input" id="c-safeguarding-level">
-                  <option value="">— Select level —</option>
+                  <option value="">� Select level �</option>
                   <option>Level 1 Safeguarding Awareness</option>
                   <option>Level 2 Safeguarding &amp; Child Protection</option>
                   <option>Level 3 Designated Safeguarding Lead</option>
@@ -170,7 +170,7 @@
               <div class="field">
                 <small>Training Expiry Date</small>
                 <input class="field-input" type="date" id="c-safeguarding-expiry" />
-                <p class="field-hint">Auto-calculated as 3 years after the completion date — edit directly to override.</p>
+                <p class="field-hint">Auto-calculated as 3 years after the completion date � edit directly to override.</p>
               </div>
 
             </div>
@@ -198,12 +198,12 @@
     document.getElementById('not-found').style.display  = 'block';
     document.getElementById('edit-panel').style.display = 'none';
   } else {
-    document.title = 'Safeguarding Training — ' + host.firstName + ' ' + host.lastName + ' — Oxford Guardians';
+    document.title = 'Safeguarding Training � ' + host.firstName + ' ' + host.lastName + ' � Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/host/' + host.id + '/compliance/safeguarding';
     document.getElementById('toolbar-name').textContent = host.firstName + ' ' + host.lastName;
     document.getElementById('toolbar-subtitle').textContent =
-      (host.status ? host.status.charAt(0).toUpperCase() + host.status.slice(1) : '—') +
-      ' host · ' + (host.capacityCurrent || 0) + ' of ' + (host.capacityMax || 3) + ' places occupied';
+      (host.status ? host.status.charAt(0).toUpperCase() + host.status.slice(1) : '�') +
+      ' host � ' + (host.capacityCurrent || 0) + ' of ' + (host.capacityMax || 3) + ' places occupied';
     document.getElementById('toolbar-avatar').textContent =
       ((host.firstName||'').charAt(0) + (host.lastName||'').charAt(0)).toUpperCase();
     document.getElementById('back-link').href   = 'host-aegis-control-room.html?id=' + host.id;
@@ -225,7 +225,7 @@
     }
   }
 
-  // ── 3-year expiry auto-fill (AEGIS 6.3) ──────────────────────────────────────
+  // -- 3-year expiry auto-fill (AEGIS 6.3) --------------------------------------
   // Stays "sticky" (keeps recalculating on every date change) until the admin
   // types directly into the expiry field, at which point their value wins.
   var expiryAutoFilled = true;

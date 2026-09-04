@@ -1,9 +1,9 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Incident Logged â€” Emergency â€” Oxford Guardians Platform</title>
+    <title>Incident Logged — Emergency — Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -110,7 +110,7 @@
             <div class="card">
               <h4>What was recorded</h4>
               <div class="list" id="recorded-details">
-                <div class="list-item"><small>Loadingâ€¦</small></div>
+                <div class="list-item"><small>Loading…</small></div>
               </div>
             </div>
             <div class="action-row">
@@ -133,15 +133,15 @@
 
         var details = [
           { label: 'Reference', value: inc.id },
-          { label: 'Type', value: inc.type + ' â€” ' + inc.severity },
-          { label: 'Student', value: inc.studentName || 'â€”' },
-          { label: 'Date/time', value: inc.dateTime ? new Date(inc.dateTime).toLocaleString('en-GB') : 'â€”' },
-          { label: 'Reported by', value: inc.reportedBy || 'â€”' },
-          { label: 'Response time', value: inc.responseTime || 'â€”' },
-          { label: 'Status', value: inc.status || 'â€”' },
-          { label: 'Host involved', value: inc.hostName || 'â€”' },
-          { label: 'Driver involved', value: inc.driverName || 'â€”' },
-          { label: 'External actors', value: inc.externalActors || 'â€”' }
+          { label: 'Type', value: inc.type + ' — ' + inc.severity },
+          { label: 'Student', value: inc.studentName || '—' },
+          { label: 'Date/time', value: inc.dateTime ? new Date(inc.dateTime).toLocaleString('en-GB') : '—' },
+          { label: 'Reported by', value: inc.reportedBy || '—' },
+          { label: 'Response time', value: inc.responseTime || '—' },
+          { label: 'Status', value: inc.status || '—' },
+          { label: 'Host involved', value: inc.hostName || '—' },
+          { label: 'Driver involved', value: inc.driverName || '—' },
+          { label: 'External actors', value: inc.externalActors || '—' }
         ];
 
         var container = document.getElementById('recorded-details');

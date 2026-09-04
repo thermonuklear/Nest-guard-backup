@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VAT Reclamation — Oxford Guardians Platform</title>
+    <title>VAT Reclamation � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      /* ── Global colour overrides ── */
+      /* -- Global colour overrides -- */
       body, .page, .shell {
         background: #f0f4f8 !important;
         color: #0f2340 !important;
@@ -21,7 +21,7 @@
         box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
       }
 
-      /* ── Chrome bar ── */
+      /* -- Chrome bar -- */
       .chrome {
         background: #e8eef6 !important;
         border-bottom-color: #d5dce8 !important;
@@ -61,7 +61,7 @@
         background: #dce8f4;
       }
 
-      /* ── Sidebar ── */
+      /* -- Sidebar -- */
       .sidebar {
         background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
       }
@@ -75,7 +75,7 @@
 
 
 
-      /* ── Main ── */
+      /* -- Main -- */
       .main {
         background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
         overflow-y: auto;
@@ -86,7 +86,7 @@
       .eyebrow    { color: #2a6096 !important; }
       .toolbar p  { color: #3b536e !important; }
 
-      /* ── Buttons ── */
+      /* -- Buttons -- */
       .button {
         background: #0f2340 !important;
         border-color: #0f2340 !important;
@@ -116,12 +116,12 @@
         display: inline-block;
       }
 
-      /* ── Content padding ── */
+      /* -- Content padding -- */
       .tracker-content {
         padding: 0 24px 28px;
       }
 
-      /* ── Filter row ── */
+      /* -- Filter row -- */
       .filter-bar {
         display: flex;
         align-items: center;
@@ -175,7 +175,7 @@
         padding-bottom: 1px;
       }
 
-      /* ── Table ── */
+      /* -- Table -- */
       .table-wrap {
         background: #ffffff !important;
         border: 1px solid #d5dce8 !important;
@@ -231,7 +231,7 @@
         background: #dbeafe; color: #1e40af;
       }
 
-      /* ── Show more bar ── */
+      /* -- Show more bar -- */
       .show-more-bar {
         display: flex;
         align-items: center;
@@ -239,7 +239,7 @@
         margin-bottom: 20px;
       }
 
-      /* ── Link pills ── */
+      /* -- Link pills -- */
       .inline-links {
         display: flex;
         flex-wrap: wrap;
@@ -352,7 +352,7 @@
                     <option value="Chargeable">Chargeable</option>
                   </select>
                 </div>
-                <span class="filter-meta" id="row-meta">— rows</span>
+                <span class="filter-meta" id="row-meta">� rows</span>
               </div>
 
               <!-- Table -->
@@ -400,9 +400,9 @@
 
     <script src="assets/finance-data.js"></script>
     <script>
-      /* ─────────────────────────────────────────────
+      /* ---------------------------------------------
          State
-      ───────────────────────────────────────────── */
+      --------------------------------------------- */
       var storedEvents = localStorage.getItem('og_finance_events');
       var events;
       if (storedEvents) {
@@ -414,11 +414,11 @@
 
       var rowLimit = 20;
 
-      /* ─────────────────────────────────────────────
+      /* ---------------------------------------------
          Helpers
-      ───────────────────────────────────────────── */
+      --------------------------------------------- */
       function fmt(n) {
-        return '£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return '�' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       }
 
       function fmtDateDisplay(iso) {
@@ -434,9 +434,9 @@
         return iso.slice(0, 7);
       }
 
-      /* ─────────────────────────────────────────────
+      /* ---------------------------------------------
          Populate student filter from VAT-eligible events
-      ───────────────────────────────────────────── */
+      --------------------------------------------- */
       function populateFilters() {
         var vatEvents = events.filter(function (e) { return !e.archived && e.paid === true && e.vatReclaimable === true; });
         var studentSel = document.getElementById('f-student');
@@ -450,9 +450,9 @@
         });
       }
 
-      /* ─────────────────────────────────────────────
-         Build sorted rows — active, paid, VAT-reclaimable only
-      ───────────────────────────────────────────── */
+      /* ---------------------------------------------
+         Build sorted rows � active, paid, VAT-reclaimable only
+      --------------------------------------------- */
       function buildRows() {
         events.forEach(function (row, i) { row._evIdx = i; });
         var sorted = events
@@ -477,9 +477,9 @@
         return sorted;
       }
 
-      /* ─────────────────────────────────────────────
+      /* ---------------------------------------------
          Render table
-      ───────────────────────────────────────────── */
+      --------------------------------------------- */
       function renderTable() {
         var allRows = buildRows();
 
@@ -512,16 +512,16 @@
             : '<span class="badge-chargeable">Chargeable</span>';
           var vatAmt = Number(row.totalCost || row.amount || 0) - Number(row.cost || 0);
           return '<tr>' +
-            '<td><strong>' + (row.event || '—') + '</strong></td>' +
+            '<td><strong>' + (row.event || '�') + '</strong></td>' +
             '<td>' + fmtDateDisplay(row.date) + '</td>' +
-            '<td>' + (row.label || '—') + '</td>' +
-            '<td>' + (row.student || '—') + '</td>' +
+            '<td>' + (row.label || '�') + '</td>' +
+            '<td>' + (row.student || '�') + '</td>' +
             '<td>' + typeBadge + '</td>' +
-            '<td>' + (row.providerId || '—') + '</td>' +
-            '<td>' + (row.deadline ? fmtDateDisplay(row.deadline) : '—') + '</td>' +
+            '<td>' + (row.providerId || '�') + '</td>' +
+            '<td>' + (row.deadline ? fmtDateDisplay(row.deadline) : '�') + '</td>' +
             '<td class="money">' + fmt(row.cost || 0) + '</td>' +
             '<td class="money">' + fmt(row._groupTotal || 0) + '</td>' +
-            '<td class="money">£' + vatAmt.toFixed(2) + '</td>' +
+            '<td class="money">�' + vatAmt.toFixed(2) + '</td>' +
             '<td class="cumulative">' + fmt(row._cumulative || 0) + '</td>' +
             '</tr>';
         }).join('');
@@ -538,9 +538,9 @@
         }
       }
 
-      /* ─────────────────────────────────────────────
+      /* ---------------------------------------------
          Event listeners
-      ───────────────────────────────────────────── */
+      --------------------------------------------- */
       document.getElementById('show-more-btn').addEventListener('click', function () {
         rowLimit = 50;
         renderTable();
@@ -553,9 +553,9 @@
         });
       });
 
-      /* ─────────────────────────────────────────────
+      /* ---------------------------------------------
          Init
-      ───────────────────────────────────────────── */
+      --------------------------------------------- */
       populateFilters();
       renderTable();
     </script>

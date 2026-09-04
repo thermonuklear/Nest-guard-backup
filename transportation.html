@@ -1,28 +1,28 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Past Transportation — Oxford Guardians</title>
+    <title>Past Transportation � Oxford Guardians</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      /* ── Global colour overrides ── */
+      /* -- Global colour overrides -- */
       body, .page, .shell {
         background: #f0f4f8 !important;
         color: #0f2340 !important;
       }
 
-      /* ── App frame ── */
+      /* -- App frame -- */
       .app-frame {
         background: #f8fafc !important;
         border-color: #d5dce8 !important;
         box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
       }
 
-      /* ── Chrome bar ── */
+      /* -- Chrome bar -- */
       .chrome {
         background: #e8eef6 !important;
         border-bottom-color: #d5dce8 !important;
@@ -59,7 +59,7 @@
         color: #0f2340;
       }
 
-      /* ── Sidebar ── */
+      /* -- Sidebar -- */
       .sidebar {
         background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
       }
@@ -75,14 +75,14 @@
 
 
 
-      /* ── Main content ── */
+      /* -- Main content -- */
       .main {
         background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
         padding: 28px 32px 40px;
         overflow-y: auto;
       }
 
-      /* ── Page header ── */
+      /* -- Page header -- */
       .page-header {
         margin-bottom: 24px;
         display: flex;
@@ -124,7 +124,7 @@
         flex-shrink: 0;
       }
 
-      /* ── Buttons ── */
+      /* -- Buttons -- */
       .button {
         background: #0f2340 !important;
         border-color: #0f2340 !important;
@@ -141,7 +141,7 @@
 
       .button-alt:hover { background: #edf2f8 !important; }
 
-      /* ── Filter row ── */
+      /* -- Filter row -- */
       .filter-row {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr;
@@ -186,14 +186,14 @@
       .filter-select:focus { border-bottom-color: #0f2340; }
       .filter-select { appearance: none; cursor: pointer; }
 
-      /* ── Result count ── */
+      /* -- Result count -- */
       .result-count {
         font-size: 0.82rem;
         color: #6b85a0;
         margin-bottom: 10px;
       }
 
-      /* ── Table ── */
+      /* -- Table -- */
       h2, h3, h4, td strong, th { color: #0f2340 !important; }
       td small { color: #6b85a0 !important; }
 
@@ -247,7 +247,7 @@
         text-decoration: underline;
       }
 
-      /* ── Route cell ── */
+      /* -- Route cell -- */
       .route-cell {
         max-width: 220px;
       }
@@ -279,7 +279,7 @@
         max-width: 200px;
       }
 
-      /* ── Confirmation badges ── */
+      /* -- Confirmation badges -- */
       .badge-confirmed {
         display: inline-block;
         padding: 3px 9px;
@@ -313,7 +313,7 @@
         white-space: nowrap;
       }
 
-      /* ── Empty state ── */
+      /* -- Empty state -- */
       .empty-state {
         text-align: center;
         padding: 40px 24px;
@@ -321,7 +321,7 @@
         font-size: 0.9rem;
       }
 
-      /* ── Responsive ── */
+      /* -- Responsive -- */
       @media (max-width: 900px) {
         .main { padding: 18px 16px 32px; }
         .filter-row { grid-template-columns: 1fr 1fr; }
@@ -419,7 +419,7 @@
               <div class="nav-label">Operations</div>
               <a class="nav-link" href="travel.html">Travel</a>
               <a class="nav-link nav-link-sub" href="travel-todo.html">To-do</a>
-              <a class="nav-link nav-link-sub" href="driver-list.html">Drivers</a>
+              <a class="nav-link nav-link-sub" href="drivers.html">Drivers</a>
               <a class="nav-link nav-link-sub active" href="transportation.html">Transportation</a>
               <a class="nav-link nav-link-sub" href="travel-incidents.html">Incident log</a>
               <a class="nav-link" href="documents.html">Documents</a>
@@ -441,7 +441,7 @@
               <div>
                 <span class="eyebrow">Operations</span>
                 <h2>Past Transportation</h2>
-                <p>Completed journeys — student, driver, route, mileage, and parent confirmation at a glance.</p>
+                <p>Completed journeys � student, driver, route, mileage, and parent confirmation at a glance.</p>
               </div>
               <div class="toolbar-actions">
                 <a class="button-alt" href="travel.html">Travel dashboard</a>
@@ -457,7 +457,7 @@
                   class="filter-input"
                   type="text"
                   id="search-input"
-                  placeholder="Search student, driver, or route…"
+                  placeholder="Search student, driver, or route�"
                   autocomplete="off"
                 />
               </div>
@@ -470,7 +470,7 @@
               </div>
               <div class="filter-field">
                 <small>Showing</small>
-                <strong id="result-label" style="font-size:0.9rem;font-weight:700;color:#0f2340;display:block;margin-top:6px;">— journeys</strong>
+                <strong id="result-label" style="font-size:0.9rem;font-weight:700;color:#0f2340;display:block;margin-top:6px;">� journeys</strong>
               </div>
             </div>
 
@@ -523,7 +523,7 @@
       var sortSelect  = document.getElementById('sort-select');
       var resultLabel = document.getElementById('result-label');
 
-      // Parse date strings like "14 Feb 2026" → comparable number
+      // Parse date strings like "14 Feb 2026" ? comparable number
       function parseDateValue(dateStr) {
         if (!dateStr) return 0;
         var d = new Date(dateStr);
@@ -544,7 +544,7 @@
       }
 
       function confirmationBadge(value) {
-        if (!value) return '<span class="badge-not-required">—</span>';
+        if (!value) return '<span class="badge-not-required">�</span>';
         var v = value.toLowerCase();
         if (v === 'confirmed')    return '<span class="badge-confirmed">Confirmed</span>';
         if (v === 'awaiting')     return '<span class="badge-awaiting">Awaiting</span>';
@@ -553,7 +553,7 @@
 
       // Shorten a location string to just the first comma-delimited segment
       function shortLocation(loc) {
-        if (!loc) return '—';
+        if (!loc) return '�';
         return loc.split(',')[0].trim();
       }
 
@@ -569,22 +569,22 @@
 
         tbody.innerHTML = data.map(function (t) {
           return '<tr>' +
-            '<td><a class="transport-id-link" href="#">' + (t.id || '—') + '</a></td>' +
-            '<td>' + (t.date || '—') + '</td>' +
-            '<td>' + (t.time || '—') + '</td>' +
-            '<td>' + (t.studentName || '—') + '</td>' +
-            '<td>' + (t.driverName || '—') + '</td>' +
-            '<td>' + (t.startPoint || '—') + '</td>' +
-            '<td>' + (t.destination || '—') + '</td>' +
-            '<td>' + (t.passengers != null ? t.passengers : '—') + '</td>' +
-            '<td>' + (t.luggage != null ? t.luggage : '—') + '</td>' +
-            '<td>' + (t.miles != null ? t.miles : '—') + '</td>' +
-            '<td>' + (t.cost || '—') + '</td>' +
-            '<td>' + (t.revenue || '—') + '</td>' +
+            '<td><a class="transport-id-link" href="#">' + (t.id || '�') + '</a></td>' +
+            '<td>' + (t.date || '�') + '</td>' +
+            '<td>' + (t.time || '�') + '</td>' +
+            '<td>' + (t.studentName || '�') + '</td>' +
+            '<td>' + (t.driverName || '�') + '</td>' +
+            '<td>' + (t.startPoint || '�') + '</td>' +
+            '<td>' + (t.destination || '�') + '</td>' +
+            '<td>' + (t.passengers != null ? t.passengers : '�') + '</td>' +
+            '<td>' + (t.luggage != null ? t.luggage : '�') + '</td>' +
+            '<td>' + (t.miles != null ? t.miles : '�') + '</td>' +
+            '<td>' + (t.cost || '�') + '</td>' +
+            '<td>' + (t.revenue || '�') + '</td>' +
             '<td>' + confirmationBadge(t.parentConfirmation) + '</td>' +
             '<td style="white-space:nowrap;">' +
-              '<a class="button-alt" href="travel-create.html?id=' + t.id + '" style="padding:4px 8px; font-size:0.75rem; color:#0f2340; border-color:#d5dce8; text-decoration:none; margin-right:6px;">✏️ Edit</a>' +
-              '<button type="button" class="button-alt delete-transport-btn" data-id="' + t.id + '" style="padding:4px 8px; font-size:0.75rem; color:#dc2626; border-color:#fecaca;">🗑️ Delete</button>' +
+              '<a class="button-alt" href="travel-create.html?id=' + t.id + '" style="padding:4px 8px; font-size:0.75rem; color:#0f2340; border-color:#d5dce8; text-decoration:none; margin-right:6px;">?? Edit</a>' +
+              '<button type="button" class="button-alt delete-transport-btn" data-id="' + t.id + '" style="padding:4px 8px; font-size:0.75rem; color:#dc2626; border-color:#fecaca;">??? Delete</button>' +
             '</td>' +
           '</tr>';
         }).join('');

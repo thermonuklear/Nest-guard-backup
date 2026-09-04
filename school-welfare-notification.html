@@ -1,9 +1,9 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>School Welfare &amp; Incident Notification â€” Oxford Guardians Platform</title>
+    <title>School Welfare &amp; Incident Notification — Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -163,7 +163,7 @@
               <div class="form-grid">
                 <div>
                   <label>Student</label>
-                  <select id="student-selector"><option value="">â€” Select a student â€”</option></select>
+                  <select id="student-selector"><option value="">— Select a student —</option></select>
                 </div>
                 <div>
                   <label>Date of Event</label>
@@ -172,7 +172,7 @@
                 <div class="form-span-2">
                   <label>Type</label>
                   <select id="input-type">
-                    <option value="">â€” Select type â€”</option>
+                    <option value="">— Select type —</option>
                     <option value="Welfare Update">Welfare Update</option>
                     <option value="Incident Report">Incident Report</option>
                     <option value="Medication Change">Medication Change</option>
@@ -180,12 +180,12 @@
                 </div>
                 <div class="form-span-2">
                   <label>Details</label>
-                  <textarea id="input-details" class="textarea-box" rows="6" placeholder="Describe the welfare update, incident, or medication change in detailâ€¦"></textarea>
+                  <textarea id="input-details" class="textarea-box" rows="6" placeholder="Describe the welfare update, incident, or medication change in detail…"></textarea>
                 </div>
               </div>
             </div>
             <div class="action-row">
-              <button id="btn-generate" class="button">ğŸ“‹ Generate &amp; Copy Email</button>
+              <button id="btn-generate" class="button">?? Generate &amp; Copy Email</button>
               <a class="button-alt" href="school-liaison.html">Cancel</a>
             </div>
             <div class="note brutal" style="margin-top:24px;">
@@ -213,20 +213,20 @@
         var btn         = this;
         var studentId   = selector.value;
         var student     = studentId ? getStudentById(studentId) : null;
-        var studentName = student ? student.firstName + ' ' + student.lastName : 'â€”';
-        var school      = student ? (student.school || 'â€”') : 'â€”';
-        var date        = document.getElementById('input-date').value || 'â€”';
-        var type        = document.getElementById('input-type').value || 'â€”';
-        var details     = document.getElementById('input-details').value.trim() || 'â€”';
+        var studentName = student ? student.firstName + ' ' + student.lastName : '—';
+        var school      = student ? (student.school || '—') : '—';
+        var date        = document.getElementById('input-date').value || '—';
+        var type        = document.getElementById('input-type').value || '—';
+        var details     = document.getElementById('input-details').value.trim() || '—';
 
         var msg =
-          'ğŸ« *School Welfare & Incident Notification*\n' +
+          '?? *School Welfare & Incident Notification*\n' +
           '*From:* Oxford Guardians (compliance@oxfordguardians.co.uk)\n' +
-          '*To:* ' + school + ' â€” pastoral / safeguarding team\n\n' +
-          'ğŸ‘¤ *Student:* ' + studentName + '\n' +
-          'ğŸ“… *Date of Event:* ' + date + '\n' +
-          'ğŸ“‹ *Notification Type:* ' + type + '\n\n' +
-          'ğŸ“ *Details:*\n' + details + '\n\n' +
+          '*To:* ' + school + ' — pastoral / safeguarding team\n\n' +
+          '?? *Student:* ' + studentName + '\n' +
+          '?? *Date of Event:* ' + date + '\n' +
+          '?? *Notification Type:* ' + type + '\n\n' +
+          '?? *Details:*\n' + details + '\n\n' +
           'This notification has been logged in the Oxford Guardians School Liaison record ' +
           'for Standards 9.2 and 9.6 compliance. Please acknowledge receipt by return.\n\n' +
           'Oxford Guardians\n' +
@@ -250,7 +250,7 @@
           });
 
           var orig = btn.innerHTML;
-          btn.innerHTML         = 'âœ… Copied to Clipboard';
+          btn.innerHTML         = '? Copied to Clipboard';
           btn.style.background  = '#d1fae5';
           btn.style.borderColor = '#065f46';
           btn.style.color       = '#065f46';

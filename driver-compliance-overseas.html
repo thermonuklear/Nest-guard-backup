@@ -1,9 +1,9 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overseas History â€” Oxford Guardians Platform</title>
+  <title>Overseas History — Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -101,11 +101,11 @@
       <section class="main">
         <div class="toolbar">
           <div style="display:flex;align-items:center;gap:16px;">
-            <div class="driver-avatar" id="driver-avatar">â€”</div>
+            <div class="driver-avatar" id="driver-avatar">—</div>
             <div>
-              <span class="eyebrow">Compliance â€” Overseas History</span>
-              <h2 id="driver-name" style="margin:2px 0 4px;">Loadingâ€¦</h2>
-              <p id="driver-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">â€”</p>
+              <span class="eyebrow">Compliance — Overseas History</span>
+              <h2 id="driver-name" style="margin:2px 0 4px;">Loading…</h2>
+              <p id="driver-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">—</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -129,7 +129,7 @@
               <div class="field">
                 <small>Has lived abroad (3+ months)?</small>
                 <select class="field-select" id="c-lived-abroad">
-                  <option value="">Selectâ€¦</option>
+                  <option value="">Select…</option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                 </select>
@@ -164,10 +164,10 @@
     document.getElementById('not-found').style.display  = 'block';
     document.getElementById('edit-panel').style.display = 'none';
   } else {
-    document.title = 'Overseas History â€” ' + driver.firstName + ' ' + driver.lastName + ' â€” Oxford Guardians';
+    document.title = 'Overseas History — ' + driver.firstName + ' ' + driver.lastName + ' — Oxford Guardians';
     document.getElementById('chrome-route').textContent  = 'Route /admin/drivers/' + driver.id + '/compliance/overseas';
     document.getElementById('driver-name').textContent   = driver.firstName + ' ' + driver.lastName;
-    document.getElementById('driver-subtitle').textContent = (driver.carMake ? driver.carMake + ' ' + (driver.carModel || '') : 'â€”');
+    document.getElementById('driver-subtitle').textContent = (driver.carMake ? driver.carMake + ' ' + (driver.carModel || '') : '—');
     document.getElementById('driver-avatar').textContent = ((driver.firstName||'').charAt(0) + (driver.lastName||'').charAt(0)).toUpperCase();
     document.getElementById('back-link').href   = 'driver-aegis-control-room.html?id=' + driver.id;
     document.getElementById('cancel-link').href = 'driver-aegis-control-room.html?id=' + driver.id;

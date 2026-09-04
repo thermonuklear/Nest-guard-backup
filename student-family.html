@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="page-title">Family & Contacts — Oxford Guardians Platform</title>
+    <title id="page-title">Family & Contacts � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -65,7 +65,7 @@
 
       .button-alt:hover { background: #edf2f8 !important; }
 
-      /* ── Deep Dive breadcrumb strip ── */
+      /* -- Deep Dive breadcrumb strip -- */
       .deepdive-nav {
         display: flex;
         align-items: center;
@@ -112,7 +112,7 @@
         color: #ffffff;
       }
 
-      /* ── Family form ── */
+      /* -- Family form -- */
       .family-form {
         max-width: 720px;
         display: grid;
@@ -203,7 +203,7 @@
         gap: 12px;
       }
 
-      /* ── UK Family Contacts manager ── */
+      /* -- UK Family Contacts manager -- */
       .uk-contacts-list {
         display: grid;
         gap: 16px;
@@ -278,7 +278,7 @@
         cursor: pointer;
       }
 
-      /* ── Toast ── */
+      /* -- Toast -- */
       .toast {
         display: none;
         align-items: center;
@@ -293,7 +293,7 @@
 
       .toast.visible { display: flex; }
 
-      /* ── Not-found state ── */
+      /* -- Not-found state -- */
       .not-found {
         padding: 48px 24px;
         text-align: center;
@@ -351,11 +351,11 @@
             <div class="toolbar">
               <div>
                 <span class="eyebrow">Family &amp; Contacts</span>
-                <h2 id="student-name">—</h2>
+                <h2 id="student-name">�</h2>
                 <p>Home address, parent contact details, family background context, and UK-based emergency contacts for this student.</p>
               </div>
               <div class="toolbar-actions">
-                <span id="status-badge" class="badge">—</span>
+                <span id="status-badge" class="badge">�</span>
                 <a class="button-alt" id="back-to-profile" href="student-profile.html">Back to Profile</a>
               </div>
             </div>
@@ -378,11 +378,11 @@
                 <div class="field-group">
                   <div class="field">
                     <label for="field-parent-addresses">Parent / Guardian Addresses</label>
-                    <textarea id="field-parent-addresses" class="tall" placeholder="e.g. Parent 1 (Haruka Tanaka) — as above. Parent 2 (Kenji Tanaka) — same household."></textarea>
+                    <textarea id="field-parent-addresses" class="tall" placeholder="e.g. Parent 1 (Haruka Tanaka) � as above. Parent 2 (Kenji Tanaka) � same household."></textarea>
                   </div>
                   <div class="field">
                     <label for="field-parent-occupations">Parent / Guardian Occupations</label>
-                    <textarea id="field-parent-occupations" placeholder="e.g. Haruka Tanaka — Paediatric consultant. Kenji Tanaka — Senior architect."></textarea>
+                    <textarea id="field-parent-occupations" placeholder="e.g. Haruka Tanaka � Paediatric consultant. Kenji Tanaka � Senior architect."></textarea>
                   </div>
                 </div>
               </div>
@@ -392,7 +392,7 @@
                 <div class="field-group">
                   <div class="field">
                     <label for="field-background">Family Background Information</label>
-                    <textarea id="field-background" class="tall" placeholder="e.g. Only child. Family has prior UK boarding school experience — older cousin attended Marlborough. Parents separated communication preferred; contact Haruka first."></textarea>
+                    <textarea id="field-background" class="tall" placeholder="e.g. Only child. Family has prior UK boarding school experience � older cousin attended Marlborough. Parents separated communication preferred; contact Haruka first."></textarea>
                   </div>
                 </div>
               </div>
@@ -402,7 +402,7 @@
                 <div class="field-group">
                   <div class="field">
                     <label for="field-uk-contacts">UK-Based Family or Trusted Contacts</label>
-                    <textarea id="field-uk-contacts" class="tall" placeholder="e.g. Aunt: Yoko Mori — 07700 900 123 / yoko.mori@example.co.uk / London NW3. Authorised to collect in emergencies. Not authorised for overnight stays without written parent approval."></textarea>
+                    <textarea id="field-uk-contacts" class="tall" placeholder="e.g. Aunt: Yoko Mori � 07700 900 123 / yoko.mori@example.co.uk / London NW3. Authorised to collect in emergencies. Not authorised for overnight stays without written parent approval."></textarea>
                   </div>
                 </div>
               </div>
@@ -461,16 +461,16 @@
         throw new Error('Student not found: ' + studentId);
       }
 
-      // ── Helpers ─────────────────────────────────────────────────────────────
+      // -- Helpers -------------------------------------------------------------
       function statusClass(status) {
         var map = { 'Active': 'green', 'Monitor': 'amber', 'Pending': 'amber' };
         return map[status] || 'navy';
       }
 
-      // ── Populate header ──────────────────────────────────────────────────────
+      // -- Populate header ------------------------------------------------------
       var fullName = student.firstName + ' ' + student.lastName;
 
-      document.getElementById('page-title').textContent   = 'Family & Contacts — ' + fullName;
+      document.getElementById('page-title').textContent   = 'Family & Contacts � ' + fullName;
       document.getElementById('chrome-route').textContent = 'Route /admin/students/' + student.id + '/family';
       document.getElementById('student-name').innerHTML   = fullName +
         ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + student.id + '</span>';
@@ -479,7 +479,7 @@
       badge.textContent = student.status;
       badge.className   = 'badge ' + statusClass(student.status);
 
-      // ── Wire up Deep Dive nav links ──────────────────────────────────────────
+      // -- Wire up Deep Dive nav links ------------------------------------------
       document.getElementById('link-health').href   = 'student-health.html?id='   + student.id;
       document.getElementById('link-family').href   = 'student-family.html?id='   + student.id;
       document.getElementById('link-legal').href    = 'student-legal.html?id='    + student.id;
@@ -487,7 +487,7 @@
       document.getElementById('link-risk').href     = 'student-risk.html?id='     + student.id;
       document.getElementById('back-to-profile').href = 'student-profile.html?id=' + student.id;
 
-      // ── Ensure family sub-object exists ─────────────────────────────────────
+      // -- Ensure family sub-object exists -------------------------------------
       if (!student.family) {
         student.family = { homeAddress: '', parentAddresses: '', parentOccupations: '', familyBackgroundInfo: '', ukFamilyContacts: '', ukFamilyContactsStructured: [] };
       }
@@ -495,19 +495,19 @@
         student.family.ukFamilyContactsStructured = [];
       }
 
-      // ── Pre-fill form ────────────────────────────────────────────────────────
+      // -- Pre-fill form --------------------------------------------------------
       document.getElementById('field-home-address').value     = student.family.homeAddress         || '';
       document.getElementById('field-parent-addresses').value = student.family.parentAddresses     || '';
       document.getElementById('field-parent-occupations').value = student.family.parentOccupations || '';
       document.getElementById('field-background').value       = student.family.familyBackgroundInfo || '';
       document.getElementById('field-uk-contacts').value      = student.family.ukFamilyContacts    || '';
 
-      // ── Pre-fill tutor / school details (Appendix 13) ────────────────────────
+      // -- Pre-fill tutor / school details (Appendix 13) ------------------------
       document.getElementById('field-tutor-house').value = student.tutorOrHouse || '';
       document.getElementById('field-tutor-email').value = student.tutorEmail  || '';
       document.getElementById('field-tutor-phone').value = student.tutorPhone  || '';
 
-      // ── UK Family & Emergency Contacts manager (Appendix 13) ─────────────────
+      // -- UK Family & Emergency Contacts manager (Appendix 13) -----------------
       var ukContacts = student.family.ukFamilyContactsStructured.map(function (c) {
         return {
           id: c.id || '',
@@ -530,7 +530,7 @@
       function renderUkContacts() {
         var list = document.getElementById('uk-contacts-list');
         if (!ukContacts.length) {
-          list.innerHTML = '<div class="uk-contacts-empty">No structured UK contacts added yet. Use “+ Add UK Contact” below.</div>';
+          list.innerHTML = '<div class="uk-contacts-empty">No structured UK contacts added yet. Use �+ Add UK Contact� below.</div>';
           return;
         }
         list.innerHTML = ukContacts.map(function (contact, index) {
@@ -590,7 +590,7 @@
 
       renderUkContacts();
 
-      // ── Save handler ─────────────────────────────────────────────────────────
+      // -- Save handler ---------------------------------------------------------
       document.getElementById('save-btn').addEventListener('click', function () {
         student.family.homeAddress          = document.getElementById('field-home-address').value.trim();
         student.family.parentAddresses      = document.getElementById('field-parent-addresses').value.trim();
@@ -632,7 +632,7 @@
             if (c.authorisedOvernight) authNotes.push('Authorised for overnight stays');
             if (authNotes.length) parts.push(authNotes.join('; '));
             if (c.notes) parts.push(c.notes);
-            return parts.join(' — ');
+            return parts.join(' � ');
           }).join('\n');
           student.family.ukFamilyContacts = summary;
           document.getElementById('field-uk-contacts').value = summary;

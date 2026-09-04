@@ -645,6 +645,17 @@
             <span class="filter-count" id="filterCount">Showing 4 of 4 rows</span>
           </div>
 
+          <!-- FULL GANTT CHART -->
+          <div class="table-scroll" id="fullGanttWrap" style="margin-bottom: 20px; display: flex; flex-direction: column; overflow: hidden; border-radius: 8px;">
+            <div style="padding: 12px 16px; background: #e8eef6; border-bottom: 1px solid #d5dce8; font-weight: 600; color: #0f2340; font-size: 14px;">
+              Timeline Overview
+            </div>
+            <div style="display: flex; flex: 1; overflow-x: auto; background: #fff;">
+              <div id="ganttLabels" style="width: 280px; flex-shrink: 0; border-right: 1px solid #d5dce8; background: #ffffff; z-index: 2; position: sticky; left: 0;"></div>
+              <div id="ganttChartArea" style="position: relative; min-width: 1000px; flex: 1; background: #f8fafc;"></div>
+            </div>
+          </div>
+
           <!-- Scrollable table -->
           <div class="table-scroll" id="tableWrap">
             <table id="exeatTable">
@@ -652,21 +663,22 @@
                 <tr>
                   <th data-col="0">School Breaks</th>
                   <th data-col="1">Names</th>
-                  <th data-col="2">School Name</th>
-                  <th data-col="3">Start Date</th>
-                  <th data-col="4">Duration (nights)</th>
-                  <th data-col="5">Return Date</th>
-                  <th data-col="6">Additional Notes</th>
-                  <th data-col="7">Confirmation from Parents</th>
-                  <th data-col="8">Deadline for Prep</th>
-                  <th data-col="9">To Do</th>
-                  <th data-col="10">Homestay Info</th>
-                  <th data-col="11">Homestay Host Name</th>
-                  <th data-col="12">Host Contact</th>
-                  <th data-col="13">Transportation Notes</th>
-                  <th data-col="14">Driver</th>
-                  <th data-col="15">Driver Contact</th>
-                  <th data-col="16">School Calendar Link</th>
+                  <th data-col="2">Student ID</th>
+                  <th data-col="3">School Name</th>
+                  <th data-col="4">Start Date</th>
+                  <th data-col="5">Duration (nights)</th>
+                  <th data-col="6">Return Date</th>
+                  <th data-col="7">Additional Notes</th>
+                  <th data-col="8">Confirmation from Parents</th>
+                  <th data-col="9">Deadline for Prep</th>
+                  <th data-col="10">To Do</th>
+                  <th data-col="11">Homestay Info</th>
+                  <th data-col="12">Homestay Host Name</th>
+                  <th data-col="13">Host Contact</th>
+                  <th data-col="14">Transportation Notes</th>
+                  <th data-col="15">Driver</th>
+                  <th data-col="16">Driver Contact</th>
+                  <th data-col="17">School Calendar Link</th>
                 </tr>
               </thead>
               <tbody id="exeatBody"></tbody>
@@ -823,21 +835,22 @@
           tr.innerHTML =
             '<td data-col="0">' + (e.breakType || '') + '</td>' +
             '<td data-col="1"><strong>' + (e.studentName || '') + '</strong></td>' +
-            '<td data-col="2">' + (e.schoolName || '') + '</td>' +
-            '<td data-col="3">' + formatDate(e.startDate) + '</td>' +
-            '<td data-col="4">' + (e.duration || '') + '</td>' +
-            '<td data-col="5">' + formatDate(e.returnDate) + '</td>' +
-            '<td data-col="6">' + (e.notes || '') + '</td>' +
-            '<td data-col="7">' + badgeHtml(e.parentConfirmation) + '</td>' +
-            '<td data-col="8">' + formatDate(e.prepDeadline) + '</td>' +
-            '<td data-col="9">' + (e.toDo || '') + '</td>' +
-            '<td data-col="10">' + (e.homestayInfo || '') + '</td>' +
-            '<td data-col="11">' + (e.hostName || '') + '</td>' +
-            '<td data-col="12">' + (e.hostContact || '') + '</td>' +
-            '<td data-col="13">' + (e.transportNotes || '') + '</td>' +
-            '<td data-col="14">' + (e.driverName || '') + '</td>' +
-            '<td data-col="15">' + (e.driverContact || '') + '</td>' +
-            '<td data-col="16"><a href="#">' + (e.schoolCalendarLabel || '') + '</a></td>';
+            '<td data-col="2"><span style="font-family: monospace; font-size: 0.9em; color: #6b85a0;">' + (e.studentId || '') + '</span></td>' +
+            '<td data-col="3">' + (e.schoolName || '') + '</td>' +
+            '<td data-col="4">' + formatDate(e.startDate) + '</td>' +
+            '<td data-col="5">' + (e.duration || '') + '</td>' +
+            '<td data-col="6">' + formatDate(e.returnDate) + '</td>' +
+            '<td data-col="7">' + (e.notes || '') + '</td>' +
+            '<td data-col="8">' + badgeHtml(e.parentConfirmation) + '</td>' +
+            '<td data-col="9">' + formatDate(e.prepDeadline) + '</td>' +
+            '<td data-col="10">' + (e.toDo || '') + '</td>' +
+            '<td data-col="11">' + (e.homestayInfo || '') + '</td>' +
+            '<td data-col="12">' + (e.hostName || '') + '</td>' +
+            '<td data-col="13">' + (e.hostContact || '') + '</td>' +
+            '<td data-col="14">' + (e.transportNotes || '') + '</td>' +
+            '<td data-col="15">' + (e.driverName || '') + '</td>' +
+            '<td data-col="16">' + (e.driverContact || '') + '</td>' +
+            '<td data-col="17"><a href="#">' + (e.schoolCalendarLabel || '') + '</a></td>';
           tbody.appendChild(tr);
         });
         applyFilter();
@@ -885,19 +898,15 @@
           : 'Showing ' + total + ' of ' + total + ' rows';
         noResults.style.display = visible === 0 ? '' : 'none';
         
-        if (typeof updateMiniGantt === 'function') {
-            updateMiniGantt();
+        if (typeof updateFullGantt === 'function') {
+            updateFullGantt();
         }
       }
 
-      function toggleMiniGantt() {
-        var widget = document.getElementById('miniGanttWidget');
-        widget.classList.toggle('collapsed');
-      }
-
-      function updateMiniGantt() {
-        var widgetBody = document.getElementById('miniGanttBody');
-        if (!widgetBody) return;
+      function updateFullGantt() {
+        var labelsContainer = document.getElementById('ganttLabels');
+        var chartArea = document.getElementById('ganttChartArea');
+        if (!labelsContainer || !chartArea) return;
 
         var rows = Array.from(document.getElementById('exeatBody').querySelectorAll('tr'));
         var visibleRows = rows.filter(function(r) { return r.style.display !== 'none'; });
@@ -908,51 +917,78 @@
         }).filter(Boolean);
 
         if (visibleExeats.length === 0) {
-          widgetBody.innerHTML = '<div style="color: #94a3b8; text-align: center; padding: 30px 0; font-weight: 500;">No timeline data to display.</div>';
+          labelsContainer.innerHTML = '<div style="height:30px; border-bottom:1px solid #d5dce8; background:#f4f7fb;"></div>';
+          chartArea.innerHTML = '<div style="padding: 20px; color: #6b85a0;">No timeline data to display.</div>';
           return;
         }
 
-        var minTime = Math.min.apply(null, visibleExeats.map(function(e) { return new Date(e.startDate).getTime(); }));
-        var maxTime = Math.max.apply(null, visibleExeats.map(function(e) { return new Date(e.returnDate).getTime(); }));
-        var totalDuration = maxTime - minTime;
-        if (totalDuration === 0) totalDuration = 86400000; // fallback to 1 day
+        var startT = new Date('2026-09-01T00:00:00').getTime();
+        var endT = new Date('2027-09-30T23:59:59').getTime();
+        var totalT = endT - startT;
 
-        var html = '';
-        var iconHost = '<svg class="mg-icon" viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 2.7l6 5.3v9.5h-2v-6H8v6H6v-9.5l6-5.3z"/></svg>';
-        var iconDriver = '<svg class="mg-icon" viewBox="0 0 24 24"><path d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z"/></svg>';
+        var labelsHtml = '';
+        var barsHtml = '';
 
-        visibleExeats.forEach(function(e) {
-          var st = new Date(e.startDate).getTime();
-          var et = new Date(e.returnDate).getTime();
-          var leftPct = ((st - minTime) / totalDuration) * 100;
-          var widthPct = ((et - st) / totalDuration) * 100;
+        var months = [];
+        var d = new Date(2026, 8, 1); // Sep 2026
+        while (d <= new Date(2027, 8, 1)) {
+          months.push(new Date(d));
+          d.setMonth(d.getMonth() + 1);
+        }
+
+        var gridHtml = '';
+        var headerHtml = '<div style="height:30px; border-bottom:1px solid #d5dce8; position:relative; background:#f4f7fb;">';
+        months.forEach(function(m) {
+          var mst = m.getTime();
+          var m_next = new Date(m.getFullYear(), m.getMonth() + 1, 1).getTime();
+          if (m_next > endT) m_next = endT;
+          var left = (mst - startT) / totalT * 100;
+          var width = (m_next - mst) / totalT * 100;
           
-          var barClass = 'gantt-bar-self';
-          if (e.parentConfirmation === 'Confirmed') barClass = 'gantt-bar-confirmed';
-          else if (e.parentConfirmation === 'Awaiting') barClass = 'gantt-bar-awaiting';
+          var monthStr = m.toLocaleString('default', { month: 'short' }) + ' ' + m.getFullYear().toString().substr(-2);
           
-          var driver = e.driverName ? e.driverName : 'TBC';
-          var host = e.hostName ? e.hostName : 'N/A';
-
-          html += '<div class="mini-gantt-row">' +
-                    '<div class="mini-gantt-title">' + 
-                      '<span>' + e.studentName + '</span>' + 
-                      '<span class="mini-gantt-badge">' + e.breakType + '</span>' + 
-                    '</div>' +
-                    '<div class="mini-gantt-details">' +
-                      '<span>' + iconHost + ' <span><strong>Host:</strong> ' + host + '</span></span>' +
-                      '<span>' + iconDriver + ' <span><strong>Driver:</strong> ' + driver + '</span></span>' +
-                    '</div>' +
-                    '<div class="mini-gantt-track">' +
-                      '<div class="mini-gantt-bar ' + barClass + '" style="left: ' + leftPct + '%; width: ' + widthPct + '%;" title="' + formatDate(e.startDate) + ' - ' + formatDate(e.returnDate) + '"></div>' +
-                    '</div>' +
-                    '<div class="mini-gantt-dates">' +
-                      '<span>' + formatDate(e.startDate) + '</span>' +
-                      '<span>' + formatDate(e.returnDate) + '</span>' +
-                    '</div>' +
-                  '</div>';
+          headerHtml += '<div style="position:absolute; left:' + left + '%; width:' + width + '%; border-right:1px solid #d5dce8; height:30px; line-height:30px; text-align:center; font-size:11px; font-weight:600; color:#6b85a0; box-sizing:border-box; z-index: 2;">' + monthStr + '</div>';
+          gridHtml += '<div style="position:absolute; left:' + left + '%; width:' + width + '%; border-right:1px solid #edf2f8; top:0; bottom:0; box-sizing:border-box; z-index: 1;"></div>';
         });
-        widgetBody.innerHTML = html;
+        headerHtml += '</div>';
+
+        var rowHeight = 40;
+        
+        visibleExeats.sort(function(a, b) {
+          return new Date(a.startDate) - new Date(b.startDate);
+        });
+
+        visibleExeats.forEach(function(e, i) {
+          var top = i * rowHeight;
+          labelsHtml += '<div style="height:' + rowHeight + 'px; line-height:' + rowHeight + 'px; padding:0 12px; border-bottom:1px solid #edf2f8; font-size:13px; color:#0f2340; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; box-sizing:border-box;">' +
+            '<strong>' + (e.studentName || 'Unknown') + '</strong> <span style="color:#6b85a0; font-size:12px; margin-left:6px;">' + (e.breakType || '') + '</span>' +
+          '</div>';
+
+          var est = new Date(e.startDate).getTime();
+          var eet = e.returnDate ? new Date(e.returnDate).getTime() : est + 86400000;
+          
+          var drawSt = Math.max(startT, est);
+          var drawEt = Math.min(endT, eet);
+          
+          if (drawSt <= drawEt && drawEt >= startT && drawSt <= endT) {
+            var left = (drawSt - startT) / totalT * 100;
+            var width = (drawEt - drawSt) / totalT * 100;
+            width = Math.max(width, 0.3); // minimum visual width
+            
+            var nights = e.duration || Math.round((eet - est) / 86400000);
+            var nightsText = nights > 0 ? nights : '';
+            
+            barsHtml += '<div style="position:absolute; top:' + (top + 8) + 'px; left:' + left + '%; width:' + width + '%; height:24px; background:#f97316; border-radius:4px; box-shadow:0 1px 3px rgba(249,115,22,0.3); z-index: 3; color: #ffffff; text-align: center; font-size: 11px; line-height: 24px; font-weight: 700; overflow: hidden; white-space: nowrap;" title="' + (e.studentName || '') + ' (' + formatDate(e.startDate) + ' - ' + formatDate(e.returnDate) + ')">' + nightsText + '</div>';
+          }
+        });
+
+        var containerHeight = 30 + visibleExeats.length * rowHeight;
+        
+        labelsContainer.innerHTML = '<div style="height:30px; border-bottom:1px solid #d5dce8; background:#f4f7fb;"></div>' + labelsHtml;
+        chartArea.innerHTML = headerHtml + '<div style="position:relative; height:' + (containerHeight - 30) + 'px;">' + gridHtml + barsHtml + '</div>';
+        
+        // Ensure parent containers resize gracefully
+        document.getElementById('fullGanttWrap').style.maxHeight = '400px';
       }
 
       searchInput.addEventListener('input', applyFilter);
@@ -1113,18 +1149,6 @@
       // â”€â”€ Init â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       renderTable();
     </script>
-      <!-- Mini Gantt Widget -->
-    <div id="miniGanttWidget" class="mini-gantt-widget">
-      <div class="mini-gantt-header" onclick="toggleMiniGantt()">
-        <div class="mini-gantt-header-title">
-          <svg class="mg-header-icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-          Timeline Overview
-        </div>
-        <svg id="miniGanttToggleIcon" class="mg-toggle-icon" viewBox="0 0 24 24">
-          <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-        </svg>
-      </div>
-      <div id="miniGanttBody" class="mini-gantt-body"></div>
-    </div>
   </body>
 </html>
+

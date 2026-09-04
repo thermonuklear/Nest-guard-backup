@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edit Student — Oxford Guardians Platform</title>
+  <title>Edit Student � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/app.css" />
   <style>
-    /* ── Global colour overrides ── */
+    /* -- Global colour overrides -- */
     body {
       background: #f0f4f8 !important;
       color: #0f2340 !important;
@@ -217,7 +217,7 @@
                 <div class="field" id="field-nationality">
                   <small>Nationality *</small>
                   <select class="field-select" id="nationality" name="nationality">
-                    <option value="">Select nationality…</option>
+                    <option value="">Select nationality�</option>
                     <option>British</option>
                     <option>Chinese</option>
                     <option>French</option>
@@ -245,7 +245,7 @@
                 <div class="field">
                   <small>School Year</small>
                   <select class="field-select" id="school-year" name="school_year">
-                    <option value="">Select year…</option>
+                    <option value="">Select year�</option>
                     <option>Year 7</option>
                     <option>Year 8</option>
                     <option>Year 9</option>
@@ -338,7 +338,7 @@
 
 <script src="assets/db.js"></script>
 <script>
-  // ── Load student from URL ─────────────────────────────────────────────────
+  // -- Load student from URL -------------------------------------------------
   var params    = new URLSearchParams(window.location.search);
   var studentId = params.get('id');
   var student   = studentId ? getStudentById(studentId) : null;
@@ -348,30 +348,30 @@
     throw new Error('Student not found: ' + studentId);
   }
 
-  // ── Update page metadata ──────────────────────────────────────────────────
+  // -- Update page metadata --------------------------------------------------
   document.getElementById('edit-header').textContent =
     'Update ' + student.firstName + ' ' + student.lastName;
   document.title =
-    'Edit ' + student.firstName + ' ' + student.lastName + ' — Oxford Guardians';
+    'Edit ' + student.firstName + ' ' + student.lastName + ' � Oxford Guardians';
 
-  // ── Wire up Discard / Cancel links ───────────────────────────────────────
+  // -- Wire up Discard / Cancel links ---------------------------------------
   var profileUrl = 'student-profile.html?id=' + student.id;
   document.getElementById('discard-btn').href = profileUrl;
   document.getElementById('cancel-btn').href  = profileUrl;
 
-  // ── Pre-fill form fields ──────────────────────────────────────────────────
+  // -- Pre-fill form fields --------------------------------------------------
   document.getElementById('first-name').value   = student.firstName    || '';
   document.getElementById('last-name').value    = student.lastName     || '';
   document.getElementById('dob').value          = student.dob          || '';
   document.getElementById('nationality').value  = student.nationality  || '';
   document.getElementById('school-year').value  = student.schoolYear   || '';
 
-  // ── Populate School dropdown from the school directory ────────────────────
+  // -- Populate School dropdown from the school directory --------------------
   (function populateSchoolSelect() {
     var sel = document.getElementById('school');
     var blank = document.createElement('option');
     blank.value = '';
-    blank.textContent = '— No school assigned —';
+    blank.textContent = '� No school assigned �';
     sel.appendChild(blank);
     getSchools().forEach(function (sch) {
       var opt = document.createElement('option');
@@ -382,7 +382,7 @@
 
     var currentId = student.schoolId;
     if (!currentId && student.school) {
-      // Legacy records may only carry a free-text school name — try to resolve it to a school record.
+      // Legacy records may only carry a free-text school name � try to resolve it to a school record.
       var match = getSchools().find(function (sch) { return sch.name === student.school; });
       if (match) currentId = match.id;
     }
@@ -397,21 +397,21 @@
   document.getElementById('p2-phone').value     = student.parent2Phone || '';
   document.getElementById('accommodation-type').value = student.accommodationType || 'Boarding Student';
 
-  // ── Show Parent 2 block if data already exists ────────────────────────────
+  // -- Show Parent 2 block if data already exists ----------------------------
   if (student.parent2Name || student.parent2Email || student.parent2Phone) {
     document.getElementById('parent2-block').style.display = 'block';
-    document.getElementById('add-parent2-btn').textContent = '− Remove Second Parent';
+    document.getElementById('add-parent2-btn').textContent = '- Remove Second Parent';
   }
 
-  // ── Toggle Parent 2 ───────────────────────────────────────────────────────
+  // -- Toggle Parent 2 -------------------------------------------------------
   document.getElementById('add-parent2-btn').addEventListener('click', function () {
     var block   = document.getElementById('parent2-block');
     var visible = block.style.display !== 'none';
     block.style.display = visible ? 'none' : 'block';
-    this.textContent    = visible ? '+ Add Second Parent' : '− Remove Second Parent';
+    this.textContent    = visible ? '+ Add Second Parent' : '- Remove Second Parent';
   });
 
-  // ── Form submission ───────────────────────────────────────────────────────
+  // -- Form submission -------------------------------------------------------
   document.getElementById('student-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -451,7 +451,7 @@
 
     errorMsg.style.display = 'none';
 
-    // ── Extract updated values ────────────────────────────────────────────
+    // -- Extract updated values --------------------------------------------
     var updatedFields = {
       firstName:   document.getElementById('first-name').value.trim(),
       lastName:    document.getElementById('last-name').value.trim(),
@@ -473,10 +473,10 @@
       accommodationType: document.getElementById('accommodation-type').value
     };
 
-    // ── Merge into existing record to preserve welfare/health/homestay data ─
+    // -- Merge into existing record to preserve welfare/health/homestay data -
     var updatedStudent = Object.assign({}, student, updatedFields);
 
-    // ── Save and redirect ─────────────────────────────────────────────────
+    // -- Save and redirect -------------------------------------------------
     upsertStudent(updatedStudent);
     window.location.href = 'student-profile.html?id=' + student.id;
   });

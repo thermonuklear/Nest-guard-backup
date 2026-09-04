@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Staff Profile — Oxford Guardians Platform</title>
+    <title>Staff Profile � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      /* ── Staff avatar in toolbar ── */
+      /* -- Staff avatar in toolbar -- */
       .staff-avatar-lg {
         width: 48px;
         height: 48px;
@@ -26,7 +26,7 @@
         flex-shrink: 0;
       }
 
-      /* ── Sub-navigation tabs ── */
+      /* -- Sub-navigation tabs -- */
       .subnav {
         display: flex;
         align-items: center;
@@ -61,10 +61,10 @@
       .tab-content { display: none; }
       .tab-content.active { display: block; }
 
-      /* ── KV block full-width span ── */
+      /* -- KV block full-width span -- */
       .kv-block-full { grid-column: 1 / -1; }
 
-      /* ── Rota card ── */
+      /* -- Rota card -- */
       .rota-card {
         background: var(--surface);
         border: 1px solid var(--line);
@@ -87,7 +87,7 @@
       .rota-slot:first-of-type { border-top: 0; padding-top: 0; }
       .rota-slot small { color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.72rem; }
 
-      /* ── Required docs checklist ── */
+      /* -- Required docs checklist -- */
       .req-docs {
         background: var(--surface);
         border: 1px solid var(--line);
@@ -122,7 +122,7 @@
       .req-doc-item strong { display: block; font-size: 0.88rem; }
       .req-doc-item small  { font-size: 0.76rem; color: var(--ink-3); }
 
-      /* ── Upload card ── */
+      /* -- Upload card -- */
       .upload-card {
         background: var(--surface);
         border: 1px solid var(--line);
@@ -220,7 +220,7 @@
         border-radius: 12px;
       }
 
-      /* ── Training rows (role-based courses) ── */
+      /* -- Training rows (role-based courses) -- */
       .training-rows-list { display: grid; gap: 4px; }
       .training-row {
         display: flex; align-items: center; gap: 16px;
@@ -243,7 +243,7 @@
       }
       .training-row-dates div div { font-size: 0.84rem; color: var(--ink-2); margin-top: 2px; }
 
-      /* ── Save toast ── */
+      /* -- Save toast -- */
       .save-toast {
         position: fixed;
         top: 20px;
@@ -280,7 +280,7 @@
         font-size: 11px;
       }
 
-      /* ── Not-found state ── */
+      /* -- Not-found state -- */
       .not-found {
         padding: 60px 32px;
         text-align: center;
@@ -294,7 +294,7 @@
 
   <!-- Save toast -->
   <div class="save-toast" id="save-toast">
-    <div class="save-toast-icon">✓</div>
+    <div class="save-toast-icon">?</div>
     <span>Profile saved</span>
   </div>
 
@@ -341,15 +341,15 @@
           <!-- Toolbar -->
           <div class="toolbar" id="profile-toolbar">
             <div style="display:flex;align-items:center;gap:14px;">
-              <div class="staff-avatar-lg" id="toolbar-avatar">—</div>
+              <div class="staff-avatar-lg" id="toolbar-avatar">�</div>
               <div>
                 <span class="eyebrow">Staff profile</span>
-                <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
-                <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:var(--ink-2);">—</p>
+                <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading�</h2>
+                <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:var(--ink-2);">�</p>
               </div>
             </div>
             <div class="toolbar-actions">
-              <span id="toolbar-status-badge" class="badge">—</span>
+              <span id="toolbar-status-badge" class="badge">�</span>
               <a class="button" id="compliance-btn" href="staff-aegis-control-room.html" style="text-decoration:none;">View Compliance Record</a>
               <a class="button-alt" href="staff-list.html">Back to Staff</a>
             </div>
@@ -362,7 +362,7 @@
             <button data-tab="tab-documents">Documents</button>\n            <button data-tab="tab-contracts">Agreements & Contracts</button>
           </nav>
 
-          <!-- ── Tab 1: Profile Overview ── -->
+          <!-- -- Tab 1: Profile Overview -- -->
           <div id="tab-overview" class="tab-content active">
             <div class="info-grid">
 
@@ -372,23 +372,23 @@
                 <div class="kv">
                   <div class="kv-row">
                     <small>First Name</small>
-                    <div id="kv-first-name">—</div>
+                    <div id="kv-first-name">�</div>
                   </div>
                   <div class="kv-row">
                     <small>Last Name</small>
-                    <div id="kv-last-name">—</div>
+                    <div id="kv-last-name">�</div>
                   </div>
                   <div class="kv-row">
                     <small>Email</small>
-                    <div id="kv-email">—</div>
+                    <div id="kv-email">�</div>
                   </div>
                   <div class="kv-row">
                     <small>Phone</small>
-                    <div id="kv-phone">—</div>
+                    <div id="kv-phone">�</div>
                   </div>
                   <div class="kv-row">
                     <small>Start Date</small>
-                    <div id="kv-start-date">—</div>
+                    <div id="kv-start-date">�</div>
                   </div>
                 </div>
               </div>
@@ -399,15 +399,15 @@
                 <div class="kv">
                   <div class="kv-row">
                     <small>Role</small>
-                    <div id="kv-role">—</div>
+                    <div id="kv-role">�</div>
                   </div>
                   <div class="kv-row">
                     <small>Title</small>
-                    <div id="kv-title">—</div>
+                    <div id="kv-title">�</div>
                   </div>
                   <div class="kv-row">
                     <small>Primary Work</small>
-                    <div id="kv-primary-work">—</div>
+                    <div id="kv-primary-work">�</div>
                   </div>
                 </div>
               </div>
@@ -418,23 +418,23 @@
                 <div class="kv">
                   <div class="kv-row">
                     <small>DBS Status</small>
-                    <div id="kv-dbs-status">—</div>
+                    <div id="kv-dbs-status">�</div>
                   </div>
                   <div class="kv-row">
                     <small>Certificate Number</small>
-                    <div id="kv-dbs-cert">—</div>
+                    <div id="kv-dbs-cert">�</div>
                   </div>
                   <div class="kv-row">
                     <small>Issue Date</small>
-                    <div id="kv-dbs-issue">—</div>
+                    <div id="kv-dbs-issue">�</div>
                   </div>
                   <div class="kv-row">
                     <small>Renewal Due</small>
-                    <div id="kv-dbs-renewal">—</div>
+                    <div id="kv-dbs-renewal">�</div>
                   </div>
                   <div class="kv-row">
                     <small>Update Service</small>
-                    <div id="kv-dbs-update">—</div>
+                    <div id="kv-dbs-update">�</div>
                   </div>
                 </div>
               </div>
@@ -451,37 +451,37 @@
               <!-- Block 5: Notes (full width) -->
               <div class="info-block kv-block-full">
                 <h4>Notes</h4>
-                <div id="kv-notes" style="color:var(--ink-2);font-size:0.92rem;line-height:1.6;">—</div>
+                <div id="kv-notes" style="color:var(--ink-2);font-size:0.92rem;line-height:1.6;">�</div>
               </div>
 
             </div><!-- /info-grid -->
           </div><!-- /tab-overview -->
 
-          <!-- ── Tab 2: Emergency & Rota ── -->
+          <!-- -- Tab 2: Emergency & Rota -- -->
           <div id="tab-emergency" class="tab-content">
 
             <div class="rota-card">
               <h4>Emergency rota assignment</h4>
-              <div id="kv-rota-assignment" style="font-size:0.95rem;color:var(--ink-2);line-height:1.6;">—</div>
+              <div id="kv-rota-assignment" style="font-size:0.95rem;color:var(--ink-2);line-height:1.6;">�</div>
             </div>
 
             <div class="rota-card">
-              <h4>Emergency coverage rota — full schedule</h4>
+              <h4>Emergency coverage rota � full schedule</h4>
               <div class="rota-slot">
-                <small>Mon–Fri daytime (08:00–18:00)</small>
-                <div>Zuko Fire — Operations director</div>
+                <small>Mon�Fri daytime (08:00�18:00)</small>
+                <div>Zuko Fire � Operations director</div>
               </div>
               <div class="rota-slot">
-                <small>Mon–Fri evening (18:00–22:00)</small>
-                <div>Priya Shah — Travel and host liaison</div>
+                <small>Mon�Fri evening (18:00�22:00)</small>
+                <div>Priya Shah � Travel and host liaison</div>
               </div>
               <div class="rota-slot">
-                <small>Overnight (22:00–08:00)</small>
-                <div>Jay Ray — Safeguarding lead (DSL)</div>
+                <small>Overnight (22:00�08:00)</small>
+                <div>Jay Ray � Safeguarding lead (DSL)</div>
               </div>
               <div class="rota-slot">
-                <small>Weekends — DSL escalation</small>
-                <div>Jay Ray — Safeguarding lead (DSL)</div>
+                <small>Weekends � DSL escalation</small>
+                <div>Jay Ray � Safeguarding lead (DSL)</div>
               </div>
             </div>
 
@@ -489,17 +489,17 @@
               <h4>Escalation path</h4>
               <div class="rota-slot">
                 <small>Safeguarding concern</small>
-                <div>Jay Ray — DSL · <a href="staff-profile.html?id=STF00001" style="color:var(--gold);font-weight:600;">View profile</a></div>
+                <div>Jay Ray � DSL � <a href="staff-profile.html?id=STF00001" style="color:var(--gold);font-weight:600;">View profile</a></div>
               </div>
               <div class="rota-slot">
                 <small>Operational issue</small>
-                <div>Zuko Fire — Operations director · <a href="staff-profile.html?id=STF00002" style="color:var(--gold);font-weight:600;">View profile</a></div>
+                <div>Zuko Fire � Operations director � <a href="staff-profile.html?id=STF00002" style="color:var(--gold);font-weight:600;">View profile</a></div>
               </div>
             </div>
 
           </div><!-- /tab-emergency -->
 
-          <!-- ── Tab 3: Documents ── -->
+          <!-- -- Tab 3: Documents -- -->
           <div id="tab-documents" class="tab-content">
 
             <div class="req-docs">
@@ -533,7 +533,7 @@
               <h4>Upload document</h4>
               <div class="upload-controls">
                 <input type="file" id="doc-file" />
-                <input class="doc-name-input" type="text" id="doc-name" placeholder="Enter document name…" />
+                <input class="doc-name-input" type="text" id="doc-name" placeholder="Enter document name�" />
                 <button class="button" id="upload-btn">Upload</button>
               </div>
               <div id="document-list" class="doc-list"></div>
@@ -558,12 +558,12 @@
 
   <script src="assets/db.js"></script>
   <script>
-    // ── URL param parsing ──────────────────────────────────────────────────────
+    // -- URL param parsing ------------------------------------------------------
     var params   = new URLSearchParams(window.location.search);
     var staffId  = params.get('id') || 'STF00001';
     var member   = getStaffById(staffId);
 
-    // ── Not-found guard ────────────────────────────────────────────────────────
+    // -- Not-found guard --------------------------------------------------------
     if (!member) {
       document.getElementById('main-content').innerHTML =
         '<div class="not-found">' +
@@ -574,7 +574,7 @@
       throw new Error('Staff member not found: ' + staffId);
     }
 
-    // ── Helpers ────────────────────────────────────────────────────────────────
+    // -- Helpers ----------------------------------------------------------------
     function initials(first, last) {
       return ((first || '').charAt(0) + (last || '').charAt(0)).toUpperCase();
     }
@@ -588,12 +588,12 @@
     }
 
     function dbsBadgeLabel(s) {
-      return { clear: 'DBS Clear', amber: 'Action Required', expired: 'Expired' }[(s || '').toLowerCase()] || (s || '—');
+      return { clear: 'DBS Clear', amber: 'Action Required', expired: 'Expired' }[(s || '').toLowerCase()] || (s || '�');
     }
 
     function set(id, text) {
       var el = document.getElementById(id);
-      if (el) el.textContent = text || '—';
+      if (el) el.textContent = text || '�';
     }
 
     function escapeHtml(str) {
@@ -604,10 +604,10 @@
       return new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     }
 
-    // ── Populate page ──────────────────────────────────────────────────────────
+    // -- Populate page ----------------------------------------------------------
     var fullName = member.firstName + ' ' + member.lastName;
 
-    document.title = fullName + ' — Oxford Guardians';
+    document.title = fullName + ' � Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/staff/' + member.id;
     document.getElementById('compliance-btn').href = 'staff-aegis-control-room.html?id=' + member.id;
 
@@ -616,13 +616,13 @@
       escapeHtml(fullName) +
       ' <span style="color:var(--ink-3);font-size:0.8em;font-weight:normal;margin-left:8px;">' + escapeHtml(member.id) + '</span>';
     document.getElementById('toolbar-subtitle').textContent =
-      (member.role || '—') + ' · ' + (member.title || '—') + ' · Since ' + (member.startDate || '—');
+      (member.role || '�') + ' � ' + (member.title || '�') + ' � Since ' + (member.startDate || '�');
 
     var statusBadge = document.getElementById('toolbar-status-badge');
-    statusBadge.textContent = member.status || '—';
+    statusBadge.textContent = member.status || '�';
     statusBadge.className   = 'badge ' + statusBadgeClass(member.status);
 
-    // Tab 1 — Profile Overview KV rows
+    // Tab 1 � Profile Overview KV rows
     set('kv-first-name',     member.firstName);
     set('kv-last-name',      member.lastName);
     set('kv-email',          member.email);
@@ -646,7 +646,7 @@
 
     set('kv-notes',          member.notes);
 
-    // ── Training: dynamic rows from role-based course requirements ──────────
+    // -- Training: dynamic rows from role-based course requirements ----------
     document.getElementById('log-training-link').href = 'training-record-create.html?personId=' + member.id;
 
     function trainingStatusBadgeClass(status) {
@@ -671,22 +671,22 @@
         return '<div class="training-row">' +
           '<div class="training-row-main">' +
             '<div class="training-row-title">' + escapeHtml(r.course.title) + '</div>' +
-            '<div class="training-row-rule">' + escapeHtml(r.requirementRule) + (r.course.code ? ' · ' + escapeHtml(r.course.code) : '') + '</div>' +
+            '<div class="training-row-rule">' + escapeHtml(r.requirementRule) + (r.course.code ? ' � ' + escapeHtml(r.course.code) : '') + '</div>' +
             certLink +
           '</div>' +
           '<div class="training-row-dates">' +
-            '<div><small>Completed</small><div>' + escapeHtml(r.completionDate || '—') + '</div></div>' +
-            '<div><small>Expires</small><div>' + escapeHtml(r.expiryDate || '—') + '</div></div>' +
+            '<div><small>Completed</small><div>' + escapeHtml(r.completionDate || '�') + '</div></div>' +
+            '<div><small>Expires</small><div>' + escapeHtml(r.expiryDate || '�') + '</div></div>' +
           '</div>' +
           '<span class="badge ' + trainingStatusBadgeClass(r.status) + '">' + escapeHtml(r.status) + '</span>' +
         '</div>';
       }).join('');
     })();
 
-    // Tab 2 — Emergency & Rota
+    // Tab 2 � Emergency & Rota
     set('kv-rota-assignment', member.emergencyRota);
 
-    // ── Tab switching ──────────────────────────────────────────────────────────
+    // -- Tab switching ----------------------------------------------------------
     var tabButtons = document.querySelectorAll('.subnav button[data-tab]');
     var tabPanels  = document.querySelectorAll('.tab-content');
 
@@ -705,7 +705,7 @@
       p.style.display = p.classList.contains('active') ? 'block' : 'none';
     });
 
-    // ── Upload widget ──────────────────────────────────────────────────────────
+    // -- Upload widget ----------------------------------------------------------
     function createUploadWidget(options) {
       var key = options.storageKey;
 
@@ -771,7 +771,7 @@
     });
 
   
-    // ── Contracts ──────────────────────────────────────────────────────────────
+    // -- Contracts --------------------------------------------------------------
     function renderContracts() {
       var contractsList = document.getElementById('contracts-list');
       if (!contractsList) return;
@@ -793,7 +793,7 @@
                   '<div style="display:flex; justify-content:space-between; align-items:flex-start;">' +
                     '<div>' +
                       '<h4 style="margin:0 0 8px 0;">' + escapeHtml(c.title) + '</h4>' +
-                      '<p style="margin:0; font-size:0.9em; color:#3b536e;">Valid: ' + escapeHtml(c.validFrom || '—') + ' to ' + escapeHtml(c.validTo || '—') + '</p>' +
+                      '<p style="margin:0; font-size:0.9em; color:#3b536e;">Valid: ' + escapeHtml(c.validFrom || '�') + ' to ' + escapeHtml(c.validTo || '�') + '</p>' +
                     '</div>' +
                     '<span class="badge ' + statusColor + '">' + escapeHtml(c.status) + '</span>' +
                   '</div>' +

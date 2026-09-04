@@ -1,9 +1,9 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Incident Logs â€” Emergency â€” Oxford Guardians Platform</title>
+    <title>Incident Logs — Emergency — Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -170,10 +170,10 @@
               <div class="toolbar-actions"><a class="button-alt" href="emergency-procedures.html">Back to emergency</a><a class="button" href="emergency-incident.html">Log new incident</a></div>
             </div>
             <div class="metrics">
-              <article class="metric featured"><h4>Total incidents</h4><div class="metric-value" id="metric-total">â€”</div><p class="metric-meta">All time</p></article>
-              <article class="metric"><h4>Open</h4><div class="metric-value" id="metric-open">â€”</div><p class="metric-meta">Requiring action</p></article>
-              <article class="metric"><h4>Resolved</h4><div class="metric-value" id="metric-resolved">â€”</div><p class="metric-meta">Closed incidents</p></article>
-              <article class="metric"><h4>This year</h4><div class="metric-value" id="metric-year">â€”</div><p class="metric-meta" id="metric-year-label">â€”</p></article>
+              <article class="metric featured"><h4>Total incidents</h4><div class="metric-value" id="metric-total">—</div><p class="metric-meta">All time</p></article>
+              <article class="metric"><h4>Open</h4><div class="metric-value" id="metric-open">—</div><p class="metric-meta">Requiring action</p></article>
+              <article class="metric"><h4>Resolved</h4><div class="metric-value" id="metric-resolved">—</div><p class="metric-meta">Closed incidents</p></article>
+              <article class="metric"><h4>This year</h4><div class="metric-value" id="metric-year">—</div><p class="metric-meta" id="metric-year-label">—</p></article>
             </div>
             <div class="table-wrap">
               <table id="incidents-table">
@@ -205,7 +205,7 @@
         var tbody = document.getElementById('incidents-tbody');
         var expandedId = null;
 
-        // â”€â”€ Metrics â”€â”€
+        // -- Metrics --
         document.getElementById('metric-total').textContent = incidents.length;
         var openCount = incidents.filter(function (i) { return i.status && i.status.indexOf('Open') === 0; }).length;
         var resolvedCount = incidents.filter(function (i) { return i.status && i.status.indexOf('Resolved') === 0; }).length;
@@ -248,17 +248,17 @@
             '<div class="incident-detail">' +
               '<div class="detail-grid">' +
                 '<div><label>Reference</label><div class="detail-value">' + inc.id + '</div></div>' +
-                '<div><label>Severity</label><div class="detail-value">' + (inc.severity || 'â€”') + '</div></div>' +
-                '<div><label>Reported by</label><div class="detail-value">' + (inc.reportedBy || 'â€”') + '</div></div>' +
-                '<div><label>Primary responder</label><div class="detail-value">' + (inc.primaryResponder || 'â€”') + '</div></div>' +
-                '<div><label>Response time</label><div class="detail-value">' + (inc.responseTime || 'â€”') + '</div></div>' +
-                '<div><label>Resolution time</label><div class="detail-value">' + (inc.resolutionTime || 'â€”') + '</div></div>' +
-                '<div class="detail-span-2"><label>Location</label><div class="detail-value">' + (inc.location || 'â€”') + '</div></div>' +
-                '<div class="detail-span-2"><label>Description</label><div class="detail-value">' + (inc.description || 'â€”') + '</div></div>' +
-                '<div class="detail-span-2"><label>Immediate action taken</label><div class="detail-value">' + (inc.actionTaken || 'â€”') + '</div></div>' +
-                '<div class="detail-span-2"><label>Escalations</label><div class="detail-value">' + (inc.escalations || 'â€”') + '</div></div>' +
-                '<div class="detail-span-2"><label>Outcome summary</label><div class="detail-value">' + (inc.outcomeSummary || 'â€”') + '</div></div>' +
-                '<div class="detail-span-2"><label>Lessons learned</label><div class="detail-value">' + (inc.lessonsLearned || 'â€”') + '</div></div>' +
+                '<div><label>Severity</label><div class="detail-value">' + (inc.severity || '—') + '</div></div>' +
+                '<div><label>Reported by</label><div class="detail-value">' + (inc.reportedBy || '—') + '</div></div>' +
+                '<div><label>Primary responder</label><div class="detail-value">' + (inc.primaryResponder || '—') + '</div></div>' +
+                '<div><label>Response time</label><div class="detail-value">' + (inc.responseTime || '—') + '</div></div>' +
+                '<div><label>Resolution time</label><div class="detail-value">' + (inc.resolutionTime || '—') + '</div></div>' +
+                '<div class="detail-span-2"><label>Location</label><div class="detail-value">' + (inc.location || '—') + '</div></div>' +
+                '<div class="detail-span-2"><label>Description</label><div class="detail-value">' + (inc.description || '—') + '</div></div>' +
+                '<div class="detail-span-2"><label>Immediate action taken</label><div class="detail-value">' + (inc.actionTaken || '—') + '</div></div>' +
+                '<div class="detail-span-2"><label>Escalations</label><div class="detail-value">' + (inc.escalations || '—') + '</div></div>' +
+                '<div class="detail-span-2"><label>Outcome summary</label><div class="detail-value">' + (inc.outcomeSummary || '—') + '</div></div>' +
+                '<div class="detail-span-2"><label>Lessons learned</label><div class="detail-value">' + (inc.lessonsLearned || '—') + '</div></div>' +
               '</div>' +
             '</div>';
           tr.appendChild(td);
@@ -272,7 +272,7 @@
 
           var dateStr = inc.dateTime
             ? new Date(inc.dateTime).toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
-            : 'â€”';
+            : '—';
 
           var hostDriver = [];
           if (inc.hostName) hostDriver.push(inc.hostName + ' (host)');
@@ -280,11 +280,11 @@
 
           tr.innerHTML =
             '<td>' + dateStr + '</td>' +
-            '<td>' + (inc.studentName || 'â€”') + '</td>' +
-            '<td><code>' + (inc.studentId || 'â€”') + '</code></td>' +
-            '<td>' + (inc.type || 'â€”') + '</td>' +
-            '<td>' + (hostDriver.length ? hostDriver.join(', ') : 'â€”') + '</td>' +
-            '<td>' + (inc.externalActors || 'â€”') + '</td>' +
+            '<td>' + (inc.studentName || '—') + '</td>' +
+            '<td><code>' + (inc.studentId || '—') + '</code></td>' +
+            '<td>' + (inc.type || '—') + '</td>' +
+            '<td>' + (hostDriver.length ? hostDriver.join(', ') : '—') + '</td>' +
+            '<td>' + (inc.externalActors || '—') + '</td>' +
             '<td>' + getStatusBadge(inc.status) + '</td>';
 
           tr.addEventListener('click', function () {

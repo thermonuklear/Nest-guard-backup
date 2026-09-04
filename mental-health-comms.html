@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Log School Communication — Oxford Guardians Platform</title>
+    <title>Log School Communication � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -73,7 +73,7 @@
 
           <div class="form-span-2">
             <label for="f-note">Note details</label>
-            <textarea id="f-note" placeholder="What was discussed, agreed, or flagged during this communication…" required></textarea>
+            <textarea id="f-note" placeholder="What was discussed, agreed, or flagged during this communication�" required></textarea>
           </div>
 
         </form>
@@ -96,7 +96,7 @@
 
     <script>
     (function () {
-      // ── Bootstrap ──────────────────────────────────────────────────────────
+      // -- Bootstrap ----------------------------------------------------------
       var params    = new URLSearchParams(window.location.search);
       var studentId = params.get('id') || '';
       var student   = studentId ? getStudentById(studentId) : null;
@@ -104,23 +104,23 @@
         ? student.firstName + ' ' + student.lastName
         : (studentId || 'Unknown student');
 
-      // ── Page heading + student field ───────────────────────────────────────
+      // -- Page heading + student field ---------------------------------------
       document.getElementById('page-heading').textContent =
         'Log school communication for ' + studentName;
       document.getElementById('f-student').value = student
-        ? studentName + ' — ' + (student.school || '') + ' — ' + (student.schoolYear || '')
+        ? studentName + ' � ' + (student.school || '') + ' � ' + (student.schoolYear || '')
         : studentName;
 
-      // ── Back link ──────────────────────────────────────────────────────────
+      // -- Back link ----------------------------------------------------------
       document.getElementById('link-back').href = 'mental-health-referral.html?id=' + studentId;
 
-      // ── Default date to today ──────────────────────────────────────────────
+      // -- Default date to today ----------------------------------------------
       var today = new Date();
       var pad   = function (n) { return String(n).padStart(2, '0'); };
       document.getElementById('f-date').value =
         today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
 
-      // ── Save handler ───────────────────────────────────────────────────────
+      // -- Save handler -------------------------------------------------------
       document.getElementById('save-btn').addEventListener('click', function () {
         var date    = document.getElementById('f-date').value.trim();
         var contact = document.getElementById('f-contact').value.trim();
@@ -153,7 +153,7 @@
         window.location.reload();
       });
 
-      // ── Timeline feed ──────────────────────────────────────────────────────
+      // -- Timeline feed ------------------------------------------------------
       function escapeHtml(str) {
         return String(str || '')
           .replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -161,7 +161,7 @@
       }
 
       function fmtDate(iso) {
-        if (!iso) return '—';
+        if (!iso) return '�';
         var d = new Date(iso);
         if (isNaN(d.getTime())) return iso;
         var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];

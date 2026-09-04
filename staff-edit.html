@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edit Staff Member — Oxford Guardians Platform</title>
+  <title>Edit Staff Member � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -63,7 +63,7 @@
 <body>
 
 <div class="save-toast" id="save-toast">
-  <div class="save-toast-icon">✓</div>
+  <div class="save-toast-icon">?</div>
   <span>Profile saved</span>
 </div>
 
@@ -104,7 +104,7 @@
         <div class="toolbar">
           <div>
             <span class="eyebrow">Edit staff member</span>
-            <h2 id="toolbar-title">Loading…</h2>
+            <h2 id="toolbar-title">Loading�</h2>
             <p>Update profile details and role information. Compliance records are managed separately.</p>
           </div>
           <div class="toolbar-actions">
@@ -121,7 +121,7 @@
         <div class="create-panel" id="edit-panel">
           <form id="staff-form" novalidate>
 
-            <!-- ── Personal Details ── -->
+            <!-- -- Personal Details -- -->
             <div class="form-section">
               <div class="form-section-title">Personal Details</div>
               <div class="form-grid">
@@ -141,14 +141,14 @@
               </div>
             </div>
 
-            <!-- ── Role & Responsibilities ── -->
+            <!-- -- Role & Responsibilities -- -->
             <div class="form-section">
               <div class="form-section-title">Role &amp; Responsibilities</div>
               <div class="form-grid">
                 <div class="field">
                   <small>Role *</small>
                   <select class="field-select" id="role">
-                    <option value="">— Select role —</option>
+                    <option value="">� Select role �</option>
                     <option value="Admin / DSL">Admin / DSL</option>
                     <option value="Admin / Operations">Admin / Operations</option>
                     <option value="Admin / Local coordinator">Admin / Local coordinator</option>
@@ -159,17 +159,17 @@
               </div>
             </div>
 
-            <!-- ── DBS & Compliance ── -->
+            <!-- -- DBS & Compliance -- -->
             <div class="form-section">
               <div class="form-section-title">DBS &amp; Compliance</div>
               <div class="form-grid">
                 <div class="field">
                   <small>DBS Status</small>
                   <select class="field-select" id="dbs-status">
-                    <option value="">— Select —</option>
-                    <option value="clear">Enhanced DBS — Clear</option>
-                    <option value="amber">DBS — Action Required</option>
-                    <option value="expired">DBS — Expired</option>
+                    <option value="">� Select �</option>
+                    <option value="clear">Enhanced DBS � Clear</option>
+                    <option value="amber">DBS � Action Required</option>
+                    <option value="expired">DBS � Expired</option>
                   </select>
                 </div>
                 <div class="field"><small>DBS Certificate Number</small><input class="field-input" type="text" id="dbs-cert" /></div>
@@ -179,14 +179,14 @@
               </div>
             </div>
 
-            <!-- ── Training ── -->
+            <!-- -- Training -- -->
             <div class="form-section">
               <div class="form-section-title">Training</div>
               <div class="form-grid">
                 <div class="field">
                   <small>Training Level</small>
                   <select class="field-select" id="training-level">
-                    <option value="">— Select —</option>
+                    <option value="">� Select �</option>
                     <option value="DSL Level 3">DSL Level 3</option>
                     <option value="Safeguarding Awareness">Safeguarding Awareness</option>
                     <option value="First Aid">First Aid</option>
@@ -198,7 +198,7 @@
               </div>
             </div>
 
-            <!-- ── Additional ── -->
+            <!-- -- Additional -- -->
             <div class="form-section">
               <div class="form-section-title">Additional</div>
               <div class="form-grid">
@@ -209,7 +209,7 @@
 
             <div style="margin:16px 0 8px;padding:14px 18px;background:var(--surface-2,#f1f5f9);border:1px solid var(--line,#e1e7ec);border-radius:10px;font-size:0.88rem;color:var(--ink-2,#3b536e);">
               Compliance records are now managed separately.
-              <a id="compliance-banner-link" href="staff-aegis-control-room.html" style="color:var(--gold,#0891b2);font-weight:600;">Manage Compliance Record →</a>
+              <a id="compliance-banner-link" href="staff-aegis-control-room.html" style="color:var(--gold,#0891b2);font-weight:600;">Manage Compliance Record ?</a>
             </div>
 
             <div class="action-row">
@@ -234,7 +234,7 @@
     document.getElementById('not-found').style.display  = 'block';
     document.getElementById('edit-panel').style.display = 'none';
   } else {
-    document.title = 'Edit ' + member.firstName + ' ' + member.lastName + ' — Oxford Guardians';
+    document.title = 'Edit ' + member.firstName + ' ' + member.lastName + ' � Oxford Guardians';
     document.getElementById('toolbar-title').textContent = member.firstName + ' ' + member.lastName;
     document.getElementById('chrome-route').textContent  = 'Route /admin/staff/' + member.id + '/edit';
     document.getElementById('back-link').href   = 'staff-profile.html?id=' + member.id;

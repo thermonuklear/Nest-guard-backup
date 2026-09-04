@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Archived Revenue — Oxford Guardians Platform</title>
+    <title>Archived Revenue � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      /* ── Global colour overrides ── */
+      /* -- Global colour overrides -- */
       body, .page, .shell {
         background: #f0f4f8 !important;
         color: #0f2340 !important;
@@ -21,7 +21,7 @@
         box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
       }
 
-      /* ── Chrome bar ── */
+      /* -- Chrome bar -- */
       .chrome {
         background: #e8eef6 !important;
         border-bottom-color: #d5dce8 !important;
@@ -61,7 +61,7 @@
         background: #dce8f4;
       }
 
-      /* ── Sidebar ── */
+      /* -- Sidebar -- */
       .sidebar {
         background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
       }
@@ -75,7 +75,7 @@
 
 
 
-      /* ── Main ── */
+      /* -- Main -- */
       .main {
         background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
         overflow-y: auto;
@@ -86,7 +86,7 @@
       .eyebrow    { color: #2a6096 !important; }
       .toolbar p  { color: #3b536e !important; }
 
-      /* ── Buttons ── */
+      /* -- Buttons -- */
       .button {
         background: #0f2340 !important;
         border-color: #0f2340 !important;
@@ -116,12 +116,12 @@
         display: inline-block;
       }
 
-      /* ── Content padding ── */
+      /* -- Content padding -- */
       .tracker-content {
         padding: 0 24px 28px;
       }
 
-      /* ── Filter row ── */
+      /* -- Filter row -- */
       .filter-bar {
         display: flex;
         align-items: center;
@@ -175,7 +175,7 @@
         padding-bottom: 1px;
       }
 
-      /* ── Table ── */
+      /* -- Table -- */
       .table-wrap {
         background: #ffffff !important;
         border: 1px solid #d5dce8 !important;
@@ -230,7 +230,7 @@
         background: #dbeafe; color: #1e40af;
       }
 
-      /* ── Show more bar ── */
+      /* -- Show more bar -- */
       .show-more-bar {
         display: flex;
         align-items: center;
@@ -238,7 +238,7 @@
         margin-bottom: 20px;
       }
 
-      /* ── Chart section ── */
+      /* -- Chart section -- */
       .chart-section {
         background: #ffffff;
         border: 1px solid #d5dce8;
@@ -289,7 +289,7 @@
         height: 260px;
       }
 
-      /* ── Action forms ── */
+      /* -- Action forms -- */
       .actions-row {
         display: flex;
         gap: 10px;
@@ -362,7 +362,7 @@
         gap: 8px;
       }
 
-      /* ── Link pills ── */
+      /* -- Link pills -- */
       .inline-links {
         display: flex;
         flex-wrap: wrap;
@@ -487,7 +487,7 @@
                     <option value="Chargeable">Chargeable</option>
                   </select>
                 </div>
-                <span class="filter-meta" id="row-meta">— rows</span>
+                <span class="filter-meta" id="row-meta">� rows</span>
               </div>
 
               <!-- Table -->
@@ -539,7 +539,7 @@
                   <div class="form-field">
                     <label for="ne-student">Student</label>
                     <select class="field-select" id="ne-student" required>
-                      <option value="">— Select student —</option>
+                      <option value="">� Select student �</option>
                     </select>
                   </div>
                   <div class="form-field">
@@ -549,11 +549,11 @@
                   <div class="form-field">
                     <label for="ne-provider">Service Provider ID</label>
                     <select class="field-select" id="ne-provider" required>
-                      <option value="">— Select provider —</option>
+                      <option value="">� Select provider �</option>
                     </select>
                   </div>
                   <div class="form-field">
-                    <label for="ne-revenue">Revenue (£)</label>
+                    <label for="ne-revenue">Revenue (�)</label>
                     <input type="number" id="ne-revenue" placeholder="0.00" min="0" step="0.01" required />
                   </div>
                 </div>
@@ -580,7 +580,7 @@
                     <input type="text" id="ee-label" placeholder="e.g. Driver fee" />
                   </div>
                   <div class="form-field">
-                    <label for="ee-cost">Item Cost (£)</label>
+                    <label for="ee-cost">Item Cost (�)</label>
                     <input type="number" id="ee-cost" placeholder="0.00" min="0" step="0.01" />
                   </div>
                   <div class="form-field">
@@ -613,9 +613,9 @@
     <script src="assets/finance-data.js"></script>
     <script src="assets/db.js"></script>
     <script>
-      /* ─────────────────────────────────────────────
-         State — reads archived entries from revenue store
-      ───────────────────────────────────────────── */
+      /* ---------------------------------------------
+         State � reads archived entries from revenue store
+      --------------------------------------------- */
       var storedEvents = localStorage.getItem('og_revenue_events');
       var events;
       if (storedEvents) {
@@ -627,11 +627,11 @@
       var rowLimit = 20;
       var editingIndex = -1;
 
-      /* ─────────────────────────────────────────────
+      /* ---------------------------------------------
          Helpers
-      ───────────────────────────────────────────── */
+      --------------------------------------------- */
       function fmt(n) {
-        return '£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return '�' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       }
 
       function fmtDateDisplay(iso) {
@@ -647,9 +647,9 @@
         return iso.slice(0, 7);
       }
 
-      /* ─────────────────────────────────────────────
+      /* ---------------------------------------------
          Populate student filter
-      ───────────────────────────────────────────── */
+      --------------------------------------------- */
       function populateStudentFilter() {
         var sel = document.getElementById('f-student');
         var names = {};
@@ -662,9 +662,9 @@
         });
       }
 
-      /* ─────────────────────────────────────────────
-         Render table — shows only archived entries
-      ───────────────────────────────────────────── */
+      /* ---------------------------------------------
+         Render table � shows only archived entries
+      --------------------------------------------- */
       function buildRows() {
         events.forEach(function (row, i) { row._evIdx = i; });
         return events.filter(function (row) { return row.archived === true; }).sort(function (a, b) {
@@ -702,10 +702,10 @@
           return '<tr>' +
             '<td>' + fmtDateDisplay(row.datePayment) + '</td>' +
             '<td>' + fmtDateDisplay(row.date) + '</td>' +
-            '<td>' + (row.label || '—') + '</td>' +
-            '<td>' + (row.student || '—') + '</td>' +
-            '<td>' + (row.brand || '—') + '</td>' +
-            '<td>' + (row.providerId || '—') + '</td>' +
+            '<td>' + (row.label || '�') + '</td>' +
+            '<td>' + (row.student || '�') + '</td>' +
+            '<td>' + (row.brand || '�') + '</td>' +
+            '<td>' + (row.providerId || '�') + '</td>' +
             '<td class="money">' + fmt(row.cost || 0) + '</td>' +
             '<td style="text-align:right;white-space:nowrap;">' +
               '<button class="button-sm button-alt" data-idx="' + row._evIdx + '" style="padding:3px 10px;font-size:0.75rem;">Edit</button>' +
@@ -725,17 +725,17 @@
         }
       }
 
-      /* ─────────────────────────────────────────────
+      /* ---------------------------------------------
          Show more
-      ───────────────────────────────────────────── */
+      --------------------------------------------- */
       document.getElementById('show-more-btn').addEventListener('click', function () {
         rowLimit = 50;
         renderTable();
       });
 
-      /* ─────────────────────────────────────────────
+      /* ---------------------------------------------
          Filter listeners
-      ───────────────────────────────────────────── */
+      --------------------------------------------- */
       ['f-month', 'f-student', 'f-type'].forEach(function (id) {
         document.getElementById(id).addEventListener('change', function () {
           rowLimit = 20;
@@ -743,9 +743,9 @@
         });
       });
 
-      /* ─────────────────────────────────────────────
-         Edit row — button delegation
-      ───────────────────────────────────────────── */
+      /* ---------------------------------------------
+         Edit row � button delegation
+      --------------------------------------------- */
       document.getElementById('tracker-tbody').addEventListener('click', function (e) {
         var btn = e.target.closest('button[data-idx]');
         if (!btn) return;
@@ -826,12 +826,12 @@
         renderTable();
       });
 
-      /* ─────────────────────────────────────────────
+      /* ---------------------------------------------
          Populate Add form dropdowns
-      ───────────────────────────────────────────── */
+      --------------------------------------------- */
       function populateAddEventDropdowns() {
         var studentSel = document.getElementById('ne-student');
-        studentSel.innerHTML = '<option value="">— Select student —</option>';
+        studentSel.innerHTML = '<option value="">� Select student �</option>';
         var naOpt = document.createElement('option');
         naOpt.value = 'N/A'; naOpt.textContent = 'N/A';
         studentSel.appendChild(naOpt);
@@ -842,7 +842,7 @@
         });
 
         var providerSel = document.getElementById('ne-provider');
-        providerSel.innerHTML = '<option value="">— Select provider —</option>';
+        providerSel.innerHTML = '<option value="">� Select provider �</option>';
         var provNaOpt = document.createElement('option');
         provNaOpt.value = 'N/A'; provNaOpt.textContent = 'N/A';
         providerSel.appendChild(provNaOpt);
@@ -853,9 +853,9 @@
         });
       }
 
-      /* ─────────────────────────────────────────────
+      /* ---------------------------------------------
          Init
-      ───────────────────────────────────────────── */
+      --------------------------------------------- */
       populateAddEventDropdowns();
       populateStudentFilter();
       renderTable();

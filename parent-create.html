@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>New Parent Record — Oxford Guardians Platform</title>
+  <title>New Parent Record � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/app.css" />
   <style>
-    /* ── Form controls ── */
+    /* -- Form controls -- */
     .field-input,
     .field-select,
     .field-textarea {
@@ -40,7 +40,7 @@
     .field-select { appearance: none; cursor: pointer; }
     .field-textarea { resize: vertical; min-height: 96px; }
 
-    /* ── Form layout ── */
+    /* -- Form layout -- */
     .form-section { margin-bottom: 28px; }
 
     .form-section-title {
@@ -62,7 +62,7 @@
       color: var(--ink-2);
     }
 
-    /* ── Linked students checkbox group ── */
+    /* -- Linked students checkbox group -- */
     .checkbox-group { display: grid; gap: 8px; margin-top: 6px; }
     .checkbox-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg-card, #f9f9fb); border: 1px solid var(--border, #e2e2e8); border-radius: 10px; cursor: pointer; transition: background 0.15s; }
     .checkbox-item:hover { background: var(--bg-hover, #f0f0f5); }
@@ -70,7 +70,7 @@
     .checkbox-item label { cursor: pointer; font-size: 0.9rem; font-weight: 500; }
     .checkbox-item small { color: var(--text-muted, #888); font-size: 0.78rem; margin-left: auto; }
 
-    /* ── Validation ── */
+    /* -- Validation -- */
     .form-error {
       display: none;
       color: var(--red);
@@ -90,7 +90,7 @@
       box-shadow: 0 0 0 3px rgba(127, 48, 52, 0.1);
     }
 
-    /* ── Panel ── */
+    /* -- Panel -- */
     .create-panel {
       background: var(--surface);
       border: 1px solid var(--line);
@@ -159,7 +159,7 @@
         <div class="create-panel">
           <form id="parent-form" novalidate>
 
-            <!-- ── Card 1: Contact details ── -->
+            <!-- -- Card 1: Contact details -- -->
             <div class="form-section">
               <div class="form-section-title">Contact Details</div>
               <div class="form-grid">
@@ -186,7 +186,7 @@
                 <div class="field">
                   <small>Preferred Contact Method</small>
                   <select class="field-select" id="preferred-contact">
-                    <option value="">— Select —</option>
+                    <option value="">� Select �</option>
                     <option value="Email">Email</option>
                     <option value="Phone">Phone</option>
                     <option value="WhatsApp">WhatsApp</option>
@@ -202,14 +202,14 @@
               </div>
             </div>
 
-            <!-- ── Card 2: Family link ── -->
+            <!-- -- Card 2: Family link -- -->
             <div class="form-section">
               <div class="form-section-title">Family Link</div>
               <div class="form-grid">
                 <div class="field form-span-2" id="field-relationship">
                   <small>Relationship *</small>
                   <select class="field-select" id="relationship">
-                    <option value="">— Select —</option>
+                    <option value="">� Select �</option>
                     <option value="Mother / legal guardian">Mother / legal guardian</option>
                     <option value="Father / legal guardian">Father / legal guardian</option>
                     <option value="Mother">Mother</option>
@@ -225,18 +225,18 @@
               </div>
             </div>
 
-            <!-- ── Card 3: Additional ── -->
+            <!-- -- Card 3: Additional -- -->
             <div class="form-section">
               <div class="form-section-title">Additional</div>
               <div class="form-grid">
                 <div class="field form-span-2">
                   <small>Notes</small>
-                  <textarea class="field-textarea" id="notes" placeholder="Any additional notes about communication preferences or family context…"></textarea>
+                  <textarea class="field-textarea" id="notes" placeholder="Any additional notes about communication preferences or family context�"></textarea>
                 </div>
               </div>
             </div>
 
-            <!-- ── Action row ── -->
+            <!-- -- Action row -- -->
             <div class="action-row">
               <button type="submit" class="button">Save parent record</button>
               <a class="button-alt" href="parent-list.html">Cancel</a>
@@ -253,7 +253,7 @@
 
 <script src="assets/db.js"></script>
 <script>
-  // ── Populate student checkboxes ────────────────────────────────────────────
+  // -- Populate student checkboxes --------------------------------------------
   (function () {
     var container = document.getElementById('student-checkboxes');
     var students  = getAllStudents();
@@ -286,11 +286,11 @@
     });
   }());
 
-  // ── Form submission ────────────────────────────────────────────────────────
+  // -- Form submission --------------------------------------------------------
   document.getElementById('parent-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    // ── Clear previous errors ────────────────────────────────────────────────
+    // -- Clear previous errors ------------------------------------------------
     var required = [
       { id: 'first-name',   wrap: 'field-first-name'   },
       { id: 'last-name',    wrap: 'field-last-name'    },
@@ -303,7 +303,7 @@
       if (wrap) wrap.classList.remove('field-error');
     });
 
-    // ── Validate ────────────────────────────────────────────────────────────
+    // -- Validate ------------------------------------------------------------
     var valid = true;
     required.forEach(function (f) {
       var el = document.getElementById(f.id);
@@ -318,20 +318,20 @@
     if (!valid) { errorMsg.style.display = 'block'; return; }
     errorMsg.style.display = 'none';
 
-    // ── Read helpers ─────────────────────────────────────────────────────────
+    // -- Read helpers ---------------------------------------------------------
     function val(id) {
       var el = document.getElementById(id);
       return el ? el.value.trim() : '';
     }
 
-    // ── Collect linked students ───────────────────────────────────────────────
+    // -- Collect linked students -----------------------------------------------
     var checked          = document.querySelectorAll('#student-checkboxes input[type="checkbox"]:checked');
     var linkedStudentIds = Array.from(checked).map(function (cb) { return cb.value; });
 
-    // ── Generate ID ───────────────────────────────────────────────────────────
+    // -- Generate ID -----------------------------------------------------------
     var newId = generateParentId();
 
-    // ── Build object ──────────────────────────────────────────────────────────
+    // -- Build object ----------------------------------------------------------
     var newParent = {
       id:               newId,
       firstName:        val('first-name'),
@@ -347,7 +347,7 @@
       notes:            val('notes')
     };
 
-    // ── Save & redirect ───────────────────────────────────────────────────────
+    // -- Save & redirect -------------------------------------------------------
     saveParent(newParent);
     window.location.href = 'parent-list.html';
   });

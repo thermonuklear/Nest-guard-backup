@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Agent Profile — Oxford Guardians Platform</title>
+    <title>Agent Profile � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      /* ── Parent avatar in toolbar ── */
+      /* -- Parent avatar in toolbar -- */
       .parent-avatar-lg {
         width: 48px;
         height: 48px;
@@ -26,7 +26,7 @@
         flex-shrink: 0;
       }
 
-      /* ── Sub-navigation tabs ── */
+      /* -- Sub-navigation tabs -- */
       .subnav {
         display: flex;
         align-items: center;
@@ -61,10 +61,10 @@
       .tab-content { display: none; }
       .tab-content.active { display: block; }
 
-      /* ── KV full-width span ── */
+      /* -- KV full-width span -- */
       .kv-block-full { grid-column: 1 / -1; }
 
-      /* ── Linked student card ── */
+      /* -- Linked student card -- */
       .student-card {
         background: var(--surface);
         border: 1px solid var(--line);
@@ -111,7 +111,7 @@
         flex-shrink: 0;
       }
 
-      /* ── Empty state ── */
+      /* -- Empty state -- */
       .empty-state-card {
         background: var(--surface);
         border: 1.5px dashed var(--line);
@@ -122,7 +122,7 @@
         font-size: 0.88rem;
       }
 
-      /* ── Required docs checklist ── */
+      /* -- Required docs checklist -- */
       .req-docs {
         background: var(--surface);
         border: 1px solid var(--line);
@@ -157,7 +157,7 @@
       .req-doc-item strong { display: block; font-size: 0.88rem; }
       .req-doc-item small  { font-size: 0.76rem; color: var(--ink-3); }
 
-      /* ── Upload card ── */
+      /* -- Upload card -- */
       .upload-card {
         background: var(--surface);
         border: 1px solid var(--line);
@@ -255,7 +255,7 @@
         border-radius: 12px;
       }
 
-      /* ── Not-found state ── */
+      /* -- Not-found state -- */
       .not-found {
         padding: 60px 32px;
         text-align: center;
@@ -310,7 +310,7 @@
         <!-- Main content -->
         <section class="main" id="main-content">
             <div class="toolbar">
-              <a href="agents.html" style="color:var(--ink-3); text-decoration:none; font-size:0.9rem; font-weight:600;">← Back to Directory</a>
+              <a href="agents.html" style="color:var(--ink-3); text-decoration:none; font-size:0.9rem; font-weight:600;">? Back to Directory</a>
             </div>
 
             <header class="profile-header">
@@ -321,7 +321,7 @@
                   <div class="meta-row">
                     <span class="badge" id="agent-status">Loading...</span>
                     <span id="agent-id">ID: </span>
-                    <span id="agent-country">📍 </span>
+                    <span id="agent-country">?? </span>
                   </div>
                 </div>
               </div>
@@ -397,7 +397,7 @@
 
   <script src="assets/db.js"></script>
 
-  <!-- ── Edit Agent Modal ──────────────────────────────────────────────── -->
+  <!-- -- Edit Agent Modal ------------------------------------------------ -->
   <div id="edit-agent-modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(15,35,64,0.45);align-items:center;justify-content:center;">
     <div style="background:#fffdf9;border:1px solid #d5dce8;border-radius:24px;padding:28px 28px 24px;width:min(560px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 24px 60px rgba(15,35,64,0.22);">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;">
@@ -482,7 +482,7 @@
         document.getElementById('agent-status').textContent = agent.status || 'Unknown';
         document.getElementById('agent-status').className = agent.status === 'Active' ? 'badge green' : 'badge slate';
         document.getElementById('agent-id').textContent = 'ID: ' + agent.id;
-        document.getElementById('agent-country').textContent = '📍 ' + (agent.country || 'N/A');
+        document.getElementById('agent-country').textContent = '?? ' + (agent.country || 'N/A');
         
         document.getElementById('agent-name').textContent = agent.firstName + ' ' + agent.lastName;
         document.getElementById('agent-email').textContent = agent.email;
@@ -565,7 +565,7 @@
                       '<div style="display:flex; justify-content:space-between; align-items:flex-start;">' +
                         '<div>' +
                           '<h4 style="margin:0 0 8px 0;">' + escapeHtml(c.title) + '</h4>' +
-                          '<p style="margin:0; font-size:0.9em; color:#3b536e;">Valid: ' + escapeHtml(c.validFrom || '—') + ' to ' + escapeHtml(c.validTo || '—') + '</p>' +
+                          '<p style="margin:0; font-size:0.9em; color:#3b536e;">Valid: ' + escapeHtml(c.validFrom || '�') + ' to ' + escapeHtml(c.validTo || '�') + '</p>' +
                         '</div>' +
                         '<span class="badge ' + statusColor + '">' + escapeHtml(c.status) + '</span>' +
                       '</div>' +
@@ -608,7 +608,7 @@
         });
       });
 
-      // ── Edit Agent Modal ──────────────────────────────────────────────────
+      // -- Edit Agent Modal --------------------------------------------------
 
       function openEditModal() {
         if (!agent) return;
@@ -648,7 +648,7 @@
         document.getElementById('avatar-initials').textContent    = agent.company ? agent.company.charAt(0) : 'A';
         document.getElementById('agent-status').textContent       = agent.status  || 'Unknown';
         document.getElementById('agent-status').className         = agent.status === 'Active' ? 'badge green' : 'badge slate';
-        document.getElementById('agent-country').textContent      = '📍 ' + (agent.country || 'N/A');
+        document.getElementById('agent-country').textContent      = '?? ' + (agent.country || 'N/A');
         document.getElementById('agent-name').textContent         = agent.firstName + ' ' + agent.lastName;
         document.getElementById('agent-email').textContent        = agent.email;
         document.getElementById('agent-phone').textContent        = agent.phone || 'N/A';

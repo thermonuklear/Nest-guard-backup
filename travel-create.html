@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create Transport — Oxford Guardians Platform</title>
+    <title>Create Transport � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      /* ── Global colour overrides ── */
+      /* -- Global colour overrides -- */
       body, .page, .shell, main {
         background: #f0f4f8 !important;
         color: #0f2340 !important;
@@ -21,7 +21,7 @@
         box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important;
       }
 
-      /* ── Chrome ── */
+      /* -- Chrome -- */
       .chrome {
         background: #e8eef6 !important;
         border-bottom-color: #d5dce8 !important;
@@ -58,7 +58,7 @@
         color: #0f2340;
       }
 
-      /* ── Sidebar ── */
+      /* -- Sidebar -- */
       .sidebar {
         background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
       }
@@ -74,7 +74,7 @@
 
 
 
-      /* ── Main ── */
+      /* -- Main -- */
       .main {
         background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
       }
@@ -84,7 +84,7 @@
       .eyebrow { color: #2a6096 !important; }
       .toolbar p { color: #3b536e !important; }
 
-      /* ── Buttons ── */
+      /* -- Buttons -- */
       .button {
         background: #0f2340 !important;
         border-color: #0f2340 !important;
@@ -101,7 +101,7 @@
 
       .button-alt:hover { background: #edf2f8 !important; }
 
-      /* ── Form controls ── */
+      /* -- Form controls -- */
       .field-input,
       .field-select,
       .field-textarea {
@@ -138,7 +138,7 @@
       .field-select { appearance: none; cursor: pointer; }
       .field-textarea { resize: vertical; min-height: 80px; }
 
-      /* ── Form layout ── */
+      /* -- Form layout -- */
       .form-section { margin-bottom: 28px; }
 
       .form-section-title {
@@ -181,7 +181,7 @@
         margin-top: 4px;
       }
 
-      /* ── Validation ── */
+      /* -- Validation -- */
       .form-error {
         display: none;
         color: #7f3034;
@@ -200,7 +200,7 @@
         box-shadow: 0 0 0 3px rgba(127,48,52,0.1);
       }
 
-      /* ── Panel ── */
+      /* -- Panel -- */
       .create-panel {
         background: #ffffff !important;
         border: 1px solid #d5dce8 !important;
@@ -216,7 +216,7 @@
         padding-top: 8px;
       }
 
-      /* ── ID chip ── */
+      /* -- ID chip -- */
       .id-chip {
         display: inline-flex;
         align-items: center;
@@ -337,7 +337,7 @@
             <div class="nav-label">Operations</div>
             <a class="nav-link" href="travel.html">Travel</a>
             <a class="nav-link nav-link-sub" href="travel-todo.html">To-do</a>
-            <a class="nav-link nav-link-sub" href="driver-list.html">Drivers</a>
+            <a class="nav-link nav-link-sub" href="drivers.html">Drivers</a>
             <a class="nav-link nav-link-sub active" href="transportation.html">Transportation</a>
             <a class="nav-link" href="documents.html">Documents</a>
               <a class="nav-link" href="safeguarding.html">Safeguarding</a>
@@ -356,7 +356,7 @@
             <div>
               <span class="eyebrow">Transportation</span>
               <h2>Create transport record</h2>
-              <p>Log a journey — exeat, holiday, or airport transfer. Required fields are marked with *.</p>
+              <p>Log a journey � exeat, holiday, or airport transfer. Required fields are marked with *.</p>
             </div>
             <div class="toolbar-actions">
               <a class="button-alt" href="transportation.html">Cancel</a>
@@ -369,11 +369,11 @@
               <!-- Auto-generated ID -->
               <div class="id-chip">
                 <span>Transport ID</span>
-                <span id="transport-id-display">—</span>
+                <span id="transport-id-display">�</span>
               </div>
               <input type="hidden" id="transport-id" />
 
-              <!-- ── Section 1: Journey Details ── -->
+              <!-- -- Section 1: Journey Details -- -->
               <div class="form-section">
                 <div class="form-section-title">Journey Details</div>
                 <div class="form-grid">
@@ -410,20 +410,20 @@
                 </div>
               </div>
 
-              <!-- ── Section 2: People ── -->
+              <!-- -- Section 2: People -- -->
               <div class="form-section">
                 <div class="form-section-title">People</div>
                 <div class="form-grid">
                   <div class="field" id="field-student">
                     <small>Name of Student *</small>
                     <select class="field-select" id="student-name">
-                      <option value="">Select a student…</option>
+                      <option value="">Select a student�</option>
                     </select>
                   </div>
                   <div class="field" id="field-driver">
                     <small>Name of Driver</small>
                     <select class="field-select" id="driver-name">
-                      <option value="">Select a driver…</option>
+                      <option value="">Select a driver�</option>
                     </select>
                   </div>
                   <div class="field form-span-2">
@@ -442,19 +442,19 @@
                 </div>
               </div>
 
-              <!-- ── Section 3: Financials ── -->
+              <!-- -- Section 3: Financials -- -->
               <div class="form-section">
                 <div class="form-section-title">Financials</div>
                 <div class="form-grid">
                   <div class="field">
-                    <small>Cost (£)</small>
-                    <input class="field-input" type="text" id="cost" placeholder="e.g. £34.10" />
-                    <p class="field-hint">Enter as £34.10 or 34.10</p>
+                    <small>Cost (�)</small>
+                    <input class="field-input" type="text" id="cost" placeholder="e.g. �34.10" />
+                    <p class="field-hint">Enter as �34.10 or 34.10</p>
                   </div>
                   <div class="field">
-                    <small>Revenue (£)</small>
-                    <input class="field-input" type="text" id="revenue" placeholder="e.g. £52.00" />
-                    <p class="field-hint">Enter as £52.00 or 52.00</p>
+                    <small>Revenue (�)</small>
+                    <input class="field-input" type="text" id="revenue" placeholder="e.g. �52.00" />
+                    <p class="field-hint">Enter as �52.00 or 52.00</p>
                   </div>
                   <div class="field form-span-2" id="field-service-type">
                     <label class="field-label" for="service-type">Type of Service</label>
@@ -466,7 +466,7 @@
                 </div>
               </div>
 
-              <!-- ── Submit ── -->
+              <!-- -- Submit -- -->
               <div class="action-row">
                 <button type="submit" class="button">Save transport record</button>
                 <a class="button-alt" href="transportation.html">Cancel</a>
@@ -496,13 +496,13 @@
       }
     </script>
   <script>
-    // ── Generate Transport ID on load ──────────────────────────────────────────
+    // -- Generate Transport ID on load ------------------------------------------
     function generateTransportId() {
       var digits = Math.floor(100000 + Math.random() * 900000).toString();
       return 'TR' + digits;
     }
 
-    // ── Populate dropdowns ─────────────────────────────────────────────────────
+    // -- Populate dropdowns -----------------------------------------------------
     var studentSelect = document.getElementById('student-name');
     var driverSelect  = document.getElementById('driver-name');
 
@@ -548,8 +548,8 @@
         document.getElementById('passengers').value = transport.passengers || '';
         document.getElementById('luggage').value = transport.luggage || '';
         document.getElementById('miles').value = transport.miles || '';
-        document.getElementById('cost').value = (transport.cost || '').replace('£', '');
-        document.getElementById('revenue').value = (transport.revenue || '').replace('£', '');
+        document.getElementById('cost').value = (transport.cost || '').replace('�', '');
+        document.getElementById('revenue').value = (transport.revenue || '').replace('�', '');
         document.getElementById('service-type').value = transport.serviceType || 'Chargeable';
         // Load existing screenshot if one exists
         if (transport.parentConfirmation === 'Confirmed') {
@@ -558,7 +558,7 @@
           if (transport.permissionScreenshot) {
             window.screenshotBase64 = transport.permissionScreenshot;
             var hint = screenshotField.querySelector('.field-hint');
-            hint.innerHTML = '<span style="color:#16a34a; font-weight:600;">✓ Existing screenshot loaded.</span> Upload a new file below if you wish to replace it.';
+            hint.innerHTML = '<span style="color:#16a34a; font-weight:600;">? Existing screenshot loaded.</span> Upload a new file below if you wish to replace it.';
           }
         }
       }
@@ -573,7 +573,7 @@
       document.getElementById('transport-id-display').textContent = newId;
     }
 
-    // ── Permission Screenshot Logic ────────────────────────────────────────────
+    // -- Permission Screenshot Logic --------------------------------------------
     var parentConfSelect  = document.getElementById('parent-confirmation');
     var screenshotField   = document.getElementById('field-permission-screenshot');
     var screenshotInput   = document.getElementById('permission-screenshot');
@@ -594,26 +594,26 @@
       }
     });
 
-    // ── Format date for display (ISO → "14 Feb 2026") ─────────────────────────
+    // -- Format date for display (ISO ? "14 Feb 2026") -------------------------
     function fmtDate(iso) {
       if (!iso) return '';
       var d = new Date(iso + 'T00:00:00');
       return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     }
 
-    // ── Format time for display ("15:30" → "15:30") ───────────────────────────
+    // -- Format time for display ("15:30" ? "15:30") ---------------------------
     function fmtTime(t) {
       return t || '';
     }
 
-    // ── Ensure £ prefix ───────────────────────────────────────────────────────
+    // -- Ensure � prefix -------------------------------------------------------
     function fmtMoney(raw) {
       if (!raw) return '';
       raw = raw.trim();
-      return raw.charAt(0) === '£' ? raw : '£' + raw;
+      return raw.charAt(0) === '�' ? raw : '�' + raw;
     }
 
-    // ── Form submission ────────────────────────────────────────────────────────
+    // -- Form submission --------------------------------------------------------
     document.getElementById('transport-form').addEventListener('submit', function (e) {
       e.preventDefault();
 

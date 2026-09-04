@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Driver — Oxford Guardians Platform</title>
+  <title>Create Driver � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/app.css" />
   <style>
-    /* ── Global colour overrides ── */
+    /* -- Global colour overrides -- */
     body, .page, .shell, main { background: #f0f4f8 !important; color: #0f2340 !important; }
 
     .app-frame {
@@ -50,7 +50,7 @@
     }
     .button-alt:hover { background: #edf2f8 !important; }
 
-    /* ── Form controls ── */
+    /* -- Form controls -- */
     .field-input,
     .field-select,
     .field-textarea {
@@ -81,7 +81,7 @@
     .field-select { appearance: none; cursor: pointer; }
     .field-textarea { resize: vertical; min-height: 96px; }
 
-    /* ── Form layout ── */
+    /* -- Form layout -- */
     .form-section { margin-bottom: 28px; }
 
     .form-section-title {
@@ -112,7 +112,7 @@
       color: #3b536e;
     }
 
-    /* ── Validation ── */
+    /* -- Validation -- */
     .form-error {
       display: none;
       color: #7f3034;
@@ -132,7 +132,7 @@
       box-shadow: 0 0 0 3px rgba(127,48,52,0.1);
     }
 
-    /* ── Panel wrapper ── */
+    /* -- Panel wrapper -- */
     .create-panel {
       background: #ffffff !important;
       border: 1px solid #d5dce8 !important;
@@ -148,7 +148,7 @@
       padding-top: 8px;
     }
 
-    /* ── DBS hint ── */
+    /* -- DBS hint -- */
     .field-hint {
       font-size: 0.76rem;
       color: #6b85a0;
@@ -211,7 +211,7 @@
         <div class="create-panel">
           <form id="driver-form" novalidate>
 
-            <!-- ── Section 1: Identity ── -->
+            <!-- -- Section 1: Identity -- -->
             <div class="form-section">
               <div class="form-section-title">Identity</div>
               <div class="form-grid">
@@ -238,7 +238,7 @@
               </div>
             </div>
 
-            <!-- ── Section 2: Vehicle ── -->
+            <!-- -- Section 2: Vehicle -- -->
             <div class="form-section">
               <div class="form-section-title">Vehicle</div>
               <div class="form-grid">
@@ -261,9 +261,9 @@
                 <div class="field">
                   <small>Child Seat Available</small>
                   <select class="field-select" id="child-seat">
-                    <option value="">Select…</option>
-                    <option value="Yes — standard Group 2/3 seat carried on request">Yes — Group 2/3 on request</option>
-                    <option value="Yes — Group 1/2/3 combination seat available">Yes — Group 1/2/3 available</option>
+                    <option value="">Select�</option>
+                    <option value="Yes � standard Group 2/3 seat carried on request">Yes � Group 2/3 on request</option>
+                    <option value="Yes � Group 1/2/3 combination seat available">Yes � Group 1/2/3 available</option>
                     <option value="No">No</option>
                   </select>
                 </div>
@@ -278,17 +278,17 @@
               </div>
             </div>
 
-            <!-- ── Section 3: Compliance ── -->
+            <!-- -- Section 3: Compliance -- -->
             <div class="form-section">
               <div class="form-section-title">DBS &amp; Compliance</div>
               <div class="form-grid">
                 <div class="field" id="field-dbs-status">
                   <small>DBS Status *</small>
                   <select class="field-select" id="dbs-status">
-                    <option value="">Select status…</option>
-                    <option value="clear">Enhanced DBS — Clear</option>
-                    <option value="amber">DBS — Action Required</option>
-                    <option value="expired">DBS — Expired</option>
+                    <option value="">Select status�</option>
+                    <option value="clear">Enhanced DBS � Clear</option>
+                    <option value="amber">DBS � Action Required</option>
+                    <option value="expired">DBS � Expired</option>
                   </select>
                 </div>
                 <div class="field">
@@ -305,23 +305,23 @@
                 </div>
                 <div class="field form-span-2">
                   <small>DBS Update Service</small>
-                  <input class="field-input" type="text" id="dbs-update" placeholder="e.g. Subscribed — last verified 02 Apr 2026" />
+                  <input class="field-input" type="text" id="dbs-update" placeholder="e.g. Subscribed � last verified 02 Apr 2026" />
                 </div>
               </div>
             </div>
 
-            <!-- ── Section 4: Rates ── -->
+            <!-- -- Section 4: Rates -- -->
             <div class="form-section">
               <div class="form-section-title">Rates &amp; Billing</div>
               <div class="form-grid">
                 <div class="field" id="field-rate-mile">
-                  <small>Rate per Mile (£) *</small>
-                  <input class="field-input" type="text" id="rate-mile" placeholder="e.g. £0.55" />
-                  <p class="field-hint">Enter as £0.55 or 0.55</p>
+                  <small>Rate per Mile (�) *</small>
+                  <input class="field-input" type="text" id="rate-mile" placeholder="e.g. �0.55" />
+                  <p class="field-hint">Enter as �0.55 or 0.55</p>
                 </div>
                 <div class="field">
                   <small>Waiting Time Rate</small>
-                  <input class="field-input" type="text" id="rate-waiting" placeholder="e.g. £18.00 / hour after 30 min free" />
+                  <input class="field-input" type="text" id="rate-waiting" placeholder="e.g. �18.00 / hour after 30 min free" />
                 </div>
                 <div class="field">
                   <small>Billing Contact Email</small>
@@ -330,16 +330,16 @@
                 <div class="field">
                   <small>Invoicing Cycle</small>
                   <select class="field-select" id="invoicing-cycle">
-                    <option value="">Select…</option>
-                    <option value="Monthly — NET 14">Monthly — NET 14</option>
-                    <option value="Monthly — NET 30">Monthly — NET 30</option>
+                    <option value="">Select�</option>
+                    <option value="Monthly � NET 14">Monthly � NET 14</option>
+                    <option value="Monthly � NET 30">Monthly � NET 30</option>
                     <option value="Per job">Per job</option>
                   </select>
                 </div>
               </div>
             </div>
 
-            <!-- ── Section 5: Performance & availability ── -->
+            <!-- -- Section 5: Performance & availability -- -->
             <div class="form-section">
               <div class="form-section-title">Performance &amp; Availability</div>
               <div class="form-grid">
@@ -353,7 +353,7 @@
                 </div>
                 <div class="field form-span-2">
                   <small>Availability</small>
-                  <input class="field-input" type="text" id="availability" placeholder="e.g. 7 days — no Sunday runs after 22:00. 48-hour notice preferred." />
+                  <input class="field-input" type="text" id="availability" placeholder="e.g. 7 days � no Sunday runs after 22:00. 48-hour notice preferred." />
                 </div>
                 <div class="field form-span-2">
                   <small>Languages</small>
@@ -361,12 +361,12 @@
                 </div>
                 <div class="field form-span-2">
                   <small>Notes</small>
-                  <textarea class="field-textarea" id="notes" placeholder="Any additional notes about this driver…"></textarea>
+                  <textarea class="field-textarea" id="notes" placeholder="Any additional notes about this driver�"></textarea>
                 </div>
               </div>
             </div>
 
-            <!-- ── Submit ── -->
+            <!-- -- Submit -- -->
             <div class="action-row">
               <button type="submit" class="button">Save driver record</button>
               <a class="button-alt" href="travel.html">Cancel</a>
@@ -386,7 +386,7 @@
   document.getElementById('driver-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    // ── Required field validation ────────────────────────────────────────────
+    // -- Required field validation --------------------------------------------
     var required = [
       { id: 'first-name',  wrap: 'field-first-name' },
       { id: 'last-name',   wrap: 'field-last-name'  },
@@ -414,7 +414,7 @@
     if (!valid) { errorMsg.style.display = 'block'; return; }
     errorMsg.style.display = 'none';
 
-    // ── Read values ──────────────────────────────────────────────────────────
+    // -- Read values ----------------------------------------------------------
     function val(id) {
       var el = document.getElementById(id);
       return el ? el.value.trim() : '';
@@ -423,11 +423,11 @@
     var firstName = val('first-name');
     var lastName  = val('last-name');
 
-    // ── Format rate: ensure leading £ ───────────────────────────────────────
+    // -- Format rate: ensure leading � ---------------------------------------
     var rawRate  = val('rate-mile');
-    var ratePerMile = rawRate.charAt(0) === '£' ? rawRate : '£' + rawRate;
+    var ratePerMile = rawRate.charAt(0) === '�' ? rawRate : '�' + rawRate;
 
-    // ── Punctuality: clamp 0–100 ─────────────────────────────────────────────
+    // -- Punctuality: clamp 0�100 ---------------------------------------------
     var pctRaw  = parseInt(val('punctuality'), 10);
     var pct     = isNaN(pctRaw) ? 100 : Math.min(100, Math.max(0, pctRaw));
     var dbsIssue   = val('dbs-issue');
@@ -439,7 +439,7 @@
       return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     }
 
-    // ── Generate unique ID ───────────────────────────────────────────────────
+    // -- Generate unique ID ---------------------------------------------------
     var baseId = (firstName + '-' + lastName)
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
@@ -453,7 +453,7 @@
       counter++;
     }
 
-    // ── Build driver object ──────────────────────────────────────────────────
+    // -- Build driver object --------------------------------------------------
     var newDriver = {
       id:                uniqueId,
       firstName:         firstName,
@@ -476,10 +476,10 @@
       ratePerMile:       ratePerMile,
       waitingRate:       val('rate-waiting') || 'Not specified',
       billingContact:    val('billing-contact') || 'billing@oxfordguardians.co.uk',
-      invoicingCycle:    val('invoicing-cycle') || 'Monthly — NET 14',
+      invoicingCycle:    val('invoicing-cycle') || 'Monthly � NET 14',
       punctualityPct:    pct,
       punctualityDetail: pct + '% on-time (record started ' + new Date().toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) + ')',
-      lateIncidents:     '0 — no incidents recorded yet.',
+      lateIncidents:     '0 � no incidents recorded yet.',
       parentFeedback:    'No feedback recorded yet.',
       preferredAirports: val('airports') || 'Not specified',
       availability:      val('availability') || 'Not specified',
@@ -507,9 +507,9 @@
       }
     };
 
-    // ── Persist & redirect ───────────────────────────────────────────────────
+    // -- Persist & redirect ---------------------------------------------------
     saveDriver(newDriver);
-    window.location.href = 'drivers.html?id=' + uniqueId;
+    window.location.href = 'driver-profile.html?id=' + uniqueId;
   });
 </script>
 

@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Travel To-do — Oxford Guardians Platform</title>
+    <title>Travel To-do � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      /* ── Global (inherited from hosts.html) ── */
+      /* -- Global (inherited from hosts.html) -- */
       body, .page, .shell {
         background: #f0f4f8 !important;
         color: #0f2340 !important;
@@ -21,7 +21,7 @@
         box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
       }
 
-      /* ── Chrome bar ── */
+      /* -- Chrome bar -- */
       .chrome {
         background: #e8eef6 !important;
         border-bottom-color: #d5dce8 !important;
@@ -51,7 +51,7 @@
 
       .chrome-nav-link:hover { background: rgba(15, 35, 64, 0.07); color: #0f2340; }
 
-      /* ── Sidebar ── */
+      /* -- Sidebar -- */
       .sidebar { background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important; }
 
       .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
@@ -65,7 +65,7 @@
 
 
 
-      /* ── Main ── */
+      /* -- Main -- */
       .main {
         background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
         overflow-y: auto;
@@ -76,7 +76,7 @@
       .eyebrow    { color: #2a6096 !important; }
       .toolbar p  { color: #3b536e !important; }
 
-      /* ── Buttons ── */
+      /* -- Buttons -- */
       .button {
         background: #0f2340 !important;
         border-color: #0f2340 !important;
@@ -93,7 +93,7 @@
 
       .button-alt:hover { background: #edf2f8 !important; }
 
-      /* ── Table ── */
+      /* -- Table -- */
       .table-wrap {
         background: #ffffff !important;
         border: 1px solid #d5dce8 !important;
@@ -130,7 +130,7 @@
       td strong { color: #0f2340 !important; font-weight: 600; }
       td small  { display: block; color: #6b85a0 !important; font-size: 0.78rem; margin-top: 1px; }
 
-      /* ── Transport group header rows ── */
+      /* -- Transport group header rows -- */
       .group-row td {
         background: #f0f4f8 !important;
         padding: 7px 14px;
@@ -173,7 +173,7 @@
         margin-right: 8px;
       }
 
-      /* ── Inline spreadsheet inputs ── */
+      /* -- Inline spreadsheet inputs -- */
       .cell-input {
         border: 1px solid transparent;
         border-radius: 6px;
@@ -224,7 +224,7 @@
       .cell-select:hover { border-color: #d5dce8; background-color: #f4f7fb; }
       .cell-select:focus { border-color: #0f2340; background-color: #ffffff; box-shadow: 0 0 0 3px rgba(15,35,64,0.08); }
 
-      /* ── Transport ID chip inside data rows ── */
+      /* -- Transport ID chip inside data rows -- */
       .transport-chip {
         display: inline-block;
         background: #e8eef6;
@@ -238,7 +238,7 @@
         letter-spacing: 0.04em;
       }
 
-      /* ── Return date injection ── */
+      /* -- Return date injection -- */
       .return-date-wrap {
         display: flex;
         align-items: center;
@@ -256,7 +256,7 @@
         flex-shrink: 0;
       }
 
-      /* ── Save flash ── */
+      /* -- Save flash -- */
       @keyframes todo-save-flash {
         0%   { background-color: #d1fae5; }
         100% { background-color: transparent; }
@@ -264,7 +264,7 @@
 
       .row-saved td { animation: todo-save-flash 0.7s ease forwards; }
 
-      /* ── Empty state ── */
+      /* -- Empty state -- */
       .empty-state {
         text-align: center;
         padding: 44px 24px;
@@ -363,7 +363,7 @@
               <div class="nav-label">Operations</div>
               <a class="nav-link" href="travel.html">Travel</a>
               <a class="nav-link nav-link-sub active" href="travel-todo.html">To-do</a>
-              <a class="nav-link nav-link-sub" href="driver-list.html">Drivers</a>
+              <a class="nav-link nav-link-sub" href="drivers.html">Drivers</a>
               <a class="nav-link nav-link-sub" href="transportation.html">Transportation</a>
               <a class="nav-link nav-link-sub" href="travel-incidents.html">Incident log</a>
               <a class="nav-link" href="documents.html">Documents</a>
@@ -385,7 +385,7 @@
               <div>
                 <span class="eyebrow">Travel Coordination</span>
                 <h2>Travel To-do</h2>
-                <p>Confirmation checklist for each booked journey. Edit inline — changes save automatically.</p>
+                <p>Confirmation checklist for each booked journey. Edit inline � changes save automatically.</p>
               </div>
               <div class="toolbar-actions">
                 <a class="button-alt" href="travel.html">Upcoming Travel</a>
@@ -432,13 +432,13 @@
       }
     </script>
     <script>
-      // ── Transport lookup map ────────────────────────────────────────────────────
+      // -- Transport lookup map ----------------------------------------------------
       var transportMap = {};
       OG_DB.getAllTransports().forEach(function (t) {
         transportMap[t.id] = t;
       });
 
-      // ── Parse "14 Feb 2026" → timestamp ────────────────────────────────────────
+      // -- Parse "14 Feb 2026" ? timestamp ----------------------------------------
       function parseDateValue(str) {
         if (!str) return 0;
         var d = new Date(str);
@@ -455,7 +455,7 @@
         return 0;
       }
 
-      // ── Persist a todo and flash the row green ──────────────────────────────────
+      // -- Persist a todo and flash the row green ----------------------------------
       function persistTodo(todo, row) {
         OG_DB.saveTravelTodo(todo);
         if (!row) return;
@@ -465,7 +465,7 @@
         setTimeout(function () { row.classList.remove('row-saved'); }, 750);
       }
 
-      // ── Build/remove the Return Date widget inside the Status cell ──────────────
+      // -- Build/remove the Return Date widget inside the Status cell --------------
       function addReturnDateWidget(statusTd, todo, row) {
         if (statusTd.querySelector('.return-date-wrap')) return;
 
@@ -497,24 +497,24 @@
         if (wrap) wrap.remove();
       }
 
-      // ── Build a complete table row for one todo ─────────────────────────────────
+      // -- Build a complete table row for one todo ---------------------------------
       function buildRow(todo) {
         var row = document.createElement('tr');
 
-        // ── Col 1: Journey Details ──
+        // -- Col 1: Journey Details --
         var tdJourney = document.createElement('td');
         var chip = document.createElement('span');
         chip.className   = 'transport-chip';
-        chip.textContent = todo.transportId || '—';
+        chip.textContent = todo.transportId || '�';
         tdJourney.appendChild(chip);
         row.appendChild(tdJourney);
 
-        // ── Col 2: Task name ──
+        // -- Col 2: Task name --
         var tdTask = document.createElement('td');
-        tdTask.innerHTML = '<strong>' + escHtml(todo.taskName || '—') + '</strong>';
+        tdTask.innerHTML = '<strong>' + escHtml(todo.taskName || '�') + '</strong>';
         row.appendChild(tdTask);
 
-        // ── Col 3: Deadline Date ──
+        // -- Col 3: Deadline Date --
         var tdDate  = document.createElement('td');
         var dateIn  = document.createElement('input');
         dateIn.type      = 'date';
@@ -527,7 +527,7 @@
         tdDate.appendChild(dateIn);
         row.appendChild(tdDate);
 
-        // ── Col 4: Deadline Time ──
+        // -- Col 4: Deadline Time --
         var tdTime  = document.createElement('td');
         var timeIn  = document.createElement('input');
         timeIn.type      = 'time';
@@ -540,7 +540,7 @@
         tdTime.appendChild(timeIn);
         row.appendChild(tdTime);
 
-        // ── Col 5: Status ──
+        // -- Col 5: Status --
         var tdStatus = document.createElement('td');
         var select   = document.createElement('select');
         select.className = 'cell-select';
@@ -580,13 +580,13 @@
 
         row.appendChild(tdStatus);
 
-        // ── Col 6: Actions ──
+        // -- Col 6: Actions --
         var tdAction = document.createElement('td');
         var delBtn = document.createElement('button');
         delBtn.type = 'button';
         delBtn.className = 'button-alt';
         delBtn.style.cssText = 'padding:4px 8px; font-size:0.75rem; color:#dc2626; border-color:#fecaca;';
-        delBtn.textContent = '🗑️ Delete';
+        delBtn.textContent = '??? Delete';
         delBtn.addEventListener('click', function() {
           if (!confirm('Are you sure you want to delete this task?')) return;
           var todos = OG_DB.getAllTravelTodos().filter(function(t) { return t.id !== todo.id; });
@@ -599,7 +599,7 @@
         return row;
       }
 
-      // ── Minimal HTML escape ────────────────────────────────────────────────────
+      // -- Minimal HTML escape ----------------------------------------------------
       function escHtml(str) {
         return String(str)
           .replace(/&/g, '&amp;')
@@ -607,7 +607,7 @@
           .replace(/>/g, '&gt;');
       }
 
-      // ── Main render ─────────────────────────────────────────────────────────────
+      // -- Main render -------------------------------------------------------------
       function render() {
         var todos  = OG_DB.getAllTravelTodos();
         var tbody  = document.getElementById('todo-tbody');
@@ -642,7 +642,7 @@
           var transport  = transportMap[transportId];
           var groupTodos = groups[transportId];
 
-          // ── Group header row ──
+          // -- Group header row --
           var groupRow = document.createElement('tr');
           groupRow.className = 'group-row';
           var groupTd = document.createElement('td');
@@ -652,17 +652,17 @@
             var start  = (transport.startPoint  || '').split(',')[0].trim();
             var dest   = (transport.destination || '').split(',')[0].trim();
             var driver = transport.driverName
-              ? ' · ' + escHtml(transport.driverName)
-              : ' · <em style="color:#9bafc4">Driver TBC</em>';
+              ? ' � ' + escHtml(transport.driverName)
+              : ' � <em style="color:#9bafc4">Driver TBC</em>';
 
             groupTd.innerHTML =
               '<span class="group-id-chip">' + escHtml(transportId) + '</span>' +
               '<span class="group-label">' +
-                escHtml(transport.studentName || 'Unknown') + ' · ' +
+                escHtml(transport.studentName || 'Unknown') + ' � ' +
                 escHtml(transport.date || '') +
               '</span>' +
               '<span class="group-detail">' +
-                escHtml(start) + ' → ' + escHtml(dest) + driver +
+                escHtml(start) + ' ? ' + escHtml(dest) + driver +
               '</span>';
           } else {
             groupTd.innerHTML =
@@ -673,7 +673,7 @@
           groupRow.appendChild(groupTd);
           tbody.appendChild(groupRow);
 
-          // ── Task rows for this transport ──
+          // -- Task rows for this transport --
           groupTodos.forEach(function (todo) {
             tbody.appendChild(buildRow(todo));
           });

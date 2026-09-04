@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Student — Oxford Guardians Platform</title>
+  <title>Create Student � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -158,7 +158,7 @@
                 <div class="field" id="field-nationality">
                   <small>Nationality *</small>
                   <select class="field-select" id="nationality" name="nationality">
-                    <option value="">Select nationality…</option>
+                    <option value="">Select nationality�</option>
                     <option>British</option>
                     <option>Chinese</option>
                     <option>French</option>
@@ -186,7 +186,7 @@
                 <div class="field">
                   <small>School Year</small>
                   <select class="field-select" id="school-year" name="school_year">
-                    <option value="">Select year…</option>
+                    <option value="">Select year�</option>
                     <option>Year 7</option>
                     <option>Year 8</option>
                     <option>Year 9</option>
@@ -291,12 +291,12 @@
 
 <script src="assets/db.js"></script>
 <script>
-  // ── Populate School dropdown from the school directory ─────────────────────
+  // -- Populate School dropdown from the school directory ---------------------
   (function populateSchoolSelect() {
     var sel = document.getElementById('school');
     var blank = document.createElement('option');
     blank.value = '';
-    blank.textContent = '— No school assigned —';
+    blank.textContent = '� No school assigned �';
     sel.appendChild(blank);
     getSchools().forEach(function (sch) {
       var opt = document.createElement('option');
@@ -311,7 +311,7 @@
     var block = document.getElementById('parent2-block');
     var visible = block.style.display !== 'none';
     block.style.display = visible ? 'none' : 'block';
-    this.textContent = visible ? '+ Add Second Parent' : '− Remove Second Parent';
+    this.textContent = visible ? '+ Add Second Parent' : '- Remove Second Parent';
   });
 
   // Form submission
@@ -354,7 +354,7 @@
 
     errorMsg.style.display = 'none';
 
-    // ── Extract form values ────────────────────────────────────────────────
+    // -- Extract form values ------------------------------------------------
     var firstName   = document.getElementById('first-name').value.trim();
     var lastName    = document.getElementById('last-name').value.trim();
     var dob         = document.getElementById('dob').value;
@@ -375,7 +375,7 @@
     var p2Phone        = document.getElementById('p2-phone').value.trim();
     var accommodationType = document.getElementById('accommodation-type').value;
 
-    // ── Generate unique ID ─────────────────────────────────────────────────
+    // -- Generate unique ID -------------------------------------------------
     var baseId = (firstName + '-' + lastName)
       .toLowerCase()
       .replace(/[^a-z0-9-]/g, '-')
@@ -390,7 +390,7 @@
       counter++;
     }
 
-    // ── Build student object ───────────────────────────────────────────────
+    // -- Build student object -----------------------------------------------
     var newStudent = {
       id:              uniqueId,
       firstName:       firstName,
@@ -409,7 +409,7 @@
       homestayFamily:  'Not yet assigned',
       homestayDetails: 'Placement pending',
       welfareStatus:   'No check-in yet',
-      welfareNotes:    'New student — welfare workflow not started',
+      welfareNotes:    'New student � welfare workflow not started',
       status:          'Pending',
       parent1Name:     p1Name,
       parent1Email:    p1Email,
@@ -420,12 +420,12 @@
       accommodationType: accommodationType
     };
 
-    // ── Persist to localStorage ────────────────────────────────────────────
+    // -- Persist to localStorage --------------------------------------------
     var updatedArray = getAllStudents();
     updatedArray.push(newStudent);
     localStorage.setItem('og_students', JSON.stringify(updatedArray));
 
-    // ── Redirect ───────────────────────────────────────────────────────────
+    // -- Redirect -----------------------------------------------------------
     window.location.href = 'students.html';
   });
 </script>

@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mental Health Referral — Oxford Guardians Platform</title>
+    <title>Mental Health Referral � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -100,7 +100,7 @@
           </div>
           <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
             <a class="button-alt" href="policy-viewer.html?id=POL-WCE-002" target="_blank" style="display:inline-flex; align-items:center; gap:6px;">
-              <span>📄</span> Mental Health Policy (Appendix 12)
+              <span>??</span> Mental Health Policy (Appendix 12)
             </a>
             <a class="button-alt" id="btn-return-profile" href="#" style="font-size:0.85rem; padding:6px 12px; background:#f0f4f8; border-color:#0f2340;">Return to Student Profile</a>
             <a class="button-alt" href="index.html" style="font-size:0.85rem; padding:6px 12px; background:#f0f4f8; border-color:#0f2340;">Return to Dashboard</a>
@@ -111,7 +111,7 @@
         <div class="meta-row">
           <span class="meta-label">Lead:</span>
           <select class="meta-select" id="select-lead">
-            <option value="">— select staff —</option>
+            <option value="">� select staff �</option>
           </select>
           <span class="meta-label">Status:</span>
           <select class="meta-select" id="select-status">
@@ -129,12 +129,12 @@
 
         <div class="cols-2">
           <div>
-            <!-- Student details — populated dynamically -->
+            <!-- Student details � populated dynamically -->
             <div class="info-block">
               <h4>Student details</h4>
               <div class="kv">
-                <div class="kv-row"><small>Student</small><div id="kv-student">—</div></div>
-                <div class="kv-row"><small>Presenting concern</small><div>Persistent homesickness — three mentions in one month</div></div>
+                <div class="kv-row"><small>Student</small><div id="kv-student">�</div></div>
+                <div class="kv-row"><small>Presenting concern</small><div>Persistent homesickness � three mentions in one month</div></div>
                 <div class="kv-row">
                   <small>Safeguarding concern</small>
                   <div id="kv-safeguarding-status" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
@@ -142,7 +142,7 @@
                   </div>
                 </div>
                 <div class="kv-row"><small>School awareness</small><div>Tutor Mrs Ellis informed</div></div>
-                <div class="kv-row"><small>Parent awareness</small><div id="kv-parent-awareness">—</div></div>
+                <div class="kv-row"><small>Parent awareness</small><div id="kv-parent-awareness">�</div></div>
               </div>
             </div>
 
@@ -183,13 +183,13 @@
           </div>
         </div>
 
-        <!-- Action row — all links wired to current studentId -->
+        <!-- Action row � all links wired to current studentId -->
         <div class="action-row" style="margin-top:18px;">
           <a class="button-alt" href="concerns-low-level.html">Back to concerns</a>
           <a class="button-alt" id="link-comms"   href="#">Log school communication</a>
           <a class="button-alt" id="link-removal" href="#">AEGIS Removal Form</a>
           <a class="button-alt" id="link-welfare" href="#">Log welfare note</a>
-          <button type="button" class="button-alt" id="btn-open-app10" style="display:inline-flex; align-items:center; gap:6px;"><span>📞</span> Appendix 10 Support Directory</button>
+          <button type="button" class="button-alt" id="btn-open-app10" style="display:inline-flex; align-items:center; gap:6px;"><span>??</span> Appendix 10 Support Directory</button>
           <a class="button"     id="link-profile" href="#">View Profile</a>
         </div>
       </section>
@@ -199,7 +199,7 @@
         <div class="modal-card" style="background:#ffffff; border-radius:16px; max-width:850px; width:100%; max-height:85vh; display:flex; flex-direction:column; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25); overflow:hidden;">
           <div style="padding:20px 24px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; background:#f8fafc;">
             <div>
-              <h3 style="margin:0; color:#0f2340; font-size:1.25rem;">AEGIS Appendix 10 — External Mental Health &amp; Crisis Support Directory</h3>
+              <h3 style="margin:0; color:#0f2340; font-size:1.25rem;">AEGIS Appendix 10 � External Mental Health &amp; Crisis Support Directory</h3>
               <p style="margin:4px 0 0; color:#64748b; font-size:0.85rem;">Statutory directory of emergency services, NHS CAMHS, and specialist youth mental health helplines.</p>
             </div>
             <button type="button" id="btn-close-app10" style="background:none; border:none; font-size:1.5rem; color:#64748b; cursor:pointer;">&times;</button>
@@ -232,13 +232,13 @@
 
     <script src="assets/db.js"></script>
     <script>
-      // ── Bootstrap ─────────────────────────────────────────────────────────
+      // -- Bootstrap ---------------------------------------------------------
       var params    = new URLSearchParams(window.location.search);
       var studentId = params.get('id') || 'STU10492';
       var student   = getStudentById(studentId);
       var mhCase    = getMHCaseForStudent(studentId);
 
-      // ── Not found guard ───────────────────────────────────────────────────
+      // -- Not found guard ---------------------------------------------------
       if (!student) {
         document.querySelector('.section').innerHTML =
           '<p style="color:#7f3034;">Student not found for ID: <strong>' + studentId + '</strong>. ' +
@@ -252,20 +252,20 @@
           .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
       }
 
-      // ── Dynamic student details ───────────────────────────────────────────
+      // -- Dynamic student details -------------------------------------------
       var fullName = student.firstName + ' ' + student.lastName;
       document.getElementById('page-heading').textContent = 'Referral tracking for ' + fullName;
       document.getElementById('kv-student').textContent =
         fullName +
-        (student.school     ? ' — ' + student.school     : '') +
-        (student.schoolYear ? ' — ' + student.schoolYear : '');
+        (student.school     ? ' � ' + student.school     : '') +
+        (student.schoolYear ? ' � ' + student.schoolYear : '');
 
       var p1 = student.parent1Name || '';
       var p2 = student.parent2Name || '';
       var parentStr = (p1 && p2) ? p1 + ' and ' + p2 : (p1 || p2 || 'Parents');
       document.getElementById('kv-parent-awareness').textContent = parentStr + ' informed via email';
 
-      // ── Lead staff select ─────────────────────────────────────────────────
+      // -- Lead staff select -------------------------------------------------
       var selectLead = document.getElementById('select-lead');
       getAllStaff().forEach(function (s) {
         var opt = document.createElement('option');
@@ -279,7 +279,7 @@
         saveMHCase(mhCase);
       });
 
-      // ── Status select ─────────────────────────────────────────────────────
+      // -- Status select -----------------------------------------------------
       var selectStatus = document.getElementById('select-status');
       if (mhCase.status) {
         var matched = false;
@@ -299,7 +299,7 @@
         saveMHCase(mhCase);
       });
 
-      // ── Support options checkboxes ────────────────────────────────────────
+      // -- Support options checkboxes ----------------------------------------
       var SUPPORT_OPTIONS = [
         { id: 'school-counselling', label: 'School counselling referral',
           detail: 'School has an on-site counsellor. Referral can be made via tutor or house parent.' },
@@ -352,7 +352,7 @@
         });
       });
 
-      // ── Removal status select ─────────────────────────────────────────────
+      // -- Removal status select ---------------------------------------------
       var selectRemovalStatus     = document.getElementById('select-removal-status');
       var removalStatusDateDisplay = document.getElementById('removal-status-date');
       var defaultRemovalStatus    = 'Removal not required. Student is coping at school.';
@@ -381,12 +381,12 @@
         updateRemovalDateDisplay();
       });
 
-      // ── Dynamic welfare timeline ──────────────────────────────────────────
+      // -- Dynamic welfare timeline ------------------------------------------
       (function () {
         var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
         function fmtDate(iso) {
-          if (!iso) return '—';
+          if (!iso) return '�';
           var d = new Date(iso);
           if (isNaN(d.getTime())) return iso;
           return d.getDate() + ' ' + MONTHS[d.getMonth()];
@@ -412,14 +412,14 @@
         }).join('');
       }());
 
-      // ── Navigation links ──────────────────────────────────────────────────
+      // -- Navigation links --------------------------------------------------
       document.getElementById('btn-return-profile').href = 'student-profile.html?id=' + studentId;
       document.getElementById('link-comms').href   = 'mental-health-comms.html?id='   + studentId;
       document.getElementById('link-removal').href = 'mental-health-removal.html?id=' + studentId;
       document.getElementById('link-welfare').href = 'welfare-note-create.html?id='   + studentId;
       document.getElementById('link-profile').href = 'student-profile.html?id='       + studentId;
 
-      // ── Appendix 10 External Support Agency Directory (AEGIS Standard 3.3.1) ──
+      // -- Appendix 10 External Support Agency Directory (AEGIS Standard 3.3.1) --
       (function () {
         var modal   = document.getElementById('modal-app10');
         var list    = document.getElementById('app10-agency-list');
@@ -461,7 +461,7 @@
         });
       }());
 
-      // ── DSL Safeguarding Escalation (AEGIS Standard 3.3.2) ─────────────────
+      // -- DSL Safeguarding Escalation (AEGIS Standard 3.3.2) -----------------
       (function () {
         var statusContainer = document.getElementById('kv-safeguarding-status');
         var escalateModal    = document.getElementById('modal-escalate-dsl');
@@ -478,12 +478,12 @@
           var concern = findActiveConcern();
           if (concern) {
             statusContainer.innerHTML =
-              '<span class="badge red">🚨 Active DSL Concern (' + escapeHtml(concern.id) + ')</span>' +
+              '<span class="badge red">?? Active DSL Concern (' + escapeHtml(concern.id) + ')</span>' +
               '<a href="concerns-low-level.html" class="button-alt button-sm">View in Triage</a>';
           } else {
             statusContainer.innerHTML =
               '<span style="color:#64748b;">None identified</span>' +
-              '<button type="button" class="button-alt button-sm" id="btn-trigger-escalate" style="color:#dc2626; border-color:#fecaca;">🚨 Escalate to DSL</button>';
+              '<button type="button" class="button-alt button-sm" id="btn-trigger-escalate" style="color:#dc2626; border-color:#fecaca;">?? Escalate to DSL</button>';
             var triggerBtn = document.getElementById('btn-trigger-escalate');
             if (triggerBtn) {
               triggerBtn.addEventListener('click', function () {
@@ -520,7 +520,7 @@
             subjectId: studentId,
             tier: 'escalated',
             category: 'Mental Health / Safeguarding Escalation',
-            title: 'Mental Health Crisis Escalation — ' + fullName,
+            title: 'Mental Health Crisis Escalation � ' + fullName,
             description: reason,
             source: 'Mental Health Referral Surface',
             loggedDate: todayIso,

@@ -1,9 +1,9 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Partner Schools Liaison â€” Oxford Guardians Platform</title>
+    <title>Partner Schools Liaison — Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -131,9 +131,9 @@
           <section class="main">
             <div class="toolbar">
               <div>
-                <span class="eyebrow">Standard 9 â€” Partner School Liaison</span>
+                <span class="eyebrow">Standard 9 — Partner School Liaison</span>
                 <h2>Partner Schools Liaison</h2>
-                <p>Standard 9 requires timely, documented, and attributable communication with every partner school. This hub is where that obligation is discharged â€” not in inboxes, not in memory.</p>
+                <p>Standard 9 requires timely, documented, and attributable communication with every partner school. This hub is where that obligation is discharged — not in inboxes, not in memory.</p>
               </div>
               <div class="toolbar-actions">
                 <a class="button-alt" href="school-liaison.html">Full communication log</a>
@@ -144,22 +144,22 @@
             <div class="metrics" id="metrics-row">
               <article class="metric featured">
                 <h4>Total school communications</h4>
-                <div class="metric-value" id="metric-total">â€”</div>
+                <div class="metric-value" id="metric-total">—</div>
                 <p class="metric-meta">All logged contacts across all students and schools</p>
               </article>
               <article class="metric">
                 <h4>Last 7 days</h4>
-                <div class="metric-value" id="metric-recent">â€”</div>
+                <div class="metric-value" id="metric-recent">—</div>
                 <p class="metric-meta">Contacts logged in the past week</p>
               </article>
               <article class="metric">
                 <h4>Students contacted</h4>
-                <div class="metric-value" id="metric-students">â€”</div>
+                <div class="metric-value" id="metric-students">—</div>
                 <p class="metric-meta">Distinct students with a school log entry</p>
               </article>
               <article class="metric">
                 <h4>Welfare notifications</h4>
-                <div class="metric-value" id="metric-welfare">â€”</div>
+                <div class="metric-value" id="metric-welfare">—</div>
                 <p class="metric-meta">Welfare or incident updates sent to schools</p>
               </article>
             </div>
@@ -167,23 +167,23 @@
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;">
               <div class="card">
                 <h4>Communication Log</h4>
-                <p>Full history of all school contacts â€” timestamped, attributed, and searchable. Required evidence for Standard 9.7 inspection.</p>
+                <p>Full history of all school contacts — timestamped, attributed, and searchable. Required evidence for Standard 9.7 inspection.</p>
                 <div style="margin-top:16px;">
-                  <a class="button" href="school-liaison.html">View full log â†’</a>
+                  <a class="button" href="school-liaison.html">View full log ?</a>
                 </div>
               </div>
               <div class="card">
                 <h4>Log a School Contact</h4>
                 <p>Record a phone call, email, meeting, or exeat discussion. Every contact must be logged within 24 hours of it taking place.</p>
                 <div style="margin-top:16px;">
-                  <a class="button" href="school-log-create.html">Log contact â†’</a>
+                  <a class="button" href="school-log-create.html">Log contact ?</a>
                 </div>
               </div>
               <div class="card">
                 <h4>Welfare &amp; Incident Notification</h4>
                 <p>Generate a Standards 9.2 and 9.6 compliant notification to a partner school. Automatically logs the contact on send.</p>
                 <div style="margin-top:16px;">
-                  <a class="button" href="school-welfare-notification.html">Generate notification â†’</a>
+                  <a class="button" href="school-welfare-notification.html">Generate notification ?</a>
                 </div>
               </div>
             </div>
@@ -248,13 +248,13 @@
           var student = log.studentId ? getStudentById(log.studentId) : null;
           var schoolLine = student ? esc(student.school) : '';
 
-          var notes = esc(log.summaryNotes || log.notes || 'â€”');
-          if (notes.length > 72) notes = notes.slice(0, 69) + 'â€¦';
+          var notes = esc(log.summaryNotes || log.notes || '—');
+          if (notes.length > 72) notes = notes.slice(0, 69) + '…';
 
           return '<tr>' +
             '<td>' + dateStr + '</td>' +
-            '<td><strong>' + esc(log.studentName || 'â€”') + '</strong>' + (schoolLine ? '<small>' + schoolLine + '</small>' : '') + '</td>' +
-            '<td>' + esc(log.contactType || log.type || 'â€”') + '</td>' +
+            '<td><strong>' + esc(log.studentName || '—') + '</strong>' + (schoolLine ? '<small>' + schoolLine + '</small>' : '') + '</td>' +
+            '<td>' + esc(log.contactType || log.type || '—') + '</td>' +
             '<td style="max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + notes + '</td>' +
           '</tr>';
         }).join('');

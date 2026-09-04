@@ -1,9 +1,9 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Drivers Single Central Record â€” Oxford Guardians Platform</title>
+    <title>Drivers Single Central Record — Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -37,7 +37,7 @@
           <section class="main">
             <div class="toolbar">
               <div>
-                <span class="eyebrow">AEGIS Appendix 7 â€” Driver Records</span>
+                <span class="eyebrow">AEGIS Appendix 7 — Driver Records</span>
                 <h2>Drivers Single Central Record</h2>
                 <p>Safer recruitment evidence for all licensed partner drivers. Every field maps to an AEGIS/KCSIE requirement. Gaps here are compliance failures.</p>
               </div>
@@ -76,7 +76,7 @@
                   <div class="list-item"><strong>Name and DOB</strong><small>Full legal name and date of birth</small></div>
                   <div class="list-item"><strong>ID check</strong><small>Document type, date checked, checker initials</small></div>
                   <div class="list-item"><strong>DBS details</strong><small>Certificate number, level (enhanced), date seen, who saw original</small></div>
-                  <div class="list-item"><strong>Barred list check</strong><small>Separate check for regulated activity â€” date and outcome</small></div>
+                  <div class="list-item"><strong>Barred list check</strong><small>Separate check for regulated activity — date and outcome</small></div>
                   <div class="list-item"><strong>Right to work</strong><small>Evidence type and verification date</small></div>
                   <div class="list-item"><strong>Overseas check</strong><small>Required if lived/worked abroad >3 months in last 5 years</small></div>
                   <div class="list-item"><strong>References</strong><small>Two references, both verified with dates and checker</small></div>
@@ -88,15 +88,15 @@
                 <h4>Why SCRs fail inspection</h4>
                 <ul>
                   <li>Certificate "seen" but no record of who saw it or when.</li>
-                  <li>References "obtained" but not verified â€” no phone call or written confirmation.</li>
+                  <li>References "obtained" but not verified — no phone call or written confirmation.</li>
                   <li>Overseas checks forgotten for drivers who lived abroad.</li>
-                  <li>Barred list check conflated with DBS â€” they're separate requirements for regulated activity.</li>
-                  <li>Update service not being used â€” 3-year renewals become compliance debt.</li>
+                  <li>Barred list check conflated with DBS — they're separate requirements for regulated activity.</li>
+                  <li>Update service not being used — 3-year renewals become compliance debt.</li>
                   <li>Hire &amp; reward insurance not on file alongside the DBS certificate.</li>
                 </ul>
               </div>
             </div>
-            <p class="inline-links">Related: <a href="scr-dashboard.html">SCR Dashboard</a> Â· <a href="scr-staff.html">Staff SCR</a> Â· <a href="scr-hosts.html">Host SCR</a> Â· <a href="drivers.html">Driver list</a> Â· <a href="aegis-control-room.html">AEGIS control room</a></p>
+            <p class="inline-links">Related: <a href="scr-dashboard.html">SCR Dashboard</a> · <a href="scr-staff.html">Staff SCR</a> · <a href="scr-hosts.html">Host SCR</a> · <a href="drivers.html">Driver list</a> · <a href="aegis-control-room.html">AEGIS control room</a></p>
           </section>
         </div>
     <script src="assets/db.js"></script>
@@ -120,7 +120,7 @@
 
       var today = new Date();
 
-      // AEGIS 6.3 â€” safeguarding training expires 3 years after completion for hosts/drivers.
+      // AEGIS 6.3 — safeguarding training expires 3 years after completion for hosts/drivers.
       function isSafeguardingExpired(c) {
         return !!(c.safeguardingTrainingExpiry && new Date(c.safeguardingTrainingExpiry) < today);
       }
@@ -146,13 +146,13 @@
 
         if (type === 'staff') {
           position  = person.title || person.role || 'Staff';
-          startDate = person.startDate || 'â€”';
+          startDate = person.startDate || '—';
         } else if (type === 'host') {
           position  = 'Homestay carer';
-          startDate = person.hostSince || 'â€”';
+          startDate = person.hostSince || '—';
         } else {
           position  = 'Licensed driver';
-          startDate = 'â€”';
+          startDate = '—';
         }
 
         var idCell   = docCell(c.idDocumentPath);
@@ -174,7 +174,7 @@
         } else {
           barredCell = (person.dbsStatus === 'clear')
             ? '<span style="color:#1a6632;font-weight:600;">Clear</span>'
-            : '<span style="color:#9bafc4;">â€”</span>';
+            : '<span style="color:#9bafc4;">—</span>';
         }
 
         var rtwCell;
@@ -188,7 +188,7 @@
 
         var overseasCell = c.livedAbroad ? docCell(c.overseasCheckDocPath) : naCell();
 
-        // AEGIS 6.3 â€” Missing / Expired / Due soon (within 60 days) / Valid, driven by
+        // AEGIS 6.3 — Missing / Expired / Due soon (within 60 days) / Valid, driven by
         // safeguardingTrainingExpiry (3 years after safeguardingTrainingDate).
         var inductionCell;
         if (!c.safeguardingTrainingDate) {
@@ -198,7 +198,7 @@
         } else if (c.safeguardingTrainingExpiry && Math.floor((new Date(c.safeguardingTrainingExpiry) - today) / 86400000) <= 60) {
           inductionCell = '<span class="badge amber">Due soon (' + c.safeguardingTrainingExpiry + ')</span>';
         } else {
-          inductionCell = '<span class="badge green">Valid to ' + (c.safeguardingTrainingExpiry || 'â€”') + '</span>' +
+          inductionCell = '<span class="badge green">Valid to ' + (c.safeguardingTrainingExpiry || '—') + '</span>' +
             ' <span style="font-size:0.8rem;color:#3b536e;">(' + c.safeguardingTrainingDate + ')</span>';
         }
 

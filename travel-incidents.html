@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Travel Incident Log — Oxford Guardians Platform</title>
+    <title>Travel Incident Log � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -134,7 +134,7 @@
               <div class="nav-label">Operations</div>
               <a class="nav-link" href="travel.html">Travel</a>
               <a class="nav-link nav-link-sub" href="travel-todo.html">To-do</a>
-              <a class="nav-link nav-link-sub" href="driver-list.html">Drivers</a>
+              <a class="nav-link nav-link-sub" href="drivers.html">Drivers</a>
               <a class="nav-link nav-link-sub" href="transportation.html">Transportation</a>
               <a class="nav-link nav-link-sub active" href="travel-incidents.html">Incident log</a>
               <a class="nav-link" href="documents.html">Documents</a>
@@ -174,7 +174,7 @@
                   </tr>
                 </thead>
                 <tbody id="incident-tbody">
-                  <tr><td colspan="7" style="text-align:center; padding:40px; color:#6b85a0;">Loading incidents…</td></tr>
+                  <tr><td colspan="7" style="text-align:center; padding:40px; color:#6b85a0;">Loading incidents�</td></tr>
                 </tbody>
               </table>
             </div>
@@ -214,15 +214,15 @@
                          : status === 'Escalated' ? 'badge-escalated'
                          : 'badge-open';
           html += '<tr>' +
-            '<td>' + (inc.incidentDate || '—') + '</td>' +
+            '<td>' + (inc.incidentDate || '�') + '</td>' +
             '<td><strong>' + (inc.driverName || 'Unknown') + '</strong></td>' +
             '<td>' + (inc.studentName || 'Unknown') + '</td>' +
-            '<td><strong>' + (inc.incidentType || '—') + '</strong><small>' + (inc.description || '') + '</small></td>' +
-            '<td>' + (inc.actionTaken || '—') + '</td>' +
+            '<td><strong>' + (inc.incidentType || '�') + '</strong><small>' + (inc.description || '') + '</small></td>' +
+            '<td>' + (inc.actionTaken || '�') + '</td>' +
             '<td><span class="' + badgeClass + '">' + status + '</span></td>' +
             '<td style="white-space:nowrap;">' +
-              '<a href="travel-incident-create.html?id=' + inc.id + '" style="margin-right:8px; text-decoration:none; font-size:0.9rem;">✏️</a>' +
-              '<a href="#" data-id="' + inc.id + '" class="del-btn" style="text-decoration:none; font-size:0.9rem;">🗑️</a>' +
+              '<a href="travel-incident-create.html?id=' + inc.id + '" style="margin-right:8px; text-decoration:none; font-size:0.9rem;">??</a>' +
+              '<a href="#" data-id="' + inc.id + '" class="del-btn" style="text-decoration:none; font-size:0.9rem;">???</a>' +
             '</td>' +
           '</tr>';
         });

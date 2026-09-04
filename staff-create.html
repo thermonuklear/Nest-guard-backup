@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>New Staff Member — Oxford Guardians Platform</title>
+  <title>New Staff Member � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/app.css" />
   <style>
-    /* ── Form controls ── */
+    /* -- Form controls -- */
     .field-input,
     .field-select,
     .field-textarea {
@@ -40,7 +40,7 @@
     .field-select { appearance: none; cursor: pointer; }
     .field-textarea { resize: vertical; min-height: 96px; }
 
-    /* ── Form layout ── */
+    /* -- Form layout -- */
     .form-section { margin-bottom: 28px; }
 
     .form-section-title {
@@ -68,7 +68,7 @@
       margin-top: 4px;
     }
 
-    /* ── Validation ── */
+    /* -- Validation -- */
     .form-error {
       display: none;
       color: var(--red);
@@ -88,7 +88,7 @@
       box-shadow: 0 0 0 3px rgba(127, 48, 52, 0.1);
     }
 
-    /* ── Panel ── */
+    /* -- Panel -- */
     .create-panel {
       background: var(--surface);
       border: 1px solid var(--line);
@@ -158,7 +158,7 @@
         <div class="create-panel">
           <form id="staff-form" novalidate>
 
-            <!-- ── Card 1: Personal details ── -->
+            <!-- -- Card 1: Personal details -- -->
             <div class="form-section">
               <div class="form-section-title">Personal Details</div>
               <div class="form-grid">
@@ -186,14 +186,14 @@
               </div>
             </div>
 
-            <!-- ── Card 2: Role & responsibilities ── -->
+            <!-- -- Card 2: Role & responsibilities -- -->
             <div class="form-section">
               <div class="form-section-title">Role &amp; Responsibilities</div>
               <div class="form-grid">
                 <div class="field" id="field-role">
                   <small>Role *</small>
                   <select class="field-select" id="role">
-                    <option value="">— Select role —</option>
+                    <option value="">� Select role �</option>
                     <option value="Admin / DSL">Admin / DSL</option>
                     <option value="Admin / Operations">Admin / Operations</option>
                     <option value="Admin / Local coordinator">Admin / Local coordinator</option>
@@ -205,22 +205,22 @@
                 </div>
                 <div class="field form-span-2">
                   <small>Primary Work</small>
-                  <textarea class="field-textarea" id="primary-work" placeholder="Describe key responsibilities…"></textarea>
+                  <textarea class="field-textarea" id="primary-work" placeholder="Describe key responsibilities�"></textarea>
                 </div>
               </div>
             </div>
 
-            <!-- ── Card 3: DBS & compliance ── -->
+            <!-- -- Card 3: DBS & compliance -- -->
             <div class="form-section">
               <div class="form-section-title">DBS &amp; Compliance</div>
               <div class="form-grid">
                 <div class="field">
                   <small>DBS Status</small>
                   <select class="field-select" id="dbs-status">
-                    <option value="">— Select —</option>
-                    <option value="clear">Enhanced DBS — Clear</option>
-                    <option value="amber">DBS — Action Required</option>
-                    <option value="expired">DBS — Expired</option>
+                    <option value="">� Select �</option>
+                    <option value="clear">Enhanced DBS � Clear</option>
+                    <option value="amber">DBS � Action Required</option>
+                    <option value="expired">DBS � Expired</option>
                   </select>
                 </div>
                 <div class="field">
@@ -237,19 +237,19 @@
                 </div>
                 <div class="field form-span-2">
                   <small>DBS Update Service</small>
-                  <input class="field-input" type="text" id="dbs-update" placeholder="e.g. Subscribed — last verified 10 Apr 2026" />
+                  <input class="field-input" type="text" id="dbs-update" placeholder="e.g. Subscribed � last verified 10 Apr 2026" />
                 </div>
               </div>
             </div>
 
-            <!-- ── Card 4: Training ── -->
+            <!-- -- Card 4: Training -- -->
             <div class="form-section">
               <div class="form-section-title">Training</div>
               <div class="form-grid">
                 <div class="field">
                   <small>Training Level</small>
                   <select class="field-select" id="training-level">
-                    <option value="">— Select —</option>
+                    <option value="">� Select �</option>
                     <option value="DSL Level 3">DSL Level 3</option>
                     <option value="Safeguarding Awareness">Safeguarding Awareness</option>
                     <option value="First Aid">First Aid</option>
@@ -267,22 +267,22 @@
               </div>
             </div>
 
-            <!-- ── Card 5: Additional ── -->
+            <!-- -- Card 5: Additional -- -->
             <div class="form-section">
               <div class="form-section-title">Additional</div>
               <div class="form-grid">
                 <div class="field form-span-2">
                   <small>Emergency Rota</small>
-                  <input class="field-input" type="text" id="emergency-rota" placeholder="e.g. Mon–Fri evening (18:00–22:00) primary" />
+                  <input class="field-input" type="text" id="emergency-rota" placeholder="e.g. Mon�Fri evening (18:00�22:00) primary" />
                 </div>
                 <div class="field form-span-2">
                   <small>Notes</small>
-                  <textarea class="field-textarea" id="notes" placeholder="Any additional notes…"></textarea>
+                  <textarea class="field-textarea" id="notes" placeholder="Any additional notes�"></textarea>
                 </div>
               </div>
             </div>
 
-            <!-- ── Action row ── -->
+            <!-- -- Action row -- -->
             <div class="action-row">
               <button type="submit" class="button">Save staff member</button>
               <a class="button-alt" href="staff-list.html">Cancel</a>
@@ -302,7 +302,7 @@
   document.getElementById('staff-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    // ── Clear previous errors ──────────────────────────────────────────────────
+    // -- Clear previous errors --------------------------------------------------
     var required = [
       { id: 'first-name', wrap: 'field-first-name' },
       { id: 'last-name',  wrap: 'field-last-name'  },
@@ -315,7 +315,7 @@
       if (wrap) wrap.classList.remove('field-error');
     });
 
-    // ── Validate ──────────────────────────────────────────────────────────────
+    // -- Validate --------------------------------------------------------------
     var valid = true;
     required.forEach(function (f) {
       var el = document.getElementById(f.id);
@@ -330,7 +330,7 @@
     if (!valid) { errorMsg.style.display = 'block'; return; }
     errorMsg.style.display = 'none';
 
-    // ── Read helpers ──────────────────────────────────────────────────────────
+    // -- Read helpers ----------------------------------------------------------
     function val(id) {
       var el = document.getElementById(id);
       return el ? el.value.trim() : '';
@@ -349,10 +349,10 @@
       return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
     }
 
-    // ── Generate ID ───────────────────────────────────────────────────────────
+    // -- Generate ID -----------------------------------------------------------
     var newId = generateStaffId();
 
-    // ── Build object ──────────────────────────────────────────────────────────
+    // -- Build object ----------------------------------------------------------
     var newStaff = {
       id:               newId,
       firstName:        val('first-name'),
@@ -394,7 +394,7 @@
       }
     };
 
-    // ── Save & redirect ───────────────────────────────────────────────────────
+    // -- Save & redirect -------------------------------------------------------
     saveStaffMember(newStaff);
     window.location.href = 'staff-list.html';
   });

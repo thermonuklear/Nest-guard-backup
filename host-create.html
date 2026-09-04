@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Host — Oxford Guardians Platform</title>
+  <title>Create Host � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/app.css" />
   <style>
-    /* ── Global colour overrides ── */
+    /* -- Global colour overrides -- */
     body, .page, .shell, main { background: #f0f4f8 !important; color: #0f2340 !important; }
 
     .app-frame {
@@ -50,7 +50,7 @@
     }
     .button-alt:hover { background: #edf2f8 !important; }
 
-    /* ── Form controls ── */
+    /* -- Form controls -- */
     .field-input,
     .field-select,
     .field-textarea {
@@ -81,7 +81,7 @@
     .field-select { appearance: none; cursor: pointer; }
     .field-textarea { resize: vertical; min-height: 96px; }
 
-    /* ── Form layout ── */
+    /* -- Form layout -- */
     .form-section { margin-bottom: 28px; }
 
     .form-section-title {
@@ -117,7 +117,7 @@
       margin-top: 4px;
     }
 
-    /* ── Capacity stepper ── */
+    /* -- Capacity stepper -- */
     .capacity-stepper {
       display: flex;
       align-items: center;
@@ -175,7 +175,7 @@
       background: #f0f4f8;
     }
 
-    /* ── Validation ── */
+    /* -- Validation -- */
     .form-error {
       display: none;
       color: #7f3034;
@@ -195,7 +195,7 @@
       box-shadow: 0 0 0 3px rgba(127,48,52,0.1);
     }
 
-    /* ── Panel ── */
+    /* -- Panel -- */
     .create-panel {
       background: #ffffff !important;
       border: 1px solid #d5dce8 !important;
@@ -334,7 +334,7 @@
         <div class="create-panel">
           <form id="host-form" novalidate>
 
-            <!-- ── Section 1: Personal details ── -->
+            <!-- -- Section 1: Personal details -- -->
             <div class="form-section">
               <div class="form-section-title">Personal Details</div>
               <div class="form-grid">
@@ -361,9 +361,9 @@
                 <div class="field">
                   <small>Preferred Contact Method</small>
                   <select class="field-select" id="preferred-contact">
-                    <option value="">Select…</option>
-                    <option value="WhatsApp / mobile — responds same day">WhatsApp / mobile</option>
-                    <option value="Email — responds within 4 hours during school hours">Email (business hours)</option>
+                    <option value="">Select�</option>
+                    <option value="WhatsApp / mobile � responds same day">WhatsApp / mobile</option>
+                    <option value="Email � responds within 4 hours during school hours">Email (business hours)</option>
                     <option value="Phone call only">Phone call only</option>
                     <option value="Text message preferred">Text message</option>
                   </select>
@@ -376,7 +376,7 @@
                 <div class="field">
                   <small>Gender (AEGIS Standard 5.2.1)</small>
                   <select class="field-select" id="gender">
-                    <option value="">Select…</option>
+                    <option value="">Select�</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
@@ -394,14 +394,14 @@
               </div>
             </div>
 
-            <!-- ── Section 2: Household ── -->
+            <!-- -- Section 2: Household -- -->
             <div class="form-section">
               <div class="form-section-title">Household &amp; Capacity</div>
               <div class="form-grid">
                 <div class="field" id="field-capacity">
                   <small>Maximum Student Capacity *</small>
                   <div class="capacity-stepper">
-                    <button type="button" id="cap-minus">−</button>
+                    <button type="button" id="cap-minus">-</button>
                     <input type="number" id="capacity" value="2" min="1" max="3" readonly />
                     <button type="button" id="cap-plus">+</button>
                     <div class="capacity-pips-preview" id="cap-pips"></div>
@@ -410,14 +410,14 @@
                 </div>
                 <div class="field">
                   <small>Household Residents</small>
-                  <input class="field-input" type="text" id="residents" placeholder="e.g. 4 — 2 adults, 2 children (ages 10 and 13)" />
+                  <input class="field-input" type="text" id="residents" placeholder="e.g. 4 � 2 adults, 2 children (ages 10 and 13)" />
                 </div>
                 <div class="field">
                   <small>Smoking Policy (AEGIS Standard 5.2.1 / 5.5.1.8) *</small>
                   <select class="field-select" id="smoker-status">
                     <option value="non-smoking">Strictly Non-Smoking Household</option>
-                    <option value="smoker-outside">Smoker — Outside Property Only (Garden/Patio)</option>
-                    <option value="smoker-inside">Smoker — Inside Property</option>
+                    <option value="smoker-outside">Smoker � Outside Property Only (Garden/Patio)</option>
+                    <option value="smoker-inside">Smoker � Inside Property</option>
                   </select>
                 </div>
                 <div class="field">
@@ -438,7 +438,7 @@
                 </div>
                 <div class="field">
                   <small>Pets</small>
-                  <input class="field-input" type="text" id="pets" placeholder="e.g. 1 cat — noted in allergy records, or None" />
+                  <input class="field-input" type="text" id="pets" placeholder="e.g. 1 cat � noted in allergy records, or None" />
                 </div>
                 <div class="field form-span-2">
                   <small>Overnight Visitor Policy</small>
@@ -456,17 +456,17 @@
               </div>
             </div>
 
-            <!-- ── Section 3: DBS & compliance ── -->
+            <!-- -- Section 3: DBS & compliance -- -->
             <div class="form-section">
               <div class="form-section-title">DBS &amp; Compliance</div>
               <div class="form-grid">
                 <div class="field" id="field-dbs-status">
                   <small>DBS Status *</small>
                   <select class="field-select" id="dbs-status">
-                    <option value="">Select status…</option>
-                    <option value="clear">Enhanced DBS — Clear</option>
-                    <option value="amber">DBS — Action Required</option>
-                    <option value="expired">DBS — Expired</option>
+                    <option value="">Select status�</option>
+                    <option value="clear">Enhanced DBS � Clear</option>
+                    <option value="amber">DBS � Action Required</option>
+                    <option value="expired">DBS � Expired</option>
                   </select>
                 </div>
                 <div class="field">
@@ -483,16 +483,16 @@
                 </div>
                 <div class="field form-span-2">
                   <small>DBS Update Service</small>
-                  <input class="field-input" type="text" id="dbs-update" placeholder="e.g. Subscribed — last verified 10 Apr 2026" />
+                  <input class="field-input" type="text" id="dbs-update" placeholder="e.g. Subscribed � last verified 10 Apr 2026" />
                 </div>
                 <div class="field form-span-2">
                   <small>Secondary Adult DBS (if applicable)</small>
-                  <input class="field-input" type="text" id="secondary-dbs" placeholder="e.g. Richard Ashworth — Enhanced DBS clear / issued 03 Aug 2023" />
+                  <input class="field-input" type="text" id="secondary-dbs" placeholder="e.g. Richard Ashworth � Enhanced DBS clear / issued 03 Aug 2023" />
                 </div>
                 <div class="field">
                   <small>Annual Visit Status</small>
                   <select class="field-select" id="annual-visit-status">
-                    <option value="complete">Complete — in date</option>
+                    <option value="complete">Complete � in date</option>
                     <option value="due">Due soon</option>
                     <option value="overdue">Overdue</option>
                   </select>
@@ -504,22 +504,22 @@
                 <div class="field">
                   <small>H&amp;S Checklist</small>
                   <select class="field-select" id="hs-checklist">
-                    <option value="complete">Complete — all items passed</option>
-                    <option value="incomplete">Incomplete — items outstanding</option>
+                    <option value="complete">Complete � all items passed</option>
+                    <option value="incomplete">Incomplete � items outstanding</option>
                   </select>
                 </div>
                 <div class="field">
                   <small>Safe Recruitment Interview</small>
-                  <input class="field-input" type="text" id="safe-recruitment" placeholder="e.g. Completed Sep 2022 — records held in secure documents" />
+                  <input class="field-input" type="text" id="safe-recruitment" placeholder="e.g. Completed Sep 2022 � records held in secure documents" />
                 </div>
                 <div class="field form-span-2">
                   <small>References</small>
-                  <input class="field-input" type="text" id="references" placeholder="e.g. 2 of 2 received and verified — on file" />
+                  <input class="field-input" type="text" id="references" placeholder="e.g. 2 of 2 received and verified � on file" />
                 </div>
               </div>
             </div>
 
-            <!-- ── Section 4: Performance & notes ── -->
+            <!-- -- Section 4: Performance & notes -- -->
             <div class="form-section">
               <div class="form-section-title">Performance &amp; Notes</div>
               <div class="form-grid">
@@ -541,12 +541,12 @@
                 </div>
                 <div class="field form-span-2">
                   <small>Notes</small>
-                  <textarea class="field-textarea" id="notes" placeholder="Any additional notes about this host family…"></textarea>
+                  <textarea class="field-textarea" id="notes" placeholder="Any additional notes about this host family�"></textarea>
                 </div>
               </div>
             </div>
 
-            <!-- ── Submit ── -->
+            <!-- -- Submit -- -->
             <div class="action-row">
               <button type="submit" class="button">Save host record</button>
               <a class="button-alt" href="homestays.html">Cancel</a>
@@ -574,7 +574,7 @@
       }
     </script>
 <script>
-  // ── Capacity stepper + pip preview ────────────────────────────────────────
+  // -- Capacity stepper + pip preview ----------------------------------------
   var capInput = document.getElementById('capacity');
   var capPips  = document.getElementById('cap-pips');
 
@@ -597,7 +597,7 @@
 
   renderPips(); // initial render
 
-  // ── Room Builder ─────────────────────────────────────────────────────────
+  // -- Room Builder ---------------------------------------------------------
   var roomsArr = [];
   var roomsDisplay = document.getElementById('rooms-display');
 
@@ -650,7 +650,7 @@
   roomsArr.push({ label: '', capacity: 1, bedType: 'Single', enSuite: false, deskSpace: false, storage: false, smokeAlarm: false, lockableDoor: false });
   renderRooms();
 
-  // ── Form submission ───────────────────────────────────────────────────────
+  // -- Form submission -------------------------------------------------------
   document.getElementById('host-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -734,7 +734,7 @@
       counter++;
     }
 
-    // Build host object — mirrors the initialHosts schema in db.js exactly
+    // Build host object � mirrors the initialHosts schema in db.js exactly
     var newHost = {
       id:                uniqueId,
       firstName:         firstName,
@@ -746,7 +746,7 @@
       hostSince:         fmtMonth(val('host-since')) || 'Not specified',
       capacityMax:       capMax,
       capacityCurrent:   0,
-      currentStudents:   'None — new host record',
+      currentStudents:   'None � new host record',
       householdResidents: val('residents') || 'Not specified',
       smokerStatus:      val('smoker-status') || 'non-smoking',
       pets:              val('pets') || 'Not specified',
@@ -780,15 +780,15 @@
       hsChecklist:       hsStatus,
       hsChecklistDetail: hsStatus === 'complete'
         ? 'All items passed on initial assessment.'
-        : 'Outstanding items — follow-up required.',
+        : 'Outstanding items � follow-up required.',
       safeRecruitment:   val('safe-recruitment') || 'Not yet completed',
       references:        val('references') || 'Not yet received',
       punctualityPct:    pct,
       punctualityDetail: pct + '% on-time (record started ' + new Date().toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) + ')',
-      welfareIncidents:  '0 — no incidents recorded yet',
+      welfareIncidents:  '0 � no incidents recorded yet',
       parentFeedback:    val('parent-feedback') || 'No feedback recorded yet.',
       studentFeedback:   val('student-feedback') || 'No feedback recorded yet.',
-      completedStays:    val('completed-stays') || '0 — new host record',
+      completedStays:    val('completed-stays') || '0 � new host record',
       notes:             val('notes'),
       status:            'pending',
       linkedStudents:    [],

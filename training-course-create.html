@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Define Training Requirement — Oxford Guardians Platform</title>
+  <title>Define Training Requirement � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -30,7 +30,7 @@
     .button-alt { background: #ffffff !important; border-color: #d5dce8 !important; color: #0f2340 !important; }
     .button-alt:hover { background: #edf2f8 !important; }
 
-    /* ── Form sections ── */
+    /* -- Form sections -- */
     .form-section {
       background: #ffffff;
       border: 1px solid #d5dce8;
@@ -47,7 +47,7 @@
       font-size: 0.83rem; color: #4b6080; margin: 0 0 16px; line-height: 1.5;
     }
 
-    /* ── Basic fields grid ── */
+    /* -- Basic fields grid -- */
     .fields-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -76,7 +76,7 @@
     }
     .field-hint { font-size: 0.76rem; color: #6b85a0; margin: 5px 0 0; }
 
-    /* ── Role checkbox group ── */
+    /* -- Role checkbox group -- */
     .role-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -99,7 +99,7 @@
     .role-option input:disabled ~ span { color: #9bafc4; }
     .role-option.disabled { opacity: 0.55; cursor: not-allowed; }
 
-    /* ── Mandatory checkbox row ── */
+    /* -- Mandatory checkbox row -- */
     .mandatory-row {
       display: flex; align-items: center; gap: 10px;
       padding: 12px 14px;
@@ -209,8 +209,8 @@
                 <label>Renewal / Repeat Interval</label>
                 <select id="field-interval">
                   <option value="12">12 Months (Annual Update)</option>
-                  <option value="24">24 Months (2 Years — e.g. DSL Level 3)</option>
-                  <option value="36" selected>36 Months (3 Years — e.g. Safeguarding Intro / Safer Recruitment)</option>
+                  <option value="24">24 Months (2 Years � e.g. DSL Level 3)</option>
+                  <option value="36" selected>36 Months (3 Years � e.g. Safeguarding Intro / Safer Recruitment)</option>
                   <option value="0">0 (One-Off / Induction / No Expiry)</option>
                 </select>
               </div>
@@ -219,7 +219,7 @@
 
           <div class="form-section">
             <p class="form-section-title">Target Audience / Roles *</p>
-            <p class="form-section-desc">Choose who this training requirement applies to. A course is either for hosts or for staff — selecting a host role will clear any staff roles, and vice versa.</p>
+            <p class="form-section-desc">Choose who this training requirement applies to. A course is either for hosts or for staff � selecting a host role will clear any staff roles, and vice versa.</p>
             <div class="role-grid" id="role-grid">
               <label class="role-option" data-audience="host">
                 <input type="checkbox" id="role-host" value="Host" />
@@ -249,7 +249,7 @@
             <p class="form-section-title">Description / Syllabus</p>
             <p class="form-section-desc">What the course covers, and why it is required.</p>
             <div class="field-group">
-              <textarea id="field-description" placeholder="e.g. Mandatory qualification for primary and deputy DSLs per AEGIS Standard 6.2…"></textarea>
+              <textarea id="field-description" placeholder="e.g. Mandatory qualification for primary and deputy DSLs per AEGIS Standard 6.2�"></textarea>
             </div>
           </div>
 
@@ -306,7 +306,7 @@
     });
   });
 
-  // ── Edit mode: pre-fill from existing course ──────────────────────────────
+  // -- Edit mode: pre-fill from existing course ------------------------------
   if (courseId && !existingCourse) {
     document.querySelector('.main').innerHTML =
       '<div class="form-section" style="text-align:center;padding:56px 32px;">' +
@@ -318,7 +318,7 @@
   }
 
   if (existingCourse) {
-    document.title = 'Edit ' + existingCourse.title + ' — Oxford Guardians Platform';
+    document.title = 'Edit ' + existingCourse.title + ' � Oxford Guardians Platform';
     document.getElementById('page-heading').textContent = 'Edit Training Requirement';
     document.getElementById('chrome-route').textContent = 'Route /admin/compliance/training/courses/' + existingCourse.id + '/edit';
 
@@ -346,7 +346,7 @@
     document.getElementById('cancel-link-2').href = 'training-log.html';
   }
 
-  // ── Form submission ───────────────────────────────────────────────────────
+  // -- Form submission -------------------------------------------------------
   document.getElementById('course-form').addEventListener('submit', function (e) {
     e.preventDefault();
 

@@ -1,9 +1,9 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Log Low-Level Concern â€” Oxford Guardians Platform</title>
+    <title>Log Low-Level Concern — Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -17,7 +17,7 @@
         <p class="lead">Low-level concerns exist so individual observations don't vanish. They're the early warning system for patterns that might escalate later.</p>
         <div class="note brutal" style="margin:18px 0;">
           <h4>Brutal product note</h4>
-          <p>This form forces you to distinguish between logging a pattern for awareness vs. escalating to the DSL. If you're unsure, start hereâ€”the DSL can always escalate later. But if you're logging something that makes you feel "this is actually serious," go directly to concern escalation instead.</p>
+          <p>This form forces you to distinguish between logging a pattern for awareness vs. escalating to the DSL. If you're unsure, start here—the DSL can always escalate later. But if you're logging something that makes you feel "this is actually serious," go directly to concern escalation instead.</p>
         </div>
         <form class="form-grid">
           <div>
@@ -53,7 +53,7 @@
           </div>
           <div class="form-span-2">
             <label>Concern title</label>
-            <input type="text" id="concern-title" placeholder="e.g. Homesickness pattern â€” third mention this month" />
+            <input type="text" id="concern-title" placeholder="e.g. Homesickness pattern — third mention this month" />
           </div>
           <div class="form-span-2">
             <label>Details</label>
@@ -95,7 +95,7 @@
     <script src="assets/db.js"></script>
     <script>
       // Concern subject-role values must match what concerns-low-level.html already
-      // filters/counts on (subjectRole === 'Student', etc.) â€” mapped from the
+      // filters/counts on (subjectRole === 'Student', etc.) — mapped from the
       // friendlier "Subject type" labels shown in this form.
       var SUBJECT_ROLE_MAP = {
         'Student':          'Student',
@@ -118,7 +118,7 @@
         getAllStudents().forEach(function (s) {
           var opt = document.createElement('option');
           opt.value = s.id;
-          opt.textContent = s.firstName + ' ' + s.lastName + ' â€” ' + (s.school || 'No school on file');
+          opt.textContent = s.firstName + ' ' + s.lastName + ' — ' + (s.school || 'No school on file');
           studentSelect.appendChild(opt);
         });
 
@@ -149,7 +149,7 @@
         var observedIso = document.getElementById('date-observed').value || new Date().toISOString().slice(0, 10);
         var reviewIso = document.getElementById('review-date').value;
 
-        // Real schema fields â€” matches what concerns-low-level.html / concerns-dashboard.html
+        // Real schema fields — matches what concerns-low-level.html / concerns-dashboard.html
         // already read via OG_DB.getConcernsByTier('low-level').
         var concern = {
           id: generateConcernId(),
@@ -160,7 +160,7 @@
           category: document.getElementById('concern-cat').value,
           title: title,
           description: details,
-          source: 'Staff-logged â€” ' + reporter,
+          source: 'Staff-logged — ' + reporter,
           loggedDate: formatDisplayDate(observedIso),
           status: 'Monitoring',
           reviewDate: formatDisplayDate(reviewIso),

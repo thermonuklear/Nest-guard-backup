@@ -1,9 +1,9 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Low-Level Concerns â€” Oxford Guardians Platform</title>
+    <title>Low-Level Concerns — Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -26,9 +26,9 @@
               <a class="nav-link nav-link-sub" href="welfare-notes.html">Welfare notes</a>
               <a class="nav-link nav-link-sub active" href="concerns-dashboard.html">Concerns Dashboard</a>
               <div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;">
-                <a href="concerns-low-level.html" style="color: #0f2340; font-weight: 600; text-decoration: none;">â€¢ Low-Level</a>
-                <a href="concerns-escalated.html" style="color: #63768b; text-decoration: none;">â€¢ Escalated</a>
-                <a href="concerns-resolved.html" style="color: #63768b; text-decoration: none;">â€¢ Resolved (History)</a>
+                <a href="concerns-low-level.html" style="color: #0f2340; font-weight: 600; text-decoration: none;">• Low-Level</a>
+                <a href="concerns-escalated.html" style="color: #63768b; text-decoration: none;">• Escalated</a>
+                <a href="concerns-resolved.html" style="color: #63768b; text-decoration: none;">• Resolved (History)</a>
               </div>
               <a class="nav-link nav-link-sub" href="emergency-procedures.html">Emergency</a>
               <a class="nav-link" href="documents.html">Documents</a>
@@ -50,10 +50,10 @@
               <div class="toolbar-actions"><a class="button" href="admin-dashboard.html">Back to Dashboard</a><a class="button-alt" href="welfare-notes.html">Welfare notes</a><a class="button-alt" href="concerns-escalated.html">Escalated concerns</a><a class="button" href="low-level-concern-create.html">Log concern</a></div>
             </div>
             <div class="metrics">
-              <article class="metric featured"><h4>Active monitoring</h4><div class="metric-value" id="count-monitoring">â€”</div><p class="metric-meta">Patterns or behaviours under observation</p></article>
-              <article class="metric"><h4>No escalation</h4><div class="metric-value" id="count-no-esc">â€”</div><p class="metric-meta">Logged and reviewed â€” no further action</p></article>
-              <article class="metric"><h4>Student-related</h4><div class="metric-value" id="count-student">â€”</div><p class="metric-meta">Welfare pattern monitoring</p></article>
-              <article class="metric"><h4>Staff / homestay</h4><div class="metric-value" id="count-other">â€”</div><p class="metric-meta">Boundary or behaviour observation</p></article>
+              <article class="metric featured"><h4>Active monitoring</h4><div class="metric-value" id="count-monitoring">—</div><p class="metric-meta">Patterns or behaviours under observation</p></article>
+              <article class="metric"><h4>No escalation</h4><div class="metric-value" id="count-no-esc">—</div><p class="metric-meta">Logged and reviewed — no further action</p></article>
+              <article class="metric"><h4>Student-related</h4><div class="metric-value" id="count-student">—</div><p class="metric-meta">Welfare pattern monitoring</p></article>
+              <article class="metric"><h4>Staff / homestay</h4><div class="metric-value" id="count-other">—</div><p class="metric-meta">Boundary or behaviour observation</p></article>
             </div>
             <div class="note brutal">
               <h4>Brutal product note</h4>
@@ -115,7 +115,7 @@
             '<td>' + c.category + '</td>' +
             '<td><strong>' + c.title + '</strong><small>' + c.description + '</small></td>' +
             '<td>' + c.loggedDate + '</td>' +
-            '<td>' + (c.reviewDate || 'â€”') + '</td>' +
+            '<td>' + (c.reviewDate || '—') + '</td>' +
             '<td><span class="badge ' + badge + '">' + c.status + '</span></td>';
           tbody.appendChild(tr);
         });

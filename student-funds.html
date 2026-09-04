@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Held Funds — Oxford Guardians Platform</title>
+  <title>Student Held Funds � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/app.css" />
   <style>
-    /* ── Global colour overrides (matches finances.html / student-profile.html) ── */
+    /* -- Global colour overrides (matches finances.html / student-profile.html) -- */
     body, .page, .shell, main { background: #f0f4f8 !important; color: #0f2340 !important; }
     .app-frame { background: #f8fafc !important; border-color: #d5dce8 !important; box-shadow: 0 20px 40px rgba(15,35,64,0.08) !important; }
     .chrome {
@@ -57,7 +57,7 @@
     .button-alt { background: #fff !important; border-color: #d5dce8 !important; color: #0f2340 !important; }
     .button-alt:hover { background: #edf2f8 !important; }
 
-    /* ── KPI strip ── */
+    /* -- KPI strip -- */
     .sf-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
     .sf-kpi { background: #ffffff; border: 1px solid #d5dce8; border-radius: 16px; padding: 18px 20px; }
     .sf-kpi h4 { font-size: 0.75rem; font-weight: 700; color: #6b85a0; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.06em; }
@@ -68,7 +68,7 @@
     @media (max-width: 980px) { .sf-kpis { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 600px) { .sf-kpis { grid-template-columns: 1fr; } }
 
-    /* ── Filter bar ── */
+    /* -- Filter bar -- */
     .filter-bar {
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
       margin-bottom: 16px;
@@ -85,7 +85,7 @@
     .filter-bar input::placeholder { color: #9bafc4; }
     .filter-count { font-size: 0.8rem; color: #6b85a0; margin-left: auto; }
 
-    /* ── Ledger table ── */
+    /* -- Ledger table -- */
     .sf-table-wrap { background: #ffffff; border: 1px solid #d5dce8; border-radius: 16px; overflow: hidden; overflow-x: auto; }
     .sf-table-wrap table { width: 100%; border-collapse: collapse; min-width: 920px; }
     .sf-table-wrap th {
@@ -148,7 +148,7 @@
 
           <div class="toolbar">
             <div>
-              <span class="eyebrow">Finance management — AEGIS Standard 2.9.2</span>
+              <span class="eyebrow">Finance management � AEGIS Standard 2.9.2</span>
               <h2>Student Held Funds Register</h2>
               <p>Master ledger of every deposit and release across all student pocket money and emergency reserve accounts, held on behalf of students in accordance with Nest Guardians Finance Records Register requirements.</p>
             </div>
@@ -157,18 +157,18 @@
           <div class="sf-kpis">
             <div class="sf-kpi">
               <h4>Total Client Funds Held</h4>
-              <div class="sf-kpi-value" id="kpi-total-held">£0.00</div>
-              <p class="sf-kpi-sub" id="kpi-total-held-sub">—</p>
+              <div class="sf-kpi-value" id="kpi-total-held">�0.00</div>
+              <p class="sf-kpi-sub" id="kpi-total-held-sub">�</p>
             </div>
             <div class="sf-kpi">
               <h4>Total Disbursed (2025/26)</h4>
-              <div class="sf-kpi-value" id="kpi-disbursed">£0.00</div>
+              <div class="sf-kpi-value" id="kpi-disbursed">�0.00</div>
               <p class="sf-kpi-sub">Since 1 Sep 2025</p>
             </div>
             <div class="sf-kpi">
               <h4>Active Student Accounts</h4>
               <div class="sf-kpi-value" id="kpi-active-accounts">0</div>
-              <p class="sf-kpi-sub" id="kpi-active-accounts-sub">—</p>
+              <p class="sf-kpi-sub" id="kpi-active-accounts-sub">�</p>
             </div>
             <div class="sf-kpi audit">
               <h4>Ledger Audit Status</h4>
@@ -179,13 +179,13 @@
 
           <div class="filter-bar">
             <select id="filter-student" aria-label="Filter by student">
-              <option value="">— All students —</option>
+              <option value="">� All students �</option>
             </select>
             <select id="filter-purpose" aria-label="Filter by purpose">
-              <option value="">— All purposes —</option>
+              <option value="">� All purposes �</option>
             </select>
-            <input type="text" id="filter-ref" placeholder="Search by reference (e.g. DEP-0001)…" />
-            <span class="filter-count" id="filter-count">—</span>
+            <input type="text" id="filter-ref" placeholder="Search by reference (e.g. DEP-0001)�" />
+            <span class="filter-count" id="filter-count">�</span>
           </div>
 
           <div class="sf-table-wrap">
@@ -223,11 +223,11 @@
 
     function fmtMoney(n) {
       var v = Number(n) || 0;
-      return '£' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return '�' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     function fmtDate(d) {
-      if (!d) return '—';
+      if (!d) return '�';
       var p = new Date(d);
       if (isNaN(p.getTime())) return String(d);
       var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -245,7 +245,7 @@
       return s ? (s.firstName + ' ' + s.lastName) : (fallbackName || studentId || 'Unknown student');
     }
 
-    // ── Populate filters ───────────────────────────────────────────────────────
+    // -- Populate filters -------------------------------------------------------
     (function populateFilters() {
       var allFunds = getAllStudentHeldFunds();
 
@@ -276,7 +276,7 @@
       });
     }());
 
-    // ── KPI header strip ──────────────────────────────────────────────────────
+    // -- KPI header strip ------------------------------------------------------
     function renderKpis() {
       var allFunds = getAllStudentHeldFunds();
 
@@ -310,7 +310,7 @@
       document.getElementById('kpi-active-accounts-sub').textContent = studentIds.length + ' student' + (studentIds.length === 1 ? '' : 's') + ' with funds on record';
     }
 
-    // ── Master ledger table ───────────────────────────────────────────────────
+    // -- Master ledger table ---------------------------------------------------
     function renderLedger() {
       var studentFilter = document.getElementById('filter-student').value;
       var purposeFilter = document.getElementById('filter-purpose').value;
@@ -339,13 +339,13 @@
 
         return '<tr>' +
           '<td>' + esc(fmtDate(tx.dateReceived)) + '</td>' +
-          '<td><span class="sf-student-name">' + esc(studentLabel(tx.studentId, tx.studentName)) + '</span><span class="sf-student-id">' + esc(tx.studentId || '—') + '</span></td>' +
-          '<td>' + esc(tx.id || '—') + '</td>' +
-          '<td>' + esc(tx.purpose || '—') + '</td>' +
-          '<td>' + (amountIn  > 0 ? '<span class="sf-amount-in">+'  + fmtMoney(amountIn)  + '</span>' : '—') + '</td>' +
-          '<td>' + (amountOut > 0 ? '<span class="sf-amount-out">−' + fmtMoney(amountOut) + '</span>' : '—') + '</td>' +
+          '<td><span class="sf-student-name">' + esc(studentLabel(tx.studentId, tx.studentName)) + '</span><span class="sf-student-id">' + esc(tx.studentId || '�') + '</span></td>' +
+          '<td>' + esc(tx.id || '�') + '</td>' +
+          '<td>' + esc(tx.purpose || '�') + '</td>' +
+          '<td>' + (amountIn  > 0 ? '<span class="sf-amount-in">+'  + fmtMoney(amountIn)  + '</span>' : '�') + '</td>' +
+          '<td>' + (amountOut > 0 ? '<span class="sf-amount-out">-' + fmtMoney(amountOut) + '</span>' : '�') + '</td>' +
           '<td>' + fmtMoney(tx.balanceHeld) + '</td>' +
-          '<td>' + esc(tx.approvedBy || '—') + '</td>' +
+          '<td>' + esc(tx.approvedBy || '�') + '</td>' +
           '<td>' + receiptHtml + '</td>' +
           '<td><a class="button-alt" style="padding:6px 12px;font-size:0.78rem;text-decoration:none;" href="student-profile.html?id=' + esc(tx.studentId || '') + '">View Profile</a></td>' +
         '</tr>';

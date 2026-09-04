@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hosts Directory — Oxford Guardians Platform</title>
+    <title>Hosts Directory � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      /* ── Global colour overrides ── */
+      /* -- Global colour overrides -- */
       body, .page, .shell {
         background: #f0f4f8 !important;
         color: #0f2340 !important;
@@ -21,7 +21,7 @@
         box-shadow: 0 20px 40px rgba(15, 35, 64, 0.08) !important;
       }
 
-      /* ── Chrome bar ── */
+      /* -- Chrome bar -- */
       .chrome {
         background: #e8eef6 !important;
         border-bottom-color: #d5dce8 !important;
@@ -61,7 +61,7 @@
         background: #dce8f4;
       }
 
-      /* ── Sidebar ── */
+      /* -- Sidebar -- */
       .sidebar {
         background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
       }
@@ -78,7 +78,7 @@
 
 
 
-      /* ── Main ── */
+      /* -- Main -- */
       .main {
         background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important;
         overflow-y: auto;
@@ -89,7 +89,7 @@
       .eyebrow    { color: #2a6096 !important; }
       .toolbar p  { color: #3b536e !important; }
 
-      /* ── Buttons ── */
+      /* -- Buttons -- */
       .button {
         background: #0f2340 !important;
         border-color: #0f2340 !important;
@@ -106,7 +106,7 @@
 
       .button-alt:hover { background: #edf2f8 !important; }
 
-      /* ── Two-column layout ── */
+      /* -- Two-column layout -- */
       .content-cols {
         display: grid;
         grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr);
@@ -114,7 +114,7 @@
         padding: 0 24px 28px;
       }
 
-      /* ── Filter row ── */
+      /* -- Filter row -- */
       .filter-row {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -159,14 +159,14 @@
       .filter-select:focus { border-bottom-color: #0f2340; }
       .filter-select { appearance: none; cursor: pointer; }
 
-      /* ── Result count ── */
+      /* -- Result count -- */
       .result-count {
         font-size: 0.78rem;
         color: #6b85a0;
         margin-bottom: 8px;
       }
 
-      /* ── Section header ── */
+      /* -- Section header -- */
       .section-header {
         display: flex;
         align-items: baseline;
@@ -191,7 +191,7 @@
 
       .section-header a:hover { text-decoration: underline; }
 
-      /* ── Table ── */
+      /* -- Table -- */
       .table-wrap {
         background: #ffffff !important;
         border: 1px solid #d5dce8 !important;
@@ -228,7 +228,7 @@
       td strong { color: #0f2340 !important; font-weight: 600; }
       td small  { display: block; color: #6b85a0 !important; font-size: 0.78rem; margin-top: 1px; }
 
-      /* ── Host name link + avatar ── */
+      /* -- Host name link + avatar -- */
       .host-name-cell {
         display: flex;
         align-items: center;
@@ -262,7 +262,7 @@
         text-decoration: underline;
       }
 
-      /* ── Capacity pips ── */
+      /* -- Capacity pips -- */
       .capacity-pips {
         display: flex;
         gap: 4px;
@@ -287,7 +287,7 @@
         margin-left: 6px;
       }
 
-      /* ── Empty state ── */
+      /* -- Empty state -- */
       .empty-state {
         text-align: center;
         padding: 36px 24px;
@@ -295,7 +295,7 @@
         font-size: 0.88rem;
       }
 
-      /* ── Alerts panel ── */
+      /* -- Alerts panel -- */
       .alerts-panel { display: flex; flex-direction: column; }
 
       .alert-card {
@@ -500,7 +500,7 @@
               <div>
                 <span class="eyebrow">Homestay Operations</span>
                 <h2>Hosts Directory</h2>
-                <p>All approved and pending host families — DBS state, capacity, and visit schedule at a glance.</p>
+                <p>All approved and pending host families � DBS state, capacity, and visit schedule at a glance.</p>
               </div>
               <div class="toolbar-actions">
                 <a class="button-alt" href="homestays.html">Back to Homestays</a>
@@ -520,19 +520,19 @@
               <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:14px;">
                 <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
                   <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Total Approved Beds</small>
-                  <strong style="font-size:1.4rem; color:#0f2340;" id="stat-total-beds">—</strong>
+                  <strong style="font-size:1.4rem; color:#0f2340;" id="stat-total-beds">�</strong>
                 </div>
                 <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
                   <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Currently Placed</small>
-                  <strong style="font-size:1.4rem; color:#0284c7;" id="stat-occupied-beds">—</strong>
+                  <strong style="font-size:1.4rem; color:#0284c7;" id="stat-occupied-beds">�</strong>
                 </div>
                 <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
                   <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Standard Beds Free</small>
-                  <strong style="font-size:1.4rem; color:#16a34a;" id="stat-available-beds">—</strong>
+                  <strong style="font-size:1.4rem; color:#16a34a;" id="stat-available-beds">�</strong>
                 </div>
                 <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
                   <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Emergency Standby (Std 2.6)</small>
-                  <strong style="font-size:1.4rem; color:#d97706;" id="stat-emergency-beds">—</strong>
+                  <strong style="font-size:1.4rem; color:#d97706;" id="stat-emergency-beds">�</strong>
                 </div>
               </div>
             </div>
@@ -558,7 +558,7 @@
                       class="filter-input"
                       type="text"
                       id="search-input"
-                      placeholder="Search name or location…"
+                      placeholder="Search name or location�"
                       autocomplete="off"
                     />
                   </div>
@@ -584,12 +584,12 @@
                     <small>Emergency Ready</small>
                     <select class="filter-select" id="emergency-filter">
                       <option value="">All Hosts</option>
-                      <option value="emergency">⚡ Emergency Ready Only (Std 2.6)</option>
+                      <option value="emergency">? Emergency Ready Only (Std 2.6)</option>
                     </select>
                   </div>
                 </div>
 
-                <p class="result-count" id="result-count">Loading…</p>
+                <p class="result-count" id="result-count">Loading�</p>
 
                 <div class="table-wrap">
                   <table>
@@ -620,7 +620,7 @@
                   <div class="alert-card alert-danger">
                     <span class="alert-timestamp">Overdue</span>
                     <div class="alert-type">DBS Check</div>
-                    <p class="alert-title">Helen Finch — DBS expiring</p>
+                    <p class="alert-title">Helen Finch � DBS expiring</p>
                     <p class="alert-body">DBS certificate expires in 14 days (18 Nov 2025). Renewal submitted but certificate not received. Cannot host until renewed.</p>
                     <a class="alert-action" href="host-profile.html?id=helen-finch">Review record</a>
                   </div>
@@ -628,7 +628,7 @@
                   <div class="alert-card alert-warning">
                     <span class="alert-timestamp">Due soon</span>
                     <div class="alert-type">Annual Visit</div>
-                    <p class="alert-title">Eleanor Ashworth — visit due next week</p>
+                    <p class="alert-title">Eleanor Ashworth � visit due next week</p>
                     <p class="alert-body">Annual inspection due 14 May 2026. Last completed 14 May 2025. Schedule before summer placements begin.</p>
                     <a class="alert-action" href="homestay-visit.html">Book visit</a>
                   </div>
@@ -636,7 +636,7 @@
                   <div class="alert-card alert-warning">
                     <span class="alert-timestamp">Pending</span>
                     <div class="alert-type">Approval Blocked</div>
-                    <p class="alert-title">Ellis Family — document missing</p>
+                    <p class="alert-title">Ellis Family � document missing</p>
                     <p class="alert-body">DBS upload outstanding. Sofia Petrova reserved for this placement. Approval cannot proceed until document is on file.</p>
                     <a class="alert-action" href="hosts.html?status=pending">Resolve</a>
                   </div>
@@ -644,7 +644,7 @@
                   <div class="alert-card alert-info">
                     <span class="alert-timestamp">Upcoming</span>
                     <div class="alert-type">Annual Visit</div>
-                    <p class="alert-title">Brennan Family — visit due 2 Jun 2026</p>
+                    <p class="alert-title">Brennan Family � visit due 2 Jun 2026</p>
                     <p class="alert-body">Fire evacuation discussion logged at last visit. Confirm updated route before scheduling follow-up.</p>
                     <a class="alert-action" href="homestay-visit.html">Schedule</a>
                   </div>
@@ -685,7 +685,7 @@
       }
 
       function locationFromAddress(address) {
-        if (!address) return '—';
+        if (!address) return '�';
         // Return city/area: last meaningful part before postcode
         var parts = address.split(',');
         return parts.length >= 2 ? parts[parts.length - 2].trim() : parts[0].trim();
@@ -707,7 +707,7 @@
       }
 
       function statusBadgeLabel(status) {
-        return status ? status.charAt(0).toUpperCase() + status.slice(1) : '—';
+        return status ? status.charAt(0).toUpperCase() + status.slice(1) : '�';
       }
 
       function visitBadgeClass(status) {
@@ -715,10 +715,10 @@
         return map[status] || 'grey';
       }
 
-      // ── Exeat availability badge (AEGIS Standard 5.4.1) ─────────────────────
+      // -- Exeat availability badge (AEGIS Standard 5.4.1) ---------------------
       function parsePeriodEndDate(period) {
         var str = (period && period.dates) || '';
-        var parts = str.split(/[–-]/).map(function (s) { return s.trim(); });
+        var parts = str.split(/[�-]/).map(function (s) { return s.trim(); });
         var last = parts[parts.length - 1];
         var d = new Date(last);
         return isNaN(d.getTime()) ? null : d;
@@ -736,7 +736,7 @@
         var isAvailable = period.status === 'available';
         return '<span class="badge' + (isAvailable ? ' green' : '') + '" style="font-size:0.7rem;' +
           (isAvailable ? '' : 'background:#e2e8f0; color:#475569;') + '">' +
-          (isAvailable ? '✓ Available' : '✕ Unavailable') + ' — ' + (period.name || period.periodId) +
+          (isAvailable ? '? Available' : '? Unavailable') + ' � ' + (period.name || period.periodId) +
         '</span>';
       }
 
@@ -774,7 +774,7 @@
                 '<div class="host-avatar">' + avt + '</div>' +
                 '<div>' +
                   '<a class="host-name-link" href="host-profile.html?id=' + h.id + '">' + fullName + '</a>' +
-                  '<small>' + (h.email || h.mobile || '—') + '</small>' +
+                  '<small>' + (h.email || h.mobile || '�') + '</small>' +
                 '</div>' +
               '</div>' +
             '</td>' +
@@ -788,13 +788,13 @@
               (h.dbsRenewalDue ? '<small>Renewal: ' + h.dbsRenewalDue + '</small>' : '') +
             '</td>' +
             '<td>' +
-              '<span class="badge ' + visitBadgeClass(h.annualVisitStatus) + '">' + (h.annualVisitDue || '—') + '</span>' +
+              '<span class="badge ' + visitBadgeClass(h.annualVisitStatus) + '">' + (h.annualVisitDue || '�') + '</span>' +
               (h.annualVisitLast ? '<small>' + h.annualVisitLast + '</small>' : '') +
             '</td>' +
             '<td>' +
               '<span class="badge ' + statusBadgeClass(h.status) + '">' + statusBadgeLabel(h.status) + '</span>' +
               (h.emergencyProvision
-                ? '<br /><span class="badge amber" style="font-size:0.7rem; margin-top:4px; display:inline-block;">⚡ Emergency Ready (&lt;' + (h.emergencyNoticeHours || 2) + 'h)</span>'
+                ? '<br /><span class="badge amber" style="font-size:0.7rem; margin-top:4px; display:inline-block;">? Emergency Ready (&lt;' + (h.emergencyNoticeHours || 2) + 'h)</span>'
                 : '') +
               (availBadge ? '<br />' + availBadge : '') +
             '</td>' +
@@ -831,7 +831,7 @@
         renderTable(data);
       }
 
-      // ── Homestay Supply & Emergency Headroom Metric Bar (AEGIS Standard 5.4.1) ──
+      // -- Homestay Supply & Emergency Headroom Metric Bar (AEGIS Standard 5.4.1) --
       function renderSupplyAnalytics() {
         var stats = OG_DB.getHomestaySupplyAnalytics();
         document.getElementById('stat-total-beds').textContent     = stats.totalApprovedBeds;
@@ -844,7 +844,7 @@
         badge.className   = 'badge ' + (stats.isSufficient ? 'green' : 'amber');
       }
 
-      // ── "All Hosts" / "Pending Approval" quick tabs ──────────────────────────
+      // -- "All Hosts" / "Pending Approval" quick tabs --------------------------
       var tabAllHosts        = document.getElementById('tab-all-hosts');
       var tabPendingApproval = document.getElementById('tab-pending-approval');
 

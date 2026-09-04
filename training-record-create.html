@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Log Training — Oxford Guardians Platform</title>
+  <title>Log Training � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -38,7 +38,7 @@
       color: #e8f0fa; border: 2px solid #d5dce8; flex-shrink: 0;
     }
 
-    /* ── Form sections ── */
+    /* -- Form sections -- */
     .form-section {
       background: #ffffff;
       border: 1px solid #d5dce8;
@@ -55,7 +55,7 @@
       font-size: 0.83rem; color: #4b6080; margin: 0 0 16px; line-height: 1.5;
     }
 
-    /* ── Basic fields grid ── */
+    /* -- Basic fields grid -- */
     .fields-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -86,7 +86,7 @@
     }
     .field-hint { font-size: 0.76rem; color: #6b85a0; margin: 5px 0 0; }
 
-    /* ── Person type selector ── */
+    /* -- Person type selector -- */
     .person-type-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
     @media (max-width: 640px) { .person-type-grid { grid-template-columns: 1fr; } }
     .person-type-option {
@@ -113,7 +113,7 @@
     .locked-person-box .name { font-weight: 700; color: #0f2340; font-size: 0.92rem; }
     .locked-person-box .meta { font-size: 0.78rem; color: #6b85a0; }
 
-    /* ── Section 8 checklist ── */
+    /* -- Section 8 checklist -- */
     .checklist-grid { display: grid; gap: 8px; }
     .checklist-row {
       display: flex; align-items: flex-start; gap: 12px;
@@ -155,7 +155,7 @@
     .yn-group input[value="no"]:checked  + label { background: #dc2626; border-color: #dc2626; color: #fff; }
     .yn-group input[value="na"]:checked  + label { background: #6b7280; border-color: #6b7280; color: #fff; }
 
-    /* ── Section 13 questions ── */
+    /* -- Section 13 questions -- */
     .question-block { margin-bottom: 14px; }
     .question-block:last-child { margin-bottom: 0; }
     .question-text {
@@ -230,7 +230,7 @@
             <div>
               <span class="eyebrow">Training &amp; Induction Log</span>
               <h2 id="toolbar-name" style="margin:2px 0 4px;">Log Training</h2>
-              <p style="margin:0;font-size:0.88rem;color:#3b536e;">Role-based courses drive renewal cycles automatically. Section 8 · Section 13 apply to homestay carers only.</p>
+              <p style="margin:0;font-size:0.88rem;color:#3b536e;">Role-based courses drive renewal cycles automatically. Section 8 � Section 13 apply to homestay carers only.</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -266,8 +266,8 @@
               <div class="locked-person-box">
                 <div class="host-avatar-lg" id="locked-avatar" style="width:38px;height:38px;font-size:14px;">?</div>
                 <div>
-                  <div class="name" id="locked-name">—</div>
-                  <div class="meta" id="locked-meta">—</div>
+                  <div class="name" id="locked-name">�</div>
+                  <div class="meta" id="locked-meta">�</div>
                 </div>
               </div>
             </div>
@@ -292,7 +292,7 @@
               </div>
               <div class="field-group">
                 <label>Expiry / Renewal Due</label>
-                <input type="text" id="field-expiry" disabled placeholder="—" />
+                <input type="text" id="field-expiry" disabled placeholder="�" />
               </div>
               <div class="field-group">
                 <label>Duration (Hours)</label>
@@ -326,7 +326,7 @@
           <div class="form-section host-only" id="section-s8-policy">
             <p class="form-section-title">Policy &amp; Procedure Explanations</p>
             <p class="form-section-desc">
-              Mark each item as <strong>Yes</strong> (covered and confirmed), <strong>No</strong> (not covered — explain in additional notes), or <strong>N/A</strong> (not applicable to this session type).
+              Mark each item as <strong>Yes</strong> (covered and confirmed), <strong>No</strong> (not covered � explain in additional notes), or <strong>N/A</strong> (not applicable to this session type).
             </p>
             <div class="checklist-grid" id="s8-policy-container">
               <!-- populated by JS -->
@@ -372,7 +372,7 @@
           <div class="form-section">
             <p class="form-section-title">Additional Notes</p>
             <p class="form-section-desc">Any follow-up actions, concerns raised, items outstanding, or observations from this session.</p>
-            <textarea id="field-notes" style="width:100%;min-height:84px;padding:9px 12px;border:1px solid #d5dce8;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.84rem;color:#0f2340;background:#f6f8fb;resize:vertical;box-sizing:border-box;line-height:1.5;" placeholder="e.g. Host confirmed understanding of all key policies. Annual safeguarding update booked for September 2026…"></textarea>
+            <textarea id="field-notes" style="width:100%;min-height:84px;padding:9px 12px;border:1px solid #d5dce8;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.84rem;color:#0f2340;background:#f6f8fb;resize:vertical;box-sizing:border-box;line-height:1.5;" placeholder="e.g. Host confirmed understanding of all key policies. Annual safeguarding update booked for September 2026�"></textarea>
           </div>
 
           <div class="form-footer">
@@ -402,7 +402,7 @@
   var currentPerson     = null;    // the resolved staff/host record
   var lockedMode        = false;   // true when arriving via hostId/personId
 
-  // ── Resolve a locked person from the URL, if any ──────────────────────────
+  // -- Resolve a locked person from the URL, if any --------------------------
   var lockedType = null;
   var lockedRecord = null;
 
@@ -434,21 +434,21 @@
     document.getElementById('locked-name').textContent   = fullName + ' (' + lockedRecord.id + ')';
     document.getElementById('locked-meta').textContent   = lockedType === 'staff' ? (lockedRecord.role || 'Staff') : 'Homestay carer';
 
-    document.getElementById('toolbar-name').textContent = 'Log Training — ' + fullName;
+    document.getElementById('toolbar-name').textContent = 'Log Training � ' + fullName;
     document.getElementById('toolbar-avatar').textContent = (lockedRecord.firstName.charAt(0) + lockedRecord.lastName.charAt(0)).toUpperCase();
     document.getElementById('chrome-route').textContent  = 'Route /admin/' + lockedType + '/' + lockedRecord.id + '/training/new';
-    document.title = 'Log Training — ' + fullName + ' — Oxford Guardians';
+    document.title = 'Log Training � ' + fullName + ' � Oxford Guardians';
 
     backUrl = lockedType === 'host' ? ('training-log.html?id=' + lockedRecord.id) : ('staff-aegis-control-room.html?id=' + lockedRecord.id);
   } else if (hostIdParam || personIdParam) {
-    // A param was given but didn't resolve to a real record — fall back to the open picker.
-    document.getElementById('field-person').placeholder = 'Record not found — check ID in URL';
+    // A param was given but didn't resolve to a real record � fall back to the open picker.
+    document.getElementById('field-person').placeholder = 'Record not found � check ID in URL';
   }
 
   document.getElementById('cancel-link').href   = backUrl;
   document.getElementById('cancel-link-2').href = backUrl;
 
-  // ── Default date to today ─────────────────────────────────────────────────
+  // -- Default date to today -------------------------------------------------
   (function () {
     var today = new Date();
     var yyyy  = today.getFullYear();
@@ -457,7 +457,7 @@
     document.getElementById('field-date').value = yyyy + '-' + mm + '-' + dd;
   })();
 
-  // ── Mode toggling (host-only / staff-only sections) ───────────────────────
+  // -- Mode toggling (host-only / staff-only sections) -----------------------
   function applyModeVisibility() {
     var isHost = currentPersonType === 'host';
     document.querySelectorAll('.host-only').forEach(function (el) { el.style.display = isHost ? '' : 'none'; });
@@ -466,13 +466,13 @@
     document.getElementById('person-select-label').textContent = isHost ? 'Homestay Carer *' : 'Staff Member *';
   }
 
-  // ── Person dropdown population (open picker only) ─────────────────────────
+  // -- Person dropdown population (open picker only) -------------------------
   function populatePersonDropdown() {
     var sel = document.getElementById('field-person');
     if (currentPersonType === 'staff') {
       var staff = getAllStaff();
       sel.innerHTML = staff.map(function (m) {
-        return '<option value="' + m.id + '">' + escHtml(m.firstName + ' ' + m.lastName) + ' — ' + escHtml(m.role || '') + '</option>';
+        return '<option value="' + m.id + '">' + escHtml(m.firstName + ' ' + m.lastName) + ' � ' + escHtml(m.role || '') + '</option>';
       }).join('');
       currentPerson = staff.length ? getStaffById(sel.value) : null;
     } else {
@@ -484,7 +484,7 @@
     }
   }
 
-  // ── Course dropdown population ────────────────────────────────────────────
+  // -- Course dropdown population --------------------------------------------
   function roleForCurrentPerson() {
     if (currentPersonType === 'host') return 'Host';
     return currentPerson ? (currentPerson.role || '') : '';
@@ -534,7 +534,7 @@
     var expiryField = document.getElementById('field-expiry');
 
     if (!course) {
-      expiryField.value = '—';
+      expiryField.value = '�';
       return;
     }
     if (!course.repeatIntervalMonths) {
@@ -542,19 +542,19 @@
       return;
     }
     if (!dateVal) {
-      expiryField.value = '—';
+      expiryField.value = '�';
       return;
     }
     var d = new Date(dateVal);
     if (isNaN(d.getTime())) {
-      expiryField.value = '—';
+      expiryField.value = '�';
       return;
     }
     d.setMonth(d.getMonth() + course.repeatIntervalMonths);
     expiryField.value = d.toISOString().split('T')[0];
   }
 
-  // ── Wire up person-type / person / course change handlers ────────────────
+  // -- Wire up person-type / person / course change handlers ----------------
   if (!lockedMode) {
     var personTypeRadios = document.querySelectorAll('input[name="person-type"]');
     function updatePersonTypeOptionState() {
@@ -589,7 +589,7 @@
   document.getElementById('field-course').addEventListener('change', handleCourseChange);
   document.getElementById('field-date').addEventListener('change', refreshExpiryDisplay);
 
-  // ── Section 8: induction checklist items ─────────────────────────────────
+  // -- Section 8: induction checklist items ---------------------------------
   var s8Items = [
     { key: 'handbookIssued',            label: 'Homestay Handbook issued.' },
     { key: 'codeOfConductExplained',    label: 'Staff and Homestay Code of Conduct explained.' },
@@ -646,7 +646,7 @@
     }
   });
 
-  // ── Section 13: safeguarding understanding questions ──────────────────────
+  // -- Section 13: safeguarding understanding questions ----------------------
   var s13Questions = [
     { key: 'motivation',          text: 'Why do you want to become a homestay? Probe motivation for taking on the role.' },
     { key: 'trainingLearnings',   text: 'What were the key points you learnt from the safeguarding training you completed?' },
@@ -664,11 +664,11 @@
     block.className = 'question-block';
     block.innerHTML =
       '<p class="question-text"><span class="q-num">' + (i + 1) + '</span>' + q.text + '</p>' +
-      '<textarea id="s13_' + q.key + '" placeholder="Record host\'s response…" rows="3"></textarea>';
+      '<textarea id="s13_' + q.key + '" placeholder="Record host\'s response�" rows="3"></textarea>';
     s13Container.appendChild(block);
   });
 
-  // ── Form submission ───────────────────────────────────────────────────────
+  // -- Form submission -------------------------------------------------------
   document.getElementById('training-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -726,7 +726,7 @@
       certificateRef:        document.getElementById('field-cert').value.trim(),
       hours:                 hoursVal === '' ? undefined : parseFloat(hoursVal),
       cost:                  costVal === '' ? undefined : parseFloat(costVal),
-      expiryDate:            document.getElementById('field-expiry').value !== '—' ? document.getElementById('field-expiry').value : '',
+      expiryDate:            document.getElementById('field-expiry').value !== '�' ? document.getElementById('field-expiry').value : '',
       inductionItems:        inductionItems,
       understandingAnswers:  understandingAnswers,
       notes:                 document.getElementById('field-notes').value.trim(),

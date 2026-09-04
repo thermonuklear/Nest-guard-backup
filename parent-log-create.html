@@ -1,9 +1,9 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Log Parent Contact â€” Oxford Guardians Platform</title>
+    <title>Log Parent Contact — Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -56,7 +56,7 @@
               <div>
                 <span class="eyebrow">Log parent contact</span>
                 <h2>Logging the call matters as much as making it.</h2>
-                <p>Record the details of a parent contact â€” who was spoken to, what was discussed, and what still needs action.</p>
+                <p>Record the details of a parent contact — who was spoken to, what was discussed, and what still needs action.</p>
               </div>
             </div>
             <div class="card">
@@ -65,7 +65,7 @@
                 <div>
                   <label>Parent</label>
                   <select id="parent-selector">
-                    <option value="">Select a parentâ€¦</option>
+                    <option value="">Select a parent…</option>
                   </select>
                 </div>
                 <div>
@@ -97,7 +97,7 @@
         getAllParents().forEach(function (p) {
           var opt = document.createElement('option');
           opt.value = p.id;
-          opt.textContent = p.firstName + ' ' + p.lastName + (p.relationship ? ' â€” ' + p.relationship : '');
+          opt.textContent = p.firstName + ' ' + p.lastName + (p.relationship ? ' — ' + p.relationship : '');
           sel.appendChild(opt);
         });
 

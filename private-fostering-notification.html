@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Notify Local Authority — Private Fostering — Oxford Guardians Platform</title>
+    <title>Notify Local Authority � Private Fostering � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -57,7 +57,7 @@
               <div class="form-grid">
                 <div>
                   <label>Student</label>
-                  <select id="student-selector"><option value="">— Select a student —</option></select>
+                  <select id="student-selector"><option value="">� Select a student �</option></select>
                 </div>
                 <div>
                   <label>Date of birth</label>
@@ -170,7 +170,7 @@
               <ul>
                 <li>Failure to notify is a criminal offence for the person caring for the child.</li>
                 <li>Guardianship organisations have a duty to ensure notification happens even if they're not the direct carer.</li>
-                <li>The LA may visit the homestay — prepare the homestay for this possibility.</li>
+                <li>The LA may visit the homestay � prepare the homestay for this possibility.</li>
                 <li>Keep all correspondence with the LA permanently as part of the student and homestay record.</li>
               </ul>
             </div>
@@ -259,7 +259,7 @@
       };
     </script>
     <script>
-      // ── Shared helpers ────────────────────────────────────────────────────────
+      // -- Shared helpers --------------------------------------------------------
 
       function getStudentName() {
         var sel = document.getElementById('student-selector');
@@ -284,7 +284,7 @@
         localStorage.setItem('og_pf_documents', JSON.stringify(records));
       }
 
-      // ── PDF generation ────────────────────────────────────────────────────────
+      // -- PDF generation --------------------------------------------------------
 
       document.getElementById('btn-generate-pdf').onclick = function () {
         var studentName = getStudentName();
@@ -328,9 +328,9 @@
         if (laAddr) ln(laAddr, false, 11, 8);
 
         ln("Dear Children's Services,", false, 11, 6);
-        ln('RE: PRIVATE FOSTERING NOTIFICATION — ' + studentName.toUpperCase(), true, 11, 6);
+        ln('RE: PRIVATE FOSTERING NOTIFICATION � ' + studentName.toUpperCase(), true, 11, 6);
         ln('We write to formally notify ' + (laName || 'the local authority') +
-          ' of a private fostering arrangement involving a child in our guardianship, as required under Section 67 of the Children Act 1989 and the Children (Private Arrangements for Fostering) Regulations 2005.',
+          ' of a private fostering arrangement involving a child in our guardianship, as required under Section�67 of the Children Act 1989 and the Children (Private Arrangements for Fostering) Regulations 2005.',
           false, 11, 6);
 
         rule();
@@ -382,7 +382,7 @@
         savePFDocument(studentName, 'PDF');
       };
 
-      // ── ZIP generation ────────────────────────────────────────────────────────
+      // -- ZIP generation --------------------------------------------------------
 
       document.getElementById('btn-generate-zip').onclick = function () {
         var studentName = getStudentName();

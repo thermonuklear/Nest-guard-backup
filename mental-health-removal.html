@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AEGIS Student Removal Form — Oxford Guardians Platform</title>
+    <title>AEGIS Student Removal Form � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -89,17 +89,17 @@
               <!-- Auto-populated read-only details -->
               <div class="form-field">
                 <label class="form-label">Student name</label>
-                <div class="readonly-field" id="ro-name">—</div>
+                <div class="readonly-field" id="ro-name">�</div>
               </div>
 
               <div class="form-field">
                 <label class="form-label">Date of birth</label>
-                <div class="readonly-field" id="ro-dob">—</div>
+                <div class="readonly-field" id="ro-dob">�</div>
               </div>
 
               <div class="form-field form-span-2">
                 <label class="form-label">School</label>
-                <div class="readonly-field" id="ro-school">—</div>
+                <div class="readonly-field" id="ro-school">�</div>
               </div>
 
               <hr class="section-divider form-span-2" />
@@ -108,7 +108,7 @@
               <div class="form-field form-span-2">
                 <label class="form-label" for="f-reason">Reason for request of removal</label>
                 <textarea class="form-control" id="f-reason"
-                  placeholder="Describe the presenting concern and circumstances that have led to this request…"
+                  placeholder="Describe the presenting concern and circumstances that have led to this request�"
                   required></textarea>
               </div>
 
@@ -131,7 +131,7 @@
               <div class="form-field form-span-2">
                 <label class="form-label" for="f-assessment-summary">Summary of assessment</label>
                 <textarea class="form-control" id="f-assessment-summary"
-                  placeholder="Summarise the medical or professional assessment findings…"></textarea>
+                  placeholder="Summarise the medical or professional assessment findings�"></textarea>
               </div>
 
               <hr class="section-divider form-span-2" />
@@ -168,7 +168,7 @@
                   <label><input type="radio" name="policies-attached" value="No"> No</label>
                 </div>
                 <textarea class="form-control" id="f-policy-notes" style="min-height:60px;"
-                  placeholder="Specify attached policy filenames or school policy handbook reference versions…"></textarea>
+                  placeholder="Specify attached policy filenames or school policy handbook reference versions�"></textarea>
               </div>
 
               <hr class="section-divider form-span-2" />
@@ -177,20 +177,20 @@
               <div class="form-field form-span-2">
                 <label class="form-label" for="f-medication">Details of medication <span style="font-size:0.85em;text-transform:none;letter-spacing:0;">(optional)</span></label>
                 <textarea class="form-control" id="f-medication" style="min-height:80px;"
-                  placeholder="List any medication the student is currently prescribed or taking…"></textarea>
+                  placeholder="List any medication the student is currently prescribed or taking�"></textarea>
               </div>
 
               <div class="form-field form-span-2">
                 <label class="form-label" for="f-additional">Additional information <span style="font-size:0.85em;text-transform:none;letter-spacing:0;">(optional)</span></label>
                 <textarea class="form-control" id="f-additional" style="min-height:80px;"
-                  placeholder="Any other relevant information about the student's condition, behaviour, or circumstances…"></textarea>
+                  placeholder="Any other relevant information about the student's condition, behaviour, or circumstances�"></textarea>
               </div>
 
               <hr class="section-divider form-span-2" />
 
               <!-- Signature -->
               <div class="form-field form-span-2">
-                <label class="form-label" for="f-signature">Signature — name of completing staff member</label>
+                <label class="form-label" for="f-signature">Signature � name of completing staff member</label>
                 <input type="text" class="form-control" id="f-signature"
                   placeholder="Full name of authorising staff member" required />
               </div>
@@ -219,7 +219,7 @@
 
     <script>
     (function () {
-      // ── Bootstrap ──────────────────────────────────────────────────────────
+      // -- Bootstrap ----------------------------------------------------------
       var params    = new URLSearchParams(window.location.search);
       var studentId = params.get('id') || '';
       var student   = studentId ? getStudentById(studentId) : null;
@@ -231,9 +231,9 @@
         throw new Error('Student not found: ' + studentId);
       }
 
-      // ── Auto-populate read-only fields ─────────────────────────────────────
+      // -- Auto-populate read-only fields -------------------------------------
       function formatDob(iso) {
-        if (!iso) return '—';
+        if (!iso) return '�';
         var d = new Date(iso);
         if (isNaN(d.getTime())) return iso;
         return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -244,22 +244,22 @@
       document.getElementById('ro-dob').textContent    = formatDob(student.dob);
       document.getElementById('ro-school').textContent =
         student.school +
-        (student.schoolYear   ? ' — ' + student.schoolYear   : '') +
-        (student.tutorOrHouse ? ' — ' + student.tutorOrHouse : '');
+        (student.schoolYear   ? ' � ' + student.schoolYear   : '') +
+        (student.tutorOrHouse ? ' � ' + student.tutorOrHouse : '');
 
-      // ── Cancel link ────────────────────────────────────────────────────────
+      // -- Cancel link --------------------------------------------------------
       document.getElementById('link-back').href = 'mental-health-referral.html?id=' + studentId;
 
-      // ── Default date completed to today ───────────────────────────────────
+      // -- Default date completed to today -----------------------------------
       document.getElementById('f-date-completed').value = new Date().toISOString().slice(0, 10);
 
-      // ── Radio helper ───────────────────────────────────────────────────────
+      // -- Radio helper -------------------------------------------------------
       function getRadio(name) {
         var el = document.querySelector('input[name="' + name + '"]:checked');
         return el ? el.value : '';
       }
 
-      // ── Submit ─────────────────────────────────────────────────────────────
+      // -- Submit -------------------------------------------------------------
       document.getElementById('removal-form').addEventListener('submit', function (e) {
         e.preventDefault();
 

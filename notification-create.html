@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create Custom Alert — Oxford Guardians Platform</title>
+    <title>Create Custom Alert � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      /* ── Form controls ──────────────────────────────────────────────────── */
+      /* -- Form controls ---------------------------------------------------- */
       .form-label {
         display: block;
         font-size: 0.76rem;
@@ -60,7 +60,7 @@
       }
       .form-field { display: grid; gap: 0; }
 
-      /* ── Checkbox group ─────────────────────────────────────────────────── */
+      /* -- Checkbox group --------------------------------------------------- */
       .checkbox-group {
         display: flex;
         flex-wrap: wrap;
@@ -98,7 +98,7 @@
         cursor: not-allowed;
       }
 
-      /* ── Severity preview swatches ─────────────────────────────────────── */
+      /* -- Severity preview swatches --------------------------------------- */
       .severity-swatch {
         display: inline-block;
         width: 10px;
@@ -111,7 +111,7 @@
       .swatch-warning  { background: #d97706; }
       .swatch-info     { background: #b07d1a; }
 
-      /* ── Toast ─────────────────────────────────────────────────────────── */
+      /* -- Toast ----------------------------------------------------------- */
       #toast {
         position: fixed;
         top: 28px;
@@ -144,7 +144,7 @@
         flex-shrink: 0;
       }
 
-      /* ── Error state ────────────────────────────────────────────────────── */
+      /* -- Error state ------------------------------------------------------ */
       .field-error {
         font-size: 0.82rem;
         color: #7f3034;
@@ -212,15 +212,15 @@
                   <div class="form-field">
                     <label class="form-label" for="f-level">Severity</label>
                     <select class="form-select" id="f-level" name="level">
-                      <option value="">Select severity…</option>
+                      <option value="">Select severity�</option>
                       <option value="critical">
-                        Critical (Red) — immediate action required
+                        Critical (Red) � immediate action required
                       </option>
                       <option value="warning">
-                        Warning (Amber) — action needed soon
+                        Warning (Amber) � action needed soon
                       </option>
                       <option value="info">
-                        Info (Yellow) — for awareness only
+                        Info (Yellow) � for awareness only
                       </option>
                     </select>
                     <span class="field-error" id="err-level">Please select a severity level.</span>
@@ -230,7 +230,7 @@
                   <div class="form-field">
                     <span class="form-label">
                       Target Categories
-                      <span class="form-hint">— select up to 2</span>
+                      <span class="form-hint">� select up to 2</span>
                     </span>
                     <div class="checkbox-group" id="category-group">
                       <label class="checkbox-chip">
@@ -253,7 +253,7 @@
                   <div class="form-field">
                     <label class="form-label" for="f-person">
                       Target User IDs
-                      <span class="form-hint">— optional, e.g. STU10492, HST2011</span>
+                      <span class="form-hint">� optional, e.g. STU10492, HST2011</span>
                     </label>
                     <input
                       class="form-input"
@@ -306,14 +306,14 @@
     <!-- Toast -->
     <div id="toast">
       <span class="toast-dot"></span>
-      <span id="toast-text">Alert created — redirecting…</span>
+      <span id="toast-text">Alert created � redirecting�</span>
     </div>
 
     <script src="assets/db.js"></script>
     <script>
     (function () {
 
-      // ── Checkbox max-2 constraint ────────────────────────────────────────
+      // -- Checkbox max-2 constraint ----------------------------------------
       var checkboxes = document.querySelectorAll('input[name="category"]');
 
       function updateCheckboxStates() {
@@ -327,7 +327,7 @@
         cb.addEventListener('change', updateCheckboxStates);
       });
 
-      // ── Validation ───────────────────────────────────────────────────────
+      // -- Validation -------------------------------------------------------
       function getCheckedCategories() {
         return Array.prototype.filter.call(checkboxes, function (cb) { return cb.checked; })
                                      .map(function (cb) { return cb.value; });
@@ -374,7 +374,7 @@
         return ok;
       }
 
-      // ── Toast + redirect ─────────────────────────────────────────────────
+      // -- Toast + redirect -------------------------------------------------
       function showToast(msg) {
         var toast = document.getElementById('toast');
         document.getElementById('toast-text').textContent = msg;
@@ -384,7 +384,7 @@
         }, 1800);
       }
 
-      // ── Save ─────────────────────────────────────────────────────────────
+      // -- Save -------------------------------------------------------------
       document.getElementById('create-form').addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -409,9 +409,9 @@
         localStorage.setItem('og_custom_notifs', JSON.stringify(existing));
 
         document.getElementById('submit-btn').disabled = true;
-        document.getElementById('submit-btn').textContent = 'Saved…';
+        document.getElementById('submit-btn').textContent = 'Saved�';
 
-        showToast('Alert created — redirecting to notifications…');
+        showToast('Alert created � redirecting to notifications�');
       });
 
     }());

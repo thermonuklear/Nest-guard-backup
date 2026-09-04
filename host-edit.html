@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edit Host — Oxford Guardians Platform</title>
+  <title>Edit Host � Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -85,7 +85,7 @@
 <body>
 
 <div class="save-toast" id="save-toast">
-  <div class="save-toast-icon">✓</div>
+  <div class="save-toast-icon">?</div>
   <span>Profile saved successfully</span>
 </div>
 
@@ -124,7 +124,7 @@
         <div class="toolbar">
           <div>
             <span class="eyebrow">Edit host</span>
-            <h2 id="toolbar-title">Loading…</h2>
+            <h2 id="toolbar-title">Loading�</h2>
             <p>Update host profile and household details. Compliance records are managed separately.</p>
           </div>
           <div class="toolbar-actions">
@@ -141,7 +141,7 @@
         <div class="create-panel" id="edit-panel">
           <form id="host-form" novalidate>
 
-            <!-- ── Identity ── -->
+            <!-- -- Identity -- -->
             <div class="form-section">
               <div class="form-section-title">Identity</div>
               <div class="form-grid">
@@ -163,7 +163,7 @@
               </div>
             </div>
 
-            <!-- ── Household & Capacity ── -->
+            <!-- -- Household & Capacity -- -->
             <div class="form-section">
               <div class="form-section-title">Household &amp; Capacity</div>
               <div class="form-grid-3">
@@ -184,16 +184,16 @@
               </div>
             </div>
 
-            <!-- ── DBS & Compliance ── -->
+            <!-- -- DBS & Compliance -- -->
             <div class="form-section">
               <div class="form-section-title">DBS &amp; Compliance</div>
               <div class="form-grid">
                 <div class="field">
                   <small>DBS Status *</small>
                   <select class="field-select" id="f-dbs-status">
-                    <option value="clear">Enhanced DBS — Clear</option>
-                    <option value="amber">DBS — Action Required</option>
-                    <option value="expired">DBS — Expired</option>
+                    <option value="clear">Enhanced DBS � Clear</option>
+                    <option value="amber">DBS � Action Required</option>
+                    <option value="expired">DBS � Expired</option>
                   </select>
                 </div>
                 <div class="field"><small>DBS Certificate Number</small><input class="field-input" type="text" id="f-dbs-cert" /></div>
@@ -228,7 +228,7 @@
               </div>
             </div>
 
-            <!-- ── Performance & Feedback ── -->
+            <!-- -- Performance & Feedback -- -->
             <div class="form-section">
               <div class="form-section-title">Performance &amp; Feedback</div>
               <div class="form-grid">
@@ -244,7 +244,7 @@
 
             <div style="margin:16px 0 8px;padding:14px 18px;background:var(--surface-2,#f1f5f9);border:1px solid var(--line,#e1e7ec);border-radius:10px;font-size:0.88rem;color:var(--ink-2,#3b536e);">
               Compliance records are now managed separately.
-              <a id="compliance-banner-link" href="host-aegis-control-room.html" style="color:var(--gold,#0891b2);font-weight:600;">Manage Compliance Record →</a>
+              <a id="compliance-banner-link" href="host-aegis-control-room.html" style="color:var(--gold,#0891b2);font-weight:600;">Manage Compliance Record ?</a>
             </div>
 
             <div class="action-row">
@@ -265,7 +265,7 @@
   var hostId = params.get('id');
   var host   = hostId ? getHostById(hostId) : null;
 
-  // ── Room Builder ─────────────────────────────────────────────────────────
+  // -- Room Builder ---------------------------------------------------------
   var roomsArr = [];
   var roomsDisplay = document.getElementById('rooms-display');
 
@@ -319,7 +319,7 @@
     document.getElementById('edit-panel').style.display = 'none';
   } else {
     var fullName = host.firstName + ' ' + host.lastName;
-    document.title = 'Edit ' + fullName + ' — Oxford Guardians';
+    document.title = 'Edit ' + fullName + ' � Oxford Guardians';
     document.getElementById('toolbar-title').textContent  = fullName;
     document.getElementById('sidebar-label').textContent  = fullName;
     document.getElementById('chrome-route').textContent   = 'Route /admin/hosts/' + host.id + '/edit';

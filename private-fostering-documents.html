@@ -1,9 +1,9 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document Archive â€” Private Fostering â€” Oxford Guardians Platform</title>
+    <title>Document Archive — Private Fostering — Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -32,7 +32,7 @@
           <section class="main">
             <div class="toolbar">
               <div>
-                <span class="eyebrow">AEGIS Standard 8 â€” Private Fostering</span>
+                <span class="eyebrow">AEGIS Standard 8 — Private Fostering</span>
                 <h2>Document Archive</h2>
                 <p>All generated LA notification letters and evidence ZIP packages. Records are stored locally and listed here for audit reference.</p>
               </div>
@@ -63,7 +63,7 @@
             <div class="note brutal" style="margin-top:24px;">
               <h4>Re-downloading documents</h4>
               <ul>
-                <li>Generated files are not stored in the browser â€” only the metadata record is kept here.</li>
+                <li>Generated files are not stored in the browser — only the metadata record is kept here.</li>
                 <li>To obtain the file again, return to <a href="private-fostering-notification.html">Notify Local Authority</a> and regenerate for the relevant student.</li>
                 <li>Keep a copy of every sent notification letter on your document management system as permanent evidence.</li>
               </ul>
@@ -76,7 +76,7 @@
       var OG_PF_DOCS_KEY = 'og_pf_documents';
 
       function fmtDate(iso) {
-        if (!iso) return 'â€”';
+        if (!iso) return '—';
         var d = new Date(iso);
         if (isNaN(d.getTime())) return iso;
         return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -115,12 +115,12 @@
         tbody.innerHTML = records.map(function (rec, idx) {
           var isPDF      = rec.type === 'PDF';
           var typeBadge  = isPDF
-            ? '<span class="badge red">PDF â€” Notification Letter</span>'
-            : '<span class="badge amber">ZIP â€” Evidence Package</span>';
+            ? '<span class="badge red">PDF — Notification Letter</span>'
+            : '<span class="badge amber">ZIP — Evidence Package</span>';
           var statusBadge = '<span class="badge green">' + (rec.status || 'Generated') + '</span>';
 
           return '<tr>' +
-            '<td><strong>' + (rec.studentName || 'â€”') + '</strong></td>' +
+            '<td><strong>' + (rec.studentName || '—') + '</strong></td>' +
             '<td>' + fmtDate(rec.date) + '</td>' +
             '<td>' + typeBadge + '</td>' +
             '<td>' + statusBadge + '</td>' +

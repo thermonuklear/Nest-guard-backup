@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homestay Profile — Oxford Guardians</title>
+    <title>Homestay Profile � Oxford Guardians</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -46,7 +46,7 @@
       a { color: var(--gold); }
       img { max-width: 100%; display: block; }
 
-      /* ── Toolbar ───────────────────────────────────────────────────────────── */
+      /* -- Toolbar ------------------------------------------------------------- */
       .toolbar {
         position: sticky;
         top: 0;
@@ -95,7 +95,7 @@
         font-size: 0.74rem; color: var(--ink-3); max-width: 220px; line-height: 1.35;
       }
 
-      /* ── Page shell ────────────────────────────────────────────────────────── */
+      /* -- Page shell ---------------------------------------------------------- */
       .sheet {
         max-width: 880px;
         margin: 32px auto 0;
@@ -122,7 +122,7 @@
         color: var(--ink-2); font-size: 0.92rem; margin: 8px 0 18px;
       }
 
-      /* ── Hero ──────────────────────────────────────────────────────────────── */
+      /* -- Hero ---------------------------------------------------------------- */
       .hero {
         background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
         color: #f4f8fc;
@@ -155,7 +155,7 @@
       .chip-approved { background: rgba(223, 236, 229, 0.92); color: var(--green); }
       .chip-info { background: rgba(255,255,255,0.14); color: #eaf2fb; }
 
-      /* ── Family member grid ──────────────────────────────────────────────── */
+      /* -- Family member grid ------------------------------------------------ */
       .member-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -172,7 +172,7 @@
       .member-fact { font-size: 0.82rem; margin-bottom: 6px; }
       .member-fact strong { color: var(--ink-2); font-weight: 700; }
 
-      /* ── Rooms ─────────────────────────────────────────────────────────────── */
+      /* -- Rooms --------------------------------------------------------------- */
       .room-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -186,15 +186,15 @@
       .room-card h4 { font-size: 0.98rem; margin-bottom: 8px; }
       .amenity-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
       .amenity-list li { font-size: 0.82rem; color: var(--ink-2); display: flex; align-items: center; gap: 7px; }
-      .amenity-list li.no::before { content: "—"; color: var(--ink-3); width: 14px; }
-      .amenity-list li.yes::before { content: "✓"; color: var(--green); font-weight: 700; width: 14px; }
+      .amenity-list li.no::before { content: "�"; color: var(--ink-3); width: 14px; }
+      .amenity-list li.yes::before { content: "?"; color: var(--green); font-weight: 700; width: 14px; }
       .no-rooms-note {
         border: 1.5px dashed var(--line); border-radius: var(--radius-md);
         padding: 18px; text-align: center; color: var(--ink-3); font-size: 0.86rem;
       }
       .amenity-footnote { font-size: 0.78rem; color: var(--ink-3); margin-top: 12px; }
 
-      /* ── Household living ──────────────────────────────────────────────────── */
+      /* -- Household living ---------------------------------------------------- */
       .living-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -213,7 +213,7 @@
       .smoke-badge.smoker-outside { background: var(--amber-soft); color: var(--amber); }
       .smoke-badge.smoker-inside { background: var(--red-soft); color: var(--red); }
 
-      /* ── Local area ────────────────────────────────────────────────────────── */
+      /* -- Local area ---------------------------------------------------------- */
       .area-fact-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -226,7 +226,7 @@
       .area-fact .area-fact-value { font-family: "Outfit", sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
       .area-fact .area-fact-label { font-size: 0.78rem; color: var(--ink-3); margin-top: 2px; }
 
-      /* ── Assurance / footer ────────────────────────────────────────────────── */
+      /* -- Assurance / footer -------------------------------------------------- */
       .assurance-card {
         background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
         color: #eef4fb;
@@ -259,7 +259,7 @@
       .not-found h3 { margin-bottom: 8px; }
       .not-found p { color: var(--ink-2); }
 
-      /* ── Print styles ──────────────────────────────────────────────────────── */
+      /* -- Print styles -------------------------------------------------------- */
       @media print {
         body { background: #ffffff; padding: 0; }
         .toolbar { display: none !important; }
@@ -282,7 +282,7 @@
   </head>
   <body>
 
-    <!-- ── Toolbar (hidden on print) ── -->
+    <!-- -- Toolbar (hidden on print) -- -->
     <div class="toolbar" id="page-toolbar">
       <div class="toolbar-left">
         <a class="back-link" id="btn-back" href="hosts.html">&larr; Back to Host Admin</a>
@@ -292,8 +292,8 @@
         </div>
       </div>
       <div class="toolbar-right">
-        <p class="redact-note" id="mode-explainer">Complete address and direct host contact — use only once a placement is confirmed.</p>
-        <button type="button" class="print-btn" id="btn-print">🖨️ Print / Export PDF</button>
+        <p class="redact-note" id="mode-explainer">Complete address and direct host contact � use only once a placement is confirmed.</p>
+        <button type="button" class="print-btn" id="btn-print">??? Print / Export PDF</button>
       </div>
     </div>
 
@@ -309,7 +309,7 @@
       var isRedacted = false;
       var OG_EMERGENCY_LINE = '+44 7700 900 999';
 
-      // ── Referrer-aware back link ────────────────────────────────────────────
+      // -- Referrer-aware back link --------------------------------------------
       (function () {
         var backLink = document.getElementById('btn-back');
         if (hostId) { backLink.href = 'host-profile.html?id=' + encodeURIComponent(hostId); }
@@ -321,20 +321,20 @@
 
       function smokeLabel(status) {
         return {
-          'non-smoking':    '🚭 Strictly Non-Smoking Household',
-          'smoker-outside': '🚬 Smoker — Outside Only (Garden/Patio)',
-          'smoker-inside':  '🚬 Smoker — Inside Property'
-        }[status] || '🚭 Strictly Non-Smoking Household';
+          'non-smoking':    '?? Strictly Non-Smoking Household',
+          'smoker-outside': '?? Smoker � Outside Only (Garden/Patio)',
+          'smoker-inside':  '?? Smoker � Inside Property'
+        }[status] || '?? Strictly Non-Smoking Household';
       }
 
       function renderMemberCard(m) {
         return (
           '<div class="member-card">' +
             '<div class="member-name">' + esc(m.name) + '</div>' +
-            '<div class="member-age-gender">' + esc(m.age || '—') + (m.age ? ' yrs' : '') + ' &middot; ' + esc(m.gender || '—') + '</div>' +
-            '<div class="member-fact"><strong>Occupation:</strong> ' + esc(m.occupation || '—') + '</div>' +
-            '<div class="member-fact"><strong>Hobbies &amp; Interests:</strong> ' + esc(m.interests || '—') + '</div>' +
-            '<div class="member-fact"><strong>Religion:</strong> ' + esc(m.religion || '—') + '</div>' +
+            '<div class="member-age-gender">' + esc(m.age || '�') + (m.age ? ' yrs' : '') + ' &middot; ' + esc(m.gender || '�') + '</div>' +
+            '<div class="member-fact"><strong>Occupation:</strong> ' + esc(m.occupation || '�') + '</div>' +
+            '<div class="member-fact"><strong>Hobbies &amp; Interests:</strong> ' + esc(m.interests || '�') + '</div>' +
+            '<div class="member-fact"><strong>Religion:</strong> ' + esc(m.religion || '�') + '</div>' +
           '</div>'
         );
       }
@@ -367,7 +367,7 @@
           return;
         }
 
-        document.title = profile.familyName + ' — Homestay Profile — Oxford Guardians';
+        document.title = profile.familyName + ' � Homestay Profile � Oxford Guardians';
 
         var members = profile.householdMembers || [];
         var memberCardsHtml = members.length
@@ -392,10 +392,10 @@
               '<div class="hero-eyebrow">Oxford Guardians &middot; Shareable Homestay Profile</div>' +
               '<h1>The ' + esc(profile.familyName.replace(/ Family$/, '')) + ' Family</h1>' +
               '<div class="hero-meta">' +
-                '<span class="chip chip-approved">✓ AEGIS Inspected &amp; DBS Vetted</span>' +
-                '<span class="chip chip-info">📍 ' + esc(profile.area) + '</span>' +
-                '<span class="chip chip-info">🏡 Host since ' + esc(profile.hostSince) + '</span>' +
-                (occupancyLabel ? '<span class="chip chip-info">👥 ' + esc(occupancyLabel) + '</span>' : '') +
+                '<span class="chip chip-approved">? AEGIS Inspected &amp; DBS Vetted</span>' +
+                '<span class="chip chip-info">?? ' + esc(profile.area) + '</span>' +
+                '<span class="chip chip-info">?? Host since ' + esc(profile.hostSince) + '</span>' +
+                (occupancyLabel ? '<span class="chip chip-info">?? ' + esc(occupancyLabel) + '</span>' : '') +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -462,9 +462,9 @@
             '<h2>Local Area &amp; Commute</h2>' +
             '<p class="section-intro">' + esc(profile.area) + ' is a leafy, residential neighbourhood popular with families and academics, a short and well-served journey from Oxford city centre.</p>' +
             '<div class="area-fact-grid">' +
-              '<div class="area-fact"><div class="area-fact-value">~15–20 min</div><div class="area-fact-label">To Oxford city centre by bus</div></div>' +
+              '<div class="area-fact"><div class="area-fact-value">~15�20 min</div><div class="area-fact-label">To Oxford city centre by bus</div></div>' +
               '<div class="area-fact"><div class="area-fact-value">S1 / S2 / 2</div><div class="area-fact-label">Frequent local bus routes</div></div>' +
-              '<div class="area-fact"><div class="area-fact-value">10–15 min</div><div class="area-fact-label">Typical walk to nearest school bus stop</div></div>' +
+              '<div class="area-fact"><div class="area-fact-value">10�15 min</div><div class="area-fact-label">Typical walk to nearest school bus stop</div></div>' +
               '<div class="area-fact"><div class="area-fact-value">Local amenities</div><div class="area-fact-label">Shops, parks and pharmacies within walking distance</div></div>' +
             '</div>' +
           '</div>' +
@@ -482,7 +482,7 @@
               : '') +
           '</div>' +
 
-          '<p class="footer-print-meta">Generated by Oxford Guardians on ' + new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ' &middot; Host ID ' + esc(profile.id) + ' &middot; ' + (profile.isRedacted ? 'Redacted / pre-placement copy' : 'Full placement copy — confidential') +
+          '<p class="footer-print-meta">Generated by Oxford Guardians on ' + new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ' &middot; Host ID ' + esc(profile.id) + ' &middot; ' + (profile.isRedacted ? 'Redacted / pre-placement copy' : 'Full placement copy � confidential') +
           '</p>';
       }
 
@@ -497,8 +497,8 @@
         document.getElementById('mode-full').classList.toggle('active', !isRedacted);
         document.getElementById('mode-redacted').classList.toggle('active', isRedacted);
         document.getElementById('mode-explainer').textContent = isRedacted
-          ? 'Address shown as area only; phone/email routed to Oxford Guardians HQ — safe to share pre-contract.'
-          : 'Complete address and direct host contact — use only once a placement is confirmed.';
+          ? 'Address shown as area only; phone/email routed to Oxford Guardians HQ � safe to share pre-contract.'
+          : 'Complete address and direct host contact � use only once a placement is confirmed.';
         loadAndRender();
       }
 

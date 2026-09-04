@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student Portal — Oxford Guardians Platform</title>
+    <title>Student Portal � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -81,7 +81,7 @@
         </div>
         <aside class="note brutal">
           <h4>Brutal product note</h4>
-          <p>The “one-tap emergency contact” in the PRD is not a decoration. It should dominate the mobile viewport and work on the device students actually use.</p>
+          <p>The �one-tap emergency contact� in the PRD is not a decoration. It should dominate the mobile viewport and work on the device students actually use.</p>
         </aside>
       </section>
 
@@ -99,11 +99,11 @@
               </div>
               <div class="mini-card">
                 <h4>Your guardian</h4>
-                <p id="guardian-card-body">Loading…</p>
+                <p id="guardian-card-body">Loading�</p>
               </div>
               <div class="mini-card">
                 <h4>Your host family</h4>
-                <p id="host-card-body">Loading…</p>
+                <p id="host-card-body">Loading�</p>
                 <div class="mini-card-actions" id="host-card-actions" style="margin-top:10px; display:none;">
                   <a class="button-alt" id="student-view-host-btn" href="#" target="_blank" style="font-size:0.78rem; padding:5px 10px; width:100%; text-align:center; display:block;">
                     Meet Your Host Family
@@ -112,8 +112,8 @@
               </div>
               <div class="mini-card">
                 <h4>Welfare check-in</h4>
-                <p id="checkin-card-body">Loading…</p>
-                <span class="badge" id="checkin-badge" style="margin-top:10px;">—</span>
+                <p id="checkin-card-body">Loading�</p>
+                <span class="badge" id="checkin-badge" style="margin-top:10px;">�</span>
                 <div class="mini-card-actions">
                   <a class="button" id="checkin-btn" href="student-checkin-submit.html">Check in</a>
                 </div>
@@ -149,7 +149,7 @@
       var studentId   = params.get('id') || (allStudents[0] && allStudents[0].id) || '';
       var student     = studentId ? getStudentById(studentId) : null;
 
-      // ── Student switcher ────────────────────────────────────────────────────
+      // -- Student switcher ----------------------------------------------------
       var switcherSel = document.getElementById('portal-student-switcher');
       allStudents.forEach(function (s) {
         var opt = document.createElement('option');
@@ -162,7 +162,7 @@
         window.location.href = 'student-portal.html?id=' + this.value;
       });
 
-      // ── Carry the active student id through every action link ──────────────
+      // -- Carry the active student id through every action link --------------
       ['topnav-checkin', 'checkin-btn'].forEach(function (id) {
         document.getElementById(id).href = 'student-checkin-submit.html?id=' + studentId;
       });
@@ -170,7 +170,7 @@
         document.getElementById(id).href = 'student-concern-submit.html?id=' + studentId;
       });
 
-      // ── Your guardian card ───────────────────────────────────────────────────
+      // -- Your guardian card ---------------------------------------------------
       (function () {
         var dsl = getAllStaff().find(function (s) { return /DSL/i.test(s.role || ''); });
         var name  = dsl ? (dsl.firstName + ' ' + dsl.lastName) : 'Jay Ray';
@@ -184,7 +184,7 @@
           '<a href="mailto:' + esc(email) + '">' + esc(email) + '</a>';
       }());
 
-      // ── Your host family card ────────────────────────────────────────────────
+      // -- Your host family card ------------------------------------------------
       (function () {
         var body = document.getElementById('host-card-body');
         if (!student) { body.textContent = 'No student selected.'; return; }
@@ -214,7 +214,7 @@
           var start = new Date(next.startDate);
           var end   = next.returnDate ? new Date(next.returnDate) : null;
           bookingLine = (next.breakType || 'Stay') + ' booked for ' +
-            fmtShort(start) + (end && !isNaN(end.getTime()) ? '–' + fmtShort(end) : '');
+            fmtShort(start) + (end && !isNaN(end.getTime()) ? '�' + fmtShort(end) : '');
         }
 
         body.innerHTML =
@@ -226,7 +226,7 @@
         document.getElementById('host-card-actions').style.display = 'flex';
       }());
 
-      // ── Welfare check-in status ──────────────────────────────────────────────
+      // -- Welfare check-in status ----------------------------------------------
       (function () {
         var bodyEl  = document.getElementById('checkin-card-body');
         var badgeEl = document.getElementById('checkin-badge');

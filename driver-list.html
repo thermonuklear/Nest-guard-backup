@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Drivers Directory — Oxford Guardians</title>
+  <title>Drivers Directory � Oxford Guardians</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -14,7 +14,7 @@
       color: #0f2340 !important;
     }
 
-    /* ── Top bar ── */
+    /* -- Top bar -- */
     .topbar {
       background: #ffffff;
       border-bottom: 1px solid #d5dce8;
@@ -83,14 +83,14 @@
       color: #ffffff;
     }
 
-    /* ── Content wrapper ── */
+    /* -- Content wrapper -- */
     .content {
       max-width: 1200px;
       margin: 36px auto;
       padding: 0 32px;
     }
 
-    /* ── Page header ── */
+    /* -- Page header -- */
     .page-header {
       margin-bottom: 28px;
       display: flex;
@@ -116,7 +116,7 @@
 
     .toolbar-actions { display: flex; gap: 10px; align-items: center; }
 
-    /* ── Buttons ── */
+    /* -- Buttons -- */
     .button {
       background: #0f2340 !important;
       color: #ffffff !important;
@@ -129,7 +129,7 @@
       color: #0f2340 !important;
     }
 
-    /* ── Filter row ── */
+    /* -- Filter row -- */
     .filter-row {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -174,7 +174,7 @@
     .filter-select:focus { border-bottom-color: #0f2340; }
     .filter-select { appearance: none; cursor: pointer; }
 
-    /* ── Table ── */
+    /* -- Table -- */
     h2, h3, h4, td strong, th { color: #0f2340 !important; }
     td small { color: #3b536e !important; }
 
@@ -206,11 +206,11 @@
 
     tr:last-child td { border-bottom: 0; }
 
-    /* ── Row hover ── */
+    /* -- Row hover -- */
     tbody tr { transition: background 0.12s; }
     tbody tr:hover td { background: #f4f7fb; }
 
-    /* ── Name link ── */
+    /* -- Name link -- */
     .driver-name-link {
       color: #0f2340;
       text-decoration: none;
@@ -222,7 +222,7 @@
       text-decoration: underline;
     }
 
-    /* ── Avatar initials ── */
+    /* -- Avatar initials -- */
     .driver-avatar {
       display: inline-flex;
       align-items: center;
@@ -252,14 +252,14 @@
       margin-top: 2px;
     }
 
-    /* ── Result count ── */
+    /* -- Result count -- */
     .result-count {
       font-size: 0.82rem;
       color: #6b85a0;
       margin-bottom: 10px;
     }
 
-    /* ── Empty state ── */
+    /* -- Empty state -- */
     .empty-state {
       text-align: center;
       padding: 40px 24px;
@@ -267,7 +267,7 @@
       font-size: 0.9rem;
     }
 
-    /* ── Inline link pills ── */
+    /* -- Inline link pills -- */
     .inline-links {
       display: flex;
       flex-wrap: wrap;
@@ -292,7 +292,7 @@
       border-color: #b0bfcf;
     }
 
-    /* ── Responsive ── */
+    /* -- Responsive -- */
     @media (max-width: 760px) {
       .topbar { padding: 0 18px; height: auto; flex-wrap: wrap; padding-top: 12px; padding-bottom: 12px; }
       .content { padding: 0 18px; margin-top: 24px; }
@@ -310,7 +310,7 @@
       <a href="admin-dashboard.html">Dashboard</a>
       <a href="notifications.html">Notifications</a>
       <a href="travel.html" style="font-size: 1.1em;">Travel</a>
-      <a class="active" href="driver-list.html">Drivers</a>
+      <a class="active" href="drivers.html">Drivers</a>
       <a href="aegis-control-room.html">Compliance</a>
       <a href="aegis-control-room.html">AEGIS control room</a>
       <a href="it-control-room.html">IT Control Room</a>
@@ -324,7 +324,7 @@
     <div class="page-header">
       <div>
         <h1>Drivers Directory</h1>
-        <p>All partner drivers — vehicle, DBS status, and rates at a glance. Click a name to open the full profile.</p>
+        <p>All partner drivers � vehicle, DBS status, and rates at a glance. Click a name to open the full profile.</p>
       </div>
       <div class="toolbar-actions">
         <a class="button" href="driver-create.html">Create driver</a>
@@ -335,7 +335,7 @@
     <div class="filter-row">
       <div class="field">
         <small>Search</small>
-        <input class="filter-input" type="text" id="search-input" placeholder="Search name or car…" autocomplete="off" />
+        <input class="filter-input" type="text" id="search-input" placeholder="Search name or car�" autocomplete="off" />
       </div>
       <div class="field">
         <small>DBS Status</small>
@@ -349,16 +349,16 @@
       <div class="field">
         <small>Sort by</small>
         <select class="filter-select" id="sort-select">
-          <option value="name-asc">Name A → Z</option>
-          <option value="name-desc">Name Z → A</option>
-          <option value="rate-asc">Rate low → high</option>
-          <option value="rate-desc">Rate high → low</option>
-          <option value="punctuality-desc">Punctuality high → low</option>
+          <option value="name-asc">Name A ? Z</option>
+          <option value="name-desc">Name Z ? A</option>
+          <option value="rate-asc">Rate low ? high</option>
+          <option value="rate-desc">Rate high ? low</option>
+          <option value="punctuality-desc">Punctuality high ? low</option>
         </select>
       </div>
       <div class="field">
         <small>Showing</small>
-        <strong id="result-label" style="font-size:0.9rem;font-weight:700;color:#0f2340;display:block;margin-top:6px;">— drivers</strong>
+        <strong id="result-label" style="font-size:0.9rem;font-weight:700;color:#0f2340;display:block;margin-top:6px;">� drivers</strong>
       </div>
     </div>
 
@@ -394,7 +394,7 @@
     var sortSelect  = document.getElementById('sort-select');
     var resultLabel = document.getElementById('result-label');
 
-    // ── Helpers ────────────────────────────────────────────────────────────────
+    // -- Helpers ----------------------------------------------------------------
     function initials(first, last) {
       return ((first || '').charAt(0) + (last || '').charAt(0)).toUpperCase();
     }
@@ -410,13 +410,13 @@
     }
 
     function parseRate(rateStr) {
-      // Extracts a float from strings like "£0.55" or "£0.55 / mile"
+      // Extracts a float from strings like "�0.55" or "�0.55 / mile"
       if (!rateStr) return 0;
       var match = rateStr.replace(/[^0-9.]/g, '');
       return parseFloat(match) || 0;
     }
 
-    // ── Render ─────────────────────────────────────────────────────────────────
+    // -- Render -----------------------------------------------------------------
     function renderTable(data) {
       var tbody = document.getElementById('driver-table-body');
       resultLabel.textContent = data.length + ' driver' + (data.length !== 1 ? 's' : '');
@@ -430,15 +430,15 @@
       tbody.innerHTML = data.map(function (d) {
         var fullName    = d.firstName + ' ' + d.lastName;
         var avatarText  = initials(d.firstName, d.lastName);
-        var vehicle     = [d.carMake, d.carModel].filter(Boolean).join(' ') || '—';
+        var vehicle     = [d.carMake, d.carModel].filter(Boolean).join(' ') || '�';
         var regDisplay  = d.regNumber ? '<small>' + d.regNumber + '</small>' : '';
-        var address     = d.address || '—';
+        var address     = d.address || '�';
         // Show only city/area: everything after the first comma
         var addressParts = address.split(',');
         var city = addressParts.length > 1 ? addressParts.slice(1).join(',').trim() : address;
-        var rateDisplay = d.ratePerMile || '—';
-        var pct         = (d.punctualityPct != null) ? d.punctualityPct : '—';
-        var pctStr      = pct !== '—' ? pct + '%' : '—';
+        var rateDisplay = d.ratePerMile || '�';
+        var pct         = (d.punctualityPct != null) ? d.punctualityPct : '�';
+        var pctStr      = pct !== '�' ? pct + '%' : '�';
         var badgeClass  = dbsBadgeClass(d.dbsStatus);
         var badgeLabel  = dbsBadgeLabel(d.dbsStatus);
 
@@ -449,9 +449,9 @@
               '<span class="driver-avatar">' + avatarText + '</span>' +
               '<div class="name-cell-text">' +
                 '<strong>' +
-                  '<a class="driver-name-link" href="drivers.html?id=' + d.id + '">' + fullName + '</a>' +
+                  '<a class="driver-name-link" href="driver-profile.html?id=' + d.id + '">' + fullName + '</a>' +
                 '</strong>' +
-                '<small>' + (d.mobile || d.email || '—') + '</small>' +
+                '<small>' + (d.mobile || d.email || '�') + '</small>' +
               '</div>' +
             '</div>' +
           '</td>' +
@@ -478,7 +478,7 @@
       }).join('');
     }
 
-    // ── Filter & sort ──────────────────────────────────────────────────────────
+    // -- Filter & sort ----------------------------------------------------------
     function applyFilters() {
       var search = searchInput.value.trim().toLowerCase();
       var dbs    = dbsFilter.value;

@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="page-title">Health & Medical — Oxford Guardians Platform</title>
+    <title id="page-title">Health & Medical � Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -65,7 +65,7 @@
 
       .button-alt:hover { background: #edf2f8 !important; }
 
-      /* ── Deep Dive breadcrumb strip ── */
+      /* -- Deep Dive breadcrumb strip -- */
       .deepdive-nav {
         display: flex;
         align-items: center;
@@ -112,7 +112,7 @@
         color: #ffffff;
       }
 
-      /* ── Health form ── */
+      /* -- Health form -- */
       .health-form {
         max-width: 720px;
         display: grid;
@@ -189,7 +189,7 @@
         gap: 12px;
       }
 
-      /* ── Toast ── */
+      /* -- Toast -- */
       .toast {
         display: none;
         align-items: center;
@@ -204,7 +204,7 @@
 
       .toast.visible { display: flex; }
 
-      /* ── Not-found state ── */
+      /* -- Not-found state -- */
       .not-found {
         padding: 48px 24px;
         text-align: center;
@@ -262,11 +262,11 @@
             <div class="toolbar">
               <div>
                 <span class="eyebrow">Health &amp; Medical Record</span>
-                <h2 id="student-name">—</h2>
+                <h2 id="student-name">�</h2>
                 <p>Medical conditions, allergies, dietary requirements, immunisation history, and learning support needs for this student.</p>
               </div>
               <div class="toolbar-actions">
-                <span id="status-badge" class="badge">—</span>
+                <span id="status-badge" class="badge">�</span>
                 <a class="button-alt" id="back-to-profile" href="student-profile.html">Back to Profile</a>
               </div>
             </div>
@@ -283,7 +283,7 @@
                   </div>
                   <div class="field">
                     <label for="field-allergies">Allergies</label>
-                    <textarea id="field-allergies" placeholder="e.g. Peanuts (anaphylactic) — EpiPen carried at all times."></textarea>
+                    <textarea id="field-allergies" placeholder="e.g. Peanuts (anaphylactic) � EpiPen carried at all times."></textarea>
                   </div>
                   <div class="field">
                     <label for="field-dietary">Dietary Requirements</label>
@@ -311,7 +311,7 @@
                 <div class="field-group">
                   <div class="field">
                     <label for="field-learning">Learning Difficulties / Additional Support Needs</label>
-                    <textarea id="field-learning" placeholder="e.g. Mild dyslexia — school has an IEP in place. Extra time granted in exams."></textarea>
+                    <textarea id="field-learning" placeholder="e.g. Mild dyslexia � school has an IEP in place. Extra time granted in exams."></textarea>
                   </div>
                 </div>
               </div>
@@ -344,16 +344,16 @@
         throw new Error('Student not found: ' + studentId);
       }
 
-      // ── Helpers ─────────────────────────────────────────────────────────────
+      // -- Helpers -------------------------------------------------------------
       function statusClass(status) {
         var map = { 'Active': 'green', 'Monitor': 'amber', 'Pending': 'amber' };
         return map[status] || 'navy';
       }
 
-      // ── Populate header ──────────────────────────────────────────────────────
+      // -- Populate header ------------------------------------------------------
       var fullName = student.firstName + ' ' + student.lastName;
 
-      document.getElementById('page-title').textContent   = 'Health & Medical — ' + fullName;
+      document.getElementById('page-title').textContent   = 'Health & Medical � ' + fullName;
       document.getElementById('chrome-route').textContent = 'Route /admin/students/' + student.id + '/health';
       document.getElementById('student-name').innerHTML   = fullName +
         ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + student.id + '</span>';
@@ -362,7 +362,7 @@
       badge.textContent = student.status;
       badge.className   = 'badge ' + statusClass(student.status);
 
-      // ── Wire up Deep Dive nav links ──────────────────────────────────────────
+      // -- Wire up Deep Dive nav links ------------------------------------------
       document.getElementById('link-health').href   = 'student-health.html?id='   + student.id;
       document.getElementById('link-family').href   = 'student-family.html?id='   + student.id;
       document.getElementById('link-legal').href    = 'student-legal.html?id='    + student.id;
@@ -370,12 +370,12 @@
       document.getElementById('link-risk').href     = 'student-risk.html?id='     + student.id;
       document.getElementById('back-to-profile').href = 'student-profile.html?id=' + student.id;
 
-      // ── Ensure health sub-object exists ─────────────────────────────────────
+      // -- Ensure health sub-object exists -------------------------------------
       if (!student.health) {
         student.health = { medicalConditions: '', allergies: '', dietaryRequirements: '', immunisationDetails: '', privateMedicalCover: '', learningDifficulties: '' };
       }
 
-      // ── Pre-fill form ────────────────────────────────────────────────────────
+      // -- Pre-fill form --------------------------------------------------------
       document.getElementById('field-conditions').value    = student.health.medicalConditions   || '';
       document.getElementById('field-allergies').value     = student.health.allergies            || '';
       document.getElementById('field-dietary').value       = student.health.dietaryRequirements  || '';
@@ -383,7 +383,7 @@
       document.getElementById('field-medical-cover').value = student.health.privateMedicalCover  || '';
       document.getElementById('field-learning').value      = student.health.learningDifficulties || '';
 
-      // ── Save handler ─────────────────────────────────────────────────────────
+      // -- Save handler ---------------------------------------------------------
       document.getElementById('save-btn').addEventListener('click', function () {
         student.health.medicalConditions   = document.getElementById('field-conditions').value.trim();
         student.health.allergies           = document.getElementById('field-allergies').value.trim();

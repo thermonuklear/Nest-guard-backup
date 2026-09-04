@@ -1,9 +1,9 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DBS Check â€” Oxford Guardians Platform</title>
+  <title>DBS Check — Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -104,11 +104,11 @@
       <section class="main">
         <div class="toolbar">
           <div style="display:flex;align-items:center;gap:16px;">
-            <div class="driver-avatar" id="driver-avatar">â€”</div>
+            <div class="driver-avatar" id="driver-avatar">—</div>
             <div>
-              <span class="eyebrow">Compliance â€” DBS Check</span>
-              <h2 id="driver-name" style="margin:2px 0 4px;">Loadingâ€¦</h2>
-              <p id="driver-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">â€”</p>
+              <span class="eyebrow">Compliance — DBS Check</span>
+              <h2 id="driver-name" style="margin:2px 0 4px;">Loading…</h2>
+              <p id="driver-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">—</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -147,7 +147,7 @@
                   <input type="checkbox" id="c-dbs-update-service" />
                   <label for="c-dbs-update-service">On DBS Update Service</label>
                 </div>
-                <a class="dbs-external-link" href="https://www.gov.uk/dbs-update-service" target="_blank" rel="noopener">Check DBS Update Service â†—</a>
+                <a class="dbs-external-link" href="https://www.gov.uk/dbs-update-service" target="_blank" rel="noopener">Check DBS Update Service ?</a>
               </div>
 
               <div class="field form-span-2">
@@ -179,10 +179,10 @@
     document.getElementById('not-found').style.display  = 'block';
     document.getElementById('edit-panel').style.display = 'none';
   } else {
-    document.title = 'DBS Check â€” ' + driver.firstName + ' ' + driver.lastName + ' â€” Oxford Guardians';
+    document.title = 'DBS Check — ' + driver.firstName + ' ' + driver.lastName + ' — Oxford Guardians';
     document.getElementById('chrome-route').textContent  = 'Route /admin/drivers/' + driver.id + '/compliance/dbs';
     document.getElementById('driver-name').textContent   = driver.firstName + ' ' + driver.lastName;
-    document.getElementById('driver-subtitle').textContent = (driver.carMake ? driver.carMake + ' ' + (driver.carModel || '') : 'â€”');
+    document.getElementById('driver-subtitle').textContent = (driver.carMake ? driver.carMake + ' ' + (driver.carModel || '') : '—');
     document.getElementById('driver-avatar').textContent = ((driver.firstName||'').charAt(0) + (driver.lastName||'').charAt(0)).toUpperCase();
     document.getElementById('back-link').href   = 'driver-aegis-control-room.html?id=' + driver.id;
     document.getElementById('cancel-link').href = 'driver-aegis-control-room.html?id=' + driver.id;
