@@ -584,6 +584,18 @@
       /* SVG Icons styling */
       .mg-icon { width: 13px; height: 13px; fill: currentColor; opacity: 0.7; }
       .mg-header-icon { width: 18px; height: 18px; fill: currentColor; }
+      .mg-toggle-icon {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .mini-gantt-widget.collapsed .mg-toggle-icon {
+        transform: rotate(180deg);
+      }
+      .mini-gantt-widget.collapsed .mini-gantt-body {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -879,15 +891,8 @@
       }
 
       function toggleMiniGantt() {
-        var body = document.getElementById('miniGanttBody');
-        var icon = document.getElementById('miniGanttToggleIcon');
-        if (body.style.display === 'none') {
-            body.style.display = 'block';
-            icon.textContent = 'â–¼';
-        } else {
-            body.style.display = 'none';
-            icon.textContent = 'â–²';
-        }
+        var widget = document.getElementById('miniGanttWidget');
+        widget.classList.toggle('collapsed');
       }
 
       function updateMiniGantt() {
@@ -1115,15 +1120,11 @@
           <svg class="mg-header-icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
           Timeline Overview
         </div>
-        <span id="miniGanttToggleIcon">▼</span>
+        <svg id="miniGanttToggleIcon" class="mg-toggle-icon" viewBox="0 0 24 24">
+          <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+        </svg>
       </div>
       <div id="miniGanttBody" class="mini-gantt-body"></div>
     </div>
   </body>
 </html>
-
-
-
-
-
-
