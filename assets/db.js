@@ -2961,6 +2961,9 @@ function initExeatDB() {
     localStorage.setItem(OG_EXEATS_KEY, JSON.stringify(initialExeats));
   }
 }
+function resetExeatsToDefault() {
+  localStorage.setItem(OG_EXEATS_KEY, JSON.stringify(initialExeats));
+}
 function getAllExeats() {
   try { return JSON.parse(localStorage.getItem(OG_EXEATS_KEY)) || []; } catch(e) { return []; }
 }
@@ -5558,6 +5561,7 @@ window.OG_DB = {
   deleteTransportById: deleteTransportById,
   getAllFinanceDocs: getAllFinanceDocs,
   aggregateDocuments: aggregateDocuments,
+  resetExeatsToDefault: resetExeatsToDefault,
   getAllExeats: getAllExeats,
   saveAllExeats: saveAllExeats,
   saveExeat: saveExeat,

@@ -115,6 +115,30 @@
       .shell.sidebar-shrunk .brand strong {
         font-size: 1rem;
       }
+      /* ── Mini Gantt Widget (Upgraded Visuals) ── */
+      .mini-gantt-widget { position: fixed; bottom: 24px; right: 24px; width: 420px; background: #ffffff; border-radius: 12px; box-shadow: 0 12px 36px rgba(15, 35, 64, 0.18); z-index: 1000; display: flex; flex-direction: column; border: 1px solid #e2e8f0; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden; }
+      .mini-gantt-header { padding: 14px 18px; background: linear-gradient(135deg, #0f2340 0%, #1e3a8a 100%); color: white; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.3s ease; }
+      .mini-gantt-header:hover { background: linear-gradient(135deg, #1e3a8a 0%, #0f2340 100%); }
+      .mini-gantt-header-title { display: flex; align-items: center; gap: 8px; font-size: 14px; letter-spacing: 0.3px; }
+      .mini-gantt-body { padding: 16px; max-height: 400px; overflow-y: auto; display: block; background: #f8fafc; }
+      .mini-gantt-row { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 12px; transition: transform 0.2s, box-shadow 0.2s; }
+      .mini-gantt-row:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.06); }
+      .mini-gantt-row:last-child { margin-bottom: 0; }
+      .mini-gantt-title { font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+      .mini-gantt-badge { background: #f1f5f9; color: #475569; padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+      .mini-gantt-details { font-size: 11px; color: #64748b; margin-bottom: 12px; display: flex; justify-content: space-between; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border: 1px solid #f1f5f9; }
+      .mini-gantt-details span { display: flex; align-items: center; gap: 6px; }
+      .mini-gantt-track { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; position: relative; margin-bottom: 8px; }
+      .mini-gantt-bar { position: absolute; height: 100%; border-radius: 4px; min-width: 8px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), left 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+      .mini-gantt-dates { display: flex; justify-content: space-between; font-size: 10px; color: #94a3b8; font-weight: 600; }
+      .gantt-bar-confirmed { background: linear-gradient(90deg, #10b981, #059669); box-shadow: 0 2px 6px rgba(16,185,129,0.35); }
+      .gantt-bar-awaiting { background: linear-gradient(90deg, #f59e0b, #d97706); box-shadow: 0 2px 6px rgba(245,158,11,0.35); }
+      .gantt-bar-self { background: linear-gradient(90deg, #64748b, #475569); box-shadow: 0 2px 6px rgba(100,116,139,0.35); }
+      .mg-icon { width: 13px; height: 13px; fill: currentColor; opacity: 0.7; }
+      .mg-header-icon { width: 18px; height: 18px; fill: currentColor; }
+      .mg-toggle-icon { width: 20px; height: 20px; fill: currentColor; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+      .mini-gantt-widget.collapsed .mg-toggle-icon { transform: rotate(180deg); }
+      .mini-gantt-widget.collapsed .mini-gantt-body { display: none; }
     </style>
   </head>
   <body>
@@ -321,10 +345,114 @@
                 </div>
               </div>
             </div>
+          <!-- Mini Gantt Widget -->
+          <div id="miniGanttWidget" class="mini-gantt-widget">
+            <div class="mini-gantt-header" onclick="toggleMiniGantt()">
+              <div class="mini-gantt-header-title">
+                <svg class="mg-header-icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7v-5z"/></svg>
+                Upcoming Events
+              </div>
+              <svg class="mg-toggle-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+            </div>
+            <div class="mini-gantt-body" id="miniGanttBody">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
           </section>
         </div>
-          <script>
+        <script src="assets/db.js"></script>
+        <script>
+      // ── Mini Gantt Logic ──
+      var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      function formatDate(iso) {
+        if (!iso) return '';
+        var parts = iso.split('-');
+        if (parts.length !== 3) return iso;
+        return parseInt(parts[2], 10) + ' ' + MONTHS[parseInt(parts[1], 10) - 1] + ' ' + parts[0];
+      }
+
+      function toggleMiniGantt() {
+        var widget = document.getElementById('miniGanttWidget');
+        if (widget) {
+          widget.classList.toggle('collapsed');
+        }
+      }
+
+      function renderMiniGantt() {
+        var body = document.getElementById('miniGanttBody');
+        if (!body) return;
+
+        var exeats = OG_DB.getAllExeats();
+        var today = new Date();
+        today.setHours(0,0,0,0);
+
+        var upcoming = exeats.filter(function(e) {
+          if (!e.startDate) return false;
+          var st = new Date(e.startDate);
+          var et = e.returnDate ? new Date(e.returnDate) : st;
+          return et >= today;
+        });
+
+        upcoming.sort(function(a, b) {
+          return new Date(a.startDate) - new Date(b.startDate);
+        });
+
+        if (upcoming.length === 0) {
+          body.innerHTML = '<div style="padding: 20px; text-align: center; color: #64748b; font-size: 13px;">No upcoming events.</div>';
+          return;
+        }
+
+        var html = '';
+        upcoming.forEach(function(e) {
+          var st = new Date(e.startDate);
+          var et = e.returnDate ? new Date(e.returnDate) : st;
+          var conf = e.parentConfirmation || '';
+          
+          var barClass = 'gantt-bar-self';
+          var badgeHtmlStr = '';
+          if (conf.indexOf('No') === 0) {
+            barClass = 'gantt-bar-self';
+            badgeHtmlStr = '<span class="mini-gantt-badge" style="background:#fef2f2; color:#ef4444;">Self-Managing</span>';
+          } else if (conf === 'Awaiting') {
+            barClass = 'gantt-bar-awaiting';
+            badgeHtmlStr = '<span class="mini-gantt-badge" style="background:#fffbeb; color:#f59e0b;">Awaiting</span>';
+          } else {
+            barClass = 'gantt-bar-confirmed';
+            badgeHtmlStr = '<span class="mini-gantt-badge" style="background:#ecfdf5; color:#10b981;">Confirmed</span>';
+          }
+
+          var duration = Math.round((et - st) / 86400000) || 1;
+          
+          var maxEtTime = upcoming.length > 0 ? (new Date(upcoming[upcoming.length - 1].startDate).getTime() + 30*86400000) : today.getTime() + 30*86400000;
+          var totalRange = maxEtTime - today.getTime();
+          var leftPct = Math.max(0, (st.getTime() - today.getTime()) / totalRange * 100);
+          var widthPct = Math.min(100 - leftPct, (duration * 86400000) / totalRange * 100);
+          widthPct = Math.max(widthPct, 2);
+
+          html += '<div class="mini-gantt-row">' +
+                    '<div class="mini-gantt-title">' +
+                      '<span>' + (e.studentName || 'Unknown') + ' (' + (e.studentId || '') + ')</span>' +
+                      badgeHtmlStr +
+                    '</div>' +
+                    '<div class="mini-gantt-details">' +
+                      '<span><svg class="mg-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> ' + (e.schoolName || 'N/A') + '</span>' +
+                      '<span><svg class="mg-icon" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> ' + duration + ' nights</span>' +
+                    '</div>' +
+                    '<div class="mini-gantt-track">' +
+                      '<div class="mini-gantt-bar ' + barClass + '" style="left: ' + leftPct + '%; width: ' + widthPct + '%;"></div>' +
+                    '</div>' +
+                    '<div class="mini-gantt-dates">' +
+                      '<span>' + formatDate(e.startDate) + '</span>' +
+                      '<span>' + formatDate(e.returnDate) + '</span>' +
+                    '</div>' +
+                  '</div>';
+        });
+
+        body.innerHTML = html;
+      }
+
       document.addEventListener('DOMContentLoaded', function() {
+        if (typeof renderMiniGantt === 'function') renderMiniGantt();
         const main = document.querySelector('.main');
         const shell = document.querySelector('.shell');
         
