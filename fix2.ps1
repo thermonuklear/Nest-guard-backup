@@ -1,20 +1,19 @@
-
-$content = Get-Content exeats.html -Raw
-$content = $content.Replace(
-    "<td data-col=`"2`">", 
-    "<td data-col=`"2`"><span style=`"font-family: monospace; font-size: 0.9em; color: #6b85a0;`">`" + (e.studentId || `"`") + `"</span></td><td data-col=`"3`">"
-)
-
-# And fix the rest of the indices
-for ($i = 16; $i -ge 3; $i--) {
-    $next = $i + 1
-    $content = $content.Replace("data-col=`"$i`"", "data-col=`"$next`"")
+$files = Get-ChildItem -Path . -Recurse -Include *.html,*.js
+foreach ($f in $files) {
+    if ($f.FullName -match '\\\.git\\' -or $f.FullName -match '\\node_modules\\') { continue }
+    $content = [System.IO.File]::ReadAllText($f.FullName, [System.Text.Encoding]::UTF8)
+    $original = $content
+    
+    # We use their unicode hex values. 
+    # The mojibake is:
+    # â€” = \u00E2\u2014 or something.
+    # In C# Replace, we can use the literal strings if the file itself is UTF-8 encoded.
+    # Since I am using write_to_file, this script file will be perfectly UTF-8!
+    
+    $content = $content.Replace("â€”", "-").Replace("â€¦", "...").Replace("â€™", "'").Replace("â”€", "-").Replace("â€“", "-").Replace("â€œ", '"').Replace("â€", '"')
+    
+    if ($content -cne $original) {
+        [System.IO.File]::WriteAllText($f.FullName, $content, [System.Text.Encoding]::UTF8)
+        Write-Host "Fixed $($f.FullName)"
+    }
 }
-
-$content = $content.Replace(
-    "<span>`" + e.studentName + `"</span>",
-    "<span>`" + e.studentName + `" <span style=`"font-size:12px; color:#6b85a0; margin-left:6px; font-weight:normal;`">`" + e.studentId + `"</span></span>"
-)
-
-Set-Content exeats.html -Value $content
-
