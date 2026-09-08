@@ -9,9 +9,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/app.css" />
     <style>
-      .shell { height: calc(100vh - 61px); min-height: 0; }
-      .sidebar { height: 100%; overflow-y: auto; }
-      .main { height: 100%; overflow-y: auto; background: #f4f7fb; display: flex; flex-direction: column; }
+      /* -- Global colour overrides from homestays -- */
+      body, .page, .shell {
+        background: #f0f4f8 !important;
+        color: #0f2340 !important;
+      }
+      .sidebar {
+        background: linear-gradient(180deg, #0f2340 0%, #1a3459 100%) !important;
+        height: 100%; overflow-y: auto;
+      }
+      .brand { border-bottom-color: rgba(255,255,255,0.1) !important; }
+      .brand small  { color: #7fb3d3 !important; }
+      .brand strong { color: #e8f0fa !important; }
+      
+      .shell {
+        height: calc(100vh - 61px);
+        min-height: 0;
+        transition: grid-template-columns 0.3s ease;
+      }
+      .shell.sidebar-shrunk {
+        grid-template-columns: 180px 1fr;
+      }
+      .shell.sidebar-shrunk .nav-link, 
+      .shell.sidebar-shrunk .nav-link-sub { 
+        font-size: 0.82rem !important; 
+        padding-left: 8px !important; 
+      }
+      .shell.sidebar-shrunk .nav-link-sub { 
+        padding-left: 20px !important; 
+      }
+      .shell.sidebar-shrunk .brand strong { 
+        font-size: 1rem; 
+      }
+
+      .main { height: 100%; overflow-y: auto; background: linear-gradient(180deg, #f4f7fb 0%, #edf2f8 100%) !important; display: flex; flex-direction: column; }
       .toolbar { padding: 24px 28px 16px; display: flex; align-items: flex-start; justify-content: space-between; flex-shrink: 0; }
       .controls-bar { display: flex; gap: 12px; padding: 0 28px 16px; align-items: center; flex-wrap: wrap; }
       .controls-bar select, .controls-bar input, .controls-bar button { height: 36px; padding: 0 12px; border: 1px solid #d5dce8; border-radius: 6px; background: #fff; color: #0f2340; font-size: 13px; font-family: inherit; outline: none; }
@@ -65,20 +96,28 @@
   <body>
     <div class="topbar">
       <a class="topbar-brand" href="admin-dashboard.html">Oxford Guardians</a>
-      <div class="chrome-nav">
-        <a href="exeats.html">List View</a>
-        <a href="exeat-calendar.html" style="background:#0f2340;color:#fff;">Calendar View</a>
-      </div>
+      <nav class="chrome-nav">
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="notifications.html">Notifications</a>
+      </nav>
     </div>
-    <div class="shell" style="display: grid; grid-template-columns: 240px 1fr;">
+    <div class="shell">
+      <!-- Sidebar -->
       <aside class="sidebar">
-        <div style="padding: 24px;">
-            <div style="font-size:11px; font-weight:700; color:#6b85a0; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:12px;">Admin Console</div>
-            <div style="display:flex; flex-direction:column; gap:4px;">
-              <a href="admin-dashboard.html" style="display:block; padding:8px 12px; color:#3b536e; text-decoration:none; font-size:14px; border-radius:6px;">Dashboard</a>
-              <a href="students.html" style="display:block; padding:8px 12px; color:#3b536e; text-decoration:none; font-size:14px; border-radius:6px;">Students</a>
-              <a href="exeats.html" style="display:block; padding:8px 12px; background:#e8eef6; color:#0f2340; font-weight:600; text-decoration:none; font-size:14px; border-radius:6px;">Exeats</a>
-            </div>
+        <div class="brand">
+          <strong>Exeat Operations</strong>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Operations</div>
+          <a class="nav-link" href="exeats.html">Exeats</a>
+          <a class="nav-link active" href="exeat-calendar.html">Exeat Calendar</a>
+          <a class="nav-link" href="safeguarding.html">Safeguarding</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">Compliance &amp; IT</div>
+          <a class="nav-link" href="aegis-control-room.html">AEGIS control room</a>
+          <a class="nav-link" href="it-control-room.html">IT Control Room</a>
+          <a class="nav-link" href="compliance.html">Compliance</a>
         </div>
       </aside>
       
@@ -104,7 +143,8 @@
           
           <div style="width: 1px; height: 24px; background: #d5dce8; margin: 0 8px;"></div>
           
-          <input type="text" id="studentFilter" placeholder="Filter by Student..." oninput="renderCalendar()" style="width: 200px;" />
+          <input type="text" id="studentFilter" list="studentList" placeholder="Filter by Student..." oninput="renderCalendar()" onchange="jumpToStudentExeat()" onkeydown="if(event.key === 'Enter') jumpToStudentExeat()" style="width: 200px;" />
+          <datalist id="studentList"></datalist>
           <select id="schoolFilter" onchange="renderCalendar()">
             <option value="">All Schools</option>
           </select>
@@ -239,6 +279,18 @@
       }
 
       function populateFiltersAndLegend(exeats) {
+        var datalist = document.getElementById('studentList');
+        if (datalist && datalist.options.length === 0) {
+          var allStudents = OG_DB.getAllStudents();
+          allStudents.sort(function(a, b) { 
+            return (a.firstName + ' ' + a.lastName).localeCompare(b.firstName + ' ' + b.lastName); 
+          }).forEach(function(s) {
+            var opt = document.createElement('option');
+            opt.value = s.firstName + ' ' + s.lastName;
+            datalist.appendChild(opt);
+          });
+        }
+
         var schoolSet = new Set();
         var studentSet = new Set();
         
@@ -275,6 +327,41 @@
             legendBar.innerHTML = '<strong style="color:#0f2340;">Next upcoming exeat:</strong> <span style="margin-left:4px; color:#2a6096; font-weight:600;">' + next.studentName + ' (' + next.studentId + ') on ' + dateStr + '</span>';
         } else {
             legendBar.innerHTML = '<span style="color:#94a3b8;">No upcoming exeats</span>';
+        }
+      }
+
+      function jumpToStudentExeat() {
+        var stFilter = document.getElementById('studentFilter').value.toLowerCase().trim();
+        if (!stFilter) return;
+        
+        var exeats = OG_DB.getAllExeats();
+        var scFilter = document.getElementById('schoolFilter').value;
+        
+        var filtered = exeats.filter(function(e) {
+           if (!e.startDate) return false;
+           if (scFilter && e.schoolName !== scFilter) return false;
+           if (!e.studentName || e.studentName.toLowerCase().indexOf(stFilter) === -1) return false;
+           return true;
+        });
+
+        if (filtered.length > 0) {
+           filtered.sort(function(a, b) {
+               return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+           });
+           
+           var todayMs = new Date().setHours(0,0,0,0);
+           var targetExeat = filtered.find(function(e) {
+               return new Date(e.startDate).getTime() >= todayMs;
+           });
+           if (!targetExeat) targetExeat = filtered[filtered.length - 1];
+           
+           var targetDate = new Date(targetExeat.startDate);
+           currentYear = targetDate.getFullYear();
+           dpYear = currentYear;
+           currentMonth = targetDate.getMonth();
+           
+           updateControls();
+           renderCalendar();
         }
       }
 
@@ -430,6 +517,19 @@
 
       updateControls();
       renderCalendar();
+
+      // Sidebar shrink effect
+      const mainEl = document.querySelector(".main");
+      const shellEl = document.querySelector(".shell");
+      if (mainEl && shellEl) {
+        mainEl.addEventListener("scroll", () => {
+          if (mainEl.scrollTop > 20) {
+            shellEl.classList.add("sidebar-shrunk");
+          } else {
+            shellEl.classList.remove("sidebar-shrunk");
+          }
+        });
+      }
     </script>
   </body>
 </html>
