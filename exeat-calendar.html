@@ -148,6 +148,7 @@
           <select id="schoolFilter" onchange="renderCalendar()">
             <option value="">All Schools</option>
           </select>
+          <button style="background: #10b981; border-color: #10b981; margin-left: auto;" onclick="simulateNewExeat()">+ Simulate New Data</button>
         </div>
 
         <div class="legend-bar" id="legendBar"></div>
@@ -363,6 +364,47 @@
            updateControls();
            renderCalendar();
         }
+      }
+
+      function simulateNewExeat() {
+        var testStudent = OG_DB.getAllStudents()[0];
+        if (!testStudent) { alert("Không tìm thấy học sinh mẫu!"); return; }
+        
+        var dStart = new Date();
+        dStart.setDate(dStart.getDate() + 2); // Start 2 days from now
+        var startStr = dStart.getFullYear() + '-' + String(dStart.getMonth()+1).padStart(2,'0') + '-' + String(dStart.getDate()).padStart(2,'0');
+        
+        var dEnd = new Date(dStart);
+        dEnd.setDate(dEnd.getDate() + 3); // Return 3 days later
+        var endStr = dEnd.getFullYear() + '-' + String(dEnd.getMonth()+1).padStart(2,'0') + '-' + String(dEnd.getDate()).padStart(2,'0');
+        
+        var simExeat = {
+            id: 'EX-SIM-' + new Date().getTime(),
+            breakType: 'Kỳ nghỉ mô phỏng',
+            studentId: testStudent.id,
+            studentName: testStudent.firstName + ' ' + testStudent.lastName,
+            schoolName: testStudent.school || 'Trường mô phỏng',
+            startDate: startStr,
+            duration: 3,
+            returnDate: endStr,
+            notes: 'Dữ liệu mô phỏng tự động tạo.',
+            parentConfirmation: 'Confirmed',
+            hostId: ''
+        };
+        
+        if(typeof OG_DB.saveExeat === 'function') {
+            OG_DB.saveExeat(simExeat);
+        } else {
+            var allE = OG_DB.getAllExeats();
+            allE.push(simExeat);
+            localStorage.setItem('og_exeats', JSON.stringify(allE));
+        }
+        
+        var stInput = document.getElementById('studentFilter');
+        stInput.value = simExeat.studentName;
+        jumpToStudentExeat();
+        
+        alert('Mô phỏng thành công!\nĐã thêm kỳ nghỉ mới cho ' + simExeat.studentName + ' bắt đầu từ ' + startStr + '.\nLịch đã tự động cập nhật và cuộn tới dữ liệu mới!');
       }
 
       function renderCalendar() {
