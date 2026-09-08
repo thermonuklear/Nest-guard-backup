@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Staff Single Central Record — Oxford Guardians Platform</title>
+    <title>Staff Single Central Record â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -37,7 +37,7 @@
           <section class="main">
             <div class="toolbar">
               <div>
-                <span class="eyebrow">AEGIS Appendix 7 — Staff Records</span>
+                <span class="eyebrow">AEGIS Appendix 7 â€” Staff Records</span>
                 <h2>Staff Single Central Record</h2>
                 <p>Safer recruitment evidence for all staff members. Every field maps to an AEGIS/KCSIE requirement. Gaps here are compliance failures.</p>
               </div>
@@ -76,7 +76,7 @@
                   <div class="list-item"><strong>Name and DOB</strong><small>Full legal name and date of birth</small></div>
                   <div class="list-item"><strong>ID check</strong><small>Document type, date checked, checker initials</small></div>
                   <div class="list-item"><strong>DBS details</strong><small>Certificate number, level (enhanced/enhanced+barred), date seen, who saw original</small></div>
-                  <div class="list-item"><strong>Barred list check</strong><small>Separate check for regulated activity — date and outcome</small></div>
+                  <div class="list-item"><strong>Barred list check</strong><small>Separate check for regulated activity â€” date and outcome</small></div>
                   <div class="list-item"><strong>Right to work</strong><small>Evidence type and verification date</small></div>
                   <div class="list-item"><strong>Overseas check</strong><small>Required if lived/worked abroad >3 months in last 5 years</small></div>
                   <div class="list-item"><strong>References</strong><small>Two references, both verified with dates and checker</small></div>
@@ -88,14 +88,14 @@
                 <h4>Why SCRs fail inspection</h4>
                 <ul>
                   <li>Certificate "seen" but no record of who saw it or when.</li>
-                  <li>References "obtained" but not verified — no phone call or written confirmation.</li>
+                  <li>References "obtained" but not verified â€” no phone call or written confirmation.</li>
                   <li>Overseas checks forgotten for staff who lived abroad.</li>
-                  <li>Barred list check conflated with DBS — they're separate requirements for regulated activity.</li>
-                  <li>Update service not being used — 3-year renewals become compliance debt.</li>
+                  <li>Barred list check conflated with DBS â€” they're separate requirements for regulated activity.</li>
+                  <li>Update service not being used â€” 3-year renewals become compliance debt.</li>
                 </ul>
               </div>
             </div>
-            <p class="inline-links">Related: <a href="scr-dashboard.html">SCR Dashboard</a> · <a href="scr-hosts.html">Host SCR</a> · <a href="scr-drivers.html">Driver SCR</a> · <a href="staff-list.html">Staff list</a> · <a href="aegis-control-room.html">AEGIS control room</a></p>
+            <p class="inline-links">Related: <a href="scr-dashboard.html">SCR Dashboard</a> Â· <a href="scr-hosts.html">Host SCR</a> Â· <a href="scr-drivers.html">Driver SCR</a> Â· <a href="staff-list.html">Staff list</a> Â· <a href="aegis-control-room.html">AEGIS control room</a></p>
           </section>
         </div>
     <script src="assets/db.js"></script>
@@ -119,7 +119,7 @@
 
       var today = new Date();
 
-      // AEGIS 2.8.2 / KCSIE — "Safer Recruitment in Education" (TRN-CRS-002) is the
+      // AEGIS 2.8.2 / KCSIE â€” "Safer Recruitment in Education" (TRN-CRS-002) is the
       // real training record for staff who sit on interview panels. We read the
       // person's actual completion via getRequiredCoursesForPerson rather than
       // inferring or fabricating a status: staff whose role doesn't require it show
@@ -163,13 +163,13 @@
 
         if (type === 'staff') {
           position  = person.title || person.role || 'Staff';
-          startDate = person.startDate || '—';
+          startDate = person.startDate || 'â€”';
         } else if (type === 'host') {
           position  = 'Homestay carer';
-          startDate = person.hostSince || '—';
+          startDate = person.hostSince || 'â€”';
         } else {
           position  = 'Licensed driver';
-          startDate = '—';
+          startDate = 'â€”';
         }
 
         var idCell   = docCell(c.idDocumentPath);
@@ -191,7 +191,7 @@
         } else {
           barredCell = (person.dbsStatus === 'clear')
             ? '<span style="color:#1a6632;font-weight:600;">Clear</span>'
-            : '<span style="color:#9bafc4;">—</span>';
+            : '<span style="color:#9bafc4;">â€”</span>';
         }
 
         var rtwCell;
@@ -205,10 +205,10 @@
 
         var overseasCell = c.livedAbroad ? docCell(c.overseasCheckDocPath) : naCell();
 
-        // AEGIS 6.3.3 — staff show qualification level + initial training date, plus the
+        // AEGIS 6.3.3 â€” staff show qualification level + initial training date, plus the
         // separate annual safeguarding update, flagged once it's over 12 months old.
         var level        = person.trainingLevel || 'Not recorded';
-        var trainingDate = c.safeguardingTrainingDate || person.trainingDate || '—';
+        var trainingDate = c.safeguardingTrainingDate || person.trainingDate || 'â€”';
         var annualUpdate = c.annualSafeguardingUpdateDate || 'Annual update pending';
         var annualAgeDays = c.annualSafeguardingUpdateDate
           ? Math.floor((today - new Date(c.annualSafeguardingUpdateDate)) / 86400000)
@@ -216,14 +216,14 @@
         var annualDue = annualAgeDays === null || annualAgeDays > 365;
 
         var inductionCell =
-          '<div style="font-size:0.8rem;color:#3b536e;">' + level + ' — ' + trainingDate + '</div>' +
+          '<div style="font-size:0.8rem;color:#3b536e;">' + level + ' â€” ' + trainingDate + '</div>' +
           '<div style="font-size:0.78rem;color:#63768b;margin-top:2px;">Annual update: ' + annualUpdate + '</div>' +
           (annualDue ? '<span class="badge amber" style="font-size:0.7rem;padding:2px 7px;margin-top:2px;display:inline-block;">Annual Update Due</span>' : '') +
           '<div style="font-size:0.76rem;color:#63768b;margin-top:6px;border-top:1px dashed #e1e7ec;padding-top:5px;">Interview panel (Safer Recruitment):<br/>' + interviewPanelStatusCell(person) + '</div>';
 
-        // AEGIS/KCSIE Appendix 7 — DOB has no real source anywhere in the staff schema
+        // AEGIS/KCSIE Appendix 7 â€” DOB has no real source anywhere in the staff schema
         // yet (no page collects it); we look for a real field rather than fabricate one,
-        // and report that gap honestly instead of hiding it behind a bare "—".
+        // and report that gap honestly instead of hiding it behind a bare "â€”".
         var dobCell = (c.dob || person.dob)
           ? '<span>' + (c.dob || person.dob) + '</span>'
           : '<span style="color:#9bafc4;">Not recorded</span>';

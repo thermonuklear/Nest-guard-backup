@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Held Funds — Oxford Guardians Platform</title>
+  <title>Student Held Funds â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -148,7 +148,7 @@
 
           <div class="toolbar">
             <div>
-              <span class="eyebrow">Finance management — AEGIS Standard 2.9.2</span>
+              <span class="eyebrow">Finance management â€” AEGIS Standard 2.9.2</span>
               <h2>Student Held Funds Register</h2>
               <p>Master ledger of every deposit and release across all student pocket money and emergency reserve accounts, held on behalf of students in accordance with Nest Guardians Finance Records Register requirements.</p>
             </div>
@@ -157,18 +157,18 @@
           <div class="sf-kpis">
             <div class="sf-kpi">
               <h4>Total Client Funds Held</h4>
-              <div class="sf-kpi-value" id="kpi-total-held">£0.00</div>
-              <p class="sf-kpi-sub" id="kpi-total-held-sub">—</p>
+              <div class="sf-kpi-value" id="kpi-total-held">Â£0.00</div>
+              <p class="sf-kpi-sub" id="kpi-total-held-sub">â€”</p>
             </div>
             <div class="sf-kpi">
               <h4>Total Disbursed (2025/26)</h4>
-              <div class="sf-kpi-value" id="kpi-disbursed">£0.00</div>
+              <div class="sf-kpi-value" id="kpi-disbursed">Â£0.00</div>
               <p class="sf-kpi-sub">Since 1 Sep 2025</p>
             </div>
             <div class="sf-kpi">
               <h4>Active Student Accounts</h4>
               <div class="sf-kpi-value" id="kpi-active-accounts">0</div>
-              <p class="sf-kpi-sub" id="kpi-active-accounts-sub">—</p>
+              <p class="sf-kpi-sub" id="kpi-active-accounts-sub">â€”</p>
             </div>
             <div class="sf-kpi audit">
               <h4>Ledger Audit Status</h4>
@@ -179,13 +179,13 @@
 
           <div class="filter-bar">
             <select id="filter-student" aria-label="Filter by student">
-              <option value="">— All students —</option>
+              <option value="">â€” All students â€”</option>
             </select>
             <select id="filter-purpose" aria-label="Filter by purpose">
-              <option value="">— All purposes —</option>
+              <option value="">â€” All purposes â€”</option>
             </select>
-            <input type="text" id="filter-ref" placeholder="Search by reference (e.g. DEP-0001)…" />
-            <span class="filter-count" id="filter-count">—</span>
+            <input type="text" id="filter-ref" placeholder="Search by reference (e.g. DEP-0001)â€¦" />
+            <span class="filter-count" id="filter-count">â€”</span>
           </div>
 
           <div class="sf-table-wrap">
@@ -223,11 +223,11 @@
 
     function fmtMoney(n) {
       var v = Number(n) || 0;
-      return '£' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return 'Â£' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     function fmtDate(d) {
-      if (!d) return '—';
+      if (!d) return 'â€”';
       var p = new Date(d);
       if (isNaN(p.getTime())) return String(d);
       var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -339,13 +339,13 @@
 
         return '<tr>' +
           '<td>' + esc(fmtDate(tx.dateReceived)) + '</td>' +
-          '<td><span class="sf-student-name">' + esc(studentLabel(tx.studentId, tx.studentName)) + '</span><span class="sf-student-id">' + esc(tx.studentId || '—') + '</span></td>' +
-          '<td>' + esc(tx.id || '—') + '</td>' +
-          '<td>' + esc(tx.purpose || '—') + '</td>' +
-          '<td>' + (amountIn  > 0 ? '<span class="sf-amount-in">+'  + fmtMoney(amountIn)  + '</span>' : '—') + '</td>' +
-          '<td>' + (amountOut > 0 ? '<span class="sf-amount-out">-' + fmtMoney(amountOut) + '</span>' : '—') + '</td>' +
+          '<td><span class="sf-student-name">' + esc(studentLabel(tx.studentId, tx.studentName)) + '</span><span class="sf-student-id">' + esc(tx.studentId || 'â€”') + '</span></td>' +
+          '<td>' + esc(tx.id || 'â€”') + '</td>' +
+          '<td>' + esc(tx.purpose || 'â€”') + '</td>' +
+          '<td>' + (amountIn  > 0 ? '<span class="sf-amount-in">+'  + fmtMoney(amountIn)  + '</span>' : 'â€”') + '</td>' +
+          '<td>' + (amountOut > 0 ? '<span class="sf-amount-out">-' + fmtMoney(amountOut) + '</span>' : 'â€”') + '</td>' +
           '<td>' + fmtMoney(tx.balanceHeld) + '</td>' +
-          '<td>' + esc(tx.approvedBy || '—') + '</td>' +
+          '<td>' + esc(tx.approvedBy || 'â€”') + '</td>' +
           '<td>' + receiptHtml + '</td>' +
           '<td><a class="button-alt" style="padding:6px 12px;font-size:0.78rem;text-decoration:none;" href="student-profile.html?id=' + esc(tx.studentId || '') + '">View Profile</a></td>' +
         '</tr>';

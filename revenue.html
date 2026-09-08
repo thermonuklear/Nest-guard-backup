@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Revenue — Oxford Guardians Platform</title>
+    <title>Revenue â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -493,7 +493,7 @@
                     <option value="Chargeable">Chargeable</option>
                   </select>
                 </div>
-                <span class="filter-meta" id="row-meta">— rows</span>
+                <span class="filter-meta" id="row-meta">â€” rows</span>
               </div>
 
               <!-- Table -->
@@ -550,7 +550,7 @@
                   <div class="form-field">
                     <label for="ne-student">Student</label>
                     <select class="field-select" id="ne-student" required>
-                      <option value="">— Select student —</option>
+                      <option value="">â€” Select student â€”</option>
                     </select>
                   </div>
                   <div class="form-field">
@@ -564,13 +564,13 @@
                   <div class="form-field">
                     <label for="ne-provider">Service Provider ID</label>
                     <select class="field-select" id="ne-provider" required>
-                      <option value="">— Select provider —</option>
+                      <option value="">â€” Select provider â€”</option>
                     </select>
                   </div>
                   <div class="form-field">
                     <label for="ne-payment-method">Payment Method</label>
                     <select class="field-select" id="ne-payment-method">
-                      <option value="">— Select method —</option>
+                      <option value="">â€” Select method â€”</option>
                       <option value="BACS">BACS</option>
                       <option value="International Wire (Flywire / TransferMate)">International Wire (Flywire / TransferMate)</option>
                       <option value="Direct Debit">Direct Debit</option>
@@ -590,7 +590,7 @@
                     <input type="text" id="ne-record-location" value="Finance Repository / HMRC 7-Yr Archive" />
                   </div>
                   <div class="form-field">
-                    <label for="ne-revenue">Revenue (£)</label>
+                    <label for="ne-revenue">Revenue (Â£)</label>
                     <input type="number" id="ne-revenue" placeholder="0.00" min="0" step="0.01" required />
                   </div>
                 </div>
@@ -617,7 +617,7 @@
                     <input type="text" id="ee-label" placeholder="e.g. Driver fee" />
                   </div>
                   <div class="form-field">
-                    <label for="ee-cost">Item Cost (£)</label>
+                    <label for="ee-cost">Item Cost (Â£)</label>
                     <input type="number" id="ee-cost" placeholder="0.00" min="0" step="0.01" />
                   </div>
                   <div class="form-field">
@@ -631,7 +631,7 @@
                   <div class="form-field">
                     <label for="ee-payment-method">Payment Method</label>
                     <select class="field-select" id="ee-payment-method">
-                      <option value="">— Select method —</option>
+                      <option value="">â€” Select method â€”</option>
                       <option value="BACS">BACS</option>
                       <option value="International Wire (Flywire / TransferMate)">International Wire (Flywire / TransferMate)</option>
                       <option value="Direct Debit">Direct Debit</option>
@@ -705,24 +705,24 @@
          Helpers
       --------------------------------------------- */
       function fmt(n) {
-        return '£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return 'Â£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       }
 
-      // Student select values are stored as "First Last (STU12345)" — pull the raw ID out.
+      // Student select values are stored as "First Last (STU12345)" â€” pull the raw ID out.
       function extractStudentId(studentLabel) {
         if (!studentLabel) return '';
         var m = studentLabel.match(/\(([^)]+)\)\s*$/);
         return m ? m[1] : '';
       }
 
-      // Mask all but the last 3 digits of a student ID for register privacy, e.g. STU10492 -> STU••492.
+      // Mask all but the last 3 digits of a student ID for register privacy, e.g. STU10492 -> STUâ€¢â€¢492.
       function redactStudentId(id) {
-        if (!id) return '—';
+        if (!id) return 'â€”';
         var m = id.match(/^([A-Za-z]+)(\d+)$/);
         if (!m) return id;
         var prefix = m[1], digits = m[2];
         if (digits.length <= 3) return prefix + digits;
-        return prefix + '•'.repeat(digits.length - 3) + digits.slice(-3);
+        return prefix + 'â€¢'.repeat(digits.length - 3) + digits.slice(-3);
       }
 
       function fmtDateDisplay(iso) {
@@ -762,7 +762,7 @@
         /* Tag each event with its original index before filtering */
         events.forEach(function (row, i) { row._evIdx = i; });
 
-        /* Sort by date — exclude archived items from all calculations */
+        /* Sort by date â€” exclude archived items from all calculations */
         var sorted = events.filter(function (row) { return !row.archived; }).sort(function (a, b) {
           return (a.date || '').localeCompare(b.date || '');
         });
@@ -820,15 +820,15 @@
           return '<tr id="' + (row.id || '') + '">' +
             '<td>' + fmtDateDisplay(row.datePayment) + '</td>' +
             '<td>' + fmtDateDisplay(row.date) + '</td>' +
-            '<td>' + (row.label || '—') + '</td>' +
-            '<td>' + (row.student || '—') + '</td>' +
+            '<td>' + (row.label || 'â€”') + '</td>' +
+            '<td>' + (row.student || 'â€”') + '</td>' +
             '<td>' + (row.studentRedactedId || redactStudentId(extractStudentId(row.student))) + '</td>' +
-            '<td>' + (row.brand || '—') + '</td>' +
-            '<td>' + (row.providerId || '—') + '</td>' +
-            '<td>' + (row.paymentMethod || '—') + '</td>' +
-            '<td>' + (row.linkedSchoolAgent || '—') + '</td>' +
-            '<td>' + (row.invoiceRef || '—') + '</td>' +
-            '<td>' + (row.recordLocation || '—') + '</td>' +
+            '<td>' + (row.brand || 'â€”') + '</td>' +
+            '<td>' + (row.providerId || 'â€”') + '</td>' +
+            '<td>' + (row.paymentMethod || 'â€”') + '</td>' +
+            '<td>' + (row.linkedSchoolAgent || 'â€”') + '</td>' +
+            '<td>' + (row.invoiceRef || 'â€”') + '</td>' +
+            '<td>' + (row.recordLocation || 'â€”') + '</td>' +
             '<td class="money">' + fmt(row.cost || 0) + '</td>' +
             '<td style="text-align:right;white-space:nowrap;">' +
               '<button class="button-sm button-alt" data-idx="' + row._evIdx + '" style="padding:3px 10px;font-size:0.75rem;">Edit</button>' +
@@ -871,7 +871,7 @@
          Add Event form
       --------------------------------------------- */
       /* ---------------------------------------------
-         Edit Event — row button delegation
+         Edit Event â€” row button delegation
       --------------------------------------------- */
       document.getElementById('tracker-tbody').addEventListener('click', function (e) {
         var btn = e.target.closest('button[data-idx]');
@@ -989,7 +989,7 @@
       function populateAddEventDropdowns() {
         // -- Student dropdown -------------------------------------------------
         var studentSel = document.getElementById('ne-student');
-        studentSel.innerHTML = '<option value="">— Select student —</option>';
+        studentSel.innerHTML = '<option value="">â€” Select student â€”</option>';
 
         var naOpt = document.createElement('option');
         naOpt.value = 'N/A';
@@ -1006,7 +1006,7 @@
 
         // -- Service Provider dropdown ----------------------------------------
         var providerSel = document.getElementById('ne-provider');
-        providerSel.innerHTML = '<option value="">— Select provider —</option>';
+        providerSel.innerHTML = '<option value="">â€” Select provider â€”</option>';
 
         var provNaOpt = document.createElement('option');
         provNaOpt.value = 'N/A';

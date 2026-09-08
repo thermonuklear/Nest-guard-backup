@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Driver Compliance — Oxford Guardians Platform</title>
+  <title>Driver Compliance â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -114,11 +114,11 @@
 
         <div class="toolbar">
           <div style="display:flex;align-items:center;gap:16px;">
-            <div class="driver-avatar" id="driver-avatar">—</div>
+            <div class="driver-avatar" id="driver-avatar">â€”</div>
             <div>
               <span class="eyebrow">Compliance &amp; SCR</span>
-              <h2 id="driver-name" style="margin:2px 0 4px;">Loading…</h2>
-              <p id="driver-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">—</p>
+              <h2 id="driver-name" style="margin:2px 0 4px;">Loadingâ€¦</h2>
+              <p id="driver-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">â€”</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -150,13 +150,13 @@
   } else {
     var c = driver.compliance || {};
 
-    document.title = driver.firstName + ' ' + driver.lastName + ' — Compliance — Oxford Guardians';
+    document.title = driver.firstName + ' ' + driver.lastName + ' â€” Compliance â€” Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/drivers/' + driver.id + '/compliance';
 
     function initials(f, l) { return ((f||'').charAt(0) + (l||'').charAt(0)).toUpperCase(); }
     document.getElementById('driver-avatar').textContent = initials(driver.firstName, driver.lastName);
     document.getElementById('driver-name').textContent   = driver.firstName + ' ' + driver.lastName;
-    document.getElementById('driver-subtitle').textContent = (driver.carMake ? driver.carMake + ' ' + (driver.carModel || '') : '—');
+    document.getElementById('driver-subtitle').textContent = (driver.carMake ? driver.carMake + ' ' + (driver.carModel || '') : 'â€”');
     document.getElementById('back-link').href = 'driver-profile.html?id=' + driver.id;
 
     // -- Badge HTML --------------------------------------------------------------
@@ -200,7 +200,7 @@
     }
     var identityRows = [rowFor('ID document', c.idDocumentPath)];
     if (c.isCitizen) {
-      identityRows.push(na('Right to work check (British/Irish citizen — exempt)'));
+      identityRows.push(na('Right to work check (British/Irish citizen â€” exempt)'));
     } else {
       identityRows.push(rowFor('Right to work document', c.rightToWorkCheckPath));
       identityRows.push(rowFor('RTW expiry date', c.rightToWorkExpiry));
@@ -228,7 +228,7 @@
     var overseasStatus, overseasRows;
     if (!c.livedAbroad) {
       overseasStatus = 'exempt';
-      overseasRows   = [na('Overseas check not required — has not lived abroad (last 5 yrs)')];
+      overseasRows   = [na('Overseas check not required â€” has not lived abroad (last 5 yrs)')];
     } else {
       overseasStatus = c.overseasCheckDocPath ? 'complete' : 'incomplete';
       overseasRows   = [
@@ -237,9 +237,9 @@
       ];
     }
 
-    // -- 5. Safeguarding Training (AEGIS 6.3 — 3-year statutory expiry) ---------
+    // -- 5. Safeguarding Training (AEGIS 6.3 â€” 3-year statutory expiry) ---------
     function fmtSgDate(d) {
-      if (!d) return '—';
+      if (!d) return 'â€”';
       var p = new Date(d);
       if (isNaN(p.getTime())) return d;
       var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -256,7 +256,7 @@
       rowFor('Training level: ' + (c.safeguardingLevel || 'Not recorded'), c.safeguardingLevel),
       rowFor('Training date: ' + fmtSgDate(c.safeguardingTrainingDate), c.safeguardingTrainingDate),
       sgExpired
-        ? miss('Expiry date: ' + fmtSgDate(c.safeguardingTrainingExpiry) + ' — EXPIRED, renewal required')
+        ? miss('Expiry date: ' + fmtSgDate(c.safeguardingTrainingExpiry) + ' â€” EXPIRED, renewal required')
         : rowFor('Expiry date: ' + fmtSgDate(c.safeguardingTrainingExpiry), c.safeguardingTrainingExpiry),
       rowFor('Certificate file: ' + (c.safeguardingCertificatePath || 'Not uploaded'), c.safeguardingCertificatePath)
     ];

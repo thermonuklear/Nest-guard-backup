@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Host Compliance — Oxford Guardians Platform</title>
+  <title>Host Compliance â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -155,11 +155,11 @@
         <!-- Toolbar -->
         <div class="toolbar" id="profile-toolbar">
           <div style="display:flex;align-items:center;gap:14px;">
-            <div class="host-avatar-lg" id="toolbar-avatar">—</div>
+            <div class="host-avatar-lg" id="toolbar-avatar">â€”</div>
             <div>
               <span class="eyebrow">Compliance &amp; SCR</span>
-              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
-              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">—</p>
+              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loadingâ€¦</h2>
+              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">â€”</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -182,7 +182,7 @@
             <h4 class="card-title">Household Residents Aged 16+ &amp; Regular Visitors (AEGIS 5.1.3)</h4>
             <button class="button" style="font-size:0.84rem;padding:8px 16px;" onclick="openMemberModal()">+ Add Household Member</button>
           </div>
-          <p class="household-sub">Every household member aged 16 and over — and any regular overnight visitor — must hold an Enhanced DBS and Children's Barred List check per AEGIS Standard 5.1.3. Members under 16 are listed for reference only.</p>
+          <p class="household-sub">Every household member aged 16 and over â€” and any regular overnight visitor â€” must hold an Enhanced DBS and Children's Barred List check per AEGIS Standard 5.1.3. Members under 16 are listed for reference only.</p>
           <div id="member-list"></div>
         </div>
 
@@ -262,10 +262,10 @@
     var c = host.compliance || {};
 
     // Pre-existing seed householdMembers (added before saveHostHouseholdMember()
-    // existed) have no `id` — backfill one so "Edit" updates the right record
+    // existed) have no `id` â€” backfill one so "Edit" updates the right record
     // instead of creating a duplicate. One-time, persisted immediately.
     // (generateHouseholdMemberId() reads localStorage each call, so a plain loop
-    // would hand out the same id to every member before the first save lands —
+    // would hand out the same id to every member before the first save lands â€”
     // track the running max locally instead.)
     (function migrateHouseholdMemberIds() {
       var changed = false;
@@ -286,7 +286,7 @@
       if (changed) saveHost(host);
     })();
 
-    document.title = host.firstName + ' ' + host.lastName + ' — Compliance — Oxford Guardians';
+    document.title = host.firstName + ' ' + host.lastName + ' â€” Compliance â€” Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/host/' + host.id + '/compliance';
 
     function initials(f, l) { return ((f||'').charAt(0) + (l||'').charAt(0)).toUpperCase(); }
@@ -301,8 +301,8 @@
       escHtml(fullName) +
       ' <span style="color:#6b85a0;font-size:0.8em;font-weight:normal;margin-left:8px;">' + escHtml(host.id) + '</span>';
     document.getElementById('toolbar-subtitle').textContent =
-      (host.status ? host.status.charAt(0).toUpperCase() + host.status.slice(1) : '—') +
-      ' host · ' + (host.capacityCurrent || 0) + ' of ' + (host.capacityMax || 3) + ' places occupied';
+      (host.status ? host.status.charAt(0).toUpperCase() + host.status.slice(1) : 'â€”') +
+      ' host Â· ' + (host.capacityCurrent || 0) + ' of ' + (host.capacityMax || 3) + ' places occupied';
     document.getElementById('back-link').href = 'host-profile.html?id=' + host.id;
 
     // -- Badge HTML helpers ------------------------------------------------------
@@ -353,9 +353,9 @@
 
     var identityRows = [rowFor('ID document', c.idDocumentPath)];
     if (c.worksOutsideUK) {
-      identityRows.push(na('Right to work check (works outside UK — exempt)'));
+      identityRows.push(na('Right to work check (works outside UK â€” exempt)'));
     } else if (isCitizenOrSettled) {
-      identityRows.push(na('Right to work check (' + host.legalStatus + ' — exempt)'));
+      identityRows.push(na('Right to work check (' + host.legalStatus + ' â€” exempt)'));
     } else {
       identityRows.push(rowFor('Right to work check', c.rightToWorkCheckPath));
       identityRows.push(rowFor('RTW expiry date', c.rightToWorkExpiry));
@@ -383,7 +383,7 @@
     var overseasStatus, overseasRows;
     if (!c.livedAbroad) {
       overseasStatus = 'exempt';
-      overseasRows   = [na('Overseas check not required — has not lived abroad (last 5 yrs)')];
+      overseasRows   = [na('Overseas check not required â€” has not lived abroad (last 5 yrs)')];
     } else {
       overseasStatus = c.overseasCheckDocPath ? 'complete' : 'incomplete';
       overseasRows   = [
@@ -392,9 +392,9 @@
       ];
     }
 
-    // -- 5. Safeguarding Training (AEGIS 6.3 — 3-year statutory expiry) ---------
+    // -- 5. Safeguarding Training (AEGIS 6.3 â€” 3-year statutory expiry) ---------
     function fmtSgDate(d) {
-      if (!d) return '—';
+      if (!d) return 'â€”';
       var p = new Date(d);
       if (isNaN(p.getTime())) return d;
       var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -411,7 +411,7 @@
       rowFor('Training level: ' + (c.safeguardingLevel || 'Not recorded'), c.safeguardingLevel),
       rowFor('Training date: ' + fmtSgDate(c.safeguardingTrainingDate), c.safeguardingTrainingDate),
       sgExpired
-        ? miss('Expiry date: ' + fmtSgDate(c.safeguardingTrainingExpiry) + ' — EXPIRED, renewal required')
+        ? miss('Expiry date: ' + fmtSgDate(c.safeguardingTrainingExpiry) + ' â€” EXPIRED, renewal required')
         : rowFor('Expiry date: ' + fmtSgDate(c.safeguardingTrainingExpiry), c.safeguardingTrainingExpiry),
       rowFor('Certificate file: ' + (c.safeguardingCertificatePath || 'Not uploaded'), c.safeguardingCertificatePath)
     ];
@@ -436,9 +436,9 @@
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var p = new Date(d); return isNaN(p) ? d : p.getDate() + ' ' + months[p.getMonth()] + ' ' + p.getFullYear();
       })(latestLog.date) : 'unknown date';
-      trainingRows.push(ok('Last session: ' + tDate + ' — ' + (latestLog.trainingType || 'Induction')));
-      trainingRows.push(ok('Conducted by: ' + (latestLog.conductedBy || '—')));
-      trainingRows.push(ok(trainingLogs.length + ' record' + (trainingLogs.length === 1 ? '' : 's') + ' on file · Section 8: ' + tYesCount + ' of 15 items covered'));
+      trainingRows.push(ok('Last session: ' + tDate + ' â€” ' + (latestLog.trainingType || 'Induction')));
+      trainingRows.push(ok('Conducted by: ' + (latestLog.conductedBy || 'â€”')));
+      trainingRows.push(ok(trainingLogs.length + ' record' + (trainingLogs.length === 1 ? '' : 's') + ' on file Â· Section 8: ' + tYesCount + ' of 15 items covered'));
     } else {
       trainingRows.push(miss('No induction or training records logged for this host.'));
       trainingRows.push(na('Complete initial induction and log via the Training &amp; Induction form.'));
@@ -460,18 +460,18 @@
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var p = new Date(d); return isNaN(p.getTime()) ? d : p.getDate() + ' ' + months[p.getMonth()] + ' ' + p.getFullYear();
       })(latestHs.date) : 'unknown date';
-      hsRows.push(ok('Last assessment: ' + hsDate + ' — ' + (latestHs.visitType || 'H&S Assessment')));
-      hsRows.push(ok('Assessed by: ' + (latestHs.assessedBy || '—')));
+      hsRows.push(ok('Last assessment: ' + hsDate + ' â€” ' + (latestHs.visitType || 'H&S Assessment')));
+      hsRows.push(ok('Assessed by: ' + (latestHs.assessedBy || 'â€”')));
       hsRows.push(
         hsNo > 0
-          ? miss('Section 11: ' + hsYes + ' items passed · ' + hsNo + ' require attention')
-          : ok('Section 11: ' + hsYes + ' items passed · no concerns')
+          ? miss('Section 11: ' + hsYes + ' items passed Â· ' + hsNo + ' require attention')
+          : ok('Section 11: ' + hsYes + ' items passed Â· no concerns')
       );
       if (latestHs.hazards && latestHs.hazards.length > 0) {
         var openHazards = latestHs.hazards.filter(function(h) { return !h.closed; }).length;
         hsRows.push(openHazards > 0
           ? miss(openHazards + ' open hazard' + (openHazards === 1 ? '' : 's') + ' still outstanding')
-          : ok(latestHs.hazards.length + ' hazard' + (latestHs.hazards.length === 1 ? '' : 's') + ' recorded — all closed')
+          : ok(latestHs.hazards.length + ' hazard' + (latestHs.hazards.length === 1 ? '' : 's') + ' recorded â€” all closed')
         );
       }
     } else {
@@ -488,20 +488,20 @@
     if (latestVisit) {
       var OUTCOME_LABELS = {
         'approved':               'Approved for placement',
-        'approved_after_actions': 'Approved — actions pending',
+        'approved_after_actions': 'Approved â€” actions pending',
         'not_approved':           'Not approved',
         'suspended':              'Suspended / withdrawn'
       };
       function fmtVDate(d) {
-        if (!d) return '—';
+        if (!d) return 'â€”';
         var p = new Date(d);
         if (isNaN(p.getTime())) return d;
         var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         return p.getDate() + ' ' + M[p.getMonth()] + ' ' + p.getFullYear();
       }
-      visitRows.push(ok('Latest: ' + (latestVisit.visitType || 'Visit') + ' — ' + fmtVDate(latestVisit.dateOfVisit)));
-      visitRows.push(ok('Staff: ' + (latestVisit.staffMember || '—')));
-      var vOutcome = OUTCOME_LABELS[latestVisit.outcome] || '—';
+      visitRows.push(ok('Latest: ' + (latestVisit.visitType || 'Visit') + ' â€” ' + fmtVDate(latestVisit.dateOfVisit)));
+      visitRows.push(ok('Staff: ' + (latestVisit.staffMember || 'â€”')));
+      var vOutcome = OUTCOME_LABELS[latestVisit.outcome] || 'â€”';
       visitRows.push((latestVisit.outcome === 'approved' || latestVisit.outcome === 'approved_after_actions') ? ok('Outcome: ' + vOutcome) : miss('Outcome: ' + vOutcome));
       if (latestVisit.nextReviewDue) {
         visitRows.push(ok('Next review due: ' + fmtVDate(latestVisit.nextReviewDue)));

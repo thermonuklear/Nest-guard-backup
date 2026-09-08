@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edit Host — Oxford Guardians Platform</title>
+  <title>Edit Host â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -124,7 +124,7 @@
         <div class="toolbar">
           <div>
             <span class="eyebrow">Edit host</span>
-            <h2 id="toolbar-title">Loading…</h2>
+            <h2 id="toolbar-title">Loadingâ€¦</h2>
             <p>Update host profile and household details. Compliance records are managed separately.</p>
           </div>
           <div class="toolbar-actions">
@@ -191,9 +191,9 @@
                 <div class="field">
                   <small>DBS Status *</small>
                   <select class="field-select" id="f-dbs-status">
-                    <option value="clear">Enhanced DBS — Clear</option>
-                    <option value="amber">DBS — Action Required</option>
-                    <option value="expired">DBS — Expired</option>
+                    <option value="clear">Enhanced DBS â€” Clear</option>
+                    <option value="amber">DBS â€” Action Required</option>
+                    <option value="expired">DBS â€” Expired</option>
                   </select>
                 </div>
                 <div class="field"><small>DBS Certificate Number</small><input class="field-input" type="text" id="f-dbs-cert" /></div>
@@ -319,7 +319,7 @@
     document.getElementById('edit-panel').style.display = 'none';
   } else {
     var fullName = host.firstName + ' ' + host.lastName;
-    document.title = 'Edit ' + fullName + ' — Oxford Guardians';
+    document.title = 'Edit ' + fullName + ' â€” Oxford Guardians';
     document.getElementById('toolbar-title').textContent  = fullName;
     document.getElementById('sidebar-label').textContent  = fullName;
     document.getElementById('chrome-route').textContent   = 'Route /admin/hosts/' + host.id + '/edit';

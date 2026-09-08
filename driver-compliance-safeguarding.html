@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Safeguarding Training — Oxford Guardians Platform</title>
+  <title>Safeguarding Training â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -100,11 +100,11 @@
       <section class="main">
         <div class="toolbar">
           <div style="display:flex;align-items:center;gap:16px;">
-            <div class="driver-avatar" id="driver-avatar">—</div>
+            <div class="driver-avatar" id="driver-avatar">â€”</div>
             <div>
-              <span class="eyebrow">Compliance — Safeguarding Training</span>
-              <h2 id="driver-name" style="margin:2px 0 4px;">Loading…</h2>
-              <p id="driver-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">—</p>
+              <span class="eyebrow">Compliance â€” Safeguarding Training</span>
+              <h2 id="driver-name" style="margin:2px 0 4px;">Loadingâ€¦</h2>
+              <p id="driver-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">â€”</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -128,7 +128,7 @@
               <div class="field">
                 <small>Safeguarding Level</small>
                 <select class="field-input" id="c-safeguarding-level">
-                  <option value="">— Select level —</option>
+                  <option value="">â€” Select level â€”</option>
                   <option>Level 1 Safeguarding Awareness</option>
                   <option>Level 2 Safeguarding &amp; Child Protection</option>
                   <option>Level 3 Designated Safeguarding Lead</option>
@@ -150,7 +150,7 @@
               <div class="field">
                 <small>Training Expiry Date</small>
                 <input class="field-input" type="date" id="c-safeguarding-expiry" />
-                <div class="field-current">Auto-calculated as 3 years after the training date — edit directly to override.</div>
+                <div class="field-current">Auto-calculated as 3 years after the training date â€” edit directly to override.</div>
               </div>
 
             </div>
@@ -176,10 +176,10 @@
     document.getElementById('not-found').style.display  = 'block';
     document.getElementById('edit-panel').style.display = 'none';
   } else {
-    document.title = 'Safeguarding Training — ' + driver.firstName + ' ' + driver.lastName + ' — Oxford Guardians';
+    document.title = 'Safeguarding Training â€” ' + driver.firstName + ' ' + driver.lastName + ' â€” Oxford Guardians';
     document.getElementById('chrome-route').textContent  = 'Route /admin/drivers/' + driver.id + '/compliance/safeguarding';
     document.getElementById('driver-name').textContent   = driver.firstName + ' ' + driver.lastName;
-    document.getElementById('driver-subtitle').textContent = (driver.carMake ? driver.carMake + ' ' + (driver.carModel || '') : '—');
+    document.getElementById('driver-subtitle').textContent = (driver.carMake ? driver.carMake + ' ' + (driver.carModel || '') : 'â€”');
     document.getElementById('driver-avatar').textContent = ((driver.firstName||'').charAt(0) + (driver.lastName||'').charAt(0)).toUpperCase();
     document.getElementById('back-link').href   = 'driver-aegis-control-room.html?id=' + driver.id;
     document.getElementById('cancel-link').href = 'driver-aegis-control-room.html?id=' + driver.id;

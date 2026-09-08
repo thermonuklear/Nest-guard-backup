@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="page-title">Pastoral & Visits — Oxford Guardians Platform</title>
+    <title id="page-title">Pastoral & Visits â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -370,11 +370,11 @@
             <div class="toolbar">
               <div>
                 <span class="eyebrow">Pastoral &amp; Visits</span>
-                <h2 id="student-name">—</h2>
+                <h2 id="student-name">â€”</h2>
                 <p>Student interests and hobbies, and a chronological record of all guardian visits and welfare check-ins.</p>
               </div>
               <div class="toolbar-actions">
-                <span id="status-badge" class="badge">—</span>
+                <span id="status-badge" class="badge">â€”</span>
                 <a class="button-alt" id="back-to-profile" href="student-profile.html">Back to Profile</a>
               </div>
             </div>
@@ -465,7 +465,7 @@
       }
 
       function formatDate(iso) {
-        if (!iso) return '—';
+        if (!iso) return 'â€”';
         var d = new Date(iso + 'T00:00:00');
         return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
       }
@@ -485,7 +485,7 @@
       // -- Populate header ------------------------------------------------------
       var fullName = student.firstName + ' ' + student.lastName;
 
-      document.getElementById('page-title').textContent   = 'Pastoral & Visits — ' + fullName;
+      document.getElementById('page-title').textContent   = 'Pastoral & Visits â€” ' + fullName;
       document.getElementById('chrome-route').textContent = 'Route /admin/students/' + student.id + '/pastoral';
       document.getElementById('student-name').innerHTML   = fullName +
         ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + student.id + '</span>';
@@ -519,7 +519,7 @@
         showToast('interests-toast');
       });
 
-      // -- Visit Records — render ------------------------------------------------
+      // -- Visit Records â€” render ------------------------------------------------
       function renderVisits() {
         var timeline  = document.getElementById('visit-timeline');
         var records   = student.pastoral.visitRecords;
@@ -558,7 +558,7 @@
 
       renderVisits();
 
-      // -- Log Visit form — toggle -----------------------------------------------
+      // -- Log Visit form â€” toggle -----------------------------------------------
       var logForm = document.getElementById('log-visit-form');
 
       document.getElementById('log-visit-toggle').addEventListener('click', function () {
@@ -578,7 +578,7 @@
         document.getElementById('visit-logged-by').value = '';
       });
 
-      // -- Log Visit form — save -------------------------------------------------
+      // -- Log Visit form â€” save -------------------------------------------------
       document.getElementById('save-visit-btn').addEventListener('click', function () {
         var date     = document.getElementById('visit-date').value;
         var report   = document.getElementById('visit-report').value.trim();

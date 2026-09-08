@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Accident &amp; Incident Book — Oxford Guardians Platform</title>
+    <title>Accident &amp; Incident Book â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -153,10 +153,10 @@
             </div>
 
             <div class="metrics">
-              <article class="metric featured"><h4>Total recorded incidents</h4><div class="metric-value" id="metric-total">—</div><p class="metric-meta">All roles (all-time)</p></article>
-              <article class="metric"><h4>This academic year</h4><div class="metric-value" id="metric-year">—</div><p class="metric-meta">Sep 2025 – present</p></article>
-              <article class="metric"><h4>Pending follow-up</h4><div class="metric-value" id="metric-pending">—</div><p class="metric-meta">Open investigation / care</p></article>
-              <article class="metric"><h4>RIDDOR / DSL Escalated</h4><div class="metric-value" id="metric-escalated">—</div><p class="metric-meta">Safeguarding / Statutory</p></article>
+              <article class="metric featured"><h4>Total recorded incidents</h4><div class="metric-value" id="metric-total">â€”</div><p class="metric-meta">All roles (all-time)</p></article>
+              <article class="metric"><h4>This academic year</h4><div class="metric-value" id="metric-year">â€”</div><p class="metric-meta">Sep 2025 â€“ present</p></article>
+              <article class="metric"><h4>Pending follow-up</h4><div class="metric-value" id="metric-pending">â€”</div><p class="metric-meta">Open investigation / care</p></article>
+              <article class="metric"><h4>RIDDOR / DSL Escalated</h4><div class="metric-value" id="metric-escalated">â€”</div><p class="metric-meta">Safeguarding / Statutory</p></article>
             </div>
 
             <!-- Role & Status Filter Bar -->
@@ -170,7 +170,7 @@
               </div>
 
               <div class="filter-group">
-                <input type="text" id="search-incidents" placeholder="Search by person, injury, location…" style="padding:6px 12px; font-size:0.84rem; border-radius:6px; border:1px solid #cbd5e1; width:220px;" />
+                <input type="text" id="search-incidents" placeholder="Search by person, injury, locationâ€¦" style="padding:6px 12px; font-size:0.84rem; border-radius:6px; border:1px solid #cbd5e1; width:220px;" />
               </div>
             </div>
 
@@ -188,7 +188,7 @@
                   </tr>
                 </thead>
                 <tbody id="incident-tbody">
-                  <tr><td colspan="7" style="text-align:center; padding:32px; color:#6b85a0;">Loading accident log…</td></tr>
+                  <tr><td colspan="7" style="text-align:center; padding:32px; color:#6b85a0;">Loading accident logâ€¦</td></tr>
                 </tbody>
               </table>
             </div>
@@ -321,9 +321,9 @@
 
           var role = inc.affectedRole || 'Student';
           var roleClass = getRoleClass(role);
-          var personName = inc.personName || inc.studentName || inc.hostName || '—';
+          var personName = inc.personName || inc.studentName || inc.hostName || 'â€”';
 
-          var displayDate = inc.date || '—';
+          var displayDate = inc.date || 'â€”';
           if (inc.date) {
             try {
               var d = new Date(inc.date + 'T00:00:00');
@@ -346,7 +346,7 @@
             flagsHtml += '<span class="tag-flag" style="background:#e0e7ff;color:#3730a3;margin-left:4px;">DSL Notified</span>';
           }
 
-          var locationDisplay = inc.location || (inc.hostName ? 'Homestay (' + inc.hostName + ')' : '—');
+          var locationDisplay = inc.location || (inc.hostName ? 'Homestay (' + inc.hostName + ')' : 'â€”');
 
           return '<tr>' +
             '<td style="white-space:nowrap;">' + displayDate + '</td>' +
@@ -360,7 +360,7 @@
               (inc.severity ? '<br><small style="color:#64748b;">' + escapeHtml(inc.severity) + '</small>' : '') +
             '</td>' +
             '<td>' +
-              '<div style="max-width:280px; font-size:0.85rem; line-height:1.4; color:#1e293b;">' + escapeHtml(inc.actionTaken || inc.description || '—') + '</div>' +
+              '<div style="max-width:280px; font-size:0.85rem; line-height:1.4; color:#1e293b;">' + escapeHtml(inc.actionTaken || inc.description || 'â€”') + '</div>' +
               (inc.firstAider ? '<small style="color:#64748b;">First Aider: ' + escapeHtml(inc.firstAider) + '</small>' : '') +
             '</td>' +
             '<td>' +

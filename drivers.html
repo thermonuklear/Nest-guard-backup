@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Drivers Directory — Oxford Guardians</title>
+  <title>Drivers Directory â€” Oxford Guardians</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -324,7 +324,7 @@
     <div class="page-header">
       <div>
         <h1>Drivers Directory</h1>
-        <p>All partner drivers — vehicle, DBS status, and rates at a glance. Click a name to open the full profile.</p>
+        <p>All partner drivers â€” vehicle, DBS status, and rates at a glance. Click a name to open the full profile.</p>
       </div>
       <div class="toolbar-actions">
         <a class="button" href="driver-create.html">Create driver</a>
@@ -335,7 +335,7 @@
     <div class="filter-row">
       <div class="field">
         <small>Search</small>
-        <input class="filter-input" type="text" id="search-input" placeholder="Search name or car…" autocomplete="off" />
+        <input class="filter-input" type="text" id="search-input" placeholder="Search name or carâ€¦" autocomplete="off" />
       </div>
       <div class="field">
         <small>DBS Status</small>
@@ -358,7 +358,7 @@
       </div>
       <div class="field">
         <small>Showing</small>
-        <strong id="result-label" style="font-size:0.9rem;font-weight:700;color:#0f2340;display:block;margin-top:6px;">— drivers</strong>
+        <strong id="result-label" style="font-size:0.9rem;font-weight:700;color:#0f2340;display:block;margin-top:6px;">â€” drivers</strong>
       </div>
     </div>
 
@@ -410,7 +410,7 @@
     }
 
     function parseRate(rateStr) {
-      // Extracts a float from strings like "£0.55" or "£0.55 / mile"
+      // Extracts a float from strings like "Â£0.55" or "Â£0.55 / mile"
       if (!rateStr) return 0;
       var match = rateStr.replace(/[^0-9.]/g, '');
       return parseFloat(match) || 0;
@@ -430,15 +430,15 @@
       tbody.innerHTML = data.map(function (d) {
         var fullName    = d.firstName + ' ' + d.lastName;
         var avatarText  = initials(d.firstName, d.lastName);
-        var vehicle     = [d.carMake, d.carModel].filter(Boolean).join(' ') || '—';
+        var vehicle     = [d.carMake, d.carModel].filter(Boolean).join(' ') || 'â€”';
         var regDisplay  = d.regNumber ? '<small>' + d.regNumber + '</small>' : '';
-        var address     = d.address || '—';
+        var address     = d.address || 'â€”';
         // Show only city/area: everything after the first comma
         var addressParts = address.split(',');
         var city = addressParts.length > 1 ? addressParts.slice(1).join(',').trim() : address;
-        var rateDisplay = d.ratePerMile || '—';
-        var pct         = (d.punctualityPct != null) ? d.punctualityPct : '—';
-        var pctStr      = pct !== '—' ? pct + '%' : '—';
+        var rateDisplay = d.ratePerMile || 'â€”';
+        var pct         = (d.punctualityPct != null) ? d.punctualityPct : 'â€”';
+        var pctStr      = pct !== 'â€”' ? pct + '%' : 'â€”';
         var badgeClass  = dbsBadgeClass(d.dbsStatus);
         var badgeLabel  = dbsBadgeLabel(d.dbsStatus);
 
@@ -451,7 +451,7 @@
                 '<strong>' +
                   '<a class="driver-name-link" href="driver-profile.html?id=' + d.id + '">' + fullName + '</a>' +
                 '</strong>' +
-                '<small>' + (d.mobile || d.email || '—') + '</small>' +
+                '<small>' + (d.mobile || d.email || 'â€”') + '</small>' +
               '</div>' +
             '</div>' +
           '</td>' +

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create Custom Alert — Oxford Guardians Platform</title>
+    <title>Create Custom Alert â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -212,15 +212,15 @@
                   <div class="form-field">
                     <label class="form-label" for="f-level">Severity</label>
                     <select class="form-select" id="f-level" name="level">
-                      <option value="">Select severity…</option>
+                      <option value="">Select severityâ€¦</option>
                       <option value="critical">
-                        Critical (Red) — immediate action required
+                        Critical (Red) â€” immediate action required
                       </option>
                       <option value="warning">
-                        Warning (Amber) — action needed soon
+                        Warning (Amber) â€” action needed soon
                       </option>
                       <option value="info">
-                        Info (Yellow) — for awareness only
+                        Info (Yellow) â€” for awareness only
                       </option>
                     </select>
                     <span class="field-error" id="err-level">Please select a severity level.</span>
@@ -230,7 +230,7 @@
                   <div class="form-field">
                     <span class="form-label">
                       Target Categories
-                      <span class="form-hint">— select up to 2</span>
+                      <span class="form-hint">â€” select up to 2</span>
                     </span>
                     <div class="checkbox-group" id="category-group">
                       <label class="checkbox-chip">
@@ -253,7 +253,7 @@
                   <div class="form-field">
                     <label class="form-label" for="f-person">
                       Target User IDs
-                      <span class="form-hint">— optional, e.g. STU10492, HST2011</span>
+                      <span class="form-hint">â€” optional, e.g. STU10492, HST2011</span>
                     </label>
                     <input
                       class="form-input"
@@ -306,7 +306,7 @@
     <!-- Toast -->
     <div id="toast">
       <span class="toast-dot"></span>
-      <span id="toast-text">Alert created — redirecting…</span>
+      <span id="toast-text">Alert created â€” redirectingâ€¦</span>
     </div>
 
     <script src="assets/db.js"></script>
@@ -409,9 +409,9 @@
         localStorage.setItem('og_custom_notifs', JSON.stringify(existing));
 
         document.getElementById('submit-btn').disabled = true;
-        document.getElementById('submit-btn').textContent = 'Saved…';
+        document.getElementById('submit-btn').textContent = 'Savedâ€¦';
 
-        showToast('Alert created — redirecting to notifications…');
+        showToast('Alert created â€” redirecting to notificationsâ€¦');
       });
 
     }());

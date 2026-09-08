@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Close Concern — Oxford Guardians Platform</title>
+    <title>Close Concern â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -13,8 +13,8 @@
     <main class="page">
       <section class="section" style="padding:28px;" id="close-section">
         <span class="eyebrow">Close safeguarding case</span>
-        <h2 id="close-title">Loading…</h2>
-        <div class="badge-row" style="margin:12px 0;"><span class="badge amber" id="close-status-badge">—</span><span class="badge navy">DSL: Jay Ray</span></div>
+        <h2 id="close-title">Loadingâ€¦</h2>
+        <div class="badge-row" style="margin:12px 0;"><span class="badge amber" id="close-status-badge">â€”</span><span class="badge navy">DSL: Jay Ray</span></div>
         <div class="note brutal" style="margin:18px 0;">
           <h4>Brutal product note</h4>
           <p>Closing a safeguarding case is not a delete action. Every closure requires documented rationale, outcome, and any ongoing monitoring. The record is preserved indefinitely for audit purposes. This form forces explicit closure reasoning.</p>
@@ -22,22 +22,22 @@
         <div class="info-block" style="margin:18px 0;">
           <h4>Case summary</h4>
           <div class="kv">
-            <div class="kv-row"><small>Student</small><div id="kv-close-student">—</div></div>
-            <div class="kv-row"><small>Concern type</small><div id="kv-close-type">—</div></div>
-            <div class="kv-row"><small>Opened</small><div id="kv-close-opened">—</div></div>
+            <div class="kv-row"><small>Student</small><div id="kv-close-student">â€”</div></div>
+            <div class="kv-row"><small>Concern type</small><div id="kv-close-type">â€”</div></div>
+            <div class="kv-row"><small>Opened</small><div id="kv-close-opened">â€”</div></div>
             <div class="kv-row"><small>Closed</small><div id="kv-close-closed">Not yet closed</div></div>
-            <div class="kv-row"><small>Duration</small><div id="kv-close-duration">—</div></div>
+            <div class="kv-row"><small>Duration</small><div id="kv-close-duration">â€”</div></div>
           </div>
         </div>
         <form class="form-grid">
           <div class="form-span-2">
             <label>Closure reason</label>
             <select id="closure-reason">
-              <option>Concern resolved — no further action</option>
-              <option selected>Concern resolved — with ongoing support</option>
+              <option>Concern resolved â€” no further action</option>
+              <option selected>Concern resolved â€” with ongoing support</option>
               <option>Concern unfounded after investigation</option>
-              <option>Referred to external agency — case transferred</option>
-              <option>Student left guardianship — case transferred to new provider</option>
+              <option>Referred to external agency â€” case transferred</option>
+              <option>Student left guardianship â€” case transferred to new provider</option>
             </select>
           </div>
           <div class="form-span-2">
@@ -121,8 +121,8 @@
         document.getElementById('close-section').style.display = 'none';
         document.getElementById('close-not-found-section').style.display = 'block';
       } else {
-        document.title = 'Close: ' + (currentConcern.subjectName || 'Concern') + ' — Oxford Guardians';
-        document.getElementById('close-title').textContent = (currentConcern.subjectName || 'Unknown subject') + ' — ' + (currentConcern.title || 'Untitled concern');
+        document.title = 'Close: ' + (currentConcern.subjectName || 'Concern') + ' â€” Oxford Guardians';
+        document.getElementById('close-title').textContent = (currentConcern.subjectName || 'Unknown subject') + ' â€” ' + (currentConcern.title || 'Untitled concern');
 
         var badgeCls = STATUS_BADGE[currentConcern.status] || 'navy';
         var badge = document.getElementById('close-status-badge');

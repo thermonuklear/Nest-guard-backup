@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>School Welfare &amp; Incident Notification — Oxford Guardians Platform</title>
+    <title>School Welfare &amp; Incident Notification â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -163,7 +163,7 @@
               <div class="form-grid">
                 <div>
                   <label>Student</label>
-                  <select id="student-selector"><option value="">— Select a student —</option></select>
+                  <select id="student-selector"><option value="">â€” Select a student â€”</option></select>
                 </div>
                 <div>
                   <label>Date of Event</label>
@@ -172,7 +172,7 @@
                 <div class="form-span-2">
                   <label>Type</label>
                   <select id="input-type">
-                    <option value="">— Select type —</option>
+                    <option value="">â€” Select type â€”</option>
                     <option value="Welfare Update">Welfare Update</option>
                     <option value="Incident Report">Incident Report</option>
                     <option value="Medication Change">Medication Change</option>
@@ -180,7 +180,7 @@
                 </div>
                 <div class="form-span-2">
                   <label>Details</label>
-                  <textarea id="input-details" class="textarea-box" rows="6" placeholder="Describe the welfare update, incident, or medication change in detail…"></textarea>
+                  <textarea id="input-details" class="textarea-box" rows="6" placeholder="Describe the welfare update, incident, or medication change in detailâ€¦"></textarea>
                 </div>
               </div>
             </div>
@@ -213,16 +213,16 @@
         var btn         = this;
         var studentId   = selector.value;
         var student     = studentId ? getStudentById(studentId) : null;
-        var studentName = student ? student.firstName + ' ' + student.lastName : '—';
-        var school      = student ? (student.school || '—') : '—';
-        var date        = document.getElementById('input-date').value || '—';
-        var type        = document.getElementById('input-type').value || '—';
-        var details     = document.getElementById('input-details').value.trim() || '—';
+        var studentName = student ? student.firstName + ' ' + student.lastName : 'â€”';
+        var school      = student ? (student.school || 'â€”') : 'â€”';
+        var date        = document.getElementById('input-date').value || 'â€”';
+        var type        = document.getElementById('input-type').value || 'â€”';
+        var details     = document.getElementById('input-details').value.trim() || 'â€”';
 
         var msg =
           '?? *School Welfare & Incident Notification*\n' +
           '*From:* Oxford Guardians (compliance@oxfordguardians.co.uk)\n' +
-          '*To:* ' + school + ' — pastoral / safeguarding team\n\n' +
+          '*To:* ' + school + ' â€” pastoral / safeguarding team\n\n' +
           '?? *Student:* ' + studentName + '\n' +
           '?? *Date of Event:* ' + date + '\n' +
           '?? *Notification Type:* ' + type + '\n\n' +

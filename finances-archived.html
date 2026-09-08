@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Archived Expenditure — Oxford Guardians Platform</title>
+    <title>Archived Expenditure â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -319,7 +319,7 @@
               <div>
                 <span class="eyebrow">Archived expenditure</span>
                 <h2>Archived Expenditure</h2>
-                <p>A read-only record of expenditure that has been archived from the active tracker — organised by academic year for historical reference.</p>
+                <p>A read-only record of expenditure that has been archived from the active tracker â€” organised by academic year for historical reference.</p>
               </div>
               <div class="toolbar-actions">
                 <a class="button-alt" href="finances-tracker.html">Active Tracker</a>
@@ -350,7 +350,7 @@
                     <option value="Chargeable">Chargeable</option>
                   </select>
                 </div>
-                <span class="filter-meta" id="row-meta">— rows</span>
+                <span class="filter-meta" id="row-meta">â€” rows</span>
               </div>
 
               <!-- Table -->
@@ -418,7 +418,7 @@
          Helpers
       --------------------------------------------- */
       function fmt(n) {
-        return '£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return 'Â£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       }
 
       function fmtDateDisplay(iso) {
@@ -521,14 +521,14 @@
             ? '<span class="badge-comp">Complimentary</span>'
             : '<span class="badge-chargeable">Chargeable</span>';
           return '<tr id="' + (row.id || '') + '">' +
-            '<td><strong>' + (row.event || '—') + '</strong></td>' +
+            '<td><strong>' + (row.event || 'â€”') + '</strong></td>' +
             '<td>' + fmtDateDisplay(row.date) + '</td>' +
-            '<td>' + (row.label || '—') + '</td>' +
-            '<td>' + (row.student || '—') + '</td>' +
+            '<td>' + (row.label || 'â€”') + '</td>' +
+            '<td>' + (row.student || 'â€”') + '</td>' +
             '<td>' + typeBadge + '</td>' +
-            '<td>' + (row.providerId || '—') + '</td>' +
+            '<td>' + (row.providerId || 'â€”') + '</td>' +
             '<td>' + (row.paid ? 'Yes' : 'No') + '</td>' +
-            '<td>' + (row.deadline ? fmtDateDisplay(row.deadline) : '—') + '</td>' +
+            '<td>' + (row.deadline ? fmtDateDisplay(row.deadline) : 'â€”') + '</td>' +
             '<td>' + (row.vatReclaimable ? 'Yes' : 'No') + '</td>' +
             '<td class="money">' + fmt(row.cost || 0) + '</td>' +
             '<td class="money">' + fmt(row._groupTotal || 0) + '</td>' +

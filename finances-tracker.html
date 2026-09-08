@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Expenditure Tracker — Oxford Guardians Platform</title>
+  <title>Expenditure Tracker â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -623,7 +623,7 @@
                   <option value="Chargeable">Chargeable</option>
                 </select>
               </div>
-              <span class="filter-meta" id="row-meta">— rows</span>
+              <span class="filter-meta" id="row-meta">â€” rows</span>
             </div>
 
             <!-- Table -->
@@ -696,13 +696,13 @@
                 <div class="form-field">
                   <label for="ne-student">Student</label>
                   <select class="field-select" id="ne-student">
-                    <option value="">— Select student —</option>
+                    <option value="">â€” Select student â€”</option>
                   </select>
                 </div>
                 <div class="form-field">
                   <label for="ne-provider">Service Provider</label>
                   <select class="field-select" id="ne-provider">
-                    <option value="">— Select provider —</option>
+                    <option value="">â€” Select provider â€”</option>
                   </select>
                 </div>
                 <div class="form-field">
@@ -713,7 +713,7 @@
                   </select>
                 </div>
                 <div class="form-field">
-                  <label for="ne-cost">Item Cost (£)</label>
+                  <label for="ne-cost">Item Cost (Â£)</label>
                   <input type="number" id="ne-cost" placeholder="0.00" min="0" step="0.01" />
                 </div>
                 <div class="form-field">
@@ -737,7 +737,7 @@
                 <div class="form-field">
                   <label for="ne-payee-type">Payee &amp; Type</label>
                   <select class="field-select" id="ne-payee-type">
-                    <option value="">— Select payee type —</option>
+                    <option value="">â€” Select payee type â€”</option>
                     <option value="Homestay Host">Homestay Host</option>
                     <option value="Staff Member">Staff Member</option>
                     <option value="Driver / Transport">Driver / Transport</option>
@@ -749,7 +749,7 @@
                 <div class="form-field">
                   <label for="ne-approved-by">Approved by (Role)</label>
                   <select class="field-select" id="ne-approved-by">
-                    <option value="">— Select role —</option>
+                    <option value="">â€” Select role â€”</option>
                     <option value="DSL Lead">DSL Lead</option>
                     <option value="Operations Manager">Operations Manager</option>
                     <option value="DDSL">DDSL</option>
@@ -759,7 +759,7 @@
                 <div class="form-field">
                   <label for="ne-payment-method">Payment Method</label>
                   <select class="field-select" id="ne-payment-method">
-                    <option value="">— Select method —</option>
+                    <option value="">â€” Select method â€”</option>
                     <option value="BACS Transfer">BACS Transfer</option>
                     <option value="Corporate Debit/Credit Card">Corporate Debit/Credit Card</option>
                     <option value="Direct Debit">Direct Debit</option>
@@ -802,7 +802,7 @@
                   <input type="text" id="ee-label" placeholder="e.g. Driver fee" />
                 </div>
                 <div class="form-field">
-                  <label for="ee-cost">Item Cost (£)</label>
+                  <label for="ee-cost">Item Cost (Â£)</label>
                   <input type="number" id="ee-cost" placeholder="0.00" min="0" step="0.01" />
                 </div>
                 <div class="form-field">
@@ -812,7 +812,7 @@
                 <div class="form-field">
                   <label for="ee-payee-type">Payee &amp; Type</label>
                   <select class="field-select" id="ee-payee-type">
-                    <option value="">— Select payee type —</option>
+                    <option value="">â€” Select payee type â€”</option>
                     <option value="Homestay Host">Homestay Host</option>
                     <option value="Staff Member">Staff Member</option>
                     <option value="Driver / Transport">Driver / Transport</option>
@@ -824,7 +824,7 @@
                 <div class="form-field">
                   <label for="ee-approved-by">Approved by (Role)</label>
                   <select class="field-select" id="ee-approved-by">
-                    <option value="">— Select role —</option>
+                    <option value="">â€” Select role â€”</option>
                     <option value="DSL Lead">DSL Lead</option>
                     <option value="Operations Manager">Operations Manager</option>
                     <option value="DDSL">DDSL</option>
@@ -834,7 +834,7 @@
                 <div class="form-field">
                   <label for="ee-payment-method">Payment Method</label>
                   <select class="field-select" id="ee-payment-method">
-                    <option value="">— Select method —</option>
+                    <option value="">â€” Select method â€”</option>
                     <option value="BACS Transfer">BACS Transfer</option>
                     <option value="Corporate Debit/Credit Card">Corporate Debit/Credit Card</option>
                     <option value="Direct Debit">Direct Debit</option>
@@ -867,7 +867,7 @@
               <h4>Amend Budget</h4>
               <div class="form-grid" style="max-width:320px;">
                 <div class="form-field">
-                  <label for="ab-value">New Budget (£)</label>
+                  <label for="ab-value">New Budget (Â£)</label>
                   <input type="number" id="ab-value" placeholder="25000" min="0" step="100" />
                 </div>
               </div>
@@ -959,7 +959,7 @@
        Helpers
     --------------------------------------------- */
     function fmt(n) {
-      return '£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return 'Â£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     function fmtDateDisplay(iso) {
@@ -1003,7 +1003,7 @@
       /* Tag each event with its original index before filtering */
       events.forEach(function (row, i) { row._evIdx = i; });
 
-      /* Sort by date — exclude archived items from all calculations */
+      /* Sort by date â€” exclude archived items from all calculations */
       var sorted = events.filter(function (row) { return !row.archived; }).sort(function (a, b) {
         return (a.date || '').localeCompare(b.date || '');
       });
@@ -1063,19 +1063,19 @@
           : '<span class="badge-chargeable">Chargeable</span>';
         var approvedByBadge = row.approvedBy
           ? '<span class="badge-role">' + row.approvedBy + '</span>'
-          : '—';
+          : 'â€”';
         var receiptBadge = (row.receiptHeld || row.receiptDocPath)
           ? '<span class="badge-receipt-ok">On file</span>'
           : '<span class="badge-receipt-missing">Missing</span>';
         return '<tr id="' + (row.id || '') + '">' +
-          '<td><strong>' + (row.event || '—') + '</strong></td>' +
+          '<td><strong>' + (row.event || 'â€”') + '</strong></td>' +
           '<td>' + fmtDateDisplay(row.date) + '</td>' +
-          '<td>' + (row.label || '—') + '</td>' +
-          '<td>' + (row.student || '—') + '</td>' +
+          '<td>' + (row.label || 'â€”') + '</td>' +
+          '<td>' + (row.student || 'â€”') + '</td>' +
           '<td>' + typeBadge + '</td>' +
-          '<td>' + (row.providerId || '—') + '</td>' +
+          '<td>' + (row.providerId || 'â€”') + '</td>' +
           '<td>' + (row.paid ? 'Yes' : 'No') + '</td>' +
-          '<td>' + (row.deadline ? fmtDateDisplay(row.deadline) : '—') + '</td>' +
+          '<td>' + (row.deadline ? fmtDateDisplay(row.deadline) : 'â€”') + '</td>' +
           '<td>' + (row.vatReclaimable ? 'Yes' : 'No') + '</td>' +
           '<td>' + approvedByBadge + '</td>' +
           '<td>' + receiptBadge + '</td>' +
@@ -1172,7 +1172,7 @@
         ctx.lineTo(PAD.left + chartW, yPx);
         ctx.stroke();
 
-        ctx.fillText('£' + Math.round(yVal / 1000) + 'k', PAD.left - 8, yPx + 4);
+        ctx.fillText('Â£' + Math.round(yVal / 1000) + 'k', PAD.left - 8, yPx + 4);
       }
 
       /* -- X-axis labels: fixed 12-month academic calendar -- */
@@ -1265,7 +1265,7 @@
        Add Event form
     --------------------------------------------- */
     /* ---------------------------------------------
-       Edit Event — row button delegation
+       Edit Event â€” row button delegation
     --------------------------------------------- */
     document.getElementById('tracker-tbody').addEventListener('click', function (e) {
       var btn = e.target.closest('button[data-idx]');
@@ -1462,7 +1462,7 @@
     function populateAddEventDropdowns() {
       // -- Student dropdown -------------------------------------------------
       var studentSel = document.getElementById('ne-student');
-      studentSel.innerHTML = '<option value="">— Select student —</option>';
+      studentSel.innerHTML = '<option value="">â€” Select student â€”</option>';
 
       var naOpt = document.createElement('option');
       naOpt.value = 'N/A';
@@ -1479,7 +1479,7 @@
 
       // -- Service Provider dropdown ----------------------------------------
       var providerSel = document.getElementById('ne-provider');
-      providerSel.innerHTML = '<option value="">— Select provider —</option>';
+      providerSel.innerHTML = '<option value="">â€” Select provider â€”</option>';
 
       var extOpt = document.createElement('option');
       extOpt.value = 'External Provider';

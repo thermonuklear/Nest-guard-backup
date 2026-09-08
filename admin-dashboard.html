@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
@@ -116,11 +116,11 @@
         font-size: 1rem;
       }
       /* ── Mini Gantt Widget (Upgraded Visuals) ── */
-      .mini-gantt-widget { position: fixed; bottom: 24px; right: 24px; width: 420px; background: #ffffff; border-radius: 12px; box-shadow: 0 12px 36px rgba(15, 35, 64, 0.18); z-index: 1000; display: flex; flex-direction: column; border: 1px solid #e2e8f0; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden; }
+      .mini-gantt-widget { margin-bottom: 24px; width: 100%;  background: #ffffff; border-radius: 12px; box-shadow: 0 12px 36px rgba(15, 35, 64, 0.18); z-index: 1000; display: flex; flex-direction: column; border: 1px solid #e2e8f0; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden; }
       .mini-gantt-header { padding: 14px 18px; background: linear-gradient(135deg, #0f2340 0%, #1e3a8a 100%); color: white; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.3s ease; }
       .mini-gantt-header:hover { background: linear-gradient(135deg, #1e3a8a 0%, #0f2340 100%); }
       .mini-gantt-header-title { display: flex; align-items: center; gap: 8px; font-size: 14px; letter-spacing: 0.3px; }
-      .mini-gantt-body { padding: 16px; max-height: 400px; overflow-y: auto; display: block; background: #f8fafc; }
+      .mini-gantt-body { padding: 16px; max-height: 600px; overflow-y: auto; display: block; background: #f8fafc; }
       .mini-gantt-row { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 12px; transition: transform 0.2s, box-shadow 0.2s; }
       .mini-gantt-row:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.06); }
       .mini-gantt-row:last-child { margin-bottom: 0; }
@@ -247,6 +247,20 @@
               </a>
             </div>
 
+
+          <!-- Mini Gantt Widget -->
+          <div id="miniGanttWidget" class="mini-gantt-widget">
+            <div class="mini-gantt-header" onclick="toggleMiniGantt()">
+              <div class="mini-gantt-header-title">
+                <svg class="mg-header-icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7v-5z"/></svg>
+                Upcoming Events
+              </div>
+              <svg class="mg-toggle-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+            </div>
+            <div class="mini-gantt-body" id="miniGanttBody">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
             <div class="cols-2">
               <div>
                 <div class="card">
@@ -345,19 +359,6 @@
                 </div>
               </div>
             </div>
-          <!-- Mini Gantt Widget -->
-          <div id="miniGanttWidget" class="mini-gantt-widget">
-            <div class="mini-gantt-header" onclick="toggleMiniGantt()">
-              <div class="mini-gantt-header-title">
-                <svg class="mg-header-icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7v-5z"/></svg>
-                Upcoming Events
-              </div>
-              <svg class="mg-toggle-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-            </div>
-            <div class="mini-gantt-body" id="miniGanttBody">
-              <!-- Rendered by JS -->
-            </div>
-          </div>
           </section>
         </div>
         <script src="assets/db.js"></script>
@@ -469,6 +470,7 @@
     </script>
   </body>
 </html>
+
 
 
 

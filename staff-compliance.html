@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Staff Compliance — Oxford Guardians Platform</title>
+  <title>Staff Compliance â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -115,11 +115,11 @@
         <!-- Toolbar -->
         <div class="toolbar" id="profile-toolbar">
           <div style="display:flex;align-items:center;gap:14px;">
-            <div class="staff-avatar-lg" id="toolbar-avatar">—</div>
+            <div class="staff-avatar-lg" id="toolbar-avatar">â€”</div>
             <div>
               <span class="eyebrow">Compliance &amp; SCR</span>
-              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
-              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:var(--ink-2);">—</p>
+              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loadingâ€¦</h2>
+              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:var(--ink-2);">â€”</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -164,7 +164,7 @@
   } else {
     var c = member.compliance || {};
 
-    document.title = member.firstName + ' ' + member.lastName + ' — Compliance — Oxford Guardians';
+    document.title = member.firstName + ' ' + member.lastName + ' â€” Compliance â€” Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/staff/' + member.id + '/compliance';
 
     function initials(f, l) { return ((f||'').charAt(0) + (l||'').charAt(0)).toUpperCase(); }
@@ -175,7 +175,7 @@
       escHtml(fullName) +
       ' <span style="color:var(--ink-3);font-size:0.8em;font-weight:normal;margin-left:8px;">' + escHtml(member.id) + '</span>';
     document.getElementById('toolbar-subtitle').textContent =
-      (member.role || '—') + ' · ' + (member.title || '—');
+      (member.role || 'â€”') + ' Â· ' + (member.title || 'â€”');
     document.getElementById('back-link').href = 'staff-profile.html?id=' + member.id;
 
     function escHtml(s) {
@@ -229,9 +229,9 @@
 
     var identityRows = [rowFor('ID document', c.idDocumentPath)];
     if (c.worksOutsideUK) {
-      identityRows.push(na('Right to work check (works outside UK — exempt)'));
+      identityRows.push(na('Right to work check (works outside UK â€” exempt)'));
     } else if (c.isCitizen) {
-      identityRows.push(na('Right to work check (UK citizen — not required)'));
+      identityRows.push(na('Right to work check (UK citizen â€” not required)'));
     } else {
       identityRows.push(rowFor('Right to work check', c.rightToWorkCheckPath));
       identityRows.push(rowFor('RTW expiry date', c.rightToWorkExpiry));
@@ -248,7 +248,7 @@
 
     var dbsRows;
     if (c.worksOutsideUK) {
-      dbsRows = [na('DBS not required — works outside UK')];
+      dbsRows = [na('DBS not required â€” works outside UK')];
     } else {
       dbsRows = [
         rowFor('DBS number', c.dbsNumber),
@@ -271,7 +271,7 @@
     var overseasRows;
     if (!c.livedAbroad) {
       overseasStatus = 'exempt';
-      overseasRows   = [na('Overseas check not required — has not lived abroad (last 5 yrs)')];
+      overseasRows   = [na('Overseas check not required â€” has not lived abroad (last 5 yrs)')];
     } else {
       overseasStatus = c.overseasCheckDocPath ? 'complete' : 'incomplete';
       overseasRows   = [
@@ -280,9 +280,9 @@
       ];
     }
 
-    // -- 5. Safeguarding Training (AEGIS 6.3 — initial training + annual update) -
+    // -- 5. Safeguarding Training (AEGIS 6.3 â€” initial training + annual update) -
     function fmtSgDate(d) {
-      if (!d) return '—';
+      if (!d) return 'â€”';
       var p = new Date(d);
       if (isNaN(p.getTime())) return d;
       var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -325,11 +325,11 @@
           return '<div class="training-req-row">' +
             '<div class="training-req-main">' +
               '<div class="training-req-title">' + escHtml(r.course.title) + '</div>' +
-              '<div class="training-req-rule">' + escHtml(r.requirementRule) + (r.course.code ? ' · ' + escHtml(r.course.code) : '') + '</div>' +
+              '<div class="training-req-rule">' + escHtml(r.requirementRule) + (r.course.code ? ' Â· ' + escHtml(r.course.code) : '') + '</div>' +
             '</div>' +
             '<div class="training-req-dates">' +
-              '<div><small>Completed</small><div>' + escHtml(r.completionDate || '—') + '</div></div>' +
-              '<div><small>Expires</small><div>' + escHtml(r.expiryDate || (r.course.repeatIntervalMonths ? '—' : 'N/A')) + '</div></div>' +
+              '<div><small>Completed</small><div>' + escHtml(r.completionDate || 'â€”') + '</div></div>' +
+              '<div><small>Expires</small><div>' + escHtml(r.expiryDate || (r.course.repeatIntervalMonths ? 'â€”' : 'N/A')) + '</div></div>' +
             '</div>' +
             '<span class="badge ' + trainingStatusBadgeClass(r.status) + '">' + escHtml(r.status) + '</span>' +
           '</div>';

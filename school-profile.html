@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>School Profile — Oxford Guardians Platform</title>
+    <title>School Profile â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -48,7 +48,7 @@
           <section class="main">
             <div class="toolbar">
               <div>
-                <span class="eyebrow" id="page-eyebrow">Operations — Schools</span>
+                <span class="eyebrow" id="page-eyebrow">Operations â€” Schools</span>
                 <h2 id="page-title">School Profile</h2>
               </div>
               <div class="toolbar-actions">
@@ -112,9 +112,9 @@
       var school = getSchoolById(id);
       if (!school) { window.location.href = 'school-directory.html'; }
 
-      document.getElementById('page-eyebrow').textContent = school.id + ' — ' + school.name;
+      document.getElementById('page-eyebrow').textContent = school.id + ' â€” ' + school.name;
       document.getElementById('page-title').textContent = school.name;
-      document.title = school.name + ' — Oxford Guardians Platform';
+      document.title = school.name + ' â€” Oxford Guardians Platform';
 
       document.getElementById('assign-students-link').href = 'school-assign-students.html?id=' + encodeURIComponent(school.id);
 

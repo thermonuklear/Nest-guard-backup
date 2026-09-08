@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Homestay Self-Declaration — Oxford Guardians Platform</title>
+  <title>Homestay Self-Declaration â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -118,11 +118,11 @@
 
         <div class="toolbar">
           <div style="display:flex;align-items:center;gap:14px;">
-            <div class="host-avatar-lg" id="toolbar-avatar">—</div>
+            <div class="host-avatar-lg" id="toolbar-avatar">â€”</div>
             <div>
-              <span class="eyebrow">Compliance — Homestay Self-Declaration</span>
-              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
-              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">—</p>
+              <span class="eyebrow">Compliance â€” Homestay Self-Declaration</span>
+              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loadingâ€¦</h2>
+              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">â€”</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -138,9 +138,9 @@
         <div class="create-panel" id="edit-panel">
           <form id="compliance-form" novalidate>
 
-            <div class="form-section-title">Section 1 — Homestay Self-Declaration (Appendix 5)</div>
+            <div class="form-section-title">Section 1 â€” Homestay Self-Declaration (Appendix 5)</div>
             <p style="font-size:0.88rem; color:#3b536e; margin:0 0 20px;">
-              AEGIS requires all host families to complete and sign Appendix 5 — the Homestay Self-Declaration — before students are placed. Upload the signed document and record the date of signing below.
+              AEGIS requires all host families to complete and sign Appendix 5 â€” the Homestay Self-Declaration â€” before students are placed. Upload the signed document and record the date of signing below.
             </p>
             <div class="form-grid">
 
@@ -157,7 +157,7 @@
 
             </div>
 
-            <div class="form-section-title" style="margin-top:28px;">Section 2 — AEGIS &amp; Statutory Inspection Cooperation Agreement (Standard 5.11.1)</div>
+            <div class="form-section-title" style="margin-top:28px;">Section 2 â€” AEGIS &amp; Statutory Inspection Cooperation Agreement (Standard 5.11.1)</div>
             <p style="font-size:0.88rem; color:#3b536e; margin:0 0 20px;">
               AEGIS Standard 5.11.1 requires host families to give signed consent to cooperate with AEGIS and statutory inspections of the homestay. Upload the signed agreement and record the date of signing below.
             </p>
@@ -176,7 +176,7 @@
 
             </div>
 
-            <div class="form-section-title" style="margin-top:28px;">Section 3 — Initial Pre-Placement Assessment Document (Standard 5.10.1)</div>
+            <div class="form-section-title" style="margin-top:28px;">Section 3 â€” Initial Pre-Placement Assessment Document (Standard 5.10.1)</div>
             <p style="font-size:0.88rem; color:#3b536e; margin:0 0 20px;">
               AEGIS Standard 5.10.1 requires evidence of an initial home suitability inspection before a homestay is approved to receive students. Upload the assessment document and record the date it was completed below.
             </p>
@@ -218,12 +218,12 @@
     document.getElementById('not-found').style.display  = 'block';
     document.getElementById('edit-panel').style.display = 'none';
   } else {
-    document.title = 'Self-Declaration — ' + host.firstName + ' ' + host.lastName + ' — Oxford Guardians';
+    document.title = 'Self-Declaration â€” ' + host.firstName + ' ' + host.lastName + ' â€” Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/host/' + host.id + '/compliance/declaration';
     document.getElementById('toolbar-name').textContent = host.firstName + ' ' + host.lastName;
     document.getElementById('toolbar-subtitle').textContent =
-      (host.status ? host.status.charAt(0).toUpperCase() + host.status.slice(1) : '—') +
-      ' host · ' + (host.capacityCurrent || 0) + ' of ' + (host.capacityMax || 3) + ' places occupied';
+      (host.status ? host.status.charAt(0).toUpperCase() + host.status.slice(1) : 'â€”') +
+      ' host Â· ' + (host.capacityCurrent || 0) + ' of ' + (host.capacityMax || 3) + ' places occupied';
     document.getElementById('toolbar-avatar').textContent =
       ((host.firstName||'').charAt(0) + (host.lastName||'').charAt(0)).toUpperCase();
     document.getElementById('back-link').href   = 'host-aegis-control-room.html?id=' + host.id;

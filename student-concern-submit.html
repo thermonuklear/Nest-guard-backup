@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Report Concern — Oxford Guardians Platform</title>
+    <title>Report Concern â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -60,7 +60,7 @@
         <h1>Private route to DSL.</h1>
 
         <div class="banner identity-banner">
-          <h4 style="margin:0;">Reporting for: <span id="identity-name">Loading…</span> — <span id="identity-school">—</span></h4>
+          <h4 style="margin:0;">Reporting for: <span id="identity-name">Loadingâ€¦</span> â€” <span id="identity-school">â€”</span></h4>
         </div>
 
         <div class="banner red" style="margin-top:18px;">
@@ -88,14 +88,14 @@
                 <label class="form-label" for="f-urgency">Urgency</label>
                 <select class="form-control" id="f-urgency" required>
                   <option>Need reply today</option>
-                  <option>Within 24–48 hours</option>
+                  <option>Within 24â€“48 hours</option>
                   <option>Urgent / Emergency</option>
                 </select>
               </div>
 
               <div class="form-field form-span-2">
                 <label class="form-label" for="f-details">What happened?</label>
-                <textarea class="form-control" id="f-details" required placeholder="Share as much as you feel comfortable with. There's no wrong way to write this — even a few lines helps Jay understand what's going on."></textarea>
+                <textarea class="form-control" id="f-details" required placeholder="Share as much as you feel comfortable with. There's no wrong way to write this â€” even a few lines helps Jay understand what's going on."></textarea>
               </div>
 
               <div class="form-field form-span-2">
@@ -124,7 +124,7 @@
       var student   = studentId ? getStudentById(studentId) : null;
 
       document.getElementById('identity-name').textContent   = student ? (student.firstName + ' ' + student.lastName) : (studentId || 'Unknown student');
-      document.getElementById('identity-school').textContent = student ? (student.school || 'School not on file') : '—';
+      document.getElementById('identity-school').textContent = student ? (student.school || 'School not on file') : 'â€”';
 
       if (studentId) {
         document.getElementById('back-portal-btn').href = 'student-portal.html?id=' + studentId;
@@ -153,7 +153,7 @@
           subjectId: studentId,
           tier: urgency === 'Urgent / Emergency' ? 'escalated' : 'DSL',
           category: 'Student Self-Report: ' + type,
-          title: 'Student portal report — ' + type,
+          title: 'Student portal report â€” ' + type,
           description: details + '\n\nUrgency: ' + urgency + '\nPreferred contact: ' + contactPref,
           source: 'Student Portal (Self-Report)',
           loggedDate: todayISO,

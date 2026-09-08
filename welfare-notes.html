@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welfare Notes — Oxford Guardians Platform</title>
+    <title>Welfare Notes â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -70,15 +70,15 @@
               <div>
                 <span class="eyebrow">Welfare timeline</span>
                 <h2>Every welfare contact is a record, not a memory</h2>
-                <p>AEGIS Standard 3.2 requires regular student check-ins with documented follow-up. This surface is where that actually happens—not buried inside student profiles.</p>
+                <p>AEGIS Standard 3.2 requires regular student check-ins with documented follow-up. This surface is where that actually happensâ€”not buried inside student profiles.</p>
               </div>
               <div class="toolbar-actions"><a class="button-alt" href="students.html">Filter by student</a><a class="button-alt" href="concerns-low-level.html">Low-level concerns</a><a class="button" href="welfare-note-create.html">Log welfare note</a></div>
             </div>
             <div class="metrics">
               <article class="metric featured"><h4>Welfare check cadence</h4><div class="metric-value">Weekly</div><p class="metric-meta">All active boarding students contacted minimum weekly during term / homestay stays trigger same-day check-in.</p></article>
-              <article class="metric"><h4>Open follow-ups</h4><div class="metric-value" id="metric-open-followups">—</div><p class="metric-meta">Contacts awaiting next action or resolution</p></article>
-              <article class="metric"><h4>Notes this month</h4><div class="metric-value" id="metric-notes-month">—</div><p class="metric-meta">Term is busy. Travel season generates additional welfare contacts.</p></article>
-              <article class="metric"><h4>Escalated to DSL</h4><div class="metric-value" id="metric-escalated-dsl">—</div><p class="metric-meta">Formal concerns raised directly from a welfare contact</p></article>
+              <article class="metric"><h4>Open follow-ups</h4><div class="metric-value" id="metric-open-followups">â€”</div><p class="metric-meta">Contacts awaiting next action or resolution</p></article>
+              <article class="metric"><h4>Notes this month</h4><div class="metric-value" id="metric-notes-month">â€”</div><p class="metric-meta">Term is busy. Travel season generates additional welfare contacts.</p></article>
+              <article class="metric"><h4>Escalated to DSL</h4><div class="metric-value" id="metric-escalated-dsl">â€”</div><p class="metric-meta">Formal concerns raised directly from a welfare contact</p></article>
             </div>
             <div class="note brutal">
               <h4>Brutal product note</h4>
@@ -107,14 +107,14 @@
       }
 
       function fmtDate(iso) {
-        if (!iso) return '—';
+        if (!iso) return 'â€”';
         var d = new Date(iso);
         if (isNaN(d.getTime())) return iso;
         var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         return d.getDate() + ' ' + M[d.getMonth()] + ' ' + d.getFullYear();
       }
 
-      // Welfare log `details` is a structured "Label: value" free-text block —
+      // Welfare log `details` is a structured "Label: value" free-text block â€”
       // pull specific fields back out of it for the table columns.
       function field(details, label) {
         if (!details) return '';
@@ -190,7 +190,7 @@
 
           var ownerCell = owner
             ? esc(owner) + (method ? '<small>' + esc(method) + '</small>' : '')
-            : (log.type === 'check-in' ? 'Student self check-in' : '—');
+            : (log.type === 'check-in' ? 'Student self check-in' : 'â€”');
 
           return '<tr>' +
             '<td><strong>' + esc(student.name) + '</strong>' + (student.school ? '<small>' + esc(student.school) + '</small>' : '') + '</td>' +

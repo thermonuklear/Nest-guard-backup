@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overseas History — Oxford Guardians Platform</title>
+  <title>Overseas History â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -99,11 +99,11 @@
 
         <div class="toolbar">
           <div style="display:flex;align-items:center;gap:14px;">
-            <div class="staff-avatar-lg" id="toolbar-avatar">—</div>
+            <div class="staff-avatar-lg" id="toolbar-avatar">â€”</div>
             <div>
-              <span class="eyebrow">Compliance — Overseas History</span>
-              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
-              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:var(--ink-2);">—</p>
+              <span class="eyebrow">Compliance â€” Overseas History</span>
+              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loadingâ€¦</h2>
+              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:var(--ink-2);">â€”</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -128,8 +128,8 @@
               <div class="field">
                 <small>Lived abroad in last 5 years?</small>
                 <select class="field-select" id="c-lived-abroad">
-                  <option value="false">No — overseas check not required</option>
-                  <option value="true">Yes — overseas check required</option>
+                  <option value="false">No â€” overseas check not required</option>
+                  <option value="true">Yes â€” overseas check required</option>
                 </select>
               </div>
 
@@ -164,10 +164,10 @@
     document.getElementById('not-found').style.display  = 'block';
     document.getElementById('edit-panel').style.display = 'none';
   } else {
-    document.title = 'Overseas History — ' + member.firstName + ' ' + member.lastName + ' — Oxford Guardians';
+    document.title = 'Overseas History â€” ' + member.firstName + ' ' + member.lastName + ' â€” Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/staff/' + member.id + '/compliance/overseas';
     document.getElementById('toolbar-name').textContent = member.firstName + ' ' + member.lastName;
-    document.getElementById('toolbar-subtitle').textContent = (member.role || '—') + ' · ' + (member.title || '—');
+    document.getElementById('toolbar-subtitle').textContent = (member.role || 'â€”') + ' Â· ' + (member.title || 'â€”');
     document.getElementById('toolbar-avatar').textContent =
       ((member.firstName||'').charAt(0) + (member.lastName||'').charAt(0)).toUpperCase();
     document.getElementById('back-link').href   = 'staff-aegis-control-room.html?id=' + member.id;

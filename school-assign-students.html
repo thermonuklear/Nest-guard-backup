@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Assign Students — Oxford Guardians Platform</title>
+    <title>Assign Students â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -65,7 +65,7 @@
           <section class="main">
             <div class="toolbar">
               <div>
-                <span class="eyebrow">Operations — Schools</span>
+                <span class="eyebrow">Operations â€” Schools</span>
                 <h2 id="page-title">Assign Students</h2>
                 <p>Tick students to enrol them at this school. Unticking a student who is currently enrolled here removes them from this school (they become unassigned, not deleted).</p>
               </div>
@@ -85,7 +85,7 @@
                 <span><span class="legend-swatch" style="background:var(--red-soft);border:1px solid var(--red);"></span> Already has a school assigned</span>
                 <span><span class="legend-swatch" style="background:var(--green-soft);border:1px solid var(--green);"></span> Unassigned</span>
               </div>
-              <input type="text" id="student-search" class="field-input" style="max-width:320px;margin-bottom:14px;" placeholder="Search students by name…" />
+              <input type="text" id="student-search" class="field-input" style="max-width:320px;margin-bottom:14px;" placeholder="Search students by nameâ€¦" />
               <div class="table-wrap">
                 <table>
                   <thead>
@@ -118,8 +118,8 @@
         document.getElementById('not-found').style.display = 'block';
         document.getElementById('assign-panel').style.display = 'none';
       } else {
-        document.title = 'Assign Students — ' + school.name + ' — Oxford Guardians Platform';
-        document.getElementById('page-title').textContent = 'Assign Students — ' + school.name;
+        document.title = 'Assign Students â€” ' + school.name + ' â€” Oxford Guardians Platform';
+        document.getElementById('page-title').textContent = 'Assign Students â€” ' + school.name;
 
         var profileUrl = 'school-profile.html?id=' + encodeURIComponent(school.id);
         document.getElementById('back-link').href = profileUrl;
@@ -171,13 +171,13 @@
             return '<tr style="' + rowStyle + '">' +
               '<td><input type="checkbox" class="assign-checkbox" data-id="' + esc(s.id) + '"' + (isChecked(s) ? ' checked' : '') + ' /></td>' +
               '<td><strong>' + esc(name.trim()) + '</strong></td>' +
-              '<td>' + esc(s.schoolYear || '—') + '</td>' +
+              '<td>' + esc(s.schoolYear || 'â€”') + '</td>' +
               '<td>' + badge + '</td>' +
             '</tr>';
           }).join('');
         }
 
-        // Event delegation — survives tbody re-renders from search filtering.
+        // Event delegation â€” survives tbody re-renders from search filtering.
         document.getElementById('assign-tbody').addEventListener('change', function (e) {
           if (e.target.classList.contains('assign-checkbox')) {
             overrides[e.target.getAttribute('data-id')] = e.target.checked;

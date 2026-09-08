@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DBS Check — Oxford Guardians Platform</title>
+  <title>DBS Check â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -122,11 +122,11 @@
 
         <div class="toolbar">
           <div style="display:flex;align-items:center;gap:14px;">
-            <div class="host-avatar-lg" id="toolbar-avatar">—</div>
+            <div class="host-avatar-lg" id="toolbar-avatar">â€”</div>
             <div>
-              <span class="eyebrow">Compliance — DBS Check</span>
-              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
-              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">—</p>
+              <span class="eyebrow">Compliance â€” DBS Check</span>
+              <h2 id="toolbar-name" style="margin:2px 0 4px;">Loadingâ€¦</h2>
+              <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:#3b536e;">â€”</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -204,12 +204,12 @@
     document.getElementById('not-found').style.display  = 'block';
     document.getElementById('edit-panel').style.display = 'none';
   } else {
-    document.title = 'DBS Check — ' + host.firstName + ' ' + host.lastName + ' — Oxford Guardians';
+    document.title = 'DBS Check â€” ' + host.firstName + ' ' + host.lastName + ' â€” Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/host/' + host.id + '/compliance/dbs';
     document.getElementById('toolbar-name').textContent = host.firstName + ' ' + host.lastName;
     document.getElementById('toolbar-subtitle').textContent =
-      (host.status ? host.status.charAt(0).toUpperCase() + host.status.slice(1) : '—') +
-      ' host · ' + (host.capacityCurrent || 0) + ' of ' + (host.capacityMax || 3) + ' places occupied';
+      (host.status ? host.status.charAt(0).toUpperCase() + host.status.slice(1) : 'â€”') +
+      ' host Â· ' + (host.capacityCurrent || 0) + ' of ' + (host.capacityMax || 3) + ' places occupied';
     document.getElementById('toolbar-avatar').textContent =
       ((host.firstName||'').charAt(0) + (host.lastName||'').charAt(0)).toUpperCase();
     document.getElementById('back-link').href   = 'host-aegis-control-room.html?id=' + host.id;

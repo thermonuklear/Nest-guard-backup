@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create Transport — Oxford Guardians Platform</title>
+    <title>Create Transport â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -356,7 +356,7 @@
             <div>
               <span class="eyebrow">Transportation</span>
               <h2>Create transport record</h2>
-              <p>Log a journey — exeat, holiday, or airport transfer. Required fields are marked with *.</p>
+              <p>Log a journey â€” exeat, holiday, or airport transfer. Required fields are marked with *.</p>
             </div>
             <div class="toolbar-actions">
               <a class="button-alt" href="transportation.html">Cancel</a>
@@ -369,7 +369,7 @@
               <!-- Auto-generated ID -->
               <div class="id-chip">
                 <span>Transport ID</span>
-                <span id="transport-id-display">—</span>
+                <span id="transport-id-display">â€”</span>
               </div>
               <input type="hidden" id="transport-id" />
 
@@ -417,13 +417,13 @@
                   <div class="field" id="field-student">
                     <small>Name of Student *</small>
                     <select class="field-select" id="student-name">
-                      <option value="">Select a student…</option>
+                      <option value="">Select a studentâ€¦</option>
                     </select>
                   </div>
                   <div class="field" id="field-driver">
                     <small>Name of Driver</small>
                     <select class="field-select" id="driver-name">
-                      <option value="">Select a driver…</option>
+                      <option value="">Select a driverâ€¦</option>
                     </select>
                   </div>
                   <div class="field form-span-2">
@@ -447,14 +447,14 @@
                 <div class="form-section-title">Financials</div>
                 <div class="form-grid">
                   <div class="field">
-                    <small>Cost (£)</small>
-                    <input class="field-input" type="text" id="cost" placeholder="e.g. £34.10" />
-                    <p class="field-hint">Enter as £34.10 or 34.10</p>
+                    <small>Cost (Â£)</small>
+                    <input class="field-input" type="text" id="cost" placeholder="e.g. Â£34.10" />
+                    <p class="field-hint">Enter as Â£34.10 or 34.10</p>
                   </div>
                   <div class="field">
-                    <small>Revenue (£)</small>
-                    <input class="field-input" type="text" id="revenue" placeholder="e.g. £52.00" />
-                    <p class="field-hint">Enter as £52.00 or 52.00</p>
+                    <small>Revenue (Â£)</small>
+                    <input class="field-input" type="text" id="revenue" placeholder="e.g. Â£52.00" />
+                    <p class="field-hint">Enter as Â£52.00 or 52.00</p>
                   </div>
                   <div class="field form-span-2" id="field-service-type">
                     <label class="field-label" for="service-type">Type of Service</label>
@@ -548,8 +548,8 @@
         document.getElementById('passengers').value = transport.passengers || '';
         document.getElementById('luggage').value = transport.luggage || '';
         document.getElementById('miles').value = transport.miles || '';
-        document.getElementById('cost').value = (transport.cost || '').replace('£', '');
-        document.getElementById('revenue').value = (transport.revenue || '').replace('£', '');
+        document.getElementById('cost').value = (transport.cost || '').replace('Â£', '');
+        document.getElementById('revenue').value = (transport.revenue || '').replace('Â£', '');
         document.getElementById('service-type').value = transport.serviceType || 'Chargeable';
         // Load existing screenshot if one exists
         if (transport.parentConfirmation === 'Confirmed') {
@@ -606,11 +606,11 @@
       return t || '';
     }
 
-    // -- Ensure £ prefix -------------------------------------------------------
+    // -- Ensure Â£ prefix -------------------------------------------------------
     function fmtMoney(raw) {
       if (!raw) return '';
       raw = raw.trim();
-      return raw.charAt(0) === '£' ? raw : '£' + raw;
+      return raw.charAt(0) === 'Â£' ? raw : 'Â£' + raw;
     }
 
     // -- Form submission --------------------------------------------------------

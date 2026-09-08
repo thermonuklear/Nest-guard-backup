@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student Portal ó Oxford Guardians Platform</title>
+    <title>Student Portal ‚Äî Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -81,7 +81,7 @@
         </div>
         <aside class="note brutal">
           <h4>Brutal product note</h4>
-          <p>The ìone-tap emergency contactî in the PRD is not a decoration. It should dominate the mobile viewport and work on the device students actually use.</p>
+          <p>The ‚Äúone-tap emergency contact‚Äù in the PRD is not a decoration. It should dominate the mobile viewport and work on the device students actually use.</p>
         </aside>
       </section>
 
@@ -99,11 +99,11 @@
               </div>
               <div class="mini-card">
                 <h4>Your guardian</h4>
-                <p id="guardian-card-body">LoadingÖ</p>
+                <p id="guardian-card-body">Loading‚Ä¶</p>
               </div>
               <div class="mini-card">
                 <h4>Your host family</h4>
-                <p id="host-card-body">LoadingÖ</p>
+                <p id="host-card-body">Loading‚Ä¶</p>
                 <div class="mini-card-actions" id="host-card-actions" style="margin-top:10px; display:none;">
                   <a class="button-alt" id="student-view-host-btn" href="#" target="_blank" style="font-size:0.78rem; padding:5px 10px; width:100%; text-align:center; display:block;">
                     Meet Your Host Family
@@ -112,8 +112,8 @@
               </div>
               <div class="mini-card">
                 <h4>Welfare check-in</h4>
-                <p id="checkin-card-body">LoadingÖ</p>
-                <span class="badge" id="checkin-badge" style="margin-top:10px;">ó</span>
+                <p id="checkin-card-body">Loading‚Ä¶</p>
+                <span class="badge" id="checkin-badge" style="margin-top:10px;">‚Äî</span>
                 <div class="mini-card-actions">
                   <a class="button" id="checkin-btn" href="student-checkin-submit.html">Check in</a>
                 </div>
@@ -214,7 +214,7 @@
           var start = new Date(next.startDate);
           var end   = next.returnDate ? new Date(next.returnDate) : null;
           bookingLine = (next.breakType || 'Stay') + ' booked for ' +
-            fmtShort(start) + (end && !isNaN(end.getTime()) ? 'ñ' + fmtShort(end) : '');
+            fmtShort(start) + (end && !isNaN(end.getTime()) ? '‚Äì' + fmtShort(end) : '');
         }
 
         body.innerHTML =

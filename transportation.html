@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Past Transportation — Oxford Guardians</title>
+    <title>Past Transportation â€” Oxford Guardians</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -441,7 +441,7 @@
               <div>
                 <span class="eyebrow">Operations</span>
                 <h2>Past Transportation</h2>
-                <p>Completed journeys — student, driver, route, mileage, and parent confirmation at a glance.</p>
+                <p>Completed journeys â€” student, driver, route, mileage, and parent confirmation at a glance.</p>
               </div>
               <div class="toolbar-actions">
                 <a class="button-alt" href="travel.html">Travel dashboard</a>
@@ -457,7 +457,7 @@
                   class="filter-input"
                   type="text"
                   id="search-input"
-                  placeholder="Search student, driver, or route…"
+                  placeholder="Search student, driver, or routeâ€¦"
                   autocomplete="off"
                 />
               </div>
@@ -470,7 +470,7 @@
               </div>
               <div class="filter-field">
                 <small>Showing</small>
-                <strong id="result-label" style="font-size:0.9rem;font-weight:700;color:#0f2340;display:block;margin-top:6px;">— journeys</strong>
+                <strong id="result-label" style="font-size:0.9rem;font-weight:700;color:#0f2340;display:block;margin-top:6px;">â€” journeys</strong>
               </div>
             </div>
 
@@ -544,7 +544,7 @@
       }
 
       function confirmationBadge(value) {
-        if (!value) return '<span class="badge-not-required">—</span>';
+        if (!value) return '<span class="badge-not-required">â€”</span>';
         var v = value.toLowerCase();
         if (v === 'confirmed')    return '<span class="badge-confirmed">Confirmed</span>';
         if (v === 'awaiting')     return '<span class="badge-awaiting">Awaiting</span>';
@@ -553,7 +553,7 @@
 
       // Shorten a location string to just the first comma-delimited segment
       function shortLocation(loc) {
-        if (!loc) return '—';
+        if (!loc) return 'â€”';
         return loc.split(',')[0].trim();
       }
 
@@ -569,18 +569,18 @@
 
         tbody.innerHTML = data.map(function (t) {
           return '<tr>' +
-            '<td><a class="transport-id-link" href="#">' + (t.id || '—') + '</a></td>' +
-            '<td>' + (t.date || '—') + '</td>' +
-            '<td>' + (t.time || '—') + '</td>' +
-            '<td>' + (t.studentName || '—') + '</td>' +
-            '<td>' + (t.driverName || '—') + '</td>' +
-            '<td>' + (t.startPoint || '—') + '</td>' +
-            '<td>' + (t.destination || '—') + '</td>' +
-            '<td>' + (t.passengers != null ? t.passengers : '—') + '</td>' +
-            '<td>' + (t.luggage != null ? t.luggage : '—') + '</td>' +
-            '<td>' + (t.miles != null ? t.miles : '—') + '</td>' +
-            '<td>' + (t.cost || '—') + '</td>' +
-            '<td>' + (t.revenue || '—') + '</td>' +
+            '<td><a class="transport-id-link" href="#">' + (t.id || 'â€”') + '</a></td>' +
+            '<td>' + (t.date || 'â€”') + '</td>' +
+            '<td>' + (t.time || 'â€”') + '</td>' +
+            '<td>' + (t.studentName || 'â€”') + '</td>' +
+            '<td>' + (t.driverName || 'â€”') + '</td>' +
+            '<td>' + (t.startPoint || 'â€”') + '</td>' +
+            '<td>' + (t.destination || 'â€”') + '</td>' +
+            '<td>' + (t.passengers != null ? t.passengers : 'â€”') + '</td>' +
+            '<td>' + (t.luggage != null ? t.luggage : 'â€”') + '</td>' +
+            '<td>' + (t.miles != null ? t.miles : 'â€”') + '</td>' +
+            '<td>' + (t.cost || 'â€”') + '</td>' +
+            '<td>' + (t.revenue || 'â€”') + '</td>' +
             '<td>' + confirmationBadge(t.parentConfirmation) + '</td>' +
             '<td style="white-space:nowrap;">' +
               '<a class="button-alt" href="travel-create.html?id=' + t.id + '" style="padding:4px 8px; font-size:0.75rem; color:#0f2340; border-color:#d5dce8; text-decoration:none; margin-right:6px;">?? Edit</a>' +

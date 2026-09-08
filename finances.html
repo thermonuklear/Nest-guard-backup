@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Finances — Oxford Guardians Platform</title>
+  <title>Finances â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -138,7 +138,7 @@
       background: #edf2f8 !important;
     }
 
-    /* -- 2×2 grid -- */
+    /* -- 2Ã—2 grid -- */
     .finance-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -514,7 +514,7 @@
             <div>
               <span class="eyebrow">Finance management</span>
               <h2>Budget, invoices, and upcoming expenditure.</h2>
-              <p>Track pending and paid invoices, monitor budget health, and plan ahead for known future costs — all in
+              <p>Track pending and paid invoices, monitor budget health, and plan ahead for known future costs â€” all in
                 one place.</p>
             </div>
           </div>
@@ -526,23 +526,23 @@
               <p>Total funds currently held in escrow on behalf of students across all active held-fund accounts.</p>
             </div>
             <div class="held-funds-value-block">
-              <div class="held-funds-value" id="held-funds-total">£0.00</div>
-              <div class="held-funds-sub" id="held-funds-sub">— accounts</div>
+              <div class="held-funds-value" id="held-funds-total">Â£0.00</div>
+              <div class="held-funds-sub" id="held-funds-sub">â€” accounts</div>
             </div>
             <a class="button-alt" href="student-funds.html">View Student Held Funds Register ?</a>
           </div>
 
-          <!-- 2×2 Finance grid -->
+          <!-- 2Ã—2 Finance grid -->
           <div class="finance-grid">
 
             <!-- TOP-LEFT: Invoices to Pay -->
             <div class="finance-card">
               <div class="finance-card-header">
                 <h3>Invoices to Pay</h3>
-                <span id="pending-count">—</span>
+                <span id="pending-count">â€”</span>
               </div>
               <div class="finance-card-body" id="pending-list">
-                <div class="empty-state">Loading…</div>
+                <div class="empty-state">Loadingâ€¦</div>
               </div>
             </div>
 
@@ -550,10 +550,10 @@
             <div class="finance-card">
               <div class="finance-card-header">
                 <h3>Finance Alert</h3>
-                <span id="budget-pct-label">—</span>
+                <span id="budget-pct-label">â€”</span>
               </div>
               <div class="finance-card-body budget-body" id="budget-body">
-                <div class="empty-state">Loading…</div>
+                <div class="empty-state">Loadingâ€¦</div>
               </div>
             </div>
 
@@ -562,10 +562,10 @@
               <div class="finance-card-header">
                 <h3>Invoices Paid <span style="font-size:0.8em;opacity:0.7;font-weight:500;">(VAT Reclaimable)</span>
                 </h3>
-                <span id="paid-count">—</span>
+                <span id="paid-count">â€”</span>
               </div>
               <div class="finance-card-body" id="paid-list">
-                <div class="empty-state">Loading…</div>
+                <div class="empty-state">Loadingâ€¦</div>
               </div>
             </div>
 
@@ -573,10 +573,10 @@
             <div class="finance-card">
               <div class="finance-card-header">
                 <h3>Upcoming Revenue</h3>
-                <span id="upcoming-count">—</span>
+                <span id="upcoming-count">â€”</span>
               </div>
               <div class="finance-card-body" id="upcoming-list">
-                <div class="empty-state">Loading…</div>
+                <div class="empty-state">Loadingâ€¦</div>
               </div>
             </div>
 
@@ -592,7 +592,7 @@
   <script src="assets/db.js"></script>
   <script>
     function fmt(n) {
-      return '£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return 'Â£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     function formatGB(dateStr) {
@@ -675,7 +675,7 @@
       paidEvents = paidEvents.slice(0, 4);
       if (!paidEvents.length) { list.innerHTML = '<div class="empty-state">No paid invoices.</div>'; return; }
       list.innerHTML = paidEvents.map(function (inv) {
-        var vatStr = inv.vat ? '£' + inv.vat + ' VAT' : '';
+        var vatStr = inv.vat ? 'Â£' + inv.vat + ' VAT' : '';
         return '<div class="invoice-row">' +
           '<a href="finances-tracker.html?focus=' + (inv.id || '') + '" style="display:flex;width:100%;text-decoration:none;color:inherit;justify-content:space-between;align-items:flex-start;gap:12px;">' +
           '<div class="invoice-info">' +

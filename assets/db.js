@@ -1,4 +1,4 @@
-var OG_STORAGE_KEY = 'og_students';
+﻿var OG_STORAGE_KEY = 'og_students';
 var OG_TRAVEL_TODOS_KEY = 'og_travel_todos';
 var OG_INCIDENTS_KEY = 'og_incidents';
 var OG_STAFF_KEY = 'og_staff';
@@ -2930,29 +2930,6 @@ var initialExeats = [
     driverContact: '',
     schoolCalendarLabel: 'Rugby Spring Term'
   },
-  {
-    id: 'EX-005',
-    breakType: 'Easter Holiday',
-    studentId: 'STU61100',
-    studentName: 'Amara Osei',
-    schoolName: 'Magdalen College School',
-    startDate: '2027-03-22',
-    duration: 23,
-    returnDate: '2027-04-14',
-    notes: 'Requires homestay for the first week before flying.',
-    parentConfirmation: 'No — family self-managing, no help required',
-    prepDeadline: '2027-03-10',
-    toDo: 'Verify flight details for safeguarding',
-    homestayInfo: 'Patel Family (first week only)',
-    hostId: '',
-    hostName: 'Patel Family',
-    hostContact: '',
-    transportNotes: 'Heathrow T3',
-    driverId: '',
-    driverName: '',
-    driverContact: '',
-    schoolCalendarLabel: 'MCS Term Dates'
-  }
 ];
 
 function initExeatDB() {
@@ -5718,3 +5695,4 @@ window.OG_DB = {
 };
 
 syncDenormalizedFields();
+

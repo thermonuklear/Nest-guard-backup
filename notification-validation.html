@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Data Quality Audit — Oxford Guardians Platform</title>
+    <title>Data Quality Audit â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -144,19 +144,19 @@
 
               <div class="audit-card" id="card-dbs-expiry">
                 <span class="audit-card-label">Missing DBS Expiry Date</span>
-                <span class="audit-value" id="val-dbs-expiry">—</span>
+                <span class="audit-value" id="val-dbs-expiry">â€”</span>
                 <span class="audit-card-desc">Staff, driver &amp; host records with no DBS expiry date on file</span>
               </div>
 
               <div class="audit-card" id="card-rtw-expiry">
                 <span class="audit-card-label">Missing RTW Expiry Date</span>
-                <span class="audit-value" id="val-rtw-expiry">—</span>
+                <span class="audit-value" id="val-rtw-expiry">â€”</span>
                 <span class="audit-card-desc">Non-citizen records with no right-to-work expiry date set</span>
               </div>
 
               <div class="audit-card audit-total-card">
                 <span class="audit-card-label">Total Compliance Records</span>
-                <span class="audit-value" id="val-compliance-total">—</span>
+                <span class="audit-value" id="val-compliance-total">â€”</span>
                 <span class="audit-card-desc">Staff, drivers &amp; hosts audited in this run</span>
               </div>
 
@@ -168,25 +168,25 @@
 
               <div class="audit-card" id="card-passport">
                 <span class="audit-card-label">Missing Passport / BRP</span>
-                <span class="audit-value" id="val-passport">—</span>
+                <span class="audit-value" id="val-passport">â€”</span>
                 <span class="audit-card-desc">Students without a passport or BRP document on file</span>
               </div>
 
               <div class="audit-card" id="card-uk-contacts">
                 <span class="audit-card-label">Missing UK Contacts</span>
-                <span class="audit-value" id="val-uk-contacts">—</span>
+                <span class="audit-value" id="val-uk-contacts">â€”</span>
                 <span class="audit-card-desc">Students with no UK emergency contact recorded</span>
               </div>
 
               <div class="audit-card" id="card-medical-cover">
                 <span class="audit-card-label">Missing Medical Cover</span>
-                <span class="audit-value" id="val-medical-cover">—</span>
+                <span class="audit-value" id="val-medical-cover">â€”</span>
                 <span class="audit-card-desc">Students with no medical cover information on file</span>
               </div>
 
               <div class="audit-card audit-total-card">
                 <span class="audit-card-label">Total Students</span>
-                <span class="audit-value" id="val-students-total">—</span>
+                <span class="audit-value" id="val-students-total">â€”</span>
                 <span class="audit-card-desc">Students currently in the system</span>
               </div>
 
@@ -213,13 +213,13 @@
 
       var complianceRecords = staff.concat(drivers).concat(hosts);
 
-      // Missing DBS expiry — record works in UK and no dbsExpiry is set
+      // Missing DBS expiry â€” record works in UK and no dbsExpiry is set
       var missingDbsExpiry = complianceRecords.filter(function (p) {
         var c = p.compliance;
         return c && !c.worksOutsideUK && !c.dbsExpiry;
       }).length;
 
-      // Missing RTW expiry — non-citizen, works in UK, no rightToWorkExpiry set
+      // Missing RTW expiry â€” non-citizen, works in UK, no rightToWorkExpiry set
       var missingRtwExpiry = complianceRecords.filter(function (p) {
         var c = p.compliance;
         return c && !c.isCitizen && !c.worksOutsideUK && !c.rightToWorkExpiry;

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weekly Operations Report — Oxford Guardians Platform</title>
+    <title>Weekly Operations Report â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -275,7 +275,7 @@
               </div>
               <div class="toolbar-actions">
                 <select id="report-history-dropdown">
-                  <option value="">Select past report…</option>
+                  <option value="">Select past reportâ€¦</option>
                 </select>
                 <button class="button-alt" id="btn-autofill">Auto-Fill Live Data</button>
                 <button class="button" id="btn-save">Save Report</button>
@@ -507,9 +507,9 @@
                   <thead>
                     <tr>
                       <th>Category</th>
-                      <th style="width:16%">Budgeted (£)</th>
-                      <th style="width:16%">Spent this week (£)</th>
-                      <th style="width:16%">Remaining (£)</th>
+                      <th style="width:16%">Budgeted (Â£)</th>
+                      <th style="width:16%">Spent this week (Â£)</th>
+                      <th style="width:16%">Remaining (Â£)</th>
                       <th style="width:22%">Notes</th>
                     </tr>
                   </thead>
@@ -563,7 +563,7 @@
               <!-- 6. Notes / Recommendations -->
               <div class="report-section">
                 <h3>Notes / Recommendations</h3>
-                <textarea class="field-textarea" name="notes-text" rows="6" placeholder="Enter any notes, observations, or recommendations for this reporting period…"></textarea>
+                <textarea class="field-textarea" name="notes-text" rows="6" placeholder="Enter any notes, observations, or recommendations for this reporting periodâ€¦"></textarea>
               </div>
 
             </div><!-- /#main-content -->
@@ -688,7 +688,7 @@
       // 4. Week commencing
       setField('sum-week', fmt(wb.start));
 
-      // 5. Budget management — categorise events and compute spend
+      // 5. Budget management â€” categorise events and compute spend
       var events = getFinanceEvents();
       var totalAnnualBudget = (typeof FINANCE_BUDGET !== 'undefined') ? FINANCE_BUDGET : 25000;
 
@@ -720,17 +720,17 @@
         var spent     = weekSpend[cat]   || 0;
         var remaining = Math.max(0, alloc - (allTimeSpend[cat] || 0));
         setField('bud-' + n + '-cat',       cat);
-        setField('bud-' + n + '-budgeted',  '£' + alloc.toLocaleString());
-        setField('bud-' + n + '-spent',     '£' + spent.toLocaleString());
-        setField('bud-' + n + '-remaining', '£' + remaining.toLocaleString());
+        setField('bud-' + n + '-budgeted',  'Â£' + alloc.toLocaleString());
+        setField('bud-' + n + '-spent',     'Â£' + spent.toLocaleString());
+        setField('bud-' + n + '-remaining', 'Â£' + remaining.toLocaleString());
         totalBudgeted  += alloc;
         totalSpentWeek += spent;
         totalRemaining += remaining;
       });
 
-      setField('bud-total-budgeted',  '£' + totalBudgeted.toLocaleString());
-      setField('bud-total-spent',     '£' + totalSpentWeek.toLocaleString());
-      setField('bud-total-remaining', '£' + totalRemaining.toLocaleString());
+      setField('bud-total-budgeted',  'Â£' + totalBudgeted.toLocaleString());
+      setField('bud-total-spent',     'Â£' + totalSpentWeek.toLocaleString());
+      setField('bud-total-remaining', 'Â£' + totalRemaining.toLocaleString());
 
       // 6. Deadlines in the next 7 days (finance invoices + upcoming spend + revenue events)
       var now = new Date(); now.setHours(0, 0, 0, 0);
@@ -743,10 +743,10 @@
         if (inRange(inv.due, now, plus7)) {
           deadlines.push({
             date:     fmt(new Date(inv.due)),
-            item:     'Invoice ' + inv.id + ' — ' + (inv.desc || ''),
+            item:     'Invoice ' + inv.id + ' â€” ' + (inv.desc || ''),
             owner:    inv.vendor || '',
             priority: (inv.amount || 0) >= 500 ? 'High' : 'Med',
-            notes:    '£' + parseFloat(inv.amount || 0).toLocaleString()
+            notes:    'Â£' + parseFloat(inv.amount || 0).toLocaleString()
           });
         }
       });
@@ -759,7 +759,7 @@
             item:     u.item || '',
             owner:    'Finance',
             priority: (u.amount || 0) >= 1000 ? 'High' : 'Med',
-            notes:    '£' + parseFloat(u.amount || 0).toLocaleString()
+            notes:    'Â£' + parseFloat(u.amount || 0).toLocaleString()
           });
         }
       });
@@ -772,7 +772,7 @@
             item:     e.description || e.item || '',
             owner:    e.owner || '',
             priority: 'Med',
-            notes:    e.amount ? '£' + parseFloat(e.amount).toLocaleString() : ''
+            notes:    e.amount ? 'Â£' + parseFloat(e.amount).toLocaleString() : ''
           });
         }
       });
@@ -799,7 +799,7 @@
       });
 
       var now    = new Date();
-      var weekId = 'Week ' + getISOWeek(now) + ' — ' + MONTHS[now.getMonth()] + ' ' + now.getFullYear();
+      var weekId = 'Week ' + getISOWeek(now) + ' â€” ' + MONTHS[now.getMonth()] + ' ' + now.getFullYear();
 
       var report = {
         id:      Date.now(),
@@ -814,7 +814,7 @@
       localStorage.setItem('og_reports', JSON.stringify(reports));
 
       loadHistory();
-      showToast('Saved — ' + weekId);
+      showToast('Saved â€” ' + weekId);
     }
 
     // -- loadHistory -------------------------------------------------------------
@@ -834,7 +834,7 @@
       var placeholder = document.createElement('option');
       placeholder.value = '';
       placeholder.textContent = reports.length
-        ? 'Select past report… (' + reports.length + ' saved)'
+        ? 'Select past reportâ€¦ (' + reports.length + ' saved)'
         : 'No saved reports yet';
       sel.appendChild(placeholder);
 

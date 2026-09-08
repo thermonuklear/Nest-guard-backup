@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="page-title">Log Accident &amp; Incident — Oxford Guardians Platform</title>
+    <title id="page-title">Log Accident &amp; Incident â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -39,15 +39,15 @@
           <div id="person-select-container">
             <label for="field-person" id="person-label">Student Involved *</label>
             <select id="field-person">
-              <option value="">— Select student —</option>
+              <option value="">â€” Select student â€”</option>
             </select>
-            <input type="text" id="field-custom-person" placeholder="Enter person name…" style="display:none; margin-top:6px;" />
+            <input type="text" id="field-custom-person" placeholder="Enter person nameâ€¦" style="display:none; margin-top:6px;" />
           </div>
 
           <div id="homestay-row">
             <label for="field-homestay">Associated Homestay</label>
             <select id="field-homestay">
-              <option value="">— Optional / Not Applicable —</option>
+              <option value="">â€” Optional / Not Applicable â€”</option>
             </select>
           </div>
 
@@ -86,26 +86,26 @@
           <div>
             <label for="field-severity">Severity Level</label>
             <select id="field-severity">
-              <option value="Minor — first aid only" selected>Minor — first aid only</option>
-              <option value="Moderate — monitoring needed">Moderate — monitoring needed</option>
-              <option value="Significant — medical attention required">Significant — medical attention required</option>
-              <option value="Serious — emergency services involved">Serious — emergency services involved</option>
+              <option value="Minor â€” first aid only" selected>Minor â€” first aid only</option>
+              <option value="Moderate â€” monitoring needed">Moderate â€” monitoring needed</option>
+              <option value="Significant â€” medical attention required">Significant â€” medical attention required</option>
+              <option value="Serious â€” emergency services involved">Serious â€” emergency services involved</option>
             </select>
           </div>
 
           <div class="form-span-2" id="medication-details-row">
             <label for="field-medication">Medication Details (AEGIS Standard 3.4.4)</label>
-            <textarea class="textarea-box" id="field-medication" style="min-height:60px;" placeholder="Medicine name, dosage, time administered, prescribing physician, and supervising adult…"></textarea>
+            <textarea class="textarea-box" id="field-medication" style="min-height:60px;" placeholder="Medicine name, dosage, time administered, prescribing physician, and supervising adultâ€¦"></textarea>
           </div>
 
           <div class="form-span-2">
             <label for="field-description">Detailed Description of What Happened *</label>
-            <textarea class="textarea-box" id="field-description" placeholder="Describe the incident, circumstances, and any witnesses in full…"></textarea>
+            <textarea class="textarea-box" id="field-description" placeholder="Describe the incident, circumstances, and any witnesses in fullâ€¦"></textarea>
           </div>
 
           <div class="form-span-2">
             <label for="field-action">Action Taken &amp; First Aid Treatment *</label>
-            <textarea class="textarea-box" id="field-action" style="min-height:70px;" placeholder="Details of first aid treatment, medication administered, or immediate preventative measures…"></textarea>
+            <textarea class="textarea-box" id="field-action" style="min-height:70px;" placeholder="Details of first aid treatment, medication administered, or immediate preventative measuresâ€¦"></textarea>
           </div>
 
           <div>
@@ -121,8 +121,8 @@
           <div>
             <label for="field-hospital">Hospital / A&amp;E Attended?</label>
             <select id="field-hospital">
-              <option value="no" selected>No — managed on site</option>
-              <option value="yes">Yes — attended hospital / walk-in clinic</option>
+              <option value="no" selected>No â€” managed on site</option>
+              <option value="yes">Yes â€” attended hospital / walk-in clinic</option>
             </select>
           </div>
 
@@ -130,7 +130,7 @@
             <label for="field-riddor">RIDDOR Reportable (HSE)?</label>
             <select id="field-riddor">
               <option value="no" selected>No</option>
-              <option value="yes">Yes — reportable to HSE RIDDOR</option>
+              <option value="yes">Yes â€” reportable to HSE RIDDOR</option>
             </select>
             <div class="hint">UK statutory reporting for major fractures, hospitalisation &gt;24h, or 7+ day incapacitation.</div>
           </div>
@@ -139,7 +139,7 @@
             <label for="field-status">Incident Status</label>
             <select id="field-status">
               <option value="Resolved" selected>Resolved</option>
-              <option value="Pending">Pending — follow-up monitoring needed</option>
+              <option value="Pending">Pending â€” follow-up monitoring needed</option>
               <option value="Escalated">Escalated to DSL</option>
             </select>
           </div>
@@ -175,7 +175,7 @@
       var existingIncident = editId ? OG_DB.getIncidentById(editId) : null;
 
       if (existingIncident) {
-        document.getElementById('page-title').textContent   = 'Edit Incident ' + editId + ' — Oxford Guardians';
+        document.getElementById('page-title').textContent   = 'Edit Incident ' + editId + ' â€” Oxford Guardians';
         document.getElementById('page-heading').textContent = 'Edit Incident Record (' + editId + ')';
       } else {
         document.getElementById('field-date').value = new Date().toISOString().slice(0, 10);
@@ -206,7 +206,7 @@
           personLabel.textContent = 'Student Involved *';
           var defaultOpt = document.createElement('option');
           defaultOpt.value = '';
-          defaultOpt.textContent = '— Select student —';
+          defaultOpt.textContent = 'â€” Select student â€”';
           personSelect.appendChild(defaultOpt);
 
           OG_DB.getAllStudents().forEach(function(s) {
@@ -224,7 +224,7 @@
           personLabel.textContent = 'Host Carer Involved *';
           var defaultOpt = document.createElement('option');
           defaultOpt.value = '';
-          defaultOpt.textContent = '— Select host carer —';
+          defaultOpt.textContent = 'â€” Select host carer â€”';
           personSelect.appendChild(defaultOpt);
 
           OG_DB.getAllHosts().forEach(function(h) {
@@ -242,7 +242,7 @@
           personLabel.textContent = 'Staff Member Involved *';
           var defaultOpt = document.createElement('option');
           defaultOpt.value = '';
-          defaultOpt.textContent = '— Select staff member —';
+          defaultOpt.textContent = 'â€” Select staff member â€”';
           personSelect.appendChild(defaultOpt);
 
           var staffList = (OG_DB.getAllStaff && OG_DB.getAllStaff()) || [
@@ -266,7 +266,7 @@
           personLabel.textContent = 'Driver Involved *';
           var defaultOpt = document.createElement('option');
           defaultOpt.value = '';
-          defaultOpt.textContent = '— Select driver —';
+          defaultOpt.textContent = 'â€” Select driver â€”';
           personSelect.appendChild(defaultOpt);
 
           var driversList = (OG_DB.getAllDrivers && OG_DB.getAllDrivers()) || [
@@ -319,7 +319,7 @@
         document.getElementById('field-date').value        = inc.date || '';
         document.getElementById('field-time').value        = inc.time || '';
         document.getElementById('field-type').value        = inc.incidentType || 'Minor injury / Accident';
-        document.getElementById('field-severity').value    = inc.severity || 'Minor — first aid only';
+        document.getElementById('field-severity').value    = inc.severity || 'Minor â€” first aid only';
         document.getElementById('field-description').value = inc.description || '';
         document.getElementById('field-action').value      = inc.actionTaken || '';
         document.getElementById('field-first-aider').value = inc.firstAider || '';

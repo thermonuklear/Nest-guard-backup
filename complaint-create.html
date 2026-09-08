@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title id="page-title">Case File — Complaints Register — Oxford Guardians Platform</title>
+  <title id="page-title">Case File â€” Complaints Register â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -143,7 +143,7 @@
           <div>
             <span class="eyebrow" id="toolbar-eyebrow">Case File</span>
             <h2 id="toolbar-title">New Complaint</h2>
-            <p id="toolbar-sub">4-stage AEGIS grievance procedure — Standard 7 &amp; Appendix 8.</p>
+            <p id="toolbar-sub">4-stage AEGIS grievance procedure â€” Standard 7 &amp; Appendix 8.</p>
           </div>
           <div class="toolbar-actions">
             <a class="button-alt" href="complaints.html">&larr; Back to Register</a>
@@ -257,7 +257,7 @@
   var ROLES = ['Parent', 'Host', 'Student', 'School', 'Agent'];
   var OUTCOMES = ['In Progress', 'Upheld', 'Partially Upheld', 'Not Upheld'];
   var STAGES = [
-    { value: 'Stage 1: Informal',    num: 'Stage 1', title: 'Informal Resolution',                    desc: 'Handled directly by the DSL or coordinator through discussion — no formal investigation.' },
+    { value: 'Stage 1: Informal',    num: 'Stage 1', title: 'Informal Resolution',                    desc: 'Handled directly by the DSL or coordinator through discussion â€” no formal investigation.' },
     { value: 'Stage 2: Formal',      num: 'Stage 2', title: 'Formal Internal Investigation',           desc: 'A formal written investigation concluding with a documented response to the complainant.' },
     { value: 'Stage 3: AEGIS Panel', num: 'Stage 3', title: 'AEGIS Panel Referral (Appendix 8)',       desc: 'Referred to an independent AEGIS panel under Appendix 8 of the Accreditation Handbook.' },
     { value: 'Stage 4: Legal',       num: 'Stage 4', title: 'Legal / External Proceedings',            desc: 'External legal counsel, regulators, or other statutory bodies are engaged.' }
@@ -340,11 +340,11 @@
   }
 
   function loadComplaintIntoForm(c) {
-    document.title = 'Case File — ' + (c.refNumber || c.id) + ' — Oxford Guardians Platform';
+    document.title = 'Case File â€” ' + (c.refNumber || c.id) + ' â€” Oxford Guardians Platform';
     document.getElementById('chrome-route').textContent = 'Route /governance/complaints/' + c.id;
     document.getElementById('toolbar-eyebrow').textContent = c.refNumber || c.id;
     document.getElementById('toolbar-title').textContent = c.complainantName || 'Complaint';
-    document.getElementById('toolbar-sub').textContent = 'Logged ' + formatDate(c.dateReceived) + ' — ' + (c.category || 'Uncategorised');
+    document.getElementById('toolbar-sub').textContent = 'Logged ' + formatDate(c.dateReceived) + ' â€” ' + (c.category || 'Uncategorised');
 
     document.getElementById('f-complainant-name').value = c.complainantName || '';
     document.getElementById('f-complainant-type').value = c.complainantType || 'Parent';
@@ -404,7 +404,7 @@
           '<time>' + escapeHtml(formatDate(e.date)) + '</time>' +
           '<div>' +
             '<strong>' + escapeHtml(e.action) + '</strong>' +
-            (e.by ? '<small> — logged by ' + escapeHtml(e.by) + '</small>' : '') +
+            (e.by ? '<small> â€” logged by ' + escapeHtml(e.by) + '</small>' : '') +
             (e.notes ? '<p style="margin-top:4px; color:#3b536e; font-size:0.9rem;">' + escapeHtml(e.notes) + '</p>' : '') +
             '<button type="button" class="log-entry-remove" onclick="removeLogEntry(' + item.idx + ')">Remove entry</button>' +
           '</div>' +

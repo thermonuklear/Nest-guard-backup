@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resolved Concerns (Historical) — Oxford Guardians Platform</title>
+    <title>Resolved Concerns (Historical) â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -26,9 +26,9 @@
               <a class="nav-link nav-link-sub" href="welfare-notes.html">Welfare notes</a>
               <a class="nav-link nav-link-sub active" href="concerns-dashboard.html">Concerns Dashboard</a>
               <div class="sub-nav" style="margin-left: 16px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; margin-bottom: 8px; font-size: 0.85rem;">
-                <a href="concerns-low-level.html" style="color: #63768b; text-decoration: none;">• Low-Level</a>
-                <a href="concerns-escalated.html" style="color: #63768b; text-decoration: none;">• Escalated</a>
-                <a href="concerns-resolved.html" style="color: #0f2340; font-weight: 600; text-decoration: none;">• Resolved (History)</a>
+                <a href="concerns-low-level.html" style="color: #63768b; text-decoration: none;">â€¢ Low-Level</a>
+                <a href="concerns-escalated.html" style="color: #63768b; text-decoration: none;">â€¢ Escalated</a>
+                <a href="concerns-resolved.html" style="color: #0f2340; font-weight: 600; text-decoration: none;">â€¢ Resolved (History)</a>
               </div>
               <a class="nav-link nav-link-sub" href="emergency-procedures.html">Emergency</a>
               <a class="nav-link" href="documents.html">Documents</a>
@@ -45,19 +45,19 @@
               <div>
                 <span class="eyebrow">Historical archive</span>
                 <h2>Resolved Concerns (Historical)</h2>
-                <p>Closed concerns with full audit trail. Each record retains its original log, review notes, and closure date. Records must not be deleted — AEGIS and KCSIE require a complete historical record of all safeguarding concerns and their outcomes.</p>
+                <p>Closed concerns with full audit trail. Each record retains its original log, review notes, and closure date. Records must not be deleted â€” AEGIS and KCSIE require a complete historical record of all safeguarding concerns and their outcomes.</p>
               </div>
               <div class="toolbar-actions"><a class="button" href="admin-dashboard.html">Back to Dashboard</a><a class="button-alt" href="concerns-dashboard.html">Concerns Dashboard</a></div>
             </div>
             <div class="metrics">
-              <article class="metric featured"><h4>Total resolved</h4><div class="metric-value" id="count-total">—</div><p class="metric-meta">Concerns closed with documented outcome</p></article>
-              <article class="metric"><h4>Student subjects</h4><div class="metric-value" id="count-student">—</div><p class="metric-meta">Resolved student welfare concerns</p></article>
-              <article class="metric"><h4>Staff / homestay</h4><div class="metric-value" id="count-other">—</div><p class="metric-meta">Resolved concerns about staff or carers</p></article>
+              <article class="metric featured"><h4>Total resolved</h4><div class="metric-value" id="count-total">â€”</div><p class="metric-meta">Concerns closed with documented outcome</p></article>
+              <article class="metric"><h4>Student subjects</h4><div class="metric-value" id="count-student">â€”</div><p class="metric-meta">Resolved student welfare concerns</p></article>
+              <article class="metric"><h4>Staff / homestay</h4><div class="metric-value" id="count-other">â€”</div><p class="metric-meta">Resolved concerns about staff or carers</p></article>
               <article class="metric"><h4>External referrals</h4><div class="metric-value">0</div><p class="metric-meta">Cases that involved LADO or LSP</p></article>
             </div>
             <div class="note brutal">
               <h4>Brutal product note</h4>
-              <p>Closed concerns are not inactive data — they're the evidence trail that AEGIS inspectors check first. A closed concern with no outcome note, no closure date, and no named decision-maker is worthless as a compliance record. Every concern closed here must show who made the decision and when.</p>
+              <p>Closed concerns are not inactive data â€” they're the evidence trail that AEGIS inspectors check first. A closed concern with no outcome note, no closure date, and no named decision-maker is worthless as a compliance record. Every concern closed here must show who made the decision and when.</p>
             </div>
             <div class="table-wrap" style="overflow-x: auto; width: 100%; display: block;">
               <table>
@@ -70,7 +70,7 @@
               <div class="list">
                 <div class="list-item"><strong>Do not delete</strong><small>Resolved concerns must be retained in full, including all notes, dates, and decision rationale. Deletion of safeguarding records is a compliance failure.</small></div>
                 <div class="list-item"><strong>Audit trail</strong><small>Each record shows the original log date, closure date, source, and current status. This is the evidence AEGIS inspectors will request.</small></div>
-                <div class="list-item"><strong>Reopening</strong><small>If new information emerges about a resolved concern, it should be re-opened as a new concern referencing the historical record — not edited in place.</small></div>
+                <div class="list-item"><strong>Reopening</strong><small>If new information emerges about a resolved concern, it should be re-opened as a new concern referencing the historical record â€” not edited in place.</small></div>
               </div>
             </div>
             <div class="inline-links"><a href="concerns-dashboard.html">Concerns Dashboard</a><span class="sep">|</span><a href="concerns-low-level.html">Low-level concerns</a><span class="sep">|</span><a href="concerns-escalated.html">Escalated concerns</a><span class="sep">|</span><a href="welfare-notes.html">Welfare notes</a></div>
@@ -104,7 +104,7 @@
             '<td>' + c.category + '</td>' +
             '<td><strong>' + c.title + '</strong><small>' + c.description + '</small></td>' +
             '<td>' + c.loggedDate + '</td>' +
-            '<td>' + (c.closedDate || '—') + '</td>' +
+            '<td>' + (c.closedDate || 'â€”') + '</td>' +
             '<td><span class="badge green">' + c.status + '</span></td>';
           tbody.appendChild(tr);
         });

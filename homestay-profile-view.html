@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homestay Profile — Oxford Guardians</title>
+    <title>Homestay Profile â€” Oxford Guardians</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -186,7 +186,7 @@
       .room-card h4 { font-size: 0.98rem; margin-bottom: 8px; }
       .amenity-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
       .amenity-list li { font-size: 0.82rem; color: var(--ink-2); display: flex; align-items: center; gap: 7px; }
-      .amenity-list li.no::before { content: "—"; color: var(--ink-3); width: 14px; }
+      .amenity-list li.no::before { content: "â€”"; color: var(--ink-3); width: 14px; }
       .amenity-list li.yes::before { content: "?"; color: var(--green); font-weight: 700; width: 14px; }
       .no-rooms-note {
         border: 1.5px dashed var(--line); border-radius: var(--radius-md);
@@ -292,7 +292,7 @@
         </div>
       </div>
       <div class="toolbar-right">
-        <p class="redact-note" id="mode-explainer">Complete address and direct host contact — use only once a placement is confirmed.</p>
+        <p class="redact-note" id="mode-explainer">Complete address and direct host contact â€” use only once a placement is confirmed.</p>
         <button type="button" class="print-btn" id="btn-print">??? Print / Export PDF</button>
       </div>
     </div>
@@ -322,8 +322,8 @@
       function smokeLabel(status) {
         return {
           'non-smoking':    '?? Strictly Non-Smoking Household',
-          'smoker-outside': '?? Smoker — Outside Only (Garden/Patio)',
-          'smoker-inside':  '?? Smoker — Inside Property'
+          'smoker-outside': '?? Smoker â€” Outside Only (Garden/Patio)',
+          'smoker-inside':  '?? Smoker â€” Inside Property'
         }[status] || '?? Strictly Non-Smoking Household';
       }
 
@@ -331,10 +331,10 @@
         return (
           '<div class="member-card">' +
             '<div class="member-name">' + esc(m.name) + '</div>' +
-            '<div class="member-age-gender">' + esc(m.age || '—') + (m.age ? ' yrs' : '') + ' &middot; ' + esc(m.gender || '—') + '</div>' +
-            '<div class="member-fact"><strong>Occupation:</strong> ' + esc(m.occupation || '—') + '</div>' +
-            '<div class="member-fact"><strong>Hobbies &amp; Interests:</strong> ' + esc(m.interests || '—') + '</div>' +
-            '<div class="member-fact"><strong>Religion:</strong> ' + esc(m.religion || '—') + '</div>' +
+            '<div class="member-age-gender">' + esc(m.age || 'â€”') + (m.age ? ' yrs' : '') + ' &middot; ' + esc(m.gender || 'â€”') + '</div>' +
+            '<div class="member-fact"><strong>Occupation:</strong> ' + esc(m.occupation || 'â€”') + '</div>' +
+            '<div class="member-fact"><strong>Hobbies &amp; Interests:</strong> ' + esc(m.interests || 'â€”') + '</div>' +
+            '<div class="member-fact"><strong>Religion:</strong> ' + esc(m.religion || 'â€”') + '</div>' +
           '</div>'
         );
       }
@@ -367,7 +367,7 @@
           return;
         }
 
-        document.title = profile.familyName + ' — Homestay Profile — Oxford Guardians';
+        document.title = profile.familyName + ' â€” Homestay Profile â€” Oxford Guardians';
 
         var members = profile.householdMembers || [];
         var memberCardsHtml = members.length
@@ -462,9 +462,9 @@
             '<h2>Local Area &amp; Commute</h2>' +
             '<p class="section-intro">' + esc(profile.area) + ' is a leafy, residential neighbourhood popular with families and academics, a short and well-served journey from Oxford city centre.</p>' +
             '<div class="area-fact-grid">' +
-              '<div class="area-fact"><div class="area-fact-value">~15–20 min</div><div class="area-fact-label">To Oxford city centre by bus</div></div>' +
+              '<div class="area-fact"><div class="area-fact-value">~15â€“20 min</div><div class="area-fact-label">To Oxford city centre by bus</div></div>' +
               '<div class="area-fact"><div class="area-fact-value">S1 / S2 / 2</div><div class="area-fact-label">Frequent local bus routes</div></div>' +
-              '<div class="area-fact"><div class="area-fact-value">10–15 min</div><div class="area-fact-label">Typical walk to nearest school bus stop</div></div>' +
+              '<div class="area-fact"><div class="area-fact-value">10â€“15 min</div><div class="area-fact-label">Typical walk to nearest school bus stop</div></div>' +
               '<div class="area-fact"><div class="area-fact-value">Local amenities</div><div class="area-fact-label">Shops, parks and pharmacies within walking distance</div></div>' +
             '</div>' +
           '</div>' +
@@ -482,7 +482,7 @@
               : '') +
           '</div>' +
 
-          '<p class="footer-print-meta">Generated by Oxford Guardians on ' + new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ' &middot; Host ID ' + esc(profile.id) + ' &middot; ' + (profile.isRedacted ? 'Redacted / pre-placement copy' : 'Full placement copy — confidential') +
+          '<p class="footer-print-meta">Generated by Oxford Guardians on ' + new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ' &middot; Host ID ' + esc(profile.id) + ' &middot; ' + (profile.isRedacted ? 'Redacted / pre-placement copy' : 'Full placement copy â€” confidential') +
           '</p>';
       }
 
@@ -497,8 +497,8 @@
         document.getElementById('mode-full').classList.toggle('active', !isRedacted);
         document.getElementById('mode-redacted').classList.toggle('active', isRedacted);
         document.getElementById('mode-explainer').textContent = isRedacted
-          ? 'Address shown as area only; phone/email routed to Oxford Guardians HQ — safe to share pre-contract.'
-          : 'Complete address and direct host contact — use only once a placement is confirmed.';
+          ? 'Address shown as area only; phone/email routed to Oxford Guardians HQ â€” safe to share pre-contract.'
+          : 'Complete address and direct host contact â€” use only once a placement is confirmed.';
         loadAndRender();
       }
 

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="page-title">Health & Medical — Oxford Guardians Platform</title>
+    <title id="page-title">Health & Medical â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -262,11 +262,11 @@
             <div class="toolbar">
               <div>
                 <span class="eyebrow">Health &amp; Medical Record</span>
-                <h2 id="student-name">—</h2>
+                <h2 id="student-name">â€”</h2>
                 <p>Medical conditions, allergies, dietary requirements, immunisation history, and learning support needs for this student.</p>
               </div>
               <div class="toolbar-actions">
-                <span id="status-badge" class="badge">—</span>
+                <span id="status-badge" class="badge">â€”</span>
                 <a class="button-alt" id="back-to-profile" href="student-profile.html">Back to Profile</a>
               </div>
             </div>
@@ -283,7 +283,7 @@
                   </div>
                   <div class="field">
                     <label for="field-allergies">Allergies</label>
-                    <textarea id="field-allergies" placeholder="e.g. Peanuts (anaphylactic) — EpiPen carried at all times."></textarea>
+                    <textarea id="field-allergies" placeholder="e.g. Peanuts (anaphylactic) â€” EpiPen carried at all times."></textarea>
                   </div>
                   <div class="field">
                     <label for="field-dietary">Dietary Requirements</label>
@@ -311,7 +311,7 @@
                 <div class="field-group">
                   <div class="field">
                     <label for="field-learning">Learning Difficulties / Additional Support Needs</label>
-                    <textarea id="field-learning" placeholder="e.g. Mild dyslexia — school has an IEP in place. Extra time granted in exams."></textarea>
+                    <textarea id="field-learning" placeholder="e.g. Mild dyslexia â€” school has an IEP in place. Extra time granted in exams."></textarea>
                   </div>
                 </div>
               </div>
@@ -353,7 +353,7 @@
       // -- Populate header ------------------------------------------------------
       var fullName = student.firstName + ' ' + student.lastName;
 
-      document.getElementById('page-title').textContent   = 'Health & Medical — ' + fullName;
+      document.getElementById('page-title').textContent   = 'Health & Medical â€” ' + fullName;
       document.getElementById('chrome-route').textContent = 'Route /admin/students/' + student.id + '/health';
       document.getElementById('student-name').innerHTML   = fullName +
         ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + student.id + '</span>';

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>H&S Checklist — Oxford Guardians Platform</title>
+  <title>H&S Checklist â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -129,7 +129,7 @@
     .btn-remove-hazard:hover { background: #fef2f2; border-color: #dc2626; }
     .no-hazards-msg { text-align: center; padding: 18px; font-size: 0.83rem; color: #9bafc4; font-style: italic; }
 
-    /* -- List view — metrics -- */
+    /* -- List view â€” metrics -- */
     .hs-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
     .hs-metric { background: #fff; border: 1px solid #d5dce8; border-radius: 12px; padding: 14px 16px; }
     .hs-metric h4 { font-size: 0.79rem; font-weight: 600; color: #4b6080; margin-bottom: 4px; }
@@ -236,7 +236,7 @@
             <div>
               <span class="eyebrow">Health &amp; Safety Checklist</span>
               <h2 id="toolbar-name" style="margin:2px 0 4px;">H&amp;S Assessment</h2>
-              <p id="toolbar-sub" style="margin:0;font-size:0.88rem;color:#3b536e;">Section 11 — Nest Guardians Property Risk Assessment</p>
+              <p id="toolbar-sub" style="margin:0;font-size:0.88rem;color:#3b536e;">Section 11 â€” Nest Guardians Property Risk Assessment</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -256,13 +256,13 @@
             </div>
             <div class="hs-metric">
               <h4>Latest assessment</h4>
-              <div class="hs-metric-value" id="metric-latest-date">—</div>
-              <p class="hs-metric-sub" id="metric-latest-by">—</p>
+              <div class="hs-metric-value" id="metric-latest-date">â€”</div>
+              <p class="hs-metric-sub" id="metric-latest-by">â€”</p>
             </div>
             <div class="hs-metric">
               <h4>Overall status</h4>
-              <div class="hs-metric-value" id="metric-status">—</div>
-              <p class="hs-metric-sub" id="metric-status-sub">—</p>
+              <div class="hs-metric-value" id="metric-status">â€”</div>
+              <p class="hs-metric-sub" id="metric-status-sub">â€”</p>
             </div>
           </div>
           <div class="checklist-cards-grid" id="checklist-cards"></div>
@@ -279,11 +279,11 @@
               <div class="fields-grid">
                 <div class="field-group">
                   <label>Host Name</label>
-                  <input type="text" id="field-host-name" disabled placeholder="—" />
+                  <input type="text" id="field-host-name" disabled placeholder="â€”" />
                 </div>
                 <div class="field-group">
                   <label>Host ID</label>
-                  <input type="text" id="field-host-id" disabled placeholder="—" />
+                  <input type="text" id="field-host-id" disabled placeholder="â€”" />
                 </div>
                 <div class="field-group">
                   <label>Date of Assessment *</label>
@@ -310,7 +310,7 @@
               </div>
             </div>
 
-            <!-- S11 sections — populated by JS -->
+            <!-- S11 sections â€” populated by JS -->
             <div id="s11-form-content"></div>
 
             <!-- Panel 4: Hazard Remediation Tracker -->
@@ -332,7 +332,7 @@
                   </thead>
                   <tbody id="hazard-rows">
                     <tr id="no-hazards-row">
-                      <td colspan="7" class="no-hazards-msg">No hazards added yet — click "Add Identified Hazard" to record one.</td>
+                      <td colspan="7" class="no-hazards-msg">No hazards added yet â€” click "Add Identified Hazard" to record one.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -433,7 +433,7 @@
   }
 
   function formatDate(d) {
-    if (!d) return '—';
+    if (!d) return 'â€”';
     var p = new Date(d);
     if (isNaN(p.getTime())) return d;
     var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -451,11 +451,11 @@
 
   if (host) {
     var fullName = host.firstName + ' ' + host.lastName;
-    document.title = fullName + ' — H&S Checklist — Oxford Guardians';
+    document.title = fullName + ' â€” H&S Checklist â€” Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/host/' + host.id + '/hs-checklist';
     document.getElementById('host-avatar').textContent  = (host.firstName.charAt(0) + host.lastName.charAt(0)).toUpperCase();
     document.getElementById('toolbar-name').innerHTML   = esc(fullName) + ' <span style="color:#6b85a0;font-size:0.8em;font-weight:normal;margin-left:8px;">' + esc(host.id) + '</span>';
-    document.getElementById('toolbar-sub').textContent  = 'H&S Property Risk Assessment — Section 11';
+    document.getElementById('toolbar-sub').textContent  = 'H&S Property Risk Assessment â€” Section 11';
     document.getElementById('back-link').href           = 'host-aegis-control-room.html?id=' + host.id;
     document.getElementById('field-host-name').value   = fullName;
     document.getElementById('field-host-id').value     = host.id;
@@ -527,7 +527,7 @@
       if (!document.getElementById('no-hazards-row')) {
         var tr = document.createElement('tr');
         tr.id = 'no-hazards-row';
-        tr.innerHTML = '<td colspan="7" class="no-hazards-msg">No hazards added yet — click "Add Identified Hazard" to record one.</td>';
+        tr.innerHTML = '<td colspan="7" class="no-hazards-msg">No hazards added yet â€” click "Add Identified Hazard" to record one.</td>';
         tbody.appendChild(tr);
       }
     }
@@ -539,10 +539,10 @@
     if (noMsg) noMsg.remove();
     var row = document.createElement('tr');
     row.innerHTML =
-      '<td><input type="text"  class="hz-hazard"  value="' + esc(h.hazard  || '') + '" placeholder="Describe hazard…" /></td>' +
-      '<td><input type="text"  class="hz-control" value="' + esc(h.control || '') + '" placeholder="Existing control…" /></td>' +
-      '<td><input type="text"  class="hz-action"  value="' + esc(h.action  || '') + '" placeholder="Action required…" /></td>' +
-      '<td><input type="text"  class="hz-owner"   value="' + esc(h.owner   || '') + '" placeholder="Owner…" /></td>' +
+      '<td><input type="text"  class="hz-hazard"  value="' + esc(h.hazard  || '') + '" placeholder="Describe hazardâ€¦" /></td>' +
+      '<td><input type="text"  class="hz-control" value="' + esc(h.control || '') + '" placeholder="Existing controlâ€¦" /></td>' +
+      '<td><input type="text"  class="hz-action"  value="' + esc(h.action  || '') + '" placeholder="Action requiredâ€¦" /></td>' +
+      '<td><input type="text"  class="hz-owner"   value="' + esc(h.owner   || '') + '" placeholder="Ownerâ€¦" /></td>' +
       '<td><input type="date"  class="hz-due"     value="' + esc(h.dueDate || '') + '" /></td>' +
       '<td style="text-align:center;"><input type="checkbox" class="hz-closed"' + (h.closed ? ' checked' : '') + ' /></td>' +
       '<td><button type="button" class="btn-remove-hazard" title="Remove row">&times;</button></td>';
@@ -590,7 +590,7 @@
       document.querySelectorAll('input[name="s11_' + item.key + '"]').forEach(function(r) { r.checked = false; });
     });
     document.getElementById('hazard-rows').innerHTML =
-      '<tr id="no-hazards-row"><td colspan="7" class="no-hazards-msg">No hazards added yet — click "Add Identified Hazard" to record one.</td></tr>';
+      '<tr id="no-hazards-row"><td colspan="7" class="no-hazards-msg">No hazards added yet â€” click "Add Identified Hazard" to record one.</td></tr>';
     var t = new Date();
     document.getElementById('field-date').value = t.getFullYear() + '-' +
       String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
@@ -621,7 +621,7 @@
       var rows = section.items.map(function(item) {
         var v  = (cl.items || {})[item.key] || '';
         var bc = v === 'yes' ? 'yes' : v === 'no' ? 'no' : v === 'na' ? 'na' : 'blank';
-        var bl = v === 'yes' ? 'Yes' : v === 'no' ? 'No'  : v === 'na' ? 'N/A' : '—';
+        var bl = v === 'yes' ? 'Yes' : v === 'no' ? 'No'  : v === 'na' ? 'N/A' : 'â€”';
         return '<div class="s11-detail-row">' +
           '<span class="s11-badge ' + bc + '">' + bl + '</span>' +
           '<span>' + esc(item.label) + '</span>' +
@@ -641,7 +641,7 @@
           '<td>' + esc(h.control) + '</td>' +
           '<td>' + esc(h.action)  + '</td>' +
           '<td>' + esc(h.owner)   + '</td>' +
-          '<td>' + (h.dueDate ? formatDate(h.dueDate) : '—') + '</td>' +
+          '<td>' + (h.dueDate ? formatDate(h.dueDate) : 'â€”') + '</td>' +
           '<td style="text-align:center;">' + (h.closed ? '&#10003;' : '') + '</td>' +
         '</tr>';
       }).join('');
@@ -688,8 +688,8 @@
       '<div class="cc-header">' +
         '<div>' +
           '<p class="cc-title">' + esc(cl.visitType || 'H&S Assessment') + '</p>' +
-          '<p class="cc-meta">Assessed by <strong>' + esc(cl.assessedBy || '—') + '</strong>' +
-            (cl.gasCertRef ? ' &nbsp;·&nbsp; Gas cert: ' + esc(cl.gasCertRef) : '') +
+          '<p class="cc-meta">Assessed by <strong>' + esc(cl.assessedBy || 'â€”') + '</strong>' +
+            (cl.gasCertRef ? ' &nbsp;Â·&nbsp; Gas cert: ' + esc(cl.gasCertRef) : '') +
           '</p>' +
         '</div>' +
         '<div style="display:flex;align-items:center;gap:10px;">' + badge + '<span class="cc-date">' + esc(formatDate(cl.date)) + '</span></div>' +
@@ -723,7 +723,7 @@
       var flags  = tally.no > 0;
       document.getElementById('metric-total').textContent       = checklists.length;
       document.getElementById('metric-latest-date').textContent = formatDate(latest.date);
-      document.getElementById('metric-latest-by').textContent   = 'By ' + (latest.assessedBy || '—');
+      document.getElementById('metric-latest-by').textContent   = 'By ' + (latest.assessedBy || 'â€”');
       document.getElementById('metric-status').textContent      = flags ? 'Review' : 'Pass';
       document.getElementById('metric-status').style.color      = flags ? '#dc2626' : '#16a34a';
       document.getElementById('metric-status-sub').textContent  = flags

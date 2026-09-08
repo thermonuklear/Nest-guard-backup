@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Parent Profile — Oxford Guardians Platform</title>
+    <title>Parent Profile â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -310,15 +310,15 @@
           <!-- Toolbar -->
           <div class="toolbar" id="profile-toolbar">
             <div style="display:flex;align-items:center;gap:14px;">
-              <div class="parent-avatar-lg" id="toolbar-avatar">—</div>
+              <div class="parent-avatar-lg" id="toolbar-avatar">â€”</div>
               <div>
                 <span class="eyebrow">Parent profile</span>
-                <h2 id="toolbar-name" style="margin:2px 0 4px;">Loading…</h2>
-                <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:var(--ink-2);">—</p>
+                <h2 id="toolbar-name" style="margin:2px 0 4px;">Loadingâ€¦</h2>
+                <p id="toolbar-subtitle" style="margin:0;font-size:0.88rem;color:var(--ink-2);">â€”</p>
               </div>
             </div>
             <div class="toolbar-actions">
-              <span id="toolbar-status-badge" class="badge">—</span>
+              <span id="toolbar-status-badge" class="badge">â€”</span>
               <a class="button-alt" href="parent-list.html">Back to Parents</a>
             </div>
           </div>
@@ -340,31 +340,31 @@
                 <div class="kv">
                   <div class="kv-row">
                     <small>First Name</small>
-                    <div id="kv-first-name">—</div>
+                    <div id="kv-first-name">â€”</div>
                   </div>
                   <div class="kv-row">
                     <small>Last Name</small>
-                    <div id="kv-last-name">—</div>
+                    <div id="kv-last-name">â€”</div>
                   </div>
                   <div class="kv-row">
                     <small>Email</small>
-                    <div id="kv-email">—</div>
+                    <div id="kv-email">â€”</div>
                   </div>
                   <div class="kv-row">
                     <small>Phone</small>
-                    <div id="kv-phone">—</div>
+                    <div id="kv-phone">â€”</div>
                   </div>
                   <div class="kv-row">
                     <small>Address</small>
-                    <div id="kv-address">—</div>
+                    <div id="kv-address">â€”</div>
                   </div>
                   <div class="kv-row">
                     <small>Preferred Contact</small>
-                    <div id="kv-preferred-contact">—</div>
+                    <div id="kv-preferred-contact">â€”</div>
                   </div>
                   <div class="kv-row">
                     <small>Language</small>
-                    <div id="kv-language">—</div>
+                    <div id="kv-language">â€”</div>
                   </div>
                 </div>
               </div>
@@ -375,11 +375,11 @@
                 <div class="kv">
                   <div class="kv-row">
                     <small>Relationship</small>
-                    <div id="kv-relationship">—</div>
+                    <div id="kv-relationship">â€”</div>
                   </div>
                   <div class="kv-row">
                     <small>Status</small>
-                    <div id="kv-status">—</div>
+                    <div id="kv-status">â€”</div>
                   </div>
                 </div>
               </div>
@@ -387,7 +387,7 @@
               <!-- Block 3: Notes (full width) -->
               <div class="info-block kv-block-full">
                 <h4>Notes</h4>
-                <div id="kv-notes" style="color:var(--ink-2);font-size:0.92rem;line-height:1.6;">—</div>
+                <div id="kv-notes" style="color:var(--ink-2);font-size:0.92rem;line-height:1.6;">â€”</div>
               </div>
 
               <!-- Block 4: Communication history (full width) -->
@@ -445,7 +445,7 @@
               <h4>Upload document</h4>
               <div class="upload-controls">
                 <input type="file" id="doc-file" />
-                <input class="doc-name-input" type="text" id="doc-name" placeholder="Enter document name…" />
+                <input class="doc-name-input" type="text" id="doc-name" placeholder="Enter document nameâ€¦" />
                 <button class="button" id="upload-btn">Upload</button>
               </div>
               <div id="document-list" class="doc-list"></div>
@@ -497,7 +497,7 @@
 
     function set(id, text) {
       var el = document.getElementById(id);
-      if (el) el.textContent = text || '—';
+      if (el) el.textContent = text || 'â€”';
     }
 
     function escapeHtml(str) {
@@ -509,7 +509,7 @@
     }
 
     function linkedStudentNames(ids) {
-      if (!ids || !ids.length) return '—';
+      if (!ids || !ids.length) return 'â€”';
       return ids.map(function (sid) {
         var s = getStudentById(sid);
         return s ? s.firstName + ' ' + s.lastName : sid;
@@ -520,7 +520,7 @@
     var fullName     = parent.firstName + ' ' + parent.lastName;
     var studentLabel = linkedStudentNames(parent.linkedStudentIds);
 
-    document.title = fullName + ' — Oxford Guardians';
+    document.title = fullName + ' â€” Oxford Guardians';
     document.getElementById('chrome-route').textContent = 'Route /admin/parents/' + parent.id;
 
     document.getElementById('toolbar-avatar').textContent = initials(parent.firstName, parent.lastName);
@@ -528,13 +528,13 @@
       escapeHtml(fullName) +
       ' <span style="color:var(--ink-3);font-size:0.8em;font-weight:normal;margin-left:8px;">' + escapeHtml(parent.id) + '</span>';
     document.getElementById('toolbar-subtitle').textContent =
-      (parent.relationship || '—') + ' · ' + studentLabel;
+      (parent.relationship || 'â€”') + ' Â· ' + studentLabel;
 
     var statusBadge = document.getElementById('toolbar-status-badge');
-    statusBadge.textContent = parent.status || '—';
+    statusBadge.textContent = parent.status || 'â€”';
     statusBadge.className   = 'badge ' + statusBadgeClass(parent.status);
 
-    // Tab 1 — KV rows
+    // Tab 1 â€” KV rows
     set('kv-first-name',        parent.firstName);
     set('kv-last-name',         parent.lastName);
     set('kv-email',             parent.email);
@@ -547,7 +547,7 @@
     var statusEl = document.getElementById('kv-status');
     if (statusEl) {
       statusEl.innerHTML = '<span class="badge ' + statusBadgeClass(parent.status) + '">' +
-        escapeHtml(parent.status || '—') + '</span>';
+        escapeHtml(parent.status || 'â€”') + '</span>';
     }
 
     set('kv-notes', parent.notes);
@@ -574,15 +574,15 @@
             var dateStr = String(dt.getDate()).padStart(2, '0') + ' ' + months[dt.getMonth()] + ' ' + dt.getFullYear();
             return '<tr>' +
               '<td style="padding:8px 10px;font-size:0.88rem;color:var(--ink-2);border-bottom:1px solid var(--line);white-space:nowrap;">' + dateStr + '</td>' +
-              '<td style="padding:8px 10px;font-size:0.88rem;border-bottom:1px solid var(--line);">' + escapeHtml(log.contactType || '—') + '</td>' +
-              '<td style="padding:8px 10px;font-size:0.88rem;color:var(--ink-2);border-bottom:1px solid var(--line);">' + escapeHtml(log.summaryNotes || '—') + '</td>' +
+              '<td style="padding:8px 10px;font-size:0.88rem;border-bottom:1px solid var(--line);">' + escapeHtml(log.contactType || 'â€”') + '</td>' +
+              '<td style="padding:8px 10px;font-size:0.88rem;color:var(--ink-2);border-bottom:1px solid var(--line);">' + escapeHtml(log.summaryNotes || 'â€”') + '</td>' +
             '</tr>';
           }).join('') +
           '</tbody>' +
         '</table>';
     }());
 
-    // Tab 2 — Linked students
+    // Tab 2 â€” Linked students
     (function () {
       var ids    = parent.linkedStudentIds || [];
       var listEl = document.getElementById('linked-students-list');
@@ -599,7 +599,7 @@
         if (!s) {
           html +=
             '<div class="student-card">' +
-              '<div><span style="color:var(--ink-3);font-size:0.88rem;">Student ID ' + escapeHtml(sid) + ' — record not found</span></div>' +
+              '<div><span style="color:var(--ink-3);font-size:0.88rem;">Student ID ' + escapeHtml(sid) + ' â€” record not found</span></div>' +
             '</div>';
           return;
         }
@@ -614,13 +614,13 @@
                 (s.preferredName && s.preferredName !== s.firstName ? ' (' + escapeHtml(s.preferredName) + ')' : '') +
               '</a>' +
               '<div class="student-card-meta">' +
-                '<div class="student-card-row"><small>School</small>' + escapeHtml(s.school || '—') + ' · ' + escapeHtml(s.schoolYear || '—') + '</div>' +
-                '<div class="student-card-row"><small>Homestay</small>' + escapeHtml(s.homestayFamily || '—') + '</div>' +
-                '<div class="student-card-row"><small>Welfare</small>' + escapeHtml(s.welfareStatus || '—') + '</div>' +
+                '<div class="student-card-row"><small>School</small>' + escapeHtml(s.school || 'â€”') + ' Â· ' + escapeHtml(s.schoolYear || 'â€”') + '</div>' +
+                '<div class="student-card-row"><small>Homestay</small>' + escapeHtml(s.homestayFamily || 'â€”') + '</div>' +
+                '<div class="student-card-row"><small>Welfare</small>' + escapeHtml(s.welfareStatus || 'â€”') + '</div>' +
               '</div>' +
             '</div>' +
             '<div>' +
-              '<span class="badge ' + studentStatusClass + '">' + escapeHtml(s.status || '—') + '</span>' +
+              '<span class="badge ' + studentStatusClass + '">' + escapeHtml(s.status || 'â€”') + '</span>' +
             '</div>' +
           '</div>';
       });
@@ -734,7 +734,7 @@
                   '<div style="display:flex; justify-content:space-between; align-items:flex-start;">' +
                     '<div>' +
                       '<h4 style="margin:0 0 8px 0;">' + escapeHtml(c.title) + '</h4>' +
-                      '<p style="margin:0; font-size:0.9em; color:#3b536e;">Valid: ' + escapeHtml(c.validFrom || '—') + ' to ' + escapeHtml(c.validTo || '—') + '</p>' +
+                      '<p style="margin:0; font-size:0.9em; color:#3b536e;">Valid: ' + escapeHtml(c.validFrom || 'â€”') + ' to ' + escapeHtml(c.validTo || 'â€”') + '</p>' +
                     '</div>' +
                     '<span class="badge ' + statusColor + '">' + escapeHtml(c.status) + '</span>' +
                   '</div>' +

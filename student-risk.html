@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="page-title">Student Risk Assessment — Oxford Guardians Platform</title>
+    <title id="page-title">Student Risk Assessment â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -262,11 +262,11 @@
             <div class="toolbar">
               <div>
                 <span class="eyebrow">Risk Assessment</span>
-                <h2 id="student-name">—</h2>
+                <h2 id="student-name">â€”</h2>
                 <p>Upload and track the latest risk assessment document for this student.</p>
               </div>
               <div class="toolbar-actions">
-                <span id="status-badge" class="badge">—</span>
+                <span id="status-badge" class="badge">â€”</span>
                 <a class="button-alt" id="back-to-profile" href="student-profile.html">Back to Profile</a>
               </div>
             </div>
@@ -318,7 +318,7 @@
         document.getElementById('student-name').textContent = student.firstName + ' ' + student.lastName;
 
         // Header population
-        document.getElementById('page-title').textContent   = 'Risk Assessment — ' + student.firstName + ' ' + student.lastName;
+        document.getElementById('page-title').textContent   = 'Risk Assessment â€” ' + student.firstName + ' ' + student.lastName;
         document.getElementById('chrome-route').textContent = 'Route /admin/students/' + student.id + '/risk';
         document.getElementById('student-name').innerHTML   = student.firstName + ' ' + student.lastName +
           ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + student.id + '</span>';

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Global Alert Settings — Oxford Guardians Platform</title>
+    <title>Global Alert Settings â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -142,7 +142,7 @@
                 <div class="form-field">
                   <label class="form-label" for="f-threshold">
                     Compliance Warning Threshold
-                    <span class="form-hint">— days</span>
+                    <span class="form-hint">â€” days</span>
                   </label>
                   <input
                     class="form-input"
@@ -166,9 +166,9 @@
                 <div class="form-field">
                   <label class="form-label" for="f-consent-level">Student Consents Alert Level</label>
                   <select class="form-select" id="f-consent-level" name="consentLevel">
-                    <option value="critical">Critical (Red) — missing consents are a blocking issue</option>
-                    <option value="warning">Warning (Amber) — missing consents need prompt attention</option>
-                    <option value="info">Info (Yellow) — missing consents are for awareness only</option>
+                    <option value="critical">Critical (Red) â€” missing consents are a blocking issue</option>
+                    <option value="warning">Warning (Amber) â€” missing consents need prompt attention</option>
+                    <option value="info">Info (Yellow) â€” missing consents are for awareness only</option>
                   </select>
                 </div>
                 <p class="setting-desc">
@@ -205,7 +205,7 @@
       document.getElementById('f-threshold').value    = saved.warningThreshold || 30;
       document.getElementById('f-consent-level').value = saved.consentLevel    || 'info';
 
-      // -- Toast (no redirect — stay on page) ------------------------------
+      // -- Toast (no redirect â€” stay on page) ------------------------------
       function showToast(msg) {
         var toast = document.getElementById('toast');
         document.getElementById('toast-text').textContent = msg;

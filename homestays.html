@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homestays — Oxford Guardians Platform</title>
+    <title>Homestays â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -463,7 +463,7 @@
               <div>
                 <span class="eyebrow">Homestay management</span>
                 <h2>Approved families, capacity, safety, and DBS state.</h2>
-                <p>Household records with capacity rules, safety checks, and evidence trails — not just a list of surnames.</p>
+                <p>Household records with capacity rules, safety checks, and evidence trails â€” not just a list of surnames.</p>
               </div>
               <div class="toolbar-actions">
                 <a class="button-alt" href="homestay-profile.html">Open sample profile</a>
@@ -483,19 +483,19 @@
               <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:14px;">
                 <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
                   <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Total Approved Beds</small>
-                  <strong style="font-size:1.4rem; color:#0f2340;" id="stat-total-beds">—</strong>
+                  <strong style="font-size:1.4rem; color:#0f2340;" id="stat-total-beds">â€”</strong>
                 </div>
                 <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
                   <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Currently Placed</small>
-                  <strong style="font-size:1.4rem; color:#0284c7;" id="stat-occupied-beds">—</strong>
+                  <strong style="font-size:1.4rem; color:#0284c7;" id="stat-occupied-beds">â€”</strong>
                 </div>
                 <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
                   <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Standard Beds Free</small>
-                  <strong style="font-size:1.4rem; color:#16a34a;" id="stat-available-beds">—</strong>
+                  <strong style="font-size:1.4rem; color:#16a34a;" id="stat-available-beds">â€”</strong>
                 </div>
                 <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
                   <small style="font-size:0.72rem; text-transform:uppercase; color:#64748b; font-weight:700; display:block; margin-bottom:2px;">Emergency Standby (Std 2.6)</small>
-                  <strong style="font-size:1.4rem; color:#d97706;" id="stat-emergency-beds">—</strong>
+                  <strong style="font-size:1.4rem; color:#d97706;" id="stat-emergency-beds">â€”</strong>
                 </div>
               </div>
             </div>
@@ -537,7 +537,7 @@
                   <div class="alert-card alert-danger">
                     <span class="alert-timestamp">Overdue</span>
                     <div class="alert-type">DBS Check</div>
-                    <p class="alert-title">Helen Finch — DBS expiring</p>
+                    <p class="alert-title">Helen Finch â€” DBS expiring</p>
                     <p class="alert-body">DBS certificate expires in 14 days (18 Nov 2025). Renewal application submitted but certificate not yet received. Cannot host until renewed.</p>
                     <a class="alert-action" href="homestay-profile.html">Review record</a>
                   </div>
@@ -545,7 +545,7 @@
                   <div class="alert-card alert-warning">
                     <span class="alert-timestamp">Due soon</span>
                     <div class="alert-type">Annual Visit</div>
-                    <p class="alert-title">Eleanor Ashworth — visit due next week</p>
+                    <p class="alert-title">Eleanor Ashworth â€” visit due next week</p>
                     <p class="alert-body">Annual inspection due 14 May 2026. Last completed 14 May 2025. Schedule now to avoid a compliance gap before summer placements.</p>
                     <a class="alert-action" href="homestay-visit.html">Book visit</a>
                   </div>
@@ -553,7 +553,7 @@
                   <div class="alert-card alert-warning">
                     <span class="alert-timestamp">Pending</span>
                     <div class="alert-type">Approval Blocked</div>
-                    <p class="alert-title">Ellis Family — 1 document missing</p>
+                    <p class="alert-title">Ellis Family â€” 1 document missing</p>
                     <p class="alert-body">DBS upload outstanding. Sofia Petrova is reserved for this placement. Approval cannot proceed until the document is on file.</p>
                     <a class="alert-action" href="hosts.html?status=pending">Resolve</a>
                   </div>
@@ -561,7 +561,7 @@
                   <div class="alert-card alert-info">
                     <span class="alert-timestamp">Upcoming</span>
                     <div class="alert-type">Annual Visit</div>
-                    <p class="alert-title">Brennan Family — visit due 2 Jun 2026</p>
+                    <p class="alert-title">Brennan Family â€” visit due 2 Jun 2026</p>
                     <p class="alert-body">Fire evacuation discussion logged at last visit. Confirm route has been updated before scheduling the follow-up.</p>
                     <a class="alert-action" href="homestay-visit.html">Schedule</a>
                   </div>
@@ -606,7 +606,7 @@
       }
 
       function formatDate(iso) {
-        if (!iso) return '—';
+        if (!iso) return 'â€”';
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var p = iso.split('-');
         return parseInt(p[2], 10) + ' ' + months[parseInt(p[1], 10) - 1] + ' ' + p[0];
@@ -641,7 +641,7 @@
 
           var svcBadge = p.serviceType === 'Complimentary'
             ? '<span class="badge-complimentary">Complimentary</span>'
-            : (p.serviceType || '—');
+            : (p.serviceType || 'â€”');
           return '<tr>' +
             '<td><strong>' + p.studentName + '</strong></td>' +
             '<td><strong>' + p.hostName + '</strong></td>' +

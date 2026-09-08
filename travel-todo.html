@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Travel To-do — Oxford Guardians Platform</title>
+    <title>Travel To-do â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -385,7 +385,7 @@
               <div>
                 <span class="eyebrow">Travel Coordination</span>
                 <h2>Travel To-do</h2>
-                <p>Confirmation checklist for each booked journey. Edit inline — changes save automatically.</p>
+                <p>Confirmation checklist for each booked journey. Edit inline â€” changes save automatically.</p>
               </div>
               <div class="toolbar-actions">
                 <a class="button-alt" href="travel.html">Upcoming Travel</a>
@@ -505,13 +505,13 @@
         var tdJourney = document.createElement('td');
         var chip = document.createElement('span');
         chip.className   = 'transport-chip';
-        chip.textContent = todo.transportId || '—';
+        chip.textContent = todo.transportId || 'â€”';
         tdJourney.appendChild(chip);
         row.appendChild(tdJourney);
 
         // -- Col 2: Task name --
         var tdTask = document.createElement('td');
-        tdTask.innerHTML = '<strong>' + escHtml(todo.taskName || '—') + '</strong>';
+        tdTask.innerHTML = '<strong>' + escHtml(todo.taskName || 'â€”') + '</strong>';
         row.appendChild(tdTask);
 
         // -- Col 3: Deadline Date --
@@ -652,13 +652,13 @@
             var start  = (transport.startPoint  || '').split(',')[0].trim();
             var dest   = (transport.destination || '').split(',')[0].trim();
             var driver = transport.driverName
-              ? ' · ' + escHtml(transport.driverName)
-              : ' · <em style="color:#9bafc4">Driver TBC</em>';
+              ? ' Â· ' + escHtml(transport.driverName)
+              : ' Â· <em style="color:#9bafc4">Driver TBC</em>';
 
             groupTd.innerHTML =
               '<span class="group-id-chip">' + escHtml(transportId) + '</span>' +
               '<span class="group-label">' +
-                escHtml(transport.studentName || 'Unknown') + ' · ' +
+                escHtml(transport.studentName || 'Unknown') + ' Â· ' +
                 escHtml(transport.date || '') +
               '</span>' +
               '<span class="group-detail">' +

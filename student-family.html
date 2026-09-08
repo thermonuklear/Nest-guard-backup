@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="page-title">Family & Contacts ó Oxford Guardians Platform</title>
+    <title id="page-title">Family & Contacts ‚Äî Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -351,11 +351,11 @@
             <div class="toolbar">
               <div>
                 <span class="eyebrow">Family &amp; Contacts</span>
-                <h2 id="student-name">ó</h2>
+                <h2 id="student-name">‚Äî</h2>
                 <p>Home address, parent contact details, family background context, and UK-based emergency contacts for this student.</p>
               </div>
               <div class="toolbar-actions">
-                <span id="status-badge" class="badge">ó</span>
+                <span id="status-badge" class="badge">‚Äî</span>
                 <a class="button-alt" id="back-to-profile" href="student-profile.html">Back to Profile</a>
               </div>
             </div>
@@ -378,11 +378,11 @@
                 <div class="field-group">
                   <div class="field">
                     <label for="field-parent-addresses">Parent / Guardian Addresses</label>
-                    <textarea id="field-parent-addresses" class="tall" placeholder="e.g. Parent 1 (Haruka Tanaka) ó as above. Parent 2 (Kenji Tanaka) ó same household."></textarea>
+                    <textarea id="field-parent-addresses" class="tall" placeholder="e.g. Parent 1 (Haruka Tanaka) ‚Äî as above. Parent 2 (Kenji Tanaka) ‚Äî same household."></textarea>
                   </div>
                   <div class="field">
                     <label for="field-parent-occupations">Parent / Guardian Occupations</label>
-                    <textarea id="field-parent-occupations" placeholder="e.g. Haruka Tanaka ó Paediatric consultant. Kenji Tanaka ó Senior architect."></textarea>
+                    <textarea id="field-parent-occupations" placeholder="e.g. Haruka Tanaka ‚Äî Paediatric consultant. Kenji Tanaka ‚Äî Senior architect."></textarea>
                   </div>
                 </div>
               </div>
@@ -392,7 +392,7 @@
                 <div class="field-group">
                   <div class="field">
                     <label for="field-background">Family Background Information</label>
-                    <textarea id="field-background" class="tall" placeholder="e.g. Only child. Family has prior UK boarding school experience ó older cousin attended Marlborough. Parents separated communication preferred; contact Haruka first."></textarea>
+                    <textarea id="field-background" class="tall" placeholder="e.g. Only child. Family has prior UK boarding school experience ‚Äî older cousin attended Marlborough. Parents separated communication preferred; contact Haruka first."></textarea>
                   </div>
                 </div>
               </div>
@@ -402,7 +402,7 @@
                 <div class="field-group">
                   <div class="field">
                     <label for="field-uk-contacts">UK-Based Family or Trusted Contacts</label>
-                    <textarea id="field-uk-contacts" class="tall" placeholder="e.g. Aunt: Yoko Mori ó 07700 900 123 / yoko.mori@example.co.uk / London NW3. Authorised to collect in emergencies. Not authorised for overnight stays without written parent approval."></textarea>
+                    <textarea id="field-uk-contacts" class="tall" placeholder="e.g. Aunt: Yoko Mori ‚Äî 07700 900 123 / yoko.mori@example.co.uk / London NW3. Authorised to collect in emergencies. Not authorised for overnight stays without written parent approval."></textarea>
                   </div>
                 </div>
               </div>
@@ -470,7 +470,7 @@
       // -- Populate header ------------------------------------------------------
       var fullName = student.firstName + ' ' + student.lastName;
 
-      document.getElementById('page-title').textContent   = 'Family & Contacts ó ' + fullName;
+      document.getElementById('page-title').textContent   = 'Family & Contacts ‚Äî ' + fullName;
       document.getElementById('chrome-route').textContent = 'Route /admin/students/' + student.id + '/family';
       document.getElementById('student-name').innerHTML   = fullName +
         ' <span style="color:#6b85a0; font-size:0.8em; font-weight:normal; margin-left:8px;">' + student.id + '</span>';
@@ -530,7 +530,7 @@
       function renderUkContacts() {
         var list = document.getElementById('uk-contacts-list');
         if (!ukContacts.length) {
-          list.innerHTML = '<div class="uk-contacts-empty">No structured UK contacts added yet. Use ì+ Add UK Contactî below.</div>';
+          list.innerHTML = '<div class="uk-contacts-empty">No structured UK contacts added yet. Use ‚Äú+ Add UK Contact‚Äù below.</div>';
           return;
         }
         list.innerHTML = ukContacts.map(function (contact, index) {
@@ -632,7 +632,7 @@
             if (c.authorisedOvernight) authNotes.push('Authorised for overnight stays');
             if (authNotes.length) parts.push(authNotes.join('; '));
             if (c.notes) parts.push(c.notes);
-            return parts.join(' ó ');
+            return parts.join(' ‚Äî ');
           }).join('\n');
           student.family.ukFamilyContacts = summary;
           document.getElementById('field-uk-contacts').value = summary;

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Log School Communication — Oxford Guardians Platform</title>
+    <title>Log School Communication â€” Oxford Guardians Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -73,7 +73,7 @@
 
           <div class="form-span-2">
             <label for="f-note">Note details</label>
-            <textarea id="f-note" placeholder="What was discussed, agreed, or flagged during this communication…" required></textarea>
+            <textarea id="f-note" placeholder="What was discussed, agreed, or flagged during this communicationâ€¦" required></textarea>
           </div>
 
         </form>
@@ -108,7 +108,7 @@
       document.getElementById('page-heading').textContent =
         'Log school communication for ' + studentName;
       document.getElementById('f-student').value = student
-        ? studentName + ' — ' + (student.school || '') + ' — ' + (student.schoolYear || '')
+        ? studentName + ' â€” ' + (student.school || '') + ' â€” ' + (student.schoolYear || '')
         : studentName;
 
       // -- Back link ----------------------------------------------------------
@@ -161,7 +161,7 @@
       }
 
       function fmtDate(iso) {
-        if (!iso) return '—';
+        if (!iso) return 'â€”';
         var d = new Date(iso);
         if (isNaN(d.getTime())) return iso;
         var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];

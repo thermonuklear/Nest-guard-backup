@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Student — Oxford Guardians Platform</title>
+  <title>Create Student â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -158,7 +158,7 @@
                 <div class="field" id="field-nationality">
                   <small>Nationality *</small>
                   <select class="field-select" id="nationality" name="nationality">
-                    <option value="">Select nationality…</option>
+                    <option value="">Select nationalityâ€¦</option>
                     <option>British</option>
                     <option>Chinese</option>
                     <option>French</option>
@@ -186,7 +186,7 @@
                 <div class="field">
                   <small>School Year</small>
                   <select class="field-select" id="school-year" name="school_year">
-                    <option value="">Select year…</option>
+                    <option value="">Select yearâ€¦</option>
                     <option>Year 7</option>
                     <option>Year 8</option>
                     <option>Year 9</option>
@@ -296,7 +296,7 @@
     var sel = document.getElementById('school');
     var blank = document.createElement('option');
     blank.value = '';
-    blank.textContent = '— No school assigned —';
+    blank.textContent = 'â€” No school assigned â€”';
     sel.appendChild(blank);
     getSchools().forEach(function (sch) {
       var opt = document.createElement('option');
@@ -409,7 +409,7 @@
       homestayFamily:  'Not yet assigned',
       homestayDetails: 'Placement pending',
       welfareStatus:   'No check-in yet',
-      welfareNotes:    'New student — welfare workflow not started',
+      welfareNotes:    'New student â€” welfare workflow not started',
       status:          'Pending',
       parent1Name:     p1Name,
       parent1Email:    p1Email,

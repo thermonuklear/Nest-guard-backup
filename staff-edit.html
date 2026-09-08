@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edit Staff Member — Oxford Guardians Platform</title>
+  <title>Edit Staff Member â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -104,7 +104,7 @@
         <div class="toolbar">
           <div>
             <span class="eyebrow">Edit staff member</span>
-            <h2 id="toolbar-title">Loading…</h2>
+            <h2 id="toolbar-title">Loadingâ€¦</h2>
             <p>Update profile details and role information. Compliance records are managed separately.</p>
           </div>
           <div class="toolbar-actions">
@@ -148,7 +148,7 @@
                 <div class="field">
                   <small>Role *</small>
                   <select class="field-select" id="role">
-                    <option value="">— Select role —</option>
+                    <option value="">â€” Select role â€”</option>
                     <option value="Admin / DSL">Admin / DSL</option>
                     <option value="Admin / Operations">Admin / Operations</option>
                     <option value="Admin / Local coordinator">Admin / Local coordinator</option>
@@ -166,10 +166,10 @@
                 <div class="field">
                   <small>DBS Status</small>
                   <select class="field-select" id="dbs-status">
-                    <option value="">— Select —</option>
-                    <option value="clear">Enhanced DBS — Clear</option>
-                    <option value="amber">DBS — Action Required</option>
-                    <option value="expired">DBS — Expired</option>
+                    <option value="">â€” Select â€”</option>
+                    <option value="clear">Enhanced DBS â€” Clear</option>
+                    <option value="amber">DBS â€” Action Required</option>
+                    <option value="expired">DBS â€” Expired</option>
                   </select>
                 </div>
                 <div class="field"><small>DBS Certificate Number</small><input class="field-input" type="text" id="dbs-cert" /></div>
@@ -186,7 +186,7 @@
                 <div class="field">
                   <small>Training Level</small>
                   <select class="field-select" id="training-level">
-                    <option value="">— Select —</option>
+                    <option value="">â€” Select â€”</option>
                     <option value="DSL Level 3">DSL Level 3</option>
                     <option value="Safeguarding Awareness">Safeguarding Awareness</option>
                     <option value="First Aid">First Aid</option>
@@ -234,7 +234,7 @@
     document.getElementById('not-found').style.display  = 'block';
     document.getElementById('edit-panel').style.display = 'none';
   } else {
-    document.title = 'Edit ' + member.firstName + ' ' + member.lastName + ' — Oxford Guardians';
+    document.title = 'Edit ' + member.firstName + ' ' + member.lastName + ' â€” Oxford Guardians';
     document.getElementById('toolbar-title').textContent = member.firstName + ' ' + member.lastName;
     document.getElementById('chrome-route').textContent  = 'Route /admin/staff/' + member.id + '/edit';
     document.getElementById('back-link').href   = 'staff-profile.html?id=' + member.id;

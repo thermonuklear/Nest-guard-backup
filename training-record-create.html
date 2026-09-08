@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Log Training — Oxford Guardians Platform</title>
+  <title>Log Training â€” Oxford Guardians Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -230,7 +230,7 @@
             <div>
               <span class="eyebrow">Training &amp; Induction Log</span>
               <h2 id="toolbar-name" style="margin:2px 0 4px;">Log Training</h2>
-              <p style="margin:0;font-size:0.88rem;color:#3b536e;">Role-based courses drive renewal cycles automatically. Section 8 · Section 13 apply to homestay carers only.</p>
+              <p style="margin:0;font-size:0.88rem;color:#3b536e;">Role-based courses drive renewal cycles automatically. Section 8 Â· Section 13 apply to homestay carers only.</p>
             </div>
           </div>
           <div class="toolbar-actions">
@@ -266,8 +266,8 @@
               <div class="locked-person-box">
                 <div class="host-avatar-lg" id="locked-avatar" style="width:38px;height:38px;font-size:14px;">?</div>
                 <div>
-                  <div class="name" id="locked-name">—</div>
-                  <div class="meta" id="locked-meta">—</div>
+                  <div class="name" id="locked-name">â€”</div>
+                  <div class="meta" id="locked-meta">â€”</div>
                 </div>
               </div>
             </div>
@@ -292,7 +292,7 @@
               </div>
               <div class="field-group">
                 <label>Expiry / Renewal Due</label>
-                <input type="text" id="field-expiry" disabled placeholder="—" />
+                <input type="text" id="field-expiry" disabled placeholder="â€”" />
               </div>
               <div class="field-group">
                 <label>Duration (Hours)</label>
@@ -326,7 +326,7 @@
           <div class="form-section host-only" id="section-s8-policy">
             <p class="form-section-title">Policy &amp; Procedure Explanations</p>
             <p class="form-section-desc">
-              Mark each item as <strong>Yes</strong> (covered and confirmed), <strong>No</strong> (not covered — explain in additional notes), or <strong>N/A</strong> (not applicable to this session type).
+              Mark each item as <strong>Yes</strong> (covered and confirmed), <strong>No</strong> (not covered â€” explain in additional notes), or <strong>N/A</strong> (not applicable to this session type).
             </p>
             <div class="checklist-grid" id="s8-policy-container">
               <!-- populated by JS -->
@@ -372,7 +372,7 @@
           <div class="form-section">
             <p class="form-section-title">Additional Notes</p>
             <p class="form-section-desc">Any follow-up actions, concerns raised, items outstanding, or observations from this session.</p>
-            <textarea id="field-notes" style="width:100%;min-height:84px;padding:9px 12px;border:1px solid #d5dce8;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.84rem;color:#0f2340;background:#f6f8fb;resize:vertical;box-sizing:border-box;line-height:1.5;" placeholder="e.g. Host confirmed understanding of all key policies. Annual safeguarding update booked for September 2026…"></textarea>
+            <textarea id="field-notes" style="width:100%;min-height:84px;padding:9px 12px;border:1px solid #d5dce8;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.84rem;color:#0f2340;background:#f6f8fb;resize:vertical;box-sizing:border-box;line-height:1.5;" placeholder="e.g. Host confirmed understanding of all key policies. Annual safeguarding update booked for September 2026â€¦"></textarea>
           </div>
 
           <div class="form-footer">
@@ -434,15 +434,15 @@
     document.getElementById('locked-name').textContent   = fullName + ' (' + lockedRecord.id + ')';
     document.getElementById('locked-meta').textContent   = lockedType === 'staff' ? (lockedRecord.role || 'Staff') : 'Homestay carer';
 
-    document.getElementById('toolbar-name').textContent = 'Log Training — ' + fullName;
+    document.getElementById('toolbar-name').textContent = 'Log Training â€” ' + fullName;
     document.getElementById('toolbar-avatar').textContent = (lockedRecord.firstName.charAt(0) + lockedRecord.lastName.charAt(0)).toUpperCase();
     document.getElementById('chrome-route').textContent  = 'Route /admin/' + lockedType + '/' + lockedRecord.id + '/training/new';
-    document.title = 'Log Training — ' + fullName + ' — Oxford Guardians';
+    document.title = 'Log Training â€” ' + fullName + ' â€” Oxford Guardians';
 
     backUrl = lockedType === 'host' ? ('training-log.html?id=' + lockedRecord.id) : ('staff-aegis-control-room.html?id=' + lockedRecord.id);
   } else if (hostIdParam || personIdParam) {
-    // A param was given but didn't resolve to a real record — fall back to the open picker.
-    document.getElementById('field-person').placeholder = 'Record not found — check ID in URL';
+    // A param was given but didn't resolve to a real record â€” fall back to the open picker.
+    document.getElementById('field-person').placeholder = 'Record not found â€” check ID in URL';
   }
 
   document.getElementById('cancel-link').href   = backUrl;
@@ -472,7 +472,7 @@
     if (currentPersonType === 'staff') {
       var staff = getAllStaff();
       sel.innerHTML = staff.map(function (m) {
-        return '<option value="' + m.id + '">' + escHtml(m.firstName + ' ' + m.lastName) + ' — ' + escHtml(m.role || '') + '</option>';
+        return '<option value="' + m.id + '">' + escHtml(m.firstName + ' ' + m.lastName) + ' â€” ' + escHtml(m.role || '') + '</option>';
       }).join('');
       currentPerson = staff.length ? getStaffById(sel.value) : null;
     } else {
@@ -534,7 +534,7 @@
     var expiryField = document.getElementById('field-expiry');
 
     if (!course) {
-      expiryField.value = '—';
+      expiryField.value = 'â€”';
       return;
     }
     if (!course.repeatIntervalMonths) {
@@ -542,12 +542,12 @@
       return;
     }
     if (!dateVal) {
-      expiryField.value = '—';
+      expiryField.value = 'â€”';
       return;
     }
     var d = new Date(dateVal);
     if (isNaN(d.getTime())) {
-      expiryField.value = '—';
+      expiryField.value = 'â€”';
       return;
     }
     d.setMonth(d.getMonth() + course.repeatIntervalMonths);
@@ -664,7 +664,7 @@
     block.className = 'question-block';
     block.innerHTML =
       '<p class="question-text"><span class="q-num">' + (i + 1) + '</span>' + q.text + '</p>' +
-      '<textarea id="s13_' + q.key + '" placeholder="Record host\'s response…" rows="3"></textarea>';
+      '<textarea id="s13_' + q.key + '" placeholder="Record host\'s responseâ€¦" rows="3"></textarea>';
     s13Container.appendChild(block);
   });
 
@@ -726,7 +726,7 @@
       certificateRef:        document.getElementById('field-cert').value.trim(),
       hours:                 hoursVal === '' ? undefined : parseFloat(hoursVal),
       cost:                  costVal === '' ? undefined : parseFloat(costVal),
-      expiryDate:            document.getElementById('field-expiry').value !== '—' ? document.getElementById('field-expiry').value : '',
+      expiryDate:            document.getElementById('field-expiry').value !== 'â€”' ? document.getElementById('field-expiry').value : '',
       inductionItems:        inductionItems,
       understandingAnswers:  understandingAnswers,
       notes:                 document.getElementById('field-notes').value.trim(),
